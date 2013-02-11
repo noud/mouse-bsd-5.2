@@ -1,0 +1,50 @@
+#	$NetBSD: XEN3_DOM0,v 1.10.8.1 2009/10/03 23:57:54 snj Exp $
+#
+#	XEN3_0: Xen 3.0 domain0 kernel
+
+include "arch/i386/conf/XEN2_DOM0"
+
+options 	XEN3	#Xen 3.x support
+
+# boot messages with MPBIOS, acpi and ioapic can be quite large
+options 	MSGBUFSIZE=24576
+
+vcpu*		at hypervisor?		# Xen virtual CPUs
+xenbus*		at hypervisor?		# Xen virtual bus
+ppb*	at pci? dev ? function ?	# PCI-PCI bridges
+pci*	at ppb? bus ?
+
+# pci backend devices, used for PCI pass-through. To export a PCI device
+# to a domU, the device has to be attached to the pciback driver in the dom0.
+# you can force a device to attach to the pciback driver in dom0 passing
+# pciback.hide=(bus:dev.fun)(bus:dev.func) to the dom0 kernel boot parameters.
+# bus and dev are 2-digits hex number, func is a single-digit number:
+# pciback.hide=(00:1a.0)(00:1a.1)(00:1a.7)
+pciback* at pci?                        #pci backend device
+
+acpi0 		at hypervisor?
+options 	MPBIOS
+options 	MPDEBUG
+options 	MPVERBOSE
+options 	ACPIVERBOSE
+#options 	PCI_ADDR_FIXUP		# fixup PCI I/O addresses
+#options 	PCI_BUS_FIXUP		# fixup PCI bus numbering
+#options 	PCI_INTR_FIXUP		# fixup PCI interrupt routing
+
+ioapic*		at mainbus? apid ?
+
+# ACPI devices
+acpiacad* 	at acpi?		# ACPI AC Adapter
+acpibat* 	at acpi?		# ACPI Battery
+acpibut* 	at acpi?		# ACPI Button
+acpidalb*	at acpi?		# ACPI Direct Application Launch Button
+# The ACPI Embedded Controller is generally configured via the special ECDT.
+# This is required as parts of the DSDT can reference the EC before the normal
+# attach phase.
+acpiec* 	at acpi?		# ACPI Embedded Controller (late binding)
+acpiecdt* 	at acpi?		# ACPI Embedded Controller (early binding)
+acpilid* 	at acpi?		# ACPI Lid Switch
+hpqlb*		at acpi?		# HP Quick Launch Buttons
+ 
+pseudo-device	xvif
+pseudo-device	xbdback

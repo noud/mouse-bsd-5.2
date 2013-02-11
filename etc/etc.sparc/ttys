@@ -1,0 +1,10 @@
+#	$NetBSD: ttys,v 1.14.2.2 2009/10/18 14:47:00 bouyer Exp $
+#
+#	@(#)ttys	5.1 (Berkeley) 4/17/89
+#
+# name	getty				type	status		comments
+#
+console	"/usr/libexec/getty suncons"	sun	on secure
+constty	"/usr/libexec/getty suncons"	sun	off secure
+ttya	"/usr/libexec/getty std.9600"	unknown	off secure
+ttyb	"/usr/libexec/getty std.9600"	unknown	off secure

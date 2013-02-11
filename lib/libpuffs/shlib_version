@@ -1,0 +1,4 @@
+#	$NetBSD: shlib_version,v 1.1.24.1 2009/10/27 20:37:38 bouyer Exp $
+#
+major=0
+minor=1

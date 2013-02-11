@@ -1,0 +1,25 @@
+#	$NetBSD: Makefile.booters,v 1.4.88.1 2012/03/17 18:38:57 bouyer Exp $
+
+S?=	${.CURDIR}/../../../..
+
+.PHONY:	machine-links
+
+CFLAGS+= -ffreestanding
+
+CPPFLAGS+=	-D__daddr_t=int32_t
+
+machine-links:
+	-rm -f machine && \
+	ln -s $S/arch/${MACHINE}/include machine
+	-rm -f ${MACHINE_ARCH} && \
+	ln -s $S/arch/${MACHINE_ARCH}/include ${MACHINE_ARCH}
+
+CLEANFILES+=	machine ${MACHINE_ARCH}
+
+beforedepend:	machine-links
+
+# XXX SHOULD NOT NEED TO DEFINE THESE!
+LIBCRT0=
+LIBC=
+LIBCRTBEGIN=
+LIBCRTEND=
