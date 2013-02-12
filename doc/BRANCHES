@@ -4,13 +4,13 @@
 # tree and their current state.
 #
 # This list is necessarily incomplete.
-# 
+#
 # Within reason, developers may create branch and version tags at any
 # time for any purpose.  To avoid name collisions, private tags should
 # have names which begin with the developer's NetBSD login name
 # followed by a - or _ character (e.g., thorpej_scsipi,
 # thorpej-signal)
-# 
+#
 # Any branch or version tag not listed here should be assumed to be
 # private to the developer who created it.  It is inappropriate for
 # anyone other than that developer to commit, move tags, or otherwise
@@ -156,7 +156,7 @@ Notes:
 		Commits restricted to Release Engineering.
 
 Branch:		netbsd-2-0
-Description:	Originally the NetBSD 2.0 release branch and now the branch 
+Description:	Originally the NetBSD 2.0 release branch and now the branch
 		tracking security/critical fixes for the NetBSD 2.0 series
 Status:		Active
 Start Date:	28 Mar 2004 and changed for security/critical function on
@@ -173,7 +173,7 @@ Notes:		Branch was re-purposed to security/critical change function
 Branch:		netbsd-2-1
 Description:	Tracking security/critical fixes for NetBSD 2.1
 Status:		Active
-Start Date:     26 Oct 2005 
+Start Date:     26 Oct 2005
 End Date:
 Base Tag:	netbsd-2-1-RELEASE
 Maintainer:	2 Release Engineering <releng-2@NetBSD.org>
@@ -309,9 +309,9 @@ End Date:
 Base Tag:       haad-dm-base
 Maintainer:     Adam Hamsik <haad@NetBSD.org>
 Scope:          kernel
-Notes:          LVM support is based on Linux lvm2tools, 
+Notes:          LVM support is based on Linux lvm2tools,
                 libdevmapper library and NetBSD device-mapper
-                driver. 
+                driver.
 
 Branch:		hpcarm-cleanup
 Description:	Fix build problems for hpcarm
@@ -354,7 +354,7 @@ Branch:		keiichi-mipv6
 Description:	Developing Mobile IPv6 function
 Status:		Active
 Start Date:	21 Feb 2008
-End Date:	
+End Date:
 Base Tag:	keiichi-mipv6-base
 Maintainer:	Keiichi Shima <keiichi@netbsd.org>
 Scope:		sys, sbin, libc/net, distrib/sets, share/man/
@@ -367,7 +367,7 @@ Branch:		kent-audio2
 Description:	In-kernel audio mixer
 Status:		Active
 Start Date:	Sun Jan 16 2005
-End Date:	
+End Date:
 Base Tag:	kent-audio2-base
 Maintainer:	TAMURA Kent <kent@NetBSD.org>
 Scope:		kernel (audio device drivers)
@@ -382,10 +382,10 @@ Description:	Convert the kernel to struct timespec as its primary time
 Status:		Inactive
 Start Date:	2005-02-19
 End Date:
-Base Tag:	
+Base Tag:
 Maintainer:	Matt Thomas <matt@NetBSD.org>
 Scope:		kernel
-Notes:	
+Notes:
 
 Branch:		matt-mips64
 Description:	Rototill the mips code to support LP64 mips and N32/N64 ABIs
@@ -395,7 +395,7 @@ End Date:
 Base Tag:	matt-mips64-base
 Maintainer:	Matt Thomas <matt@NetBSD.org>
 Scope:		kernel & userland
-Notes:	
+Notes:
 
 Branch:		mjf-devfs2
 Description:	device file system supporting dynamic device nodes
@@ -459,7 +459,7 @@ Branch:		rpaulo-netinet-merge-pcb
 Description:	merge in6pcb with inpcb
 Status:		Dormant
 Start Date:	Wed Feb 01 2006
-End Date:	
+End Date:
 Base Tag:	rpaulo-netinet-merge-pcb-base
 Maintainer:	Rui Paulo <rpaulo@NetBSD.org>
 Scope:		src/sys
@@ -489,7 +489,7 @@ Branch:		rtr-xorg-branch
 Description:	xorg & static build alterations to src/x11
 Status:		Active
 Start Date:	Nov 15 2004
-End Date:	
+End Date:
 Base tag:	rtr-xorg-branch-base
 Maintainer:	Tyler R. Retzlaff <rtr@NetBSD.org>
 Scope:		x11
@@ -538,16 +538,16 @@ Notes:		This branch is intended to revive Scheduler Activations
 		time.
 
 Branch:		yamt-kmem
-Description:	
+Description:
 		- separate kernel va allocation from kernel fault handling.
 		- make kmem_alloc interrupt-safe.
 Status:		Active
 Start Date:	Sun Dec  9 2007
-End Date:	
+End Date:
 Base Tag:	yamt-kmem-base3
 Maintainer:	YAMAMOTO Takashi <yamt@NetBSD.org>
 Scope:		src/sys  (src/common is tagged but not branched)
-Notes:		
+Notes:
 		todo:
 		- investigate if PMAP_PREFER equivalent can be done
 		  with vmem_xalloc.  find a tester with hardware for it.
@@ -558,11 +558,11 @@ Branch:		yamt-nfs-mp
 Description:	make nfs client mp-safe
 Status:		Active
 Start Date:	Sun Apr 27 2008
-End Date:	
+End Date:
 Base Tag:	yamt-nfs-mp-base2
 Maintainer:	YAMAMOTO Takashi <yamt@NetBSD.org>
 Scope:		src/sys  (src/common is tagged but not branched)
-Notes:		
+Notes:
 
 Branch:		reinoud-bufcleanup
 Description:	implement and evaluate struct buf usage cleanup strategies.
@@ -661,7 +661,7 @@ Notes:		Base atomic primitives need to be implemented for
 				  stubs using the technique.
 
 		m68k		- Need to do 68010 support.
-		
+
 		i386		- Need to change when x86_patch() is called
 				  so we can test ncpus.
 
@@ -703,7 +703,7 @@ End Date:	22 Nov 2007
 Base Tag:	bouyer-xenamd64-base
 Maintainer:	Manuel Bouyer <bouyer@NetBSD.org>
 Scope:		kernel
-Notes:		
+Notes:
 
 Branch:		bouyer-xeni386
 Description:	switch xen on i386 to the x86 pmap and the xen/x86/x86_xpmap.c bootstrap, and add i386 PAE support
@@ -713,7 +713,7 @@ End Date:	23 Jan 2008
 Base Tag:	bouyer-xeni386-base
 Maintainer:	Manuel Bouyer <bouyer@NetBSD.org>
 Scope:		kernel
-Notes:		
+Notes:
 
 Branch: 	chap-midi
 Description:	Renovation of MIDI support
@@ -818,7 +818,7 @@ End Date:	9 Dec 2007
 Base Tag:	jmcneill-pm-base
 Maintainer:	Jared D. McNeill <jmcneill@NetBSD.org>
 Scope:		kernel
-Notes:		
+Notes:
 
 Branch:		kenh-if-detach
 Description:	Interface detach support.
@@ -865,7 +865,7 @@ End Date:	Sun Dec 11 12:25:29 UTC 2005
 Base Tag:	ktrace-lwp-base
 Maintainer:	Darren Reed <darrenr@NetBSD.org>
 Scope:		sys
-Notes:		
+Notes:
 
 Branch:		marc-pcmcia
 Description:	PCMCIA support
@@ -887,7 +887,7 @@ End Date:	2008-04-27
 Base Tag:	matt-armv6-base
 Maintainer:	Matt Thomas <matt@NetBSD.org>
 Scope:		kernel & userland
-Notes:	
+Notes:
 
 Branch:		minoura_x68k_bus_h
 Description:	bus_space(9) and bus_dma(9) implementation for x68k
@@ -951,7 +951,7 @@ Start Date:	5 March 2001
 End Date:	18 January 2003
 Base Tag:	nathanw_sa_base
 Maintainer:	Nathan Williams <nathanw@NetBSD.org>
-Scope:		kernel, libc, libkvm, libpthread, libpthread_dbg, include, 
+Scope:		kernel, libc, libkvm, libpthread, libpthread_dbg, include,
 		bin/ps usr.bin/systat usr.bin/top usr.bin/w
 		gnu/dist/toolchain/gdb gnu/usr.bin/gdb
 Notes:		The idea of scheduler activations is described in the
@@ -1015,7 +1015,7 @@ End Date:
 Base Tag:	nick-csl-alignment-base5
 Maintainer:	Nick Hudson <skrll@NetBSD.org>
 Scope:		sys, lib/libpthread, lib/libpthread_dbg
-Notes:	
+Notes:
 
 Branch:		perseant-lfsv2
 Description:	LFS incompatible on-disk data structure changes
@@ -1083,22 +1083,22 @@ Base Tag:	sommerfeld_i386mpbase_1
 Maintainer:	Bill Sommerfeld <sommerfeld@NetBSD.org>
 Scope:		sys/arch/i386
 Notes:
-		Code committed to the branch has booted to multiuser 
+		Code committed to the branch has booted to multiuser
 		on at least one system.
 
 		Not guaranteed to compile against mainline since -current
 		may have changed incompatibly with the last branch update;
 		use "cvs update -D" to roll-back the rest of the tree to match.
 
-		Please get explicit permission from the maintainer 
+		Please get explicit permission from the maintainer
 		before each commit, or your changes will be backed out.
-		Other tags starting with sommerfeld_ are private to 
+		Other tags starting with sommerfeld_ are private to
 		the developer and are guaranteed to be unstable.
 		Only the maintainer should move tags.
 
-		Note that this branch uses a DIFFERENT scheme for 
+		Note that this branch uses a DIFFERENT scheme for
 		syncing with the mainline.  the maintainer uses some private
-		scripts for keeping them in sync; if you make commits 
+		scripts for keeping them in sync; if you make commits
 		to the branch to "resynchronize" things, you'll
 		probably do it wrong; instead, ask the maintainer to
 		resynchronize things.
@@ -1273,7 +1273,7 @@ Notes:		Goals:
 		  i386		done
 		  amd64		done
 		  mips		done
-		  sparc		need pmap/trap locking changes	
+		  sparc		need pmap/trap locking changes
 		  sparc64	done
 		  arm		done
 		  powerpc	done
@@ -1328,7 +1328,7 @@ End Date:	Thu May 17 2007
 Base Tag:	yamt-idlelwp-base8
 Maintainer:	YAMAMOTO Takashi <yamt@NetBSD.org>
 Scope:		src/sys  (src/common is tagged but not branched)
-Notes:		
+Notes:
 		Status of ports:
 		  alpha			[ Done, UP tested, MP not tested ]
 		  i386			[ Done, tested ]
@@ -1384,7 +1384,7 @@ End Date:	Mon Mar 24 2008
 Base Tag:	yamt-lazymbuf-base14
 Maintainer:	YAMAMOTO Takashi <yamt@NetBSD.org>
 Scope:		src/sys  (src/common is tagged but not branched)
-Notes:		
+Notes:
 
 Branch:		yamt-km, yamt-km-doc
 Description:	simplify/improve kernel memory management and bootstrap
@@ -1495,7 +1495,7 @@ End Date:	Sat Sep 16 2006
 Base Tag:	yamt-pdpolicy-base9
 Maintainer:	YAMAMOTO Takashi <yamt@NetBSD.org>
 Scope:		src/sys  (src/common is tagged but not branched)
-Notes:		
+Notes:
 
 Branch:		yamt-pf42
 Description:	import newer pf from OpenBSD 4.2
@@ -1516,7 +1516,7 @@ End Date:	Wed Nov 30 2005
 Base Tag:	yamt-readahead-base3
 Maintainer:	YAMAMOTO Takashi <yamt@NetBSD.org>
 Scope:		src/sys
-Notes:		
+Notes:
 
 Branch:		yamt-uio_vmspace
 Description:	uio_lwp/uio_segflg -> uio_vmspace
@@ -1526,7 +1526,7 @@ End Date:	Wed Mar  1 2006
 Base Tag:	yamt-uio_vmspace-base5
 Maintainer:	YAMAMOTO Takashi <yamt@NetBSD.org>
 Scope:		src/sys
-Notes:		
+Notes:
 
 Branch:		yamt-splraiseipl
 Description:	finish implementing splraiseipl (and makeiplcookie).
@@ -1541,7 +1541,7 @@ End Date:	Fri Dec 22 2006
 Base Tag:	yamt-splraiseipl-base5
 Maintainer:	YAMAMOTO Takashi <yamt@NetBSD.org>
 Scope:		src/sys  (src/common is tagged but not branched)
-Notes:		
+Notes:
 		tested (by who):
 			alpha		(yamt)
 			alpha		(pavel)
@@ -1640,7 +1640,7 @@ End Date:	Fri Oct 19 2007
 Base Tag:	yamt-x86pmap-base4
 Maintainer:	YAMAMOTO Takashi <yamt@NetBSD.org>
 Scope:		src/sys  (src/common is tagged but not branched)
-Notes:		
+Notes:
 
 Branch:		gdamore-uart
 Description:	Add register table support to com driver.

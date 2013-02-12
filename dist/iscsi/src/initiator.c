@@ -36,26 +36,26 @@
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
-  
+
 #ifdef HAVE_SYS_SOCKET_H
 #include <sys/socket.h>
 #endif
-  
+
 #ifdef HAVE_NETINET_IN_H
 #include <netinet/in.h>
 #endif
-  
+
 #ifdef HAVE_NETINET_TCP_H
 #include <netinet/tcp.h>
 #endif
-  
+
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
 #endif
-  
+
 #include <stdio.h>
 #include <stdlib.h>
-   
+
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
@@ -163,7 +163,7 @@ dump_session(initiator_session_t * sess)
 /* This function reads the target IP and target name information */
 /* from the input configuration file, and populates the */
 /* g_target data structure  fields. */
-static int 
+static int
 get_target_config(const char *hostname, int port)
 {
 	int i;
@@ -175,7 +175,7 @@ get_target_config(const char *hostname, int port)
 	return 0;
 }
 
-static int 
+static int
 session_init_i(initiator_session_t ** sess, uint64_t isid)
 {
 	initiator_session_t *s;
@@ -304,7 +304,7 @@ session_init_i(initiator_session_t ** sess, uint64_t isid)
 	return 0;
 }
 
-static int 
+static int
 session_destroy_i(initiator_session_t * sess)
 {
 	initiator_cmd_t *ptr;
@@ -420,7 +420,7 @@ enum {
 	SESS_TYPE_NONE = 3
 };
 
-static int 
+static int
 params_out(initiator_session_t * sess, char *text, int *len, int textsize, int sess_type, int security)
 {
 	if (security == IS_SECURITY) {
@@ -458,7 +458,7 @@ params_out(initiator_session_t * sess, char *text, int *len, int textsize, int s
 	return 0;
 }
 
-static int 
+static int
 full_feature_negotiation_phase_i(initiator_session_t * sess, char *text, int text_len)
 {
 	initiator_cmd_t *cmd = NULL;
@@ -590,7 +590,7 @@ initiator_get_targets(int target, strv_t *svp)
         if (full_feature_negotiation_phase_i(sess, text, text_len) != 0) {
                 iscsi_trace_error(__FILE__, __LINE__, "full_feature_negotiation_phase_i() failed\n");
                 DP_ERROR;
-        }       
+        }
 	i=0;
         for (ip = sess->params ; ip ; ip = ip->next) {
                 if (strcmp(ip->key, "TargetName") == 0) {
@@ -607,7 +607,7 @@ initiator_get_targets(int target, strv_t *svp)
 }
 
 
-static int 
+static int
 discovery_phase(int target, strv_t *svp)
 {
 	initiator_session_t	*sess;
@@ -735,7 +735,7 @@ discovery_phase(int target, strv_t *svp)
 
 #define FULL_FEATURE_PHASE_TEXT_LEN	1024
 
-static int 
+static int
 full_feature_phase(initiator_session_t * sess)
 {
 	char           *text;
@@ -768,7 +768,7 @@ full_feature_phase(initiator_session_t * sess)
 	return 0;
 }
 
-int 
+int
 initiator_init(const char *hostname, int port, int address_family, const char *user, int auth_type, int mutual_auth, int digest_type)
 {
 	int             i;
@@ -848,7 +848,7 @@ initiator_init(const char *hostname, int port, int address_family, const char *u
 	return 0;
 }
 
-int 
+int
 initiator_shutdown(void)
 {
 	initiator_session_t *sess;
@@ -907,7 +907,7 @@ initiator_shutdown(void)
 	return 0;
 }
 
-static int 
+static int
 wait_callback_i(void *ptr)
 {
 	initiator_wait_t *wait = (initiator_wait_t *) (((initiator_cmd_t *) ptr)->callback_arg);
@@ -918,7 +918,7 @@ wait_callback_i(void *ptr)
 	return 0;
 }
 
-int 
+int
 initiator_abort(initiator_cmd_t * cmd)
 {
 	initiator_cmd_t *ptr, *prev;
@@ -961,7 +961,7 @@ initiator_abort(initiator_cmd_t * cmd)
 	return 0;
 }
 
-int 
+int
 initiator_command(initiator_cmd_t * cmd)
 {
 	initiator_wait_t wait;
@@ -994,7 +994,7 @@ initiator_command(initiator_cmd_t * cmd)
  * enqueue_worker_proc will enqueue the ptr onto one of the tx queues.
  */
 
-int 
+int
 initiator_enqueue(initiator_cmd_t * cmd)
 {
 	initiator_session_t *sess;
@@ -1058,7 +1058,7 @@ initiator_enqueue(initiator_cmd_t * cmd)
 	return 0;
 }
 
-static int 
+static int
 enqueue_worker_proc(void *arg)
 {
 	initiator_session_t *sess;
@@ -1212,7 +1212,7 @@ done:
  * Tx Worker (one per connection)
  */
 
-static int 
+static int
 tx_worker_proc_i(void *arg)
 {
 	iscsi_worker_t *me = (iscsi_worker_t *) arg;
@@ -1363,7 +1363,7 @@ tx_worker_proc_i(void *arg)
 			 * completed sending the command.  This is
 			 * what tx_done is used for.  The last step is
 			 * to set tx_done and signal the Rx thread,
-			 * which may be block on the condition. 
+			 * which may be block on the condition.
 			 * NOP_OUT (without ping) will have no
 			 * response for the Rx thread to process - so
 			 * we execute the callback directly.  */
@@ -1399,7 +1399,7 @@ done:
  * There is one Rx worker per connection.
  */
 
-static int 
+static int
 rx_worker_proc_i(void *arg)
 {
 	uint8_t   header[ISCSI_HEADER_LEN];
@@ -1553,7 +1553,7 @@ done:
 	ISCSI_WORKER_EXIT(me);
 }
 
-static int 
+static int
 text_command_i(initiator_cmd_t * cmd)
 {
 	iscsi_text_cmd_args_t *text_cmd = (iscsi_text_cmd_args_t *) cmd->ptr;
@@ -1589,7 +1589,7 @@ text_command_i(initiator_cmd_t * cmd)
 	return 0;
 }
 
-static int 
+static int
 login_command_i(initiator_cmd_t * cmd)
 {
 	iscsi_login_cmd_args_t *login_cmd = (iscsi_login_cmd_args_t *) cmd->ptr;
@@ -1623,7 +1623,7 @@ login_command_i(initiator_cmd_t * cmd)
 	return 0;
 }
 
-static int 
+static int
 logout_phase_i(initiator_session_t * sess)
 {
 	initiator_cmd_t *cmd = NULL;
@@ -1699,7 +1699,7 @@ logout_phase_i(initiator_session_t * sess)
 	return 0;
 }
 
-static void 
+static void
 alarm_handler(int arg)
 {
 	iscsi_trace_error(__FILE__, __LINE__, "***aborting cmd 0x%p***\n", g_cmd);
@@ -1708,7 +1708,7 @@ alarm_handler(int arg)
 	}
 }
 
-static int 
+static int
 login_phase_i(initiator_session_t * sess, char *text, int text_len)
 {
 	initiator_cmd_t *cmd = NULL;
@@ -1749,7 +1749,7 @@ login_phase_i(initiator_session_t * sess, char *text, int text_len)
 
 		/*
 		 * Build login command.  Note that the <length> and
-		 * <text> fields may get updated by login_response_i. 
+		 * <text> fields may get updated by login_response_i.
 		 * Such is the case when we receive offers from the
 		 * target.  The new <length> and <text> fields will
 		 * represent the response that we need to send to the
@@ -1827,7 +1827,7 @@ login_phase_i(initiator_session_t * sess, char *text, int text_len)
 
 #define TEXT_RESPONSE_TEXT_LEN	2048
 
-static int 
+static int
 text_response_i(initiator_session_t * sess, initiator_cmd_t * cmd, uint8_t *header)
 {
 	iscsi_text_cmd_args_t *text_cmd;
@@ -1902,7 +1902,7 @@ text_response_i(initiator_session_t * sess, initiator_cmd_t * cmd, uint8_t *head
 			/*
 			 * Copy response text into text_cmd->text and
 			 * update the length text_cmd->length.  This
-			 * will be sent out on the next text command. 
+			 * will be sent out on the next text command.
 			 * */
 
 			PARAM_TEXT_PARSE(l, &sess->sess_params.cred, text_out, len_out, NULL, NULL, TEXT_RESPONSE_TEXT_LEN, 1, TI_ERROR);
@@ -1932,7 +1932,7 @@ callback:
 
 #define LOGIN_RESPONSE_TEXT_LEN	2048
 
-static int 
+static int
 login_response_i(initiator_session_t * sess, initiator_cmd_t * cmd, uint8_t *header)
 {
 	iscsi_login_cmd_args_t *login_cmd;
@@ -2086,7 +2086,7 @@ callback:
 	return 0;
 }
 
-static int 
+static int
 logout_command_i(initiator_cmd_t * cmd)
 {
 	iscsi_logout_cmd_args_t *logout_cmd = (iscsi_logout_cmd_args_t *) cmd->ptr;
@@ -2120,7 +2120,7 @@ logout_command_i(initiator_cmd_t * cmd)
 }
 
 
-static int 
+static int
 logout_response_i(initiator_session_t * sess, initiator_cmd_t * cmd, uint8_t *header)
 {
 	iscsi_logout_cmd_args_t *logout_cmd;
@@ -2174,7 +2174,7 @@ callback:
 	return 0;
 }
 
-static int 
+static int
 nop_out_i(initiator_cmd_t * cmd)
 {
 	uint8_t   header[ISCSI_HEADER_LEN];
@@ -2209,7 +2209,7 @@ nop_out_i(initiator_cmd_t * cmd)
 	 * variable length.  Otherwise, we may get a seg fault - as if
 	 * this is a NOP_OUT without ping, the Tx thread will issue
 	 * the callback function immediately after we return - thereby
-	 * de-allocating the NOP_OUT and initiator command structures. 
+	 * de-allocating the NOP_OUT and initiator command structures.
 	 * */
 
 	if ((rc = iscsi_sock_send_header_and_data(sess->sock, header, ISCSI_HEADER_LEN, nop_out->data,
@@ -2221,7 +2221,7 @@ nop_out_i(initiator_cmd_t * cmd)
 	return 0;
 }
 
-static int 
+static int
 scsi_command_i(initiator_cmd_t * cmd)
 {
 	iscsi_scsi_cmd_args_t *scsi_cmd = (iscsi_scsi_cmd_args_t *) cmd->ptr;
@@ -2479,7 +2479,7 @@ error:
 	return -1;
 }
 
-static int 
+static int
 reject_i(initiator_session_t * sess, uint8_t *header)
 {
 	initiator_cmd_t *cmd = NULL;
@@ -2534,7 +2534,7 @@ reject_i(initiator_session_t * sess, uint8_t *header)
 	return 0;
 }
 
-static int 
+static int
 async_msg_i(initiator_session_t * sess, uint8_t *header)
 {
 	iscsi_async_msg_t    msg;
@@ -2593,7 +2593,7 @@ async_msg_i(initiator_session_t * sess, uint8_t *header)
 	return 0;
 }
 
-static int 
+static int
 nop_in_i(initiator_session_t * sess, initiator_cmd_t * cmd, uint8_t *header)
 {
 	iscsi_nop_out_args_t *nop_out = NULL;
@@ -2692,7 +2692,7 @@ nop_in_i(initiator_session_t * sess, initiator_cmd_t * cmd, uint8_t *header)
 	return 0;
 }
 
-static int 
+static int
 scsi_r2t_i(initiator_session_t * sess, initiator_cmd_t * cmd, uint8_t *header)
 {
 	iscsi_r2t_t     r2t;
@@ -2837,7 +2837,7 @@ scsi_r2t_i(initiator_session_t * sess, initiator_cmd_t * cmd, uint8_t *header)
 	return 0;
 }
 
-static int 
+static int
 scsi_response_i(initiator_session_t * sess, initiator_cmd_t * cmd, uint8_t *header)
 {
 	iscsi_scsi_cmd_args_t *scsi_cmd;
@@ -2945,7 +2945,7 @@ scsi_response_i(initiator_session_t * sess, initiator_cmd_t * cmd, uint8_t *head
 	return 0;
 }
 
-static int 
+static int
 scsi_read_data_i(initiator_session_t * sess, initiator_cmd_t * cmd, uint8_t *header)
 {
 	iscsi_read_data_t data;
@@ -3095,7 +3095,7 @@ scsi_read_data_i(initiator_session_t * sess, initiator_cmd_t * cmd, uint8_t *hea
 	return 0;
 }
 
-int 
+int
 initiator_info(char *ptr, int size, int len)
 {
 	initiator_session_t *sess;
@@ -3140,7 +3140,7 @@ initiator_info(char *ptr, int size, int len)
 	return len;
 }
 
-int 
+int
 initiator_discover(char *host, uint64_t target, int lun)
 {
 	iscsi_nop_out_args_t	discover_cmd;
@@ -3168,7 +3168,7 @@ get_target_info(uint64_t target, initiator_target_t *ip)
 	(void) memcpy(ip, &g_target[target], sizeof(*ip));
 }
 
-int 
+int
 ii_initiator_init(const char *hostname, int port, int address_family, const char *user, char *lun, int auth_type, int mutual_auth, int digest_type)
 {
 	initiator_session_t *sess = NULL;

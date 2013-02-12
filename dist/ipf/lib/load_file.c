@@ -22,13 +22,13 @@ load_file(char *filename)
 	if (fp == NULL) {
 		fprintf(stderr, "load_file cannot open '%s'\n", filename);
 		return NULL;
-	}       
+	}
 
 	a = NULL;
 	rtop = NULL;
 	rbot = NULL;
-	linenum = 0;    
-		
+	linenum = 0;
+
 	while (fgets(line, sizeof(line) - 1, fp)) {
 		line[sizeof(line) - 1] = '\0';
 		linenum++;

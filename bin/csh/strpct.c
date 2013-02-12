@@ -87,7 +87,7 @@ strpct(u_long numerator, u_long denominator, u_int digits)
 
 		(void)snprintf(percent, sizeof(percent), fmt, result / factor,
 		    result % factor);
-	}       
+	}
 
 	return (percent);
 }

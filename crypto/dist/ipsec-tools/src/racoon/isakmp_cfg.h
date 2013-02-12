@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 2004 Emmanuel Dreyfus
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -35,8 +35,8 @@
 #include <security/pam_appl.h>
 #endif
 
-/* 
- * XXX don't forget to update 
+/*
+ * XXX don't forget to update
  * src/racoon/handler.c:exclude_cfg_addr()
  * if you add IPv6 capability
  */
@@ -64,8 +64,8 @@
 /* For the wins servers -- XXX find the value somewhere ? */
 #define MAXWINS 4
 
-/* 
- * Global configuration for ISAKMP mode confiration address allocation 
+/*
+ * Global configuration for ISAKMP mode confiration address allocation
  * Read from the mode_cfg section of racoon.conf
  */
 struct isakmp_cfg_port {
@@ -140,7 +140,7 @@ struct isakmp_cfg_config {
 extern struct isakmp_cfg_config isakmp_cfg_config;
 
 /*
- * ISAKMP mode config state 
+ * ISAKMP mode config state
  */
 #define LOGINLEN 31
 struct isakmp_cfg_state {
@@ -154,13 +154,13 @@ struct isakmp_cfg_state {
 	struct in_addr wins4[MAXWINS];	/* IPv4 WINS (when client only) */
 	int wins4_index;		/* Number of IPv4 WINS (client only) */
 	char default_domain[MAXPATHLEN + 1];	/* Default domain recieved */
-	struct unity_netentry 
+	struct unity_netentry
 	    *split_include; 		/* UNITY_SPLIT_INCLUDE */
 	int include_count;		/* Number of SPLIT_INCLUDES */
-	struct unity_netentry 
+	struct unity_netentry
 	    *split_local;		/* UNITY_LOCAL_LAN */
 	int local_count;		/* Number of SPLIT_LOCAL */
-	struct xauth_state xauth;	/* Xauth state, if revelant */		
+	struct xauth_state xauth;	/* Xauth state, if revelant */
 	struct isakmp_ivm *ivm;		/* XXX Use iph1's ivm? */
 	u_int32_t last_msgid;           /* Last message-ID */
 };
@@ -211,7 +211,7 @@ int isakmp_cfg_init(int);
 #ifdef HAVE_LIBRADIUS
 struct rad_handle;
 extern struct rad_handle *radius_acct_state;
-int isakmp_cfg_radius_common(struct rad_handle *, int); 
+int isakmp_cfg_radius_common(struct rad_handle *, int);
 #endif
 
 #ifdef HAVE_LIBPAM

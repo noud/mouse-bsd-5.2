@@ -153,7 +153,7 @@ case "$1" in
 		then
 			int=`expr $ns + $base - 1`
 		else
-			int=$ns	
+			int=$ns
 		fi
 		case "$sys" in
 		    *-pc-solaris2.5.1)

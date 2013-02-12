@@ -275,7 +275,7 @@ $code.=<<___;
 	clg	$inp,`$frame+32`($sp)
 	jne	.Lloop
 
-	lmg	%r6,%r15,`$frame+48`($sp)	
+	lmg	%r6,%r15,`$frame+48`($sp)
 	br	%r14
 .size	$Func,.-$Func
 .string	"SHA${label} block transform for s390x, CRYPTOGAMS by <appro\@openssl.org>"

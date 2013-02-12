@@ -23,7 +23,7 @@
 
 CONFIG: {
     package timelocal;
-    
+
     @epoch = localtime(0);
     $tzmin = $epoch[2] * 60 + $epoch[1];	# minutes east of GMT
     if ($tzmin > 0) {

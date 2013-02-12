@@ -93,7 +93,7 @@ struct isc_rwlock {
 	 * when the quota is reached and it is time to switch.
 	 */
 	unsigned int		granted;
-	
+
 	unsigned int		readers_waiting;
 	unsigned int		writers_waiting;
 	unsigned int		read_quota;

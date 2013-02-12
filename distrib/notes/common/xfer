@@ -79,7 +79,7 @@ and
 .Pa boot2.fs
 for VGA installation.
 .Pa boot-com1.fs
-and 
+and
 .Pa boot-com2.fs
 are available if you wish to use a serial console.
 .Pp
@@ -353,7 +353,7 @@ using the provided
 .Ic gzip.x
 program with the
 .Fl d
-switch. 
+switch.
 .Pp
 To invoke the installation system, just type
 .Pp
@@ -426,7 +426,7 @@ using the provided
 .Ic gzip.x
 program with the
 .Fl d
-switch. 
+switch.
 See above how to write the images to floppies.
 .Pp
 To start the `floppy-root' installation system, insert the `kern' floppy
@@ -508,12 +508,12 @@ depend upon which installation medium you choose.
 The steps for the various media are outlined below.
 .if \n[sparc64] \{\
 .(Note
-If you are installing the 32-bit sparc distribution sets, you will need to 
+If you are installing the 32-bit sparc distribution sets, you will need to
 rename
 .Pa sparc/binary/sets/kern-GENERIC_SUN4U.tgz
 to
 .Pa kern-GENERIC.tgz
-since the \*M installation tools would otherwise attempt to install the 
+since the \*M installation tools would otherwise attempt to install the
 kernel for 32-bit sparc computers which does not boot on \*M systems.
 .Note)
 .\}
@@ -584,7 +584,7 @@ Repeat this for all
 .Pa set_name.tgz
 files, splitting them into
 .Pa set_name. Ns Ar xx
-files. 
+files.
 Count the number of
 .Pa set_name. Ns Ar xx
 files that make up the

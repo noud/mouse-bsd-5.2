@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -63,7 +63,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -110,7 +110,7 @@
  */
 /* ====================================================================
  * Copyright 2002 Sun Microsystems, Inc. ALL RIGHTS RESERVED.
- * ECC cipher suite support in OpenSSL originally developed by 
+ * ECC cipher suite support in OpenSSL originally developed by
  * SUN MICROSYSTEMS, INC., and contributed to the OpenSSL project.
  */
 
@@ -144,7 +144,7 @@ int SSL_get_ex_data_X509_STORE_CTX_idx(void)
 		CRYPTO_r_unlock(CRYPTO_LOCK_SSL_CTX);
 		CRYPTO_w_lock(CRYPTO_LOCK_SSL_CTX);
 		got_write_lock = 1;
-		
+
 		if (ssl_x509_store_ctx_idx < 0)
 			{
 			ssl_x509_store_ctx_idx=X509_STORE_CTX_get_ex_new_index(
@@ -156,7 +156,7 @@ int SSL_get_ex_data_X509_STORE_CTX_idx(void)
 		CRYPTO_w_unlock(CRYPTO_LOCK_SSL_CTX);
 	else
 		CRYPTO_r_unlock(CRYPTO_LOCK_SSL_CTX);
-	
+
 	return ssl_x509_store_ctx_idx;
 	}
 
@@ -265,14 +265,14 @@ CERT *ssl_cert_dup(CERT *cert)
 			CRYPTO_add(&ret->pkeys[i].x509->references, 1,
 				CRYPTO_LOCK_X509);
 			}
-		
+
 		if (cert->pkeys[i].privatekey != NULL)
 			{
 			ret->pkeys[i].privatekey = cert->pkeys[i].privatekey;
 			CRYPTO_add(&ret->pkeys[i].privatekey->references, 1,
 				CRYPTO_LOCK_EVP_PKEY);
 
-			switch(i) 
+			switch(i)
 				{
 				/* If there was anything special to do for
 				 * certain types of keys, we'd do it here.
@@ -282,11 +282,11 @@ CERT *ssl_cert_dup(CERT *cert)
 			case SSL_PKEY_RSA_SIGN:
 				/* We have an RSA key. */
 				break;
-				
+
 			case SSL_PKEY_DSA_SIGN:
 				/* We have a DSA key. */
 				break;
-				
+
 			case SSL_PKEY_DH_RSA:
 			case SSL_PKEY_DH_DSA:
 				/* We have a DH key. */
@@ -302,14 +302,14 @@ CERT *ssl_cert_dup(CERT *cert)
 				}
 			}
 		}
-	
+
 	/* ret->extra_certs *should* exist, but currently the own certificate
 	 * chain is held inside SSL_CTX */
 
 	ret->references=1;
 
 	return(ret);
-	
+
 #if !defined(OPENSSL_NO_DH) || !defined(OPENSSL_NO_ECDH)
 err:
 #endif
@@ -393,8 +393,8 @@ int ssl_cert_inst(CERT **o)
 	 * s->cert being NULL, otherwise we could do without the
 	 * initialization in SSL_CTX_new).
 	 */
-	
-	if (o == NULL) 
+
+	if (o == NULL)
 		{
 		SSLerr(SSL_F_SSL_CERT_INST, ERR_R_PASSED_NULL_PARAMETER);
 		return(0);
@@ -524,7 +524,7 @@ int ssl_verify_cert_chain(SSL *s,STACK_OF(X509) *sk)
 
 	if (s->ctx->app_verify_callback != NULL)
 #if 1 /* new with OpenSSL 0.9.7 */
-		i=s->ctx->app_verify_callback(&ctx, s->ctx->app_verify_arg); 
+		i=s->ctx->app_verify_callback(&ctx, s->ctx->app_verify_arg);
 #else
 		i=s->ctx->app_verify_callback(&ctx); /* should pass app_verify_arg */
 #endif
@@ -613,7 +613,7 @@ static int add_client_CA(STACK_OF(X509_NAME) **sk,X509 *x)
 	if (x == NULL) return(0);
 	if ((*sk == NULL) && ((*sk=sk_X509_NAME_new_null()) == NULL))
 		return(0);
-		
+
 	if ((name=X509_NAME_dup(X509_get_subject_name(x))) == NULL)
 		return(0);
 
@@ -665,7 +665,7 @@ STACK_OF(X509_NAME) *SSL_load_client_CA_file(const char *file)
 		SSLerr(SSL_F_SSL_LOAD_CLIENT_CA_FILE,ERR_R_MALLOC_FAILURE);
 		goto err;
 		}
-	
+
 	if (!BIO_read_filename(in,file))
 		goto err;
 
@@ -727,20 +727,20 @@ int SSL_add_file_cert_subjects_to_stack(STACK_OF(X509_NAME) *stack,
 	X509_NAME *xn=NULL;
 	int ret=1;
 	int (*oldcmp)(const X509_NAME * const *a, const X509_NAME * const *b);
-	
+
 	oldcmp=sk_X509_NAME_set_cmp_func(stack,xname_cmp);
-	
+
 	in=BIO_new(BIO_s_file_internal());
-	
+
 	if (in == NULL)
 		{
 		SSLerr(SSL_F_SSL_ADD_FILE_CERT_SUBJECTS_TO_STACK,ERR_R_MALLOC_FAILURE);
 		goto err;
 		}
-	
+
 	if (!BIO_read_filename(in,file))
 		goto err;
-	
+
 	for (;;)
 		{
 		if (PEM_read_bio_X509(in,&x,NULL,NULL) == NULL)
@@ -763,7 +763,7 @@ err:
 		BIO_free(in);
 	if(x != NULL)
 		X509_free(x);
-	
+
 	(void)sk_X509_NAME_set_cmp_func(stack,oldcmp);
 
 	return ret;

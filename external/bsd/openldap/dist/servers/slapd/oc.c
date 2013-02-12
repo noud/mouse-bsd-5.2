@@ -114,7 +114,7 @@ int is_entry_objectclass(
 				return 1;
 			}
 		}
-		
+
 		e->e_ocflags |= objectClass->soc_flags;
 	}
 
@@ -216,11 +216,11 @@ oc_bvfind_undef( struct berval *ocname )
 			break;
 		}
 	}
-	
+
 	if ( oc ) {
 		return oc;
 	}
-	
+
 	oc = ch_malloc( sizeof( ObjectClass ) + ocname->bv_len + 1 );
 	memset( oc, 0, sizeof( ObjectClass ) );
 
@@ -349,7 +349,7 @@ oc_add_sups(
 			}
 
 			/* check object class usage
-			 * abstract classes can only sup abstract classes 
+			 * abstract classes can only sup abstract classes
 			 * structural classes can not sup auxiliary classes
 			 * auxiliary classes can not sup structural classes
 			 */
@@ -462,7 +462,7 @@ oc_destroy( void )
 
 		oc_delete_names( o );
 	}
-	
+
 	avl_free( oc_index, oc_destroy_one );
 
 	while( !LDAP_STAILQ_EMPTY(&oc_undef_list) ) {
@@ -546,7 +546,7 @@ oc_check_dup(
 			if ( soc->soc_names[ i ] == NULL ) {
 				return SLAP_SCHERR_CLASS_INCONSISTENT;
 			}
-			
+
 			if ( strcasecmp( soc->soc_names[ i ],
 					new_soc->soc_names[ i ] ) != 0 )
 			{

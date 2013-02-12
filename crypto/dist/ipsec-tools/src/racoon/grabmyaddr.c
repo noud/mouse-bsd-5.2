@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -60,7 +60,7 @@
 #ifdef HAVE_GETIFADDRS
 #include <ifaddrs.h>
 #include <net/if.h>
-#endif 
+#endif
 
 #include "var.h"
 #include "misc.h"
@@ -181,7 +181,7 @@ static void recvaddrs(int fd, struct ifaddrs **ifa, __u32 seq)
 				rta_tb[IFA_LOCAL] = rta_tb[IFA_ADDRESS];
 			if (rta_tb[IFA_LOCAL] == NULL)
 				goto skip_it;
-			
+
 			I = malloc(sizeof(struct ifaddrs));
 			if (!I)
 				return;
@@ -302,7 +302,7 @@ clear_myaddr(db)
 		*db = p;
 	}
 }
-  
+
 static struct myaddrs *
 find_myaddr(db, p)
 	struct myaddrs *db;
@@ -399,7 +399,7 @@ grab_myaddrs()
 					if_nametoindex(ifap->ifa_name);
 			}
 		}
-				
+
 #endif
 #endif
 		if (getnameinfo(p->addr, sysdep_sa_len(p->addr),
@@ -876,7 +876,7 @@ getsockmyaddr(my)
 	struct myaddrs *p, *lastresort = NULL;
 #if defined(INET6) && defined(__linux__)
 	struct myaddrs *match_wo_scope_id = NULL;
-	int check_wo_scope_id = (my->sa_family == AF_INET6) && 
+	int check_wo_scope_id = (my->sa_family == AF_INET6) &&
 		IN6_IS_ADDR_LINKLOCAL(&((struct sockaddr_in6 *)my)->sin6_addr);
 #endif
 
@@ -894,7 +894,7 @@ getsockmyaddr(my)
 		if (check_wo_scope_id && IN6_IS_ADDR_LINKLOCAL(&((struct sockaddr_in6 *)p->addr)->sin6_addr) &&
 			/* XXX: this depends on sin6_scope_id to be last
 			 * item in struct sockaddr_in6 */
-			memcmp(my, p->addr, 
+			memcmp(my, p->addr,
 				sysdep_sa_len(my) - sizeof(uint32_t)) == 0) {
 			match_wo_scope_id = p;
 		}

@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/sh
 #
 # ntpgroper host ...
 #
@@ -39,13 +39,13 @@ do
         continue
     fi
 
-    ping $host 64 1 > /dev/null 2>&1 
+    ping $host 64 1 > /dev/null 2>&1
     if [ $? -ne 0 ]
     then
         echo "$host not responding to ping"
 	continue
     fi
-    
+
     # Attempt to contact with version 3 ntp, then try version 2.
     for version in 3 2
     do
@@ -68,7 +68,7 @@ do
             # First we extract the reference ID (usually a host or a clock)
             synchost=`fgrep "refid=" $ntpqlog`
             #synchost=${synchost##*refid=} # strip off the beginning of the line
-            #synchost=${synchost%%,*}      # strip off the end  
+            #synchost=${synchost%%,*}      # strip off the end
 	    synchost=`expr "$synchost" : '.*refid=\([^,]*\),.*'`
 
             # Next, we get the stratum

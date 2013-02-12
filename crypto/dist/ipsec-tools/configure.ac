@@ -69,7 +69,7 @@ case "$host_os" in
     AC_ARG_WITH(kernel-headers,
 	AC_HELP_STRING([--with-kernel-headers=/lib/modules/<uname>/build/include],
 		       [where your Linux Kernel headers are installed]),
-	    [ KERNEL_INCLUDE="$with_kernel_headers" 
+	    [ KERNEL_INCLUDE="$with_kernel_headers"
 	      CONFIGURE_AMFLAGS="--with-kernel-headers=$with_kernel_headers"
 	      AC_SUBST(CONFIGURE_AMFLAGS) ],
 	    [ KERNEL_INCLUDE="/lib/modules/`uname -r`/build/include" ])
@@ -84,7 +84,7 @@ case "$host_os" in
     # i.e. this will be removed from CPPFLAGS at the end of configure.
     CPPFLAGS="-I$KERNEL_INCLUDE $CPPFLAGS"
 
-    AC_CHECK_MEMBER(struct sadb_x_policy.sadb_x_policy_priority, 
+    AC_CHECK_MEMBER(struct sadb_x_policy.sadb_x_policy_priority,
     	[AC_DEFINE(HAVE_PFKEY_POLICY_PRIORITY, [],
                	[Are PF_KEY policy priorities supported?])], [],
     	[#include "$KERNEL_INCLUDE/linux/pfkeyv2.h"])
@@ -163,7 +163,7 @@ AC_MSG_RESULT($with_readline)
 
 # Is readline available?
 if test $with_readline != "no"; then
-	AC_CHECK_HEADER([readline/readline.h], 
+	AC_CHECK_HEADER([readline/readline.h],
 		[AC_CHECK_LIB(readline, readline, [
 				AC_DEFINE(HAVE_READLINE, [],
 					[Is readline available?])
@@ -218,7 +218,7 @@ AC_MSG_ERROR([OpenSSL version must be 0.9.6 or higher. Aborting.])
 AC_CHECK_HEADERS(openssl/engine.h)
 
 # checking rijndael
-AC_CHECK_HEADERS([openssl/aes.h], [], 
+AC_CHECK_HEADERS([openssl/aes.h], [],
 	[CRYPTOBJS="$CRYPTOBJS rijndael-api-fst.o rijndael-alg-fst.o"])
 
 # checking sha2
@@ -250,7 +250,7 @@ AC_SUBST(CRYPTOBJS)
 AC_CHECK_HEADERS([openssl/camellia.h])
 
 
-# Option --enable-adminport 
+# Option --enable-adminport
 AC_MSG_CHECKING(if --enable-adminport option is specified)
 AC_ARG_ENABLE(adminport,
 	[  --enable-adminport      enable admin port],
@@ -282,7 +282,7 @@ AC_MSG_RESULT($enable_idea)
 
 if test $enable_idea = "yes"; then
 	AC_CHECK_HEADERS([openssl/idea.h])
-	AC_CHECK_LIB([crypto_idea], [idea_encrypt], 
+	AC_CHECK_LIB([crypto_idea], [idea_encrypt],
 	    [EXTRA_CRYPTO="$EXTRA_CRYPTO -lcrypto_idea"])
 fi
 AC_SUBST(EXTRA_CRYPTO)
@@ -295,9 +295,9 @@ RACOON_PATH_LIBS([login], [util])
 
 # Specify libiconv prefix
 AC_MSG_CHECKING(if --with-libiconv option is specified)
-AC_ARG_WITH(libiconv, 
+AC_ARG_WITH(libiconv,
     [  --with-libiconv=DIR    specify libiconv path (like/usr/pkg)],
-    [libiconv_dir=$withval], 
+    [libiconv_dir=$withval],
     [libiconv_dir=no])
 AC_MSG_RESULT($libiconv_dir)
 if test "$libiconv_dir" != "no"; then
@@ -320,7 +320,7 @@ if test "$libiconv_dir" != "no"; then
 fi
 
 AC_MSG_CHECKING([if --enable-hybrid option is specified])
-AC_ARG_ENABLE(hybrid, 
+AC_ARG_ENABLE(hybrid,
     [  --enable-hybrid	  enable hybrid, both mode-cfg and xauth support],
     [], [enable_hybrid=no])
 AC_MSG_RESULT($enable_hybrid)
@@ -339,7 +339,7 @@ if test "x$enable_hybrid" = "xyes"; then
 fi
 
 AC_MSG_CHECKING([if --enable-frag option is specified])
-AC_ARG_ENABLE(frag, 
+AC_ARG_ENABLE(frag,
     [  --enable-frag           enable IKE fragmentation payload support],
     [], [enable_frag=no])
 AC_MSG_RESULT($enable_frag)
@@ -349,7 +349,7 @@ if test "x$enable_frag" = "xyes"; then
 	*darwin*)
 		;;
 	*)
-		LIBS="$LIBS -lcrypt"; 
+		LIBS="$LIBS -lcrypt";
 		;;
 	esac
 	FRAG_OBJS="isakmp_frag.o"
@@ -358,9 +358,9 @@ if test "x$enable_frag" = "xyes"; then
 fi
 
 AC_MSG_CHECKING(if --with-libradius option is specified)
-AC_ARG_WITH(libradius, 
+AC_ARG_WITH(libradius,
     [  --with-libradius=DIR    specify libradius path (like/usr/pkg)],
-    [libradius_dir=$withval], 
+    [libradius_dir=$withval],
     [libradius_dir=no])
 AC_MSG_RESULT($libradius_dir)
 if test "$libradius_dir" != "no"; then
@@ -384,9 +384,9 @@ if test "$libradius_dir" != "no"; then
 fi
 
 AC_MSG_CHECKING(if --with-libpam option is specified)
-AC_ARG_WITH(libpam, 
+AC_ARG_WITH(libpam,
     [  --with-libpam=DIR    specify libpam path (like/usr/pkg)],
-    [libpam_dir=$withval], 
+    [libpam_dir=$withval],
     [libpam_dir=no])
 AC_MSG_RESULT($libpam_dir)
 if test "$libpam_dir" != "no"; then
@@ -410,9 +410,9 @@ if test "$libpam_dir" != "no"; then
 fi
 
 AC_MSG_CHECKING(if --with-libldap option is specified)
-AC_ARG_WITH(libldap, 
+AC_ARG_WITH(libldap,
     [  --with-libldap=DIR    specify libldap path (like/usr/pkg)],
-    [libldap_dir=$withval], 
+    [libldap_dir=$withval],
     [libldap_dir=no])
 AC_MSG_RESULT($libldap_dir)
 if test "$libldap_dir" != "no"; then
@@ -483,7 +483,7 @@ if test "x$enable_gssapi" = "xyes"; then
 	CPPFLAGS_ADD="$krb5_incdir $CPPFLAGS_ADD"
 	AC_DEFINE([HAVE_GSSAPI], [], [Enable GSS API])
 
-	# Check if iconv 2nd argument needs const 
+	# Check if iconv 2nd argument needs const
 	saved_CFLAGS=$CFLAGS
 	CFLAGS="$CFLAGS -Wall -Werror"
 	saved_CPPFLAGS=$CPPFLAGS
@@ -574,9 +574,9 @@ if test "x$enable_samode_unspec" = "xyes"; then
 	case $host_os in
 	*linux*)
 		cat << EOC
-		
-ERROR: --enable-samode-unspec is not supported under linux 
-because linux kernel do not support it. This option is disabled 
+
+ERROR: --enable-samode-unspec is not supported under linux
+because linux kernel do not support it. This option is disabled
 to prevent mysterious problems.
 
 If you REALLY know what your are doing, remove this check.
@@ -642,14 +642,14 @@ if test "$buggygetaddrinfo" = "yes"; then
 	AC_MSG_ERROR([Broken getaddrinfo() is no longer supported. Aborting.])
 fi
 
-# Check if kernel support is available for NAT-T, defaults to no. 
+# Check if kernel support is available for NAT-T, defaults to no.
 kernel_natt="no"
 
 AC_MSG_CHECKING(kernel NAT-Traversal support)
 case $host_os in
 linux*)
 # Linux kernel NAT-T check
-AC_EGREP_CPP(yes, 
+AC_EGREP_CPP(yes,
 [#include <linux/pfkeyv2.h>
 #ifdef SADB_X_EXT_NAT_T_TYPE
 yes
@@ -677,7 +677,7 @@ AC_ARG_ENABLE(natt,
 AC_MSG_RESULT($enable_natt)
 
 if test "$enable_natt" = "yes"; then
-	if test "$kernel_natt" = "no" ; then 
+	if test "$kernel_natt" = "no" ; then
 		AC_MSG_ERROR([NAT-T requested, but no kernel support! Aborting.])
 	else
 		AC_DEFINE([ENABLE_NATT], [], [Enable NAT-Traversal])
@@ -696,7 +696,7 @@ AC_ARG_ENABLE(natt_versions,
 if test "$enable_natt" = "yes"; then
 	AC_MSG_RESULT($enable_natt_versions)
 	for i in `echo $enable_natt_versions | tr ',cfr' ' CFR'`; do
-		case $i in 
+		case $i in
 			0|00) AC_DEFINE([ENABLE_NATT_00], [], [Enable NAT-Traversal draft 00]) ;;
 			1|01) AC_DEFINE([ENABLE_NATT_01], [], [Enable NAT-Traversal draft 01]) ;;
 			2|02) AC_DEFINE([ENABLE_NATT_02], [], [Enable NAT-Traversal draft 02]) ;;
@@ -742,7 +742,7 @@ case $host in
 		;;
 esac
 
-AC_CHECK_TYPE([ipsec_policy_t], 
+AC_CHECK_TYPE([ipsec_policy_t],
 	      [AC_DEFINE([HAVE_IPSEC_POLICY_T], [], [Have ipsec_policy_t])],
 	      [],
 	      [
@@ -768,7 +768,7 @@ esac
 AC_MSG_RESULT($kernel_secctx)
 
 AC_CHECK_HEADER(selinux/selinux.h,
-	[AC_CHECK_LIB(selinux, avc_init, [selinux_support=yes], 
+	[AC_CHECK_LIB(selinux, avc_init, [selinux_support=yes],
 	[selinux_support=no])], [selinux_support=no])
 
 AC_MSG_CHECKING(whether to support Security Context)

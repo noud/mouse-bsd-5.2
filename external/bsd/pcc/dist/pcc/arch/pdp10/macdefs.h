@@ -32,7 +32,7 @@
 
 /*
  * Convert (multi-)character constant to integer.
- * Assume: If only one value; store at left side (char size), otherwise 
+ * Assume: If only one value; store at left side (char size), otherwise
  * treat it as an integer.
  */
 #define makecc(val,i) {			\
@@ -71,7 +71,7 @@
 #define ALSHORT		18
 #define ALPOINT		36
 #define ALSTRUCT	36
-#define ALSTACK		36 
+#define ALSTACK		36
 
 /*
  * Max values.
@@ -148,12 +148,12 @@ typedef long long OFFSZ;
  * Register allocator definitions.
  *
  * The pdp10 has 16 general-purpose registers, but the two
- * highest are used as sp and fp.  Register 0 has special 
+ * highest are used as sp and fp.  Register 0 has special
  * constraints in its possible use as index register.
  * All regs can be used as pairs, named by the lowest number.
  * In here we call the registers Rn and the pairs XRn, in assembler
  * just its number prefixed with %.
- * 
+ *
  * R1/XR1 are return registers.
  *
  * R0 is currently not used.

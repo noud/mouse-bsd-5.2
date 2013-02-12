@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -113,7 +113,7 @@ int MAIN(int argc, char **argv)
 		goto end;
 	ERR_load_crypto_strings();
 	OpenSSL_add_all_algorithms();
-	
+
 	while(argc >= 1)
 		{
 		if (!strcmp(*argv,"-in"))
@@ -258,7 +258,7 @@ int MAIN(int argc, char **argv)
 				{
 				BIO_puts(bio_err,
 					"Error Opening Input File\n");
-				ERR_print_errors(bio_err);	
+				ERR_print_errors(bio_err);
 				goto end;
 				}
 			}
@@ -271,7 +271,7 @@ int MAIN(int argc, char **argv)
 		if(!(out = BIO_new_file(outfile, "wb")))
 			{
 			BIO_printf(bio_err, "Error Creating Output File\n");
-			ERR_print_errors(bio_err);	
+			ERR_print_errors(bio_err);
 			goto end;
 			}
 		}
@@ -303,7 +303,7 @@ int MAIN(int argc, char **argv)
 			goto end;
 			}
 		}
-	
+
 	if (in)
 		{
 		/* Read the input data */
@@ -339,7 +339,7 @@ int MAIN(int argc, char **argv)
 			goto end;
 		}
 	else
-		{	
+		{
 		rv = do_keyop(ctx, pkey_op, NULL, (size_t *)&buf_outlen,
 			      buf_in, (size_t)buf_inlen);
 		if (rv > 0)
@@ -419,7 +419,7 @@ static EVP_PKEY_CTX *init_ctx(int *pkeysize,
 	char *passin = NULL;
 	int rv = -1;
 	X509 *x;
-	if(((pkey_op == EVP_PKEY_OP_SIGN) || (pkey_op == EVP_PKEY_OP_DECRYPT) 
+	if(((pkey_op == EVP_PKEY_OP_SIGN) || (pkey_op == EVP_PKEY_OP_DECRYPT)
 		|| (pkey_op == EVP_PKEY_OP_DERIVE))
 		&& (key_type != KEY_PRIVKEY))
 		{
@@ -520,7 +520,7 @@ static int setup_peer(BIO *err, EVP_PKEY_CTX *ctx, int peerform,
 		BIO_puts(err, "-peerkey command before -inkey\n");
 		return 0;
 		}
-		
+
 	peer = load_pubkey(bio_err, file, peerform, 0, NULL, NULL, "Peer Key");
 
 	if (!peer)
@@ -559,7 +559,7 @@ static int do_keyop(EVP_PKEY_CTX *ctx, int pkey_op,
 
 		case EVP_PKEY_OP_DECRYPT:
 		rv  = EVP_PKEY_decrypt(ctx, out, poutlen, in, inlen);
-		break; 
+		break;
 
 		case EVP_PKEY_OP_DERIVE:
 		rv  = EVP_PKEY_derive(ctx, out, poutlen);

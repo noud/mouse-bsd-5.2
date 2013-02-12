@@ -94,7 +94,7 @@ dolfptoa(
 	}
 	if (dec > 12)
 	    dec = 12;
-	
+
 	/*
 	 * If there's a fraction to deal with, do so.
 	 */

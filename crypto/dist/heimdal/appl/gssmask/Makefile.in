@@ -377,10 +377,10 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-gssmaestro$(EXEEXT): $(gssmaestro_OBJECTS) $(gssmaestro_DEPENDENCIES) 
+gssmaestro$(EXEEXT): $(gssmaestro_OBJECTS) $(gssmaestro_DEPENDENCIES)
 	@rm -f gssmaestro$(EXEEXT)
 	$(LINK) $(gssmaestro_OBJECTS) $(gssmaestro_LDADD) $(LIBS)
-gssmask$(EXEEXT): $(gssmask_OBJECTS) $(gssmask_DEPENDENCIES) 
+gssmask$(EXEEXT): $(gssmask_OBJECTS) $(gssmask_DEPENDENCIES)
 	@rm -f gssmask$(EXEEXT)
 	$(LINK) $(gssmask_OBJECTS) $(gssmask_LDADD) $(LIBS)
 

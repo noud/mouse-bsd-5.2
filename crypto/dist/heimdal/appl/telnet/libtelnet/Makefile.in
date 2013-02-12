@@ -383,7 +383,7 @@ $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-libtelnet.a: $(libtelnet_a_OBJECTS) $(libtelnet_a_DEPENDENCIES) 
+libtelnet.a: $(libtelnet_a_OBJECTS) $(libtelnet_a_DEPENDENCIES)
 	-rm -f libtelnet.a
 	$(libtelnet_a_AR) libtelnet.a $(libtelnet_a_OBJECTS) $(libtelnet_a_LIBADD)
 	$(RANLIB) libtelnet.a

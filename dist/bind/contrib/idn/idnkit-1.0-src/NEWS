@@ -69,7 +69,7 @@ Major changes in idnkit version 020711:
   This version supports NAMEPREP draft -11 without bidirectional label
   check.
 
-* Supported NAMEPREP versions are changed. 
+* Supported NAMEPREP versions are changed.
   idnkit supports NAMEPREP draft version -03, -10, and -11.  Others
   are removed.
 

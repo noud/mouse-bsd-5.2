@@ -60,7 +60,7 @@ rk_TEST_PACKAGE(openldap,
 #include <ldap.h>],
 [-lldap -llber],,,OPENLDAP)
 
-AC_ARG_ENABLE(hdb-openldap-module, 
+AC_ARG_ENABLE(hdb-openldap-module,
 	AS_HELP_STRING([--enable-hdb-openldap-module],
 		[if you want support to build openldap hdb as shared object]))
 if test "$enable_hdb_openldap_module" = yes -a "$with_openldap" = yes; then
@@ -68,7 +68,7 @@ if test "$enable_hdb_openldap_module" = yes -a "$with_openldap" = yes; then
 fi
 AM_CONDITIONAL(OPENLDAP_MODULE, test "$enable_hdb_openldap_module" = yes -a "$with_openldap" = yes)
 
-AC_ARG_ENABLE(pk-init, 
+AC_ARG_ENABLE(pk-init,
 	AS_HELP_STRING([--disable-pk-init],
 		[if you want disable to PK-INIT support]))
 if test "$enable_pk_init" != no ;then
@@ -78,7 +78,7 @@ AM_CONDITIONAL(PKINIT, test "$enable_pk_init" != no)
 
 
 dnl path where the hdb directory is stored
-AC_ARG_WITH([hdbdir], 
+AC_ARG_WITH([hdbdir],
 	[AC_HELP_STRING([--with-hdbdir],
 		[Default location for KDC database @<:@default=/var/heimdal@:>@])],
 	[],
@@ -103,7 +103,7 @@ KRB_CRYPTO
 
 KRB_PTHREADS
 
-AC_ARG_ENABLE(dce, 
+AC_ARG_ENABLE(dce,
 	AS_HELP_STRING([--enable-dce],[if you want support for DCE/DFS PAG's]))
 if test "$enable_dce" = yes; then
     AC_DEFINE(DCE, 1, [Define if you want support for DCE/DFS PAG's.])
@@ -407,7 +407,7 @@ AC_HAVE_STRUCT_FIELD(struct utmp, ut_user, [#include <utmp.h>])
 AC_HAVE_STRUCT_FIELD(struct utmpx, ut_exit, [#include <utmpx.h>])
 AC_HAVE_STRUCT_FIELD(struct utmpx, ut_syslen, [#include <utmpx.h>])
 
-AC_CHECK_TYPES([int8_t, int16_t, int32_t, int64_t, 
+AC_CHECK_TYPES([int8_t, int16_t, int32_t, int64_t,
 	u_int8_t, u_int16_t, u_int32_t, u_int64_t,
 	uint8_t, uint16_t, uint32_t, uint64_t],,,[
 #ifdef HAVE_INTTYPES_H

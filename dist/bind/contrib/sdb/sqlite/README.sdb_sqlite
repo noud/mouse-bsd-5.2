@@ -21,7 +21,7 @@ Usage:
 o Use the named_sdb process ( put ENABLE_SDB=yes in /etc/sysconfig/named )
 
 o Edit your named.conf to contain a database zone, eg.:
-  
+
 zone "mydomain.net." IN {
         type master;
         database "sqlite /etc/named.d/mydomain.db mydomain";
@@ -32,9 +32,9 @@ o Create the database zone table
   The table must contain the columns "name", "rdtype", and "rdata", and
   is expected to contain a properly constructed zone.  The program
   "zone2sqlite" creates such a table.
-  
+
   zone2sqlite usage:
-    
+
     zone2sqlite origin zonefile dbfile dbtable
 
     where

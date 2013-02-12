@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -106,7 +106,7 @@ extern caddr_t set_isakmp_header1 __P((vchar_t *, struct ph1handle *, int));
 extern caddr_t set_isakmp_header2 __P((vchar_t *, struct ph2handle *, int));
 extern caddr_t set_isakmp_payload __P((caddr_t, vchar_t *, int));
 
-extern struct payload_list *isakmp_plist_append __P((struct payload_list *plist, 
+extern struct payload_list *isakmp_plist_append __P((struct payload_list *plist,
 	vchar_t *payload, int payload_type));
 extern vchar_t *isakmp_plist_set_all __P((struct payload_list **plist,
 	struct ph1handle *iph1));
@@ -120,7 +120,7 @@ extern int copy_ph1addresses __P(( struct ph1handle *,
 	struct remoteconf *, struct sockaddr *, struct sockaddr *));
 extern void log_ph1established __P((const struct ph1handle *));
 
-extern void script_hook __P((struct ph1handle *, int)); 
+extern void script_hook __P((struct ph1handle *, int));
 extern int script_env_append __P((char ***, int *, char *, char *));
 extern int script_exec __P((char *, int, char * const *));
 

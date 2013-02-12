@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -83,7 +83,7 @@
 #    include <novsock2.h>
 #  endif
 #endif
-  
+
 /* Maximum leeway in validity period: default 5 minutes */
 #define MAX_VALIDITY_PERIOD	(5 * 60)
 
@@ -771,7 +771,7 @@ int MAIN(int argc, char **argv)
 			BIO_printf(bio_err, "Error reading OCSP response\n");
 			goto end;
 			}
-	
+
 		}
 	else
 		{
@@ -1064,13 +1064,13 @@ static int make_ocsp_response(OCSP_RESPONSE **resp, OCSP_REQUEST *req, CA_DB *db
 
 		OCSP_id_get0_info(NULL,&cert_id_md_oid, NULL,NULL, cid);
 
-		cert_id_md = EVP_get_digestbyobj(cert_id_md_oid);	
-		if (! cert_id_md) 
+		cert_id_md = EVP_get_digestbyobj(cert_id_md_oid);
+		if (! cert_id_md)
 			{
 			*resp = OCSP_response_create(OCSP_RESPONSE_STATUS_INTERNALERROR,
 				NULL);
 				goto end;
-			}	
+			}
 		if (ca_id) OCSP_CERTID_free(ca_id);
 		ca_id = OCSP_cert_to_id(cert_id_md, NULL, ca);
 
@@ -1118,7 +1118,7 @@ static int make_ocsp_response(OCSP_RESPONSE **resp, OCSP_REQUEST *req, CA_DB *db
 		}
 
 	OCSP_copy_nonce(bs, req);
-	
+
 	OCSP_basic_sign(bs, rcert, rkey, NULL, rother, flags);
 
 	*resp = OCSP_response_create(OCSP_RESPONSE_STATUS_SUCCESSFUL, bs);
@@ -1157,7 +1157,7 @@ static BIO *init_responder(char *port)
 	{
 	BIO *acbio = NULL, *bufbio = NULL;
 	bufbio = BIO_new(BIO_f_buffer());
-	if (!bufbio) 
+	if (!bufbio)
 		goto err;
 #ifndef OPENSSL_NO_SOCK
 	acbio = BIO_new_accept(port);
@@ -1239,7 +1239,7 @@ static int do_responder(OCSP_REQUEST **preq, BIO **pcbio, BIO *acbio, char *port
 
 static int send_ocsp_response(BIO *cbio, OCSP_RESPONSE *resp)
 	{
-	char http_resp[] = 
+	char http_resp[] =
 		"HTTP/1.0 200 OK\r\nContent-type: application/ocsp-response\r\n"
 		"Content-Length: %d\r\n\r\n";
 	if (!cbio)
@@ -1298,7 +1298,7 @@ static OCSP_RESPONSE *query_responder(BIO *err, BIO *cbio, char *path,
 	ctx = OCSP_sendreq_new(cbio, path, req, -1);
 	if (!ctx)
 		return NULL;
-	
+
 	for (;;)
 		{
 		rv = OCSP_sendreq_nbio(&rsp, ctx);
@@ -1327,7 +1327,7 @@ static OCSP_RESPONSE *query_responder(BIO *err, BIO *cbio, char *path,
 			BIO_puts(err, "Select error\n");
 			break;
 			}
-			
+
 		}
 	err:
 	if (ctx)

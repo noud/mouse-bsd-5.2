@@ -39,7 +39,7 @@
  * refclock_palisade - clock driver for the Trimble Palisade GPS
  * timing receiver
  *
- * For detailed information on this program, please refer to the html 
+ * For detailed information on this program, please refer to the html
  * Refclock 29 page accompanying the NTP distribution.
  *
  * for questions / bugs / comments, contact:
@@ -118,13 +118,13 @@
 #define ETX 0x03
 
 /* parse states */
-#define TSIP_PARSED_EMPTY       0	
+#define TSIP_PARSED_EMPTY       0
 #define TSIP_PARSED_FULL        1
 #define TSIP_PARSED_DLE_1       2
 #define TSIP_PARSED_DATA        3
 #define TSIP_PARSED_DLE_2       4
 
-/* 
+/*
  * Leap-Insert and Leap-Delete are encoded as follows:
  * 	PALISADE_UTC_TIME set   and PALISADE_LEAP_PENDING set: INSERT leap
  */
@@ -165,7 +165,7 @@ static  void 	palisade_io		P((struct recvbuf *));
 int 		palisade_configure	P((int, struct peer *));
 int 		TSIP_decode		P((struct peer *));
 long		HW_poll			P((struct refclockproc *));
-float 		getfloat		P((u_char *)); 
+float 		getfloat		P((u_char *));
 double 		getdbl 			P((u_char *));
 short  		getint 			P((u_char *));
 

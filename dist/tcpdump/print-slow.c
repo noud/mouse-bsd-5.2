@@ -93,7 +93,7 @@ struct lacp_tlv_actor_partner_info_t {
     u_int8_t port[2];
     u_int8_t state;
     u_int8_t pad[3];
-};          
+};
 
 static const struct tok lacp_tlv_actor_partner_info_state_values[] = {
     { 0x01, "Activity"},
@@ -110,18 +110,18 @@ static const struct tok lacp_tlv_actor_partner_info_state_values[] = {
 struct lacp_tlv_collector_info_t {
     u_int8_t max_delay[2];
     u_int8_t pad[12];
-}; 
+};
 
 struct marker_tlv_marker_info_t {
     u_int8_t req_port[2];
     u_int8_t req_sys[ETHER_ADDR_LEN];
     u_int8_t req_trans_id[4];
     u_int8_t pad[2];
-}; 
+};
 
 struct lacp_marker_tlv_terminator_t {
     u_int8_t pad[50];
-}; 
+};
 
 void
 slow_print(register const u_char *pptr, register u_int len) {

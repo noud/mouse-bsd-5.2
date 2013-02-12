@@ -54,7 +54,7 @@ SRCDIRS	bin sbin usr.bin usr.sbin
 
 # miniroot files from /sbin:
 # Extras not in ../../miniroot/list:
-#  disklabel dmesg edlabel mount_kernfs restore 
+#  disklabel dmesg edlabel mount_kernfs restore
 
 PROG	sbin/disklabel
 PROG	sbin/dmesg

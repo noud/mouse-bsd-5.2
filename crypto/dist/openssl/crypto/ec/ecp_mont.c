@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -100,7 +100,7 @@ const EC_METHOD *EC_GFp_mont_method(void)
 		ec_GFp_simple_points_make_affine,
 		0 /* mul */,
 		0 /* precompute_mult */,
-		0 /* have_precompute_mult */,	
+		0 /* have_precompute_mult */,
 		ec_GFp_mont_field_mul,
 		ec_GFp_mont_field_sqr,
 		0 /* field_div */,
@@ -190,7 +190,7 @@ int ec_GFp_mont_group_copy(EC_GROUP *dest, const EC_GROUP *src)
 		BN_MONT_CTX_free(dest->field_data1);
 		dest->field_data1 = NULL;
 		}
-	return 0;	
+	return 0;
 	}
 
 
@@ -211,7 +211,7 @@ int ec_GFp_mont_group_set_curve(EC_GROUP *group, const BIGNUM *p, const BIGNUM *
 		BN_free(group->field_data2);
 		group->field_data2 = NULL;
 		}
-	
+
 	if (ctx == NULL)
 		{
 		ctx = new_ctx = BN_CTX_new();

@@ -1,6 +1,6 @@
 /* $OpenLDAP: pkg/ldap/contrib/slapd-modules/nops/nops.c,v 1.1.2.1 2008/05/27 20:00:51 quanah Exp $ */
 /* nops.c - Overlay to filter idempotent operations */
-/* 
+/*
  * Copyright 2008 Emmanuel Dreyfus
  * All rights reserved.
  *
@@ -62,7 +62,7 @@ nops_modify( Operation *op, SlapReply *rs )
 	Entry *target_entry = NULL;
 	Modifications *m;
 	int rc;
-	
+
 	if ((m = op->orm_modlist) == NULL) {
 		op->o_bd->bd_info = (BackendInfo *)(on->on_info);
 		send_ldap_error(op, rs, LDAP_INVALID_SYNTAX,
@@ -76,9 +76,9 @@ nops_modify( Operation *op, SlapReply *rs )
 
 	if (rc != 0 || target_entry == NULL)
 		return 0;
-        
-	/* 
-	 * For each attribute modification, check if the 
+
+	/*
+	 * For each attribute modification, check if the
 	 * modification and the old entry are the same.
 	 */
 	while (m) {

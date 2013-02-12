@@ -38,7 +38,7 @@ static int gost_cipher_nids[] =
 static int gost_digest_nids[] =
 	{NID_id_GostR3411_94,NID_id_Gost28147_89_MAC, 0};
 
-static int gost_pkey_meth_nids[] = 
+static int gost_pkey_meth_nids[] =
 	{NID_id_GostR3410_94,
 	 NID_id_GostR3410_2001, NID_id_Gost28147_89_MAC, 0};
 
@@ -52,67 +52,67 @@ static EVP_PKEY_ASN1_METHOD *ameth_GostR3410_94 = NULL,
 
 
 static int gost_engine_init(ENGINE *e)
-	{ 
+	{
 	return 1;
 	}
 
 static int gost_engine_finish(ENGINE *e)
-	{ 
+	{
 	return 1;
 	}
 
 static int gost_engine_destroy(ENGINE *e)
-	{ 
+	{
 	gost_param_free();
 	return 1;
 	}
 
-static int bind_gost (ENGINE *e,const char *id) 
+static int bind_gost (ENGINE *e,const char *id)
 	{
 	int ret = 0;
 	if (id && strcmp(id, engine_gost_id)) return 0;
 
-	if (!ENGINE_set_id(e, engine_gost_id)) 
+	if (!ENGINE_set_id(e, engine_gost_id))
 		{
-		printf("ENGINE_set_id failed\n"); 
+		printf("ENGINE_set_id failed\n");
 		goto end;
-		}	
-	if (!ENGINE_set_name(e, engine_gost_name)) 
+		}
+	if (!ENGINE_set_name(e, engine_gost_name))
 		{
 		printf("ENGINE_set_name failed\n");
 		goto end;
-		}	
-	if (!ENGINE_set_digests(e, gost_digests)) 
+		}
+	if (!ENGINE_set_digests(e, gost_digests))
 		{
 		printf("ENGINE_set_digests failed\n");
 		goto end;
-		}	
-	if (! ENGINE_set_ciphers(e, gost_ciphers)) 
+		}
+	if (! ENGINE_set_ciphers(e, gost_ciphers))
 		{
 		printf("ENGINE_set_ciphers failed\n");
 		goto end;
-		}	
-	if (! ENGINE_set_pkey_meths(e, gost_pkey_meths)) 
+		}
+	if (! ENGINE_set_pkey_meths(e, gost_pkey_meths))
 		{
 		printf("ENGINE_set_pkey_meths failed\n");
 		goto end;
-		}	
-	if (! ENGINE_set_pkey_asn1_meths(e, gost_pkey_asn1_meths)) 
+		}
+	if (! ENGINE_set_pkey_asn1_meths(e, gost_pkey_asn1_meths))
 		{
 		printf("ENGINE_set_pkey_asn1_meths failed\n");
 		goto end;
-		}	
+		}
 	/* Control function and commands */
-	if (!ENGINE_set_cmd_defns(e,gost_cmds)) 
+	if (!ENGINE_set_cmd_defns(e,gost_cmds))
 		{
 		fprintf(stderr,"ENGINE_set_cmd_defns failed\n");
 		goto end;
-		}	
-	if (!ENGINE_set_ctrl_function(e,gost_control_func)) 
+		}
+	if (!ENGINE_set_ctrl_function(e,gost_control_func))
 		{
 		fprintf(stderr,"ENGINE_set_ctrl_func failed\n");
 		goto end;
-		}	
+		}
 	if ( ! ENGINE_set_destroy_function(e, gost_engine_destroy)
 		|| ! ENGINE_set_init_function(e,gost_engine_init)
 		|| ! ENGINE_set_finish_function(e,gost_engine_finish))
@@ -146,7 +146,7 @@ static int bind_gost (ENGINE *e,const char *id)
 	ret = 1;
 	end:
 	return ret;
-	}	
+	}
 
 #ifndef OPENSSL_NO_DYNAMIC_ENGINE
 IMPLEMENT_DYNAMIC_BIND_FN(bind_gost)
@@ -155,19 +155,19 @@ IMPLEMENT_DYNAMIC_CHECK_FN()
 
 static int gost_digests(ENGINE *e, const EVP_MD **digest,
 	const int **nids, int nid)
-	{ 
+	{
 	int ok =1 ;
-	if (!digest) 
+	if (!digest)
 		{
 		*nids = gost_digest_nids;
-		return 2; 
+		return 2;
 		}
 	/*printf("Digest no %d requested\n",nid);*/
-	if(nid == NID_id_GostR3411_94) 
+	if(nid == NID_id_GostR3411_94)
 		{
 		*digest = &digest_gost;
 		}
-	else if (nid == NID_id_Gost28147_89_MAC) 
+	else if (nid == NID_id_Gost28147_89_MAC)
 		{
 		*digest = &imit_gost_cpa;
 		}
@@ -177,51 +177,51 @@ static int gost_digests(ENGINE *e, const EVP_MD **digest,
 		*digest = NULL;
 		}
 	return ok;
-	}	
-	
+	}
+
 static int gost_ciphers (ENGINE *e,const EVP_CIPHER **cipher,
-	const int **nids, int nid) 
+	const int **nids, int nid)
 	{
 	int ok = 1;
-	if (!cipher) 
+	if (!cipher)
 		{
 		*nids = gost_cipher_nids;
 		return 2; /* two ciphers are supported */
 		}
 
-	if(nid == NID_id_Gost28147_89) 
+	if(nid == NID_id_Gost28147_89)
 		{
 		*cipher = &cipher_gost;
 		}
-	else if  (nid == NID_gost89_cnt) 
+	else if  (nid == NID_gost89_cnt)
 		{
 		*cipher = &cipher_gost_cpacnt;
 		}
-	else	
+	else
 		{
 		ok = 0;
 		*cipher = NULL;
 		}
 	return ok;
-	}	
+	}
 
 static int gost_pkey_meths (ENGINE *e, EVP_PKEY_METHOD **pmeth,
 	const int **nids, int nid)
 	{
-	if (!pmeth) 
+	if (!pmeth)
 		{
 		*nids = gost_pkey_meth_nids;
 		return 3;
 		}
 
-	switch (nid) 
+	switch (nid)
 		{
 		case NID_id_GostR3410_94: *pmeth = pmeth_GostR3410_94; return 1;
 		case NID_id_GostR3410_2001: *pmeth = pmeth_GostR3410_2001; return 1;
 		case NID_id_Gost28147_89_MAC: *pmeth = pmeth_Gost28147_MAC; return 1;
 		default:;
 		}
-	
+
 	*pmeth = NULL;
 	return 0;
 	}
@@ -229,38 +229,38 @@ static int gost_pkey_meths (ENGINE *e, EVP_PKEY_METHOD **pmeth,
 static int gost_pkey_asn1_meths (ENGINE *e, EVP_PKEY_ASN1_METHOD **ameth,
 	const int **nids, int nid)
 	{
-	if (!ameth) 
+	if (!ameth)
 		{
 		*nids = gost_pkey_meth_nids;
 		return 3;
 		}
-	switch (nid) 
+	switch (nid)
 		{
 		case NID_id_GostR3410_94: *ameth = ameth_GostR3410_94; return 1;
 		case NID_id_GostR3410_2001: *ameth = ameth_GostR3410_2001; return 1;
 		case NID_id_Gost28147_89_MAC: *ameth = ameth_Gost28147_MAC; return 1;
-	
+
 		default:;
 		}
-	
+
 	*ameth = NULL;
 	return 0;
 	}
 
 #ifdef OPENSSL_NO_DYNAMIC_ENGINE
 static ENGINE *engine_gost(void)
-	{	
+	{
 	ENGINE *ret = ENGINE_new();
 	if (!ret)
 		return NULL;
-	if (!bind_gost(ret,engine_gost_id)) 
+	if (!bind_gost(ret,engine_gost_id))
 		{
 		ENGINE_free(ret);
 		return NULL;
 		}
 	return ret;
 	}
-	
+
 void ENGINE_load_gost(void)
 	{
 	ENGINE *toadd =engine_gost();
@@ -269,5 +269,5 @@ void ENGINE_load_gost(void)
 	ENGINE_free(toadd);
 	ERR_clear_error();
 	}
-#endif	
+#endif
 

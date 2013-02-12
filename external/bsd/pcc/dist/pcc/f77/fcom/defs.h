@@ -29,7 +29,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <stdio.h>
@@ -433,7 +433,7 @@ ftnint lmin(ftnint, ftnint), lmax(ftnint, ftnint);
 ftnint simoffset(expptr *);
 char *memname(int, int), *convic(ftnint), *setdoto(char *);
 double convcd(int, char *);
-struct extsym *mkext(char *), 
+struct extsym *mkext(char *),
 	*newentry(struct bigblock *),
 	*comblock(int, char *s);
 struct bigblock *mkname(int, char *);
@@ -486,7 +486,7 @@ void settype(struct bigblock *, int, int), putlabel(int);
 void putbranch(struct bigblock *p), goret(int), putrbrack(int);
 void prolog(struct entrypoint *, struct bigblock *), prendproc(void);
 void prlocvar(char *, ftnint), prext(char *, ftnint, int);
-void vardcl(struct bigblock *v), frchain(chainp *p); 
+void vardcl(struct bigblock *v), frchain(chainp *p);
 void frtemp(struct bigblock *p), incomm(struct extsym *, struct bigblock *);
 void setintr(struct bigblock * v), setext(struct bigblock * v);
 struct uux { expptr lb, ub; };
@@ -522,7 +522,7 @@ void prarif(bigptr, int, int, int);
 void putstr(char *, ftnint);
 NODE *putex1(bigptr p);
 void puteq(bigptr, bigptr);
-void popstack(chainp *p); 
+void popstack(chainp *p);
 void consconv(int, union constant *, int, union constant *);
 void yyerror(char *s);
 void enddo(int);

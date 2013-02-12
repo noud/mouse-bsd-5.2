@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -82,7 +82,7 @@
 #ifdef ENABLE_HYBRID
 #include "isakmp_xauth.h"
 #include "isakmp_unity.h"
-#include "isakmp_cfg.h" 
+#include "isakmp_cfg.h"
 #endif
 #include "isakmp_inf.h"
 #include "oakley.h"
@@ -167,7 +167,7 @@ isakmp_info_recv(iph1, msg0)
 
 	/* Safety check */
 	if (msg->l < sizeof(*isakmp) + sizeof(*gen)) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 			"ignore information because the "
 			"message is way too short - %zu byte(s).\n", msg->l);
 		goto end;
@@ -191,10 +191,10 @@ isakmp_info_recv(iph1, msg0)
 			    "has not been established yet.\n");
 			goto end;
 		}
-		
+
 		/* Safety check */
 		if (msg->l < sizeof(*isakmp) + ntohs(gen->len) + sizeof(*nd)) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 				"ignore information because the "
 				"message is too short - %zu byte(s).\n", msg->l);
 			goto end;
@@ -235,7 +235,7 @@ isakmp_info_recv(iph1, msg0)
 			vfree(payload);
 			goto end;
 		}
-		
+
 		if (ntohs(gen->len) - sizeof(struct isakmp_gen) != hash->l) {
 			plog(LLV_ERROR, LOCATION, NULL,
 			    "ignore information due to hash length mismatch\n");
@@ -428,12 +428,12 @@ isakmp_info_recv_n(iph1, notify, msgid, encrypted)
 	   type <= ISAKMP_NTYPE_MAXERROR) {
 		l = ntohs(notify->h.len) - sizeof(*notify) - notify->spi_size;
 		if (l > 0) {
-			nraw = (char*)notify;	
+			nraw = (char*)notify;
 			nraw += sizeof(*notify) + notify->spi_size;
 			if ((ndata = vmalloc(l)) != NULL) {
 				memcpy(ndata->v, nraw, ndata->l);
 				plog(LLV_ERROR, LOCATION, iph1->remote,
-				    "Message: '%s'.\n", 
+				    "Message: '%s'.\n",
 				    binsanitize(ndata->v, ndata->l));
 				vfree(ndata);
 			} else {
@@ -537,7 +537,7 @@ isakmp_info_recv_d(iph1, delete, msgid, encrypted)
 				delete->spi_size, delete->proto_id);
 			return 0;
 		}
-		EVT_PUSH(iph1->local, iph1->remote, 
+		EVT_PUSH(iph1->local, iph1->remote,
 		    EVTT_PEER_DELETE, NULL);
 		purge_ipsec_spi(iph1->remote, delete->proto_id,
 		    (u_int32_t *)(delete + 1), num_spi);
@@ -597,7 +597,7 @@ isakmp_info_send_d1(iph1)
 	tlen = sizeof(*d) + sizeof(isakmp_index);
 	payload = vmalloc(tlen);
 	if (payload == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get buffer for payload.\n");
 		return errno;
 	}
@@ -661,7 +661,7 @@ isakmp_info_send_d2(iph2)
 		tlen = sizeof(*d) + pr->spisize;
 		payload = vmalloc(tlen);
 		if (payload == NULL) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 				"failed to get buffer for payload.\n");
 			return errno;
 		}
@@ -746,7 +746,7 @@ isakmp_info_send_nx(isakmp, remote, local, type, data)
 	if (data)
 		tlen += data->l;
 	payload = vmalloc(tlen);
-	if (payload == NULL) { 
+	if (payload == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get buffer to send.\n");
 		goto end;
@@ -808,7 +808,7 @@ isakmp_info_send_n1(iph1, type, data)
 	if (data)
 		tlen += data->l;
 	payload = vmalloc(tlen);
-	if (payload == NULL) { 
+	if (payload == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get buffer to send.\n");
 		return errno;
@@ -858,7 +858,7 @@ isakmp_info_send_n2(iph2, type, data)
 	if (data)
 		tlen += data->l;
 	payload = vmalloc(tlen);
-	if (payload == NULL) { 
+	if (payload == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get buffer to send.\n");
 		return errno;
@@ -967,7 +967,7 @@ isakmp_info_send_common(iph1, payload, np, flags)
 
 	/* create buffer for isakmp payload */
 	iph2->sendbuf = vmalloc(tlen);
-	if (iph2->sendbuf == NULL) { 
+	if (iph2->sendbuf == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get buffer to send.\n");
 		goto err;
@@ -1393,7 +1393,7 @@ info_recv_initialcontact(iph1)
 		 * source address and the destination accress.
 		 */
 #ifdef ENABLE_NATT
-		/* 
+		/*
 		 * XXX RFC 3947 says that whe MUST NOT use IP+port to find old SAs
 		 * from this peer !
 		 */
@@ -1524,7 +1524,7 @@ isakmp_info_recv_r_u (iph1, ru, msgid)
 	   Or is this already done by calling function?  */
 	tlen = sizeof(*ru_ack);
 	payload = vmalloc(tlen);
-	if (payload == NULL) { 
+	if (payload == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get buffer to send.\n");
 		return errno;
@@ -1538,7 +1538,7 @@ isakmp_info_recv_r_u (iph1, ru, msgid)
 	ru_ack->proto_id = IPSECDOI_PROTO_ISAKMP; /* XXX ? */
 	ru_ack->spi_size = sizeof(isakmp_index);
 	memcpy(ru_ack->i_ck, ru->i_ck, sizeof(cookie_t));
-	memcpy(ru_ack->r_ck, ru->r_ck, sizeof(cookie_t));	
+	memcpy(ru_ack->r_ck, ru->r_ck, sizeof(cookie_t));
 	ru_ack->data = ru->data;
 
 	/* XXX Should we do FLAG_A ?  */
@@ -1567,7 +1567,7 @@ isakmp_info_recv_r_u_ack (iph1, ru, msgid)
 	 *    ru->data >= iph2->dpd_seq - iph2->dpd_fails ? */
 	if (ntohl(ru->data) != iph1->dpd_seq-1) {
 		plog(LLV_ERROR, LOCATION, iph1->remote,
-			 "Wrong DPD sequence number (%d, %d expected).\n", 
+			 "Wrong DPD sequence number (%d, %d expected).\n",
 			 ntohl(ru->data), iph1->dpd_seq-1);
 		return 0;
 	}
@@ -1635,7 +1635,7 @@ isakmp_info_send_r_u(arg)
 	tlen = sizeof(*ru);
 	payload = vmalloc(tlen);
 	if (payload == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 			 "failed to get buffer for payload.\n");
 		return;
 	}

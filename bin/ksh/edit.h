@@ -7,7 +7,7 @@
  *      This header defines various global edit objects.
  *
  * SEE ALSO:
- *      
+ *
  *
  * RCSid:
  *      $NetBSD: edit.h,v 1.3 1999/11/02 22:06:45 jdolecek Exp $

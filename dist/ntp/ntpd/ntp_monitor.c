@@ -127,7 +127,7 @@ mon_start(
 	}
 	if (mode == MON_OFF)
 	    return;
-	
+
 	if (!mon_have_memory) {
 		mon_total_mem = 0;
 		mon_mem_increments = 0;
@@ -161,7 +161,7 @@ mon_stop(
 	mon_enabled &= ~mode;
 	if (mon_enabled != MON_OFF)
 	    return;
-	
+
 	/*
 	 * Put everything back on the free list
 	 */
@@ -187,7 +187,7 @@ ntp_monclearinterface(struct interface *interface)
 
 	for (md = mon_mru_list.mru_next; md != &mon_mru_list;
 	     md = md->mru_next) {
-	  if (md->interface == interface) 
+	  if (md->interface == interface)
 	    {
 	      /* dequeue from mru list and put to free list */
 	      md->mru_prev->mru_next = md->mru_next;

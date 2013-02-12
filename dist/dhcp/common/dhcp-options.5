@@ -60,13 +60,13 @@ domain name resolves to a single IP address.
 .PP
 The
 .B int32
-data type specifies a signed 32-bit integer.   The 
+data type specifies a signed 32-bit integer.   The
 .B uint32
-data type specifies an unsigned 32-bit integer.   The 
+data type specifies an unsigned 32-bit integer.   The
 .B int16
 and
 .B uint16
-data types specify signed and unsigned 16-bit integers.   The 
+data types specify signed and unsigned 16-bit integers.   The
 .B int8
 and
 .B uint8
@@ -109,7 +109,7 @@ or
 .SH SETTING OPTION VALUES USING EXPRESSIONS
 Sometimes it's helpful to be able to set the value of a DHCP option
 based on some value that the client has sent.   To do this, you can
-use expression evaluation.   The 
+use expression evaluation.   The
 .B dhcp-eval(5)
 manual page describes how to write expressions.   To assign the result
 of an evaluation to an option, define the option as follows:
@@ -234,7 +234,7 @@ rather than:
 This option is used in a client request (DHCPDISCOVER or DHCPREQUEST)
 to allow the client to request a lease time for the IP address.  In a
 server reply (DHCPOFFER), a DHCP server uses this option to specify
-the lease time it is willing to offer.                                    
+the lease time it is willing to offer.
 .PP
 This option is not directly user configurable in the server; refer to the
 \fImax-lease-time\fR and \fIdefault-lease-time\fR server options in
@@ -277,7 +277,7 @@ RFC2132) are:
              5     DHCPACK
              6     DHCPNAK
              7     DHCPRELEASE
-             8     DHCPINFORM               
+             8     DHCPINFORM
 .fi
 .PP
 This option is not user configurable.
@@ -300,7 +300,7 @@ Legal values for this option are:
 .nf
              1     the 'file' field is used to hold options
              2     the 'sname' field is used to hold options
-             3     both fields are used to hold options                        
+             3     both fields are used to hold options
 .fi
 .PP
 This option is not user configurable.
@@ -347,7 +347,7 @@ This option is not user configurable.
 .RS 0.25i
 .PP
 This option is used by the client in a DHCPDISCOVER to
-request that a particular IP address be assigned.                 
+request that a particular IP address be assigned.
 .PP
 This option is not user configurable.
 .PP
@@ -367,7 +367,7 @@ this option in a DHCPREQUEST message.
 .PP
 The value of this option is the IP address of the server.
 .PP
-This option is not directly user configurable. See the 
+This option is not directly user configurable. See the
 \fIserver-identifier\fR server option in
 .B \fIdhcpd.conf(5).
 .PP
@@ -1421,7 +1421,7 @@ option static-routes
 	10.0.1.0 255.255.255.0 net-1-rtr.example.com 1,
 	10.2.0.0 255.255.224.0 net-2-0-rtr.example.com 3;
 
-.fi	
+.fi
 .SH VENDOR ENCAPSULATED OPTIONS
 The DHCP protocol defines the \fB vendor-encapsulated-options\fR
 option, which allows vendors to define their own options that will be
@@ -1447,7 +1447,7 @@ option vendor-encapsulated-options
 The second way of setting the value of this option is to have the DHCP
 server generate a vendor-specific option buffer.   To do this, you
 must do four things: define an option space, define some options in
-that option space, provide values for them, and specify that that 
+that option space, provide values for them, and specify that that
 option space should be used to generate the
 .B vendor-encapsulated-options
 option.

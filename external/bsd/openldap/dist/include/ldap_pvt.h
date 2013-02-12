@@ -1,6 +1,6 @@
 /* $OpenLDAP: pkg/ldap/include/ldap_pvt.h,v 1.91.2.6 2008/02/11 23:26:40 kurt Exp $ */
 /* This work is part of OpenLDAP Software <http://www.openldap.org/>.
- * 
+ *
  * Copyright 1998-2008 The OpenLDAP Foundation.
  * All rights reserved.
  *
@@ -161,13 +161,13 @@ ldap_charray2str LDAP_P((
 LDAP_F( void ) ldap_rdnfree_x LDAP_P(( LDAPRDN rdn, void *ctx ));
 LDAP_F( void ) ldap_dnfree_x LDAP_P(( LDAPDN dn, void *ctx ));
 
-LDAP_F( int ) ldap_bv2dn_x LDAP_P(( 
+LDAP_F( int ) ldap_bv2dn_x LDAP_P((
 	struct berval *bv, LDAPDN *dn, unsigned flags, void *ctx ));
-LDAP_F( int ) ldap_dn2bv_x LDAP_P(( 
+LDAP_F( int ) ldap_dn2bv_x LDAP_P((
 	LDAPDN dn, struct berval *bv, unsigned flags, void *ctx ));
-LDAP_F( int ) ldap_bv2rdn_x LDAP_P(( 
+LDAP_F( int ) ldap_bv2rdn_x LDAP_P((
 	struct berval *, LDAPRDN *, char **, unsigned flags, void *ctx ));
-LDAP_F( int ) ldap_rdn2bv_x LDAP_P(( 
+LDAP_F( int ) ldap_rdn2bv_x LDAP_P((
 	LDAPRDN rdn, struct berval *bv, unsigned flags, void *ctx ));
 #endif /* LDAP_AVA_NULL */
 
@@ -307,7 +307,7 @@ LDAP_END_DECL
 
 /*
  * Multiple precision stuff
- * 
+ *
  * May use OpenSSL's BIGNUM if built with TLS,
  * or GNU's multiple precision library. But if
  * long long is available, that's big enough

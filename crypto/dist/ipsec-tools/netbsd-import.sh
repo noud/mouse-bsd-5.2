@@ -33,7 +33,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# netbsd-import: prepare ipsec-tools distribution for import 
+# netbsd-import: prepare ipsec-tools distribution for import
 # in the NetBSD tree, under src/crypto/dist/ipsec-tools
 # Based on bind2netbsd.
 #
@@ -49,7 +49,7 @@
 #	  IPSEC_TOOLS $tag
 #	$ cd /usr/src/lib/libipsec
 #	$ cvs -d`whoami`@cvs.netbsd.org:/cvsroot commit -m 	\
-#	  "update ipsec-tools version" package_version.h 
+#	  "update ipsec-tools version" package_version.h
 #
 
 test $# -ne 3 && 							\
@@ -101,11 +101,11 @@ done
 sed "									\
     s/^\(#define TOP_PACKAGE_VERSION \).*/\1 \"${RELEASE}\"/;		\
     s/^\(#define TOP_PACKAGE_STRING \).*/\1 \"ipsec-tools ${RELEASE}\"/;\
-" ${NETBSDSRC}/lib/libipsec/package_version.h > /tmp/ipsec5		
+" ${NETBSDSRC}/lib/libipsec/package_version.h > /tmp/ipsec5
 mv /tmp/ipsec5 ${NETBSDSRC}/lib/libipsec/package_version.h &&		\
     echo "Updated version in lib/libipsec/package_version.h"
 
-cp ${SCRIPTNAME} ${DISTSRC} && echo "copied ${SCRIPTNAME} to ${DISTSRC}" 
+cp ${SCRIPTNAME} ${DISTSRC} && echo "copied ${SCRIPTNAME} to ${DISTSRC}"
 
 echo "done, don't forget to cvs commit src/lib/libipsec/package_version.h"
 

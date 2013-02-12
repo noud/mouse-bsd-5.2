@@ -1868,12 +1868,12 @@ gen_linktype(proto)
 		case ETHERTYPE_IP:
 		case PPP_IP:
 		/* FIXME add other L3 proto IDs */
-			return gen_mpls_linktype(Q_IP); 
+			return gen_mpls_linktype(Q_IP);
 
 		case ETHERTYPE_IPV6:
 		case PPP_IPV6:
 		/* FIXME add other L3 proto IDs */
-			return gen_mpls_linktype(Q_IPV6); 
+			return gen_mpls_linktype(Q_IPV6);
 
 		default:
 			bpf_error("unsupported protocol over mpls");
@@ -3089,7 +3089,7 @@ gen_mpls_linktype(proto)
                 b1 = gen_mcmp(OR_NET, 0, BPF_B, 0x40, 0xf0);
                 gen_and(b0, b1);
                 return b1;
- 
+
        case Q_IPV6:
                 /* match the bottom-of-stack bit */
                 b0 = gen_mcmp(OR_NET, -2, BPF_B, 0x01, 0x01);
@@ -3097,7 +3097,7 @@ gen_mpls_linktype(proto)
                 b1 = gen_mcmp(OR_NET, 0, BPF_B, 0x60, 0xf0);
                 gen_and(b0, b1);
                 return b1;
- 
+
        default:
                 abort();
         }
@@ -3877,7 +3877,7 @@ gen_portrangeatom(off, v1, v2)
 	b1 = gen_cmp_ge(OR_TRAN_IPV4, off, BPF_H, v1);
 	b2 = gen_cmp_le(OR_TRAN_IPV4, off, BPF_H, v2);
 
-	gen_and(b1, b2); 
+	gen_and(b1, b2);
 
 	return b2;
 }
@@ -3980,7 +3980,7 @@ gen_portrangeatom6(off, v1, v2)
 	b1 = gen_cmp_ge(OR_TRAN_IPV6, off, BPF_H, v1);
 	b2 = gen_cmp_le(OR_TRAN_IPV6, off, BPF_H, v2);
 
-	gen_and(b1, b2); 
+	gen_and(b1, b2);
 
 	return b2;
 }
@@ -4872,7 +4872,7 @@ gen_scode(name, q)
 		if (proto != Q_DEFAULT &&
 		    proto != Q_UDP && proto != Q_TCP && proto != Q_SCTP)
 			bpf_error("illegal qualifier of 'portrange'");
-		if (pcap_nametoportrange(name, &port1, &port2, &real_proto) == 0) 
+		if (pcap_nametoportrange(name, &port1, &port2, &real_proto) == 0)
 			bpf_error("unknown port in range '%s'", name);
 		if (proto == Q_UDP) {
 			if (real_proto == IPPROTO_TCP)
@@ -4899,7 +4899,7 @@ gen_scode(name, q)
 				bpf_error("port in range '%s' is tcp", name);
 			else
 				/* override PROTO_UNDEF */
-				real_proto = IPPROTO_SCTP;	
+				real_proto = IPPROTO_SCTP;
 		}
 #ifndef INET6
 		return gen_portrange(port1, port2, real_proto, dir);
@@ -6350,22 +6350,22 @@ gen_mpls(label_num)
              * etc.
              */
             switch (linktype) {
-                
+
             case DLT_C_HDLC: /* fall through */
             case DLT_EN10MB:
                     b0 = gen_cmp(OR_LINK, off_linktype, BPF_H,
                                  (bpf_int32)ETHERTYPE_MPLS);
                     break;
-                
+
             case DLT_PPP:
                     b0 = gen_cmp(OR_LINK, off_linktype, BPF_H,
                                  (bpf_int32)PPP_MPLS_UCAST);
                     break;
-                
+
                     /* FIXME add other DLT_s ...
                      * for Frame-Relay/and ATM this may get messy due to SNAP headers
                      * leave it for now */
-                
+
             default:
                     bpf_error("no MPLS support for data link type %d",
                           linktype);

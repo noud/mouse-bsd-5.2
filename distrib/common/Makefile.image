@@ -19,7 +19,7 @@
 #	DESTDIR		destination directory
 #	MAKEFS_FLAGS	extra options to ${TOOL_MAKEFS}
 #	PARSELISTENV	environment variables to set for parselist.awk
-#	WORKDIR		directory to build image in to 
+#	WORKDIR		directory to build image in to
 #	IMAGETAR	tar.gz file to create containing ${IMAGE}'s contents
 #
 #	IMAGE_RELEASEDIR	where to install ${IMAGE}.gz

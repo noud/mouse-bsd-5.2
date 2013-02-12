@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -63,7 +63,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -110,7 +110,7 @@
  */
 /* ====================================================================
  * Copyright 2002 Sun Microsystems, Inc. ALL RIGHTS RESERVED.
- * ECC cipher suite support in OpenSSL originally developed by 
+ * ECC cipher suite support in OpenSSL originally developed by
  * SUN MICROSYSTEMS, INC., and contributed to the OpenSSL project.
  */
 /* ====================================================================
@@ -543,7 +543,7 @@ static int ebcdic_free(BIO *a)
 	a->flags=0;
 	return(1);
 }
-	
+
 static int ebcdic_read(BIO *b, char *out, int outl)
 {
 	int ret=0;
@@ -649,21 +649,21 @@ static int MS_CALLBACK ssl_servername_cb(SSL *s, int *ad, void *arg)
 	{
 	tlsextctx * p = (tlsextctx *) arg;
 	const char * servername = SSL_get_servername(s, TLSEXT_NAMETYPE_host_name);
-        if (servername && p->biodebug) 
+        if (servername && p->biodebug)
 		BIO_printf(p->biodebug,"Hostname in TLS extension: \"%s\"\n",servername);
-        
+
 	if (!p->servername)
 		return SSL_TLSEXT_ERR_NOACK;
-	
+
 	if (servername)
 		{
-    		if (strcmp(servername,p->servername)) 
+    		if (strcmp(servername,p->servername))
 			return p->extension_error;
 		if (ctx2)
 			{
 			BIO_printf(p->biodebug,"Swiching server context.\n");
 			SSL_set_SSL_CTX(s,ctx2);
-			}     
+			}
 		}
 	return SSL_TLSEXT_ERR_OK;
 }
@@ -744,7 +744,7 @@ BIO_printf(err, "cert_status: received %d ids\n", sk_OCSP_RESPID_num(ids));
 		port = srctx->port;
 		use_ssl = srctx->use_ssl;
 		}
-		
+
 	if (!X509_STORE_CTX_init(&inctx,
 				SSL_CTX_get_cert_store(SSL_get_SSL_CTX(s)),
 				NULL, NULL))
@@ -947,7 +947,7 @@ int MAIN(int argc, char *argv[])
 			if (--argc < 1) goto bad;
 			dhfile = *(++argv);
 			}
-#ifndef OPENSSL_NO_ECDH		
+#ifndef OPENSSL_NO_ECDH
 		else if	(strcmp(*argv,"-named_curve") == 0)
 			{
 			if (--argc < 1) goto bad;
@@ -1010,13 +1010,13 @@ int MAIN(int argc, char *argv[])
 			if (--argc < 1) goto bad;
 			CAfile= *(++argv);
 			}
-#ifdef FIONBIO	
+#ifdef FIONBIO
 		else if	(strcmp(*argv,"-nbio") == 0)
 			{ s_nbio=1; }
 #endif
 		else if	(strcmp(*argv,"-nbio_test") == 0)
 			{
-#ifdef FIONBIO	
+#ifdef FIONBIO
 			s_nbio=1;
 #endif
 			s_nbio_test=1;
@@ -1125,7 +1125,7 @@ int MAIN(int argc, char *argv[])
 #endif
 #ifndef OPENSSL_NO_DTLS1
 		else if	(strcmp(*argv,"-dtls1") == 0)
-			{ 
+			{
 			meth=DTLSv1_server_method();
 			socket_type = SOCK_DGRAM;
 			}
@@ -1232,7 +1232,7 @@ bad:
 			}
 
 #ifndef OPENSSL_NO_TLSEXT
-		if (tlsextcbp.servername) 
+		if (tlsextcbp.servername)
 			{
 			s_key2 = load_key(bio_err, s_key_file2, s_key_format, 0, pass, e,
 				"second server certificate private key file");
@@ -1241,10 +1241,10 @@ bad:
 				ERR_print_errors(bio_err);
 				goto end;
 				}
-			
+
 			s_cert2 = load_cert(bio_err,s_cert_file2,s_cert_format,
 				NULL, e, "second server certificate file");
-			
+
 			if (!s_cert2)
 				{
 				ERR_print_errors(bio_err);
@@ -1343,7 +1343,7 @@ bad:
 	if (bugs) SSL_CTX_set_options(ctx,SSL_OP_ALL);
 	if (hack) SSL_CTX_set_options(ctx,SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG);
 	SSL_CTX_set_options(ctx,off);
-	/* DTLS: partial reads end up discarding unread UDP bytes :-( 
+	/* DTLS: partial reads end up discarding unread UDP bytes :-(
 	 * Setting read ahead solves this problem.
 	 */
 	if (socket_type == SOCK_DGRAM) SSL_CTX_set_read_ahead(ctx, 1);
@@ -1384,7 +1384,7 @@ bad:
 			goto end;
 			}
 		}
-	
+
 	if (ctx2)
 		{
 		BIO_printf(bio_s_out,"Setting secondary ctx parameters\n");
@@ -1409,7 +1409,7 @@ bad:
 		if (bugs) SSL_CTX_set_options(ctx2,SSL_OP_ALL);
 		if (hack) SSL_CTX_set_options(ctx2,SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG);
 		SSL_CTX_set_options(ctx2,off);
-		/* DTLS: partial reads end up discarding unread UDP bytes :-( 
+		/* DTLS: partial reads end up discarding unread UDP bytes :-(
 		 * Setting read ahead solves this problem.
 		 */
 		if (socket_type == SOCK_DGRAM) SSL_CTX_set_read_ahead(ctx2, 1);
@@ -1426,7 +1426,7 @@ bad:
 		store = SSL_CTX_get_cert_store(ctx2);
 		X509_STORE_set_flags(store, vflags);
 		}
-#endif 
+#endif
 
 #ifndef OPENSSL_NO_DH
 	if (!no_dhe)
@@ -1454,7 +1454,7 @@ bad:
 		if (ctx2)
 			{
 			if (!dhfile)
-				{ 
+				{
 				DH *dh2=load_dh_param(s_cert_file2);
 				if (dh2 != NULL)
 					{
@@ -1483,14 +1483,14 @@ bad:
 
 			if (nid == 0)
 				{
-				BIO_printf(bio_err, "unknown curve name (%s)\n", 
+				BIO_printf(bio_err, "unknown curve name (%s)\n",
 					named_curve);
 				goto end;
 				}
 			ecdh = EC_KEY_new_by_curve_name(nid);
 			if (ecdh == NULL)
 				{
-				BIO_printf(bio_err, "unable to create curve (%s)\n", 
+				BIO_printf(bio_err, "unable to create curve (%s)\n",
 					named_curve);
 				goto end;
 				}
@@ -1504,7 +1504,7 @@ bad:
 			{
 			BIO_printf(bio_s_out,"Using default temp ECDH parameters\n");
 			ecdh = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
-			if (ecdh == NULL) 
+			if (ecdh == NULL)
 				{
 				BIO_printf(bio_err, "unable to create curve (nistp256)\n");
 				goto end;
@@ -1514,18 +1514,18 @@ bad:
 
 		SSL_CTX_set_tmp_ecdh(ctx,ecdh);
 #ifndef OPENSSL_NO_TLSEXT
-		if (ctx2) 
+		if (ctx2)
 			SSL_CTX_set_tmp_ecdh(ctx2,ecdh);
 #endif
 		EC_KEY_free(ecdh);
 		}
 #endif
-	
+
 	if (!set_cert_key_stuff(ctx,s_cert,s_key))
 		goto end;
 #ifndef OPENSSL_NO_TLSEXT
 	if (ctx2 && !set_cert_key_stuff(ctx2,s_cert2,s_key2))
-		goto end; 
+		goto end;
 #endif
 	if (s_dcert != NULL)
 		{
@@ -1539,9 +1539,9 @@ bad:
 		{
 		SSL_CTX_set_tmp_rsa_callback(ctx,tmp_rsa_cb);
 #ifndef OPENSSL_NO_TLSEXT
-		if (ctx2) 
+		if (ctx2)
 			SSL_CTX_set_tmp_rsa_callback(ctx2,tmp_rsa_cb);
-#endif		
+#endif
 		}
 #else
 	if (!no_tmp_rsa && SSL_CTX_need_tmp_RSA(ctx))
@@ -1630,7 +1630,7 @@ bad:
 		{
 		SSL_CTX_set_client_CA_list(ctx,SSL_load_client_CA_file(CAfile));
 #ifndef OPENSSL_NO_TLSEXT
-		if (ctx2) 
+		if (ctx2)
 			SSL_CTX_set_client_CA_list(ctx2,SSL_load_client_CA_file(CAfile));
 #endif
 		}
@@ -1716,7 +1716,7 @@ static int sv_body(char *hostname, int s, unsigned char *context)
 		BIO_printf(bio_err,"out of memory\n");
 		goto err;
 		}
-#ifdef FIONBIO	
+#ifdef FIONBIO
 	if (s_nbio)
 		{
 		unsigned long sl=1;
@@ -1774,7 +1774,7 @@ static int sv_body(char *hostname, int s, unsigned char *context)
 			timeout.tv_sec = 0;
 			timeout.tv_usec = DGRAM_RCV_TIMEOUT;
 			BIO_ctrl(sbio, BIO_CTRL_DGRAM_SET_RECV_TIMEOUT, 0, &timeout);
-			
+
 			timeout.tv_sec = 0;
 			timeout.tv_usec = DGRAM_SND_TIMEOUT;
 			BIO_ctrl(sbio, BIO_CTRL_DGRAM_SET_SEND_TIMEOUT, 0, &timeout);
@@ -1925,7 +1925,7 @@ static int sv_body(char *hostname, int s, unsigned char *context)
 					goto err;
 					}
 
-				if ((buf[0] == 'r') && 
+				if ((buf[0] == 'r') &&
 					((buf[1] == '\n') || (buf[1] == '\r')))
 					{
 					SSL_renegotiate(con);
@@ -1999,7 +1999,7 @@ static int sv_body(char *hostname, int s, unsigned char *context)
 			if (!SSL_is_init_finished(con))
 				{
 				i=init_ssl_connection(con);
-				
+
 				if (i < 0)
 					{
 					ret=0;
@@ -2013,7 +2013,7 @@ static int sv_body(char *hostname, int s, unsigned char *context)
 				}
 			else
 				{
-again:	
+again:
 				i=SSL_read(con,(char *)buf,bufsize);
 				switch (SSL_get_error(con,i))
 					{
@@ -2187,7 +2187,7 @@ static int www_body(char *hostname, int s, unsigned char *context)
 	ssl_bio=BIO_new(BIO_f_ssl());
 	if ((io == NULL) || (ssl_bio == NULL)) goto err;
 
-#ifdef FIONBIO	
+#ifdef FIONBIO
 	if (s_nbio)
 		{
 		unsigned long sl=1;

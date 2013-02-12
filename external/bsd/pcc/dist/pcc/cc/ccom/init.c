@@ -57,7 +57,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -67,7 +67,7 @@
 /*
  * The following machine-dependent routines may be called during
  * initialization:
- * 
+ *
  * zbits(OFFSZ, int)	- sets int bits of zero at position OFFSZ.
  * infld(CONSZ off, int fsz, CONSZ val)
  *			- sets the bitfield val starting at off and size fsz.
@@ -87,11 +87,11 @@
  */
 
 /*
- * The base element(s) of an initialized variable is kept in a linked 
+ * The base element(s) of an initialized variable is kept in a linked
  * list, allocated while initialized.
  *
  * When a scalar is found, entries are popped of the instk until it's
- * possible to find an entry for a new scalar; then onstk() is called 
+ * possible to find an entry for a new scalar; then onstk() is called
  * to get the correct type and size of that scalar.
  *
  * If a right brace is found, pop the stack until a matching left brace
@@ -270,7 +270,7 @@ stkpush(void)
 #endif
 
 	/*
-	 * Figure out what the next initializer will be, and push it on 
+	 * Figure out what the next initializer will be, and push it on
 	 * the stack.  If this is an array, just decrement type, if it
 	 * is a struct or union, extract the next element.
 	 */
@@ -492,7 +492,7 @@ scalinit(NODE *p)
 	 */
 	while (ISSOU(pstk->in_t) || ISARY(pstk->in_t))
 		stkpush();
-		
+
 	/* let buildtree do typechecking (and casting) */
 	q = block(NAME, NIL,NIL, pstk->in_t, pstk->in_sym->sdf,
 	    pstk->in_sym->ssue);
@@ -810,11 +810,11 @@ strcvt(NODE *p)
 
 	for (s = p->n_sp->sname; *s != 0; ) {
 		if (*s++ == '\\') {
-			i = esccon(&s);  
+			i = esccon(&s);
 		} else
 			i = (unsigned char)s[-1];
 		asginit(bcon(i));
-	} 
+	}
 	tfree(p);
 }
 
@@ -836,7 +836,7 @@ asginit(NODE *p)
 	/* convert string to array of char */
 	if (p && DEUNSIGN(p->n_type) == ARY+CHAR) {
 		/*
-		 * ...but only if next element is ARY+CHAR, otherwise 
+		 * ...but only if next element is ARY+CHAR, otherwise
 		 * just fall through.
 		 */
 
@@ -847,7 +847,7 @@ asginit(NODE *p)
 			stkpush();
 		while (ISSOU(pstk->in_t) || ISARY(pstk->in_t))
 			stkpush();
-		if (pstk->in_prev && 
+		if (pstk->in_prev &&
 		    DEUNSIGN(pstk->in_prev->in_t) == ARY+CHAR) {
 			pstk = pstk->in_prev;
 			if ((g = pstk->in_fl) == 0)

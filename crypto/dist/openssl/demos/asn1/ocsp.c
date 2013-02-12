@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -280,7 +280,7 @@ ASN1_SEQUENCE(X509_EXTENSION) = {
 	ASN1_OPT(X509_EXTENSION, critical, ASN1_BOOLEAN),
 	ASN1_SIMPLE(X509_EXTENSION, value, ASN1_OCTET_STRING)
 } ASN1_SEQUENCE_END(X509_EXTENSION);
-	
+
 
 ASN1_SEQUENCE(Signature) = {
 	ASN1_SIMPLE(Signature, signatureAlgorithm, X509_ALGOR),

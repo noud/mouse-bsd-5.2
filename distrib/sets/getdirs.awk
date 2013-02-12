@@ -50,7 +50,7 @@ function dirname(file) \
 	next
 }
 
-#	all other lines are parsed 
+#	all other lines are parsed
 #
 {
 	print

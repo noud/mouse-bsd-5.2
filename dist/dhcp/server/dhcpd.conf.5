@@ -331,7 +331,7 @@ which case the server will send a DHCPNAK even though it doesn't know
 about the address.
 .PP
 There may be a host declaration matching the client's identification.
-If that host declaration contains a fixed-address declaration that 
+If that host declaration contains a fixed-address declaration that
 lists an IP address that is valid for the network segment to which the
 client is connected.  In this case, the DHCP server will never do
 dynamic address allocation.  In this case, the client is \fIrequired\fR
@@ -546,7 +546,7 @@ include "/etc/dhcpd.master";
 .PP
 The statements in the peer declaration are as follows:
 .PP
-The 
+The
 .I primary
 and
 .I secondary
@@ -559,7 +559,7 @@ This determines whether the server is primary or secondary, as
 described earlier under DHCP FAILOVER.
 .RE
 .PP
-The 
+The
 .I address
 statement
 .RS 0.25i
@@ -572,7 +572,7 @@ value to use for the DHCP Failover Protocol server identifier.  Because this
 value is used as an identifier, it may not be omitted.
 .RE
 .PP
-The 
+The
 .I peer address
 statement
 .RS 0.25i
@@ -584,7 +584,7 @@ which the server should connect to reach its failover peer for failover
 messages.
 .RE
 .PP
-The 
+The
 .I port
 statement
 .RS 0.25i
@@ -597,7 +597,7 @@ may not currently be omitted, because the failover protocol does not
 yet have a reserved TCP port number.
 .RE
 .PP
-The 
+The
 .I peer port
 statement
 .RS 0.25i
@@ -612,7 +612,7 @@ number declared in the \fBpeer port\fR statement may be the same as
 the port number declared in the \fBport\fR statement.
 .RE
 .PP
-The 
+The
 .I max-response-delay
 statement
 .RS 0.25i
@@ -629,7 +629,7 @@ constantly making and breaking connections.   This parameter must be
 specified.
 .RE
 .PP
-The 
+The
 .I max-unacked-updates
 statement
 .RS 0.25i
@@ -643,7 +643,7 @@ to say what a good value for this is, but 10 seems to work.   This
 parameter must be specified.
 .RE
 .PP
-The 
+The
 .I mclt
 statement
 .RS 0.25i
@@ -662,7 +662,7 @@ probably reasonable, but again bear in mind that we have no real
 operational experience with this.
 .RE
 .PP
-The 
+The
 .I split
 statement
 .RS 0.25i
@@ -678,7 +678,7 @@ split, the secondary answers.   The only meaningful value is 128, and can
 only be configured on the primary.
 .RE
 .PP
-The 
+The
 .I hba
 statement
 .RS 0.25i
@@ -701,7 +701,7 @@ fine-grained control that \fBhba\fR offers isn't necessary, and \fBsplit\fR
 should be used.  As such, the use of \fBhba\fR is deprecated.
 .RE
 .PP
-The 
+The
 .I load balance max seconds
 statement
 .RS 0.25i
@@ -954,7 +954,7 @@ of these applies, the server will not have a hostname for the client,
 and will not be able to do a DNS update.
 .PP
 The domain name is determined based strictly on the server
-configuration, not on what the client sends.   First, if there is a 
+configuration, not on what the client sends.   First, if there is a
 .I ddns-domainname
 configuration option, it is used.   Second, if there is a
 \fIdomain-name\fR option configured, that is used.  Otherwise, the
@@ -1172,7 +1172,7 @@ Note that the zone declarations have to correspond to authority
 records in your name server - in the above example, there must be an
 SOA record for "example.org." and for "17.10.10.in-addr.arpa.".   For
 example, if there were a subdomain "foo.example.org" with no separate
-SOA, you could not write a zone declaration for "foo.example.org."  
+SOA, you could not write a zone declaration for "foo.example.org."
 Also keep in mind that zone names in your DHCP configuration should end in a
 "."; this is the preferred syntax.  If you do not end your zone name in a
 ".", the DHCP server will figure it out.  Also note that in the DHCP
@@ -1261,7 +1261,7 @@ The \fIinclude\fR statement is used to read in a named file, and process
 the contents of that file as though it were entered in place of the
 include statement.
 .PP
-.B The 
+.B The
 .I shared-network
 .B statement
 .PP
@@ -1291,7 +1291,7 @@ shared network.   The name may have the syntax of a valid domain name
 (although it will never be used as such), or it may be any arbitrary
 name, enclosed in quotes.
 .PP
-.B The 
+.B The
 .I subnet
 .B statement
 .PP
@@ -1312,7 +1312,7 @@ declaration.
 The
 .I subnet-number
 should be an IP address or domain name which resolves to the subnet
-number of the subnet being described.   The 
+number of the subnet being described.   The
 .I netmask
 should be an IP address or domain name which resolves to the subnet mask
 of the subnet being described.   The subnet number, together with the
@@ -1368,7 +1368,7 @@ declaration, or more than one
 statement may be specified matching the same client.
 .PP
 If client-specific boot parameters must change based on the network
-to which the client is attached, then multiple 
+to which the client is attached, then multiple
 .B host
 declarations should be used.  The
 .B host
@@ -1778,7 +1778,7 @@ than each time a client is assigned an IP address, so there is no way
 to use different DNS update styles for different clients.
 .RE
 .PP
-.B The  
+.B The
 .I ddns-updates
 .B statement
 .RS 0.25i
@@ -1924,7 +1924,7 @@ done for all addresses in the current scope.   By default, or if
 \fIflag\fR is false, no lookups are done.
 .RE
 .PP
-The 
+The
 .I hardware
 statement
 .RS 0.25i
@@ -2392,7 +2392,7 @@ the \fIVENDOR ENCAPSULATED OPTIONS\fR section.
 .SH SETTING PARAMETER VALUES USING EXPRESSIONS
 Sometimes it's helpful to be able to set the value of a DHCP server
 parameter based on some value that the client has sent.   To do this,
-you can use expression evaluation.   The 
+you can use expression evaluation.   The
 .B dhcp-eval(5)
 manual page describes how to write expressions.   To assign the result
 of an evaluation to an option, define the option as follows:

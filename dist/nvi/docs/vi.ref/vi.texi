@@ -9,15 +9,15 @@
 @comment      The Regents of the University of California.  All rights reserved.
 @comment  Copyright (c) 1994, 1995, 1996
 @comment 	Keith Bostic.  All rights reserved.
-@comment 
+@comment
 @comment  This document may not be republished without written permission from
-@comment  Keith Bostic. 
-@comment 
+@comment  Keith Bostic.
+@comment
 @comment  See the LICENSE file for redistribution information.
-@comment 
+@comment
 @comment      Id: vi.texi,v 8.1 2001/08/18 20:43:50 skimo Exp (Berkeley) Date: 2001/08/18 20:43:50
-@comment 
-@comment 
+@comment
+@comment
 @node Top,(dir),(dir),(dir)
 @menu
 * Vi Commands::
@@ -843,7 +843,7 @@ that creates tags files with multiple locations per tag,
 tags file format, i.e., more than a single line in the tags file with
 the same initial tag name.
 If you wish to extend your
-@CO{ctags}  
+@CO{ctags}
 implementation or other tool with which you build tags files,
 this extension should be simple and will require no changes to
 @CO{nvi}  .
@@ -925,7 +925,7 @@ For this command,
  databases for the pattern.
 If the pattern is a double-quote character followed by a valid buffer
 name (e.g.,
-@LI{}"<character>" ), 
+@LI{}"<character>" ),
 then the contents of the named buffer are used as the pattern.
 Otherwise, the pattern is a Regular Expression.
 @sp 1
@@ -1272,7 +1272,7 @@ Display the specified
 Create a new screen.
 @IP{viEndScreen screenId}
 
-Exit the screen 
+Exit the screen
 @LI{screenId}.
 @IP{viSwitchScreen screenId screenId}
 

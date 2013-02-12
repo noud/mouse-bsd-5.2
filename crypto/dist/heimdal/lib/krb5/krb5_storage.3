@@ -347,10 +347,10 @@ functions move the current offset forward when the functions returns.
 .Fn krb5_store_uint16 ,
 .Fn krb5_ret_uint16 ,
 .Fn krb5_store_int8 ,
-.Fn krb5_ret_int8 
+.Fn krb5_ret_int8
 .Fn krb5_store_uint8 ,
 and
-.Fn krb5_ret_uint8 
+.Fn krb5_ret_uint8
 stores and reads an integer from
 .Fa sp
 in the byte order specified by the flags set on the
@@ -371,13 +371,13 @@ store and reads a string by storing the length of the string with
 followed by the string itself.
 .Pp
 .Fn krb5_store_stringnl
-and 
+and
 .Fn krb5_ret_stringnl
 store and reads a string by storing string followed by a
 .Dv '\n' .
 .Pp
 .Fn krb5_store_stringz
-and 
+and
 .Fn krb5_ret_stringz
 store and reads a string by storing string followed by a
 .Dv NUL .
@@ -396,19 +396,19 @@ store and reads a
 .Fn krb5_store_times
 .Fn krb5_ret_times
 store and reads
-.Li krb5_times 
+.Li krb5_times
 structure .
 .Pp
 .Fn krb5_store_address
 and
 .Fn krb5_ret_address
-store and reads a 
+store and reads a
 .Li krb5_address .
 .Pp
 .Fn krb5_store_addrs
 and
 .Fn krb5_ret_addrs
-store and reads a 
+store and reads a
 .Li krb5_addresses .
 .Pp
 .Fn krb5_store_authdata

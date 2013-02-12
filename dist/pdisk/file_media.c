@@ -6,23 +6,23 @@
 
 /*
  * Copyright 1997,1998 by Apple Computer, Inc.
- *              All Rights Reserved 
- *  
- * Permission to use, copy, modify, and distribute this software and 
- * its documentation for any purpose and without fee is hereby granted, 
- * provided that the above copyright notice appears in all copies and 
- * that both the copyright notice and this permission notice appear in 
- * supporting documentation. 
- *  
- * APPLE COMPUTER DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE 
- * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
- * FOR A PARTICULAR PURPOSE. 
- *  
- * IN NO EVENT SHALL APPLE COMPUTER BE LIABLE FOR ANY SPECIAL, INDIRECT, OR 
- * CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM 
- * LOSS OF USE, DATA OR PROFITS, WHETHER IN ACTION OF CONTRACT, 
- * NEGLIGENCE, OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION 
- * WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. 
+ *              All Rights Reserved
+ *
+ * Permission to use, copy, modify, and distribute this software and
+ * its documentation for any purpose and without fee is hereby granted,
+ * provided that the above copyright notice appears in all copies and
+ * that both the copyright notice and this permission notice appear in
+ * supporting documentation.
+ *
+ * APPLE COMPUTER DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE
+ * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE.
+ *
+ * IN NO EVENT SHALL APPLE COMPUTER BE LIABLE FOR ANY SPECIAL, INDIRECT, OR
+ * CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+ * LOSS OF USE, DATA OR PROFITS, WHETHER IN ACTION OF CONTRACT,
+ * NEGLIGENCE, OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION
+ * WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
 // for printf()
@@ -144,7 +144,7 @@ file_init(void)
 	return;
     }
     file_inited = 1;
-    
+
     file_info.kind = allocate_media_kind();
 }
 
@@ -165,7 +165,7 @@ compute_block_size(int fd)
     long t;
     int i;
     char *buffer;
-    
+
     max_size = 0;
     for (i = 0; ; i++) {
     	size = potential_block_sizes[i];
@@ -176,7 +176,7 @@ compute_block_size(int fd)
 	    max_size = size;
     	}
     }
-    
+
     buffer = malloc(max_size);
     if (buffer != 0) {
 	for (i = 0; ; i++) {
@@ -207,11 +207,11 @@ open_file_as_media(char *file, int oflag)
 #if defined(__linux__) || defined(__unix__)
     struct stat info;
 #endif
-	
+
     if (file_inited == 0) {
 	    file_init();
     }
-    
+
     a = 0;
     fd = open(file, oflag);
     if (fd >= 0) {
@@ -300,7 +300,7 @@ write_file_media(MEDIA m, long long offset, unsigned long count, void *address)
     long rtn_value;
     loff_t off;
     int t;
-	
+
     a = (FILE_MEDIA) m;
     rtn_value = 0;
     if (a == 0) {
@@ -333,7 +333,7 @@ long
 close_file_media(MEDIA m)
 {
     FILE_MEDIA a;
-    
+
     a = (FILE_MEDIA) m;
     if (a == 0) {
 	return 0;
@@ -341,7 +341,7 @@ close_file_media(MEDIA m)
 	/* XXX need to error here - this is an internal problem */
 	return 0;
     }
-    
+
     close(a->fd);
     return 1;
 }
@@ -356,7 +356,7 @@ os_reload_file_media(MEDIA m)
     int i;
     int saved_errno;
 #endif
-	
+
     a = (FILE_MEDIA) m;
     rtn_value = 0;
     if (a == 0) {
@@ -415,11 +415,11 @@ MEDIA_ITERATOR
 create_file_iterator(void)
 {
     FILE_MEDIA_ITERATOR a;
-    
+
     if (file_inited == 0) {
 	file_init();
     }
-    
+
     a = new_file_iterator();
     if (a != 0) {
 	a->m.kind = file_info.kind;
@@ -439,7 +439,7 @@ void
 reset_file_iterator(MEDIA_ITERATOR m)
 {
     FILE_MEDIA_ITERATOR a;
-    
+
     a = (FILE_MEDIA_ITERATOR) m;
     if (a == 0) {
 	/* no media */
@@ -460,7 +460,7 @@ step_file_iterator(MEDIA_ITERATOR m)
     int	fd;
     int bump;
     int value;
-    
+
     a = (FILE_MEDIA_ITERATOR) m;
     if (a == 0) {
 	/* no media */

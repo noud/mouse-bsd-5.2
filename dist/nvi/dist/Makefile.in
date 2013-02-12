@@ -509,7 +509,7 @@ vi_ipc_SOURCES = \
 	$(visrcdir)/ip/ip_screen.c \
 	$(visrcdir)/ipc/ip_send.c \
 	$(visrcdir)/ipc/ip.h \
-	$(visrcdir)/ip/ip_term.c 
+	$(visrcdir)/ip/ip_term.c
 
 vi_ipc_LDADD = libvi.la @perllibs@ @IPCOBJS@
 vi_ipc_LDFLAGS = @perlldflags@
@@ -654,7 +654,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libvi.la: $(libvi_la_OBJECTS) $(libvi_la_DEPENDENCIES) 
+libvi.la: $(libvi_la_OBJECTS) $(libvi_la_DEPENDENCIES)
 	$(LINK) -rpath $(libdir) $(libvi_la_OBJECTS) $(libvi_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -684,16 +684,16 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-vi$(EXEEXT): $(vi_OBJECTS) $(vi_DEPENDENCIES) 
+vi$(EXEEXT): $(vi_OBJECTS) $(vi_DEPENDENCIES)
 	@rm -f vi$(EXEEXT)
 	$(vi_LINK) $(vi_OBJECTS) $(vi_LDADD) $(LIBS)
-vi-gtk$(EXEEXT): $(vi_gtk_OBJECTS) $(vi_gtk_DEPENDENCIES) 
+vi-gtk$(EXEEXT): $(vi_gtk_OBJECTS) $(vi_gtk_DEPENDENCIES)
 	@rm -f vi-gtk$(EXEEXT)
 	$(vi_gtk_LINK) $(vi_gtk_OBJECTS) $(vi_gtk_LDADD) $(LIBS)
-vi-ipc$(EXEEXT): $(vi_ipc_OBJECTS) $(vi_ipc_DEPENDENCIES) 
+vi-ipc$(EXEEXT): $(vi_ipc_OBJECTS) $(vi_ipc_DEPENDENCIES)
 	@rm -f vi-ipc$(EXEEXT)
 	$(vi_ipc_LINK) $(vi_ipc_OBJECTS) $(vi_ipc_LDADD) $(LIBS)
-vi-motif$(EXEEXT): $(vi_motif_OBJECTS) $(vi_motif_DEPENDENCIES) 
+vi-motif$(EXEEXT): $(vi_motif_OBJECTS) $(vi_motif_DEPENDENCIES)
 	@rm -f vi-motif$(EXEEXT)
 	$(vi_motif_LINK) $(vi_motif_OBJECTS) $(vi_motif_LDADD) $(LIBS)
 

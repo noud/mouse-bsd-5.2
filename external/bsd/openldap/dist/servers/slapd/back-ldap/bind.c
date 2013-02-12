@@ -45,13 +45,13 @@ ldap_back_ravl_print( Avlnode *root, int depth )
 {
 	int		i;
 	ldapconn_t	*lc;
-	
+
 	if ( root == 0 ) {
 		return;
 	}
-	
+
 	ldap_back_ravl_print( root->avl_right, depth+1 );
-	
+
 	for ( i = 0; i < depth; i++ ) {
 		fprintf( stderr, "-" );
 	}
@@ -62,7 +62,7 @@ ldap_back_ravl_print( Avlnode *root, int depth )
 		lc->lc_local_ndn.bv_val ? lc->lc_local_ndn.bv_val : "",
 		(void *)lc->lc_conn,
 		avl_bf2str( root->avl_bf ), lc->lc_refcnt, lc->lc_lcflags );
-	
+
 	ldap_back_ravl_print( root->avl_left, depth+1 );
 }
 
@@ -99,14 +99,14 @@ ldap_back_print_conntree( ldapinfo_t *li, char *msg )
 			i++;
 		}
 	}
-	
+
 	if ( li->li_conninfo.lai_tree == 0 ) {
 		fprintf( stderr, "\t(empty)\n" );
 
 	} else {
 		ldap_back_ravl_print( li->li_conninfo.lai_tree, 0 );
 	}
-	
+
 	fprintf( stderr, "<======== %s\n", msg );
 }
 #endif /* LDAP_BACK_PRINT_CONNTREE */
@@ -247,7 +247,7 @@ retry:;
 		/* If defined, proxyAuthz will be used also when
 		 * back-ldap is the authorizing backend; for this
 		 * purpose, after a successful bind the connection
-		 * is left for further binds, and further operations 
+		 * is left for further binds, and further operations
 		 * on this client connection will use a default
 		 * connection with identity assertion */
 		/* NOTE: use with care */
@@ -335,7 +335,7 @@ retry_lock:;
 #if LDAP_BACK_PRINT_CONNTREE > 0
 		ldap_back_print_conntree( li, "<<< ldap_back_bind" );
 #endif /* LDAP_BACK_PRINT_CONNTREE */
-	
+
 		ldap_pvt_thread_mutex_unlock( &li->li_conninfo.lai_mutex );
 		switch ( lerr ) {
 		case 0:
@@ -449,7 +449,7 @@ ldap_back_conndn_dup( void *c1, void *c2 )
 	{
 		return -1;
 	}
-		
+
 	return 0;
 }
 
@@ -555,10 +555,10 @@ retry:;
 						rc = err;
 					}
 					res = NULL;
-					
-					/* FIXME: in case a referral 
+
+					/* FIXME: in case a referral
 					 * is returned, should we try
-					 * using it instead of the 
+					 * using it instead of the
 					 * configured URI? */
 					if ( rc == LDAP_SUCCESS ) {
 						rc = ldap_install_tls( ld );
@@ -593,7 +593,7 @@ retry:;
 
 		/* if StartTLS is requested, only attempt it if the URL
 		 * is not "ldaps://"; this may occur not only in case
-		 * of misconfiguration, but also when used in the chain 
+		 * of misconfiguration, but also when used in the chain
 		 * overlay, where the "uri" can be parsed out of a referral */
 		switch ( rc ) {
 		case LDAP_SUCCESS:
@@ -801,7 +801,7 @@ ldap_back_getconn(
 		/* need cleanup */
 		if ( binddn == NULL ) {
 			binddn = &tmpbinddn;
-		}	
+		}
 		if ( bindcred == NULL ) {
 			bindcred = &tmpbindcred;
 		}
@@ -879,11 +879,11 @@ retry_lock:
 			{
 				lc = LDAP_TAILQ_FIRST( &li->li_conn_priv[ LDAP_BACK_CONN2PRIV( &lc_curr ) ].lic_priv );
 			}
-			
+
 		} else {
 
 			/* Searches for a ldapconn in the avl tree */
-			lc = (ldapconn_t *)avl_find( li->li_conninfo.lai_tree, 
+			lc = (ldapconn_t *)avl_find( li->li_conninfo.lai_tree,
 					(caddr_t)&lc_curr, ldap_back_conndn_cmp );
 		}
 
@@ -974,12 +974,12 @@ retry_lock:
 		 * check if the non-TLS connection was already
 		 * in cache; in case, destroy the newly created
 		 * connection and use the existing one */
-		if ( LDAP_BACK_PCONN_ISTLS( lc ) 
+		if ( LDAP_BACK_PCONN_ISTLS( lc )
 				&& !ldap_tls_inplace( lc->lc_ld ) )
 		{
 			ldapconn_t	*tmplc = NULL;
 			int		idx = LDAP_BACK_CONN2PRIV( &lc_curr ) - 1;
-			
+
 			ldap_pvt_thread_mutex_lock( &li->li_conninfo.lai_mutex );
 			LDAP_TAILQ_FOREACH( tmplc,
 				&li->li_conn_priv[ idx ].lic_priv,
@@ -1013,7 +1013,7 @@ retry_lock:
 #if LDAP_BACK_PRINT_CONNTREE > 0
 		ldap_back_print_conntree( li, ">>> ldap_back_getconn(insert)" );
 #endif /* LDAP_BACK_PRINT_CONNTREE */
-	
+
 		if ( LDAP_BACK_PCONN_ISPRIV( lc ) ) {
 			if ( li->li_conn_priv[ LDAP_BACK_CONN2PRIV( lc ) ].lic_num < li->li_conn_priv_max ) {
 				LDAP_TAILQ_INSERT_TAIL( &li->li_conn_priv[ LDAP_BACK_CONN2PRIV( lc ) ].lic_priv, lc, lc_q );
@@ -1034,7 +1034,7 @@ retry_lock:
 #if LDAP_BACK_PRINT_CONNTREE > 0
 		ldap_back_print_conntree( li, "<<< ldap_back_getconn(insert)" );
 #endif /* LDAP_BACK_PRINT_CONNTREE */
-	
+
 		ldap_pvt_thread_mutex_unlock( &li->li_conninfo.lai_mutex );
 
 		if ( LogTest( LDAP_DEBUG_TRACE ) ) {
@@ -1043,12 +1043,12 @@ retry_lock:
 			snprintf( buf, sizeof( buf ),
 				"lc=%p inserted refcnt=%u rc=%d",
 				(void *)lc, refcnt, rs->sr_err );
-				
+
 			Debug( LDAP_DEBUG_TRACE,
 				"=>ldap_back_getconn: %s: %s\n",
 				op->o_log_prefix, buf, 0 );
 		}
-	
+
 		if ( !LDAP_BACK_PCONN_ISPRIV( lc ) ) {
 			/* Err could be -1 in case a duplicate ldapconn is inserted */
 			switch ( rs->sr_err ) {
@@ -1088,7 +1088,7 @@ retry_lock:
 		{
 			expiring = 1;
 
-			/* let it be used, but taint/delete it so that 
+			/* let it be used, but taint/delete it so that
 			 * no-one else can look it up any further */
 			ldap_pvt_thread_mutex_lock( &li->li_conninfo.lai_mutex );
 
@@ -1246,7 +1246,7 @@ ldap_back_dobind_int(
 	ldap_back_send_t	sendok,
 	int			retries,
 	int			dolock )
-{	
+{
 	ldapinfo_t	*li = (ldapinfo_t *)op->o_bd->be_private;
 
 	ldapconn_t	*lc;
@@ -1326,8 +1326,8 @@ retry_lock:;
 	 */
 	/*
 	 * if no bind took place yet, but the connection is bound
-	 * and the "idassert-authcDN" (or other ID) is set, 
-	 * then bind as the asserting identity and explicitly 
+	 * and the "idassert-authcDN" (or other ID) is set,
+	 * then bind as the asserting identity and explicitly
 	 * add the proxyAuthz control to every operation with the
 	 * dn bound to the connection as control value.
 	 * This is done also if this is the authorizing backend,
@@ -1527,7 +1527,7 @@ ldap_back_dobind( ldapconn_t **lcp, Operation *op, SlapReply *rs, ldap_back_send
  * This is a callback used for chasing referrals using the same
  * credentials as the original user on this session.
  */
-int 
+int
 ldap_back_default_rebind( LDAP *ld, LDAP_CONST char *url, ber_tag_t request,
 	ber_int_t msgid, void *params )
 {
@@ -1560,7 +1560,7 @@ ldap_back_default_rebind( LDAP *ld, LDAP_CONST char *url, ber_tag_t request,
 /*
  * ldap_back_default_urllist
  */
-int 
+int
 ldap_back_default_urllist(
 	LDAP		*ld,
 	LDAPURLDesc	**urllist,
@@ -1702,7 +1702,7 @@ retry:;
 					ldap_unbind_ext( lc->lc_ld, NULL, NULL );
 					lc->lc_ld = NULL;
 
-					/* let it be used, but taint/delete it so that 
+					/* let it be used, but taint/delete it so that
 					 * no-one else can look it up any further */
 					ldap_pvt_thread_mutex_lock( &li->li_conninfo.lai_mutex );
 
@@ -1739,7 +1739,7 @@ retry:;
 
 		/* otherwise get the result; if it is not
 		 * LDAP_SUCCESS, record it in the reply
-		 * structure (this includes 
+		 * structure (this includes
 		 * LDAP_COMPARE_{TRUE|FALSE}) */
 		default:
 			/* only touch when activity actually took place... */
@@ -1798,12 +1798,12 @@ retry:;
 	}
 
 	/* if the error in the reply structure is not
-	 * LDAP_SUCCESS, try to map it from client 
+	 * LDAP_SUCCESS, try to map it from client
 	 * to server error */
 	if ( !ERR_OK( rs->sr_err ) ) {
 		rs->sr_err = slap_map_api2result( rs );
 
-		/* internal ops ( op->o_conn == NULL ) 
+		/* internal ops ( op->o_conn == NULL )
 		 * must not reply to client */
 		if ( op->o_conn && !op->o_do_not_cache && match ) {
 
@@ -2021,7 +2021,7 @@ ldap_back_is_proxy_authz( Operation *op, SlapReply *rs, ldap_back_send_t sendok,
 
 			} else {
 				authcDN = ndn;
-			}	
+			}
 			rs->sr_err = slap_sasl_matches( op, li->li_idassert_authz,
 					&authcDN, &authcDN );
 			if ( rs->sr_err != LDAP_SUCCESS ) {
@@ -2231,15 +2231,15 @@ done:;
  * ldap_back_proxy_authz_ctrl() prepends a proxyAuthz control
  * to existing server-side controls if required; if not,
  * the existing server-side controls are placed in *pctrls.
- * The caller, after using the controls in client API 
+ * The caller, after using the controls in client API
  * operations, if ( *pctrls != op->o_ctrls ), should
  * free( (*pctrls)[ 0 ] ) and free( *pctrls ).
  * The function returns success if the control could
  * be added if required, or if it did nothing; in the future,
  * it might return some error if it failed.
- * 
+ *
  * if no bind took place yet, but the connection is bound
- * and the "proxyauthzdn" is set, then bind as "proxyauthzdn" 
+ * and the "proxyauthzdn" is set, then bind as "proxyauthzdn"
  * and explicitly add proxyAuthz the control to every operation
  * with the dn bound to the connection as control value.
  *
@@ -2584,7 +2584,7 @@ ldap_back_controls_add(
 	/* put controls that go __after__ existing ones here */
 
 #ifdef SLAP_CONTROL_X_SESSION_TRACKING
-	/* FIXME: according to <draft-wahl-ldap-session>, 
+	/* FIXME: according to <draft-wahl-ldap-session>,
 	 * the server should check if the control can be added
 	 * based on the identity of the client and so */
 
@@ -2656,7 +2656,7 @@ done:;
 	}
 
 	*pctrls = ctrls;
-	
+
 	return rs->sr_err;
 }
 
@@ -2697,7 +2697,7 @@ ldap_back_controls_free( Operation *op, SlapReply *rs, LDAPControl ***pctrls )
 		}
 
 		op->o_tmpfree( ctrls, op->o_tmpmemctx );
-	} 
+	}
 
 	*pctrls = NULL;
 

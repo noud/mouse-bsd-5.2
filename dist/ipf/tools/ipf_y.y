@@ -348,7 +348,7 @@ toslist:
 	| YY_HEX	{ DOREM(fr->fr_tos = $1; fr->fr_mtos = 0xff;) }
 	| toslist lmore YY_NUMBER
 			{ DOREM(fr->fr_tos = $3; fr->fr_mtos = 0xff;) }
-	| toslist lmore YY_HEX	
+	| toslist lmore YY_HEX
 			{ DOREM(fr->fr_tos = $3; fr->fr_mtos = 0xff;) }
 	;
 
@@ -683,7 +683,7 @@ andwith:
 	| IPFY_AND			{ nowith = 0; setipftype(); }
 	;
 
-flags:	| startflags flagset	
+flags:	| startflags flagset
 		{ DOALL(fr->fr_tcpf = $2; fr->fr_tcpfm = FR_TCPFMAX;) }
 	| startflags flagset '/' flagset
 		{ DOALL(fr->fr_tcpf = $2; fr->fr_tcpfm = $4;) }
@@ -775,10 +775,10 @@ fromport:
 
 srcportlist:
 	portnum		{ DOREM(fr->fr_scmp = FR_EQUAL; fr->fr_sport = $1;) }
-	| portnum ':' portnum	
+	| portnum ':' portnum
 			{ DOREM(fr->fr_scmp = FR_INCRANGE; fr->fr_sport = $1; \
 				fr->fr_stop = $3;) }
-	| portnum YY_RANGE_IN portnum	
+	| portnum YY_RANGE_IN portnum
 			{ DOREM(fr->fr_scmp = FR_INRANGE; fr->fr_sport = $1; \
 				fr->fr_stop = $3;) }
 	| srcportlist lmore portnum
@@ -853,10 +853,10 @@ toport:
 
 dstportlist:
 	portnum		{ DOREM(fr->fr_dcmp = FR_EQUAL; fr->fr_dport = $1;) }
-	| portnum ':' portnum	
+	| portnum ':' portnum
 			{ DOREM(fr->fr_dcmp = FR_INCRANGE; fr->fr_dport = $1; \
 				fr->fr_dtop = $3;) }
-	| portnum YY_RANGE_IN portnum	
+	| portnum YY_RANGE_IN portnum
 			{ DOREM(fr->fr_dcmp = FR_INRANGE; fr->fr_dport = $1; \
 				fr->fr_dtop = $3;) }
 	| dstportlist lmore portnum
@@ -2004,7 +2004,7 @@ alist_t *list;
 	top = calloc(1, sizeof(*top));
 	if (top == NULL)
 		return 0;
-	
+
 	for (n = top, a = list; (n != NULL) && (a != NULL); a = a->al_next) {
 		n->ipn_addr.adf_addr.in4.s_addr = a->al_1;
 		n->ipn_mask.adf_addr.in4.s_addr = a->al_2;
@@ -2041,7 +2041,7 @@ alist_t *list;
 	top = calloc(1, sizeof(*top));
 	if (top == NULL)
 		return 0;
-	
+
 	for (n = top, a = list; (n != NULL) && (a != NULL); a = a->al_next) {
 		n->ipe_addr.in4_addr = a->al_1;
 		n->ipe_mask.in4_addr = a->al_2;

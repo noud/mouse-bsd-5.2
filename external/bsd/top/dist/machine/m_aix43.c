@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 1984 through 2008, William LeFebvre
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  *     * Redistributions in binary form must reproduce the above
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- * 
+ *
  *     * Neither the name of William LeFebvre nor the names of other
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -81,7 +81,7 @@ struct vmker {
     uint badmem; /* this is used in RS/6000 model 220 */
     uint freemem;
     uint n12;
-    uint numperm;   /* this seems to keep other than text and data segment 
+    uint numperm;   /* this seems to keep other than text and data segment
                        usage; name taken from /usr/lpp/bos/samples/vmtune.c */
     uint totalvmem,freevmem;
     uint n15, n16, n17, n18, n19;
@@ -169,7 +169,7 @@ char *ordernames[] = {
 };
 
 /* compare routines */
-int compare_cpu(), compare_size(), compare_res(), compare_time(), 
+int compare_cpu(), compare_size(), compare_res(), compare_time(),
     compare_prio();
 
 int (*proc_compares[])() = {
@@ -367,7 +367,7 @@ get_process_info(struct system_info *si, struct process_select *sel, int compare
     curtime = time(0);
 
     /* get the procsinfo structures of all running processes */
-    nproc = getprocs(p_info, sizeof (struct procsinfo), NULL, 0, 
+    nproc = getprocs(p_info, sizeof (struct procsinfo), NULL, 0,
 		     &procsindex, nprocs);
     if (nproc < 0) {
 	perror("getprocs");
@@ -376,7 +376,7 @@ get_process_info(struct system_info *si, struct process_select *sel, int compare
 
     /* the swapper has no cmd-line attached */
     strcpy(p_info[0].pi_comm, "swapper");
-    
+
     /* get proc table */
     ptsize_util = (PROCMASK(p_info[nproc-1].pi_pid)+1) * sizeof(struct proc);
     getkval(proc_offset, (caddr_t)p_proc, ptsize_util, "proc");
@@ -409,7 +409,7 @@ get_process_info(struct system_info *si, struct process_select *sel, int compare
 		active_procs++;
 	    }
 	}
-    }   
+    }
 
     /* the pref array now holds pointers to the procsinfo structures in
      * the p_info array that were selected for display
@@ -417,9 +417,9 @@ get_process_info(struct system_info *si, struct process_select *sel, int compare
 
     /* sort if requested */
     if (si->p_active)
-	qsort((char *)pref, active_procs, sizeof (struct procsinfo *), 
+	qsort((char *)pref, active_procs, sizeof (struct procsinfo *),
 	      proc_compares[compare_index]);
-    
+
     si->last_pid = -1;		/* no way to figure out last used pid */
     si->p_total = total_procs;
     si->p_active = pref_len = active_procs;
@@ -500,7 +500,7 @@ format_next_process(caddr_t handle, char *(*get_userid)())
  *	    if "refstr" starts with a '!', then a failure on read will not
  *  	    be fatal (this may seem like a silly way to do things, but I
  *  	    really didn't want the overhead of another argument).
- *  	
+ *
  */
 
 int
@@ -534,7 +534,7 @@ getkval(unsigned long offset, caddr_t ptr, int size, char *refstr)
 
     return 1 ;
 }
-    
+
 /* comparison routine for qsort */
 /*
  * The following code is taken from the solaris module and adjusted
@@ -555,7 +555,7 @@ getkval(unsigned long offset, caddr_t ptr, int size, char *refstr)
 
 /* Nice values directly reflect the process' priority, and are always >0 ;-) */
 #define ORDERKEY_PRIO \
-	   if ((result = EXTRACT_NICE(p1) - EXTRACT_NICE(p2)) == 0) 
+	   if ((result = EXTRACT_NICE(p1) - EXTRACT_NICE(p2)) == 0)
 
 #define ORDERKEY_RSSIZE \
            if ((result = PROCRESS(pi2) - PROCRESS(pi1)) == 0)
@@ -600,7 +600,7 @@ compare_cpu(struct procsinfo **ppi1, struct procsinfo **ppi2)
 
     return result;
 }
-    
+
 
 /* compare_size - the comparison function for sorting by total memory usage */
 
@@ -627,7 +627,7 @@ compare_size(struct procsinfo **ppi1, struct procsinfo **ppi2)
 
     return result;
 }
-    
+
 
 /* compare_res - the comparison function for sorting by resident set size */
 
@@ -654,7 +654,7 @@ compare_res(struct procsinfo **ppi1, struct procsinfo **ppi2)
 
     return result;
 }
-    
+
 
 /* compare_time - the comparison function for sorting by total cpu time */
 
@@ -681,7 +681,7 @@ compare_time(struct procsinfo **ppi1, struct procsinfo **ppi2)
 
     return result;
 }
-    
+
 
 /* compare_prio - the comparison function for sorting by cpu percentage */
 
@@ -708,7 +708,7 @@ compare_prio(struct procsinfo **ppi1, struct procsinfo **ppi2)
 
     return result;
 }
-    
+
 int
 proc_owner(int pid)
 
@@ -722,7 +722,7 @@ proc_owner(int pid)
 	   return (*prefp)->pi_uid;
        prefp++;
    }
-   
+
    return(-1);
 }
 

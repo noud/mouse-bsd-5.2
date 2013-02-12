@@ -247,7 +247,7 @@ str2entry2( char *s, int checkvals )
 			if ( !ad || ( i<lines && !bvcasematch( type+i, &ad->ad_cname ))) {
 				ad = NULL;
 				rc = slap_bv2ad( type+i, &ad, &text );
-	
+
 				if( rc != LDAP_SUCCESS ) {
 					Debug( slapMode & SLAP_TOOL_MODE
 						? LDAP_DEBUG_ANY : LDAP_DEBUG_TRACE,
@@ -255,7 +255,7 @@ str2entry2( char *s, int checkvals )
 					if( slapMode & SLAP_TOOL_MODE ) {
 						goto fail;
 					}
-	
+
 					rc = slap_bv2undef_ad( type+i, &ad, &text, 0 );
 					if( rc != LDAP_SUCCESS ) {
 						Debug( LDAP_DEBUG_ANY,
@@ -264,18 +264,18 @@ str2entry2( char *s, int checkvals )
 						goto fail;
 					}
 				}
-	
+
 				/* require ';binary' when appropriate (ITS#5071) */
 				if ( slap_syntax_is_binary( ad->ad_type->sat_syntax ) && !slap_ad_is_binary( ad ) ) {
 					Debug( LDAP_DEBUG_ANY,
 						"str2entry: attributeType %s #%d: "
-						"needs ';binary' transfer as per syntax %s\n", 
+						"needs ';binary' transfer as per syntax %s\n",
 						ad->ad_cname.bv_val, 0,
 						ad->ad_type->sat_syntax->ssyn_oid );
 					goto fail;
 				}
 			}
-	
+
 			if (( ad_prev && ad != ad_prev ) || ( i == lines )) {
 				int j, k;
 				/* FIXME: we only need this when migrating from an unsorted DB */
@@ -323,41 +323,41 @@ str2entry2( char *s, int checkvals )
 				attr_cnt = 0;
 				if ( i == lines ) break;
 			}
-	
+
 			if ( BER_BVISNULL( &vals[i] ) ) {
 				Debug( LDAP_DEBUG_ANY,
 					"str2entry: attributeType %s #%d: "
-					"no value\n", 
+					"no value\n",
 					ad->ad_cname.bv_val, attr_cnt, 0 );
 				goto fail;
 			}
-	
+
 			if( slapMode & SLAP_TOOL_MODE ) {
 				struct berval pval;
 				slap_syntax_validate_func *validate =
 					ad->ad_type->sat_syntax->ssyn_validate;
 				slap_syntax_transform_func *pretty =
 					ad->ad_type->sat_syntax->ssyn_pretty;
-	
+
 				if ( pretty ) {
 					rc = ordered_value_pretty( ad,
 						&vals[i], &pval, NULL );
-	
+
 				} else if ( validate ) {
 					/*
 				 	 * validate value per syntax
 				 	 */
 					rc = ordered_value_validate( ad, &vals[i], LDAP_MOD_ADD );
-	
+
 				} else {
 					Debug( LDAP_DEBUG_ANY,
 						"str2entry: attributeType %s #%d: "
-						"no validator for syntax %s\n", 
+						"no validator for syntax %s\n",
 						ad->ad_cname.bv_val, attr_cnt,
 						ad->ad_type->sat_syntax->ssyn_oid );
 					goto fail;
 				}
-	
+
 				if( rc != 0 ) {
 					Debug( LDAP_DEBUG_ANY,
 						"str2entry: invalid value "
@@ -366,14 +366,14 @@ str2entry2( char *s, int checkvals )
 						ad->ad_type->sat_syntax->ssyn_oid );
 					goto fail;
 				}
-	
+
 				if( pretty ) {
 					if ( freeval[i] ) free( vals[i].bv_val );
 					vals[i] = pval;
 					freeval[i] = 1;
 				}
 			}
-	
+
 			if ( ad->ad_type->sat_equality &&
 				ad->ad_type->sat_equality->smr_normalize )
 			{
@@ -382,14 +382,14 @@ str2entry2( char *s, int checkvals )
 					ad,
 					ad->ad_type->sat_equality,
 					&vals[i], &nvals[i], NULL );
-	
+
 				if ( rc ) {
 					Debug( LDAP_DEBUG_ANY,
 				   		"<= str2entry NULL (smr_normalize %s %d)\n", ad->ad_cname.bv_val, rc, 0 );
 					goto fail;
 				}
 			}
-	
+
 			attr_cnt++;
 		}
 	}

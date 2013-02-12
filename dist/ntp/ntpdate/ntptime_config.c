@@ -228,20 +228,20 @@ M
 		switch(tok) {
 		    case CONFIG_PEER:
 		    case CONFIG_SERVER:
-			
+
 			if (ntokens < 2) {
 				msyslog(LOG_ERR,
 					"No address for %s, line ignored",
 					tokens[0]);
 				break;
 			}
-			
+
 			if (!getnetnum(tokens[1], &peeraddr, 1)) {
 				/* Resolve now, or lose! */
 				break;
 			} else {
 				errflg = 0;
-				
+
 				/* Shouldn't be able to specify multicast */
 				if (IN_CLASSD(ntohl(peeraddr.sin_addr.s_addr))
 				    || ISBADADR(&peeraddr)) {
@@ -276,7 +276,7 @@ M
 					    errflg = 1;
 				    }
 				    break;
-					
+
 				case CONF_MOD_KEY:
 				    if (i >= ntokens-1) {
 					    msyslog(LOG_ERR,
@@ -367,7 +367,7 @@ M
 				srvcnt++;
 			}
 			break;
-			
+
 			case CONFIG_KEYS:
 			if (ntokens >= 2) {
 				key_file = (char *) emalloc(strlen(tokens[1]) + 1);
@@ -380,7 +380,7 @@ M
 
 	/* build final list */
 	sys_numservers = srvcnt;
-	sys_servers = (struct server **) 
+	sys_servers = (struct server **)
 	    emalloc(sys_numservers * sizeof(struct server *));
 	for(i=0;i<sys_numservers;i++) {
 		sys_servers[i] = srvlist;

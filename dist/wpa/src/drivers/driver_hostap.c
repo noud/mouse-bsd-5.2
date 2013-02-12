@@ -45,7 +45,7 @@ static int hostapd_ioctl(struct wpa_driver_hostap_data *drv,
 
 	if (ioctl(drv->sock, PRISM2_IOCTL_HOSTAPD, &iwr) < 0) {
 		int ret = errno;
-		if (show_err) 
+		if (show_err)
 			perror("ioctl[PRISM2_IOCTL_HOSTAPD]");
 		return ret;
 	}
@@ -352,7 +352,7 @@ wpa_driver_hostap_associate(void *priv,
 		allow_unencrypted_eapol = 0;
 	else
 		allow_unencrypted_eapol = 1;
-	
+
 	if (prism2param(drv, PRISM2_PARAM_IEEE_802_1X,
 			allow_unencrypted_eapol) < 0) {
 		wpa_printf(MSG_DEBUG, "hostap: Failed to configure "

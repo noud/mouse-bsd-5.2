@@ -91,7 +91,7 @@ isc_result_t interface_setup ()
 					     dhcp_interface_destroy,
 					     dhcp_interface_signal_handler,
 					     dhcp_interface_stuff_values,
-					     dhcp_interface_lookup, 
+					     dhcp_interface_lookup,
 					     dhcp_interface_create,
 					     dhcp_interface_remove,
 #endif
@@ -169,7 +169,7 @@ void discover_interfaces (state)
 #ifdef SIOCGIFCONF_ZERO_PROBE
 	/* linux will only tell us how long a buffer it wants if we give it
 	 * a null buffer first. So, do a dry run to figure out the length.
-	 * 
+	 *
 	 * XXX this code is duplicated from below because trying to fold
 	 * the logic into the if statement and goto resulted in excesssive
 	 * obfuscation. The intent is that unless you run Linux you shouldn't
@@ -210,7 +210,7 @@ void discover_interfaces (state)
 	 * everything only if there is an entire struct ifreq worth of
 	 * space left.
 	 */
-	if ((ic.ifc_ifcu.ifcu_buf == buf 
+	if ((ic.ifc_ifcu.ifcu_buf == buf
 #ifdef SIOCGIFCONF_ZERO_PROBE
 	     || ic.ifc_ifcu.ifcu_buf == 0
 #endif
@@ -227,7 +227,7 @@ void discover_interfaces (state)
 #endif
 	}
 
-		
+
 	/* If we already have a list of interfaces, and we're running as
 	   a DHCP server, the interfaces were requested. */
 	if (interfaces && (state == DISCOVER_SERVER ||
@@ -265,8 +265,8 @@ void discover_interfaces (state)
 			if (sizeof(struct ifreq) + ifp->ifr_addr.sa_len >
 			    sizeof(ifcpy))
 				break;
-			/* XXX This copies IFNAMSIZ bytes too many. */ 
-			memcpy(&ifcpy, (caddr_t)ic.ifc_req + i, 
+			/* XXX This copies IFNAMSIZ bytes too many. */
+			memcpy(&ifcpy, (caddr_t)ic.ifc_req + i,
 			    sizeof(struct ifreq) + ifp->ifr_addr.sa_len);
 			i += offsetof(struct ifreq, ifr_ifru) +
 			    ifp -> ifr_addr.sa_len;
@@ -308,7 +308,7 @@ void discover_interfaces (state)
 		    (!(ifr.ifr_flags & IFF_UP) &&
 		     state != DISCOVER_UNCONFIGURED))
 			continue;
-		
+
 		/* If there isn't already an interface by this name,
 		   allocate one. */
 		if (!tmp) {
@@ -494,7 +494,7 @@ void discover_interfaces (state)
 		struct ifreq ifr;
 		struct sockaddr sa;
 		int b, sk;
-		
+
 		if (!tmp -> ifp) {
 			/* Make up an ifreq structure. */
 			tif = (struct ifreq *)dmalloc (sizeof (struct ifreq),
@@ -510,9 +510,9 @@ void discover_interfaces (state)
 		ifr = *tmp -> ifp;
 		if (ioctl (sock, SIOCGIFHWADDR, &ifr) < 0)
 			continue;
-		
+
 		sa = *(struct sockaddr *)&ifr.ifr_hwaddr;
-		
+
 		switch (sa.sa_family) {
 #ifdef HAVE_ARPHRD_TUNNEL
 		      case ARPHRD_TUNNEL:
@@ -879,7 +879,7 @@ isc_result_t dhcp_interface_set_value  (omapi_object_t *h,
 		if (status == ISC_R_SUCCESS || status == ISC_R_UNCHANGED)
 			return status;
 	}
-			  
+
 	return ISC_R_NOTFOUND;
 }
 
@@ -1080,7 +1080,7 @@ isc_result_t dhcp_interface_create (omapi_object_t **lp,
 {
  	struct interface_info *hp;
 	isc_result_t status;
-	
+
 	hp = (struct interface_info *)0;
 	status = interface_allocate (&hp, MDL);
  	if (status != ISC_R_SUCCESS)

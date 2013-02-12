@@ -66,7 +66,7 @@ sub loadfile
 			{
 			$n=join(' ',grep(/[^k]$/,@a));
 			@k=grep(s/k$//,@a);
-			
+
 			$ret{$n,   8}=$k[0];
 			$ret{$n,  64}=$k[1];
 			$ret{$n, 256}=$k[2];

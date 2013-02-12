@@ -210,7 +210,7 @@ ex_read(SCR *sp, EXCMD *cmdp)
 			abort();
 			/* NOTREACHED */
 		case 2:
-			INT2CHAR(sp, cmdp->argv[1]->bp, cmdp->argv[1]->len + 1, 
+			INT2CHAR(sp, cmdp->argv[1]->bp, cmdp->argv[1]->len + 1,
 				 name, nlen);
 			/*
 			 * !!!
@@ -242,7 +242,7 @@ ex_read(SCR *sp, EXCMD *cmdp)
 		default:
 			ex_wemsg(sp, cmdp->argv[0]->bp, EXM_FILECOUNT);
 			return (1);
-		
+
 		}
 		break;
 	}

@@ -242,7 +242,7 @@ static	Widget	create_push_buttons( parent, data, count )
     int		pos = 1, base;
 
     base = SpacingRatio*count + 1;
-    form = XtVaCreateManagedWidget( "buttons", 
+    form = XtVaCreateManagedWidget( "buttons",
 				    xmFormWidgetClass,
 				    parent,
 				    XmNleftAttachment,	XmATTACH_FORM,
@@ -299,7 +299,7 @@ static	Widget	create_check_boxes( parent, toggles, count )
     int		pos = 1, base;
 
     base = SpacingRatio*count +1;
-    form = XtVaCreateManagedWidget( "toggles", 
+    form = XtVaCreateManagedWidget( "toggles",
 				    xmFormWidgetClass,
 				    parent,
 				    XmNleftAttachment,	XmATTACH_FORM,
@@ -356,7 +356,7 @@ static	void	text_cr( w, ptr, ptr2 )
  * I don't currently see any way to make this work -- incremental search
  * is going to be really nasty.  What makes it worse is that the dialog
  * box almost certainly obscured a chunk of the text file, so there's no
- * way to use it even if it works.  
+ * way to use it even if it works.
  */
 #if defined(__STDC__)
 static	void	value_changed( Widget w, void *ptr, void *ptr2 )
@@ -410,7 +410,7 @@ static	Widget	create_search_dialog( parent, title )
 				0
 				);
 
-    form = XtVaCreateWidget( "form", 
+    form = XtVaCreateWidget( "form",
 				xmFormWidgetClass,
 				box,
 				XmNverticalSpacing,	4,
@@ -418,7 +418,7 @@ static	Widget	create_search_dialog( parent, title )
 				0
 				);
 
-    form2 = XtVaCreateManagedWidget( "form", 
+    form2 = XtVaCreateManagedWidget( "form",
 				xmFormWidgetClass,
 				form,
 				XmNtopAttachment,	XmATTACH_FORM,
@@ -427,7 +427,7 @@ static	Widget	create_search_dialog( parent, title )
 				0
 				);
 
-    label = XtVaCreateManagedWidget( "Pattern:", 
+    label = XtVaCreateManagedWidget( "Pattern:",
 				    xmLabelWidgetClass,
 				    form2,
 				    XmNtopAttachment,	XmATTACH_FORM,
@@ -436,7 +436,7 @@ static	Widget	create_search_dialog( parent, title )
 				    0
 				    );
 
-    text = XtVaCreateManagedWidget( PatternWidget, 
+    text = XtVaCreateManagedWidget( PatternWidget,
 				    xmTextFieldWidgetClass,
 				    form2,
 				    XmNtopAttachment,	XmATTACH_FORM,

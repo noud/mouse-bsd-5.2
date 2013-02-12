@@ -675,8 +675,8 @@ srcunit(int unit, int onlyown, int hflg)
     jmp_buf oldexit;
     Char *oarginp, *oevalp, **oevalvec, *ogointr;
     char OHIST;
-    int oSHIN, oinsource, oldintty, oonelflg; 
-    int oenterhist, otell;      
+    int oSHIN, oinsource, oldintty, oonelflg;
+    int oenterhist, otell;
     /* The (few) real local variables */
     int my_reenter;
 
@@ -809,7 +809,7 @@ rechist(void)
   	}
 
   	if ((fp = open(short2str(hfile), O_WRONLY | O_CREAT | O_TRUNC,
-	    0600)) == -1) 
+	    0600)) == -1)
   	    return;
 
 	oldidfds = didfds;
@@ -874,14 +874,14 @@ phup(int sig)
 
     /*
      * We kill the last foreground process group. It then becomes
-     * responsible to propagate the SIGHUP to its progeny. 
+     * responsible to propagate the SIGHUP to its progeny.
      */
     {
 	struct process *pp, *np;
 
 	for (pp = proclist.p_next; pp; pp = pp->p_next) {
 	    np = pp;
-	    /* 
+	    /*
 	     * Find if this job is in the foreground. It could be that
 	     * the process leader has exited and the foreground flag
 	     * is cleared for it.
@@ -889,7 +889,7 @@ phup(int sig)
 	    do
 		/*
 		 * If a process is in the foreground; we try to kill
-		 * its process group. If we succeed, then the 
+		 * its process group. If we succeed, then the
 		 * whole job is gone. Otherwise we keep going...
 		 * But avoid sending HUP to the shell again.
 		 */
@@ -992,7 +992,7 @@ process(int catch)
     jmp_buf osetexit;
     sigset_t nsigset;
 
-    t = savet;    
+    t = savet;
     savet = NULL;
     getexit(osetexit);
     for (;;) {
@@ -1267,9 +1267,9 @@ vis_fputc(int ch, FILE *fp)
 {
     char uenc[5];	/* 4 + NULL */
 
-    if (ch & QUOTE) 
+    if (ch & QUOTE)
 	return fputc(ch & TRIM, fp);
-    /* 
+    /*
      * XXX: When we are in AsciiOnly we want all characters >= 0200 to
      * be encoded, but currently there is no way in vis to do that.
      */

@@ -2,7 +2,7 @@ This file, together with ChangeLog.0_9_7-stable_not-in-head_FIPS,
 provides a collection of those CVS change log entries for the
 0.9.7 branch (OpenSSL_0_9_7-stable) that do not appear similarly in
 0.9.8-dev (CVS head).
-    
+
 ChangeLog.0_9_7-stable_not-in-head_FIPS  -  "FIPS" related changes
 ChangeLog.0_9_7-stable_not-in-head       -  everything else
 
@@ -10,7 +10,7 @@ Some obvious false positives have been eliminated: e.g., we do not
 care about a simple "make update"; and we don't care about changes
 identified to the 0.9.7 branch that were explicitly identified as
 backports from head.
-    
+
 Eliminating all other entries (and finally this file and its
 compantion), either as false positives or as things that should go
 into 0.9.8, remains to be done.  Any additional changes to 0.9.7 that

@@ -164,7 +164,7 @@ _prop_number_free(prop_stack_t stack, prop_object_t *obj)
 	return (_PROP_OBJECT_FREE_DONE);
 }
 
-static void 
+static void
 _prop_number_lock()
 {
 	_PROP_MUTEX_LOCK(_prop_number_tree_mutex);
@@ -175,7 +175,7 @@ _prop_number_unlock()
 {
 	_PROP_MUTEX_UNLOCK(_prop_number_tree_mutex);
 }
-	
+
 static bool
 _prop_number_externalize(struct _prop_object_externalize_context *ctx,
 			 void *v)
@@ -196,7 +196,7 @@ _prop_number_externalize(struct _prop_object_externalize_context *ctx,
 	    _prop_object_externalize_append_cstring(ctx, tmpstr) == false ||
 	    _prop_object_externalize_end_tag(ctx, "integer") == false)
 		return (false);
-	
+
 	return (true);
 }
 
@@ -475,7 +475,7 @@ prop_number_equals_integer(prop_number_t pn, int64_t val)
 	if (pn->pn_value.pnv_is_unsigned &&
 	    (pn->pn_value.pnv_unsigned > INT64_MAX || val < 0))
 		return (false);
-	
+
 	return (pn->pn_value.pnv_signed == val);
 }
 
@@ -490,11 +490,11 @@ prop_number_equals_unsigned_integer(prop_number_t pn, uint64_t val)
 
 	if (! prop_object_is_number(pn))
 		return (false);
-	
+
 	if (! pn->pn_value.pnv_is_unsigned &&
 	    (pn->pn_value.pnv_signed < 0 || val > INT64_MAX))
 		return (false);
-	
+
 	return (pn->pn_value.pnv_unsigned == val);
 }
 

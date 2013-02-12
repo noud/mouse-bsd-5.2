@@ -149,7 +149,7 @@ closelog() {
  */
 void
 ModifyLogLevel(int level) {
-	debug_level = level;	
+	debug_level = level;
 }
 
 /*

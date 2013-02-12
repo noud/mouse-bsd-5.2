@@ -139,12 +139,12 @@ krb5_init(void)
 	    kerberos5_set_forwardable(1);
 #endif
 #ifdef  ENCRYPTION
-    krb5_appdefault_boolean(context, NULL, 
+    krb5_appdefault_boolean(context, NULL,
 			    NULL, "encrypt",
 			    0, &ret_val);
     if (ret_val) {
           encrypt_auto(1);
-          decrypt_auto(1); 
+          decrypt_auto(1);
 	  wantencryption = 1;
           EncryptVerbose(1);
         }
@@ -170,7 +170,7 @@ main(int argc, char **argv)
 #ifdef KRB5
 	krb5_init();
 #endif
-	
+
 	tninit();		/* Clear out things */
 
 	TerminalSaveState();
@@ -184,10 +184,10 @@ main(int argc, char **argv)
 
 	rlogin = (strncmp(prompt, "rlog", 4) == 0) ? '~' : _POSIX_VDISABLE;
 
-	/* 
+	/*
 	 * if AUTHENTICATION and ENCRYPTION is set autologin will be
 	 * se to true after the getopt switch; unless the -K option is
-	 * passed 
+	 * passed
 	 */
 	autologin = -1;
 

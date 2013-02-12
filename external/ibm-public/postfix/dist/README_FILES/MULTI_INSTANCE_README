@@ -708,7 +708,7 @@ explicit name, the default instance can always be selected via "-i -".
 
 The output is one line per instance (in "postfix start" order):
 
-     _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+     _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     |nnaammee   |ggrroouupp|eennaabblleedd|ccoonnffiigg__ddiirreeccttoorryy    |
     |_ _ _ _ _ _ _ _|_ _ _ _ _ _|_ _ _ _ _ _ _ _|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |
     |-      |-    |yes    |/etc/postfix        |

@@ -1,6 +1,6 @@
 /*	$NetBSD: sht.c,v 1.2 2003/12/04 16:23:38 drochner Exp $	*/
 
-/* 
+/*
  * sht.c - Testprogram for shared memory refclock
  * read/write shared memory segment; see usage
  */
@@ -23,11 +23,11 @@
 #include <assert.h>
 struct shmTime {
 	int    mode; /* 0 - if valid set
-		      *       use values, 
+		      *       use values,
 		      *       clear valid
-		      * 1 - if valid set 
+		      * 1 - if valid set
 		      *       if count before and after read of values is equal,
-		      *         use values 
+		      *         use values
 		      *       clear valid
 		      */
 	int    count;
@@ -91,7 +91,7 @@ getShmTime (
 		exit (1);
 	}
 	else {
-		struct shmTime *p=(struct shmTime *) MapViewOfFile (shmid, 
+		struct shmTime *p=(struct shmTime *) MapViewOfFile (shmid,
 								    FILE_MAP_WRITE, 0, 0, sizeof (struct shmTime));
 		if (p==0) {
 			char mbuf[1000];

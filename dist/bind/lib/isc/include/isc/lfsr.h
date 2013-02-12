@@ -56,7 +56,7 @@ struct isc_lfsr {
 ISC_LANG_BEGINDECLS
 
 
-void 
+void
 isc_lfsr_init(isc_lfsr_t *lfsr, isc_uint32_t state, unsigned int bits,
 		   isc_uint32_t tap, unsigned int count,
 		   isc_lfsrreseed_t reseed, void *arg);
@@ -77,7 +77,7 @@ isc_lfsr_init(isc_lfsr_t *lfsr, isc_uint32_t state, unsigned int bits,
  *\li	tap != 0
  */
 
-void 
+void
 isc_lfsr_generate(isc_lfsr_t *lfsr, void *data, unsigned int count);
 /*%<
  * Returns "count" bytes of data from the LFSR.
@@ -91,7 +91,7 @@ isc_lfsr_generate(isc_lfsr_t *lfsr, void *data, unsigned int count);
  *\li	count > 0.
  */
 
-void 
+void
 isc_lfsr_skip(isc_lfsr_t *lfsr, unsigned int skip);
 /*%<
  * Skip "skip" states.
@@ -101,7 +101,7 @@ isc_lfsr_skip(isc_lfsr_t *lfsr, unsigned int skip);
  *\li	lfsr be valid.
  */
 
-isc_uint32_t 
+isc_uint32_t
 isc_lfsr_generate32(isc_lfsr_t *lfsr1, isc_lfsr_t *lfsr2);
 /*%<
  * Given two LFSRs, use the current state from each to skip entries in the

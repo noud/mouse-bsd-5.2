@@ -18,7 +18,7 @@ slapcat \- SLAPD database to LDIF utility
 .B [\-o name[=value]]
 .B [\-s subtree-dn]
 .B [\-v]
-.B 
+.B
 .LP
 .SH DESCRIPTION
 .LP
@@ -59,7 +59,7 @@ slapcat -a \\
 will dump all but the "ou=People,dc=example,dc=com" subtree
 of the "dc=example,dc=com" database.
 .TP
-.BI \-b " suffix" 
+.BI \-b " suffix"
 Use the specified \fIsuffix\fR to determine which database to
 generate output for.  The \-b cannot be used in conjunction
 with the
@@ -138,7 +138,7 @@ For some backend types, your
 .BR slapd (8)
 should not be running (at least, not in read-write
 mode) when you do this to ensure consistency of the database. It is
-always safe to run 
+always safe to run
 .B slapcat
 with the
 .BR slapd-bdb (5),

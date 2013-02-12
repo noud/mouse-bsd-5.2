@@ -53,7 +53,7 @@
 #include "conffile.h"
 
 
-int 
+int
 param_list_add(iscsi_parameter_t ** head, int type, const char *key, const char *dflt, const char *valid)
 {
 	iscsi_parameter_t *param;
@@ -148,7 +148,7 @@ param_list_add(iscsi_parameter_t ** head, int type, const char *key, const char 
 		return 0;
 }
 
-int 
+int
 param_list_destroy(iscsi_parameter_t * head)
 {
 	iscsi_parameter_t *ptr, *tmp;
@@ -222,7 +222,7 @@ param_val_which(iscsi_parameter_t * head, const char *key, int which)
 	return NULL;
 }
 
-static int 
+static int
 param_val_delete_all(iscsi_parameter_t * head, char *key)
 {
 	iscsi_parameter_t *ptr;
@@ -242,7 +242,7 @@ param_val_delete_all(iscsi_parameter_t * head, char *key)
 	return -1;
 }
 
-int 
+int
 param_val_reset(iscsi_parameter_t * head, const char *key)
 {
 	iscsi_parameter_t *ptr;
@@ -257,7 +257,7 @@ param_val_reset(iscsi_parameter_t * head, const char *key)
 	return -1;
 }
 
-int 
+int
 param_atoi(iscsi_parameter_t * head, const char *key)
 {
 	iscsi_parameter_t *ptr;
@@ -282,7 +282,7 @@ param_atoi(iscsi_parameter_t * head, const char *key)
 	return 0;
 }
 
-int 
+int
 param_equiv(iscsi_parameter_t * head, const char *key, const char *val)
 {
 	iscsi_parameter_t *ptr;
@@ -305,7 +305,7 @@ param_equiv(iscsi_parameter_t * head, const char *key, const char *val)
 	return -1;
 }
 
-int 
+int
 param_num_vals(iscsi_parameter_t * head, char *key)
 {
 	iscsi_parameter_t *ptr;
@@ -324,7 +324,7 @@ param_num_vals(iscsi_parameter_t * head, char *key)
 	return -1;
 }
 
-int 
+int
 param_list_print(iscsi_parameter_t * head)
 {
 	iscsi_parameter_t *ptr;
@@ -338,7 +338,7 @@ param_list_print(iscsi_parameter_t * head)
 	return 0;
 }
 
-int 
+int
 param_text_print(char *text, uint32_t text_len)
 {
 	char            key[256];
@@ -366,7 +366,7 @@ param_text_print(char *text, uint32_t text_len)
 }
 
 /* ARGSUSED */
-int 
+int
 param_text_add(iscsi_parameter_t * head, const char *key, const char *value, char *text, int *len, int size, int offer)
 {
 	int	cc;
@@ -376,7 +376,7 @@ param_text_add(iscsi_parameter_t * head, const char *key, const char *value, cha
 	return 0;
 }
 
-int 
+int
 driver_atoi(const char *s)
 {
 	int             k = 0;
@@ -656,12 +656,12 @@ param_parse_security(iscsi_parameter_t * head,
 	return (ret);
 }
 
-int 
+int
 param_text_parse(iscsi_parameter_t * head,
 		 iscsi_cred_t *cred,
 		 char *text_in, int text_len_in,
 		 char *text_out, int *text_len_out,
-		 int textsize, 
+		 int textsize,
 		 int outgoing)
 {
 	static char    *key = NULL;
@@ -866,7 +866,7 @@ param_text_parse(iscsi_parameter_t * head,
 			} else {
 				param->rx_offer = 1;	/* received an offer */
 				param->rx_answer = 0;
-				param->tx_answer = 0; 
+				param->tx_answer = 0;
 				(void) strlcpy(param->offer_rx, value, sizeof(param->offer_rx));
 				iscsi_trace(TRACE_ISCSI_PARAM, __FILE__, __LINE__, "received offer \"%s\"=\"%s\"\n", param->key, param->offer_rx);
 
@@ -1069,7 +1069,7 @@ declarative_negotiate:
 			} else if (param->rx_offer) {
 				(void) strlcpy(param->negotiated, param->offer_rx, sizeof(param->negotiated));
 			} else {
-				iscsi_trace_error(__FILE__, __LINE__, "Invalid negotiation!?!?\n");	
+				iscsi_trace_error(__FILE__, __LINE__, "Invalid negotiation!?!?\n");
 			}
 			break;
 		case ISCSI_PARAM_TYPE_BINARY_AND:
@@ -1273,7 +1273,7 @@ next:
 	return 0;
 }
 
-void 
+void
 set_session_parameters(iscsi_parameter_t * head,
 		       iscsi_sess_param_t * sess_params)
 {

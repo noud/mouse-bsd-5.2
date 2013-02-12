@@ -201,7 +201,7 @@ int makeinit(fa *f, int anchor)
 	f->curstat = 2;
 	f->out[2] = 0;
 	k = *(f->re[0].lfollow);
-	xfree(f->posns[2]);			
+	xfree(f->posns[2]);
 	if ((f->posns[2] = (int *) calloc(1, (k+1)*sizeof(int))) == NULL)
 		overflo("out of space in makeinit");
 	for (i=0; i <= k; i++) {
@@ -812,7 +812,7 @@ int relex(void)		/* lexical analyzer for reparse */
 	default:
 		rlxval = c;
 		return CHAR;
-	case '[': 
+	case '[':
 		if (buf == 0 && (buf = (uschar *) malloc(bufsz)) == NULL)
 			FATAL("out of space in reg expr %.10s..", lastre);
 		bp = buf;

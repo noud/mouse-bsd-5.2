@@ -37,7 +37,7 @@ nameprep RFC3491
 #
 # `local-map' entry specifies TLD (top level domain) based local mapping
 # schemes, which is performed before NAMEPREP.  Available schemes are:
-# 
+#
 #	<nameprep version>      -- nameprep version
 #	filemap:<pathname>      -- read mapping rules from a file
 #
@@ -55,7 +55,7 @@ nameprep RFC3491
 # whose TLD does not match any TLDs specified in local-map entries.
 # If <tld> is `-', its schemes are applied to domain names which
 # contain no dots.
-# 
+#
 #local-map -	filemap:/some/where/local.map
 #local-map .	filemap:/some/where/default.map
 local-map .jp	filemap:@mapdir@/jp.map

@@ -50,7 +50,7 @@ __weak_alias(strncasecmp,_strncasecmp)
 #else
 #include <lib/libkern/libkern.h>
 #include <machine/limits.h>
-#endif 
+#endif
 
 int
 strncasecmp(const char *s1, const char *s2, size_t n)

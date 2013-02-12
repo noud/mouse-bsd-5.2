@@ -51,7 +51,7 @@ prop_array_get_bool(prop_array_t array,
 	b = prop_array_get(array, indx);
 	if (prop_object_type(b) != PROP_TYPE_BOOL)
 		return (false);
-	
+
 	*valp = prop_bool_true(b);
 
 	return (true);

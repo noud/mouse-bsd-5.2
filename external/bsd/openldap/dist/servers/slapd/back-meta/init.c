@@ -135,7 +135,7 @@ meta_back_db_init(
 		LDAP_TAILQ_INIT( &mi->mi_conn_priv[ i ].mic_priv );
 	}
 	mi->mi_conn_priv_max = LDAP_BACK_CONN_PRIV_DEFAULT;
-	
+
 	mi->mi_ldap_extra = (ldap_extra_t *)bi->bi_extra;
 
 	be->be_private = mi;
@@ -244,7 +244,7 @@ meta_back_db_open(
  * and it must not (or no longer) be in the cache.
  */
 void
-meta_back_conn_free( 
+meta_back_conn_free(
 	void 		*v_mc )
 {
 	metaconn_t		*mc = v_mc;
@@ -400,7 +400,7 @@ meta_back_db_destroy(
 		if ( mi->mi_cache.tree ) {
 			avl_free( mi->mi_cache.tree, meta_dncache_free );
 		}
-		
+
 		ldap_pvt_thread_mutex_unlock( &mi->mi_cache.mutex );
 		ldap_pvt_thread_mutex_destroy( &mi->mi_cache.mutex );
 

@@ -226,7 +226,7 @@ Building
 
 	    CFLAGS
 		C compiler flags.  Defaults to include -g and/or -O2
-		as supported by the compiler.  
+		as supported by the compiler.
 
 	    STD_CINCLUDES
 		System header file directories.	 Can be used to specify
@@ -239,7 +239,7 @@ Building
 
 		Possible settings:
 		Change the default syslog facility of named/lwresd.
-		  -DISC_FACILITY=LOG_LOCAL0	
+		  -DISC_FACILITY=LOG_LOCAL0
 		Enable DNSSEC signature chasing support in dig.
 		  -DDIG_SIGCHASE=1 (sets -DDIG_SIGCHASE_TD=1 and
 				    -DDIG_SIGCHASE_BU=1)
@@ -287,7 +287,7 @@ Building
 
 	On some platforms, BIND 9 can be built with multithreading
 	support, allowing it to take advantage of multiple CPUs.
-	You can specify whether to build a multithreaded BIND 9 
+	You can specify whether to build a multithreaded BIND 9
 	by specifying "--enable-threads" or "--disable-threads"
 	on the configure command line.  The default is operating
 	system dependent.
@@ -305,7 +305,7 @@ Building
 	By default, installation is into /usr/local, but this can be changed
 	with the "--prefix" option when running "configure".
 
-	You may specify the option "--sysconfdir" to set the directory 
+	You may specify the option "--sysconfdir" to set the directory
 	where configuration files like "named.conf" go by default,
 	and "--localstatedir" to set the default parent directory
 	of "run/named.pid".   For backwards compatibility with BIND 8,
@@ -315,7 +315,7 @@ Building
 	defaults to "$prefix/var".
 
 	To see additional configure options, run "configure --help".
-	Note that the help message does not reflect the BIND 8 
+	Note that the help message does not reflect the BIND 8
 	compatibility defaults for sysconfdir and localstatedir.
 
 	If you're planning on making changes to the BIND 9 source, you
@@ -327,7 +327,7 @@ Building
 
 	Building with gcc is not supported, unless gcc is the vendor's usual
 	compiler (e.g. the various BSD systems, Linux).
-	
+
 	Known compiler issues:
 	* gcc-3.2.1 and gcc-3.1.1 is known to cause problems with solaris-x86.
 	* gcc prior to gcc-3.2.3 ultrasparc generates incorrect code at -02.

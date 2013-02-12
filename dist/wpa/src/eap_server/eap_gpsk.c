@@ -391,7 +391,7 @@ static void eap_gpsk_process_gpsk_2(struct eap_sm *sm,
 	data->specifier = WPA_GET_BE16(csuite->specifier);
 	wpa_printf(MSG_DEBUG, "EAP-GPSK: CSuite_Sel %d:%d",
 		   data->vendor, data->specifier);
-	pos += sizeof(*csuite);	
+	pos += sizeof(*csuite);
 
 	if (end - pos < 2) {
 		wpa_printf(MSG_DEBUG, "EAP-GPSK: Too short message for "

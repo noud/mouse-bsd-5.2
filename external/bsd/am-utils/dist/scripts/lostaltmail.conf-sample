@@ -18,7 +18,7 @@ $SYSTEM_FROM_ADDRESS="Mailer-Daemon";
 $MAILDIR="/var/alt_mail";	# What directory should I run out of.
 $MAILER='/usr/lib/sendmail -t'; # Which mailer should I use.
 
-$LOCALMAILJUNK='.*~|\#.*|core';	# Files name patterns that might appear in 
+$LOCALMAILJUNK='.*~|\#.*|core';	# Files name patterns that might appear in
 				# alt_mail and should be ignored. This REGEXP
 				# gets or'ed with $MAILJUNK below.
 
@@ -30,7 +30,7 @@ $SMTPHOST='localhost';		# The name of a local host which speaks SMTP
 				# should be setting `noverify' to prevent
 				# SMTP verification.
 
-$HOSTNAME='localhost';		# Hostname to use for SMTP HELO 
+$HOSTNAME='localhost';		# Hostname to use for SMTP HELO
 
 # Subject of lost log mail message. Must define $MAILGRUNT.
 # I overwrite this variable in the subroutine Clean_up. Please make sure I
@@ -60,7 +60,7 @@ $MESSAGE_DELIM="^From[^:]";	# /bin/mail message delimiter. Your milage
 
 $HEADER_BODY_DELIM="\n";	# RFC 822 header-body delimiter.
 
-$RESENT_TO="Resent-To: ";	# 
+$RESENT_TO="Resent-To: ";	#
 $RESENT_FROM="Resent-From: ";	# Resent headers (RFC 822).
 $RESENT_DATE="Resent-Date: ";	#  You probably don't want to muck with these.
 $RESENT_INFO="X-Resent-Info: ";	# (special one to alert folks about mail).

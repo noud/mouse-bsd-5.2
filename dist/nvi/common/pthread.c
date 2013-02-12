@@ -39,7 +39,7 @@ static int vi_pthread_lock_unlock __P((WIN *, void **));
  *
  * PUBLIC: void thread_init __P((GS *gp));
  */
-void 
+void
 thread_init(GS *gp)
 {
 	gp->run = vi_pthread_run;
@@ -57,7 +57,7 @@ vi_pthread_run(WIN *wp, void *(*fun)(void*), void *data)
 	return 0;
 }
 
-static int 
+static int
 vi_pthread_lock_init (WIN * wp, void **p)
 {
 	pthread_mutex_t *mutex;
@@ -74,7 +74,7 @@ vi_pthread_lock_init (WIN * wp, void **p)
 	return 0;
 }
 
-static int 
+static int
 vi_pthread_lock_end (WIN * wp, void **p)
 {
 	int rc;
@@ -88,7 +88,7 @@ vi_pthread_lock_end (WIN * wp, void **p)
 	return 0;
 }
 
-static int 
+static int
 vi_pthread_lock_try (WIN * wp, void **p)
 {
 	printf("try %p\n", *p);
@@ -97,7 +97,7 @@ vi_pthread_lock_try (WIN * wp, void **p)
 	return pthread_mutex_trylock((pthread_mutex_t *)*p);
 }
 
-static int 
+static int
 vi_pthread_lock_unlock (WIN * wp, void **p)
 {
 	printf("unlock %p\n", *p);

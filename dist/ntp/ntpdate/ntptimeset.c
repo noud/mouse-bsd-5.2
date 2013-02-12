@@ -16,7 +16,7 @@
  * and is restarting. The second issue is the class of machine whether it
  * is a user's office workstation being handled by an uneducated user or
  * a server computer being handled by a trained operations staff. The third
- * issue is whether the ratio of people to computers and whether the 
+ * issue is whether the ratio of people to computers and whether the
  * environment is stable and viable or not.
  *
  * NETWORK USAGE:
@@ -33,7 +33,7 @@
  * The second issue of uneducated user of a office workstation versus a
  * trained operation staff of a server machine translates into simply an
  * issue of untrained and trained users.
- * 
+ *
  * The training issue implies that for the sake of the users involved in the
  * handling of their office workstation, problems and options should be
  * communicated simply and effectively and not in terse expert related
@@ -54,7 +54,7 @@
  *       of output. If this happens and the environment is in trouble then
  *       many pages of paper on many different machines will be filled up.
  *       Save some tress in your lifetime.
- * 
+ *
  * CONCLUSION:
  * The behavior of the program derived from these three issues should be
  * that during normal situations it quickly sets the time and allow the
@@ -395,7 +395,7 @@ main(
 	return ntptimesetmain(argc, argv);
 }
 #endif /* NO_MAIN_ALLOWED */
-	   
+
 
 int
 ntptimesetmain(
@@ -516,7 +516,7 @@ ntptimesetmain(
 			break;
 		}
 
-	
+
 	if (errflg || ntp_optind < argc) {
 		fprintf(stderr,"usage: %s [switches...]\n",progname);
 		fprintf(stderr,"  -v       (verbose)\n");
@@ -648,7 +648,7 @@ ntptimesetmain(
 	 */
 	was_alarmed = 0;
 	while (finish_time > current_time) {
-#if !defined(HAVE_SIGNALED_IO) 
+#if !defined(HAVE_SIGNALED_IO)
 		fd_set rdfdes;
 		int nfound;
 #elif defined(HAVE_SIGNALED_IO)
@@ -697,7 +697,7 @@ ntptimesetmain(
 # endif
 			}
 #else /* HAVE_SIGNALED_IO */
-                        
+
 			wait_for_signal();
 #endif /* HAVE_SIGNALED_IO */
 			if (alarm_flag) 	/* alarmed? */
@@ -904,7 +904,7 @@ transmit(
 		HTONL_FP(&server->xmt, &xpkt.xmt);
 		if (sendpkt(&(server->srcadr), &xpkt, LEN_PKT_NOMAC)) {
 			if (debug > 1)
-				printf("failed transmit to %s\n", 
+				printf("failed transmit to %s\n",
 				    ntoa(&(server->srcadr)));
 			return;
 		}
@@ -1011,7 +1011,7 @@ receive(
 			    PKT_MODE(rpkt->li_vn_mode), rpkt->stratum);
 		return;
 	}
-	
+
 	/*
 	 * So far, so good.  See if this is from a server we know.
 	 */
@@ -1032,7 +1032,7 @@ receive(
 			printf("receive: pkt.org and peer.xmt differ\n");
 		return;
 	}
-	
+
 	/*
 	 * Check out the authenticity if we're doing that.
 	 */
@@ -1058,7 +1058,7 @@ receive(
 	server->trust <<= 1;
 	if (!is_authentic)
 		server->trust |= 1;
-	
+
 	/*
 	 * Looks good.  Record info from the packet.
 	 */
@@ -1186,7 +1186,7 @@ clock_filter(
 	 */
 	for (i = 0; i < NTP_SHIFT; i++)
 		ord[i] = i;
-	
+
 	for (i = 0; i < (NTP_SHIFT-1); i++) {
 		for (j = i+1; j < NTP_SHIFT; j++) {
 			if (server->filter_delay[ord[j]] == 0)
@@ -1422,7 +1422,7 @@ clock_select(void)
 				server_list[i] = server_list[j];
 				server_list[j] = server;
 			}
-		
+
 		/*
 		 * Calculate the fixed part of the dispersion limit
 		 */
@@ -1466,7 +1466,7 @@ clock_select(void)
 				if (n > server_list[j]->precision)
 					n = server_list[j]->precision;
 			}
-			
+
 			/*
 			 * i is the index of the server with the worst
 			 * dispersion.  If his dispersion is less than
@@ -1662,7 +1662,7 @@ alarming(
 	int sig
 	)
 #else
-void CALLBACK 
+void CALLBACK
 alarming(UINT uTimerID, UINT uMsg, DWORD dwUser, DWORD dw1, DWORD dw2)
 #endif /* SYS_WINNT */
 {

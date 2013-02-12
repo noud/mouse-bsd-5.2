@@ -7,7 +7,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -62,7 +62,7 @@
 /* NOTE: the IV/counter CTR mode is big-endian.  The rest of the Camellia code
  * is endian-neutral. */
 /* increment counter (128-bit int) by 1 */
-static void Camellia_ctr128_inc(unsigned char *counter) 
+static void Camellia_ctr128_inc(unsigned char *counter)
 	{
 	unsigned long c;
 
@@ -116,7 +116,7 @@ void Camellia_ctr128_encrypt(const unsigned char *in, unsigned char *out,
 	const unsigned long length, const CAMELLIA_KEY *key,
 	unsigned char ivec[CAMELLIA_BLOCK_SIZE],
 	unsigned char ecount_buf[CAMELLIA_BLOCK_SIZE],
-	unsigned int *num) 
+	unsigned int *num)
 	{
 
 	unsigned int n;
@@ -127,9 +127,9 @@ void Camellia_ctr128_encrypt(const unsigned char *in, unsigned char *out,
 
 	n = *num;
 
-	while (l--) 
+	while (l--)
 		{
-		if (n == 0) 
+		if (n == 0)
 			{
 			Camellia_encrypt(ivec, ecount_buf, key);
 			Camellia_ctr128_inc(ivec);

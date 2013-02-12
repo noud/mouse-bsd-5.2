@@ -231,7 +231,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/include $(LIBOPTS_CFLAGS)
 # LDADD might need RESLIB and ADJLIB
 ntpdc_LDADD = version.o @READLINE_LIBS@ $(LIBOPTS_LDADD) ../libntp/libntp.a
 # ntpdc-layout doesn't need any additional libraries at all
-ntpdc_layout_LDADD = 
+ntpdc_layout_LDADD =
 DISTCLEANFILES = .version version.c
 CLEANFILES = check-layout layout.here nl.c ntpdc-layout
 noinst_HEADERS = ntpdc.h
@@ -312,10 +312,10 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-ntpdc$(EXEEXT): $(ntpdc_OBJECTS) $(ntpdc_DEPENDENCIES) 
+ntpdc$(EXEEXT): $(ntpdc_OBJECTS) $(ntpdc_DEPENDENCIES)
 	@rm -f ntpdc$(EXEEXT)
 	$(LINK) $(ntpdc_LDFLAGS) $(ntpdc_OBJECTS) $(ntpdc_LDADD) $(LIBS)
-ntpdc-layout$(EXEEXT): $(ntpdc_layout_OBJECTS) $(ntpdc_layout_DEPENDENCIES) 
+ntpdc-layout$(EXEEXT): $(ntpdc_layout_OBJECTS) $(ntpdc_layout_DEPENDENCIES)
 	@rm -f ntpdc-layout$(EXEEXT)
 	$(LINK) $(ntpdc_layout_LDFLAGS) $(ntpdc_layout_OBJECTS) $(ntpdc_layout_LDADD) $(LIBS)
 

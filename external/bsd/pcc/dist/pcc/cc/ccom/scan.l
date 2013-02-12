@@ -39,7 +39,7 @@ IS			(u|U|l|L)*
 
 %{
 #include <stdlib.h>
-#include <errno.h>  
+#include <errno.h>
 #include <string.h>
 #include <stdarg.h>
 
@@ -272,7 +272,7 @@ h2n(int ch)
 	if (ch >= 'a' && ch <= 'f')
 		return ch - 'a' + 10;
 	return ch - 'A' + 10;
-	
+
 }
 
 NODE *
@@ -317,7 +317,7 @@ esccon(char **sptr)
 	case 'v': val = '\v'; break;
 	case '\"': val = '\"'; break;
 	case 'x': val = strtoul(wr, &wr, 16); break;
-	case '0': case '1': case '2': case '3': case '4': 
+	case '0': case '1': case '2': case '3': case '4':
 	case '5': case '6': case '7':
 		val = wr[-1] - '0';
 		if (*wr >= '0' && *wr <= '7') {
@@ -343,7 +343,7 @@ cvtdig(int radix)
 
 	if (radix == 16)
 		ch += 2; /* Skip 0x */
-	
+
 	v = 0;
 	while ((*ch >= '0' && *ch <= '9') || (*ch >= 'a' && *ch <= 'f') ||
 	    (*ch >= 'A' && *ch <= 'F')) {

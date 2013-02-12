@@ -63,7 +63,7 @@ named_precmd()
 	fi
 
 	# If running in a chroot cage, ensure that the appropriate files
-	# exist inside the cage, as well as helper symlinks into the cage 
+	# exist inside the cage, as well as helper symlinks into the cage
 	# from outside.
 	#
 	# As this is called after the is_running and required_dir checks
@@ -91,7 +91,7 @@ named_precmd()
 	do
 		if [ ! -c "${named_chrootdir}/dev/$i" ]; then
 			rm -f "${named_chrootdir}/dev/$i"
-			(cd /dev && 
+			(cd /dev &&
 			    /bin/pax -rw -pe "$i" "${named_chrootdir}/dev")
 		fi
 	done

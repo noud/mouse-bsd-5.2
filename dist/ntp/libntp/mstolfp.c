@@ -35,7 +35,7 @@ mstolfp(
 	cp = str;
 	while (isspace((int)*cp))
 	    cp++;
-	
+
 	if (*cp == '-') {
 		*bp++ = '-';
 		cp++;
@@ -84,7 +84,7 @@ mstolfp(
 	 */
 	while (cp < cpdec)
 	    *bp++ = (char)*cp++;
-	
+
 	if (*cp == '.') {
 		cp++;
 		while (isdigit((int)*cp))

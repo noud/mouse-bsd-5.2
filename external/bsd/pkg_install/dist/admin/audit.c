@@ -360,7 +360,7 @@ fetch_pkg_vulnerabilities(int argc, char **argv)
 			    fetchLastErrString);
 		buf_fetched += cur_fetched;
 	}
-	
+
 	buf[buf_len] = '\0';
 
 	if (decompress_buffer(buf, buf_len, &decompressed_input,

@@ -91,7 +91,7 @@ H4: access to <what> [ by <who> [<accesslevel>] [<control>] ]+
 
 This directive grants access (specified by <accesslevel>) to a set
 of entries and/or attributes (specified by <what>) by one or more
-requestors (specified by <who>).  See the {{SECT:Access Control}} section of 
+requestors (specified by <who>).  See the {{SECT:Access Control}} section of
 this guide for basic usage.
 
 !if 0
@@ -452,7 +452,7 @@ schema conformance. The default is off.
 The {{EX:binddn}} parameter gives the DN to bind as for the
 syncrepl searches to the provider slapd. It should be a DN
 which has read access to the replication content in the
-master database. 
+master database.
 
 The {{EX:bindmethod}} is {{EX:simple}} or {{EX:sasl}},
 depending on whether simple password-based authentication or

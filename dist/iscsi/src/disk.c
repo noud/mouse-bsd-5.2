@@ -720,7 +720,7 @@ strpadcpy(uint8_t *dst, size_t dstlen, const char *src, const size_t srclen, cha
 	} else {
 		(void) memcpy(dst, src, dstlen);
 	}
-}	
+}
 
 /* handle REPORT LUNs SCSI command */
 static int
@@ -764,7 +764,7 @@ persistent_reserve_in(uint8_t action, uint8_t *data)
 
 /* initialise the device */
 /* ARGSUSED */
-int 
+int
 device_init(globals_t *gp __attribute__((__unused__)), targv_t *tvp, disc_target_t *tp)
 {
 	int	mode;
@@ -884,7 +884,7 @@ mode_sense(const int bytes, target_cmd_t *cmd)
 }
 
 
-int 
+int
 device_command(target_session_t * sess, target_cmd_t * cmd)
 {
 	iscsi_scsi_cmd_args_t	*args = cmd->scsi_cmd;
@@ -1204,7 +1204,7 @@ device_command(target_session_t * sess, target_cmd_t * cmd)
 }
 
 /*ARGSUSED*/
-int 
+int
 device_shutdown(target_session_t *sess)
 {
 	return 1;
@@ -1214,7 +1214,7 @@ device_shutdown(target_session_t *sess)
  * Private Interface
  */
 
-static int 
+static int
 disk_write(target_session_t *sess, iscsi_scsi_cmd_args_t *args, uint8_t lun, uint32_t lba, uint32_t len)
 {
 	uint64_t        byte_offset = lba * disks.v[sess->d].blocklen;
@@ -1253,7 +1253,7 @@ disk_write(target_session_t *sess, iscsi_scsi_cmd_args_t *args, uint8_t lun, uin
 	return 0;
 }
 
-static int 
+static int
 disk_read(target_session_t * sess, iscsi_scsi_cmd_args_t * args, uint32_t lba, uint16_t len, uint8_t lun)
 {
 	uint64_t        byte_offset = lba * disks.v[sess->d].blocklen;

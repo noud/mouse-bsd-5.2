@@ -39,11 +39,11 @@ static int append __P((SCR*, db_recno_t, const CHAR_T*, size_t, lnop_t, int));
  */
 int
 db_eget(SCR *sp, db_recno_t lno, CHAR_T **pp, size_t *lenp, int *isemptyp)
-	        
+
 	               				/* Line number. */
 	            				/* Pointer store. */
 	             				/* Length store. */
-	              
+
 {
 	db_recno_t l1;
 
@@ -234,7 +234,7 @@ db_delete(SCR *sp, db_recno_t lno)
 		ex_emsg(sp, NULL, EXM_LOCKED);
 		return 1;
 	}
-		
+
 	/* Update marks, @ and global commands. */
 	if (line_insdel(sp, LINE_DELETE, lno))
 		return 1;
@@ -247,7 +247,7 @@ db_delete(SCR *sp, db_recno_t lno)
 	key.data = &lno;
 	key.size = sizeof(lno);
 	if ((sp->db_error = ep->db->del(ep->db, NULL, &key, 0)) != 0) {
-		msgq(sp, M_DBERR, "003|unable to delete line %lu", 
+		msgq(sp, M_DBERR, "003|unable to delete line %lu",
 		    (u_long)lno);
 		return (1);
 	}
@@ -311,7 +311,7 @@ append(SCR *sp, db_recno_t lno, const CHAR_T *p, size_t len, lnop_t op, int upda
 	INT2FILE(sp, p, len, fp, flen);
 
 	if (lno != 0) {
-	    if ((sp->db_error = dbcp_put->c_get(dbcp_put, &key, &data, DB_SET)) != 0) 
+	    if ((sp->db_error = dbcp_put->c_get(dbcp_put, &key, &data, DB_SET)) != 0)
 		goto err2;
 
 	    data.data = __UNCONST(fp);
@@ -319,10 +319,10 @@ append(SCR *sp, db_recno_t lno, const CHAR_T *p, size_t len, lnop_t op, int upda
 	    if ((sp->db_error = dbcp_put->c_put(dbcp_put, &key, &data, DB_AFTER)) != 0) {
 err2:
 		(void)dbcp_put->c_close(dbcp_put);
-		msgq(sp, M_DBERR, 
-			(op == LINE_APPEND) 
-			    ? "004|unable to append to line %lu" 
-			    : "005|unable to insert at line %lu", 
+		msgq(sp, M_DBERR,
+			(op == LINE_APPEND)
+			    ? "004|unable to append to line %lu"
+			    : "005|unable to insert at line %lu",
 			(u_long)lno);
 		return (1);
 	    }
@@ -389,7 +389,7 @@ db_append(SCR *sp, int update, db_recno_t lno, const CHAR_T *p, size_t len)
 #if defined(DEBUG) && 0
 	vtrace(sp, "append to %lu: len %u {%.*s}\n", lno, len, MIN(len, 20), p);
 #endif
-		
+
 	/* Update file. */
 	return append(sp, lno, p, len, LINE_APPEND, update);
 }
@@ -437,7 +437,7 @@ db_set(SCR *sp, db_recno_t lno, CHAR_T *p, size_t len)
 		ex_emsg(sp, NULL, EXM_LOCKED);
 		return 1;
 	}
-		
+
 	/* Log before change. */
 	log_line(sp, lno, LOG_LINE_RESET_B);
 
@@ -489,7 +489,7 @@ db_exist(SCR *sp, db_recno_t lno)
 
 	if (lno == OOBLNO)
 		return (0);
-		
+
 	/*
 	 * Check the last-line number cache.  Adjust the cached line
 	 * number for the lines used by the text input buffers.
@@ -524,7 +524,7 @@ db_last(SCR *sp, db_recno_t *lnop)
 		ex_emsg(sp, NULL, EXM_NOFILEYET);
 		return (1);
 	}
-		
+
 	/*
 	 * Check the last-line number cache.  Adjust the cached line
 	 * number for the lines used by the text input buffers.
@@ -599,7 +599,7 @@ db_err(SCR *sp, db_recno_t lno)
  *	Update all of the screens that are backed by the file that
  *	just changed.
  *
- * PUBLIC: int scr_update __P((SCR *sp, db_recno_t lno, 
+ * PUBLIC: int scr_update __P((SCR *sp, db_recno_t lno,
  * PUBLIC: 			lnop_t op, int current));
  */
 int
@@ -615,7 +615,7 @@ scr_update(SCR *sp, db_recno_t lno, lnop_t op, int current)
 	/* XXXX goes outside of window */
 	ep = sp->ep;
 	if (ep->refcnt != 1)
-		for (wp = sp->gp->dq.cqh_first; wp != (void *)&sp->gp->dq; 
+		for (wp = sp->gp->dq.cqh_first; wp != (void *)&sp->gp->dq;
 		    wp = wp->q.cqe_next)
 			for (tsp = wp->scrq.cqh_first;
 			    tsp != (void *)&wp->scrq; tsp = tsp->q.cqe_next)
@@ -641,7 +641,7 @@ update_cache(SCR *sp, lnop_t op, db_recno_t lno)
 	 * for db_insert.  It might be better to adjust it, like
 	 * marks, @ and global
 	 */
-	for (scrp = ep->scrq.cqh_first; scrp != (void *)&ep->scrq; 
+	for (scrp = ep->scrq.cqh_first; scrp != (void *)&ep->scrq;
 	    scrp = scrp->eq.cqe_next)
 		switch (op) {
 		case LINE_INSERT:

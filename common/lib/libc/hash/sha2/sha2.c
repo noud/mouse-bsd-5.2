@@ -283,22 +283,22 @@ static const uint64_t sha512_initial_hash_value[8] = {
 };
 
 #if !defined(_KERNEL) && defined(__weak_alias)
-__weak_alias(SHA224_Init,_SHA224_Init) 
+__weak_alias(SHA224_Init,_SHA224_Init)
 __weak_alias(SHA224_Update,_SHA224_Update)
 __weak_alias(SHA224_Final,_SHA224_Final)
 __weak_alias(SHA224_Transform,_SHA224_Transform)
 
-__weak_alias(SHA256_Init,_SHA256_Init) 
+__weak_alias(SHA256_Init,_SHA256_Init)
 __weak_alias(SHA256_Update,_SHA256_Update)
 __weak_alias(SHA256_Final,_SHA256_Final)
 __weak_alias(SHA256_Transform,_SHA256_Transform)
 
-__weak_alias(SHA384_Init,_SHA384_Init) 
+__weak_alias(SHA384_Init,_SHA384_Init)
 __weak_alias(SHA384_Update,_SHA384_Update)
 __weak_alias(SHA384_Final,_SHA384_Final)
 __weak_alias(SHA384_Transform,_SHA384_Transform)
 
-__weak_alias(SHA512_Init,_SHA512_Init) 
+__weak_alias(SHA512_Init,_SHA512_Init)
 __weak_alias(SHA512_Update,_SHA512_Update)
 __weak_alias(SHA512_Final,_SHA512_Final)
 __weak_alias(SHA512_Transform,_SHA512_Transform)
@@ -343,7 +343,7 @@ SHA256_Init(SHA256_CTX *context)
 	(h) = T1 + Sigma0_256(a) + Maj((a), (b), (c)); \
 	j++
 
-void 
+void
 SHA256_Transform(SHA256_CTX *context, const uint32_t *data)
 {
 	uint32_t	a, b, c, d, e, f, g, h, s0, s1;
@@ -617,7 +617,7 @@ SHA256_Final(uint8_t digest[], SHA256_CTX *context)
 }
 
 /*** SHA-224: *********************************************************/
-int 
+int
 SHA224_Init(SHA224_CTX *context)
 {
 	if (context == NULL)

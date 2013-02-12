@@ -71,7 +71,7 @@ void dhcp_common_objects_setup ()
 					     dhcp_control_destroy,
 					     dhcp_control_signal_handler,
 					     dhcp_control_stuff_values,
-					     dhcp_control_lookup, 
+					     dhcp_control_lookup,
 					     dhcp_control_create,
 					     dhcp_control_remove, 0, 0, 0,
 					     sizeof (dhcp_control_object_t),
@@ -92,7 +92,7 @@ void dhcp_common_objects_setup ()
 					     dhcp_group_destroy,
 					     dhcp_group_signal_handler,
 					     dhcp_group_stuff_values,
-					     dhcp_group_lookup, 
+					     dhcp_group_lookup,
 					     dhcp_group_create,
 					     dhcp_group_remove, 0, 0, 0,
 					     sizeof (struct group_object), 0,
@@ -108,7 +108,7 @@ void dhcp_common_objects_setup ()
 					     dhcp_subnet_destroy,
 					     dhcp_subnet_signal_handler,
 					     dhcp_subnet_stuff_values,
-					     dhcp_subnet_lookup, 
+					     dhcp_subnet_lookup,
 					     dhcp_subnet_create,
 					     dhcp_subnet_remove, 0, 0, 0,
 					     sizeof (struct subnet), 0,
@@ -125,7 +125,7 @@ void dhcp_common_objects_setup ()
 		 dhcp_shared_network_destroy,
 		 dhcp_shared_network_signal_handler,
 		 dhcp_shared_network_stuff_values,
-		 dhcp_shared_network_lookup, 
+		 dhcp_shared_network_lookup,
 		 dhcp_shared_network_create,
 		 dhcp_shared_network_remove, 0, 0, 0,
 		 sizeof (struct shared_network), 0, RC_MISC);
@@ -148,7 +148,7 @@ isc_result_t dhcp_group_set_value  (omapi_object_t *h,
 		return ISC_R_INVALIDARG;
 	group = (struct group_object *)h;
 
-	/* XXX For now, we can only set these values on new group objects. 
+	/* XXX For now, we can only set these values on new group objects.
 	   XXX Soon, we need to be able to update group objects. */
 	if (!omapi_ds_strcmp (name, "name")) {
 		if (group -> name)
@@ -205,7 +205,7 @@ isc_result_t dhcp_group_set_value  (omapi_object_t *h,
 		if (status == ISC_R_SUCCESS || status == ISC_R_UNCHANGED)
 			return status;
 	}
-			  
+
 	return ISC_R_NOTFOUND;
 }
 
@@ -475,7 +475,7 @@ isc_result_t dhcp_control_set_value  (omapi_object_t *h,
 		if (status == ISC_R_SUCCESS || status == ISC_R_UNCHANGED)
 			return status;
 	}
-			  
+
 	return ISC_R_NOTFOUND;
 }
 
@@ -582,11 +582,11 @@ isc_result_t dhcp_control_lookup (omapi_object_t **lp,
 		status = omapi_get_value_str (ref, id, "handle", &tv);
 		if (status == ISC_R_SUCCESS) {
 			status = omapi_handle_td_lookup (lp, tv -> value);
-			
+
 			omapi_value_dereference (&tv, MDL);
 			if (status != ISC_R_SUCCESS)
 				return status;
-			
+
 			/* Don't return the object if the type is wrong. */
 			if ((*lp) -> type != dhcp_type_control) {
 				omapi_object_dereference (lp, MDL);
@@ -638,7 +638,7 @@ isc_result_t dhcp_subnet_set_value  (omapi_object_t *h,
 		if (status == ISC_R_SUCCESS || status == ISC_R_UNCHANGED)
 			return status;
 	}
-			  
+
 	return ISC_R_NOTFOUND;
 }
 
@@ -788,7 +788,7 @@ isc_result_t dhcp_shared_network_set_value  (omapi_object_t *h,
 		if (status == ISC_R_SUCCESS || status == ISC_R_UNCHANGED)
 			return status;
 	}
-			  
+
 	return ISC_R_NOTFOUND;
 }
 

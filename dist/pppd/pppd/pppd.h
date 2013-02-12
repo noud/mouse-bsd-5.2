@@ -325,7 +325,7 @@ extern int	child_wait;	/* # seconds to wait for children at end */
 extern unsigned int maxoctets;	     /* Maximum octetes per session (in bytes) */
 extern int       maxoctets_dir;      /* Direction :
 				      0 - in+out (default)
-				      1 - in 
+				      1 - in
 				      2 - out
 				      3 - max(in,out) */
 extern int       maxoctets_timeout;  /* Timeout for check of octets limit */
@@ -334,7 +334,7 @@ extern int       maxoctets_timeout;  /* Timeout for check of octets limit */
 #define PPP_OCTETS_DIRECTION_OUT        2
 #define PPP_OCTETS_DIRECTION_MAXOVERAL  3
 /* same as previos, but little different on RADIUS side */
-#define PPP_OCTETS_DIRECTION_MAXSESSION 4	
+#define PPP_OCTETS_DIRECTION_MAXSESSION 4
 #endif
 
 #ifdef PPP_FILTER

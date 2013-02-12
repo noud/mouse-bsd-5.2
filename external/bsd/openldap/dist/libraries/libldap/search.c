@@ -98,7 +98,7 @@ ldap_search_ext(
 	}
 
 	ber = ldap_build_search_req( ld, base, scope, filter, attrs,
-	    attrsonly, sctrls, cctrls, timelimit, sizelimit, &id ); 
+	    attrsonly, sctrls, cctrls, timelimit, sizelimit, &id );
 
 	if ( ber == NULL ) {
 		return ld->ld_errno;
@@ -188,7 +188,7 @@ ldap_search(
 	assert( LDAP_VALID( ld ) );
 
 	ber = ldap_build_search_req( ld, base, scope, filter, attrs,
-	    attrsonly, NULL, NULL, -1, -1, &id ); 
+	    attrsonly, NULL, NULL, -1, -1, &id );
 
 	if ( ber == NULL ) {
 		return( -1 );
@@ -318,7 +318,7 @@ ldap_build_search_req(
 			if ( ptr >= &buf[ sizeof( buf ) ] ) {
 				AC_MEMCPY( &buf[ sizeof( buf ) - STRLENOF( "...(truncated)" ) - 1 ],
 					"...(truncated)", STRLENOF( "...(truncated)" ) + 1 );
-			} 
+			}
 		}
 
 		Debug( LDAP_DEBUG_ARGS, "ldap_build_search_req ATTRS:%s\n", buf, 0, 0 );

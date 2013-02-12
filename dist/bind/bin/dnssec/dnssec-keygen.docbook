@@ -539,7 +539,7 @@
         </para>
       </listitem>
     </itemizedlist>
-    <para><command>dnssec-keygen</command> 
+    <para><command>dnssec-keygen</command>
       creates two files, with names based
       on the printed string.  <filename>Knnnn.+aaa+iiiii.key</filename>
       contains the public key, and

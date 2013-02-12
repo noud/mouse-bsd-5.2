@@ -30,7 +30,7 @@ typedef struct
     struct tm		gps_tm;
 } gps_time_t;
 
-typedef struct 
+typedef struct
 {
     unsigned char reserved_1;
     unsigned unit_ms		: 4;
@@ -68,7 +68,7 @@ typedef struct
 
 } hw_stat_reg_t;
 
-typedef struct 
+typedef struct
 {
     unsigned tens_us		: 4;
     unsigned unit_us		: 4;
@@ -213,7 +213,7 @@ typedef struct
     unsigned unit_year		: 4;
     unsigned thou_year		: 4;
     unsigned hun_year		: 4;
-    unsigned char reserved_5[2]; 
+    unsigned char reserved_5[2];
 } ext_time_event_reg_t;
 
 typedef struct
@@ -380,7 +380,7 @@ typedef struct
 #define FLAG_BIT			10	/* access the flag bit */
 
 /*
- * The following defines are used to set modes in the 
+ * The following defines are used to set modes in the
  * configuration register.
  */
 

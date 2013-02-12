@@ -77,7 +77,7 @@
     <xsl:text> \par </xsl:text>
   </xsl:template>
 
-  <!-- 
+  <!--
     - Add support for <optional/> in <programlisting/>.
    -->
   <xsl:template match="optional" mode="latex.verbatim">
@@ -182,7 +182,7 @@
 
 </xsl:stylesheet>
 
-<!-- 
+<!--
   - Local variables:
   - mode: sgml
   - End:

@@ -147,7 +147,7 @@ static	Widget	create_push_buttons( parent, data, count )
     int		pos = 1, base;
 
     base = SpacingRatio*count + 1;
-    form = XtVaCreateManagedWidget( "buttons", 
+    form = XtVaCreateManagedWidget( "buttons",
 				    xmFormWidgetClass,
 				    parent,
 				    XmNleftAttachment,	XmATTACH_FORM,
@@ -332,7 +332,7 @@ static	Widget	create_tags_dialog( parent, title )
     XtAddCallback( box, XmNpopdownCallback, cancel_cb, 0 );
     XtAddCallback( box, XmNdestroyCallback, destroyed, 0 );
 
-    form = XtVaCreateWidget( "Tags", 
+    form = XtVaCreateWidget( "Tags",
 			     xmFormWidgetClass,
 			     box,
 			     0

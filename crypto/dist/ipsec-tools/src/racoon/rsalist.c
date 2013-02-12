@@ -129,7 +129,7 @@ struct lookup_result {
 	int max_score;
 	struct genlist *winners;
 };
-	
+
 static void *
 rsa_lookup_key_one(void *entry, void *data)
 {
@@ -189,7 +189,7 @@ int
 rsa_parse_file(struct genlist *list, const char *fname, enum rsa_key_type type)
 {
 	int ret;
-	
+
 	plog(LLV_DEBUG, LOCATION, NULL, "Parsing %s\n", fname);
 	ret = prsa_parse_file(list, fname, type);
 	if (loglevel >= LLV_DEBUG)

@@ -7,7 +7,7 @@
 # bzip2/libbzip2 version 1.0.5 of 10 December 2007
 # Copyright (C) 1996-2007 Julian Seward <jseward@bzip.org>
 #
-# Please read the WARNING, DISCLAIMER and PATENTS sections in the 
+# Please read the WARNING, DISCLAIMER and PATENTS sections in the
 # README file.
 #
 # This program is released under the terms of the license contained
@@ -30,14 +30,14 @@ if (! -r $infile) {
     die "Can't read input $infile\n";
 }
 # check we can open infile
-open( INFILE,"<$infile" ) or 
+open( INFILE,"<$infile" ) or
     die "Can't input $infile $!";
 
 #my $outfile = 'fmt-manual.xml';
 my $outfile = shift;
 #print "Infile: $infile, Outfile: $outfile\n";
 # check we can write to outfile
-open( OUTFILE,">$outfile" ) or 
+open( OUTFILE,">$outfile" ) or
     die "Can't output $outfile $! for writing";
 
 my ($prev, $curr, $str);

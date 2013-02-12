@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2007 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 /* $Heimdal: parse.y 21597 2007-07-16 18:48:58Z lha $
@@ -210,7 +210,7 @@ struct string_list {
 %type <member> NamedBit
 %type <member> NamedNumber
 %type <member> NamedType
-%type <members> ComponentTypeList 
+%type <members> ComponentTypeList
 %type <members> Enumerations
 %type <members> NamedBitList
 %type <members> NamedNumberList
@@ -269,7 +269,7 @@ SymbolsFromModuleList: SymbolsFromModule
 		;
 
 SymbolsFromModule: referencenames kw_FROM IDENTIFIER objid_opt
-		{ 
+		{
 		    struct string_list *sl;
 		    for(sl = $1; sl != NULL; sl = sl->next) {
 			Symbol *s = addsym(sl->string);
@@ -334,7 +334,7 @@ BuiltinType	: BitStringType
 
 BooleanType	: kw_BOOLEAN
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_Boolean, 
+			$$ = new_tag(ASN1_C_UNIV, UT_Boolean,
 				     TE_EXPLICIT, new_type(TBoolean));
 		}
 		;
@@ -350,7 +350,7 @@ range		: '(' Value RANGE Value ')'
 		    $$->max = $4->u.integervalue;
 		}
 		| '(' Value RANGE kw_MAX ')'
-		{		
+		{
 		    if($2->type != integervalue)
 			error_message("Non-integer in first part of range");
 		    $$ = ecalloc(1, sizeof(*$$));
@@ -358,7 +358,7 @@ range		: '(' Value RANGE Value ')'
 		    $$->max = $2->u.integervalue - 1;
 		}
 		| '(' kw_MIN RANGE Value ')'
-		{		
+		{
 		    if($4->type != integervalue)
 			error_message("Non-integer in second part of range");
 		    $$ = ecalloc(1, sizeof(*$$));
@@ -378,7 +378,7 @@ range		: '(' Value RANGE Value ')'
 
 IntegerType	: kw_INTEGER
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_Integer, 
+			$$ = new_tag(ASN1_C_UNIV, UT_Integer,
 				     TE_EXPLICIT, new_type(TInteger));
 		}
 		| kw_INTEGER range
@@ -451,7 +451,7 @@ BitStringType	: kw_BIT kw_STRING
 
 ObjectIdentifierType: kw_OBJECT kw_IDENTIFIER
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_OID, 
+			$$ = new_tag(ASN1_C_UNIV, UT_OID,
 				     TE_EXPLICIT, new_type(TOID));
 		}
 		;
@@ -459,14 +459,14 @@ OctetStringType	: kw_OCTET kw_STRING size
 		{
 		    Type *t = new_type(TOctetString);
 		    t->range = $3;
-		    $$ = new_tag(ASN1_C_UNIV, UT_OctetString, 
+		    $$ = new_tag(ASN1_C_UNIV, UT_OctetString,
 				 TE_EXPLICIT, t);
 		}
 		;
 
 NullType	: kw_NULL
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_Null, 
+			$$ = new_tag(ASN1_C_UNIV, UT_Null,
 				     TE_EXPLICIT, new_type(TNull));
 		}
 		;
@@ -547,12 +547,12 @@ DefinedType	: IDENTIFIER
 
 UsefulType	: kw_GeneralizedTime
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_GeneralizedTime, 
+			$$ = new_tag(ASN1_C_UNIV, UT_GeneralizedTime,
 				     TE_EXPLICIT, new_type(TGeneralizedTime));
 		}
 		| kw_UTCTime
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_UTCTime, 
+			$$ = new_tag(ASN1_C_UNIV, UT_UTCTime,
 				     TE_EXPLICIT, new_type(TUTCTime));
 		}
 		;
@@ -686,37 +686,37 @@ CharacterStringType: RestrictedCharactedStringType
 
 RestrictedCharactedStringType: kw_GeneralString
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_GeneralString, 
+			$$ = new_tag(ASN1_C_UNIV, UT_GeneralString,
 				     TE_EXPLICIT, new_type(TGeneralString));
 		}
 		| kw_UTF8String
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_UTF8String, 
+			$$ = new_tag(ASN1_C_UNIV, UT_UTF8String,
 				     TE_EXPLICIT, new_type(TUTF8String));
 		}
 		| kw_PrintableString
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_PrintableString, 
+			$$ = new_tag(ASN1_C_UNIV, UT_PrintableString,
 				     TE_EXPLICIT, new_type(TPrintableString));
 		}
 		| kw_VisibleString
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_VisibleString, 
+			$$ = new_tag(ASN1_C_UNIV, UT_VisibleString,
 				     TE_EXPLICIT, new_type(TVisibleString));
 		}
 		| kw_IA5String
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_IA5String, 
+			$$ = new_tag(ASN1_C_UNIV, UT_IA5String,
 				     TE_EXPLICIT, new_type(TIA5String));
 		}
 		| kw_BMPString
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_BMPString, 
+			$$ = new_tag(ASN1_C_UNIV, UT_BMPString,
 				     TE_EXPLICIT, new_type(TBMPString));
 		}
 		| kw_UniversalString
 		{
-			$$ = new_tag(ASN1_C_UNIV, UT_UniversalString, 
+			$$ = new_tag(ASN1_C_UNIV, UT_UniversalString,
 				     TE_EXPLICIT, new_type(TUniversalString));
 		}
 
@@ -835,7 +835,7 @@ objid_element	: IDENTIFIER '(' NUMBER ')'
 		    Symbol *s = addsym($1);
 		    if(s->stype != SValue ||
 		       s->value->type != objectidentifiervalue) {
-			error_message("%s is not an object identifier\n", 
+			error_message("%s is not an object identifier\n",
 				      s->name);
 			exit(1);
 		    }
@@ -938,7 +938,7 @@ new_tag(int tagclass, int tagvalue, int tagenv, Type *oldtype)
 	oldtype = oldtype->subtype; /* XXX */
     } else
 	t = new_type (TTag);
-    
+
     t->tag.tagclass = tagclass;
     t->tag.tagvalue = tagvalue;
     t->tag.tagenv = tagenv;

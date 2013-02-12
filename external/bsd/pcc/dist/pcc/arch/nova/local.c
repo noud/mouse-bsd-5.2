@@ -126,7 +126,7 @@ clocal(NODE *p)
 		for (r = p->n_right; r->n_op == CM; r = r->n_left) {
 			if (r->n_right->n_op != STARG &&
 			    r->n_right->n_op != FUNARG)
-				r->n_right = block(FUNARG, r->n_right, NIL, 
+				r->n_right = block(FUNARG, r->n_right, NIL,
 				    r->n_right->n_type, r->n_right->n_df,
 				    r->n_right->n_sue);
 		}
@@ -136,7 +136,7 @@ clocal(NODE *p)
 			r->n_op = FUNARG; r->n_left = l; r->n_type = l->n_type;
 		}
 		break;
-		
+
 	case CBRANCH:
 		l = p->n_left;
 
@@ -167,7 +167,7 @@ clocal(NODE *p)
 			l->n_lval = (unsigned)l->n_lval;
 			goto delp;
 		}
-		if (l->n_type < INT || l->n_type == LONGLONG || 
+		if (l->n_type < INT || l->n_type == LONGLONG ||
 		    l->n_type == ULONGLONG) {
 			/* float etc? */
 			p->n_left = block(SCONV, l, NIL,
@@ -342,19 +342,19 @@ myp2tree(NODE *p)
 {
 	int o = p->n_op, i;
 
-	if (o != FCON) 
+	if (o != FCON)
 		return;
 
 	/* Write float constants to memory */
 	/* Should be volontary per architecture */
- 
+
 	setloc1(RDATA);
 	defalign(p->n_type == FLOAT ? ALFLOAT : p->n_type == DOUBLE ?
 	    ALDOUBLE : ALLDOUBLE );
-	deflab1(i = getlab()); 
+	deflab1(i = getlab());
 	ninval(0, btdims[p->n_type].suesize, p);
 	p->n_op = NAME;
-	p->n_lval = 0;	
+	p->n_lval = 0;
 	p->n_sp = tmpalloc(sizeof(struct symtab_hdr));
 	p->n_sp->sclass = ILABEL;
 	p->n_sp->soffset = i;
@@ -573,7 +573,7 @@ noinit()
 }
 
 void
-calldec(NODE *p, NODE *q) 
+calldec(NODE *p, NODE *q)
 {
 }
 

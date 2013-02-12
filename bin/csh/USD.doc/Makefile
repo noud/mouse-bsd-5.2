@@ -7,6 +7,6 @@ MACROS= -ms
 
 paper.ps: ${SRCS}
 	${TOOL_SOELIM} -I${.CURDIR} ${.ALLSRC} | \
-	    ${TOOL_ROFF_PS} ${MACROS} > ${.TARGET}                  
+	    ${TOOL_ROFF_PS} ${MACROS} > ${.TARGET}
 
 .include <bsd.doc.mk>

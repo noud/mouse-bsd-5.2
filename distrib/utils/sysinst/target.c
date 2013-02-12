@@ -23,13 +23,13 @@
  * THIS SOFTWARE IS PROVIDED BY JONATHAN STONE ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL PIERMONT INFORMATION SYSTEMS INC. BE 
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * ARE DISCLAIMED. IN NO EVENT SHALL PIERMONT INFORMATION SYSTEMS INC. BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
@@ -39,7 +39,7 @@
 /*
  * Copyright (c) 1989, 1991, 1993, 1995
  *      The Regents of the University of California.  All rights reserved.
- *      
+ *
  * This code is derived from software contributed to Berkeley by
  * Jan-Simon Pendry.
  *
@@ -53,8 +53,8 @@
  *    documentation and/or other materials provided with the distribution.
  * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission. 
- * 
+ *    without specific prior written permission.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -66,7 +66,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- */     
+ */
 
 
 #include <sys/cdefs.h>
@@ -101,7 +101,7 @@ __RCSID("$NetBSD: target.c,v 1.51 2006/10/23 19:44:57 he Exp $");
 #include "menu_defs.h"
 
 /*
- * local  prototypes 
+ * local  prototypes
  */
 
 static void make_prefixed_dir (const char *prefix, const char *path);
@@ -146,7 +146,7 @@ backtowin(void)
 
 
 /*
- * Is the root partition we're running from the same as the root 
+ * Is the root partition we're running from the same as the root
  * which the user has selected to install/upgrade?
  * Uses global variable "diskdev" to find the selected device for
  * install/upgrade.
@@ -166,7 +166,7 @@ target_already_root(void)
 
 
 /*
- * Is this device partition (e.g., "sd0a") mounted as root? 
+ * Is this device partition (e.g., "sd0a") mounted as root?
  */
 int
 is_active_rootpart(const char *dev, int ptn)
@@ -194,7 +194,7 @@ is_active_rootpart(const char *dev, int ptn)
 }
 
 /*
- * Pathname  prefixing glue to support installation either 
+ * Pathname  prefixing glue to support installation either
  * from in-ramdisk miniroots or on-disk diskimages.
  * If our root is on the target disk, the install target is mounted
  * on /targetroot and we need to prefix installed pathnames with /targetroot.
@@ -205,7 +205,7 @@ const char *
 target_prefix(void)
 {
 	/*
-	 * XXX fetch sysctl variable for current root, and compare 
+	 * XXX fetch sysctl variable for current root, and compare
 	 * to the devicename of the install target disk.
 	 */
 	return(target_already_root() ? "" : targetroot_mnt);
@@ -214,11 +214,11 @@ target_prefix(void)
 /*
  * concatenate two pathnames.
  * XXX returns either input args or result in a static buffer.
- * The caller must copy if it wants to use the pathname past the 
+ * The caller must copy if it wants to use the pathname past the
  * next call to a target-prefixing  function, or to modify the inputs..
  * Used only  internally so this is probably safe.
  */
-const char *  
+const char *
 concat_paths(const char *prefix, const char *suffix)
 {
 	static char real_path[MAXPATHLEN];
@@ -235,7 +235,7 @@ concat_paths(const char *prefix, const char *suffix)
 	if (suffix[0] == '/' || suffix[0] == 0)
 		snprintf(real_path, sizeof(real_path), "%s%s", prefix, suffix);
 	else
-		snprintf(real_path, sizeof(real_path), "%s/%s", 
+		snprintf(real_path, sizeof(real_path), "%s/%s",
 		    prefix, suffix);
 	return (real_path);
 }
@@ -243,7 +243,7 @@ concat_paths(const char *prefix, const char *suffix)
 /*
  * Do target prefix expansion on a pathname.
  * XXX uses concat_paths and so returns result in a static buffer.
- * The caller must copy if it wants to use the pathname past the 
+ * The caller must copy if it wants to use the pathname past the
  * next call to a target-prefixing  function, or to modify the inputs..
  * Used only  internally so this is probably safe.
  *
@@ -257,7 +257,7 @@ target_expand(const char *tgtpath)
 }
 
 /* Make a directory, with a prefix like "/targetroot" or possibly just "". */
-static void 
+static void
 make_prefixed_dir(const char *prefix, const char *path)
 {
 
@@ -343,7 +343,7 @@ cp_to_target(const char *srcpath, const char *tgt_path)
 /*
  * Duplicate a file from the current root to the same pathname
  * in the target system.  Pathname must be an absolute pathname.
- * If we're running in the target, do nothing. 
+ * If we're running in the target, do nothing.
  */
 void
 dup_file_into_target(const char *filename)
@@ -430,7 +430,7 @@ target_mount(const char *opts, const char *from, int ptn, const char *on)
 
 /*
  * unwind the mount stack, unmounting mounted filesystems.
- * For now, ignore any errors in unmount. 
+ * For now, ignore any errors in unmount.
  * (Why would we be unable to unmount?  The user has suspended
  *  us and forked shell sitting somewhere in the target root?)
  */
@@ -490,7 +490,7 @@ target_test(unsigned int mode, const char *path)
 }
 
 /*
- * Verify a directory already exists in the target root 
+ * Verify a directory already exists in the target root
  * filesystem. Do not create the directory if it doesn't  exist.
  * Assumes that sysinst has already mounted the target root.
  */
@@ -502,7 +502,7 @@ target_test_dir(const char *path)
 }
 
 /*
- * Verify an ordinary file already exists in the target root 
+ * Verify an ordinary file already exists in the target root
  * filesystem. Do not create the directory if it doesn't  exist.
  * Assumes that sysinst has already mounted the target root.
  */

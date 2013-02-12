@@ -285,7 +285,7 @@ struct optab table[] = {
 	SAREG,	TWORD,
 		NASL|NAREG,	RESC1,
 		"	ldrb A1,AL" COM "convert uchar to int/long\n", },
- 
+
 /* short */
 { SCONV,	INAREG | FEATURE_HALFWORDS,
 	SOREG,	TSHORT,
@@ -1155,7 +1155,7 @@ struct optab table[] = {
 		"ZQ", },
 
 /*
- * DIV/MOD/MUL 
+ * DIV/MOD/MUL
  */
 
 { DIV,	INAREG,

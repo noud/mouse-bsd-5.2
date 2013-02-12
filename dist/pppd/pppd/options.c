@@ -134,7 +134,7 @@ int	child_wait = 5;		/* # seconds to wait for children at exit */
 #ifdef MAXOCTETS
 unsigned int  maxoctets = 0;    /* default - no limit */
 int maxoctets_dir = 0;       /* default - sum of traffic */
-int maxoctets_timeout = 1;   /* default 1 second */ 
+int maxoctets_timeout = 1;   /* default 1 second */
 #endif
 
 
@@ -1562,7 +1562,7 @@ setactivefilter_out(argv)
 #endif
 
 /*
- * setdomain - Set domain name to append to hostname 
+ * setdomain - Set domain name to append to hostname
  */
 static int
 setdomain(argv)

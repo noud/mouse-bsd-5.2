@@ -242,10 +242,10 @@ kill -KILL `cat named.pid`
 rm named.pid
 cd ..
 sleep 10
-if 
+if
 	$PERL $SYSTEMTESTTOP/start.pl --noclean . ns1
 then
-	echo "I:restarted server ns1"	
+	echo "I:restarted server ns1"
 else
 	echo "I:could not restart server ns1"
 	exit 1

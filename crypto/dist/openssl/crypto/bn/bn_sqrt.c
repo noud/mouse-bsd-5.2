@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -59,7 +59,7 @@
 #include "bn_lcl.h"
 
 
-BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx) 
+BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
 /* Returns 'ret' such that
  *      ret^2 == a (mod p),
  * using the Tonelli/Shanks algorithm (cf. Henri Cohen, "A Course
@@ -72,7 +72,7 @@ BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
 	int r;
 	BIGNUM *A, *b, *q, *t, *x, *y;
 	int e, i, j;
-	
+
 	if (!BN_is_odd(p) || BN_abs_is_word(p, 1))
 		{
 		if (BN_abs_is_word(p, 2))
@@ -119,7 +119,7 @@ BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
 	x = BN_CTX_get(ctx);
 	y = BN_CTX_get(ctx);
 	if (y == NULL) goto end;
-	
+
 	if (ret == NULL)
 		ret = BN_new();
 	if (ret == NULL) goto end;
@@ -149,7 +149,7 @@ BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
 		err = 0;
 		goto vrfy;
 		}
-	
+
 	if (e == 2)
 		{
 		/* |p| == 5  (mod 8)
@@ -173,7 +173,7 @@ BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
 		 *         = a*(-i)*i
 		 *         = a.
 		 *
-		 * (This is due to A.O.L. Atkin, 
+		 * (This is due to A.O.L. Atkin,
 		 * <URL: http://listserv.nodak.edu/scripts/wa.exe?A2=ind9211&L=nmbrthry&O=T&P=562>,
 		 * November 1992.)
 		 */
@@ -201,7 +201,7 @@ BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
 		err = 0;
 		goto vrfy;
 		}
-	
+
 	/* e > 2, so we really have to use the Tonelli/Shanks algorithm.
 	 * First, find some  y  that is not a square. */
 	if (!BN_copy(q, p)) goto end; /* use 'q' as temp */
@@ -227,7 +227,7 @@ BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
 			if (BN_is_zero(y))
 				if (!BN_set_word(y, i)) goto end;
 			}
-		
+
 		r = BN_kronecker(y, q, ctx); /* here 'q' is |p| */
 		if (r < -1) goto end;
 		if (r == 0)
@@ -238,7 +238,7 @@ BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
 			}
 		}
 	while (r == 1 && ++i < 82);
-	
+
 	if (r != -1)
 		{
 		/* Many rounds and still no non-square -- this is more likely
@@ -279,10 +279,10 @@ BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
 	 *
 	 * so it is the square root that we are looking for.
 	 */
-	
+
 	/* t := (q-1)/2  (note that  q  is odd) */
 	if (!BN_rshift1(t, q)) goto end;
-	
+
 	/* x := a^((q-1)/2) */
 	if (BN_is_zero(t)) /* special case: p = 2^e + 1 */
 		{
@@ -312,7 +312,7 @@ BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
 	/* b := a*x^2  (= a^q) */
 	if (!BN_mod_sqr(b, x, p, ctx)) goto end;
 	if (!BN_mod_mul(b, b, A, p, ctx)) goto end;
-	
+
 	/* x := a*x    (= a^((q+1)/2)) */
 	if (!BN_mod_mul(x, x, A, p, ctx)) goto end;
 
@@ -348,7 +348,7 @@ BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
 				}
 			if (!BN_mod_mul(t, t, t, p, ctx)) goto end;
 			}
-		
+
 
 		/* t := y^2^(e - i - 1) */
 		if (!BN_copy(t, y)) goto end;
@@ -367,10 +367,10 @@ BIGNUM *BN_mod_sqrt(BIGNUM *in, const BIGNUM *a, const BIGNUM *p, BN_CTX *ctx)
 		{
 		/* verify the result -- the input might have been not a square
 		 * (test added in 0.9.8) */
-		
+
 		if (!BN_mod_sqr(x, ret, p, ctx))
 			err = 1;
-		
+
 		if (!err && 0 != BN_cmp(x, A))
 			{
 			BNerr(BN_F_BN_MOD_SQRT, BN_R_NOT_A_SQUARE);

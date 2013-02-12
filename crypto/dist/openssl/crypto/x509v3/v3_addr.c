@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -95,7 +95,7 @@ ASN1_SEQUENCE(IPAddressFamily) = {
   ASN1_SIMPLE(IPAddressFamily, ipAddressChoice, IPAddressChoice)
 } ASN1_SEQUENCE_END(IPAddressFamily)
 
-ASN1_ITEM_TEMPLATE(IPAddrBlocks) = 
+ASN1_ITEM_TEMPLATE(IPAddrBlocks) =
   ASN1_EX_TEMPLATE_TYPE(ASN1_TFLG_SEQUENCE_OF, 0,
 			IPAddrBlocks, IPAddressFamily)
 ASN1_ITEM_TEMPLATE_END(IPAddrBlocks)
@@ -281,7 +281,7 @@ static int i2r_IPAddrBlocks(X509V3_EXT_METHOD *method,
       case 128:
 	BIO_puts(out, " (MPLS-labeled VPN)");
 	break;
-      default:  
+      default:
 	BIO_printf(out, " (Unknown SAFI %u)",
 		   (unsigned) f->addressFamily->data[2]);
 	break;
@@ -424,7 +424,7 @@ static int make_addressPrefix(IPAddressOrRange **result,
     aor->u.addressPrefix->data[bytelen - 1] &= ~(0xFF >> bitlen);
     aor->u.addressPrefix->flags |= 8 - bitlen;
   }
-  
+
   *result = aor;
   return 1;
 
@@ -471,7 +471,7 @@ static int make_addressRange(IPAddressOrRange **result,
   if (i > 0) {
     unsigned char b = min[i - 1];
     int j = 1;
-    while ((b & (0xFFU >> j)) != 0) 
+    while ((b & (0xFFU >> j)) != 0)
       ++j;
     aor->u.addressRange->min->flags |= 8 - j;
   }
@@ -532,7 +532,7 @@ static IPAddressFamily *make_IPAddressFamily(IPAddrBlocks *addr,
   if (f->ipAddressChoice == NULL &&
       (f->ipAddressChoice = IPAddressChoice_new()) == NULL)
     goto err;
-  if (f->addressFamily == NULL && 
+  if (f->addressFamily == NULL &&
       (f->addressFamily = ASN1_OCTET_STRING_new()) == NULL)
     goto err;
   if (!ASN1_OCTET_STRING_set(f->addressFamily, key, keylen))
@@ -894,7 +894,7 @@ static void *v2i_IPAddrBlocks(struct v3_ext_method *method,
   IPAddrBlocks *addr = NULL;
   char *s = NULL, *t;
   int i;
-  
+
   if ((addr = sk_IPAddressFamily_new(IPAddressFamily_cmp)) == NULL) {
     X509V3err(X509V3_F_V2I_IPADDRBLOCKS, ERR_R_MALLOC_FAILURE);
     return NULL;
@@ -1033,7 +1033,7 @@ static void *v2i_IPAddrBlocks(struct v3_ext_method *method,
    * Canonize the result, then we're done.
    */
   if (!v3_addr_canonize(addr))
-    goto err;    
+    goto err;
   return addr;
 
  err:
@@ -1126,7 +1126,7 @@ int v3_addr_subset(IPAddrBlocks *a, IPAddrBlocks *b)
     IPAddressFamily *fa = sk_IPAddressFamily_value(a, i);
     int j = sk_IPAddressFamily_find(b, fa);
     IPAddressFamily *fb = sk_IPAddressFamily_value(b, j);
-    if (!addr_contains(fb->ipAddressChoice->u.addressesOrRanges, 
+    if (!addr_contains(fb->ipAddressChoice->u.addressesOrRanges,
 		       fa->ipAddressChoice->u.addressesOrRanges,
 		       length_from_afi(v3_addr_get_afi(fb))))
       return 0;
@@ -1223,7 +1223,7 @@ static int v3_addr_validate_path_internal(X509_STORE_CTX *ctx,
       }
       if (fp->ipAddressChoice->type == IPAddressChoice_addressesOrRanges) {
 	if (fc->ipAddressChoice->type == IPAddressChoice_inherit ||
-	    addr_contains(fp->ipAddressChoice->u.addressesOrRanges, 
+	    addr_contains(fp->ipAddressChoice->u.addressesOrRanges,
 			  fc->ipAddressChoice->u.addressesOrRanges,
 			  length_from_afi(v3_addr_get_afi(fc))))
 	  sk_IPAddressFamily_set(child, j, fp);

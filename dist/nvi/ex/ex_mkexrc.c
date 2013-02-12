@@ -50,7 +50,7 @@ ex_mkexrc(SCR *sp, EXCMD *cmdp)
 	switch (cmdp->argc) {
 	case 0:
 		fname = _PATH_EXRC;
-		INT2CHAR(sp, cmdp->argv[0]->bp, cmdp->argv[0]->len + 1, 
+		INT2CHAR(sp, cmdp->argv[0]->bp, cmdp->argv[0]->len + 1,
 			    fname, flen);
 		set_alt_name(sp, fname);
 		break;

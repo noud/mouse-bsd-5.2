@@ -64,7 +64,7 @@ released)
 	# Disk idle timeouts
 	#/sbin/atactl wd0 setidle 30
 	#/sbin/atactl wd0 setstandby 120
-	
+
 	# Stop the cron daemon
 	#/etc/rc.d/cron stop
 

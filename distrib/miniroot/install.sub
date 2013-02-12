@@ -168,7 +168,7 @@ dir_has_sets() {
 
 twiddle() {
 # spin the propeller so we don't get bored
-	while : ; do  
+	while : ; do
 		sleep 1; echo -n "/";
 		sleep 1; echo -n "-";
 		sleep 1; echo -n "\\";
@@ -660,7 +660,7 @@ __install_ftp_1
 	while [ "X${resp}" = X"" ]; do
 		echo -n "Login? [${_ftp_server_login}] "
 		getresp "${_ftp_server_login}"
-		_ftp_server_login=$resp 
+		_ftp_server_login=$resp
 	done
 
 	# Get password
@@ -1291,7 +1291,7 @@ get_timezone() {
 	else
 		_zonepath=""
 	fi
-		
+
 cat << \__get_timezone_1
 
 Select a time zone for your location. Timezones are represented on the

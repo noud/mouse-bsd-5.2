@@ -182,7 +182,7 @@ auth_moremem(void)
 	sk = (struct savekey *)calloc(MEMINC, sizeof(struct savekey));
 	if (sk == 0)
 		return (0);
-	
+
 	for (i = MEMINC; i > 0; i--) {
 		sk->next = authfreekeys;
 		authfreekeys = sk++;
@@ -216,7 +216,7 @@ authtrust(
 
 	if (sk == 0 && !trust)
 		return;
-	
+
 	if (sk != 0) {
 		if (cache_keyid == keyno) {
 			cache_flags = 0;
@@ -308,7 +308,7 @@ MD5auth_setkey(
 	)
 {
 	struct savekey *sk;
-	
+
 	/*
 	 * See if we already have the key.  If so just stick in the
 	 * new value.
@@ -356,7 +356,7 @@ MD5auth_setkey(
 	authnumkeys++;
 	return;
 }
-    
+
 /*
  * auth_delkeys - delete all known keys, in preparation for rereading
  *		  the keys file (presumably)

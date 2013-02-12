@@ -52,7 +52,7 @@ message dobad144
 
 message getboottype
 {¿Le gustaria instalar el set normal de bootblocks o bootblocks por serie?
- 
+
 Bootblocks normal usa el dispositivo de consola de BIOS como consola
 (normalmente el monitor y teclado). Bootblocks por serie usa el primer
 puerto serie como consola.

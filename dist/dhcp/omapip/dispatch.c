@@ -66,7 +66,7 @@ isc_result_t omapi_register_io_object (omapi_object_t *h,
 		omapi_io_states.refcnt = 1;
 		omapi_io_states.type = omapi_type_io_object;
 	}
-		
+
 	obj = (omapi_io_object_t *)0;
 	status = omapi_io_allocate (&obj, MDL);
 	if (status != ISC_R_SUCCESS)
@@ -166,7 +166,7 @@ isc_result_t omapi_wait_for_completion (omapi_object_t *object,
 			omapi_waiter_dereference (&waiter, MDL);
 			return status;
 		}
-		
+
 		status = omapi_object_reference (&inner -> inner,
 						 (omapi_object_t *)waiter,
 						 MDL);
@@ -196,7 +196,7 @@ isc_result_t omapi_wait_for_completion (omapi_object_t *object,
 	}
 	if (waiter -> inner)
 		omapi_object_dereference (&waiter -> inner, MDL);
-	
+
 	status = waiter -> waitstatus;
 	omapi_waiter_dereference (&waiter, MDL);
 	return status;
@@ -228,7 +228,7 @@ isc_result_t omapi_one_dispatch (omapi_object_t *wo,
 		if (now.tv_sec > t -> tv_sec ||
 		    (now.tv_sec == t -> tv_sec && now.tv_usec >= t -> tv_usec))
 			return ISC_R_TIMEDOUT;
-			
+
 		/* We didn't time out, so figure out how long until
 		   we do. */
 		to.tv_sec = t -> tv_sec - now.tv_sec;
@@ -245,12 +245,12 @@ isc_result_t omapi_one_dispatch (omapi_object_t *wo,
 		if (to.tv_sec > (60 * 60 * 24))
 			to.tv_sec = 60 * 60 * 24;
 	}
-	
+
 	/* If the object we're waiting on has reached completion,
 	   return now. */
 	if (waiter && waiter -> ready)
 		return ISC_R_SUCCESS;
-	
+
       again:
 	/* If we have no I/O state, we can't proceed. */
 	if (!(io = omapi_io_states.next))
@@ -270,7 +270,7 @@ isc_result_t omapi_one_dispatch (omapi_object_t *wo,
 			if (desc > max)
 				max = desc;
 		}
-		
+
 		/* Same deal for write fdets. */
 		if (io -> writefd && io -> inner &&
 		    (desc = (*(io -> writefd)) (io -> inner)) >= 0) {
@@ -371,7 +371,7 @@ isc_result_t omapi_one_dispatch (omapi_object_t *wo,
 				goto again;
 			    }
 			}
-			
+
 			FD_ZERO (&r);
 			FD_ZERO (&w);
 			t0.tv_sec = t0.tv_usec = 0;
@@ -393,7 +393,7 @@ isc_result_t omapi_one_dispatch (omapi_object_t *wo,
 		}
 		if (prev)
 			omapi_io_dereference (&prev, MDL);
-		
+
 	}
 
 	for (io = omapi_io_states.next; io; io = io -> next) {
@@ -407,7 +407,7 @@ isc_result_t omapi_one_dispatch (omapi_object_t *wo,
 			if (FD_ISSET (desc, &r))
 				((*(io -> reader)) (tmp));
 		}
-		
+
 		/* Same deal for write descriptors. */
 		if (io -> writefd &&
 		    (desc = (*(io -> writefd)) (tmp)) >= 0)
@@ -470,7 +470,7 @@ isc_result_t omapi_io_set_value (omapi_object_t *h,
 {
 	if (h -> type != omapi_type_io_object)
 		return ISC_R_INVALIDARG;
-	
+
 	if (h -> inner && h -> inner -> type -> set_value)
 		return (*(h -> inner -> type -> set_value))
 			(h -> inner, id, name, value);
@@ -484,7 +484,7 @@ isc_result_t omapi_io_get_value (omapi_object_t *h,
 {
 	if (h -> type != omapi_type_io_object)
 		return ISC_R_INVALIDARG;
-	
+
 	if (h -> inner && h -> inner -> type -> get_value)
 		return (*(h -> inner -> type -> get_value))
 			(h -> inner, id, name, value);
@@ -505,7 +505,7 @@ isc_result_t omapi_io_destroy (omapi_object_t *h, const char *file, int line)
 
 	if (h -> type != omapi_type_io_object)
 		return ISC_R_INVALIDARG;
-	
+
 	/* remove from the list of I/O states */
 	last = &omapi_io_states;
 	for (p = omapi_io_states.next; p; p = p -> next) {
@@ -537,7 +537,7 @@ isc_result_t omapi_io_signal_handler (omapi_object_t *h,
 {
 	if (h -> type != omapi_type_io_object)
 		return ISC_R_INVALIDARG;
-	
+
 	if (h -> inner && h -> inner -> type -> signal_handler)
 		return (*(h -> inner -> type -> signal_handler)) (h -> inner,
 								  name, ap);
@@ -564,7 +564,7 @@ isc_result_t omapi_waiter_signal_handler (omapi_object_t *h,
 
 	if (h -> type != omapi_type_waiter)
 		return ISC_R_INVALIDARG;
-	
+
 	if (!strcmp (name, "ready")) {
 		waiter = (omapi_waiter_object_t *)h;
 		waiter -> ready = 1;

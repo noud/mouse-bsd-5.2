@@ -53,7 +53,7 @@ a new directory then configure and build.
 For additional information about building DB for UNIX platforms, the
 description of possible configuration options and other information
 on DB configuration and build issues, see the file build.unix/README.
-	
+
 Bug fixes and updated versions of this software will periodically be made
 available.  For more information, as well as a list of Frequently Asked
 Questions, see:
@@ -67,7 +67,7 @@ reason, please send email to:
 	bostic@bostic.com
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-o This software is several years old and is the product of many folks' work.  
+o This software is several years old and is the product of many folks' work.
 
 	This software was originally derived from software contributed to
 	the University of California, Berkeley by Steve Kirkendall, the

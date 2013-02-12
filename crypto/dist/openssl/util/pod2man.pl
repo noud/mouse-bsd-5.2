@@ -518,9 +518,9 @@ END
 print <<'END';
 .\"	If the F register is turned on, we'll generate
 .\"	index entries out stderr for the following things:
-.\"		TH	Title 
+.\"		TH	Title
 .\"		SH	Header
-.\"		Sh	Subsection 
+.\"		Sh	Subsection
 .\"		Ip	Item
 .\"		X<>	Xref  (embedded
 .\"	Of course, you have to process the output yourself
@@ -898,7 +898,7 @@ while (<>) {
 	}
 	elsif ($Cmd eq 'pod') {
 	    # this is just a comment
-	} 
+	}
 	else {
 	    warn "$0: Unrecognized pod directive in paragraph $. of $ARGV: $Cmd\n";
 	}
@@ -959,11 +959,11 @@ sub escapes {
     if ( $indot == 1 ) {
 	$dotmacroL = 'M';
 	$dotmacroR = 'S';
-    }  
+    }
     elsif ( $indot >= 2 ) {
 	$dotmacroL = 'N';
 	$dotmacroR = 'T';
-    }  
+    }
     if (!/""/) {
 	s/(^|\s)(['"])/noremap("$1\\*($dotmacroL$2")/ge;
 	s/(['"])($|[\-\s,;\\!?.])/noremap("\\*($dotmacroR$1$2")/ge;
@@ -997,7 +997,7 @@ sub escapes {
 #	    (
 #		[A-Z][\/A-Z+:\-\d_$.]+
 #	    )
-#	    (s?) 		
+#	    (s?)
 #	    \b
 #	} {$1\\s-1$2\\s0}gmox;
 
@@ -1066,15 +1066,15 @@ sub clear_noremap {
     s {
 	    E<
 	    (
-	        ( \d + ) 
-	        | ( [A-Za-z]+ )	
+	        ( \d + )
+	        | ( [A-Za-z]+ )
 	    )
-	    >	
+	    >
     } {
 	 do {
 	     defined $2
 		? chr($2)
-		:	
+		:
 	     exists $HTML_Escapes{$3}
 		? do { $HTML_Escapes{$3} }
 		: do {

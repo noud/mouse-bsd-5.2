@@ -199,7 +199,7 @@ main(
 		perror("adjtimed: get message queue id");
 		Exit(1);
 	}
-  
+
 	/* Lock process in memory to improve response time */
 	if (plock(PROCLOCK)) {
 		msyslog(LOG_ERR, "plock: %m");
@@ -280,7 +280,7 @@ AdjustClockRate(
 {
 	register long rate, dt, leftover;
 	struct itimerval period, remains;
- 
+
 	dt = (delta->tv_sec * MILLION) + delta->tv_usec;
 
 	if (verbose)
@@ -337,7 +337,7 @@ AdjustClockRate(
 		dt = ((remains.it_value.tv_sec * MILLION) + remains.it_value.tv_usec) *
 			oldrate;
 		olddelta->tv_sec = dt / MILLION;
-		olddelta->tv_usec = dt - (olddelta->tv_sec * MILLION); 
+		olddelta->tv_usec = dt - (olddelta->tv_sec * MILLION);
 	}
 
 	oldrate = (double)rate / (double)MILLION;

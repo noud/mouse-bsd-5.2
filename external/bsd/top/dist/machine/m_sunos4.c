@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 1984 through 2008, William LeFebvre
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  *     * Redistributions in binary form must reproduce the above
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- * 
+ *
  *     * Neither the name of William LeFebvre nor the names of other
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -247,7 +247,7 @@ char *memorynames[] = {
 };
 
 /* these are names given to allowed sorting orders -- first is default */
-char *ordernames[] = 
+char *ordernames[] =
 {"cpu", "size", "res", NULL};
 
 /* forward definitions for comparison functions */
@@ -388,7 +388,7 @@ struct statics *statics;
 	fprintf(stderr, "top: can't allocate sufficient memory\n");
 	return(-1);
     }
-   
+
     /* get the page size with "getpagesize" and calculate pageshift from it */
     pagesize = getpagesize();
     pageshift = 0;
@@ -654,7 +654,7 @@ char *(*get_userid)();
     hp = (struct handle *)handle;
     pp = *(hp->next_proc++);
     hp->remaining--;
-    
+
     /* get the process's user struct and set cputime */
     if (getu(pp, &u) == -1)
     {
@@ -794,7 +794,7 @@ register struct nlist *nlst;
  *	    if "refstr" starts with a '!', then a failure on read will not
  *  	    be fatal (this may seem like a silly way to do things, but I
  *  	    really didn't want the overhead of another argument).
- *  	
+ *
  */
 
 getkval(offset, ptr, size, refstr)
@@ -821,7 +821,7 @@ char *refstr;
     }
     return(1);
 }
-    
+
 /* comparison routines for qsort */
 
 /*
@@ -862,7 +862,7 @@ static unsigned char sorted_state[] =
     2,	/* zombie		*/
     4	/* stop			*/
 };
- 
+
 /* compare_cpu - the comparison function for sorting by cpu percentage */
 
 compare_cpu(pp1, pp2)

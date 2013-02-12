@@ -76,7 +76,7 @@ copy_file(FTSENT *entp, int dne)
 	struct stat to_stat, *fs;
 	int ch, checkch, from_fd, rcount, rval, to_fd, tolnk, wcount;
 	char *p;
-	
+
 	if ((from_fd = open(entp->fts_path, O_RDONLY, 0)) == -1) {
 		warn("%s", entp->fts_path);
 		return (1);
@@ -220,7 +220,7 @@ mmap_failed:
 		rval = 1;
 	}
 	/* set the mod/access times now after close of the fd */
-	if (pflag && set_utimes(to.p_path, fs)) { 
+	if (pflag && set_utimes(to.p_path, fs)) {
 	    rval = 1;
 	}
 	return (rval);

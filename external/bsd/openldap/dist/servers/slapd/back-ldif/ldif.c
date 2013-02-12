@@ -227,7 +227,7 @@ static char * slurp_file(int fd) {
 	entry_size = st.st_size;
 	entry = ch_malloc( entry_size+1 );
 	entry_pos = entry;
-	
+
 	while(1) {
 		read_chars = read(fd, (void *) entry_pos, entry_size - read_chars_total);
 		if(read_chars == -1) {
@@ -252,7 +252,7 @@ static char * slurp_file(int fd) {
  */
 static int spew_file(int fd, char * spew, int len) {
 	int writeres = 0;
-	
+
 	while(len > 0) {
 		writeres = write(fd, spew, len);
 		if(writeres == -1) {
@@ -374,7 +374,7 @@ static Entry * get_entry_for_fd(int fd,
 {
 	char * entry = (char *) slurp_file(fd);
 	Entry * ldentry = NULL;
-	
+
 	/* error reading file */
 	if(entry == NULL) {
 		goto return_value;
@@ -492,14 +492,14 @@ static int r_enum_tree(enumCookie *ck, struct berval *path, int base,
 							&e->e_name, NULL,
 							ck->op->oq_search.rs_scope == LDAP_SCOPE_ONELEVEL
 								? LDAP_SCOPE_BASE : LDAP_SCOPE_SUBTREE );
-	
+
 					ck->rs->sr_entry = e;
 					rc = send_search_reference( ck->op, ck->rs );
 					ber_bvarray_free( ck->rs->sr_ref );
 					ber_bvarray_free( erefs );
 					ck->rs->sr_ref = NULL;
 					ck->rs->sr_entry = NULL;
-	
+
 				} else if ( test_filter( ck->op, e, ck->op->ors_filter ) == LDAP_COMPARE_TRUE )
 				{
 					ck->rs->sr_entry = e;
@@ -517,11 +517,11 @@ static int r_enum_tree(enumCookie *ck, struct berval *path, int base,
 					ck->entries = (Entry **) ch_malloc(sizeof(Entry *) * ENTRY_BUFF_INCREMENT);
 					ck->elen = ENTRY_BUFF_INCREMENT;
 				}
-				if(ck->eind >= ck->elen) { /* grow entries if necessary */	
+				if(ck->eind >= ck->elen) { /* grow entries if necessary */
 					ck->entries = (Entry **) ch_realloc(ck->entries, sizeof(Entry *) * (ck->elen) * 2);
 					ck->elen *= 2;
 				}
-	
+
 				ck->entries[ck->eind++] = e;
 				fd = 0;
 			}
@@ -549,7 +549,7 @@ static int r_enum_tree(enumCookie *ck, struct berval *path, int base,
 			}
 			goto done;
 		}
-	
+
 		while(1) {
 			struct berval fname, itmp;
 			struct dirent * dir;
@@ -592,7 +592,7 @@ static int r_enum_tree(enumCookie *ck, struct berval *path, int base,
 			}
 			*prev = bvl;
 			bvl->next = ptr;
-				
+
 		}
 		closedir(dir_of_path);
 
@@ -651,7 +651,7 @@ get_parent_path( struct berval *dnpath, struct berval *res )
 {
 	int dnpathlen = dnpath->bv_len;
 	int i;
-	
+
 	for(i = dnpathlen;i>0;i--) /* find the first path seperator */
 		if(dnpath->bv_val[i] == LDAP_DIRSEP[0])
 			break;
@@ -689,14 +689,14 @@ static int apply_modify_to_entry(Entry * entry,
 				   &rs->sr_text, textbuf,
 				   sizeof( textbuf ) );
 			break;
-				
+
 		case LDAP_MOD_DELETE:
 			rc = modify_delete_values(entry, mods,
 				get_permissiveModify(op),
 				&rs->sr_text, textbuf,
 				sizeof( textbuf ) );
 			break;
-				
+
 		case LDAP_MOD_REPLACE:
 			rc = modify_replace_values(entry, mods,
 				 get_permissiveModify(op),
@@ -1013,7 +1013,7 @@ static int ldif_back_add(Operation *op, SlapReply *rs) {
 	ldap_pvt_thread_rdwr_wunlock(&li->li_rdwr);
 
 send_res:
-	Debug( LDAP_DEBUG_TRACE, 
+	Debug( LDAP_DEBUG_TRACE,
 			"ldif_back_add: err: %d text: %s\n", rs->sr_err, rs->sr_text ?
 				rs->sr_text : "", 0);
 	send_ldap_result(op, rs);
@@ -1208,7 +1208,7 @@ ldif_back_modrdn(Operation *op, SlapReply *rs)
 		} else {
 			dnParent( &entry->e_name, &p_dn );
 		}
-		build_new_dn( &new_dn, &p_dn, &op->oq_modrdn.rs_newrdn, NULL ); 
+		build_new_dn( &new_dn, &p_dn, &op->oq_modrdn.rs_newrdn, NULL );
 		dnNormalize( 0, NULL, NULL, &new_dn, &new_ndn, NULL );
 		ber_memfree_x( entry->e_name.bv_val, NULL );
 		ber_memfree_x( entry->e_nname.bv_val, NULL );
@@ -1275,7 +1275,7 @@ static int ldif_tool_entry_open(BackendDB *be, int mode) {
 	struct ldif_info *li = (struct ldif_info *) be->be_private;
 	li->li_tool_current = 0;
 	return 0;
-}					
+}
 
 static int ldif_tool_entry_close(BackendDB * be) {
 	struct ldif_info *li = (struct ldif_info *) be->be_private;
@@ -1471,7 +1471,7 @@ ldif_back_initialize(
 	bi->bi_tool_entry_put = ldif_tool_entry_put;
 	bi->bi_tool_entry_reindex = 0;
 	bi->bi_tool_sync = 0;
-	
+
 	bi->bi_tool_dn2id_get = 0;
 	bi->bi_tool_entry_modify = 0;
 

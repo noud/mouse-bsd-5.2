@@ -1,11 +1,11 @@
 /*	$NetBSD: refclock_bancomm.c,v 1.3 2007/01/06 19:45:23 kardel Exp $	*/
 
-/* refclock_bancomm.c - clock driver for the  Datum/Bancomm bc635VME 
+/* refclock_bancomm.c - clock driver for the  Datum/Bancomm bc635VME
  * Time and Frequency Processor. It requires the BANCOMM bc635VME/
- * bc350VXI Time and Frequency Processor Module Driver for SunOS4.x 
- * and SunOS5.x UNIX Systems. It has been tested on a UltraSparc 
+ * bc350VXI Time and Frequency Processor Module Driver for SunOS4.x
+ * and SunOS5.x UNIX Systems. It has been tested on a UltraSparc
  * IIi-cEngine running Solaris 2.6.
- * 
+ *
  * Author(s): 	Ganesh Ramasivan & Gary Cliff, Computing Devices Canada,
  *		Ottawa, Canada
  *
@@ -14,41 +14,41 @@
  * Note(s):	The refclock type has been defined as 16.
  *
  *		This program has been modelled after the Bancomm driver
- *		originally written by R. Schmidt of Time Service, U.S. 
+ *		originally written by R. Schmidt of Time Service, U.S.
  *		Naval Observatory for a HP-UX machine. Since the original
- *		authors no longer plan to maintain this code, all 
+ *		authors no longer plan to maintain this code, all
  *		references to the HP-UX vme2 driver subsystem bave been
- *		removed. Functions vme_report_event(), vme_receive(), 
+ *		removed. Functions vme_report_event(), vme_receive(),
  *		vme_control() and vme_buginfo() have been deleted because
  *		they are no longer being used.
  *
- *		The time on the bc635 TFP must be set to GMT due to the 
+ *		The time on the bc635 TFP must be set to GMT due to the
  *		fact that NTP makes use of GMT for all its calculations.
  *
- *		Installation of the Datum/Bancomm driver creates the 
- *		device file /dev/btfp0 
+ *		Installation of the Datum/Bancomm driver creates the
+ *		device file /dev/btfp0
  *
- *	04/28/2005 Rob Neal 
- *		Modified to add support for Symmetricom bc637PCI-U Time & 
- *		Frequency Processor. 
+ *	04/28/2005 Rob Neal
+ *		Modified to add support for Symmetricom bc637PCI-U Time &
+ *		Frequency Processor.
  *		Card bus type (VME/VXI or PCI) and environment are specified via the
  *		"mode" keyword on the server command in ntp.conf.
- *		server 127.127.16.u prefer mode m (...) 
- *		Modes currently supported are 
+ *		server 127.127.16.u prefer mode m (...)
+ *		Modes currently supported are
  *		1		: FreeBSD PCI 635/637.
  *		2		: Linux or Windows PCI 635/637.
- *		not specified, or other number: 
+ *		not specified, or other number:
  *				: Assumed to be VME/VXI legacy Bancomm card on Solaris.
  *		Linux and Windows platforms require Symmetricoms' proprietary driver
- *		for the TFP card. 
- *		Tested on FreeBSD 5.3 with a 637 card. 
+ *		for the TFP card.
+ *		Tested on FreeBSD 5.3 with a 637 card.
  */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
-#if defined(REFCLOCK) && defined(CLOCK_BANC) 
+#if defined(REFCLOCK) && defined(CLOCK_BANC)
 
 #include "ntpd.h"
 #include "ntp_io.h"
@@ -82,10 +82,10 @@ struct btfp_time                /* Structure for reading 5 time words   */
 /* Read all 5 time words in one call.   */
 #define READTIME	IOCIORN(b, 32, sizeof( struct btfp_time ))
 
-#if defined(__FreeBSD__) 
+#if defined(__FreeBSD__)
 #undef  READTIME
 #define READTIME	_IOR('u', 5, struct btfp_time )
-#endif 
+#endif
 
 #define VMEFD "/dev/btfp0"
 
@@ -103,7 +103,7 @@ struct vmedate {               /* structure returned by get_vmetime.c */
 typedef void *SYMMT_PCI_HANDLE;
 
 /*
- * VME interface parameters. 
+ * VME interface parameters.
  */
 #define VMEPRECISION    (-21)   /* precision assumed (1 us) */
 #define USNOREFID       "BTFP"  /* or whatever */
@@ -125,7 +125,7 @@ extern volatile int debug;               /* global debug flag */
 
 /*
  * VME unit control structure.
- * Changes made to vmeunit structure. Most members are now available in the 
+ * Changes made to vmeunit structure. Most members are now available in the
  * new refclockproc structure in ntp_refclock.h - 07/99 - Ganesh Ramasivan
  */
 struct vmeunit {
@@ -140,7 +140,7 @@ static  int     vme_start       (int, struct peer *);
 static  void    vme_shutdown    (int, struct peer *);
 static  void    vme_receive     (struct recvbuf *);
 static  void    vme_poll        (int unit, struct peer *);
-struct vmedate *get_datumtime(struct vmedate *);	
+struct vmedate *get_datumtime(struct vmedate *);
 void 	tvme_fill(struct vmedate *, uint32_t btm[2]);
 /*
  * Define the bc*() functions as weak so we can compile/link without them.
@@ -159,8 +159,8 @@ struct  refclock refclock_bancomm = {
 	vme_shutdown,		/* shut down driver */
 	vme_poll,		/* transmit poll message */
 	noentry,		/* not used (old vme_control) */
-	noentry,		/* initialize driver */ 
-	noentry,		/* not used (old vme_buginfo) */ 
+	noentry,		/* initialize driver */
+	noentry,		/* not used (old vme_buginfo) */
 	NOFLAGS			/* not used */
 };
 
@@ -183,9 +183,9 @@ vme_start(
 	struct refclockproc *pp;
 	int dummy;
 	char vmedev[20];
-	
+
 	tfp_type = (int)(peer->ttl);
-	switch (tfp_type) {		
+	switch (tfp_type) {
 		case 1:
 			break;
 		case 2:
@@ -205,11 +205,11 @@ vme_start(
 		msyslog(LOG_ERR, "vme_start: failed open of %s: %m", vmedev);
 		return (0);
 	}
-	else  { 
+	else  {
 		switch (tfp_type) {
 		  	case 1:	break;
 			case 2: break;
-			default: 
+			default:
 				/* Release capture lockout in case it was set before. */
 				if( ioctl( fd_vme, RUNLOCK, &dummy ) )
 		    		msyslog(LOG_ERR, "vme_start: RUNLOCK failed %m");
@@ -256,7 +256,7 @@ vme_start(
  */
 static void
 vme_shutdown(
-	int unit, 
+	int unit,
 	struct peer *peer
 	)
 {
@@ -271,7 +271,7 @@ vme_shutdown(
 	io_closeclock(&pp->io);
 	pp->unitptr = NULL;
 	free(vme);
-	if (tfp_type == 2) bcStopPci(stfp_handle); 
+	if (tfp_type == 2) bcStopPci(stfp_handle);
 }
 
 
@@ -298,16 +298,16 @@ vme_poll(
 	struct peer *peer
 	)
 {
-	struct vmedate *tptr; 
+	struct vmedate *tptr;
 	struct vmeunit *vme;
 	struct refclockproc *pp;
 	time_t tloc;
 	struct tm *tadr;
-        
-	pp = peer->procptr;	 
+
+	pp = peer->procptr;
 	vme = (struct vmeunit *)pp->unitptr;        /* Here is the structure */
 
-	tptr = &vme->vmedata; 
+	tptr = &vme->vmedata;
 	if ((tptr = get_datumtime(tptr)) == NULL ) {
 		refclock_report(peer, CEVNT_BADREPLY);
 		return;
@@ -318,21 +318,21 @@ vme_poll(
 	vme->lasttime = current_time;
 
 	/*
-	 * Get VME time and convert to timestamp format. 
+	 * Get VME time and convert to timestamp format.
 	 * The year must come from the system clock.
 	 */
-	
+
 	  time(&tloc);
 	  tadr = gmtime(&tloc);
 	  tptr->year = (unsigned short)(tadr->tm_year + 1900);
 
-	sprintf(pp->a_lastcode, 
+	sprintf(pp->a_lastcode,
 		"%3.3d %2.2d:%2.2d:%2.2d.%.6ld %1d",
-		tptr->day, 
-		tptr->hr, 
+		tptr->day,
+		tptr->hr,
 		tptr->mn,
-		tptr->sec, 
-		tptr->frac, 
+		tptr->sec,
+		tptr->frac,
 		tptr->status);
 
 	pp->lencode = (u_short) strlen(pp->a_lastcode);
@@ -341,7 +341,7 @@ vme_poll(
 	pp->hour =   tptr->hr;
 	pp->minute =  tptr->mn;
 	pp->second =  tptr->sec;
-	pp->nsec =   tptr->frac;	
+	pp->nsec =   tptr->frac;
 
 #ifdef DEBUG
 	if (debug)
@@ -378,7 +378,7 @@ get_datumtime(struct vmedate *time_vme)
 	struct btfp_time vts;
 	uint32_t btm[2];
 	uint8_t dmy;
-	
+
 	if ( time_vme == (struct vmedate *)NULL) {
   	  time_vme = (struct vmedate *)malloc(sizeof(struct vmedate ));
 	}
@@ -394,7 +394,7 @@ get_datumtime(struct vmedate *time_vme)
 
 		case 2:				/* Linux/Windows, PCI, 2 32bit time words */
 			if (bcReadBinTime(stfp_handle, &btm[1], &btm[0], &dmy) == 0) {
-	    		msyslog(LOG_ERR, "get_datumtime error: %m"); 
+	    		msyslog(LOG_ERR, "get_datumtime error: %m");
 				return(NULL);
 			}
 			tvme_fill(time_vme, btm);
@@ -408,7 +408,7 @@ get_datumtime(struct vmedate *time_vme)
 			}
 			/* Get day */
 			sprintf(cbuf,"%3.3x", ((vts.btfp_time[ 0 ] & 0x000f) <<8) +
-				((vts.btfp_time[ 1 ] & 0xff00) >> 8));  
+				((vts.btfp_time[ 1 ] & 0xff00) >> 8));
 			time_vme->day = (unsigned short)atoi(cbuf);
 
 			/* Get hour */
@@ -438,7 +438,7 @@ get_datumtime(struct vmedate *time_vme)
 			break;
 	}
 
-	if (time_vme->status) 
+	if (time_vme->status)
 		return ((void *)NULL);
 	else
 	    return (time_vme);
@@ -458,7 +458,7 @@ tvme_fill(struct vmedate *time_vme, uint32_t btm[2])
 	time_vme->hr   = maj.tm_hour;
 	time_vme->mn   = maj.tm_min;
 	time_vme->sec  = maj.tm_sec;
-	time_vme->frac = (dmin & 0x000fffff) * 1000; 
+	time_vme->frac = (dmin & 0x000fffff) * 1000;
 	time_vme->frac += ((dmin & 0x00f00000) >> 20) * 100;
 	time_vme->status = (dmin & 0x01000000) >> 24;
 	return;

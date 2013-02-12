@@ -215,7 +215,7 @@ Responsible: rmind
 17. Incremental namei improvements, Phase 1
 -------------------------------------------
 
-Implement the rest of the changes to namei outlined in Message-ID: 
+Implement the rest of the changes to namei outlined in Message-ID:
 <20080319053709.GB3951@netbsd.org>.  Simplify the locking and behavior
 of namei() calls within the kernel to resolve path names within file
 systems. This phase simplifies the majority of calls to namei().
@@ -237,7 +237,7 @@ XXX firewire support in libkvm
 20. Processor and cache topology aware scheduler
 ------------------------------------------------
 
-Implement the detection of the topology of the processors and caches. 
+Implement the detection of the topology of the processors and caches.
 Improve the scheduler to make decisions about thread migration
 according to the topology, to get better thread affinity and less
 cache thrashing, and thus improve overall performance in modern SMP
@@ -248,7 +248,7 @@ Responsible: rmind
 29. Incremental namei improvements, Phase 2
 -------------------------------------------
 
-Implement the rest of the changes to namei outlined in Message-ID: 
+Implement the rest of the changes to namei outlined in Message-ID:
 <20080319053709.GB3951@netbsd.org>.  Simplify the locking and behavior
 of namei() calls within the kernel to resolve path names within file
 systems.

@@ -132,7 +132,7 @@ static int get_char (cfile)
 
 	if (!cfile -> ugflag) {
 		if (c == EOL) {
-			if (cfile -> cur_line == cfile -> line1) {	
+			if (cfile -> cur_line == cfile -> line1) {
 				cfile -> cur_line = cfile -> line2;
 				cfile -> prev_line = cfile -> line1;
 			} else {
@@ -151,7 +151,7 @@ static int get_char (cfile)
 		}
 	} else
 		cfile -> ugflag = 0;
-	return c;		
+	return c;
 }
 
 static enum dhcp_token get_token (cfile)
@@ -308,7 +308,7 @@ static enum dhcp_token read_string (cfile)
 
 	value = 0;	/* XXXGCC -Wuninitialized */
 	hex = 0;	/* XXXGCC -Wuninitialized */
-					
+
 	for (i = 0; i < sizeof cfile -> tokbuf; i++) {
 	      again:
 		c = get_char (cfile);

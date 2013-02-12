@@ -29,7 +29,7 @@ class LDAPCtrl{
          * @param data: If there is data for the control, put it here.
          * @param length: The length of the data field
          */
-        LDAPCtrl(const char *oid, bool critical, const char *data=0, 
+        LDAPCtrl(const char *oid, bool critical, const char *data=0,
                 int length=0);
 
         /**
@@ -51,7 +51,7 @@ class LDAPCtrl{
          * Destructor
          */
         ~LDAPCtrl();
-       
+
         /**
          * @return The OID of the control
          */

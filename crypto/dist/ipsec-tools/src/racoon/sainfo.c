@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -39,7 +39,7 @@
 #include <sys/queue.h>
 
 #include <netinet/in.h>
-#include <netinet/in.h> 
+#include <netinet/in.h>
 #include PATH_IPSEC_H
 
 #include <stdlib.h>
@@ -90,26 +90,26 @@ getsainfo(loc, rmt, peer, remoteid)
 	/* debug level output */
 	if(loglevel >= LLV_DEBUG) {
 		char *dloc, *drmt, *dpeer, *dclient;
- 
+
 		if (loc == NULL)
 			dloc = strdup("ANONYMOUS");
 		else
 			dloc = ipsecdoi_id2str(loc);
- 
+
 		if (rmt == NULL)
 			drmt = strdup("ANONYMOUS");
 		else
 			drmt = ipsecdoi_id2str(rmt);
- 
+
 		if (peer == NULL)
 			dpeer = strdup("NULL");
 		else
 			dpeer = ipsecdoi_id2str(peer);
- 
+
 		plog(LLV_DEBUG, LOCATION, NULL,
 			"getsainfo params: loc=\'%s\', rmt=\'%s\', peer=\'%s\', id=%i\n",
 			dloc, drmt, dpeer, remoteid );
- 
+
                 racoon_free(dloc);
                 racoon_free(drmt);
                 racoon_free(dpeer);
@@ -118,7 +118,7 @@ getsainfo(loc, rmt, peer, remoteid)
     again:
 	plog(LLV_DEBUG, LOCATION, NULL,
 		"getsainfo pass #%i\n", pass);
- 
+
 	LIST_FOREACH(s, &sitree, chain) {
 		const char *sainfostr = sainfo2str(s);
 		plog(LLV_DEBUG, LOCATION, NULL,
@@ -275,29 +275,29 @@ sainfo2str(si)
         static char buf[256];
 
         char *idloc = NULL, *idrmt = NULL, *id_i;
- 
+
         if (si->idsrc == NULL)
                 idloc = strdup("ANONYMOUS");
         else
                 idloc = ipsecdoi_id2str(si->idsrc);
- 
+
         if (si->iddst == NULL)
                 idrmt = strdup("ANONYMOUS");
         else
                 idrmt = ipsecdoi_id2str(si->iddst);
- 
+
         if (si->id_i == NULL)
                 id_i = strdup("ANY");
         else
                 id_i = ipsecdoi_id2str(si->id_i);
- 
+
         snprintf(buf, 255, "loc=\'%s\', rmt=\'%s\', peer=\'%s\', id=%i",
 		idloc, idrmt, id_i, si->remoteid);
- 
+
         racoon_free(idloc);
         racoon_free(idrmt);
         racoon_free(id_i);
- 
+
         return buf;
 }
 

@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -88,7 +88,7 @@ int SMIME_write_PKCS7(BIO *bio, PKCS7 *p7, BIO *data, int flags)
 
 	return SMIME_write_ASN1(bio, (ASN1_VALUE *)p7, data, flags,
 					ctype_nid, NID_undef, mdalgs,
-					ASN1_ITEM_rptr(PKCS7));	
+					ASN1_ITEM_rptr(PKCS7));
 	}
 
 PKCS7 *SMIME_read_PKCS7(BIO *bio, BIO **bcont)

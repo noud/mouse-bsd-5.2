@@ -4,7 +4,7 @@
 # include <config.h>
 #endif
 
-#ifdef MPE 
+#ifdef MPE
 /*
  * MPE lacks adjtime(), so we define our own.  But note that time slewing has
  * a sub-second accuracy bug documented in SR 5003462838 which prevents ntpd
@@ -19,7 +19,7 @@
  *
  * The one-time clock adjustment functionality of ntpdate and ntp_timeset can
  * be used without screwing up the PDC clock.
- * 
+ *
  */
 #include <time.h>
 
@@ -78,13 +78,13 @@ if (delta != NULL) {
     offset_usecs = ticks_to_micro(offset_ticks);
     pdc_usecs_wanted = get_time() - offset_usecs;
     pdc_usecs_current = pdc_time(&hpe_status);
-    if (hpe_status == 0) 
+    if (hpe_status == 0)
       /* Force new PDC time by starting an extra correction. */
       set_time_correction(pdc_usecs_wanted - pdc_usecs_current,0,1);
   }
 #endif /* 0 */
-    
-  /* Immediately jump the PDC time to the new value, and then initiate a 
+
+  /* Immediately jump the PDC time to the new value, and then initiate a
      gradual MPE time correction slew. */
   set_time_correction(new_correction,0,1);
 }
@@ -253,7 +253,7 @@ _adjtime(
  * Chris Burghart <burghart@atd.ucar.edu>, 11/2001
  * Miroslaw Pabich <miroslaw_pabich@o2.pl>, 09/2005
  *
- * This is an implementation of adjtime() for QNX.  
+ * This is an implementation of adjtime() for QNX.
  * ClockAdjust() is used to tweak the system clock for about
  * 1 second period until the desired delta is achieved.
  * Time correction slew is limited to reasonable value.
@@ -277,7 +277,7 @@ _adjtime(
  */
 #define ADJUST_PERIOD       0.97  /* [s] */
 
-int 
+int
 adjtime (struct timeval *delta, struct timeval *olddelta)
 {
     double delta_nsec;

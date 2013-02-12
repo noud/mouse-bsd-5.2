@@ -161,7 +161,7 @@ dumbclock_start(
 	{
 	    return 0;
 	}
-	    
+
 	/*
 	 * Initialize miscellaneous variables
 	 */

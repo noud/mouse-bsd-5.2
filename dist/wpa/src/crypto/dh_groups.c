@@ -507,7 +507,7 @@ static const u8 dh_group18_prime[1024] = {
 #define DH_GROUP(id) \
 { id, dh_group ## id ## _generator, sizeof(dh_group ## id ## _generator), \
 dh_group ## id ## _prime, sizeof(dh_group ## id ## _prime) }
-		
+
 
 static struct dh_group dh_groups[] = {
 	DH_GROUP(1),

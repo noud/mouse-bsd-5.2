@@ -122,8 +122,8 @@ getgrnam_r(const char *name, struct group *grp, char *buffer,
 {
 	struct group *gp, *bgp;
 
-	/* 
-	 * We blatantly cheat (don't provide reentrancy) 
+	/*
+	 * We blatantly cheat (don't provide reentrancy)
 	 * and hope to get away with it
 	 */
 

@@ -333,7 +333,7 @@ if ($sse2) {
 	&BODY_00_15_sse2(1);
 
 &set_label("16_79_sse2",16);
-	#&movq	("mm2",&QWP(8*(9+16-1),"esp"));	#prefetched in BODY_00_15 
+	#&movq	("mm2",&QWP(8*(9+16-1),"esp"));	#prefetched in BODY_00_15
 	#&movq	("mm6",&QWP(8*(9+16-14),"esp"));
 	&movq	("mm1","mm2");
 

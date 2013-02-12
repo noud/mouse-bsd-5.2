@@ -9,7 +9,7 @@
 	On any code I even wonder about, I've cut and pasted the code
 	here and ran it as a test case just to be sure.
 
-	For code not in "ntpd" proper, we have tried to call most 
+	For code not in "ntpd" proper, we have tried to call most
 	repaired functions from herein to properly test them
 	(something never done before!). This has found several bugs,
 	not normal Y2K bugs, that will strike in Y2K so repair them
@@ -26,7 +26,7 @@
 	a controled order).
    */
 
-/* { definitions lifted from ntpd.c to allow us to complie with 
+/* { definitions lifted from ntpd.c to allow us to complie with
      "#include ntp.h".  I have not taken the time to reduce the clutter. */
 
 #ifdef HAVE_CONFIG_H
@@ -186,9 +186,9 @@ main( void )
     LocalTime.tm_year = year - 1900;
     Fatals = Warnings = 0;
     Error(year);		/* should increment Fatals */
-    if ( Fatals == 0 ) 
+    if ( Fatals == 0 )
     {
-	fprintf( stdout, 
+	fprintf( stdout,
 	    "%4d: %s(%d): FATAL DID NOT INCREMENT  (Fatals=%d Warnings=%d)\n",
 	    (int)year, __FILE__, __LINE__, (int)Fatals, (int)Warnings );
 	exit(2);
@@ -197,9 +197,9 @@ main( void )
     year = 2100;		/* test year > limit but CURRENT year < limit */
     Fatals = Warnings = 0;
     Error(year);		/* should increment Fatals */
-    if ( Warnings == 0 ) 
+    if ( Warnings == 0 )
     {
-	fprintf( stdout, 
+	fprintf( stdout,
 	    "%4d: %s(%d): WARNING DID NOT INCREMENT  (Fatals=%d Warnings=%d)\n",
 	    (int)year, __FILE__, __LINE__, (int)Fatals, (int)Warnings );
 	exit(2);
@@ -207,9 +207,9 @@ main( void )
     Fatals = Warnings = 0;
     LocalTime.tm_year = year - 1900;	/* everything > limit */
     Error(1980);		/* should increment Fatals */
-    if ( Fatals == 0 ) 
+    if ( Fatals == 0 )
     {
-	fprintf( stdout, 
+	fprintf( stdout,
 	    "%4d: %s(%d): FATALS DID NOT INCREMENT  (Fatals=%d Warnings=%d)\n",
 	    (int)year, __FILE__, __LINE__, (int)Fatals, (int)Warnings );
 	exit(2);
@@ -225,7 +225,7 @@ main( void )
 	Test = Days( year );
 	if ( days != Test )
 	{
-	    fprintf( stdout, "%04d: Days() DAY COUNT ERROR: s/b=%ld was=%ld\n", 
+	    fprintf( stdout, "%04d: Days() DAY COUNT ERROR: s/b=%ld was=%ld\n",
 		year, (long)days, (long)Test );
 	    exit(2);		/* would throw off many other tests */
 	}
@@ -233,7 +233,7 @@ main( void )
 	Test = julian0(year);		/* compare with julian0() macro */
 	if ( days != Test )
 	{
-	    fprintf( stdout, "%04d: julian0() DAY COUNT ERROR: s/b=%ld was=%ld\n", 
+	    fprintf( stdout, "%04d: julian0() DAY COUNT ERROR: s/b=%ld was=%ld\n",
 		year, (long)days, (long)Test );
 	    exit(2);		/* would throw off many other tests */
 	}
@@ -269,7 +269,7 @@ main( void )
 
     puts( " include/ntp.h" );
   {		/* test our new isleap_*() #define "functions" */
-    
+
     for ( year = 1400; year <= 2200; year++ )
     {
 	int  LeapSw;
@@ -281,7 +281,7 @@ main( void )
 	if ( !!LeapSw != !!IsLeapSw )
 	{
 	    Error(year);
-	    fprintf( stdout, 
+	    fprintf( stdout,
 		"  %4d %2d %3d *** ERROR\n", year, LeapSw, IsLeapSw );
 	    break;
 	}
@@ -291,7 +291,7 @@ main( void )
 	if ( !!LeapSw != !!IsLeapSw )
 	{
 	    Error(year);
-	    fprintf( stdout, 
+	    fprintf( stdout,
 		"  %4d %2d %3d *** ERROR\n", year, LeapSw, IsLeapSw );
 	    break;
 	}
@@ -313,16 +313,16 @@ main( void )
 	if ( !(!LeapSw) != !(!is_leapyear(year)) )
 	{
 	    Error(year);
-	    fprintf( stdout, 
+	    fprintf( stdout,
 		"  %4d %2d *** ERROR\n", year, LeapSw );
 	    break;
 	}
     }
-  }   
+  }
 
 
     puts( " libparse/parse.c" );
-  { 
+  {
     long Days1970;	/* days from 1900 to 1970 */
 
     struct ParseTime	/* womp up a test structure to all cut/paste code */
@@ -346,8 +346,8 @@ main( void )
 	if ( ( LeapSw ? 366 : 365 ) != DayCnt )
 	{
 	    Error(year);
-	    fprintf( stdout, 
-		    "  days_per_year() %4d %2d %3d *** ERROR\n", 
+	    fprintf( stdout,
+		    "  days_per_year() %4d %2d %3d *** ERROR\n",
 		    year, LeapSw, DayCnt );
 	    break;
 	}
@@ -358,7 +358,7 @@ main( void )
     Days1970 = Days( 1970 );	/* get days since 1970 using a known good */
 
     for ( year = 1970; year < yearend; year++ )
-    {				
+    {
 	unsigned long t;
 	long DaysYear ;
 
@@ -370,7 +370,7 @@ main( void )
 	     * over a period of time, including for year 2000. True, it
 	     * had more successes than failures, but that's not really good
 	     * enough for critical time distribution software.
-	     * It is so awful I wonder if it has had a history of failure 
+	     * It is so awful I wonder if it has had a history of failure
 	     * and fixes? */
         t =  (clock_time->year - 1970) * 365;
         t += (clock_time->year >> 2) - (1970 >> 2);
@@ -390,7 +390,7 @@ main( void )
 	if ( t != DaysYear - Days1970 )
 	{
 	    Error(year);
-	    fprintf( stdout, 
+	    fprintf( stdout,
 		"  %4d 1970=%-8ld %4d=%-8ld %-3ld  t=%-8ld  *** ERROR ***\n",
 		  year,      (long)Days1970,
 				 year,
@@ -424,7 +424,7 @@ main( void )
  	Observed = parse_to_unixtime( &ct, &Flag );
 	if ( ct.year != year )
 	{
-	    fprintf( stdout, 
+	    fprintf( stdout,
 	       "%04d: parse_to_unixtime(,%d) CORRUPTED ct.year: was %d\n",
 	       (int)year, (int)Flag, (int)ct.year );
 	    Error(year);
@@ -434,9 +434,9 @@ main( void )
 	Expected = t * 24 * 60 * 60;
 	if ( Observed != Expected  ||  Flag )
 	{   /* time difference */
-	    fprintf( stdout, 
+	    fprintf( stdout,
 	       "%04d: parse_to_unixtime(,%d) FAILURE: was=%lu s/b=%lu  (%ld)\n",
-	       year, (int)Flag, 
+	       year, (int)Flag,
 	       (unsigned long)Observed, (unsigned long)Expected,
 	       ((long)Observed - (long)Expected) );
 	    Error(year);
@@ -454,9 +454,9 @@ main( void )
 
 	    if ( Observed != Expected  ||  Flag )
 	    {   /* time difference */
-		fprintf( stdout, 
+		fprintf( stdout,
 "%04d: parse_to_unixtime(%d,%d) FAILURE: was=%lu s/b=%lu  (%ld)\n",
-		   year, (int)ct.year, (int)Flag, 
+		   year, (int)ct.year, (int)Flag,
 		   (unsigned long)Observed, (unsigned long)Expected,
 		   ((long)Observed - (long)Expected) );
 		Error(year);
@@ -472,9 +472,9 @@ main( void )
 
 	    if ( Observed != Expected  ||  Flag )
 	    {   /* time difference */
-		fprintf( stdout, 
+		fprintf( stdout,
 "%04d: parse_to_unixtime(%d,%d) FAILURE: was=%lu s/b=%lu  (%ld)\n",
-		   year, (int)ct.year, (int)Flag, 
+		   year, (int)ct.year, (int)Flag,
 		   (unsigned long)Observed, (unsigned long)Expected,
 		   ((long)Observed - (long)Expected) );
 		Error(year);
@@ -505,7 +505,7 @@ main( void )
     if ( DAY_NTP_STARTS != ntp_time )
     {
 	Error(year);
-	fprintf( stdout, 
+	fprintf( stdout,
 		"%04d: DAY_NTP_STARTS (%ld) NOT TRUE VALUE OF %ld (%ld)\n",
 		(int)year0,
 		(long)DAY_NTP_STARTS,  (long)ntp_time,
@@ -514,7 +514,7 @@ main( void )
 
     for ( ; year < yearend; year++ )
     {
-	
+
 	/* 01-01 for the current year */
 	ntp_time = Days( year ) - Days( year0 );  /* days into NTP time */
 	ntp_time *= 24 * 60 * 60;	/* convert into seconds */
@@ -526,7 +526,7 @@ main( void )
 	    Error(year);
 	    fprintf( stdout, "%lu: EXPECTED %04d-01-01: FOUND %04d-%02d-%02d\n",
 			(unsigned long)ntp_time,
-			year, 
+			year,
 			(int)ot.year, (int)ot.month, (int)ot.monthday );
 	    break;
 	}
@@ -540,7 +540,7 @@ main( void )
 	    Error(year);
 	    fprintf( stdout, "%lu: EXPECTED %04d-02-28: FOUND %04d-%02d-%02d\n",
 			(unsigned long)ntp_time,
-			year, 
+			year,
 			(int)ot.year, (int)ot.month, (int)ot.monthday );
 	    break;
 	}
@@ -561,7 +561,7 @@ main( void )
 	    Error(year);
 	    fprintf( stdout, "%lu: EXPECTED %04d-%02d-%02d: FOUND %04d-%02d-%02d\n",
 			(unsigned long)ntp_time,
-			year, m, d, 
+			year, m, d,
 			(int)ot.year, (int)ot.month, (int)ot.monthday );
 	    break;
 	}
@@ -583,7 +583,7 @@ main( void )
     for ( ; year < yearend; year++ )
     {
 	u_long  ObservedNtp;
-	
+
 	/* 01-01 for the current year */
 	ot.year = year;
 	ot.month = ot.monthday = 1; 	/* unused, but set anyway JIC */
@@ -613,7 +613,7 @@ main( void )
 	    Error(year);
 	    fprintf( stdout, "%lu: caljulian FAILSAFE EXPECTED %04d-01-01: FOUND %04d-%02d-%02d\n",
 			(unsigned long)ObservedNtp,
-			year, 
+			year,
 			(int)ot.year, (int)ot.month, (int)ot.monthday );
 	    break;
 	}

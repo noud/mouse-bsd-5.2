@@ -294,7 +294,7 @@ for i in ${files}; do
 	    icmd="/usr/local/gnu/bin/indent"
 	    cmd="${icmd} $i -o $i$prefix $gnuopts"
 	    showcmd="${icmd} $i -o $i$prefix"
-	    
+
 	;;
 
 	-s )
@@ -308,7 +308,7 @@ for i in ${files}; do
 	    exit 1
 	;;
     esac
- 
+
     echo ${showcmd}
     ${cmd}
     if [ $? != 0 ]; then
@@ -324,5 +324,5 @@ for i in ${files}; do
 	echo Failed!
 	exit $?
     fi
-    
+
 done

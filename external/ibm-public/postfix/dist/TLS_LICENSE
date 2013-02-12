@@ -23,7 +23,7 @@ Disclaimer:
 - This software package uses strong cryptography, so even if it is created,
   maintained and distributed from liberal countries in Europe (where it is
   legal to do this), it falls under certain export/import and/or use
-  restrictions in some other parts of the world. 
+  restrictions in some other parts of the world.
 - PLEASE REMEMBER THAT EXPORT/IMPORT AND/OR USE OF STRONG
   CRYPTOGRAPHY SOFTWARE, PROVIDING CRYPTOGRAPHY HOOKS OR EVEN JUST
   COMMUNICATING TECHNICAL DETAILS ABOUT CRYPTOGRAPHY SOFTWARE IS
@@ -33,4 +33,4 @@ Disclaimer:
   OTHER PEOPLE YOU ARE STRONGLY ADVICED TO PAY CLOSE ATTENTION TO ANY
   EXPORT/IMPORT AND/OR USE LAWS WHICH APPLY TO YOU. THE AUTHOR OF
   PFIXTLS IS NOT LIABLE FOR ANY VIOLATIONS YOU MAKE HERE. SO BE
-  CAREFULLY YOURSELF, IT IS YOUR RESPONSIBILITY.  
+  CAREFULLY YOURSELF, IT IS YOUR RESPONSIBILITY.

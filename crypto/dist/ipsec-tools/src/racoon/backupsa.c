@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -149,12 +149,12 @@ backupsa_to_file(sa_args)
 		" %u %lu %u %u %u "
 		"%u %u %u %u %u "
 		"%u %llu %llu %llu %u",
-		sa_args->satype, (unsigned long)ntohl(sa_args->spi), 
-		sa_args->mode, sa_args->reqid, sa_args->wsize, sa_args->e_type, 
-		sa_args->e_keylen, sa_args->a_type, sa_args->a_keylen, 
-		sa_args->flags, sa_args->l_alloc, 
-		(unsigned long long)sa_args->l_bytes, 
-		(unsigned long long)sa_args->l_addtime, 
+		sa_args->satype, (unsigned long)ntohl(sa_args->spi),
+		sa_args->mode, sa_args->reqid, sa_args->wsize, sa_args->e_type,
+		sa_args->e_keylen, sa_args->a_type, sa_args->a_keylen,
+		sa_args->flags, sa_args->l_alloc,
+		(unsigned long long)sa_args->l_bytes,
+		(unsigned long long)sa_args->l_addtime,
 		(unsigned long long)sa_args->l_usetime, sa_args->seq);
 
 	if (l < 0 || l >= len)
@@ -231,7 +231,7 @@ backupsa_from_file()
 	err:
 			plog(LLV_ERROR, LOCATION, NULL,
 				"illegal format line#%d in %s: %s\n",
-				line, lcconf->pathinfo[LC_PATHTYPE_BACKUPSA], 
+				line, lcconf->pathinfo[LC_PATHTYPE_BACKUPSA],
 				buf);
 			goto next;
 		}
@@ -287,7 +287,7 @@ do { 								\
 		if (sa_args.keymat == NULL) {
 			plog(LLV_ERROR, LOCATION, NULL,
 				"illegal format(keymat) line#%d in %s: %s\n",
-				line, lcconf->pathinfo[LC_PATHTYPE_BACKUPSA], 
+				line, lcconf->pathinfo[LC_PATHTYPE_BACKUPSA],
 				buf);
 			goto next;
 		}
@@ -303,7 +303,7 @@ do { 								\
 		if (pfkey_send_add2(&sa_args) < 0) {
 			plog(LLV_ERROR, LOCATION, NULL,
 				"restore SA failed line#%d in %s: %s\n",
-				line, lcconf->pathinfo[LC_PATHTYPE_BACKUPSA], 
+				line, lcconf->pathinfo[LC_PATHTYPE_BACKUPSA],
 				ipsec_strerror());
 		}
 

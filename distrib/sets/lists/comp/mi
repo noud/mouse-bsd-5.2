@@ -636,8 +636,8 @@
 ./usr/include/fstab.h				comp-c-include
 ./usr/include/fts.h				comp-c-include
 ./usr/include/ftw.h				comp-c-include
-./usr/include/fuse.h				comp-c-include	
-./usr/include/fuse_opt.h			comp-c-include	
+./usr/include/fuse.h				comp-c-include
+./usr/include/fuse_opt.h			comp-c-include
 ./usr/include/g++/ACG.h				comp-obsolete		obsolete
 ./usr/include/g++/AllocRing.h			comp-obsolete		obsolete
 ./usr/include/g++/Binomial.h			comp-obsolete		obsolete
@@ -1831,7 +1831,7 @@
 ./usr/include/rpcsvc/ypclnt.h			comp-c-include
 ./usr/include/rpcsvc/yppasswd.h			comp-c-include
 ./usr/include/rpcsvc/yppasswd.x			comp-c-include
-./usr/include/rump/p2k.h			comp-c-include	
+./usr/include/rump/p2k.h			comp-c-include
 ./usr/include/rump/rump.h			comp-c-include
 ./usr/include/rump/rump_syscalls.h		comp-c-include
 ./usr/include/rump/rumpdefs.h			comp-c-include
@@ -2412,7 +2412,7 @@
 ./usr/lib/libossaudio.a				comp-c-lib
 ./usr/lib/libossaudio_g.a		-unknown-	debuglib
 ./usr/lib/libossaudio_p.a			comp-c-proflib		profile
-./usr/lib/libp2k.a				comp-c-lib	
+./usr/lib/libp2k.a				comp-c-lib
 ./usr/lib/libp2k_p.a				comp-c-proflib		profile
 ./usr/lib/libpam.a				comp-c-lib		pam
 ./usr/lib/libpam_g.a		-unknown-	debuglib
@@ -2441,7 +2441,7 @@
 ./usr/lib/libradius.a				comp-c-lib
 ./usr/lib/libradius_g.a		-unknown-	debuglib
 ./usr/lib/libradius_p.a				comp-c-proflib		profile
-./usr/lib/librefuse.a				comp-c-lib	
+./usr/lib/librefuse.a				comp-c-lib
 ./usr/lib/librefuse_p.a				comp-c-proflib		profile
 ./usr/lib/libresolv.a				comp-c-lib
 ./usr/lib/libresolv_g.a		-unknown-	debuglib

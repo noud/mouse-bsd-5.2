@@ -15,21 +15,21 @@ Newsgroups: comp.protocols.time.ntp
 to: mills@udel.edu
 return-receipt-to: rocky@panix.com
 Subject: time and AIX 3.2.5 raw tty bug
- 
+
 This posting isn't strictly about NTP, any program that may stop the
 clock or set the clock backwards is subject to the AIX 3.2.5 bug.
- 
+
 On AIX 3.2.5, there is a bug in the tty driver for a raw device which
 may crash the box under certain conditions: basically a read() on a
 raw tty in effect, a character was read but not as many as specified
 by VMIN when a read timeout occurred. VTIME specifies the timeout. See
 the AIX manual page on termios.h or that include file. for Information
 on VMIN (or MIN) VTIME (or TIME).
- 
+
 A remedy other than to not use raw tty's is to apply patch U435110.
- 
+
 Details of the problem report follow.
- 
+
 > ABSTRACT:
 > IX43779: TRAP IN PSX_TIMEO
 >

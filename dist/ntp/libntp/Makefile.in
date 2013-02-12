@@ -277,7 +277,7 @@ libntpsim_a_SOURCES = systime_s.c $(libntp_a_SRCS)
 EXTRA_libntp_a_SOURCES = adjtimex.c
 INCLUDES = -I$(top_srcdir)/include -I../include
 ETAGS_ARGS = Makefile.am
-noinst_HEADERS = lib_strbuf.h 
+noinst_HEADERS = lib_strbuf.h
 EXTRA_DIST = README
 all: all-am
 
@@ -315,11 +315,11 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-libntp.a: $(libntp_a_OBJECTS) $(libntp_a_DEPENDENCIES) 
+libntp.a: $(libntp_a_OBJECTS) $(libntp_a_DEPENDENCIES)
 	-rm -f libntp.a
 	$(libntp_a_AR) libntp.a $(libntp_a_OBJECTS) $(libntp_a_LIBADD)
 	$(RANLIB) libntp.a
-libntpsim.a: $(libntpsim_a_OBJECTS) $(libntpsim_a_DEPENDENCIES) 
+libntpsim.a: $(libntpsim_a_OBJECTS) $(libntpsim_a_DEPENDENCIES)
 	-rm -f libntpsim.a
 	$(libntpsim_a_AR) libntpsim.a $(libntpsim_a_OBJECTS) $(libntpsim_a_LIBADD)
 	$(RANLIB) libntpsim.a

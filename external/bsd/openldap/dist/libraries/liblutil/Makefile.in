@@ -1,7 +1,7 @@
 # Makefile for -llutil
 # $OpenLDAP: pkg/ldap/libraries/liblutil/Makefile.in,v 1.38.2.3 2008/02/11 23:26:42 kurt Exp $
 ## This work is part of OpenLDAP Software <http://www.openldap.org/>.
-## 
+##
 ## Copyright 1998-2008 The OpenLDAP Foundation.
 ## All rights reserved.
 ##
@@ -16,7 +16,7 @@
 LIBRARY	= liblutil.a
 PROGRAM = testavl
 
-LDAP_INCDIR= ../../include       
+LDAP_INCDIR= ../../include
 LDAP_LIBDIR= ../../libraries
 
 NT_SRCS = ntservice.c

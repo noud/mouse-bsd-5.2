@@ -23,7 +23,7 @@
 [domain_realms]
 	.sub.test.h5l.se = SUB.TEST.H5L.SE
 	localhost = TEST.H5L.SE
-	
+
 
 [kdc]
 	enable-digest = true

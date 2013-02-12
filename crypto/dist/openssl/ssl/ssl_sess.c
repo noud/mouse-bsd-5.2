@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -63,7 +63,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -202,7 +202,7 @@ SSL_SESSION *SSL_SESSION_new(void)
 	ss->next=NULL;
 	ss->compress_meth=0;
 #ifndef OPENSSL_NO_TLSEXT
-	ss->tlsext_hostname = NULL; 
+	ss->tlsext_hostname = NULL;
 #ifndef OPENSSL_NO_EC
 	ss->tlsext_ecpointformatlist_length = 0;
 	ss->tlsext_ecpointformatlist = NULL;
@@ -461,7 +461,7 @@ int ssl_get_prev_session(SSL *s, unsigned char *session_id, int len,
 	if (ret == NULL)
 		{
 		int copy=1;
-	
+
 		s->session_ctx->stats.sess_miss++;
 		ret=NULL;
 		if (s->session_ctx->get_session_cb != NULL
@@ -504,7 +504,7 @@ int ssl_get_prev_session(SSL *s, unsigned char *session_id, int len,
 #endif
 		goto err; /* treat like cache miss */
 		}
-	
+
 	if((s->verify_mode & SSL_VERIFY_PEER) && s->sid_ctx_length == 0)
 		{
 		/* We can't be sure if this session is being used out of
@@ -516,7 +516,7 @@ int ssl_get_prev_session(SSL *s, unsigned char *session_id, int len,
 		 * applications to effectively disable the session cache by
 		 * accident without anyone noticing).
 		 */
-		
+
 		SSLerr(SSL_F_SSL_GET_PREV_SESSION,SSL_R_SESSION_ID_CONTEXT_UNINITIALIZED);
 		fatal = 1;
 		goto err;
@@ -532,7 +532,7 @@ int ssl_get_prev_session(SSL *s, unsigned char *session_id, int len,
 		l2n(l,p);
 		if ((ret->ssl_version>>8) == SSL3_VERSION_MAJOR)
 			ret->cipher=ssl_get_cipher_by_char(s,&(buf[2]));
-		else 
+		else
 			ret->cipher=ssl_get_cipher_by_char(s,&(buf[1]));
 		if (ret->cipher == NULL)
 			goto err;
@@ -559,7 +559,7 @@ int ssl_get_prev_session(SSL *s, unsigned char *session_id, int len,
 	s->session_ctx->stats.sess_hit++;
 
 	/* ret->time=time(NULL); */ /* rezero timeout? */
-	/* again, just leave the session 
+	/* again, just leave the session
 	 * if it is the same session, we have just incremented and
 	 * then decremented the reference count :-) */
 	if (s->session != NULL)
@@ -590,7 +590,7 @@ int SSL_CTX_add_session(SSL_CTX *ctx, SSL_SESSION *c)
 
 	CRYPTO_w_lock(CRYPTO_LOCK_SSL_CTX);
 	s=(SSL_SESSION *)lh_insert(ctx->sessions,c);
-	
+
 	/* s != NULL iff we already had a session with the given PID.
 	 * In this case, s == c should hold (then we did not really modify
 	 * ctx->sessions), or we're in trouble. */
@@ -622,7 +622,7 @@ int SSL_CTX_add_session(SSL_CTX *ctx, SSL_SESSION *c)
 	else
 		{
 		/* new cache entry -- remove old ones if cache has become too large */
-		
+
 		ret=1;
 
 		if (SSL_CTX_sess_get_cache_size(ctx) > 0)
@@ -975,7 +975,7 @@ SSL_SESSION * (*SSL_CTX_sess_get_get_cb(SSL_CTX *ctx))(SSL *ssl,
 	return ctx->get_session_cb;
 	}
 
-void SSL_CTX_set_info_callback(SSL_CTX *ctx, 
+void SSL_CTX_set_info_callback(SSL_CTX *ctx,
 	void (*cb)(const SSL *ssl,int type,int val))
 	{
 	ctx->info_callback=cb;

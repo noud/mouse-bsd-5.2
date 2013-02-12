@@ -203,7 +203,7 @@ prusage(FILE *fp, struct rusage *r0, struct rusage *r1, struct timeval *e,
 		(void)fprintf(fp, "%ld", i);
 		break;
 	    case 'X':		/* (average) shared text size */
-		(void)fprintf(fp, "%ld", t == 0 ? 0L : 
+		(void)fprintf(fp, "%ld", t == 0 ? 0L :
 			       (long)((r1->ru_ixrss - r0->ru_ixrss) / t));
 		break;
 	    case 'c':		/* num. involuntary context switches */

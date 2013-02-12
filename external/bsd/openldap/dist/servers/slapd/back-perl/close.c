@@ -32,7 +32,7 @@ perl_back_close(
 	perl_free(PERL_INTERPRETER);
 	PERL_INTERPRETER = NULL;
 
-	ldap_pvt_thread_mutex_destroy( &perl_interpreter_mutex );	
+	ldap_pvt_thread_mutex_destroy( &perl_interpreter_mutex );
 
 	return 0;
 }

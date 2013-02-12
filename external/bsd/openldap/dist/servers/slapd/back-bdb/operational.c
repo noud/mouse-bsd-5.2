@@ -35,7 +35,7 @@ bdb_hasSubordinates(
 	int		*hasSubordinates )
 {
 	int		rc;
-	
+
 	assert( e != NULL );
 
 	/* NOTE: this should never happen, but it actually happens
@@ -52,7 +52,7 @@ retry:
 	 * field is correctly populated; so we need to reacquire
 	 * it with reader lock */
 	rc = bdb_cache_children( op, NULL, e );
-	
+
 	switch( rc ) {
 	case DB_LOCK_DEADLOCK:
 	case DB_LOCK_NOTGRANTED:
@@ -68,9 +68,9 @@ retry:
 		break;
 
 	default:
-		Debug(LDAP_DEBUG_ARGS, 
+		Debug(LDAP_DEBUG_ARGS,
 			"<=- " LDAP_XSTRING(bdb_hasSubordinates)
-			": has_children failed: %s (%d)\n", 
+			": has_children failed: %s (%d)\n",
 			db_strerror(rc), rc, 0 );
 		rc = LDAP_OTHER;
 	}

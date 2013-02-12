@@ -1,11 +1,11 @@
    End User License Certificate (EULA) End User License Certificate
-   (EULA) 
-   Support Support 
-   QNX Source Licenses QNX Source Licenses 
+   (EULA)
+   Support Support
+   QNX Source Licenses QNX Source Licenses
    License of the month
    Confidential Source License
    Version 1.0
-   
+
 QNX Open Community License Version 1.0
 
    THIS QNX OPEN COMMUNITY LICENSE ( "THE OCL", OR "THIS AGREEMENT")
@@ -20,7 +20,7 @@ QNX Open Community License Version 1.0
    MODIFY OR DISTRIBUTE SUCH PROGRAMS OR THEIR DERIVATIVE WORKS. THESE
    ACTIONS ARE OTHERWISE PROHIBITED. CONTACT QSS IF OTHER STEPS ARE
    REQUIRED LOCALLY TO CREATE A BINDING CONTRACT.
-   
+
    The OCL is intended to promote the development, use and distribution
    of derivative works created from QSS source code. This includes
    commercial distribution of object code versions under the terms of
@@ -31,11 +31,11 @@ QNX Open Community License Version 1.0
    originate with Recipient. If Recipient elects to license source code
    for its derivative works to others, then it must be licensed under the
    OCL. The terms of the OCL are as follows:
-   
+
 1. DEFINITIONS
 
    "Contribution" means:
-   
+
     a. in the case of QSS: (i) the Original Program, where the Original
        Program originates from QSS, (ii) changes and/or additions to
        Unrestricted Open Source, where the Original Program originates
@@ -46,21 +46,21 @@ QNX Open Community License Version 1.0
     b. in the case of each Contributor, changes and/or additions to the
        Program, where such changes and/or additions originate from and
        are distributed by that particular Contributor.
-       
+
    A Contribution 'originates' from a Contributor if it was added to the
    Program by such Contributor itself or anyone acting on such
    Contributor's behalf. Contributions do not include additions to the
    Program which: (i) are separate modules of software distributed in
    conjunction with the Program under their own license agreement, and
    (ii) are not derivative works of the Program.
-   
+
    "Contributor" means QSS and any other entity that distributes the
    Program.
-   
+
    "Licensed Patents " mean patent claims licensable by Contributor to
    others, which are necessarily infringed by the use or sale of its
    Contribution alone or when combined with the Program.
-   
+
    "Unrestricted Open Source" means published source code that is
    licensed for free use and distribution under an unrestricted licensing
    and distribution model, such as the Berkley Software Design ("BSD")
@@ -69,16 +69,16 @@ QNX Open Community License Version 1.0
    the GNU Lesser/Library GPL. All "Unrestricted Open Source" license
    terms appear or are clearly identified in the header of any affected
    source code for the Original Program.
-   
+
    "Original Program" means the original version of the software
    accompanying this Agreement as released by QSS, including source code,
    object code and documentation, if any.
-   
+
    "Program" means the Original Program and Contributions.
-   
+
    "Recipient" means anyone who receives the Program under this
    Agreement, including all Contributors.
-   
+
 2. GRANT OF RIGHTS
 
     a. Subject to the terms of this Agreement, each Contributor hereby
@@ -115,12 +115,12 @@ QNX Open Community License Version 1.0
     d. Each Contributor represents that to its knowledge it has
        sufficient copyright rights in its Contribution, if any, to grant
        the copyright license set forth in this Agreement.
-       
+
   3. REQUIREMENTS
-  
+
    A Contributor may choose to distribute the Program in object code form
    under its own license agreement, provided that:
-   
+
     a. it complies with the terms and conditions of this Agreement; and
     b. its license agreement:
          i. effectively disclaims on behalf of all Contributors all
@@ -135,9 +135,9 @@ QNX Open Community License Version 1.0
         iii. states that any provisions which differ from this Agreement
             are offered by that Contributor alone and not by any other
             party.
-       
+
    If the Program is made available in source code form:
-   
+
     a. it must be made available under this Agreement; and
     b. a copy of this Agreement must be included with each copy of the
        Program. Each Contributor must include the following in a
@@ -146,13 +146,13 @@ QNX Open Community License Version 1.0
        Unrestricted Open Source license:
        Copyright {date here}, QNX Software Systems Ltd. and others. All
        Rights Reserved.
-       
+
    In addition, each Contributor must identify itself as the originator
    of its Contribution, if any, in a manner that reasonably allows
    subsequent Recipients to identify the originator of the Contribution.
-   
+
   4. COMMERCIAL DISTRIBUTION
-  
+
    Commercial distributors of software may accept certain
    responsibilities with respect to end users, business partners and the
    like. While this license is intended to facilitate the commercial use
@@ -175,7 +175,7 @@ QNX Open Community License Version 1.0
    Commercial Contributor in, the defense and any related settlement
    negotiations. The Indemnified Contributor may participate in any such
    claim at its own expense.
-   
+
    For example, a Contributor might include the Program in a commercial
    product offering, Product X. That Contributor is then a Commercial
    Contributor. If that Commercial Contributor then makes performance
@@ -186,15 +186,15 @@ QNX Open Community License Version 1.0
    performance claims and warranties, and if a court requires any other
    Contributor to pay any damages as a result, the Commercial Contributor
    must pay those damages.
-   
+
   5. NO WARRANTY
-  
+
    Recipient acknowledges that there may be errors or bugs in the Program
    and that it is imperative that Recipient conduct thorough testing to
    identify and correct any problems prior to the productive use or
    commercial release of any products that use the Program, and prior to
    the release of any modifications, updates or enhancements thereto.
-   
+
    EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, THE PROGRAM IS
    PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
    KIND, EITHER EXPRESS OR IMPLIED INCLUDING, WITHOUT LIMITATION, ANY
@@ -206,9 +206,9 @@ QNX Open Community License Version 1.0
    the risks and costs of program errors, compliance with applicable
    laws, damage to or loss of data, programs or equipment, and
    unavailability or interruption of operations.
-   
+
   6. DISCLAIMER OF LIABILITY
-  
+
    EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, NEITHER RECIPIENT NOR
    ANY CONTRIBUTORS SHALL HAVE ANY LIABILITY FOR ANY DIRECT, INDIRECT,
    INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING
@@ -217,15 +217,15 @@ QNX Open Community License Version 1.0
    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OR
    DISTRIBUTION OF THE PROGRAM OR THE EXERCISE OF ANY RIGHTS GRANTED
    HEREUNDER, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-   
+
   7. GENERAL
-  
+
    If any provision of this Agreement is invalid or unenforceable under
    applicable law, it shall not affect the validity or enforceability of
    the remainder of the terms of this Agreement, and without further
    action by the parties hereto, such provision shall be reformed to the
    minimum extent necessary to make such provision valid and enforceable.
-   
+
    If Recipient institutes patent litigation against a Contributor with
    respect to a patent applicable to software (including a cross-claim or
    counterclaim in a lawsuit), then any patent licenses granted by that
@@ -237,7 +237,7 @@ QNX Open Community License Version 1.0
    hardware) infringes such Recipient's patent(s), then such Recipient's
    rights granted under Section 2(b) shall terminate as of the date such
    litigation is filed.
-   
+
    All Recipient's rights under this Agreement shall terminate if it
    fails to comply with any of the material terms or conditions of this
    Agreement and does not cure such failure in a reasonable period of
@@ -247,7 +247,7 @@ QNX Open Community License Version 1.0
    However, Recipient's obligations under this Agreement and any licenses
    granted by Recipient relating to the Program shall continue and
    survive.
-   
+
    QSS may publish new versions (including revisions) of this Agreement
    from time to time. Each new version of the Agreement will be given a
    distinguishing version number. The Program (including Contributions)
@@ -261,7 +261,7 @@ QNX Open Community License Version 1.0
    under this Agreement, whether expressly, by implication, estoppel or
    otherwise. All rights in the Program not expressly granted under this
    Agreement are reserved.
-   
+
    This Agreement is governed by the laws in force in the Province of
    Ontario, Canada without regard to the conflict of law provisions
    therein. The parties expressly disclaim the provisions of the United
@@ -269,7 +269,7 @@ QNX Open Community License Version 1.0
    No party to this Agreement will bring a legal action under this
    Agreement more than one year after the cause of action arose. Each
    party waives its rights to a jury trial in any resulting litigation.
-   
+
    * QNX is a registered trademark of QNX Software Systems Ltd.
-   
+
                          Document Version: ocl1_00

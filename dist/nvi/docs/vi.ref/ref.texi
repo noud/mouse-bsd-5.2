@@ -3,12 +3,12 @@
 @comment      The Regents of the University of California.  All rights reserved.
 @comment  Copyright (c) 1994, 1995, 1996
 @comment 	Keith Bostic.  All rights reserved.
-@comment 
+@comment
 @comment  See the LICENSE file for redistribution information.
-@comment 
+@comment
 @comment      Id: ref.texi,v 8.1 2001/08/18 20:43:48 skimo Exp (Berkeley) Date: 2001/08/18 20:43:48
-@comment 
-@comment 
+@comment
+@comment
 @comment  indented paragraph, with spaces between the items, bold font
 @macro IP{item}
 @item @strong{\item\}

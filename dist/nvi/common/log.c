@@ -297,7 +297,7 @@ log_line(SCR *sp, db_recno_t lno, u_int action)
 		if (db_get(sp, lno, DBG_FATAL, &lp, &len))
 			return (1);
 	BINC_RETC(sp,
-	    sp->wp->l_lp, sp->wp->l_len, 
+	    sp->wp->l_lp, sp->wp->l_len,
 	    len * sizeof(CHAR_T) + CHAR_T_OFFSET);
 	sp->wp->l_lp[0] = action;
 	memmove(sp->wp->l_lp + sizeof(u_char), &lno, sizeof(db_recno_t));
@@ -467,7 +467,7 @@ log_backward(SCR *sp, MARK *rp)
 		return 1;
 	}
 	ep->l_win = sp->wp;
-		
+
 
 	F_SET(ep, F_NOLOG);		/* Turn off logging. */
 
@@ -499,7 +499,7 @@ log_backward(SCR *sp, MARK *rp)
 		case LOG_LINE_DELETE_B:
 			didop = 1;
 			memmove(&lno, p + sizeof(u_char), sizeof(db_recno_t));
-			if (db_insert(sp, lno, 
+			if (db_insert(sp, lno,
 			    (CHAR_T *)(p + CHAR_T_OFFSET),
 			    (size - CHAR_T_OFFSET) / sizeof(CHAR_T)))
 				goto err;
@@ -510,7 +510,7 @@ log_backward(SCR *sp, MARK *rp)
 		case LOG_LINE_RESET_B:
 			didop = 1;
 			memmove(&lno, p + sizeof(u_char), sizeof(db_recno_t));
-			if (db_set(sp, lno, 
+			if (db_set(sp, lno,
 			    (CHAR_T *)(p + CHAR_T_OFFSET),
 			    (size - CHAR_T_OFFSET) / sizeof(CHAR_T)))
 				goto err;
@@ -692,7 +692,7 @@ log_forward(SCR *sp, MARK *rp)
 		case LOG_LINE_APPEND_F:
 			didop = 1;
 			memmove(&lno, p + sizeof(u_char), sizeof(db_recno_t));
-			if (db_insert(sp, lno, 
+			if (db_insert(sp, lno,
 			    (CHAR_T *)(p + CHAR_T_OFFSET),
 			    (size - CHAR_T_OFFSET) / sizeof(CHAR_T)))
 				goto err;
@@ -710,7 +710,7 @@ log_forward(SCR *sp, MARK *rp)
 		case LOG_LINE_RESET_F:
 			didop = 1;
 			memmove(&lno, p + sizeof(u_char), sizeof(db_recno_t));
-			if (db_set(sp, lno, 
+			if (db_set(sp, lno,
 			    (CHAR_T *)(p + CHAR_T_OFFSET),
 			    (size - CHAR_T_OFFSET) / sizeof(CHAR_T)))
 				goto err;

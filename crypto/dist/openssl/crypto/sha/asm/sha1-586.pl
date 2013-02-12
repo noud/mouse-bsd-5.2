@@ -142,7 +142,7 @@ sub BODY_40_59
 					# to calculate F_40_59(b,c,d)
 	&rotr($b,2);			# b=ROTATE(b,30)
 	 &and($e,$c);
-	&or($tmp1,$e);			# tmp1 holds F_40_59(b,c,d)		
+	&or($tmp1,$e);			# tmp1 holds F_40_59(b,c,d)
 	 &mov($e,$a);
 	&rotl($e,5);			# e=ROTATE(a,5)
 	 &add($f,$tmp1);		# f+=tmp1;

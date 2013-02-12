@@ -48,13 +48,13 @@
 #undef TV2MILLISEC
 #define TV2MILLISEC(tv) (((tv)->tv_sec * 1000) + ((tv)->tv_usec/1000))
 
-/* 
+/*
  * Support needed if the library is running in the kernel
  */
 #if LDAP_INT_IN_KERNEL
-	/* 
+	/*
 	 * Platform specific function to return a pointer to the
-	 * process-specific global options. 
+	 * process-specific global options.
 	 *
 	 * This function should perform the following functions:
 	 *  Allocate and initialize a global options struct on a per process basis

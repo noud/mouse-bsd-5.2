@@ -288,10 +288,10 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-ntpdate$(EXEEXT): $(ntpdate_OBJECTS) $(ntpdate_DEPENDENCIES) 
+ntpdate$(EXEEXT): $(ntpdate_OBJECTS) $(ntpdate_DEPENDENCIES)
 	@rm -f ntpdate$(EXEEXT)
 	$(LINK) $(ntpdate_LDFLAGS) $(ntpdate_OBJECTS) $(ntpdate_LDADD) $(LIBS)
-ntptimeset$(EXEEXT): $(ntptimeset_OBJECTS) $(ntptimeset_DEPENDENCIES) 
+ntptimeset$(EXEEXT): $(ntptimeset_OBJECTS) $(ntptimeset_DEPENDENCIES)
 	@rm -f ntptimeset$(EXEEXT)
 	$(LINK) $(ntptimeset_LDFLAGS) $(ntptimeset_OBJECTS) $(ntptimeset_LDADD) $(LIBS)
 

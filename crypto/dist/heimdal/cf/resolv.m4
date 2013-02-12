@@ -92,7 +92,7 @@ AC_FIND_FUNC(dn_expand, resolv,
 ],
 [0,0,0,0,0])
 
-rk_CHECK_VAR(_res, 
+rk_CHECK_VAR(_res,
 [#include <stdio.h>
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>

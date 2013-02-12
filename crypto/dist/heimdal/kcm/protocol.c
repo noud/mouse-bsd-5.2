@@ -44,7 +44,7 @@ kcm_op_noop(krb5_context context,
 {
     KCM_LOG_REQUEST(context, client, opcode);
 
-    return 0;	
+    return 0;
 }
 
 /*
@@ -93,7 +93,7 @@ kcm_op_get_name(krb5_context context,
 
 /*
  * Request:
- *	
+ *
  * Response:
  *	NameZ
  */
@@ -124,9 +124,9 @@ kcm_op_gen_new(krb5_context context,
  * Request:
  *	NameZ
  *	Principal
- *	
+ *
  * Response:
- *	
+ *
  */
 static krb5_error_code
 kcm_op_initialize(krb5_context context,
@@ -190,9 +190,9 @@ kcm_op_initialize(krb5_context context,
 /*
  * Request:
  *	NameZ
- *	
+ *
  * Response:
- *	
+ *
  */
 static krb5_error_code
 kcm_op_destroy(krb5_context context,
@@ -221,9 +221,9 @@ kcm_op_destroy(krb5_context context,
  * Request:
  *	NameZ
  *	Creds
- *	
+ *
  * Response:
- *	
+ *
  */
 static krb5_error_code
 kcm_op_store(krb5_context context,
@@ -281,7 +281,7 @@ kcm_op_store(krb5_context context,
  *
  * Response:
  *	Creds
- *	
+ *
  */
 static krb5_error_code
 kcm_op_retrieve(krb5_context context,
@@ -414,7 +414,7 @@ kcm_op_get_principal(krb5_context context,
  *
  * Response:
  *	Cursor
- *	
+ *
  */
 static krb5_error_code
 kcm_op_get_first(krb5_context context,
@@ -524,7 +524,7 @@ kcm_op_get_next(krb5_context context,
  *	Cursor
  *
  * Response:
- *	
+ *
  */
 static krb5_error_code
 kcm_op_end_get(krb5_context context,
@@ -572,7 +572,7 @@ kcm_op_end_get(krb5_context context,
  *	MatchCreds
  *
  * Response:
- *	
+ *
  */
 static krb5_error_code
 kcm_op_remove_cred(krb5_context context,
@@ -630,7 +630,7 @@ kcm_op_remove_cred(krb5_context context,
  *	Flags
  *
  * Response:
- *	
+ *
  */
 static krb5_error_code
 kcm_op_set_flags(krb5_context context,
@@ -677,7 +677,7 @@ kcm_op_set_flags(krb5_context context,
  *	GID
  *
  * Response:
- *	
+ *
  */
 static krb5_error_code
 kcm_op_chown(krb5_context context,
@@ -731,7 +731,7 @@ kcm_op_chown(krb5_context context,
  *	Mode
  *
  * Response:
- *	
+ *
  */
 static krb5_error_code
 kcm_op_chmod(krb5_context context,
@@ -927,7 +927,7 @@ kcm_op_get_ticket(krb5_context context,
 	free(name);
 	return ret;
     }
- 
+
     HEIMDAL_MUTEX_lock(&ccache->mutex);
 
     /* Fake up an internal ccache */

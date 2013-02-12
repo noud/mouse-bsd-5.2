@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -83,7 +83,7 @@ int AES_wrap_key(AES_KEY *key, const unsigned char *iv,
 			memcpy(B + 8, R, 8);
 			AES_encrypt(B, B, key);
 			A[7] ^= (unsigned char)(t & 0xff);
-			if (t > 0xff)	
+			if (t > 0xff)
 				{
 				A[6] ^= (unsigned char)((t & 0xff) >> 8);
 				A[5] ^= (unsigned char)((t & 0xff) >> 16);
@@ -117,7 +117,7 @@ int AES_unwrap_key(AES_KEY *key, const unsigned char *iv,
 		for (i = 0; i < inlen; i += 8, t--, R -= 8)
 			{
 			A[7] ^= (unsigned char)(t & 0xff);
-			if (t > 0xff)	
+			if (t > 0xff)
 				{
 				A[6] ^= (unsigned char)((t & 0xff) >> 8);
 				A[5] ^= (unsigned char)((t & 0xff) >> 16);
@@ -160,7 +160,7 @@ int AES_wrap_unwrap_test(const unsigned char *kek, int keybits,
 
 	if (eout && memcmp(eout, otmp, keylen))
 		goto err;
-		
+
 	if (AES_set_decrypt_key(kek, keybits, &wctx))
 		goto err;
 	r = AES_unwrap_key(&wctx, iv, ptmp, otmp, r);
@@ -254,6 +254,6 @@ static const unsigned char e6[] = {
 	ret = AES_wrap_unwrap_test(kek, 256, NULL, e6, key, 32);
 	fprintf(stderr, "Key test result %d\n", ret);
 }
-	
-	
+
+
 #endif

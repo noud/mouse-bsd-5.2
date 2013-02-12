@@ -215,7 +215,7 @@ open_sbuf(void)
 
 	if ((tmp = getenv("TMPDIR")) == NULL)
 		tmp = _PATH_TMP;
-	
+
 	if ((s = strlen(tmp)) == 0 || tmp[s - 1] == '/')
 		(void)asprintf(&sfn, "%sed.XXXXXX", tmp);
 	else
@@ -226,7 +226,7 @@ open_sbuf(void)
 		umask(u);
 		return ERR;
 	}
-		
+
 
 	if ((fd = mkstemp(sfn)) == -1 || (sfp = fdopen(fd, "w+")) == NULL) {
 		if (fd != -1)
@@ -288,7 +288,7 @@ init_buffers(void)
 {
 	int i = 0;
 
-	/* Read stdin one character at a time to avoid i/o contention 
+	/* Read stdin one character at a time to avoid i/o contention
 	   with shell escapes invoked by nonterminal input, e.g.,
 	   ed - <<EOF
 	   !cat

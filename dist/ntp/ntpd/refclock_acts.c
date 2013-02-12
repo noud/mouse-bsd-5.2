@@ -468,11 +468,11 @@ acts_timecode(
 	 * itself. Be sure a timecode has been received.
 	 */
 	case 1:
-		if (*str == '*' && up->msgcnt > 0) 
+		if (*str == '*' && up->msgcnt > 0)
 			break;
 
 		return;
-	
+
 	/*
 	 * ACTS format: "jjjjj yy-mm-dd hh:mm:ss ds l uuu aaaaa
 	 * UTC(NIST) *"
@@ -531,7 +531,7 @@ acts_timecode(
 		return;
 
 	/*
-	 * PTB/NPL format: "yyyy-mm-dd hh:mm:ss MEZ" 
+	 * PTB/NPL format: "yyyy-mm-dd hh:mm:ss MEZ"
 	 */
 	case LENPTB:
 		if (sscanf(str,

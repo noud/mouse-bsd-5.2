@@ -179,7 +179,7 @@ listed here, but this should hit a lot of the main ones.
 	   file.  Hostname longer than this length will be put
 	   into the utmp file in dotted decimal notation, rather
 	   than putting in a truncated hostname.
-	
+
 	-U Registered hosts only.  If a reverse hostname lookup
 	   fails, the connection will be refused.
 
@@ -305,7 +305,7 @@ Februrary 22, 1991:
 
 	Telnetd was improperly setting/clearing the ISTRIP
 	flag in the c_lflag field, it should be using the
-	c_iflag field. 
+	c_iflag field.
 
 	When the child process of telnetd was opening the
 	slave side of the pty, it was re-setting the EXTPROC
@@ -673,7 +673,7 @@ telnetd/Makefile.4.4:
 
 
 The following TELNET options are supported:
-	
+
 	LINEMODE:
 		The LINEMODE option is supported as per RFC1116.  The
 		FORWARDMASK option is not currently supported.

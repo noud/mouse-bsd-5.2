@@ -192,8 +192,8 @@ chstr:		oc = c;
 		rval = oc == '"' ? STRING : CHARCON;
 		break;
 
-	case '0': case '1': case '2': case '3': case '4': 
-	case '5': case '6': case '7': case '8': case '9': 
+	case '0': case '1': case '2': case '3': case '4':
+	case '5': case '6': case '7': case '8': case '9':
 		*yyp++ = c;
 		c = slofgetc();
 		if (yyp[-1] == '0' && (c == 'x' || c == 'X')) {
@@ -278,7 +278,7 @@ E:				ONEMORE();
 		*yyp++ = '\\'; *yyp = 0;
 		rval = '\\';
 		break;
-		
+
 	case '\n':
 		wasnl = 1;
 		ifiles->lineno++;
@@ -344,7 +344,7 @@ E:				ONEMORE();
 			if (Cflag)
 				fprintf(obuf, "/*");
 			oc = 0;
-			do { 
+			do {
 				while ((c = slofgetc()) && c != '*') {
 					if (c == '\n') {
 						putc(c, obuf);

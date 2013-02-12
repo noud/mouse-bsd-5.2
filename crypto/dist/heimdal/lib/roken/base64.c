@@ -40,10 +40,10 @@ __RCSID("$Heimdal: base64.c 15506 2005-06-23 10:47:57Z lha $"
 #include <string.h>
 #include "base64.h"
 
-static const char base64_chars[] = 
+static const char base64_chars[] =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-static int 
+static int
 pos(char c)
 {
     const char *p;

@@ -1,24 +1,24 @@
 /*
  * IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING. By downloading, copying, installing or
  * using the software you agree to this license. If you do not agree to this license, do not download, install,
- * copy or use the software. 
+ * copy or use the software.
  *
- * Intel License Agreement 
+ * Intel License Agreement
  *
  * Copyright (c) 2000, Intel Corporation
- * All rights reserved. 
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that
- * the following conditions are met: 
+ * the following conditions are met:
  *
  * -Redistributions of source code must retain the above copyright notice, this list of conditions and the
- *  following disclaimer. 
+ *  following disclaimer.
  *
  * -Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
- *  following disclaimer in the documentation and/or other materials provided with the distribution. 
+ *  following disclaimer in the documentation and/or other materials provided with the distribution.
  *
  * -The name of Intel Corporation may not be used to endorse or promote products derived from this software
- *  without specific prior written permission. 
+ *  without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -27,10 +27,10 @@
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE. 
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* 
+/*
  * Intel SCSI device driver for iSCSI
  */
 
@@ -85,17 +85,17 @@ static iscsi_driver_stats_t g_stats;
  * Definitions
  */
 
-/* 
- * Starting with kernel 2.4.10, we define a license string. This source is under BSD License. 
+/*
+ * Starting with kernel 2.4.10, we define a license string. This source is under BSD License.
  * Consult <linux/include/linux/module.h> for details
  */
- 
-MODULE_AUTHOR("Intel Corporation, <http://www.intel.com>");
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,10) 
-MODULE_LICENSE("Dual BSD/GPL"); /*  This source is under BSD License. This is the closest ident that module.h provides  */
-#  endif 
 
-/* 
+MODULE_AUTHOR("Intel Corporation, <http://www.intel.com>");
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,10)
+MODULE_LICENSE("Dual BSD/GPL"); /*  This source is under BSD License. This is the closest ident that module.h provides  */
+#  endif
+
+/*
  * Private
  */
 
@@ -195,14 +195,14 @@ static int driver_shutdown(void) {
 
 int iscsi_detect(Scsi_Host_Template *tptr) {
   struct Scsi_Host *ptr;
-   
+
   iscsi_trace(TRACE_SCSI_DEBUG, "detecting iSCSI host\n");
   spin_unlock(&io_request_lock);
   if (driver_init()!=0) {
     iscsi_trace_error("driver_init() failed\n");
     spin_lock(&io_request_lock);
     return 0; /*No 'SCSI' host detected, return 0 */
-   	
+
   }
   ptr = scsi_register(tptr, 0);
   ptr->max_id = CONFIG_INITIATOR_NUM_TARGETS;
@@ -210,7 +210,7 @@ int iscsi_detect(Scsi_Host_Template *tptr) {
   ptr->max_cmd_len = 255;
   iscsi_trace(TRACE_SCSI_DEBUG, "iSCSI host detected\n");
    spin_lock(&io_request_lock);
-  return 1; 
+  return 1;
 }
 
 int iscsi_release(struct Scsi_Host *host) {
@@ -233,8 +233,8 @@ int iscsi_bios_param(Disk *disk, kdev_t dev, int *ip) {
 }
 
 int iscsi_command(Scsi_Cmnd *SCpnt) {
-  iscsi_trace(TRACE_SCSI_DEBUG, "0x%p: op 0x%x, chan %i, target %i, lun %i, bufflen %i, sg %i\n", 
-        SCpnt, SCpnt->cmnd[0], SCpnt->channel, SCpnt->target, SCpnt->lun, 
+  iscsi_trace(TRACE_SCSI_DEBUG, "0x%p: op 0x%x, chan %i, target %i, lun %i, bufflen %i, sg %i\n",
+        SCpnt, SCpnt->cmnd[0], SCpnt->channel, SCpnt->target, SCpnt->lun,
         SCpnt->request_bufflen, SCpnt->use_sg);
   iscsi_trace_error("NOT IMPLEMENTED\n");
   return -1;
@@ -247,12 +247,12 @@ int iscsi_done(void *ptr) {
   unsigned long flags = 0;
   if (SCpnt==0) {
 	  return 0;
-  } 
+  }
   if (cmd->status==0) {
     SCpnt->result = scsi_cmd->status;
   } else {
     SCpnt->result = -1;
-  } 
+  }
   iscsi_trace(TRACE_SCSI_DEBUG, "scsi_arg 0x%p SCpnt 0x%p op 0x%x done (result %i)\n",
         scsi_cmd, SCpnt, SCpnt->cmnd[0], SCpnt->result);
   if ((scsi_cmd->input)&&(scsi_cmd->output)) {
@@ -286,14 +286,14 @@ int iscsi_done(void *ptr) {
     if (iscsi_queue_insert(&g_iovec_q, hs)!=0) {
       iscsi_trace_error("iscsi_queue_insert() failed\n");
       return -1;
-    }  
+    }
   }
   iscsi_free_atomic(scsi_cmd->ahs);
   if (iscsi_queue_insert(&g_cmd_q, cmd)!=0) {
     iscsi_trace_error("iscsi_queue_insert() failed\n");
   cmd->callback_arg = NULL;    /*  for abort */
     return -1;
-  } 
+  }
   cmd->callback_arg = NULL;    /*  for abort */
   if (SCpnt->result==0) {
     SCpnt->scsi_done(SCpnt);
@@ -318,7 +318,7 @@ int iscsi_queuecommand(Scsi_Cmnd *SCpnt, void (*done)(Scsi_Cmnd *)) {
   spin_unlock(&io_request_lock);
 
   iscsi_trace(TRACE_SCSI_DEBUG, "SCpnt %p: tid %i lun %i op 0x%x tag %u len %i sg %i buff 0x%p\n",
-        SCpnt, SCpnt->target, SCpnt->lun, SCpnt->cmnd[0], SCpnt->tag, SCpnt->request_bufflen, 
+        SCpnt, SCpnt->target, SCpnt->lun, SCpnt->cmnd[0], SCpnt->tag, SCpnt->request_bufflen,
         SCpnt->use_sg, SCpnt->buffer);
 
 
@@ -341,7 +341,7 @@ int iscsi_queuecommand(Scsi_Cmnd *SCpnt, void (*done)(Scsi_Cmnd *)) {
       g_stats.rx_queued += trans_len;
       iscsi_spin_unlock_irqrestore(&g_stats.lock, &flags);
     }
-  } 
+  }
 
   /*  Convert scatterlist to iovec */
 
@@ -357,22 +357,22 @@ int iscsi_queuecommand(Scsi_Cmnd *SCpnt, void (*done)(Scsi_Cmnd *)) {
       return -1;
     }
     for (i=0; i<SCpnt->use_sg; i++) {
-      iov[i].iov_base = sg[i].address; 
+      iov[i].iov_base = sg[i].address;
       iov[i].iov_len = sg[i].length;
     }
     data = SCpnt->host_scribble = (unsigned char *)iov;
   } else {
     data = SCpnt->buffer;
     SCpnt->host_scribble = NULL;
-  } 
+  }
 
   /*  Get free cmd structure */
 
   if ((cmd=iscsi_queue_remove(&g_cmd_q))==NULL) {
     iscsi_trace_error("iscsi_queue_remove() failed\n");
-    spin_lock(&io_request_lock);	
+    spin_lock(&io_request_lock);
     return -1;
-  } 
+  }
   scsi_cmd = (iscsi_scsi_cmd_args_t *) cmd->ptr;
   memset(scsi_cmd, 0, sizeof(*scsi_cmd));
   scsi_cmd->send_data = output?data:0;
@@ -545,12 +545,12 @@ int iscsi_abort_handler (Scsi_Cmnd *SCpnt) {
   unsigned long flags;
 
   spin_unlock_irq(&io_request_lock);
-  iscsi_trace_error("aborting SCSI cmd 0x%p (op 0x%x, tid %i, lun %i)\n", 
+  iscsi_trace_error("aborting SCSI cmd 0x%p (op 0x%x, tid %i, lun %i)\n",
               SCpnt, SCpnt->cmnd[0], SCpnt->target, SCpnt->lun);
 
 
   for (i=0; i<CONFIG_INITIATOR_QUEUE_DEPTH; i++) {
-   
+
     /*  Find the cmd ptr in g_cmd.  We look for the callback_arg that's equal */
     /*  to SCpnt. iscsi_done() sets callback_arg to NULL when a command */
     /*  completes.  So we know that any non_NULL callback_arg is associated */
@@ -575,7 +575,7 @@ int iscsi_abort_handler (Scsi_Cmnd *SCpnt) {
         return FAILED;
       } else if (scsi_cmd->input) {
         iscsi_spin_lock_irqsave(&g_stats.lock,&flags);
-        g_stats.rx_error += SCpnt->request_bufflen; 
+        g_stats.rx_error += SCpnt->request_bufflen;
         g_stats.rx_queued -= SCpnt->request_bufflen;
 	iscsi_spin_unlock_irqrestore(&g_stats.lock, &flags);
       } else if (scsi_cmd->output) {
@@ -585,7 +585,7 @@ int iscsi_abort_handler (Scsi_Cmnd *SCpnt) {
 	iscsi_spin_unlock_irqrestore(&g_stats.lock, &flags);
       }
       break;
-    } 
+    }
   }
 
   /*  Destroy session */

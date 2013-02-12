@@ -559,12 +559,12 @@ getdol(void)
 		int delimcnt = 2;
 		int delim = getC(0);
 		*np++ = delim;
-		
+
 		if (!delim || letter(delim)
 		    || Isdigit(delim) || any(" \t\n", delim)) {
 		    seterror(ERR_BADSUBST);
 		    break;
-		}	
+		}
 		while ((c = getC(0)) != (-1)) {
 		    *np++ = c;
 		    if(c == delim) delimcnt--;
@@ -1389,10 +1389,10 @@ bgetc(void)
     Char ttyline[BUFSIZE];
     int c, buf, numleft, off, roomleft;
 
-    numleft = 0; 
+    numleft = 0;
 #else /* FILEC */
     char tbuf[BUFSIZE + 1];
-    int c, buf, off;        
+    int c, buf, off;
 #endif /* !FILEC */
 
     if (cantell) {

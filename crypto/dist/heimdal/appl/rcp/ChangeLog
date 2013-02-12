@@ -3,9 +3,9 @@
 	* Makefile.am: Add missing files, from Buchan Milne.
 
 2006-10-20  Love Hörnquist Åstrand  <lha@it.su.se>
-	
+
 	* Makefile.am: more files
-	
+
 2006-08-08  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* util.c: Check return values from setuid, prompted by MIT
@@ -19,20 +19,20 @@
 	* rcp.c: Check return values from seteuid, prompted by MIT
 	advisory.  Thanks to Tom Yu at MIT, and Michael Calmer and Marcus
 	Meissner at SUSE.  Either of CVE-2006-3083 or CVE-2006-3084.
-	
+
 2005-10-22  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* rcp.c: Check return value from asprintf instead of string !=
 	NULL since it undefined behavior on Linux. From Björn Sandell
-	
+
 2005-08-30  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* util.c: Explicit typecast to avoid signess warning.
-	
+
 2005-05-29  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* rcp_locl.h: undef _PATH_RSH to make sure our version is used
-	
+
 2005-05-11  David Love  <fx@gnu.org>
 
 	* rcp.c: MODEMASK is defined in sys/vnode.h on Solaris, so undef
@@ -50,7 +50,7 @@
 2004-05-14  Johan Danielsson  <joda@pdc.kth.se>
 
 	* rcp.c: add -e (passed to rsh)
-	
+
 2003-04-16  Johan Danielsson  <joda@pdc.kth.se>
 
 	* rcp.1: add a HISTORY section

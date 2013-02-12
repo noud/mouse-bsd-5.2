@@ -20,12 +20,12 @@
 		<p>Most of this code is originally from refclock_wwvb.c with thanks. Any mistakes are mine. Any improvements are welcome.</p>
 		<hr>
 		<pre>  The Model 325 timecode format is:
- 
+
    &lt;cr&gt;&lt;lf&gt;RQ_1C00LYYYY+DDDUTCS_HH:MM:SSL+5
- 
+
   where:
- 
-  R = Signal readability indicator, ranging from R1 to R5  
+
+  R = Signal readability indicator, ranging from R1 to R5
   Q	R1 is unreadable, R5 is best reception
   _ = Space
   1 = prev. received data bit, values: 0, 1 ,M or ? unknown
@@ -53,11 +53,11 @@
 		<p>Note that Model 325 reports a very similar output like Model 33X series. The driver for this clock is similar to Model 33X behavior. On a unmodified new ULM325 clock, the polling flag (flag1 =1) needs to be set.</p>
 		<hr>
 		<pre>  The Model 320 timecode format is:
- 
+
    &lt;cr&gt;&lt;lf&gt;SQRYYYYDDD+HH:MM:SS.mmLT&lt;cr&gt;
- 
+
   where:
- 
+
   S = 'S' -- sync'd in last hour, '0'-'9' - hours x 10 since last update, else '?'
   Q = Number of correlating time-frames, from 0 to 5
   R = 'R' -- reception in progress, 'N' -- Noisy reception, ' ' -- standby mode

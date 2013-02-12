@@ -451,7 +451,7 @@ showjob(struct output *out, struct job *jp, int mode)
 				fmtstr(s + col, 16, "Done");
 		} else {
 #if JOBS
-			if (WIFSTOPPED(ps->status)) 
+			if (WIFSTOPPED(ps->status))
 				st = WSTOPSIG(ps->status);
 			else /* WIFSIGNALED(ps->status) */
 #endif
@@ -690,7 +690,7 @@ getjob(const char *name, int noerror)
 	int pid;
 	int i;
 	const char *err_msg = "No such job: %s";
-		
+
 	if (name == NULL) {
 #if JOBS
 		jobno = curjob;

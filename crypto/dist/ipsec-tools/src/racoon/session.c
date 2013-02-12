@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -154,14 +154,14 @@ session(void)
 
 	/* write .pid file */
 	racoon_pid = getpid();
-	if (lcconf->pathinfo[LC_PATHTYPE_PIDFILE] == NULL) 
+	if (lcconf->pathinfo[LC_PATHTYPE_PIDFILE] == NULL)
 		strlcpy(pid_file, _PATH_VARRUN "racoon.pid", MAXPATHLEN);
-	else if (lcconf->pathinfo[LC_PATHTYPE_PIDFILE][0] == '/') 
+	else if (lcconf->pathinfo[LC_PATHTYPE_PIDFILE][0] == '/')
 		strlcpy(pid_file, lcconf->pathinfo[LC_PATHTYPE_PIDFILE], MAXPATHLEN);
 	else {
 		strlcat(pid_file, _PATH_VARRUN, MAXPATHLEN);
 		strlcat(pid_file, lcconf->pathinfo[LC_PATHTYPE_PIDFILE], MAXPATHLEN);
-	} 
+	}
 	fp = fopen(pid_file, "w");
 	if (fp) {
 		if (fchmod(fileno(fp),
@@ -345,7 +345,7 @@ static void reload_conf(){
 
 #ifdef ENABLE_HYBRID
 	if ((isakmp_cfg_init(ISAKMP_CFG_INIT_WARM)) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "ISAKMP mode config structure reset failed, "
 		    "not reloading\n");
 		return;
@@ -364,7 +364,7 @@ static void reload_conf(){
 	/* Do a part of pfkey_init() ?
 	 * SPD reload ?
 	 */
-	
+
 	save_params();
 	error = cfparse();
 	if (error != 0){
@@ -374,16 +374,16 @@ static void reload_conf(){
 	}
 	restore_params();
 
-#if 0	
+#if 0
 	if (dump_config)
 		dumprmconf ();
 #endif
 
-	/* 
+	/*
 	 * init_myaddr() ?
 	 * If running in privilege separation, do not reinitialize
-	 * the IKE listener, as we will not have the right to 
-	 * setsockopt(IP_IPSEC_POLICY). 
+	 * the IKE listener, as we will not have the right to
+	 * setsockopt(IP_IPSEC_POLICY).
 	 */
 	if (geteuid() == 0)
 		check_rtsock(NULL);
@@ -404,10 +404,10 @@ check_sigreq()
 {
 	int sig;
 
-	/* 
-	 * XXX We are not able to tell if we got 
+	/*
+	 * XXX We are not able to tell if we got
 	 * several time the same signal. This is
-	 * not a problem for the current code, 
+	 * not a problem for the current code,
 	 * but we shall remember this limitation.
 	 */
 	for (sig = 0; sig <= NSIG; sig++) {
@@ -418,21 +418,21 @@ check_sigreq()
 		switch(sig) {
 		case 0:
 			return;
-			
+
 			/* Catch up childs, mainly scripts.
 			 */
 		case SIGCHLD:
 	    {
 			pid_t pid;
 			int s;
-			
+
 			pid = wait(&s);
 	    }
 		break;
 
 #ifdef DEBUG_RECORD_MALLOCATION
-		/* 
-		 * XXX This operation is signal handler unsafe and may lead to 
+		/*
+		 * XXX This operation is signal handler unsafe and may lead to
 		 * crashes and security breaches: See Henning Brauer talk at
 		 * EuroBSDCon 2005. Do not run in production with this option
 		 * enabled.
@@ -448,11 +448,11 @@ check_sigreq()
 			break;
 
 		case SIGINT:
-		case SIGTERM:			
-			plog(LLV_INFO, LOCATION, NULL, 
+		case SIGTERM:
+			plog(LLV_INFO, LOCATION, NULL,
 			    "caught signal %d\n", sig);
 			EVT_PUSH(NULL, NULL, EVTT_RACOON_QUIT, NULL);
-			pfkey_send_flush(lcconf->sock_pfkey, 
+			pfkey_send_flush(lcconf->sock_pfkey,
 			    SADB_SATYPE_UNSPEC);
 #ifdef ENABLE_FASTQUIT
 			close_session();
@@ -463,7 +463,7 @@ check_sigreq()
 			break;
 
 		default:
-			plog(LLV_INFO, LOCATION, NULL, 
+			plog(LLV_INFO, LOCATION, NULL,
 			    "caught signal %d\n", sig);
 			break;
 		}

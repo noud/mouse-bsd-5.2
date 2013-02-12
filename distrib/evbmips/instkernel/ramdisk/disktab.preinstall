@@ -1,6 +1,6 @@
 #	$NetBSD: disktab.preinstall,v 1.1 2006/03/30 15:45:42 shige Exp $
 #
-# Disk geometry and partition layout tables. 
+# Disk geometry and partition layout tables.
 # Key:
 #	dt	controller type
 #	ty	type of disk (fixed, removable, simulated)

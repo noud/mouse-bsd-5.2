@@ -251,7 +251,7 @@ int group_dereference (ptr, file, line)
 
 	if (group -> object)
 		group_object_dereference (&group -> object, file, line);
-	if (group -> subnet)	
+	if (group -> subnet)
 		subnet_dereference (&group -> subnet, file, line);
 	if (group -> shared_network)
 		shared_network_dereference (&group -> shared_network,
@@ -512,7 +512,7 @@ void relinquish_free_expressions ()
 #endif
 
 struct binding_value *free_binding_values;
-				
+
 int binding_value_allocate (cptr, file, line)
 	struct binding_value **cptr;
 	const char *file;

@@ -392,7 +392,7 @@ hex_escape_len( const char *s, unsigned list )
 		case ')':
 			len++;
 			break;
-			
+
 		/* RFC 2396: unreserved alphanum */
 		default:
 			if ( !isalnum( (unsigned char) s[0] ) ) {
@@ -457,7 +457,7 @@ hex_escape( char *buf, int len, const char *s, unsigned list )
 		case '(':
 		case ')':
 			break;
-			
+
 		/* RFC 2396: unreserved alphanum */
 		default:
 			if ( !isalnum( (unsigned char) s[i] ) ) {
@@ -766,7 +766,7 @@ ldap_url_desc2str( LDAPURLDesc *u )
 	if ( len < 0 ) {
 		return NULL;
 	}
-	
+
 	/* allocate enough to hex escape everything -- overkill */
 	s = LDAP_MALLOC( len + 1 );
 
@@ -1186,7 +1186,7 @@ ldap_url_dup ( LDAPURLDesc *ludp )
 	dest = LDAP_MALLOC( sizeof(LDAPURLDesc) );
 	if (dest == NULL)
 		return NULL;
-	
+
 	*dest = *ludp;
 	dest->lud_scheme = NULL;
 	dest->lud_host = NULL;
@@ -1271,7 +1271,7 @@ ldap_url_duplist (LDAPURLDesc *ludlist)
 
 static int
 ldap_url_parselist_int (LDAPURLDesc **ludlist, const char *url, const char *sep, unsigned flags )
-	
+
 {
 	int i, rc;
 	LDAPURLDesc *ludp;
@@ -1469,7 +1469,7 @@ ldap_url_list2urls(
 		}
 		size += len + 1;
 	}
-	
+
 	s = LDAP_MALLOC( size );
 
 	if ( s == NULL ) {
@@ -1480,7 +1480,7 @@ ldap_url_list2urls(
 		int	len;
 
 		len = desc2str( ludp, &s[sofar], size );
-		
+
 		if ( len < 0 ) {
 			LDAP_FREE( s );
 			return NULL;
@@ -1517,7 +1517,7 @@ ldap_free_urldesc( LDAPURLDesc *ludp )
 	if ( ludp == NULL ) {
 		return;
 	}
-	
+
 	if ( ludp->lud_scheme != NULL ) {
 		LDAP_FREE( ludp->lud_scheme );
 	}
@@ -1565,10 +1565,10 @@ ldap_int_is_hexpair( char *s )
 
 		return 0;
 	}
-	
-	return 1;	
+
+	return 1;
 }
-	
+
 static int
 ldap_int_unhex( int c )
 {

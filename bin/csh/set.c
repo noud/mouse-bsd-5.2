@@ -129,7 +129,7 @@ doset(Char **v, struct command *t)
 	else
 	    set(vp, Strsave(p));
 	if (eq(vp, STRpath)) {
-	    struct varent *pt = adrof(STRpath); 
+	    struct varent *pt = adrof(STRpath);
 	    if (pt == NULL)
 		stderror(ERR_NAME | ERR_UNDVAR);
 	    else {
@@ -287,7 +287,7 @@ dolet(Char **v, struct command *t)
 	else
 	    set(vp, operate(op, value(vp), p));
 	if (eq(vp, STRpath)) {
-	    struct varent *pt = adrof(STRpath); 
+	    struct varent *pt = adrof(STRpath);
 	    if (pt == NULL)
 		stderror(ERR_NAME | ERR_UNDVAR);
 	    else {

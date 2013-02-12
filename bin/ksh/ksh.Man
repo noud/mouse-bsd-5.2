@@ -132,7 +132,7 @@ If the \fBENV\fP parameter is set when the shell starts (or, in the
 case of login shells, after any profiles are processed), its value
 is subjected to parameter, command, arithmetic and tilde substitution and
 the resulting file (if any) is read and executed.
-If the \fBENV\fP parameter is not set (and not null) the file \fB$HOME/.kshrc\fP 
+If the \fBENV\fP parameter is not set (and not null) the file \fB$HOME/.kshrc\fP
 is included (after the above mentioned substitutions have been performed).
 .PP
 The exit status of the shell is 127 if the command file specified
@@ -2165,9 +2165,9 @@ see Emacs Editing Mode.
 T}
 	emacs-usemeta	T{
 In emacs command-line editing, use the 8th bit
-as meta (^[) prefix.  This is the default if 
+as meta (^[) prefix.  This is the default if
 LC_CTYPE is unset or POSIX respectively C.
-8 
+8
 T}
 	gmacs	T{
 Enable gmacs-like (Gosling emacs) command line editing (interactive shells

@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: nb_lib.h,v 1.2 2000/07/17 01:49:27 bp Exp 
+ * from: Id: nb_lib.h,v 1.2 2000/07/17 01:49:27 bp Exp
  */
 #ifndef _NETSMB_NB_LIB_H_
 #define	_NETSMB_NB_LIB_H_

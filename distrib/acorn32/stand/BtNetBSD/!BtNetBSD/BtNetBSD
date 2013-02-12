@@ -212,7 +212,7 @@ DEF PROCload_kernel_elf(file%)
   REM read header
   DIM hdr% 52
   SYS "OS_GBPB", 3, file%, hdr%, 52, 0
- 
+
   REM check if its a correct kernel to load
   IF hdr%?4 <> 1 THEN ERROR 1, "Not a 32-bit ELF file"
   IF hdr%?5 <> 1 THEN ERROR 1, "Not an LSB ELF file"
@@ -336,7 +336,7 @@ DEF PROCload_chunk(file%, offset%, vaddr%, filesz%, memsz%)
 
     fragaddr% = FNblock_vaddr(freepagesbase%)
     SYS "OS_GBPB", 3, file%, fragaddr%, fragsz%, offset%
- 
+
     REM create a relocation block
     relocpos%!0 = FNblock_paddr(freepagesbase%)
     relocpos%!4 = vaddr% - pv_offset%
@@ -350,7 +350,7 @@ DEF PROCload_chunk(file%, offset%, vaddr%, filesz%, memsz%)
     memsz% -= fragsz%
     PROCtwirl
   ENDWHILE
- 
+
   IF memsz% > 0 PRINT "+";memsz%;
   WHILE memsz% > 0
     REM freepagesbase% is first page index in freepages list
@@ -365,7 +365,7 @@ DEF PROCload_chunk(file%, offset%, vaddr%, filesz%, memsz%)
     relocpos%!8 = fragsz%
     relocpos% += 12: relocnr%+=1: relocoff%+=1
     freepagesbase% += 1
- 
+
     offset% += fragsz%
     vaddr% += fragsz%
     filesz% -= fragsz%
@@ -422,7 +422,7 @@ DEF PROCload_kernel_aout(file%)
   IF bsssize% MOD nbpp% <> 0 THEN
     ERROR EXT 1, "Bss size not a multiple of page size"
   ENDIF
- 
+
   entry% = hdr%!20
   IF debug% THEN PRINT "Entry point at ";~entry%
 
@@ -443,7 +443,7 @@ DEF PROCload_kernel_aout(file%)
   symbolsize% = symsize% + stringtablesize% + 4
   symbolpages% = FNroundup(symbolsize%, nbpp%) DIV nbpp%
   IF debug% PRINT '"Stringtablesize = 0x";~stringtablesize%;"  symsize = 0x";~symsize%
- 
+
   PRINT '"A total of about ";kernelpages%;" pages need to be relocated"
   IF (kernelpages%+40)*nbpp% > memory_image_size% THEN
     REM 40 is an estimation ...
@@ -490,7 +490,7 @@ DEF PROCload_kernel_aout(file%)
 
     REM put a page for the value of symsize just after bss%
     symDaddr% = !(relocpos%-8) + ((hdr%!12) AND (nbpp%-1))
- 
+
     symstartpagaddrV% = FNblock_vaddr(symbasepage%)
     PROCbzero(symstartpagaddrV%, nbpp%)
     !symstartpagaddrV% = symsize%
@@ -500,10 +500,10 @@ DEF PROCload_kernel_aout(file%)
     relocpos%!8 = nbpp% : REM XXX
     relocpos% += 12
     symDaddr% += 4
- 
+
     REM update the symbasepage !! ... we used one!
     symbasepage%+=1
- 
+
     PRINT "+";symbolsize%;
     REM now fill in rest of the file
     FOR pg% = 0 TO symbolpages%-1 : REM => due to first page to hold offset
@@ -514,20 +514,20 @@ DEF PROCload_kernel_aout(file%)
       relocpos% += 12
       PROCtwirl
     NEXT
- 
+
     freepagesbase% = symbasepage% + symbolpages% + 4 : REM XXX
   ENDIF
- 
+
   REM update new header structure
   new_hdr%!16 = symsize%
- 
+
   REM mark highest virtual address free in NetBSD's mapping
   vfreebase% = KERNEL_BASE + nbpp%*relocoff%
 
   REM `patch' symbol table stuff
   ssym% = 0
   esym% = 0
- 
+
   PROCfinish_relocationtable
 ENDPROC
 
@@ -718,7 +718,7 @@ DEF PROCnew_configuration_structure
         EQUD 0
     ; u_int MDFsize
         EQUD 0
- 
+
     ; u_int display_phys
         EQUD          videomem_start%
     ; u_int display_start
@@ -733,10 +733,10 @@ DEF PROCnew_configuration_structure
         EQUD          FNvdu_var(9)    ; acorn32 port needs log(bitsperpixel)/log(2)
     ; u_int framerate
         EQUD          56 ; XXX why?
- 
+
     ; char reserved[512]
     ]: P% += 512: [ OPT opt%
- 
+
     ; u_int pagesize
         EQUD          nbpp%
     ; u_int drampages
@@ -857,7 +857,7 @@ DEF PROCassemble_relocate_code(virtaddress%, physaddress%, entry%, L1pages_phys%
       .relocate_entry%
         ; Enter sup26 mode
         SWI "OS_EnterOS"
- 
+
         ; move args up in register bank
         STMFD r13!, {r0-r4}
         LDMFD r13!, {r8-r12}
@@ -867,7 +867,7 @@ DEF PROCassemble_relocate_code(virtaddress%, physaddress%, entry%, L1pages_phys%
         ; r10 = physical relocation table address
         ; r11 = physical address of new L1page
         ; r12 = kernel entry point in new virt. map
- 
+
         ; go to sup32 mode with IRQ + FIQ disabled
         EQUD %11100001000011110000000000000000 ; MRS R0, CPSR
         BIC r0, r0, #&1F                       ; clear proc. mode
@@ -892,7 +892,7 @@ DEF PROCassemble_relocate_code(virtaddress%, physaddress%, entry%, L1pages_phys%
 
         ; determine if its a StrongARM
         MOV   r14, #1                          ; r14 flags if its a StrongARM ... assume one
- 
+
         ; detecting an ARM6 needs a special mask
         MOV   r0,     #&FF000000               ; get processor discr. mask in r0
         ADD   r0, r0, #&00000F00               ;
@@ -902,7 +902,7 @@ DEF PROCassemble_relocate_code(virtaddress%, physaddress%, entry%, L1pages_phys%
         AND   r2, r13, r0                      ; mask with discr. mask
         CMP   r2, r1                           ; is it a ARM6 ?
         MOVEQ r14, #0                          ; ifso ... then its a v3
- 
+
         ; newer ARMs need a different mask
         MOV   r0,     #&FF000000               ; get processor discr. mask in r0
         ADD   r0, r0, #&0000F000               ;
@@ -912,12 +912,12 @@ DEF PROCassemble_relocate_code(virtaddress%, physaddress%, entry%, L1pages_phys%
         AND   r2, r13, r0                      ; mask with discr. mask
         CMP   r2, r1                           ; is it a ARM7 ?
         MOVEQ r14, #0                          ; ifso ... then its a v3
- 
+
 ;        MOV   r1,     #&44000000               ; check for 0x44xxaxxx => Strong ARM
 ;        ADD   r1, r1, #&0000a000
 ;        AND   r2, r13, r0                      ; mask with discr. mask
 ;        CMP   r2, r1                           ; is it a StrongARM ?
- 
+
         ; switch off MMU, IDcache and WB and branch to physical code !!
         CMP r14, #0
         EQUD %00011110000100010000111100010000 ; MRCNE cp15, 0, r0, c1, c0, 0 ; read control register
@@ -976,7 +976,7 @@ DEF PROCassemble_relocate_code(virtaddress%, physaddress%, entry%, L1pages_phys%
         ; set new TLB address
         MOV r0, r11
         EQUD %11101110000000100000111100010000 ; MCR cp15, 0, r0, c2, c0, 0 ; write TLB base
- 
+
         ; switch on MMU, IDcache and WB and keep on running (flat *translated*)
         ; in r13 last written value
         ORR r0, r13, #%0001111101
@@ -1030,14 +1030,14 @@ DEF PROCget_memory_map
     !(pos%!4) = 0: REM PROCbzero(pos%!4, nbpp%)
   NEXT
   PRINT ;" "
- 
+
   os_memory_GIVEN_LOG_ADDR   = &200
   os_memory_RETURN_PAGE_NO   = &800
   os_memory_RETURN_PHYS_ADDR = &2000
   SYS "OS_Memory", os_memory_GIVEN_LOG_ADDR+os_memory_RETURN_PAGE_NO+os_memory_RETURN_PHYS_ADDR, memoryblock%, totalpages%
- 
+
   PROCsort_memory_map(memoryblock%, totalpages%)
- 
+
   REM Get first DRAM index
   PRINT '"Found memory blocks ";
   first_mapped_DRAM_index%=-1
@@ -1094,7 +1094,7 @@ DEF PROCget_memory_configuration
     loop% += 64
     PROCtwirl
   ENDWHILE
- 
+
   IF emulateDRAMsize% > 0 THEN
     REM emulate HACK
     DRAM0% = DRAM_addr%(0)
@@ -1114,7 +1114,7 @@ DEF PROCget_memory_configuration
 
   PRINT " "
   PRINT'
- 
+
   REM Emulate VRAM by reporting different memory sizes
   REM XXX assumption : no VRAM => screen is located in bottom DRAM; leave it there
   IF (VRAM_pages%(0)=0) OR emulateVRAM% THEN
@@ -1130,7 +1130,7 @@ DEF PROCget_memory_configuration
     videomem_pages% = VRAM_pages%(0)
     display_size%   = videomem_pages% * nbpp%
   ENDIF
- 
+
   IF mapped_screenmemory%>0 THEN PRINT "Used 1st Mb of DRAM at 0x";RIGHT$("00000000"+STR$~videomem_start%,8);" for video memory"
 
   totaldrampages% = 0
@@ -1146,17 +1146,17 @@ DEF PROCget_memory_configuration
     totalvrampages% += VRAM_pages%(I%)
     PRINT "Found  VRAM (";I%;") at 0x";RIGHT$("00000000"+STR$~VRAM_addr%(I%),8);" for ";,VRAM_pages%(I%)*nbpp%/1024;" k"
   NEXT
- 
+
   kernel_phys_start% = DRAM_addr%(0)
- 
+
   REM Expirimental Kinetic support
   IF INSTR(args$, "kinetic")>0 THEN
     REM The Kinetic card has SDRAM on the processor module ... first fix is to only use this memory
     REM for VRAM emulation and only pass it through as buffer memory for the DRAM is the only one
     REM wich DMA capabilities.
- 
+
     PRINT ''"Kinetic support asked ... ";
- 
+
     REM find SDRAM start... DRAM is under 512 Mb, SDRAM is above it
     first_SDRAM% = -1
     FOR I%=0 TO MAX_DRAMBANKS

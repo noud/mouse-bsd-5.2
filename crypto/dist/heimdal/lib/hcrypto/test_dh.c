@@ -237,21 +237,21 @@ static struct getargs args[] = {
 struct prime {
     char *name;
     char *value;
-} primes[] = { 
-    { "modp768", OAKLEY_PRIME_MODP768 }, 
+} primes[] = {
+    { "modp768", OAKLEY_PRIME_MODP768 },
     { "modp1024", OAKLEY_PRIME_MODP1024 },
     { "modp1536", OAKLEY_PRIME_MODP1536 },
     { "modp2048", OAKLEY_PRIME_MODP2048 },
     { "modp3072", OAKLEY_PRIME_MODP3072 },
-    { "modp4096", OAKLEY_PRIME_MODP4096 }, 
+    { "modp4096", OAKLEY_PRIME_MODP4096 },
     { "modp6144", OAKLEY_PRIME_MODP6144 },
     { "modp8192", OAKLEY_PRIME_MODP8192 },
-    { NULL, NULL } 
+    { NULL, NULL }
 };
 
 /*
  * exchange a string based "base" to a value.
- *   
+ *
  */
 static char *
 str2val(const char *str, int base, size_t *len)
@@ -309,12 +309,12 @@ static void set_prime(BIGNUM *p, char *str)
     prime = (unsigned char *)str2val(str, 16, &len);
     if (prime == NULL)
 	errx(1, "failed to parse %s", str);
-    BN_bin2bn(prime, len, p);	
+    BN_bin2bn(prime, len, p);
 }
 
 static void set_generator(BIGNUM *g)
 {
-    BN_set_word(g, 2);	
+    BN_set_word(g, 2);
 }
 
 static void print_secret(unsigned char *sec, size_t len)
@@ -344,7 +344,7 @@ static int check_prime(struct prime *pr)
     dh2 = DH_new();
 
     /* 1. set shared parameter */
-    set_prime(p, pr->value); 
+    set_prime(p, pr->value);
     set_generator(g);
     dh1->p = BN_dup(p);
     dh1->g = BN_dup(g);
@@ -432,7 +432,7 @@ main(int argc, char **argv)
 
     if(getarg(args, sizeof(args) / sizeof(args[0]), argc, argv, &idx))
 	usage(1);
-    
+
     if (help_flag)
 	usage(0);
 
@@ -446,13 +446,13 @@ main(int argc, char **argv)
 
     {
 	struct prime *p = primes;
-	
+
 	for (; p->name; ++p)
 	    if (check_prime(p))
 		printf("%s: shared secret OK\n", p->name);
 	    else
 		printf("%s: shared secret FAILURE\n", p->name);
-	
+
 	return 0;
     }
 

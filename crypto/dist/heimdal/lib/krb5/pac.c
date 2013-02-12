@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 2006 - 2007 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "krb5_locl.h"
@@ -45,7 +45,7 @@ struct PAC_INFO_BUFFER {
 
 struct PACTYPE {
     uint32_t numbuffers;
-    uint32_t version;                         
+    uint32_t version;
     struct PAC_INFO_BUFFER buffers[1];
 };
 
@@ -118,7 +118,7 @@ krb5_pac_parse(krb5_context context, const void *ptr, size_t len,
 	goto out;
     }
 
-    p->pac = calloc(1, 
+    p->pac = calloc(1,
 		    sizeof(*p->pac) + (sizeof(p->pac->buffers[0]) * (tmp - 1)));
     if (p->pac == NULL) {
 	krb5_set_error_string(context, "out of memory");
@@ -283,7 +283,7 @@ krb5_pac_add_buffer(krb5_context context, krb5_pac p,
 	krb5_set_error_string(context, "integer overrun");
 	return EINVAL;
     }
-    
+
     /* align to PAC_ALIGNMENT */
     len = ((len + PAC_ALIGNMENT - 1) / PAC_ALIGNMENT) * PAC_ALIGNMENT;
 
@@ -293,7 +293,7 @@ krb5_pac_add_buffer(krb5_context context, krb5_pac p,
 	return ret;
     }
 
-    /* 
+    /*
      * make place for new PAC INFO BUFFER header
      */
     header_end = PACTYPE_SIZE + (PAC_INFO_BUFFER_SIZE * p->pac->numbuffers);
@@ -422,7 +422,7 @@ verify_checksum(krb5_context context,
 
     CHECK(ret, krb5_ret_uint32(sp, &type), out);
     cksum.cksumtype = type;
-    cksum.checksum.length = 
+    cksum.checksum.length =
 	sig->buffersize - krb5_storage_seek(sp, 0, SEEK_CUR);
     cksum.checksum.data = malloc(cksum.checksum.length);
     if (cksum.checksum.data == NULL) {
@@ -614,7 +614,7 @@ verify_logonname(krb5_context context,
     free(s);
     if (ret)
 	return ret;
-    
+
     if (krb5_principal_compare_any_realm(context, principal, p2) != TRUE) {
 	krb5_set_error_string(context, "PAC logon name mismatch");
 	ret = EINVAL;
@@ -630,9 +630,9 @@ out:
  */
 
 static krb5_error_code
-build_logon_name(krb5_context context, 
+build_logon_name(krb5_context context,
 		 time_t authtime,
-		 krb5_const_principal principal, 
+		 krb5_const_principal principal,
 		 krb5_data *logon)
 {
     krb5_error_code ret;
@@ -661,7 +661,7 @@ build_logon_name(krb5_context context,
 	goto out;
 
     len = strlen(s);
-    
+
     CHECK(ret, krb5_store_uint16(sp, len * 2), out);
 
 #if 1 /* cheat for now */
@@ -703,7 +703,7 @@ out:
  */
 
 krb5_error_code
-krb5_pac_verify(krb5_context context, 
+krb5_pac_verify(krb5_context context,
 		const krb5_pac pac,
 		time_t authtime,
 		krb5_const_principal principal,
@@ -725,7 +725,7 @@ krb5_pac_verify(krb5_context context,
 	return EINVAL;
     }
 
-    ret = verify_logonname(context, 
+    ret = verify_logonname(context,
 			   pac->logon_name,
 			   &pac->data,
 			   authtime,
@@ -733,7 +733,7 @@ krb5_pac_verify(krb5_context context,
     if (ret)
 	return ret;
 
-    /* 
+    /*
      * in the service case, clean out data option of the privsvr and
      * server checksum before checking the checksum.
      */
@@ -807,7 +807,7 @@ fill_zeros(krb5_context context, krb5_storage *sp, size_t len)
 }
 
 static krb5_error_code
-pac_checksum(krb5_context context, 
+pac_checksum(krb5_context context,
 	     const krb5_keyblock *key,
 	     uint32_t *cksumtype,
 	     size_t *cksumsize)
@@ -833,7 +833,7 @@ pac_checksum(krb5_context context,
     ret = krb5_checksumsize(context, cktype, cksumsize);
     if (ret)
 	return ret;
-    
+
     *cksumtype = (uint32_t)cktype;
 
     return 0;

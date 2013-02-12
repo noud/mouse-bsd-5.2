@@ -218,7 +218,7 @@ thread_loop(void *x)
 		}
 		pthread_mutex_unlock(&q->lock);
 	}
-	else 
+	else
 		STATS_SKIP(stats);
 
 	/*
@@ -376,7 +376,7 @@ ssh_aes_ctr_init(EVP_CIPHER_CTX *ctx, const u_char *key, const u_char *iv,
 		}
 
 		STATS_INIT(c->stats);
-		
+
 		EVP_CIPHER_CTX_set_app_data(ctx, c);
 	}
 
@@ -421,7 +421,7 @@ ssh_aes_ctr_init(EVP_CIPHER_CTX *ctx, const u_char *key, const u_char *iv,
 		while (c->q[0].qstate != KQDRAINING)
 			pthread_cond_wait(&c->q[0].cond, &c->q[0].lock);
 		pthread_mutex_unlock(&c->q[0].lock);
-		
+
 	}
 	return (1);
 }

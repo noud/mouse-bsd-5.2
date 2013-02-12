@@ -185,7 +185,7 @@ responding to the client send the client its values for the specified
 options.   Only the option names should be specified in the request
 statement - not option parameters.   By default, the DHCP server
 requests the subnet-mask, broadcast-address, time-offset, routers,
-domain-name, domain-name-servers and host-name options. 
+domain-name, domain-name-servers and host-name options.
 .PP
 In some cases, it may be desirable to send no parameter request list
 at all.   To do this, simply write the request statement but specify
@@ -308,7 +308,7 @@ statement.
 .PP
 If for some option the client should always use a locally-configured
 value or values rather than whatever is supplied by the server, these
-values can be defined in the 
+values can be defined in the
 .B supersede
 statement.
 .PP
@@ -556,7 +556,7 @@ effect that will be addressed in a future release.
 .PP
  \fBpseudo "\fIname\fR" "\fIreal-name\fB" { \fIdeclarations ... \fB }
 .PP
-Under some circumstances it can be useful to declare a pseudo-interface 
+Under some circumstances it can be useful to declare a pseudo-interface
 and have the DHCP client acquire a configuration for that interface.
 Each interface that the DHCP client is supporting normally has a DHCP
 client state machine running on it to acquire and maintain its lease.

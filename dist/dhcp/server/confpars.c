@@ -185,7 +185,7 @@ void trace_conf_input (trace_type_t *ttype, unsigned len, char *data)
 	struct parse *cfile = (struct parse *)0;
 	static int postconf_initialized;
 	static int leaseconf_initialized;
-	
+
 	/* Do what's done above, except that we don't have to read in the
 	   data, because it's already been read for us. */
 	tflen = strlen (data);
@@ -355,7 +355,7 @@ int parse_statement (cfile, group, type, host_decl, declaration)
 			parse_semi (cfile);
 		}
 		return 1;
-		
+
 	      case HOST:
 		next_token (&val, (unsigned *)0, cfile);
 		if (type != HOST_DECL && type != CLASS_DECL)
@@ -568,7 +568,7 @@ int parse_statement (cfile, group, type, host_decl, declaration)
 		group -> authoritative = 1;
 	      authoritative:
 		if (type == HOST_DECL)
-			parse_warn (cfile, "authority makes no sense here."); 
+			parse_warn (cfile, "authority makes no sense here.");
 		parse_semi (cfile);
 		break;
 
@@ -928,7 +928,7 @@ void parse_failover_peer (cfile, group, type)
 				goto make_hba;
 			}
 			break;
-			
+
 		      case LOAD:
 			token = next_token (&val, (unsigned *)0, cfile);
 			if (token != BALANCE) {
@@ -954,7 +954,7 @@ void parse_failover_peer (cfile, group, type)
 			}
 			peer -> load_balance_max_secs = atoi (val);
 			break;
-			
+
 		      default:
 			parse_warn (cfile,
 				    "invalid statement in peer declaration");
@@ -1114,11 +1114,11 @@ void parse_failover_state_declaration (struct parse *cfile,
 			state -> mclt = atoi (val);
 			parse_semi (cfile);
 			break;
-			
+
 		      default:
 			parse_warn (cfile, "expecting state setting.");
 		      bogus:
-			skip_to_rbrace (cfile, 1);	
+			skip_to_rbrace (cfile, 1);
 			dhcp_failover_state_dereference (&state, MDL);
 			return;
 		}
@@ -1165,23 +1165,23 @@ void parse_failover_state (cfile, state, stos)
 	      case RECOVER:
 		state_in = recover;
 		break;
-		
+
 	      case RECOVER_WAIT:
 		state_in = recover_wait;
 		break;
-		
+
 	      case RECOVER_DONE:
 		state_in = recover_done;
 		break;
-		
+
 	      case SHUTDOWN:
 		state_in = shut_down;
 		break;
-		
+
 	      case PAUSED:
 		state_in = paused;
 		break;
-		
+
 	      case STARTUP:
 		state_in = startup;
 		break;
@@ -1201,7 +1201,7 @@ void parse_failover_state (cfile, state, stos)
 			skip_to_semi (cfile);
 			return;
 		}
-		
+
 		stos_in = parse_date (cfile);
 		if (!stos_in)
 			return;
@@ -1281,7 +1281,7 @@ void parse_pool_statement (cfile, group, type)
 	/* Inherit the failover peer from the shared network. */
 	if (pool -> shared_network -> failover_peer)
 	    dhcp_failover_state_reference
-		    (&pool -> failover_peer, 
+		    (&pool -> failover_peer,
 		     pool -> shared_network -> failover_peer, MDL);
 #endif
 
@@ -1310,7 +1310,7 @@ void parse_pool_statement (cfile, group, type)
 					(&pool -> failover_peer, MDL);
 #endif
 			break;
-				
+
 #if defined (FAILOVER_PROTOCOL)
 		      case FAILOVER:
 			next_token (&val, (unsigned *)0, cfile);
@@ -1367,7 +1367,7 @@ void parse_pool_statement (cfile, group, type)
 					continue;
 				}
 				break;
-				
+
 			      case KNOWN_CLIENTS:
 				permit -> type = permit_known_clients;
 				break;
@@ -1379,11 +1379,11 @@ void parse_pool_statement (cfile, group, type)
 			      case KNOWN:
 				permit -> type = permit_known_clients;
 				goto get_clients;
-				
+
 			      case AUTHENTICATED:
 				permit -> type = permit_authenticated_clients;
 				goto get_clients;
-				
+
 			      case UNAUTHENTICATED:
 				permit -> type =
 					permit_unauthenticated_clients;
@@ -1393,7 +1393,7 @@ void parse_pool_statement (cfile, group, type)
 				permit -> type = permit_all_clients;
 				goto get_clients;
 				break;
-				
+
 			      case DYNAMIC:
 				permit -> type = permit_dynamic_bootp_clients;
 				if (next_token (&val, (unsigned *)0,
@@ -1405,7 +1405,7 @@ void parse_pool_statement (cfile, group, type)
 					continue;
 				}
 				goto get_clients;
-				
+
 			      case MEMBERS:
 				if (next_token (&val, (unsigned *)0,
 						cfile) != OF) {
@@ -1444,7 +1444,7 @@ void parse_pool_statement (cfile, group, type)
 		      case DENY:
 			permit_head = &pool -> prohibit_list;
 			goto get_permit;
-			
+
 		      case RBRACE:
 			next_token (&val, (unsigned *)0, cfile);
 			done = 1;
@@ -1787,7 +1787,7 @@ void parse_host_declaration (cfile, group)
 						 MDL);
 			}
 		}
-				
+
 		if (dynamicp)
 			host -> flags |= HOST_DECL_DYNAMIC;
 		else
@@ -1888,7 +1888,7 @@ int parse_class_declaration (cp, cfile, group, type)
 					      data.len + 1, MDL)) {
 				if (pc)
 					class_dereference (&pc, MDL);
-				
+
 				return 0;
 			}
 			data.terminated = 1;
@@ -2364,12 +2364,12 @@ void parse_group_declaration (cfile, group)
 	token = peek_token (&val, (unsigned *)0, cfile);
 	if (is_identifier (token) || token == STRING) {
 		next_token (&val, (unsigned *)0, cfile);
-		
+
 		name = dmalloc (strlen (val) + 1, MDL);
 		if (!name)
 			log_fatal ("no memory for group decl name %s", val);
 		strcpy (name, val);
-	}		
+	}
 
 	if (!parse_lbrace (cfile)) {
 		group_dereference (&g, MDL);
@@ -2493,7 +2493,7 @@ TIME parse_timestamp (cfile)
 	rv = parse_date (cfile);
 	return rv;
 }
-		
+
 /* lease_declaration :== LEASE ip_address LBRACE lease_parameters RBRACE
 
    lease_parameters :== <nil>
@@ -2580,12 +2580,12 @@ int parse_lease_declaration (struct lease **lp, struct parse *cfile)
 				seenbit = 1;
 				lease -> starts = t;
 				break;
-			
+
 			      case ENDS:
 				seenbit = 2;
 				lease -> ends = t;
 				break;
-				
+
 			      case TIMESTAMP:
 				seenbit = 4;
 				lease -> timestamp = t;
@@ -2595,17 +2595,17 @@ int parse_lease_declaration (struct lease **lp, struct parse *cfile)
 				seenbit = 65536;
 				lease -> tstp = t;
 				break;
-				
+
 			      case TSFP:
 				seenbit = 131072;
 				lease -> tsfp = t;
 				break;
-				
+
 			      case CLTT:
 				seenbit = 524288;
 				lease -> cltt = t;
 				break;
-				
+
 			      default: /* for gcc, we'll never get here. */
 				log_fatal ("Impossible error at %s:%d.", MDL);
 				return 0;
@@ -2661,7 +2661,7 @@ int parse_lease_declaration (struct lease **lp, struct parse *cfile)
 				log_fatal ("No memory for lease uid");
 			}
 			break;
-			
+
 		      case CLASS:
 			seenbit = 32;
 			token = next_token (&val, (unsigned *)0, cfile);
@@ -2686,7 +2686,7 @@ int parse_lease_declaration (struct lease **lp, struct parse *cfile)
 			lease -> flags |= BOOTP_LEASE;
 			parse_semi (cfile);
 			break;
-			
+
 		      case TOKEN_ABANDONED:
 			seenbit = 256;
 			lease -> binding_state = FTS_ABANDONED;
@@ -2761,7 +2761,7 @@ int parse_lease_declaration (struct lease **lp, struct parse *cfile)
 				    lease -> next_binding_state = new_state;
 			} else
 				lease -> next_binding_state = new_state;
-				
+
 			parse_semi (cfile);
 			break;
 
@@ -2789,7 +2789,7 @@ int parse_lease_declaration (struct lease **lp, struct parse *cfile)
 				}
 			}
 			break;
-			
+
 		      case BILLING:
 			seenbit = 2048;
 			class = (struct class *)0;
@@ -2856,7 +2856,7 @@ int parse_lease_declaration (struct lease **lp, struct parse *cfile)
 			}
 			executable_statement_dereference (&on, MDL);
 			break;
-			
+
 		      case OPTION:
 		      case SUPERSEDE:
 			noequal = 0;
@@ -2888,7 +2888,7 @@ int parse_lease_declaration (struct lease **lp, struct parse *cfile)
 
 		      case TOKEN_SET:
 			noequal = 0;
-			
+
 			token = next_token (&val, (unsigned *)0, cfile);
 			if (token != NAME && token != NUMBER_OR_NAME) {
 				parse_warn (cfile,
@@ -2899,7 +2899,7 @@ int parse_lease_declaration (struct lease **lp, struct parse *cfile)
 				lease_dereference (&lease, MDL);
 				return 0;
 			}
-			
+
 			seenbit = 0;
 		      special_set:
 			if (lease -> scope)
@@ -3019,7 +3019,7 @@ int parse_lease_declaration (struct lease **lp, struct parse *cfile)
 				lease_dereference (&lease, MDL);
 				return 0;
 			}
-				
+
 			if (newbinding) {
 				binding -> next = lease -> scope -> bindings;
 				lease -> scope -> bindings = binding;
@@ -3161,7 +3161,7 @@ void parse_address_range (cfile, group, type, inpool, lpchain)
 		   then look for a pool with an empty prohibit list and
 		   a permit list with one entry that permits all clients. */
 		for (pool = share -> pools; pool; pool = pool -> next) {
-			if ((!dynamic && !pool -> permit_list && 
+			if ((!dynamic && !pool -> permit_list &&
 			     pool -> prohibit_list &&
 			     !pool -> prohibit_list -> next &&
 			     (pool -> prohibit_list -> type ==

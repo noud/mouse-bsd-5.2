@@ -63,7 +63,7 @@
  * \verbatim
  *             Octet 0           Octet 1
  *                         |
- *         p p p p p 1 1 0 | 1 0 0 0 1 1 1 1 
+ *         p p p p p 1 1 0 | 1 0 0 0 1 1 1 1
  *         ^               |               ^
  *         |                               |
  *         bit 15                          bit 0

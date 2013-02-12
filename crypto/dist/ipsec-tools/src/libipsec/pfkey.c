@@ -104,7 +104,7 @@ int libipsec_opt = 0
 /*
  * make and search supported algorithm structure.
  */
-static struct sadb_supported *ipsec_supported[] = { NULL, NULL, NULL, 
+static struct sadb_supported *ipsec_supported[] = { NULL, NULL, NULL,
 #ifdef SADB_X_SATYPE_TCPSIGNATURE
     NULL,
 #endif
@@ -508,7 +508,7 @@ pfkey_send_update2(sa_parms)
 {
 	int len;
 
-	
+
 	sa_parms->type = SADB_UPDATE;
 	if ((len = pfkey_send_x1(sa_parms)) < 0)
 		return -1;
@@ -528,7 +528,7 @@ pfkey_send_add2(sa_parms)
 	struct pfkey_send_sa_args *sa_parms;
 {
 	int len;
-	
+
 	sa_parms->type = SADB_ADD;
 	if ((len = pfkey_send_x1(sa_parms)) < 0)
 		return -1;
@@ -612,7 +612,7 @@ pfkey_send_delete_all(so, satype, mode, src, dst)
 	}
 	ep = ((caddr_t)(void *)newmsg) + len;
 
-	p = pfkey_setsadbmsg((void *)newmsg, ep, SADB_DELETE, (u_int)len, 
+	p = pfkey_setsadbmsg((void *)newmsg, ep, SADB_DELETE, (u_int)len,
 	    satype, 0, getpid());
 	if (!p) {
 		free(newmsg);
@@ -865,7 +865,7 @@ pfkey_send_promisc_toggle(so, flag)
 {
 	int len;
 
-	if ((len = pfkey_send_x3(so, SADB_X_PROMISC, 
+	if ((len = pfkey_send_x3(so, SADB_X_PROMISC,
 	    (u_int)(flag ? 1 : 0))) < 0)
 		return -1;
 
@@ -1297,12 +1297,12 @@ pfkey_send_x1(sa_parms)
 		+ sizeof(struct sadb_lifetime)
 		+ sizeof(struct sadb_lifetime);
 
-	if (sa_parms->e_type != SADB_EALG_NONE && 
+	if (sa_parms->e_type != SADB_EALG_NONE &&
 	    sa_parms->satype != SADB_X_SATYPE_IPCOMP)
-		len += (sizeof(struct sadb_key) + 
+		len += (sizeof(struct sadb_key) +
 			PFKEY_ALIGN8(sa_parms->e_keylen));
 	if (sa_parms->a_type != SADB_AALG_NONE)
-		len += (sizeof(struct sadb_key) + 
+		len += (sizeof(struct sadb_key) +
 			PFKEY_ALIGN8(sa_parms->a_keylen));
 
 #ifdef SADB_X_EXT_SEC_CTX
@@ -1348,8 +1348,8 @@ pfkey_send_x1(sa_parms)
 		free(newmsg);
 		return -1;
 	}
-	p = pfkey_setsadbsa(p, ep, sa_parms->spi, sa_parms->wsize, 
-			    sa_parms->a_type, sa_parms->e_type, 
+	p = pfkey_setsadbsa(p, ep, sa_parms->spi, sa_parms->wsize,
+			    sa_parms->a_type, sa_parms->e_type,
 			    sa_parms->flags);
 	if (!p) {
 		free(newmsg);
@@ -1360,20 +1360,20 @@ pfkey_send_x1(sa_parms)
 		free(newmsg);
 		return -1;
 	}
-	p = pfkey_setsadbaddr(p, ep, SADB_EXT_ADDRESS_SRC, sa_parms->src, 
+	p = pfkey_setsadbaddr(p, ep, SADB_EXT_ADDRESS_SRC, sa_parms->src,
 			      (u_int)plen, IPSEC_ULPROTO_ANY);
 	if (!p) {
 		free(newmsg);
 		return -1;
 	}
-	p = pfkey_setsadbaddr(p, ep, SADB_EXT_ADDRESS_DST, sa_parms->dst, 
+	p = pfkey_setsadbaddr(p, ep, SADB_EXT_ADDRESS_DST, sa_parms->dst,
 			      (u_int)plen, IPSEC_ULPROTO_ANY);
 	if (!p) {
 		free(newmsg);
 		return -1;
 	}
 
-	if (sa_parms->e_type != SADB_EALG_NONE && 
+	if (sa_parms->e_type != SADB_EALG_NONE &&
 	    sa_parms->satype != SADB_X_SATYPE_IPCOMP) {
 		p = pfkey_setsadbkey(p, ep, SADB_EXT_KEY_ENCRYPT,
 		                   sa_parms->keymat, sa_parms->e_keylen);
@@ -1384,7 +1384,7 @@ pfkey_send_x1(sa_parms)
 	}
 	if (sa_parms->a_type != SADB_AALG_NONE) {
 		p = pfkey_setsadbkey(p, ep, SADB_EXT_KEY_AUTH,
-				     sa_parms->keymat + sa_parms->e_keylen, 
+				     sa_parms->keymat + sa_parms->e_keylen,
 				     sa_parms->a_keylen);
 		if (!p) {
 			free(newmsg);
@@ -1394,14 +1394,14 @@ pfkey_send_x1(sa_parms)
 
 	/* set sadb_lifetime for destination */
 	p = pfkey_setsadblifetime(p, ep, SADB_EXT_LIFETIME_HARD,
-			sa_parms->l_alloc, sa_parms->l_bytes, 
+			sa_parms->l_alloc, sa_parms->l_bytes,
 			sa_parms->l_addtime, sa_parms->l_usetime);
 	if (!p) {
 		free(newmsg);
 		return -1;
 	}
 	p = pfkey_setsadblifetime(p, ep, SADB_EXT_LIFETIME_SOFT,
-				  sa_parms->l_alloc, sa_parms->l_bytes, 
+				  sa_parms->l_alloc, sa_parms->l_bytes,
 				  sa_parms->l_addtime, sa_parms->l_usetime);
 	if (!p) {
 		free(newmsg);
@@ -1410,7 +1410,7 @@ pfkey_send_x1(sa_parms)
 #ifdef SADB_X_EXT_SEC_CTX
 	if (sa_parms->ctxstr != NULL) {
 		p = pfkey_setsecctx(p, ep, SADB_X_EXT_SEC_CTX, sa_parms->ctxdoi,
-				    sa_parms->ctxalg, sa_parms->ctxstr, 
+				    sa_parms->ctxalg, sa_parms->ctxstr,
 				    sa_parms->ctxstrlen);
 		if (!p) {
 			free(newmsg);
@@ -1422,7 +1422,7 @@ pfkey_send_x1(sa_parms)
 #ifdef SADB_X_EXT_NAT_T_TYPE
 	/* Add nat-t messages */
 	if (sa_parms->l_natt_type) {
-		p = pfkey_set_natt_type(p, ep, SADB_X_EXT_NAT_T_TYPE, 
+		p = pfkey_set_natt_type(p, ep, SADB_X_EXT_NAT_T_TYPE,
 					sa_parms->l_natt_type);
 		if (!p) {
 			free(newmsg);
@@ -2472,9 +2472,9 @@ pfkey_setsecctx(buf, lim, type, ctx_doi, ctx_alg, sec_ctx, sec_ctxlen)
 }
 #endif
 
-/* 
- * Deprecated, available for backward compatibility with third party 
- * libipsec users. Please use pfkey_send_update2 and pfkey_send_add2 instead 
+/*
+ * Deprecated, available for backward compatibility with third party
+ * libipsec users. Please use pfkey_send_update2 and pfkey_send_add2 instead
  */
 int
 pfkey_send_update(so, satype, mode, src, dst, spi, reqid, wsize,

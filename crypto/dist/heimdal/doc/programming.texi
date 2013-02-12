@@ -7,10 +7,10 @@ First you need to know how the Kerberos model works, go read the
 introduction text (@pxref{What is Kerberos?}).
 
 @menu
-* Kerberos 5 API Overview::     
-* Walkthrough of a sample Kerberos 5 client::  
-* Validating a password in a server application::  
-* API differences to MIT Kerberos::  
+* Kerberos 5 API Overview::
+* Walkthrough of a sample Kerberos 5 client::
+* Validating a password in a server application::
+* API differences to MIT Kerberos::
 * File formats::
 @end menu
 
@@ -118,7 +118,7 @@ Heimdal includes a implementation of the Kerberos crypto framework,
 all crypto operations.
 
 See also manual page for @manpage{krb5_crypto_init,3},
-@manpage{krb5_keyblock,3}, @manpage{krb5_create_checksum,3}, 
+@manpage{krb5_keyblock,3}, @manpage{krb5_create_checksum,3},
 and @manpage{krb5_encrypt,3}.
 
 @node Walkthrough of a sample Kerberos 5 client, Validating a password in a server application, Kerberos 5 API Overview, Programming with Kerberos
@@ -213,7 +213,7 @@ when given a connected file descriptor to the socket.
                                                  auth_context,
                                                  &sock);
         if (status)
-                krb5_err (context, 1, status, 
+                krb5_err (context, 1, status,
                           "krb5_auth_con_setaddrs_from_fd");
 @end example
 
@@ -379,15 +379,15 @@ the error code itself).
 
 @c @node Why you should use GSS-API for new applications, Walkthrough of a sample GSS-API client, Validating a password in a server application, Programming with Kerberos
 @c @section Why you should use GSS-API for new applications
-@c 
+@c
 @c SSPI, bah, bah, microsoft, bah, bah, almost GSS-API.
-@c 
+@c
 @c It would also be possible for other mechanisms then Kerberos, but that
 @c doesn't exist any other GSS-API implementations today.
-@c 
+@c
 @c @node Walkthrough of a sample GSS-API client, , Why you should use GSS-API for new applications, Programming with Kerberos
 @c @section Walkthrough of a sample GSS-API client
-@c 
+@c
 @c Write about how gssapi_clent.c works.
 
 @node File formats,  , API differences to MIT Kerberos, Programming with Kerberos
@@ -579,7 +579,7 @@ kvno=27,@{key: masterkvno=1,keytype=des3-cbc-sha1,keydata=..., default salt@}...
 @end example
 
 @item time
-	
+
 Format of the time is: YYYYmmddHHMMSS, corresponding to strftime
 format "%Y%m%d%k%M%S".
 

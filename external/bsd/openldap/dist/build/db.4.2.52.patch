@@ -44,12 +44,12 @@ This should have been, instead:
 +++ mp/mp_region.c	2006-10-27 23:25:05.000000000 -0700
 @@ -43,9 +43,7 @@
  	int htab_buckets, ret;
- 
+
  	/* Figure out how big each cache region is. */
 -	reg_size = (dbenv->mp_gbytes / dbenv->mp_ncache) * GIGABYTE;
 -	reg_size += ((dbenv->mp_gbytes %
 -	    dbenv->mp_ncache) * GIGABYTE) / dbenv->mp_ncache;
 +	reg_size = GIGABYTE / dbenv->mp_ncache * dbenv->mp_gbytes;
  	reg_size += dbenv->mp_bytes / dbenv->mp_ncache;
- 
+
  	/*

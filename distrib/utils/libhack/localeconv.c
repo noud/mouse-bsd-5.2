@@ -10,7 +10,7 @@
 #include <locale.h>
 #include <limits.h>
 
-/* 
+/*
  * The localeconv() function constructs a struct lconv from the current
  * monetary and numeric locales.
  */

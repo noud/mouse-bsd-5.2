@@ -42,9 +42,9 @@ TARGETS =	dlzbdb
 
 SRCS =		dlzbdb.c
 
-#MANPAGES =	
+#MANPAGES =
 
-#HTMLPAGES =	
+#HTMLPAGES =
 
 #MANOBJS =	${MANPAGES} ${HTMLPAGES}
 

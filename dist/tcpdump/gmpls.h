@@ -1,7 +1,7 @@
 /*	$NetBSD: gmpls.h,v 1.2 2007/07/24 11:53:38 drochner Exp $	*/
 
 /* @(#) Header: /tcpdump/master/tcpdump/gmpls.h,v 1.3.2.1 2005/05/19 06:44:03 guy Exp (LBL) */
-/* 
+/*
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that: (1) source code
  * distributions retain the above copyright notice and this paragraph

@@ -3,9 +3,9 @@
 # $Id: ntpsweep.in,v 1.3 2007/06/24 16:55:15 kardel Exp $
 #
 # DISCLAIMER
-# 
+#
 # Copyright (C) 1999,2000 Hans Lambermont and Origin B.V.
-# 
+#
 # Permission to use, copy, modify and distribute this software and its
 # documentation for any purpose and without fee is hereby granted,
 # provided that the above copyright notice appears in all copies and
@@ -150,7 +150,7 @@ sub scan_host($;$;$) {
 	    };
 	}
 	close(NTPDATE);
-    
+
 	# got answers ? If so, go on.
 	if ($stratum) {
 	    # ntpq part
@@ -169,7 +169,7 @@ sub scan_host($;$;$) {
 		};
 	    }
 	    close(NTPQ);
-	    
+
 	    # Shorten daemon_version string.
 	    $daemonversion =~ s/(;|Mon|Tue|Wed|Thu|Fri|Sat|Sun).*$//;
 	    $daemonversion =~ s/version=//;
@@ -177,7 +177,7 @@ sub scan_host($;$;$) {
 	    $daemonversion =~ s/(\(|\))//g;
 	    $daemonversion =~ s/beta/b/;
 	    $daemonversion =~ s/multicast/mc/;
-	
+
 	    # Shorten system string
 	    $system =~ s/UNIX\///;
 	    $system =~ s/RELEASE/r/;
@@ -186,7 +186,7 @@ sub scan_host($;$;$) {
 	    # Shorten processor string
 	    $processor =~ s/unknown//;
 	}
-    
+
 	# got answers ? If so, go on.
 	if ($daemonversion) {
 	    # ntpq again, find out the peers this time
@@ -213,7 +213,7 @@ sub scan_host($;$;$) {
 		close(NTPQ);
 	    }
 	}
-    
+
 	# Add scanned host to known_hosts array
 	push(@known_hosts, $host);
 	if ($stratum) {

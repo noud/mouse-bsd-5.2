@@ -56,7 +56,7 @@ message onebiosmatch
 }
 
 message onebiosmatch_header
-{BIOS # cilindros  cabezal sectore 
+{BIOS # cilindros  cabezal sectore
 ------ ---------- ------- -------
 }
 

@@ -779,7 +779,7 @@ eap_sim_db_get_reauth_id(struct eap_sim_db_data *data, const u8 *identity,
  * eap_sim_db_identity_known - Verify whether the given identity is known
  * @priv: Private data pointer from eap_sim_db_init()
  * @identity: User name identity
- * @identity_len: Length of identity in bytes 
+ * @identity_len: Length of identity in bytes
  * Returns: 0 if the user is found or -1 on failure
  *
  * In most cases, the user name is ['0','1'] | IMSI, i.e., 1 followed by the
@@ -840,7 +840,7 @@ static char * eap_sim_db_get_next(struct eap_sim_db_data *data, char prefix)
 	end = id + sizeof(buf) * 2 + 2;
 	*pos++ = prefix;
 	pos += wpa_snprintf_hex(pos, end - pos, buf, sizeof(buf));
-	
+
 	return id;
 }
 

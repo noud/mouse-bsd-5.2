@@ -883,14 +883,14 @@ pfctl_show_rules(int dev, char *path, int opts, enum pfctl_show format,
 					p = &pr.anchor_call[0];
 			} else
 				p = &pr.anchor_call[0];
-		
+
 			print_rule(&pr.rule, p, rule_numbers);
 			if (brace)
 				printf(" {\n");
 			else
 				printf("\n");
 			pfctl_print_rule_counters(&pr.rule, opts);
-			if (brace) { 
+			if (brace) {
 				pfctl_show_rules(dev, path, opts, format,
 				    p, depth + 1);
 				INDENT(depth, !(opts & PF_OPT_VERBOSE));
@@ -1142,12 +1142,12 @@ pfctl_add_rule(struct pfctl *pf, struct pf_rule *r, const char *anchor_call)
 	rs = &pf->anchor->ruleset;
 
 	if (anchor_call[0] && r->anchor == NULL) {
-		/* 
+		/*
 		 * Don't make non-brace anchors part of the main anchor pool.
 		 */
 		if ((r->anchor = calloc(1, sizeof(*r->anchor))) == NULL)
 			err(1, "pfctl_add_rule: calloc");
-		
+
 		pf_init_ruleset(&r->anchor->ruleset);
 		r->anchor->ruleset.anchor = r->anchor;
 		if (strlcpy(r->anchor->path, anchor_call,
@@ -1538,7 +1538,7 @@ pfctl_init_options(struct pfctl *pf)
 	size = sizeof(mem);
 	(void) sysctl(mib, 2, &mem, &size, NULL, 0);
 	if (mem <= 100*1024*1024)
-		pf->limit[PF_LIMIT_TABLE_ENTRIES] = PFR_KENTRY_HIWAT_SMALL; 
+		pf->limit[PF_LIMIT_TABLE_ENTRIES] = PFR_KENTRY_HIWAT_SMALL;
 
 	pf->debug = PF_DEBUG_URGENT;
 }

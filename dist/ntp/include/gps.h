@@ -1,7 +1,7 @@
 /*	$NetBSD: gps.h,v 1.2 2003/12/04 16:23:36 drochner Exp $	*/
 
 /****************************************************************************/
-/*      gps.h                                                            */     
+/*      gps.h                                                            */
 /*      TrueTime GPS-VME and VME-SG                                     */
 /*      VME controller hardware commands and parameters.                */
 /*      created 010694 res                                              */

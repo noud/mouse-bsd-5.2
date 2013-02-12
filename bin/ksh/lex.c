@@ -132,7 +132,7 @@ yylex(cf)
 #ifdef KSH
 	else if (cf&LETEXPR) {
 		*wp++ = OQUOTE;	 /* enclose arguments in (double) quotes */
-		state = SLETPAREN;	
+		state = SLETPAREN;
 		statep->ls_sletparen.nparen = 0;
 	}
 #endif /* KSH */
@@ -465,7 +465,7 @@ yylex(cf)
 						statep->ls_scsparen.csstate = 0;
 						state = statep->ls_state
 							= SCSPAREN;
-						
+
 					}
 				}
 			}

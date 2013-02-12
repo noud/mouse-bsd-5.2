@@ -75,7 +75,7 @@ ldap_back_modify(
 		mods[ i ].mod_type = ml->sml_desc->ad_cname.bv_val;
 
 		if ( ml->sml_values != NULL ) {
-			if ( ml->sml_values == NULL ) {	
+			if ( ml->sml_values == NULL ) {
 				continue;
 			}
 

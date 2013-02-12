@@ -31,7 +31,7 @@ bootconf_start()
 		case $name in
 		current|default|\*)
 			continue
-			;;	
+			;;
 		*)
 			if [ "$name" = "$default" ]; then
 				echo -n "${spc}[${name}]"

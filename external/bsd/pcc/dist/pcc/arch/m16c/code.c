@@ -277,7 +277,7 @@ ejobcode(int flag )
 			continue;
 		printf("	EXTERN %s\n", w->sp->soname);
 	}
-	
+
 	printf("	END\n");
 }
 
@@ -308,7 +308,7 @@ bycode(int t, int i)
 		} else if (lastoctal && '0' <= t && t <= '9') {
 			lastoctal = 0;
 			printf("\"\n\t.ascii \"%c", t);
-		} else {	
+		} else {
 			lastoctal = 0;
 			putchar(t);
 		}

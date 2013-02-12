@@ -257,7 +257,7 @@ tls_session_new ( tls_ctx * ctx, int is_server )
 	}
 	if ( ctx->cred )
 		gnutls_credentials_set( session->session, GNUTLS_CRD_CERTIFICATE, ctx->cred );
-	
+
 	if ( is_server ) {
 		int flag = 0;
 		if ( ctx->lo->ldo_tls_require_cert ) {
@@ -269,7 +269,7 @@ tls_session_new ( tls_ctx * ctx, int is_server )
 		}
 	}
 	return session;
-} 
+}
 
 void
 tls_session_free ( tls_session * session )
@@ -339,7 +339,7 @@ tls_parse_ciphers( tls_ctx *ctx, char *suites )
 				for (j=0; j<ncipher; j++)
 					if ( cipher[j] == ciphers[i].cipher )
 						break;
-				if ( j == ncipher ) 
+				if ( j == ncipher )
 					cipher[ncipher++] = ciphers[i].cipher;
 				for (j=0; j<nmac; j++)
 					if ( mac[j] == ciphers[i].mac )
@@ -537,7 +537,7 @@ ldap_int_tls_destroy( struct ldapoptions *lo )
 void
 ldap_pvt_tls_destroy( void )
 {
-	struct ldapoptions *lo = LDAP_INT_GLOBAL_OPT();   
+	struct ldapoptions *lo = LDAP_INT_GLOBAL_OPT();
 
 	ldap_int_tls_destroy( lo );
 
@@ -715,13 +715,13 @@ ldap_int_tls_init_ctx( struct ldapoptions *lo, int is_server )
  	}
 
 	if (lo->ldo_tls_cacertdir != NULL) {
-		Debug( LDAP_DEBUG_ANY, 
+		Debug( LDAP_DEBUG_ANY,
 		       "TLS: warning: cacertdir not implemented for gnutls\n",
 		       NULL, NULL, NULL );
 	}
 
 	if (lo->ldo_tls_cacertfile != NULL) {
-		rc = gnutls_certificate_set_x509_trust_file( 
+		rc = gnutls_certificate_set_x509_trust_file(
 			((tls_ctx*) lo->ldo_tls_ctx)->cred,
 			cacertfile,
 			GNUTLS_X509_FMT_PEM );
@@ -729,14 +729,14 @@ ldap_int_tls_init_ctx( struct ldapoptions *lo, int is_server )
 	}
 
 	if ( lo->ldo_tls_certfile && lo->ldo_tls_keyfile ) {
-		rc = gnutls_certificate_set_x509_key_file( 
+		rc = gnutls_certificate_set_x509_key_file(
 			((tls_ctx*) lo->ldo_tls_ctx)->cred,
 			certfile,
 			keyfile,
 			GNUTLS_X509_FMT_PEM );
 		if ( rc ) goto error_exit;
 	} else if ( lo->ldo_tls_certfile || lo->ldo_tls_keyfile ) {
-		Debug( LDAP_DEBUG_ANY, 
+		Debug( LDAP_DEBUG_ANY,
 		       "TLS: only one of certfile and keyfile specified\n",
 		       NULL, NULL, NULL );
 		rc = 1;
@@ -744,13 +744,13 @@ ldap_int_tls_init_ctx( struct ldapoptions *lo, int is_server )
 	}
 
 	if ( lo->ldo_tls_dhfile ) {
-		Debug( LDAP_DEBUG_ANY, 
-		       "TLS: warning: ignoring dhfile\n", 
+		Debug( LDAP_DEBUG_ANY,
+		       "TLS: warning: ignoring dhfile\n",
 		       NULL, NULL, NULL );
 	}
 
 	if ( lo->ldo_tls_crlfile ) {
-		rc = gnutls_certificate_set_x509_crl_file( 
+		rc = gnutls_certificate_set_x509_crl_file(
 			((tls_ctx*) lo->ldo_tls_ctx)->cred,
 			crlfile,
 			GNUTLS_X509_FMT_PEM );
@@ -758,10 +758,10 @@ ldap_int_tls_init_ctx( struct ldapoptions *lo, int is_server )
 		rc = 0;
 	}
 	if ( is_server ) {
-		gnutls_dh_params_init (&((tls_ctx*) 
+		gnutls_dh_params_init (&((tls_ctx*)
 					lo->ldo_tls_ctx)->dh_params);
-		gnutls_dh_params_generate2 (((tls_ctx*) 
-						 lo->ldo_tls_ctx)->dh_params, 
+		gnutls_dh_params_generate2 (((tls_ctx*)
+						 lo->ldo_tls_ctx)->dh_params,
 						DH_BITS);
 	}
 
@@ -893,7 +893,7 @@ ldap_int_tls_init_ctx( struct ldapoptions *lo, int is_server )
 		if ( lo->ldo_tls_crlcheck == LDAP_OPT_X_TLS_CRL_PEER ) {
 			X509_STORE_set_flags( x509_s, X509_V_FLAG_CRL_CHECK );
 		} else if ( lo->ldo_tls_crlcheck == LDAP_OPT_X_TLS_CRL_ALL ) {
-			X509_STORE_set_flags( x509_s, 
+			X509_STORE_set_flags( x509_s,
 					X509_V_FLAG_CRL_CHECK | X509_V_FLAG_CRL_CHECK_ALL  );
 		}
 	}
@@ -927,7 +927,7 @@ error_exit:
 int
 ldap_pvt_tls_init_def_ctx( int is_server )
 {
-	struct ldapoptions *lo = LDAP_INT_GLOBAL_OPT();   
+	struct ldapoptions *lo = LDAP_INT_GLOBAL_OPT();
 	int rc;
 #ifdef LDAP_R_COMPILE
 	ldap_pvt_thread_mutex_lock( &tls_def_ctx_mutex );
@@ -948,7 +948,7 @@ alloc_handle( void *ctx_arg, int is_server )
 	if ( ctx_arg ) {
 		ctx = ctx_arg;
 	} else {
-		struct ldapoptions *lo = LDAP_INT_GLOBAL_OPT();   
+		struct ldapoptions *lo = LDAP_INT_GLOBAL_OPT();
 		if ( ldap_pvt_tls_init_def_ctx( is_server ) < 0 ) return NULL;
 		ctx = lo->ldo_tls_ctx;
 	}
@@ -972,7 +972,7 @@ update_flags( Sockbuf *sb, tls_session * ssl, int rc )
 		return 0;
 
 	switch (gnutls_record_get_direction (ssl->session)) {
-	case 0: 
+	case 0:
 		sb->sb_trans_needs_read = 1;
 		return 1;
 	case 1:
@@ -1027,9 +1027,9 @@ static ssize_t
 sb_gtls_send( gnutls_transport_ptr_t ptr, const void *buf, size_t len )
 {
 	struct tls_data		*p;
-	
+
 	if ( buf == NULL || len <= 0 ) return 0;
-	
+
 	p = (struct tls_data *)ptr;
 
 	if ( p == NULL || p->sbiod == NULL ) {
@@ -1051,7 +1051,7 @@ sb_tls_setup( Sockbuf_IO_Desc *sbiod, void *arg )
 	if ( p == NULL ) {
 		return -1;
 	}
-	
+
 	gnutls_transport_set_ptr( session->session, (gnutls_transport_ptr)p );
 	gnutls_transport_set_pull_function( session->session, sb_gtls_recv );
 	gnutls_transport_set_push_function( session->session, sb_gtls_send );
@@ -1065,7 +1065,7 @@ static int
 sb_tls_remove( Sockbuf_IO_Desc *sbiod )
 {
 	struct tls_data		*p;
-	
+
 	assert( sbiod != NULL );
 	assert( sbiod->sbiod_pvt != NULL );
 
@@ -1081,7 +1081,7 @@ static int
 sb_tls_close( Sockbuf_IO_Desc *sbiod )
 {
 	struct tls_data		*p;
-	
+
 	assert( sbiod != NULL );
 	assert( sbiod->sbiod_pvt != NULL );
 
@@ -1094,22 +1094,22 @@ static int
 sb_tls_ctrl( Sockbuf_IO_Desc *sbiod, int opt, void *arg )
 {
 	struct tls_data		*p;
-	
+
 	assert( sbiod != NULL );
 	assert( sbiod->sbiod_pvt != NULL );
 
 	p = (struct tls_data *)sbiod->sbiod_pvt;
-	
+
 	if ( opt == LBER_SB_OPT_GET_SSL ) {
 		*((tls_session **)arg) = p->ssl;
 		return 1;
-		
+
 	} else if ( opt == LBER_SB_OPT_DATA_READY ) {
 		if( gnutls_record_check_pending( p->ssl->session ) > 0 ) {
 			return 1;
 		}
 	}
-	
+
 	return LBER_SBIOD_CTRL_NEXT( sbiod, opt, arg );
 }
 
@@ -1197,7 +1197,7 @@ sb_tls_bio_read( BIO *b, char *buf, int len )
 {
 	struct tls_data		*p;
 	int			ret;
-		
+
 	if ( buf == NULL || len <= 0 ) return 0;
 
 	p = (struct tls_data *)b->ptr;
@@ -1224,9 +1224,9 @@ sb_tls_bio_write( BIO *b, const char *buf, int len )
 {
 	struct tls_data		*p;
 	int			ret;
-	
+
 	if ( buf == NULL || len <= 0 ) return 0;
-	
+
 	p = (struct tls_data *)b->ptr;
 
 	if ( p == NULL || p->sbiod == NULL ) {
@@ -1267,7 +1267,7 @@ sb_tls_bio_puts( BIO *b, const char *str )
 {
 	return sb_tls_bio_write( b, str, strlen( str ) );
 }
-	
+
 static BIO_METHOD sb_tls_bio_method =
 {
 	( 100 | 0x400 ),		/* it's a source/sink BIO */
@@ -1293,7 +1293,7 @@ sb_tls_setup( Sockbuf_IO_Desc *sbiod, void *arg )
 	if ( p == NULL ) {
 		return -1;
 	}
-	
+
 	p->ssl = (SSL *)arg;
 	p->sbiod = sbiod;
 	bio = BIO_new( &sb_tls_bio_method );
@@ -1307,7 +1307,7 @@ static int
 sb_tls_remove( Sockbuf_IO_Desc *sbiod )
 {
 	struct tls_data		*p;
-	
+
 	assert( sbiod != NULL );
 	assert( sbiod->sbiod_pvt != NULL );
 
@@ -1322,7 +1322,7 @@ static int
 sb_tls_close( Sockbuf_IO_Desc *sbiod )
 {
 	struct tls_data		*p;
-	
+
 	assert( sbiod != NULL );
 	assert( sbiod->sbiod_pvt != NULL );
 
@@ -1335,12 +1335,12 @@ static int
 sb_tls_ctrl( Sockbuf_IO_Desc *sbiod, int opt, void *arg )
 {
 	struct tls_data		*p;
-	
+
 	assert( sbiod != NULL );
 	assert( sbiod->sbiod_pvt != NULL );
 
 	p = (struct tls_data *)sbiod->sbiod_pvt;
-	
+
 	if ( opt == LBER_SB_OPT_GET_SSL ) {
 		*((SSL **)arg) = p->ssl;
 		return 1;
@@ -1350,7 +1350,7 @@ sb_tls_ctrl( Sockbuf_IO_Desc *sbiod, int opt, void *arg )
 			return 1;
 		}
 	}
-	
+
 	return LBER_SBIOD_CTRL_NEXT( sbiod, opt, arg );
 }
 
@@ -1493,7 +1493,7 @@ ldap_int_tls_connect( LDAP *ld, LDAPConn *conn )
 		ber_sockbuf_add_io( sb, &sb_tls_sbio,
 			LBER_SBIOD_LEVEL_TRANSPORT, (void *)ssl );
 
-		lo = LDAP_INT_GLOBAL_OPT();   
+		lo = LDAP_INT_GLOBAL_OPT();
 		if( ctx == NULL ) {
 			ctx = lo->ldo_tls_ctx;
 			ld->ld_options.ldo_tls_ctx = ctx;
@@ -1696,7 +1696,7 @@ tls_get_cert_dn( tls_session *session, struct berval *dnbv )
 		int list_size;
 		struct berval bv;
 
-		peer_cert_list = gnutls_certificate_get_peers( session->session, 
+		peer_cert_list = gnutls_certificate_get_peers( session->session,
 							&list_size );
 		if ( !peer_cert_list ) return LDAP_INVALID_CREDENTIALS;
 
@@ -1750,7 +1750,7 @@ ldap_pvt_tls_get_peer_dn( void *s, struct berval *dn,
 	rc = tls_get_cert_dn( session, &bvdn );
 	if ( rc ) return rc;
 
-	rc = ldap_X509dn2bv( &bvdn, dn, 
+	rc = ldap_X509dn2bv( &bvdn, dn,
 			    (LDAPDN_rewrite_func *)func, flags);
 	return rc;
 }
@@ -1795,7 +1795,7 @@ ldap_pvt_tls_check_hostname( LDAP *ld, void *s, const char *name_in )
 		name = name_in;
 	}
 
-	peer_cert_list = gnutls_certificate_get_peers( session->session, 
+	peer_cert_list = gnutls_certificate_get_peers( session->session,
 						&list_size );
 	if ( !peer_cert_list ) {
 		Debug( LDAP_DEBUG_ANY,
@@ -1822,12 +1822,12 @@ ldap_pvt_tls_check_hostname( LDAP *ld, void *s, const char *name_in )
 		if (inet_pton(AF_INET6, n2, &addr))
 			ntype = IS_IP6;
 		LDAP_FREE(n2);
-	} else 
+	} else
 #endif
 	if ((ptr = strrchr(name, '.')) && isdigit((unsigned char)ptr[1])) {
 		if (inet_aton(name, (struct in_addr *)&addr)) ntype = IS_IP4;
 	}
-	
+
 	if (ntype == IS_DNS) {
 		len1 = strlen(name);
 		domain = strchr(name, '.');
@@ -1838,7 +1838,7 @@ ldap_pvt_tls_check_hostname( LDAP *ld, void *s, const char *name_in )
 
 	for ( i=0, ret=0; ret >= 0; i++ ) {
 		altnamesize = sizeof(altname);
-		ret = gnutls_x509_crt_get_subject_alt_name( cert, i, 
+		ret = gnutls_x509_crt_get_subject_alt_name( cert, i,
 			altname, &altnamesize, NULL );
 		if ( ret < 0 ) break;
 
@@ -1847,7 +1847,7 @@ ldap_pvt_tls_check_hostname( LDAP *ld, void *s, const char *name_in )
 
 		if ( ret == GNUTLS_SAN_DNSNAME ) {
 			if (ntype != IS_DNS) continue;
-	
+
 			/* Is this an exact match? */
 			if ((len1 == altnamesize) && !strncasecmp(name, altname, len1)) {
 				break;
@@ -1909,7 +1909,7 @@ ldap_pvt_tls_check_hostname( LDAP *ld, void *s, const char *name_in )
 		if( ret == LDAP_LOCAL_ERROR ) {
 			altname[altnamesize] = '\0';
 			Debug( LDAP_DEBUG_ANY, "TLS: hostname (%s) does not match "
-				"common name in certificate (%s).\n", 
+				"common name in certificate (%s).\n",
 				name, altname, 0 );
 			ret = LDAP_CONNECT_ERROR;
 			if ( ld->ld_error ) {
@@ -1966,12 +1966,12 @@ ldap_pvt_tls_check_hostname( LDAP *ld, void *s, const char *name_in )
 		if (inet_pton(AF_INET6, n2, &addr))
 			ntype = IS_IP6;
 		LDAP_FREE(n2);
-	} else 
+	} else
 #endif
 	if ((ptr = strrchr(name, '.')) && isdigit((unsigned char)ptr[1])) {
 		if (inet_aton(name, (struct in_addr *)&addr)) ntype = IS_IP4;
 	}
-	
+
 	i = X509_get_ext_by_NID(x, NID_subject_alt_name, -1);
 	if (i >= 0) {
 		X509_EXTENSION *ex;
@@ -2193,7 +2193,7 @@ ldap_pvt_tls_get_option( LDAP *ld, int option, void *arg )
 
 	} else {
 		/* Get pointer to global option structure */
-		lo = LDAP_INT_GLOBAL_OPT();   
+		lo = LDAP_INT_GLOBAL_OPT();
 		if ( lo == NULL ) {
 			return LDAP_NO_MEMORY;
 		}
@@ -2295,7 +2295,7 @@ ldap_pvt_tls_set_option( LDAP *ld, int option, void *arg )
 
 	} else {
 		/* Get pointer to global option structure */
-		lo = LDAP_INT_GLOBAL_OPT();   
+		lo = LDAP_INT_GLOBAL_OPT();
 		if ( lo == NULL ) {
 			return LDAP_NO_MEMORY;
 		}
@@ -2438,7 +2438,7 @@ ldap_int_tls_start ( LDAP *ld, LDAPConn *conn, LDAPURLDesc *srv )
 	ssl = ldap_pvt_tls_sb_ctx( sb );
 	assert( ssl != NULL );
 
-	/* 
+	/*
 	 * compare host with name(s) in certificate
 	 */
 	if (ld->ld_options.ldo_tls_require_cert != LDAP_OPT_X_TLS_NEVER) {
@@ -2786,7 +2786,7 @@ ldap_pvt_tls_sb_ctx( Sockbuf *sb )
 {
 #ifdef HAVE_TLS
 	void			*p;
-	
+
 	if (HAS_TLS( sb )) {
 		ber_sockbuf_ctrl( sb, LBER_SB_OPT_GET_SSL, (void *)&p );
 		return p;
@@ -2829,7 +2829,7 @@ ldap_pvt_tls_get_my_dn( void *s, struct berval *dn, LDAPDN_rewrite_dummy *func, 
 	x = SSL_get_certificate((SSL *)s);
 
 	if (!x) return LDAP_INVALID_CREDENTIALS;
-	
+
 	xn = X509_get_subject_name(x);
 	der_dn.bv_len = i2d_X509_NAME( xn, NULL );
 	der_dn.bv_val = xn->bytes->data;
@@ -2841,7 +2841,7 @@ ldap_pvt_tls_get_my_dn( void *s, struct berval *dn, LDAPDN_rewrite_dummy *func, 
 	x = gnutls_certificate_get_ours( session->session );
 
 	if (!x) return LDAP_INVALID_CREDENTIALS;
-	
+
 	bv.bv_val = x->data;
 	bv.bv_len = x->size;
 
@@ -3006,7 +3006,7 @@ ldap_X509dn2bv( void *x509_name, struct berval *bv, LDAPDN_rewrite_func *func,
 		}
 	}
 
-	/* Allocate the DN/RDN/AVA stuff as a single block */    
+	/* Allocate the DN/RDN/AVA stuff as a single block */
 	dnsize = sizeof(LDAPRDN) * (nrdns+1);
 	dnsize += sizeof(LDAPAVA *) * (navas+nrdns);
 	dnsize += sizeof(LDAPAVA) * navas;
@@ -3017,7 +3017,7 @@ ldap_X509dn2bv( void *x509_name, struct berval *bv, LDAPDN_rewrite_func *func,
 	} else {
 		newDN = (LDAPDN)(char *)ptrs;
 	}
-	
+
 	newDN[nrdns] = NULL;
 	newRDN = (LDAPRDN)(newDN + nrdns+1);
 	newAVA = (LDAPAVA *)(newRDN + navas + nrdns);
@@ -3122,7 +3122,7 @@ to_utf8:		rc = ldap_ucs_to_utf8s( &Val, csize, &newAVA->la_value );
 		*newRDN++ = NULL;
 		tag = ber_next_element( ber, &len, dn_end );
 	}
-		
+
 	if ( func ) {
 		rc = func( newDN, flags, NULL );
 		if ( rc != LDAP_SUCCESS )

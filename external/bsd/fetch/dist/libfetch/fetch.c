@@ -421,7 +421,7 @@ fetchParseURL(const char *URL)
 		}
 		URL += 2;
 		p = URL;
-		goto find_user;			
+		goto find_user;
 	}
 
 	url_seterr(URL_BAD_SCHEME);
@@ -542,7 +542,7 @@ xdigit2digit(char digit)
 /*
  * Unquote whole URL.
  * Skips optional parts like query or fragment identifier.
- */ 
+ */
 char *
 fetchUnquotePath(struct url *url)
 {

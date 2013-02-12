@@ -6,7 +6,7 @@
  * Definitions of GOST R 34.10 parameter sets, defined in RFC 4357    *
  *         OpenSSL 0.9.9 libraries required to compile and use        *
  *                              this code                             *
- **********************************************************************/ 
+ **********************************************************************/
 #include "gost_params.h"
 #include <openssl/objects.h>
 /* Parameters of GOST 34.10 */
@@ -122,11 +122,11 @@ R3410_params R3410_paramset[]={
 
 {NID_undef,NULL, NULL, NULL}
 };
-	
+
 R3410_2001_params R3410_2001_paramset[]={
 	/* default_cc_sign01_param 1.2.643.2.9.1.8.1 */
 	{NID_id_GostR3410_2001_ParamSet_cc,
-	/* A */	
+	/* A */
 	"C0000000000000000000000000000000000000000000000000000000000003c4",
 	/* B */
 	"2d06B4265ebc749ff7d0f1f1f88232e81632e9088fd44b7787d5e407e955080c",
@@ -158,12 +158,12 @@ R3410_2001_params R3410_2001_paramset[]={
 	"8D91E471E0989CDA27DF505A453F2B7635294F2DDF23E3B122ACC99C9E9F1E14"
 	},
 	/*1.2.643.2.2.35.2*/
-	{NID_id_GostR3410_2001_CryptoPro_B_ParamSet,	
+	{NID_id_GostR3410_2001_CryptoPro_B_ParamSet,
 	"8000000000000000000000000000000000000000000000000000000000000C96",
 	"3E1AF419A269A5F866A7D3C25C3DF80AE979259373FF2B182F49D4CE7E1BBC8B",
 	"8000000000000000000000000000000000000000000000000000000000000C99",
 	"800000000000000000000000000000015F700CFFF1A624E5E497161BCC8A198F",
-	"1",	
+	"1",
 	"3FA8124359F96680B83D1C3EB2C070E5C545C9858D03ECFB744BF8D717717EFC"
 	},
 	/*1.2.643.2.2.35.3*/

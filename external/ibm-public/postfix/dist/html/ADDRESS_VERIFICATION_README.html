@@ -272,7 +272,7 @@ the same address repeatedly.  </p>
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
-    <a href="postconf.5.html#smtpd_recipient_restrictions">smtpd_recipient_restrictions</a> = 
+    <a href="postconf.5.html#smtpd_recipient_restrictions">smtpd_recipient_restrictions</a> =
         <a href="postconf.5.html#permit_mynetworks">permit_mynetworks</a>
         <a href="postconf.5.html#reject_unauth_destination">reject_unauth_destination</a>
         ...
@@ -331,7 +331,7 @@ in forged email.  </p>
     # Note 1: Be sure to read the "<a href="#caching">Caching</a>" section below!
     # Note 2: Avoid hash files here. Use btree instead.
     <a href="postconf.5.html#address_verify_map">address_verify_map</a> = btree:/var/db/postfix/verify
- 
+
 /etc/postfix/sender_access:
     # Don't do this when you handle lots of email.
     aol.com     <a href="postconf.5.html#reject_unverified_sender">reject_unverified_sender</a>
@@ -364,12 +364,12 @@ you can see what mail would be blocked: </p>
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
-    <a href="postconf.5.html#smtpd_sender_restrictions">smtpd_sender_restrictions</a> = 
+    <a href="postconf.5.html#smtpd_sender_restrictions">smtpd_sender_restrictions</a> =
         <a href="postconf.5.html#permit_mynetworks">permit_mynetworks</a>
-        ... 
+        ...
         <a href="postconf.5.html#check_sender_access">check_sender_access</a> hash:/etc/postfix/sender_access
         <a href="postconf.5.html#reject_unknown_sender_domain">reject_unknown_sender_domain</a>
-        <a href="postconf.5.html#warn_if_reject">warn_if_reject</a> <a href="postconf.5.html#reject_unverified_sender">reject_unverified_sender</a> 
+        <a href="postconf.5.html#warn_if_reject">warn_if_reject</a> <a href="postconf.5.html#reject_unverified_sender">reject_unverified_sender</a>
         ...
     # Postfix 2.6 and later.
     # <a href="postconf.5.html#unverified_sender_reject_reason">unverified_sender_reject_reason</a> = Address verification failed
@@ -523,7 +523,7 @@ parameters when it delivers an address verification probe message.
 
 <p> First, the <a href="postconf.5.html#address_verify_relayhost">address_verify_relayhost</a> parameter allows you to
 override the <a href="postconf.5.html#relayhost">relayhost</a> setting, and the <a href="postconf.5.html#address_verify_transport_maps">address_verify_transport_maps</a>
-parameter allows you to override the <a href="postconf.5.html#transport_maps">transport_maps</a> setting. 
+parameter allows you to override the <a href="postconf.5.html#transport_maps">transport_maps</a> setting.
 The <a href="postconf.5.html#address_verify_sender_dependent_relayhost_maps">address_verify_sender_dependent_relayhost_maps</a> parameter
 does the same for sender-dependent <a href="postconf.5.html#relayhost">relayhost</a> selection. </p>
 

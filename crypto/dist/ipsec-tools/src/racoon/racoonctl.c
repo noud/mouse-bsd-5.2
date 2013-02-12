@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -61,7 +61,7 @@
 #include <unistd.h>
 #endif
 #include <err.h>
-#include <sys/ioctl.h> 
+#include <sys/ioctl.h>
 #include <resolv.h>
 
 #include "var.h"
@@ -321,8 +321,8 @@ main(ac, av)
 
 	if (evt_filter != EVTF_NONE)
 		if (evt_poll() != 0)
-			goto bad;	
-	
+			goto bad;
+
 	exit(0);
 
     bad:
@@ -665,7 +665,7 @@ f_exchangesa(ac, av)
 		id = av[1];
 		if ((key = getpass("Password: ")) == NULL)
 			errx(1, "getpass() failed: %s", strerror(errno));
-		
+
 		com_len += sizeof(*acp) + strlen(id) + 1 + strlen(key) + 1;
 		cmd = ADMIN_ESTABLISH_SA_PSK;
 
@@ -751,7 +751,7 @@ f_vpnc(ac, av)
 
 	evt_filter = (EVTF_LOOP|EVTF_CFG|EVTF_CFG_STOP|EVTF_ERR|EVTF_ERR_STOP);
 	time(&evt_start);
-	
+
 	/* Optional -u identity */
 	if (strcmp(av[0], "-u") == 0) {
 		if (ac < 2)
@@ -765,7 +765,7 @@ f_vpnc(ac, av)
 	}
 
 	if (ac < 1)
-		errx(1, "VPN gateway required");	
+		errx(1, "VPN gateway required");
 	if (ac > 1)
 		warnx("Extra arguments");
 
@@ -785,7 +785,7 @@ f_vpnc(ac, av)
 		errx(1, "cannot read source address");
 
 	/* We get "ip[port]" strip the port */
-	if ((idx = index(srcaddr, '[')) == NULL) 
+	if ((idx = index(srcaddr, '[')) == NULL)
 		errx(1, "unexpected source address format");
 	*idx = '\0';
 
@@ -810,11 +810,11 @@ f_vpnd(ac, av)
 	char *idx;
 
 	if (ac < 1)
-		errx(1, "VPN gateway required");	
+		errx(1, "VPN gateway required");
 	if (ac > 1)
 		warnx("Extra arguments");
 
-	evt_filter = 
+	evt_filter =
 	    (EVTF_PH1DOWN|EVTF_PH1DOWN_STOP|EVTF_LOOP|EVTF_ERR|EVTF_ERR_STOP);
 
 	nav[nac++] = isakmp;
@@ -1101,13 +1101,13 @@ dump_isakmp_sa(buf, len)
 /* short header;
  1234567890123456789012 0000000000000000:0000000000000000 000000000000
 */
-char *header1 = 
+char *header1 =
 "Destination            Cookies                           Created";
 
 /* semi long header;
  1234567890123456789012 0000000000000000:0000000000000000 00 X 00 X 0000-00-00 00:00:00 000000
 */
-char *header2 = 
+char *header2 =
 "Destination            Cookies                           ST S  V E Created             Phase2";
 
 /* long header;
@@ -1118,7 +1118,7 @@ char *header3 =
 
 /* phase status header */
 /* short format;
-   side stats source address         destination address   
+   side stats source address         destination address
    xxx  xxxxx 1234567890123456789012 1234567890123456789012
 */
 
@@ -1218,19 +1218,19 @@ dump_internal(buf, tlen)
 
 /*
 short header;
- source address         destination address    
- 1234567890123456789012 1234567890123456789012 
+ source address         destination address
+ 1234567890123456789012 1234567890123456789012
 */
-char *short_h1 = 
+char *short_h1 =
 "Source                 Destination            ";
 
 /*
 long header;
- source address                                destination address                           
- 123456789012345678901234567890123456789012345 123456789012345678901234567890123456789012345 
+ source address                                destination address
+ 123456789012345678901234567890123456789012345 123456789012345678901234567890123456789012345
  0000:0000:0000:0000:0000:0000:0000:0000.00000 0000:0000:0000:0000:0000:0000:0000:0000.00000 0000:0000:0000:0000:0000:0000:0000:0000.00000
 */
-char *long_h1 = 
+char *long_h1 =
 "Source                                        Destination                                  ";
 
 	printf("%s\n", long_format ? long_h1 : short_h1);
@@ -1343,24 +1343,24 @@ print_evt(buf, len)
 	int i;
 	char *srcstr;
 	char *dststr;
-	
+
 	for (i = 0; evtmsg[i].msg; i++)
 		if (evtmsg[i].type == evtdump->type)
-			break;				
-	
-	if (evtmsg[i].msg == NULL) 
+			break;
+
+	if (evtmsg[i].msg == NULL)
 		printf("Event %d: ", evtdump->type);
 	else
 		printf("%s : ", evtmsg[i].msg);
 
 	if ((srcstr = saddr2str((struct sockaddr *)&evtdump->src)) == NULL)
 		printf("unknown");
-	else 
+	else
 		printf("%s", srcstr);
 	printf(" -> ");
 	if ((dststr = saddr2str((struct sockaddr *)&evtdump->dst)) == NULL)
 		printf("unknown");
-	else 
+	else
 		printf("%s", dststr);
 	printf("\n");
 
@@ -1374,16 +1374,16 @@ print_err(buf, len)
 {
 	struct evtdump *evtdump = (struct evtdump *)buf;
 	int i;
-	
-	
+
+
 	for (i = 0; evtmsg[i].msg; i++)
 		if (evtmsg[i].type == evtdump->type)
-			break;				
+			break;
 
 	if (evtmsg[i].level != ERROR)
 		return;
-	
-	if (evtmsg[i].msg == NULL) 
+
+	if (evtmsg[i].msg == NULL)
 		printf("Error: Event %d\n", evtdump->type);
 	else
 		printf("Error: %s\n", evtmsg[i].msg);
@@ -1403,7 +1403,7 @@ print_ph1down(buf, len)
 	int len;
 {
 	struct evtdump *evtdump = (struct evtdump *)buf;
-	
+
 	if (evtdump->type != EVTT_PHASE1_DOWN)
 		return;
 
@@ -1411,7 +1411,7 @@ print_ph1down(buf, len)
 
 	if (evt_filter & EVTF_PH1DOWN_STOP)
 		evt_filter &= ~EVTF_LOOP;
-	
+
 	return;
 }
 
@@ -1427,10 +1427,10 @@ print_cfg(buf, len)
 	struct isakmp_data *attr;
 	char *banner = NULL;
 	struct in_addr addr4;
-	
+
 	memset(&addr4, 0, sizeof(addr4));
 
-	if (evtdump->type != EVTT_ISAKMP_CFG_DONE && 
+	if (evtdump->type != EVTT_ISAKMP_CFG_DONE &&
 	    evtdump->type != EVTT_NO_ISAKMP_CFG)
 		return;
 
@@ -1484,20 +1484,20 @@ print_cfg(buf, len)
 			    (n + sizeof(*attr) + ntohs(attr->lorv));
 		}
 	}
-	
+
 	if (evtdump->type == EVTT_ISAKMP_CFG_DONE)
 		printf("Bound to address %s\n", inet_ntoa(addr4));
 	else
 		printf("VPN connexion established\n");
-	
+
 	if (banner) {
 		struct winsize win;
 		int col = 0;
 		int i;
 
-		if (ioctl(1, TIOCGWINSZ, &win) != 1) 
+		if (ioctl(1, TIOCGWINSZ, &win) != 1)
 			col = win.ws_col;
-			
+
 		for (i = 0; i < col; i++)
 			printf("%c", '=');
 		printf("\n%s\n", banner);
@@ -1506,13 +1506,13 @@ print_cfg(buf, len)
 		printf("\n");
 		racoon_free(banner);
 	}
-	
+
 	if (evt_filter & EVTF_CFG_STOP)
 		evt_filter &= ~EVTF_LOOP;
-	
+
 	return;
 }
-	
+
 
 char *
 fixed_addr(addr, port, len)
@@ -1572,7 +1572,7 @@ handle_recv(combuf)
 		}
 
 		if (len < sizeof(struct evtdump))
-			errx(1, "Short buffer\n");		
+			errx(1, "Short buffer\n");
 
 		/* Toss outdated events */
 		evtdump = (struct evtdump *)buf;

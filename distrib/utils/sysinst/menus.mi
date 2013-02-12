@@ -32,7 +32,7 @@
 /*
  * Menu system definitions -- machine and language independent
  *
- * Some menus may be called directly in the code rather than via the 
+ * Some menus may be called directly in the code rather than via the
  * menu system.
  *
  *  This file must be first in the sed command line.
@@ -81,14 +81,14 @@ menu selfskind, title MSG_Select_the_type, exitstring MSG_unchanged, y=6, x=30;
 		default	:	menu->cursel = 6; break;
 		};
 	};
-	option "unused", exit, action 
+	option "unused", exit, action
 	    { memset(arg, 0, sizeof (partinfo)); };
 	option "FFSv1", exit, action { set_ptype(arg, FS_BSDFFS, 0); };
 	option "FFSv2", exit, action { set_ptype(arg, FS_BSDFFS, PIF_FFSv2); };
 	option "swap",  exit, action { set_ptype(arg, FS_SWAP, 0); };
 	option "msdos", exit, action { set_ptype(arg, FS_MSDOS, 0); };
 	option "LFS",   exit, action { set_ptype(arg, FS_BSDLFS, 0); };
-	option MSG_other_types, action 
+	option MSG_other_types, action
 	    { extern int all_fstype_menu;
 	      m->opts[m->cursel].opt_menu = all_fstype_menu; };
 
@@ -128,7 +128,7 @@ menu mountoptions, title MSG_toggle, y=5, x=30, exitstring MSG_unchanged;
 		static int actual_numopt;
 		if (!actual_numopt)
 			actual_numopt = menu->numopts;
-		menu->numopts = actual_numopt - 
+		menu->numopts = actual_numopt -
 			(((partinfo *)arg)->pi_fstype !=  FS_BSDFFS);
 	};
 	option "softdep", exit, action
@@ -165,7 +165,7 @@ menu utility, title MSG_NetBSD_VERSION_Utilities, exit;
 	display action  { toplevel(); };
 	option MSG_Run_bin_sh,
 		action (endwin) { system("/bin/sh"); };
-	option MSG_Set_timezone, 
+	option MSG_Set_timezone,
 		action { set_timezone(); };
 	option MSG_Configure_network,
 		action {
@@ -204,16 +204,16 @@ menu sizechoice, sub menu, y=0, title MSG_Choose_your_size_specifier;
 		else if (sizemult == 1)
 			menu->cursel = 2;
 		};
-	option MSG_Megabytes, exit, action 
+	option MSG_Megabytes, exit, action
 		{ sizemult = MEG / sectorsize;
 		  multname = msg_string(MSG_megname);
 		};
-	option MSG_Cylinders, exit, action 
-		{ sizemult = current_cylsize; 
+	option MSG_Cylinders, exit, action
+		{ sizemult = current_cylsize;
 		  multname = msg_string(MSG_cylname);
 		};
-	option MSG_Sectors, exit, action 
-		{ sizemult = 1; 
+	option MSG_Sectors, exit, action
+		{ sizemult = 1;
 		  multname = msg_string(MSG_secname);
 		};
 
@@ -355,7 +355,7 @@ menu namesrv6, title MSG_Select_IPv6_DNS_server;
 #else
 		  yesno = 0;
 #endif
-		}; 
+		};
 	option "ns-wide.wide.ad.jp", exit, action
 		{
 #ifdef INET6
@@ -364,7 +364,7 @@ menu namesrv6, title MSG_Select_IPv6_DNS_server;
 #else
 		  yesno = 0;
 #endif
-		}; 
+		};
 	option "light.imasy.or.jp", exit, action
 		{
 #ifdef INET6
@@ -374,12 +374,12 @@ menu namesrv6, title MSG_Select_IPv6_DNS_server;
 #else
 		  yesno = 0;
 #endif
-		}; 
+		};
 	option MSG_other, exit, action
 		{ yesno = 0; };
 
 menu rootsh, title MSG_Root_shell;
-	option "/bin/sh",  exit, action {*(const char **)arg = "/bin/sh";}; 
+	option "/bin/sh",  exit, action {*(const char **)arg = "/bin/sh";};
 	option "/bin/ksh", exit, action {*(const char **)arg = "/bin/ksh";};
 	option "/bin/csh", exit, action {*(const char **)arg = "/bin/csh";};
 

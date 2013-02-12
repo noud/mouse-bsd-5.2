@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -93,7 +93,7 @@ int main(int argc, char **argv)
 		printf("%s\n", OBJ_nid2ln(OBJ_obj2nid(ext->object)));
 		if(!X509V3_EXT_print_fp(stdout, ext, 0, 0)) ERR_print_errors_fp(stderr);
 		printf("\n");
-		
+
 	}
 	return 0;
 }

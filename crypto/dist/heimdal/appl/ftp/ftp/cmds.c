@@ -190,7 +190,7 @@ setpeer(int argc, char **argv)
 				unix_proxy = 0;
 			else
 				unix_server = 0;
-			if (overbose && 
+			if (overbose &&
 			    !strncmp(reply_string, "215 TOPS20", 10))
 				printf(
 "Remember to set tenex mode when transfering binary files from this machine.\n");
@@ -683,15 +683,15 @@ getit(int argc, char **argv, int restartit, char *filemode)
 			tm->tm_year += 1900;
 
 			if ((tm->tm_year > yy) ||
-			    (tm->tm_year == yy && 
+			    (tm->tm_year == yy &&
 			     tm->tm_mon > mo) ||
-			    (tm->tm_mon == mo && 
+			    (tm->tm_mon == mo &&
 			     tm->tm_mday > day) ||
-			    (tm->tm_mday == day && 
+			    (tm->tm_mday == day &&
 			     tm->tm_hour > hour) ||
-			    (tm->tm_hour == hour && 
+			    (tm->tm_hour == hour &&
 			     tm->tm_min > min) ||
-			    (tm->tm_min == min && 
+			    (tm->tm_min == min &&
 			     tm->tm_sec > sec))
 				return (1);
 		}
@@ -869,7 +869,7 @@ status(int argc, char **argv)
 	sec_status();
 	printf("Mode: %s; Type: %s; Form: %s; Structure: %s\n",
 		modename, typename, formname, structname);
-	printf("Verbose: %s; Bell: %s; Prompting: %s; Globbing: %s\n", 
+	printf("Verbose: %s; Bell: %s; Prompting: %s; Globbing: %s\n",
 		onoff(verbose), onoff(bell), onoff(interactive),
 		onoff(doglob));
 	printf("Store unique: %s; Receive unique: %s\n", onoff(sunique),
@@ -988,7 +988,7 @@ setprompt(int argc, char **argv)
 void
 setglob(int argc, char **argv)
 {
-	
+
 	doglob = !doglob;
 	printf("Globbing %s.\n", onoff(doglob));
 	code = doglob;
@@ -1172,7 +1172,7 @@ ls(int argc, char **argv)
 		return;
 	}
 	if (strcmp(argv[2], "-") && *argv[2] != '|')
-	    if (!globulize(&argv[2]) || !confirm("output to local-file:", 
+	    if (!globulize(&argv[2]) || !confirm("output to local-file:",
 						 argv[2])) {
 		code = -1;
 		return;
@@ -1238,7 +1238,7 @@ shell(int argc, char **argv)
 {
 	pid_t pid;
 	RETSIGTYPE (*old1)(int), (*old2)(int);
-	char shellnam[40], *shellpath, *namep; 
+	char shellnam[40], *shellpath, *namep;
 	int waitstatus;
 
 	old1 = signal (SIGINT, SIG_IGN);
@@ -1834,7 +1834,7 @@ domap(char *name)
 				break;
 			case '[':
 LOOP:
-				if (*++cp2 == '$' && isdigit((unsigned char)*(cp2+1))) { 
+				if (*++cp2 == '$' && isdigit((unsigned char)*(cp2+1))) {
 					if (*++cp2 == '0') {
 						char *cp3 = name;
 
@@ -1853,7 +1853,7 @@ LOOP:
 					}
 				}
 				else {
-					while (*cp2 && *cp2 != ',' && 
+					while (*cp2 && *cp2 != ',' &&
 					    *cp2 != ']') {
 						if (*cp2 == '\\') {
 							cp2++;
@@ -2138,7 +2138,7 @@ klist(int argc, char **argv)
 	code = -1;
 	return;
     }
-    
+
     ret = command("SITE KLIST");
     code = (ret == COMPLETE);
 }

@@ -87,13 +87,13 @@ pcf_start(
 	if (fd == -1) {
 		return (0);
 	}
-	
+
 	pp = peer->procptr;
 	pp->io.clock_recv = noentry;
 	pp->io.srcclock = (caddr_t)peer;
 	pp->io.datalen = 0;
 	pp->io.fd = fd;
-	
+
 	/*
 	 * Initialize miscellaneous variables
 	 */
@@ -118,7 +118,7 @@ pcf_shutdown(
 	)
 {
 	struct refclockproc *pp;
-	
+
 	pp = peer->procptr;
 	(void)close(pp->io.fd);
 }
@@ -137,7 +137,7 @@ pcf_poll(
 	char buf[LENPCF];
 	struct tm tm, *tp;
 	time_t t;
-	
+
 	pp = peer->procptr;
 
 	buf[0] = 0;
@@ -159,7 +159,7 @@ pcf_poll(
 	 */
 	if (tm.tm_year < 99)
 		tm.tm_year += 100;
-	
+
 	t = mktime(&tm);
 	if (t == (time_t) -1) {
 		refclock_report(peer, CEVNT_BADTIME);

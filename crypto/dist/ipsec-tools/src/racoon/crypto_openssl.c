@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -163,13 +163,13 @@ eay_str2asn1dn(str, len)
 
 			if (!value) goto err;
 			if (!X509_NAME_add_entry_by_txt(name, field,
-					(value[0] == '*' && value[1] == 0) ? 
+					(value[0] == '*' && value[1] == 0) ?
 						V_ASN1_PRINTABLESTRING : MBSTRING_ASC,
 					(unsigned char *) value, -1, -1, 0)) {
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				     "Invalid DN field: %s=%s\n",
 				     field, value);
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				     "%s\n", eay_strerror());
 				goto err;
 			}
@@ -189,13 +189,13 @@ eay_str2asn1dn(str, len)
 
 	if (!value) goto err;
 	if (!X509_NAME_add_entry_by_txt(name, field,
-			(value[0] == '*' && value[1] == 0) ? 
+			(value[0] == '*' && value[1] == 0) ?
 				V_ASN1_PRINTABLESTRING : MBSTRING_ASC,
 			(unsigned char *) value, -1, -1, 0)) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		     "Invalid DN field: %s=%s\n",
 		     field, value);
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		     "%s\n", eay_strerror());
 		goto err;
 	}
@@ -233,17 +233,17 @@ eay_hex2asn1dn(const char *hex, int len)
 	char *binbuf;
 	size_t binlen;
 	vchar_t *ret = NULL;
-	
+
 	if (len == -1)
 		len = strlen(hex);
 
 	if (BN_hex2bn(&bn, hex) != len) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		     "conversion of Hex-encoded ASN1 string to binary failed: %s\n",
 		     eay_strerror());
 		goto out;
 	}
-	
+
 	binlen = BN_num_bytes(bn);
 	ret = vmalloc(binlen);
 	if (!ret) {
@@ -288,15 +288,15 @@ static int nocase_cmp(const ASN1_STRING *a, const ASN1_STRING *b)
 	return 0;
 }
 
-/* Case insensitive string comparision with space normalization 
- * Space normalization - ignore leading, trailing spaces, 
- *       multiple spaces between characters are replaced by single space  
+/* Case insensitive string comparision with space normalization
+ * Space normalization - ignore leading, trailing spaces,
+ *       multiple spaces between characters are replaced by single space
  */
 static int nocase_spacenorm_cmp(const ASN1_STRING *a, const ASN1_STRING *b)
 {
 	unsigned char *pa = NULL, *pb = NULL;
 	int la, lb;
-	
+
 	la = a->length;
 	lb = b->length;
 	pa = a->data;
@@ -452,14 +452,14 @@ eay_check_x509cert(cert, CApath, CAfile, local)
 
 	if (local)
 		X509_STORE_set_verify_cb_func(cert_ctx, cb_check_cert_local);
-	else 
+	else
 		X509_STORE_set_verify_cb_func(cert_ctx, cb_check_cert_remote);
 
 	lookup = X509_STORE_add_lookup(cert_ctx, X509_LOOKUP_file());
 	if (lookup == NULL)
 		goto end;
 
-	X509_LOOKUP_load_file(lookup, CAfile, 
+	X509_LOOKUP_load_file(lookup, CAfile,
 	    (CAfile == NULL) ? X509_FILETYPE_DEFAULT : X509_FILETYPE_PEM);
 
 	lookup = X509_STORE_add_lookup(cert_ctx, X509_LOOKUP_hash_dir());
@@ -623,7 +623,7 @@ eay_get_x509asn1subjectname(cert)
 error:
 	plog(LLV_ERROR, LOCATION, NULL, "%s\n", eay_strerror());
 
-	if (name != NULL) 
+	if (name != NULL)
 		vfree(name);
 
 	if (x509 != NULL)
@@ -679,12 +679,12 @@ eay_get_x509subjectaltname(cert, altname, type, pos)
 			racoon_hexdump(gen->d.ia5->data, gen->d.ia5->length + 1);
 			goto end;
 		}
-		
+
 		len = gen->d.ia5->length + 1;
 		*altname = racoon_malloc(len);
 		if (!*altname)
 			goto end;
-		
+
 		strlcpy(*altname, (char *) gen->d.ia5->data, len);
 		*type = gen->type;
 		error = 0;
@@ -694,11 +694,11 @@ eay_get_x509subjectaltname(cert, altname, type, pos)
 	{
 		unsigned char p[5], *ip;
 		ip = p;
-		
+
 		/* only support IPv4 */
 		if (gen->d.ip->length != 4)
 			goto end;
-		
+
 		/* convert Octet String to String
 		 * XXX ???????
 		 */
@@ -710,7 +710,7 @@ eay_get_x509subjectaltname(cert, altname, type, pos)
 		*altname = racoon_malloc(20);
 		if (!*altname)
 			goto end;
-		
+
 		sprintf(*altname, "%u.%u.%u.%u", ip[0], ip[1], ip[2], ip[3]);
 		*type = gen->type;
 		error = 0;
@@ -1001,7 +1001,7 @@ eay_get_pkcs1pubkey(path)
 
 	if (x509 == NULL)
 		return NULL;
-  
+
 	/* Get public key - eay */
 	evp = X509_get_pubkey(x509);
 	if (evp == NULL)
@@ -1073,7 +1073,7 @@ eay_rsa_sign(vchar_t *src, RSA *rsa)
 	if (sig == NULL)
 		return NULL;
 
-	len = RSA_private_encrypt(src->l, (unsigned char *) src->v, 
+	len = RSA_private_encrypt(src->l, (unsigned char *) src->v,
 			(unsigned char *) sig->v, rsa, pad);
 
 	if (len == 0 || len != sig->l) {
@@ -1101,7 +1101,7 @@ eay_rsa_verify(src, sig, rsa)
 		return -1;
 	}
 
-	len = RSA_public_decrypt(sig->l, (unsigned char *) sig->v, 
+	len = RSA_public_decrypt(sig->l, (unsigned char *) sig->v,
 			(unsigned char *) xbuf->v, rsa, pad);
 	if (len == 0 || len != src->l) {
 		plog(LLV_ERROR, LOCATION, NULL, "%s\n", eay_strerror());
@@ -1185,7 +1185,7 @@ evp_crypt(vchar_t *data, vchar_t *key, vchar_t *iv, const EVP_CIPHER *e, int enc
             vfree(res);
             return NULL;
         }
-		
+
         /* update key size
          */
         if (!EVP_CIPHER_CTX_set_key_length(&ctx, key->l))
@@ -1206,7 +1206,7 @@ evp_crypt(vchar_t *data, vchar_t *key, vchar_t *iv, const EVP_CIPHER *e, int enc
 		}
 		break;
 	default:
-		if (!EVP_CipherInit(&ctx, e, (u_char *) key->v, 
+		if (!EVP_CipherInit(&ctx, e, (u_char *) key->v,
 							(u_char *) iv->v, enc)) {
 			OpenSSL_BUG();
 			vfree(res);
@@ -1215,8 +1215,8 @@ evp_crypt(vchar_t *data, vchar_t *key, vchar_t *iv, const EVP_CIPHER *e, int enc
 	}
 
 	/* disable openssl padding */
-	EVP_CIPHER_CTX_set_padding(&ctx, 0); 
-	
+	EVP_CIPHER_CTX_set_padding(&ctx, 0);
+
 	if (!EVP_Cipher(&ctx, (u_char *) res->v, (u_char *) data->v, data->l)) {
 		OpenSSL_BUG();
 		vfree(res);
@@ -1244,7 +1244,7 @@ evp_keylen(int len, const EVP_CIPHER *e)
 	 */
 	if (len != 0 && len != (EVP_CIPHER_key_length(e) << 3))
 		return -1;
-	
+
 	return EVP_CIPHER_key_length(e) << 3;
 }
 
@@ -2552,11 +2552,11 @@ base64_encode(char *in, long inlen)
 	res = vmalloc(plen+1);
 	if (!res)
 		goto out;
-	
+
 	memcpy (res->v, ptr, plen);
 	res->v[plen] = '\0';
 
-out:	
+out:
 	if (bio)
 		BIO_free_all(bio);
 
@@ -2575,7 +2575,7 @@ binbuf_pubkey2rsa(vchar_t *binbuf)
 	}
 
 	exp = BN_bin2bn((unsigned char *) (binbuf->v + 1), binbuf->v[0], NULL);
-	mod = BN_bin2bn((unsigned char *) (binbuf->v + binbuf->v[0] + 1), 
+	mod = BN_bin2bn((unsigned char *) (binbuf->v + binbuf->v[0] + 1),
 			binbuf->l - binbuf->v[0] - 1, NULL);
 	rsa_pub = RSA_new();
 
@@ -2590,7 +2590,7 @@ binbuf_pubkey2rsa(vchar_t *binbuf)
 		rsa_pub = NULL;
 		goto out;
 	}
-	
+
 	rsa_pub->n = mod;
 	rsa_pub->e = exp;
 
@@ -2615,7 +2615,7 @@ base64_pubkey2rsa(char *in)
 		plog(LLV_ERROR, LOCATION, NULL, "Plain RSA pubkey format error: Base64 decoding failed.\n");
 		return NULL;
 	}
-	
+
 	if (binbuf->v[0] > binbuf->l - 1) {
 		plog(LLV_ERROR, LOCATION, NULL, "Plain RSA pubkey format error: decoded string doesn't make sense.\n");
 		goto out;
@@ -2641,7 +2641,7 @@ bignum_pubkey2rsa(BIGNUM *in)
 		plog(LLV_ERROR, LOCATION, NULL, "Plain RSA pubkey conversion: memory allocation failed..\n");
 		return NULL;
 	}
-	
+
 	BN_bn2bin(in, (unsigned char *) binbuf->v);
 
 	rsa_pub = binbuf_pubkey2rsa(binbuf);

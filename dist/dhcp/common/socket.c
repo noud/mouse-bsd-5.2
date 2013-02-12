@@ -36,7 +36,7 @@
  * This sockopt allows a socket to be bound to a particular interface,
  * thus enabling the use of DHCPD on a multihomed host.
  * If SO_BINDTODEVICE is defined in your system header files, the use of
- * this sockopt will be automatically enabled. 
+ * this sockopt will be automatically enabled.
  * I have implemented it under Linux; other systems should be doable also.
  */
 
@@ -376,7 +376,7 @@ void maybe_setup_fallback ()
 		      (fbi -> shared_network ? "/" : ""),
 		      (fbi -> shared_network ?
 		       fbi -> shared_network -> name : ""));
-	
+
 		status = omapi_register_io_object ((omapi_object_t *)fbi,
 						   if_readsocket, 0,
 						   fallback_discard, 0, 0);

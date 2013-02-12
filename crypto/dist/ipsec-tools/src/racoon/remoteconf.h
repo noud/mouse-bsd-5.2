@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -108,15 +108,15 @@ struct remoteconf {
 	int dpd;				/* Negociate DPD support ? */
 	int dpd_retry;			/* in seconds */
 	int dpd_interval;		/* in seconds */
-	int dpd_maxfails; 
+	int dpd_maxfails;
 
 	int ph1id; /* ph1id to be matched with sainfo sections */
 
 	int weak_phase1_check;		/* act on unencrypted deletions ? */
 
 	struct isakmpsa *proposal;	/* proposal list */
-	struct remoteconf *inherited_from;	/* the original rmconf 
-						   from which this one 
+	struct remoteconf *inherited_from;	/* the original rmconf
+						   from which this one
 						   was inherited */
 	struct proposalspec *prhead;
 

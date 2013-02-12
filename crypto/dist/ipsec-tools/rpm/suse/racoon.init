@@ -55,7 +55,7 @@ rc_reset
 # 5 - program is not installed
 # 6 - program is not configured
 # 7 - program is not running
-# 
+#
 # Note that starting an already running service, stopping
 # or restarting a not-running service as well as the restart
 # with force-reload (in case signalling is not supported) are
@@ -70,7 +70,7 @@ case "$1" in
 		rc_status -v
 		rc_reset
 	fi
-	
+
 	echo -n "Starting $RACOON "
 	## If there is no conf file, skip starting of ddtd
 	## and return with "program not configured"
@@ -82,7 +82,7 @@ case "$1" in
 		rc_exit
 	fi
 
-	# startproc should return 0, even if service is 
+	# startproc should return 0, even if service is
 	# already running to match LSB spec.
 	startproc $RACOON_BIN $RACOON_OPTIONS -f $RACOON_CONF
 	rc_status -v
@@ -107,7 +107,7 @@ case "$1" in
 	fi
 	;;
     try-restart)
-	## Stop the service and if this succeeds (i.e. the 
+	## Stop the service and if this succeeds (i.e. the
 	## service was running before), start it again.
 	$0 stop  &&  $0 start
 

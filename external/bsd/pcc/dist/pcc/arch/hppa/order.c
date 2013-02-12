@@ -186,7 +186,7 @@ int *
 livecall(NODE *p)
 {
 	static int r[5], *s = &r[4];
-	 
+
 	*s = -1;
 	if (p->n_op == UCALL || p->n_op == UFORTCALL || p->n_op == USTCALL ||
 	    p->n_op == FORTCALL)

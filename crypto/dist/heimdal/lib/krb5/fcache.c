@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2008 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "krb5_locl.h"
@@ -91,10 +91,10 @@ _krb5_xlock(krb5_context context, int fd, krb5_boolean exclusive,
     case 0:
 	break;
     case EINVAL: /* filesystem doesn't support locking, let the user have it */
-	ret = 0; 
+	ret = 0;
 	break;
     case EAGAIN:
-	krb5_set_error_string(context, "timed out locking cache file %s", 
+	krb5_set_error_string(context, "timed out locking cache file %s",
 			      filename);
 	break;
     default:
@@ -125,10 +125,10 @@ _krb5_xunlock(krb5_context context, int fd)
     case 0:
 	break;
     case EINVAL: /* filesystem doesn't support locking, let the user have it */
-	ret = 0; 
+	ret = 0;
 	break;
     default:
-	krb5_set_error_string(context, 
+	krb5_set_error_string(context,
 			      "Failed to unlock file: %s", strerror(ret));
 	break;
     }
@@ -303,7 +303,7 @@ storage_set_flags(krb5_context context, krb5_storage *sp, int vno)
     case KRB5_FCC_FVNO_4:
 	break;
     default:
-	krb5_abortx(context, 
+	krb5_abortx(context,
 		    "storage_set_flags called with bad vno (%x)", vno);
     }
     krb5_storage_set_flags(sp, flags);
@@ -328,7 +328,7 @@ fcc_open(krb5_context context,
 			      strerror(ret));
 	return ret;
     }
-	
+
     if((ret = fcc_lock(context, id, fd, exclusive)) != 0) {
 	close(fd);
 	return ret;
@@ -348,12 +348,12 @@ fcc_initialize(krb5_context context,
     char *filename = f->filename;
 
     unlink (filename);
-  
+
     ret = fcc_open(context, id, &fd, O_RDWR | O_CREAT | O_EXCL | O_BINARY, 0600);
     if(ret)
 	return ret;
     {
-	krb5_storage *sp;    
+	krb5_storage *sp;
 	sp = krb5_storage_from_fd(fd);
 	krb5_storage_set_eof_code(sp, KRB5_CC_END);
 	if(context->fcache_vno != 0)
@@ -376,14 +376,14 @@ fcc_initialize(krb5_context context,
 	    }
 	}
 	ret |= krb5_store_principal(sp, primary_principal);
-	
+
 	krb5_storage_free(sp);
     }
     fcc_unlock(context, fd);
     if (close(fd) < 0)
 	if (ret == 0) {
 	    ret = errno;
-	    krb5_set_error_string (context, "close %s: %s", 
+	    krb5_set_error_string (context, "close %s: %s",
 				   FILENAME(id), strerror(ret));
 	}
     return ret;
@@ -434,7 +434,7 @@ fcc_store_cred(krb5_context context,
     if (close(fd) < 0)
 	if (ret == 0) {
 	    ret = errno;
-	    krb5_set_error_string (context, "close %s: %s", 
+	    krb5_set_error_string (context, "close %s: %s",
 				   FILENAME(id), strerror(ret));
 	}
     return ret;
@@ -454,7 +454,7 @@ init_fcc (krb5_context context,
     ret = fcc_open(context, id, &fd, O_RDONLY | O_BINARY, 0);
     if(ret)
 	return ret;
-    
+
     sp = krb5_storage_from_fd(fd);
     if(sp == NULL) {
 	krb5_clear_error_string(context);
@@ -540,7 +540,7 @@ init_fcc (krb5_context context,
 		    ret = krb5_ret_int8 (sp, &dummy);
 		    if(ret) {
 			krb5_set_error_string(context, "Error reading unknown "
-					      "tag in cache file: %s", 
+					      "tag in cache file: %s",
 					      FILENAME(id));
 			ret = KRB5_CC_FORMAT;
 			goto out;
@@ -565,7 +565,7 @@ init_fcc (krb5_context context,
     }
     *ret_sp = sp;
     *ret_fd = fd;
-    
+
     return 0;
   out:
     if(sp != NULL)
@@ -616,7 +616,7 @@ fcc_get_first (krb5_context context,
     }
     memset(*cursor, 0, sizeof(struct fcc_cursor));
 
-    ret = init_fcc (context, id, &FCC_CURSOR(*cursor)->sp, 
+    ret = init_fcc (context, id, &FCC_CURSOR(*cursor)->sp,
 		    &FCC_CURSOR(*cursor)->fd);
     if (ret) {
 	free(*cursor);
@@ -711,7 +711,7 @@ fcc_get_version(krb5_context context,
 {
     return FCACHE(id)->version;
 }
-		    
+
 struct fcache_iter {
     int first;
 };
@@ -725,7 +725,7 @@ fcc_get_cache_first(krb5_context context, krb5_cc_cursor *cursor)
     if (iter == NULL) {
 	krb5_set_error_string(context, "malloc - out of memory");
 	return ENOMEM;
-    }    
+    }
     iter->first = 1;
     *cursor = iter;
     return 0;
@@ -747,7 +747,7 @@ fcc_get_cache_next(krb5_context context, krb5_cc_cursor cursor, krb5_ccache *id)
 
     fn = krb5_cc_default_name(context);
     if (strncasecmp(fn, "FILE:", 5) != 0) {
-	ret = _krb5_expand_default_cc_name(context, 
+	ret = _krb5_expand_default_cc_name(context,
 					   KRB5_DEFAULT_CCNAME_FILE,
 					   &expandedfn);
 	if (ret)
@@ -756,7 +756,7 @@ fcc_get_cache_next(krb5_context context, krb5_cc_cursor cursor, krb5_ccache *id)
     ret = krb5_cc_resolve(context, fn, id);
     if (expandedfn)
 	free(expandedfn);
-    
+
     return ret;
 }
 
@@ -777,7 +777,7 @@ fcc_move(krb5_context context, krb5_ccache from, krb5_ccache to)
     if (ret && errno != EXDEV) {
 	ret = errno;
 	krb5_set_error_string(context,
-			      "Rename of file from %s to %s failed: %s", 
+			      "Rename of file from %s to %s failed: %s",
 			      FILENAME(from), FILENAME(to),
 			      strerror(ret));
 	return ret;
@@ -793,7 +793,7 @@ fcc_move(krb5_context context, krb5_ccache from, krb5_ccache to)
 
 	unlink(FILENAME(to));
 
-	ret = fcc_open(context, to, &fd2, 
+	ret = fcc_open(context, to, &fd2,
 		       O_WRONLY | O_CREAT | O_EXCL | O_BINARY, 0600);
 	if(ret)
 	    goto out1;
@@ -816,7 +816,7 @@ fcc_move(krb5_context context, krb5_ccache from, krb5_ccache to)
 	    goto out2;
 	}
 	erase_file(FILENAME(from));
-	    
+
     out2:
 	fcc_unlock(context, fd2);
 	close(fd2);
@@ -839,14 +839,14 @@ fcc_move(krb5_context context, krb5_ccache from, krb5_ccache to)
 	krb5_storage_free(sp);
 	fcc_unlock(context, fd);
 	close(fd);
-    }    
+    }
     return ret;
 }
 
 static krb5_error_code
 fcc_default_name(krb5_context context, char **str)
 {
-    return _krb5_expand_default_cc_name(context, 
+    return _krb5_expand_default_cc_name(context,
 					KRB5_DEFAULT_CCNAME_FILE,
 					str);
 }

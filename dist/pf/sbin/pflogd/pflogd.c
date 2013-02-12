@@ -745,7 +745,7 @@ main(int argc, char **argv)
 		if (gotsig_alrm) {
 			if (dpcap)
 				flush_buffer(dpcap);
-			else 
+			else
 				gotsig_hup = 1;
 			gotsig_alrm = 0;
 			alarm(delay);

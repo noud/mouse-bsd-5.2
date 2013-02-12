@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -82,7 +82,7 @@ static unsigned int read_ledword(const unsigned char **in)
 	return ret;
 	}
 
-/* Read a BIGNUM in little endian format. The docs say that this should take up 
+/* Read a BIGNUM in little endian format. The docs say that this should take up
  * bitlen/8 bytes.
  */
 
@@ -341,10 +341,10 @@ static EVP_PKEY *b2i_dss(const unsigned char **in, unsigned int length,
 			goto memerr;
 		if (!(ctx = BN_CTX_new()))
 			goto memerr;
-			
+
 		if (!BN_mod_exp(dsa->pub_key, dsa->g,
 						 dsa->priv_key, dsa->p, ctx))
-			
+
 			goto memerr;
 		BN_CTX_free(ctx);
 		}
@@ -367,7 +367,7 @@ static EVP_PKEY *b2i_dss(const unsigned char **in, unsigned int length,
 
 static EVP_PKEY *b2i_rsa(const unsigned char **in, unsigned int length,
 						unsigned int bitlen, int ispub)
-		
+
 	{
 	const unsigned char *p = *in;
 	EVP_PKEY *ret = NULL;
@@ -479,7 +479,7 @@ static int check_bitlen_dsa(DSA *dsa, int ispub, unsigned int *magic);
 
 static void write_rsa(unsigned char **out, RSA *rsa, int ispub);
 static void write_dsa(unsigned char **out, DSA *dsa, int ispub);
-	
+
 static int do_i2b(unsigned char **out, EVP_PKEY *pk, int ispub)
 	{
 	unsigned char *p;
@@ -565,7 +565,7 @@ static int check_bitlen_dsa(DSA *dsa, int ispub, unsigned int *pmagic)
 			goto badkey;
 		*pmagic = MS_DSS2MAGIC;
 		}
-	
+
 	return bitlen;
 	badkey:
 	PEMerr(PEM_F_CHECK_BITLEN_DSA, PEM_R_UNSUPPORTED_KEY_COMPONENTS);
@@ -624,7 +624,7 @@ static void write_rsa(unsigned char **out, RSA *rsa, int ispub)
 	write_lebn(out, rsa->d, nbyte);
 	}
 
-	
+
 static void write_dsa(unsigned char **out, DSA *dsa, int ispub)
 	{
 	int nbyte;
@@ -641,7 +641,7 @@ static void write_dsa(unsigned char **out, DSA *dsa, int ispub)
 	*out += 24;
 	return;
 	}
-	
+
 
 int i2b_PrivateKey_bio(BIO *out, EVP_PKEY *pk)
 	{
@@ -656,7 +656,7 @@ int i2b_PublicKey_bio(BIO *out, EVP_PKEY *pk)
 static int do_PVK_header(const unsigned char **in, unsigned int length,
 		int skip_magic,
 	       	unsigned int *psaltlen, unsigned int *pkeylen)
-		
+
 	{
 	const unsigned char *p = *in;
 	unsigned int pvk_magic, keytype, is_encrypted;
@@ -701,7 +701,7 @@ static int do_PVK_header(const unsigned char **in, unsigned int length,
 	return 1;
 	}
 
-static int derive_pvk_key(unsigned char *key, 
+static int derive_pvk_key(unsigned char *key,
 			const unsigned char *salt, unsigned int saltlen,
 			const unsigned char *pass, int passlen)
 	{
@@ -714,7 +714,7 @@ static int derive_pvk_key(unsigned char *key,
 	EVP_MD_CTX_cleanup(&mctx);
 	return 1;
 	}
-	
+
 
 static EVP_PKEY *do_PVK_body(const unsigned char **in,
 		unsigned int saltlen, unsigned int keylen,
@@ -831,8 +831,8 @@ EVP_PKEY *b2i_PVK_bio(BIO *in, pem_password_cb *cb, void *u)
 	return ret;
 	}
 
-	
-	
+
+
 static int i2b_PVK(unsigned char **out, EVP_PKEY*pk, int enclevel,
 		pem_password_cb *cb, void *u)
 	{

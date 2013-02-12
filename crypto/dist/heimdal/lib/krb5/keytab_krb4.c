@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2002 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "krb5_locl.h"
@@ -260,8 +260,8 @@ krb4_kt_end_seq_get (krb5_context context,
 }
 
 static krb5_error_code
-krb4_store_keytab_entry(krb5_context context, 
-			krb5_keytab_entry *entry, 
+krb4_store_keytab_entry(krb5_context context,
+			krb5_keytab_entry *entry,
 			krb5_storage *sp)
 {
     krb5_error_code ret;
@@ -331,7 +331,7 @@ krb4_kt_remove_entry(krb5_context context,
     krb5_kt_cursor cursor;
     krb5_storage *sp;
     int remove_flag = 0;
-    
+
     sp = krb5_storage_emem();
     if (sp == NULL) {
 	krb5_set_error_string(context, "malloc: out of memory");
@@ -341,9 +341,9 @@ krb4_kt_remove_entry(krb5_context context,
     if (ret) {
 	krb5_storage_free(sp);
 	return ret;
-    }	
+    }
     while(krb5_kt_next_entry(context, id, &e, &cursor) == 0) {
-	if(!krb5_kt_compare(context, &e, entry->principal, 
+	if(!krb5_kt_compare(context, &e, entry->principal,
 			    entry->vno, entry->keyblock.keytype)) {
 	    ret = krb4_store_keytab_entry(context, &e, sp);
 	    if(ret) {
@@ -370,7 +370,7 @@ krb4_kt_remove_entry(krb5_context context,
 	if(fd < 0) {
 	    memset(data.data, 0, data.length);
 	    krb5_data_free(&data);
-	    if(errno == EACCES || errno == EROFS) 
+	    if(errno == EACCES || errno == EROFS)
 		return KRB5_KT_NOWRITE;
 	    return errno;
 	}
@@ -399,7 +399,7 @@ krb4_kt_remove_entry(krb5_context context,
 		close(fd);
 		krb5_set_error_string(context, "failed writing to \"%s\"", d->filename);
 		return errno;
-		
+
 	    }
 	    st.st_size -= n;
 	}

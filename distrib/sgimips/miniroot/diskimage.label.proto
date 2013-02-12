@@ -1,7 +1,7 @@
 # /dev/rvnd1c:
 type: SCSI
 disk: install diskimag
-label: 
+label:
 flags:
 bytes/sector: 512
 sectors/track: 16
@@ -15,7 +15,7 @@ trackskew: 0
 cylinderskew: 0
 headswitch: 0           # microseconds
 track-to-track seek: 0  # microseconds
-drivedata: 0 
+drivedata: 0
 
 4 partitions:
 #        size    offset     fstype  [fsize bsize cpg/sgs]

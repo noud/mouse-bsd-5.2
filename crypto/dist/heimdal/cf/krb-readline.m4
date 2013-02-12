@@ -34,7 +34,7 @@ else
 	LIB_readline="\$(top_builddir)/lib/editline/libeditline.la \$(LIB_tgetent)"
 fi
 AM_CONDITIONAL(el_compat, test "$ac_foo" = yes)
-AC_DEFINE(HAVE_READLINE, 1, 
+AC_DEFINE(HAVE_READLINE, 1,
 	[Define if you have a readline compatible library.])dnl
 
 ])

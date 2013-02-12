@@ -94,7 +94,7 @@ static struct tok pimv2_register_flag_values[] = {
     { PIMV2_REGISTER_FLAG_BORDER, "Border" },
     { PIMV2_REGISTER_FLAG_NULL, "Null" },
     { 0, NULL}
-};    
+};
 
 /*
  * XXX: We consider a case where IPv6 is not ready yet for portability,

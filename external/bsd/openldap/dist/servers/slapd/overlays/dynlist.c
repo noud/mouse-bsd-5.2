@@ -337,7 +337,7 @@ done:;
 
 	return 0;
 }
-	
+
 static int
 dynlist_prepare_entry( Operation *op, SlapReply *rs, dynlist_info_t *dli )
 {
@@ -370,7 +370,7 @@ dynlist_prepare_entry( Operation *op, SlapReply *rs, dynlist_info_t *dli )
 	/* Don't generate member list if it wasn't requested */
 	for ( dlm = dli->dli_dlm; dlm; dlm = dlm->dlm_next ) {
 		if ( userattrs ||
-		     ad_inlist( dlm->dlm_member_ad, rs->sr_attrs ) ) 
+		     ad_inlist( dlm->dlm_member_ad, rs->sr_attrs ) )
 			break;
 	}
 	if ( dli->dli_dlm && !dlm )
@@ -481,7 +481,7 @@ dynlist_prepare_entry( Operation *op, SlapReply *rs, dynlist_info_t *dli )
 			o.ors_attrs = op->o_tmpcalloc( i + 1, sizeof( AttributeName ), op->o_tmpmemctx );
 			for ( i = 0, j = 0; lud->lud_attrs[i]; i++) {
 				const char	*text = NULL;
-	
+
 				ber_str2bv( lud->lud_attrs[i], 0, 0, &o.ors_attrs[j].an_name );
 				o.ors_attrs[j].an_desc = NULL;
 				(void)slap_bv2ad( &o.ors_attrs[j].an_name, &o.ors_attrs[j].an_desc, &text );
@@ -504,7 +504,7 @@ dynlist_prepare_entry( Operation *op, SlapReply *rs, dynlist_info_t *dli )
 						}
 
 					} else {
-						if ( !userattrs && 
+						if ( !userattrs &&
 								o.ors_attrs[j].an_desc != NULL &&
 								!ad_inlist( o.ors_attrs[j].an_desc, rs->sr_attrs ) )
 						{
@@ -519,7 +519,7 @@ dynlist_prepare_entry( Operation *op, SlapReply *rs, dynlist_info_t *dli )
 			if ( j == 0 ) {
 				goto cleanup;
 			}
-		
+
 			BER_BVZERO( &o.ors_attrs[j].an_name );
 		}
 
@@ -539,7 +539,7 @@ dynlist_prepare_entry( Operation *op, SlapReply *rs, dynlist_info_t *dli )
 		if ( o.ors_filter == NULL ) {
 			goto cleanup;
 		}
-		
+
 		o.o_bd = select_backend( &o.o_req_ndn, 1 );
 		if ( o.o_bd && o.o_bd->be_search ) {
 #ifdef SLAP_OPATTRS
@@ -624,7 +624,7 @@ dynlist_compare( Operation *op, SlapReply *rs )
 					&& backend_attribute( &o, NULL, &o.o_req_ndn,
 						ad_dgAuthz, &authz, ACL_READ ) == LDAP_SUCCESS )
 				{
-					
+
 					rs->sr_err = slap_sasl_matches( op, authz,
 						&o.o_ndn, &o.o_ndn );
 					ber_bvarray_free_x( authz, op->o_tmpmemctx );
@@ -909,7 +909,7 @@ dynlist_db_config(
 		}
 
 		for ( i = 3; i < argc; i++ ) {
-			char *arg; 
+			char *arg;
 			char *cp;
 			AttributeDescription *member_ad = NULL;
 			AttributeDescription *mapped_ad = NULL;
@@ -918,7 +918,7 @@ dynlist_db_config(
 
 
 			/*
-			 * If no mapped attribute is given, dn is used 
+			 * If no mapped attribute is given, dn is used
 			 * for backward compatibility.
 			 */
 			arg = argv[i];
@@ -933,7 +933,7 @@ dynlist_db_config(
 						fname, lineno, arg );
 					return 1;
 				}
-				
+
 				arg = cp + 1;
 			}
 
@@ -954,7 +954,7 @@ dynlist_db_config(
 			dlmp->dlm_member_ad = member_ad;
 			dlmp->dlm_mapped_ad = mapped_ad;
 			dlmp->dlm_next = NULL;
-		
+
 			if ( dlml != NULL )
 				dlml->dlm_next = dlmp;
 			dlml = dlmp;
@@ -963,9 +963,9 @@ dynlist_db_config(
 		for ( dlip = (dynlist_info_t **)&on->on_bi.bi_private;
 			*dlip; dlip = &(*dlip)->dli_next )
 		{
-			/* 
+			/*
 			 * The same URL attribute / member attribute pair
-			 * cannot be repeated, but we enforce this only 
+			 * cannot be repeated, but we enforce this only
 			 * when the member attribute is unique. Performing
 			 * the check for multiple values would require
 			 * sorting and comparing the lists, which is left
@@ -1062,9 +1062,9 @@ dynlist_db_config(
 		for ( dlip = (dynlist_info_t **)&on->on_bi.bi_private;
 			*dlip; dlip = &(*dlip)->dli_next )
 		{
-			/* 
+			/*
 			 * The same URL attribute / member attribute pair
-			 * cannot be repeated, but we enforce this only 
+			 * cannot be repeated, but we enforce this only
 			 * when the member attribute is unique. Performing
 			 * the check for multiple values would require
 			 * sorting and comparing the lists, which is left
@@ -1178,7 +1178,7 @@ dl_cfgen( ConfigArgs *c )
 						ptr[ 0 ] = ':';
 						ptr++;
 					}
-						
+
 					ptr = lutil_strcopy( ptr, dlm->dlm_member_ad->ad_cname.bv_val );
 				}
 
@@ -1307,7 +1307,7 @@ dl_cfgen( ConfigArgs *c )
 		}
 
 		for ( i = 3; i < c->argc; i++ ) {
-			char *arg; 
+			char *arg;
 			char *cp;
 			AttributeDescription *member_ad = NULL;
 			AttributeDescription *mapped_ad = NULL;
@@ -1316,7 +1316,7 @@ dl_cfgen( ConfigArgs *c )
 
 
 			/*
-			 * If no mapped attribute is given, dn is used 
+			 * If no mapped attribute is given, dn is used
 			 * for backward compatibility.
 			 */
 			arg = c->argv[i];
@@ -1355,8 +1355,8 @@ dl_cfgen( ConfigArgs *c )
 			dlmp->dlm_member_ad = member_ad;
 			dlmp->dlm_mapped_ad = mapped_ad;
 			dlmp->dlm_next = NULL;
-		
-			if ( dlml != NULL ) 
+
+			if ( dlml != NULL )
 				dlml->dlm_next = dlmp;
 			dlml = dlmp;
 		}
@@ -1457,9 +1457,9 @@ dl_cfgen( ConfigArgs *c )
 		for ( dlip = (dynlist_info_t **)&on->on_bi.bi_private;
 			*dlip; dlip = &(*dlip)->dli_next )
 		{
-			/* 
+			/*
 			 * The same URL attribute / member attribute pair
-			 * cannot be repeated, but we enforce this only 
+			 * cannot be repeated, but we enforce this only
 			 * when the member attribute is unique. Performing
 			 * the check for multiple values would require
 			 * sorting and comparing the lists, which is left
@@ -1545,8 +1545,8 @@ dynlist_db_open(
 					return 1;
 				}
 			}
-		
-			dli->dli_ad = ad;			
+
+			dli->dli_ad = ad;
 		}
 
 		if ( BER_BVISNULL( &dli->dli_default_filter ) ) {

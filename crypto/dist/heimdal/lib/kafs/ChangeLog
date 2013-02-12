@@ -5,25 +5,25 @@
 2007-05-10  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* kafs.h: Add VIOCSETTOK2
-	
+
 2006-10-21  Love Hörnquist Åstrand  <lha@it.su.se>
-	
+
 	* Makefile.am: unbreak previous
-	
+
 	* Makefile.am: split dist and nodist sources
-	
+
 2006-10-20  Love Hörnquist Åstrand  <lha@it.su.se>
-	
+
 	* Makefile.am: add more files
-	
+
 2006-05-01  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* kafs.3: Spelling, from Björn Sandell.
-	
+
 2006-04-11  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afssys.c: use afs_ioctlnum, From Tomas Olsson <tol@it.su.se>
-	
+
 2006-04-10  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afssys.c: Try harder to get the pioctl to work via the /proc or
@@ -33,13 +33,13 @@
 
 	* afskrb5.c (afslog_uid_int): use the simpler
 	krb5_principal_get_realm function.
-	
+
 2005-12-21  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* Makefile.am: Remove dependency on config.h, breaks IRIX build,
 	could depend on libkafs_la_OBJECTS, but that is just asking for
 	trubble.
-	
+
 2005-10-20  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afssys.c (k_hasafs_recheck): new function, allow rechecking if
@@ -47,7 +47,7 @@
 	state from k_hasafs() and retry retry the probing. The problem
 	with calling k_hasaf() is that is plays around with signals, and
 	that cases problem for some systems/applications.
-	
+
 2005-10-02  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* kafs_locl.h: Maybe include <sys/sysctl.h>.
@@ -56,12 +56,12 @@
 	use the syscall, there is no cpp define to use to check the
 	version.  Every after 10.0 (darwin 8.0) uses the /dev/ version of
 	the pioctl.
-	
+
 2005-10-01  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afssys.c: Support the new MacOS X 10.4 ioctl interface that is a
 	device node. Patched from Tomas Olson <tol@it.su.se>.
-	
+
 2005-08-26  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afskrb5.c: Default to use 2b tokens.
@@ -71,14 +71,14 @@
 	* common.c: rename index to idx
 
 	* afssys.c (k_afs_cell_of_file): unconst path
-	
+
 2005-06-02  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* use struct kafs_data everywhere, don't mix with the typedef
 	kafs_data
 
 	* roken_rename.h: rename more resolve.c symbols
-	
+
 	* afssys.c: Don't building map_syscall_name_to_number where its
 	not used.
 
@@ -89,23 +89,23 @@
 2005-02-03  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* kafs.h: de-__P
-	
+
 2004-12-06  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afskrb5.c: s/KEYTYPE_DES/ETYPE_DES_CBC_CRC/
-	
+
 2004-08-09  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afssysdefs.h: ifdef protect AFS_SYSCALL for DragonFly since they
 	still define __FreeBSD__ (and __FreeBSD_version), but claim that
 	they will stop doing it some time...
-	
+
 	* afssysdefs.h: dragonflybsd uses 339 just like freebsd5
-	
+
 2004-06-22  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afssys.c: s/arla/nnpfs/
-	
+
 	* afssys.c: support the linux /proc/fs/mumel/afs_ioctl afs
 	"syscall" interface
 
@@ -113,29 +113,29 @@
 
 	* common.c: search paths for AFS configuration files for the
 	OpenAFS MacOS X, fix comment
-	
+
 	* kafs.h: search paths for AFS configuration files for the OpenAFS
 	MacOS X
 
 2003-12-02  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* common.c: add _PATH_ARLA_OPENBSD & c/o
-	
+
 	* kafs.h: add _PATH_ARLA_OPENBSD & c/o
-	
+
 2003-11-14  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* common.c: typo, Bruno Rohee <bruno@rohee.com>
-	
+
 2003-11-08  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* kafs.3: spelling, partly from jmc <jmc@prioris.mini.pw.edu.pl>
-	
+
 2003-09-30  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afskrb5.c (krb5_afslog_uid_home): be even more friendly to the
 	user and fetch context and id ourself
-	
+
 2003-09-23  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afskrb5.c (afslog_uid_int): just belive that realm hint the user
@@ -144,14 +144,14 @@
 2003-07-23  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* Makefile.am: always include v4 symbols
-	
+
 	* afskrb.c: provide dummy krb_ function to there is no need to
 	bump major
 
 2003-06-22  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afskrb5.c (v5_convert): rename one of the two c to cred4
-	
+
 2003-04-23  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* common.c, kafs.h: drop the int argument (the error code) from
@@ -170,11 +170,11 @@
 2003-04-14  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* Makefile.am: (libkafs_la_LDFLAGS): update version
-	
+
 	* Makefile.am (ROKEN_SRCS): drop strupr.c
-	
+
 	* kafs.3: document kafs_set_verbose
-	
+
 	* common.c (kafs_set_verbose): add function that (re)sets the
 	logging function
 	(_kafs_try_get_cred): add function that does (krb_data->get_cred) to
@@ -195,10 +195,10 @@
 2003-04-11  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* kafs.3: tell that cell-name is uppercased
-	
+
 	* Makefile.am: add INCLUDE_krb4 when using krb4, add INCLUDE_des
 	when using krb5, add strupr.c
-	
+
 	* afskrb5.c: Check the cell part of the name, not the realm part
 	when checking if 2b should be used. The reson is afs@REALM might
 	have updated their servers but not afs/cell@REALM. Add constant
@@ -207,14 +207,14 @@
 2003-04-06  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* kafs.3: s/kerberos/Kerberos/
-	
+
 2003-03-19  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* kafs.3: spelling, from <jmc@prioris.mini.pw.edu.pl>
-	
+
 	* kafs.3: document the kafs_settoken functions write about the
 	krb5_appdefault option for kerberos 5 afs tokens fix prototypes
-	
+
 2003-03-18  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afskrb5.c (kafs_settoken5): change signature to include a
@@ -230,9 +230,9 @@
 
 	* Makefile.am: always build the libkafs library now that the
 	kerberos 5 can stand on their own
-	
+
 	* kafs.3: expose the krb5 functions
-	
+
 	* common.c (kafs_settoken_rxkad): move all content kerberos
 	version from kafs_settoken to kafs_settoken_rxkad
 	(_kafs_fixup_viceid): move the fixup the timestamp to make client
@@ -249,11 +249,11 @@
 	directly or converted via 524 first.
 
 	* afskrb.c: move kafs_settoken here, use struct kafs_token
-	
+
 	* kafs_locl.h: include krb5-v4compat.h if needed, define an
 	internal structure struct kafs_token that carries around for rxkad
 	data that is independant of kerberos version
-	
+
 2003-02-18  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* dlfcn.h: s/intialize/initialize, from
@@ -267,7 +267,7 @@
 
 	* afssysdefs.h: use syscall 208 on openbsd (all version) use
 	syscall 339 on freebsd 5.0 and later, use 210 on 4.x and earlier
-	
+
 2002-08-28  Johan Danielsson  <joda@pdc.kth.se>
 
 	* kafs.3: move around sections (from NetBSD)
@@ -398,7 +398,7 @@
 1999-11-22  Assar Westerlund  <assar@sics.se>
 
 	* afskrb5.c (afslog_uid_int): handle d->realm == NULL
-	
+
 1999-11-17  Assar Westerlund  <assar@sics.se>
 
 	* afskrb5.c (afslog_uid_int): don't look at the local realm at

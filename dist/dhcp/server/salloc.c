@@ -70,7 +70,7 @@ void relinquish_lease_hunks ()
 		}
 	    }
 	}
-		
+
 	for (c = lease_hunks; c; c = n) {
 		n = c -> next;
 		if (c -> ends != c -> starts) {

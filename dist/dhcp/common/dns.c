@@ -135,7 +135,7 @@ isc_result_t find_tsig_key (ns_tsig_key **key, const char *zname,
 	if (!zone -> key) {
 		return ISC_R_KEY_UNKNOWN;
 	}
-	
+
 	if ((!zone -> key -> name ||
 	     strlen (zone -> key -> name) > NS_MAXDNAME) ||
 	    (!zone -> key -> algorithm ||
@@ -436,7 +436,7 @@ void cache_found_zone (ns_class class,
 	/* XXX Need to get the lower-level code to push the actual zone
 	   XXX TTL up to us. */
 	zone -> timeout = cur_time + 1800;
-	
+
 	if (!option_cache_allocate (&zone -> primary, MDL)) {
 		dns_zone_dereference (&zone, MDL);
 		return;
@@ -877,7 +877,7 @@ isc_result_t ddns_remove_a (struct data_string *ddns_fwd_name,
 		/* If the rrset isn't there, we didn't need to do the
 		   delete, which is success. */
 		if (result == ISC_R_NXRRSET || result == ISC_R_NXDOMAIN)
-			result = ISC_R_SUCCESS;	
+			result = ISC_R_SUCCESS;
 		goto error;
 	}
 

@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -117,7 +117,7 @@ int ASN1_STRING_set_default_mask_asc(char *p)
 }
 
 /* The following function generates an ASN1_STRING based on limits in a table.
- * Frequently the types and length of an ASN1_STRING are restricted by a 
+ * Frequently the types and length of an ASN1_STRING are restricted by a
  * corresponding OID. For example certificates and certificate requests.
  */
 
@@ -199,7 +199,7 @@ ASN1_STRING_TABLE *ASN1_STRING_TABLE_get(int nid)
 	ASN1_STRING_TABLE fnd;
 	fnd.nid = nid;
 	ttmp = (ASN1_STRING_TABLE *) OBJ_bsearch((char *)&fnd,
-					(char *)tbl_standard, 
+					(char *)tbl_standard,
 			sizeof(tbl_standard)/sizeof(ASN1_STRING_TABLE),
 			sizeof(ASN1_STRING_TABLE), table_cmp);
 	if(ttmp) return ttmp;
@@ -208,7 +208,7 @@ ASN1_STRING_TABLE *ASN1_STRING_TABLE_get(int nid)
 	if(idx < 0) return NULL;
 	return sk_ASN1_STRING_TABLE_value(stable, idx);
 }
-	
+
 int ASN1_STRING_TABLE_add(int nid,
 		 long minsize, long maxsize, unsigned long mask,
 				unsigned long flags)

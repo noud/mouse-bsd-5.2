@@ -46,7 +46,7 @@ Version history:
 	o PAM support for Xauth
 	o Privilege separation
 	o ESP fragmentation in tunnel mode can be tunned (NetBSD only)
-	o racoon admin interface is exported (header and library) to 
+	o racoon admin interface is exported (header and library) to
 	  help building control programs for racoon (think GUI)
  	o Fixed single DES support; single DES users MUST UPGRADE.
 
@@ -54,7 +54,7 @@ Version history:
 	o Rewritten buildsystem. Now completely autoconfed, automaked,
 	  libtoolized.
 	o IPsec-tools now compiles on NetBSD and FreeBSD again.
-	o Support for server-side hybrid authentication, with full 
+	o Support for server-side hybrid authentication, with full
 	  RADIUS supoort. This is interoperable with the Cisco VPN client.
 	o Support for client-side hybrid authentication (Tested only with
 	  a racoon server)

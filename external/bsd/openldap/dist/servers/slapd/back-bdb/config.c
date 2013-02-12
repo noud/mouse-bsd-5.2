@@ -113,7 +113,7 @@ static ConfigTable bdbcfg[] = {
 		"EQUALITY caseIgnoreMatch "
 		"SYNTAX OMsDirectoryString )", NULL, NULL },
 	{ "linearindex", NULL, 1, 2, 0, ARG_ON_OFF|ARG_OFFSET,
-		(void *)offsetof(struct bdb_info, bi_linear_index), 
+		(void *)offsetof(struct bdb_info, bi_linear_index),
 		"( OLcfgDbAt:1.7 NAME 'olcDbLinearIndex' "
 		"DESC 'Index attributes one at a time' "
 		"SYNTAX OMsBoolean SINGLE-VALUE )", NULL, NULL },
@@ -131,7 +131,7 @@ static ConfigTable bdbcfg[] = {
 		"DESC 'Depth of search stack in IDLs' "
 		"SYNTAX OMsInteger SINGLE-VALUE )", NULL, NULL },
 	{ "shm_key", "key", 2, 2, 0, ARG_LONG|ARG_OFFSET,
-		(void *)offsetof(struct bdb_info, bi_shm_key), 
+		(void *)offsetof(struct bdb_info, bi_shm_key),
 		"( OLcfgDbAt:1.10 NAME 'olcDbShmKey' "
 		"DESC 'Key for shared memory region' "
 		"SYNTAX OMsInteger SINGLE-VALUE )", NULL, NULL },
@@ -177,7 +177,7 @@ bdb_checkpoint( void *ctx, void *arg )
 {
 	struct re_s *rtask = arg;
 	struct bdb_info *bdb = rtask->arg;
-	
+
 	TXN_CHECKPOINT( bdb->bi_dbenv, bdb->bi_txn_cp_kbyte,
 		bdb->bi_txn_cp_min, 0 );
 	ldap_pvt_thread_mutex_lock( &slapd_rq.rq_mutex );
@@ -215,7 +215,7 @@ bdb_online_index( void *ctx, void *arg )
 
 	DBTzero( &key );
 	DBTzero( &data );
-	
+
 	id = 1;
 	key.data = &nid;
 	key.size = key.ulen = sizeof(ID);
@@ -229,7 +229,7 @@ bdb_online_index( void *ctx, void *arg )
 			break;
 
 		rc = TXN_BEGIN( bdb->bi_dbenv, NULL, &txn, bdb->bi_db_opflags );
-		if ( rc ) 
+		if ( rc )
 			break;
 		locker = TXN_ID( txn );
 		if ( getnext ) {
@@ -334,7 +334,7 @@ bdb_cf_cleanup( ConfigArgs *c )
 		bdb_attr_flush( bdb );
 		bdb->bi_flags ^= BDB_DEL_INDEX;
 	}
-	
+
 	if ( bdb->bi_flags & BDB_RE_OPEN ) {
 		bdb->bi_flags ^= BDB_RE_OPEN;
 		rc = c->be->bd_info->bi_db_close( c->be, &c->reply );
@@ -446,7 +446,7 @@ bdb_cf_gen( ConfigArgs *c )
 			if ( bdb->bi_dbenv_xflags & DB_TXN_NOSYNC )
 				c->value_int = 1;
 			break;
-			
+
 		case BDB_INDEX:
 			bdb_attr_index_unparse( bdb, &c->rvalue_vals );
 			if ( !c->rvalue_vals ) rc = 1;

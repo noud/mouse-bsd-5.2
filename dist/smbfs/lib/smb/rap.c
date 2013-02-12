@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: rap.c,v 1.8 2001/02/24 15:56:05 bp Exp 
+ * from: Id: rap.c,v 1.8 2001/02/24 15:56:05 bp Exp
  *
  * This is very simple implementation of RAP protocol.
  */
@@ -207,7 +207,7 @@ smb_rap_create(int fn, const char *param, const char *data,
 	 * Calculate length of request parameter block
 	 */
 	len = 2 + strlen(param) + 1 + strlen(data) + 1;
-	
+
 	while (*p) {
 		if (smb_rap_parserqparam(p, &p, &plen) != 0)
 			break;

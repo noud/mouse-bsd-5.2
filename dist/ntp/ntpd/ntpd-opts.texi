@@ -3,9 +3,9 @@
 @pindex ntpd
 @cindex NTP daemon program
 @ignore
-# 
+#
 # EDIT THIS FILE WITH CAUTION  (ntpd-opts.texi)
-# 
+#
 # It has been AutoGen-ed  Thursday January  8, 2009 at 06:11:58 AM EST
 # From the definitions    ntpd-opts.def
 # and the template file   aginfo.tpl
@@ -239,7 +239,7 @@ The name and path of the frequency file,
 by default.
 This is the same operation as the
 driftfile driftfile
-configuration specification in the 
+configuration specification in the
 /etc/ntp.conf
 file.
 

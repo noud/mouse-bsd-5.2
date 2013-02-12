@@ -101,7 +101,7 @@ v_editopt(SCR *sp, VICMD *vp)
 
 	INT2CHAR(sp, vp->ev.e_str2, STRLEN(vp->ev.e_str2)+1, np, nlen);
 	p2 = strdup(np);
-	rval = api_opts_set(sp, vp->ev.e_str1, p2, 
+	rval = api_opts_set(sp, vp->ev.e_str1, p2,
 			    vp->ev.e_val1, vp->ev.e_val1);
 	if (sp->gp->scr_reply != NULL)
 		(void)sp->gp->scr_reply(sp, rval, NULL);

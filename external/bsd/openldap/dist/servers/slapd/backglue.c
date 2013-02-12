@@ -300,7 +300,7 @@ glue_chk_controls ( Operation *op, SlapReply *rs )
 		rc = ( *op->o_bd->bd_info->bi_chk_controls )( op, rs );
 	}
 
-	
+
 	if ( rc == SLAP_CB_CONTINUE ) {
 		rc = backend_check_controls( op, rs );
 	}
@@ -388,7 +388,7 @@ glue_op_search ( Operation *op, SlapReply *rs )
 		b1 = op->o_bd;
 
 		/*
-		 * Execute in reverse order, most specific first 
+		 * Execute in reverse order, most specific first
 		 */
 		for (i = gi->gi_nodes; i >= 0; i--) {
 			if ( i == gi->gi_nodes ) {
@@ -422,7 +422,7 @@ glue_op_search ( Operation *op, SlapReply *rs )
 			}
 			rs->sr_err = 0;
 			/*
-			 * check for abandon 
+			 * check for abandon
 			 */
 			if (op->o_abandon) {
 				goto end_of_loop;
@@ -431,8 +431,8 @@ glue_op_search ( Operation *op, SlapReply *rs )
 
 			assert( op->o_bd->be_suffix != NULL );
 			assert( op->o_bd->be_nsuffix != NULL );
-			
-			if (scope0 == LDAP_SCOPE_ONELEVEL && 
+
+			if (scope0 == LDAP_SCOPE_ONELEVEL &&
 				dn_match(pdn, &ndn))
 			{
 				op->ors_scope = LDAP_SCOPE_BASE;
@@ -515,7 +515,7 @@ glue_op_search ( Operation *op, SlapReply *rs )
 							sizeof( PagedResultsCookie ));
 					}
 				}
-				
+
 			default:
 				break;
 			}
@@ -1007,7 +1007,7 @@ glue_db_destroy (
 }
 
 static int
-glue_db_close( 
+glue_db_close(
 	BackendDB *be,
 	ConfigReply *cr
 )

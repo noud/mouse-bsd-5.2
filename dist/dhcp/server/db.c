@@ -383,7 +383,7 @@ int write_host (host)
 				putc (';', db_file);
 			}
 		}
-		
+
 		memset (&ip_addrs, 0, sizeof ip_addrs);
 		if (host -> fixed_addr &&
 		    evaluate_option_cache (&ip_addrs, (struct packet *)0,
@@ -393,7 +393,7 @@ int write_host (host)
 					   (struct option_state *)0,
 					   &global_scope,
 					   host -> fixed_addr, MDL)) {
-		
+
 			errno = 0;
 			fprintf (db_file, "\n  fixed-address ");
 			if (errno) {
@@ -854,7 +854,7 @@ int new_lease_file ()
 #if defined (TRACING)
 	}
 #endif
-	
+
 	/* Move in the new file... */
 	if (rename (newfname, path_dhcpd_db) < 0) {
 		log_error ("Can't install new lease database %s to %s: %m",

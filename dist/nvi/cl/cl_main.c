@@ -88,7 +88,7 @@ main(int argc, char **argv)
 
 	/* Create new window */
 	wp = gs_new_win(gp);
-		
+
 	/* Create and initialize the CL_PRIVATE structure. */
 	clp = cl_init(wp);
 

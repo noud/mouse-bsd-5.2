@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -261,7 +261,7 @@ int UI_dup_input_string(UI *ui, const char *prompt, int flags,
 			return 0;
 			}
 		}
-	
+
 	return general_allocate_string(ui, prompt_copy, 1,
 		UIT_PROMPT, flags, result_buf, minsize, maxsize, NULL);
 	}
@@ -287,7 +287,7 @@ int UI_dup_verify_string(UI *ui, const char *prompt, int flags,
 			return -1;
 			}
 		}
-	
+
 	return general_allocate_string(ui, prompt_copy, 1,
 		UIT_VERIFY, flags, result_buf, minsize, maxsize, test_buf);
 	}
@@ -318,7 +318,7 @@ int UI_dup_input_boolean(UI *ui, const char *prompt, const char *action_desc,
 			goto err;
 			}
 		}
-	
+
 	if (action_desc)
 		{
 		action_desc_copy=BUF_strdup(action_desc);
@@ -328,7 +328,7 @@ int UI_dup_input_boolean(UI *ui, const char *prompt, const char *action_desc,
 			goto err;
 			}
 		}
-	
+
 	if (ok_chars)
 		{
 		ok_chars_copy=BUF_strdup(ok_chars);
@@ -338,7 +338,7 @@ int UI_dup_input_boolean(UI *ui, const char *prompt, const char *action_desc,
 			goto err;
 			}
 		}
-	
+
 	if (cancel_chars)
 		{
 		cancel_chars_copy=BUF_strdup(cancel_chars);
@@ -348,7 +348,7 @@ int UI_dup_input_boolean(UI *ui, const char *prompt, const char *action_desc,
 			goto err;
 			}
 		}
-	
+
 	return general_allocate_boolean(ui, prompt_copy, action_desc_copy,
 		ok_chars_copy, cancel_chars_copy, 1, UIT_BOOLEAN, flags,
 		result_buf);

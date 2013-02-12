@@ -417,10 +417,10 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-afslog$(EXEEXT): $(afslog_OBJECTS) $(afslog_DEPENDENCIES) 
+afslog$(EXEEXT): $(afslog_OBJECTS) $(afslog_DEPENDENCIES)
 	@rm -f afslog$(EXEEXT)
 	$(LINK) $(afslog_OBJECTS) $(afslog_LDADD) $(LIBS)
-pagsh$(EXEEXT): $(pagsh_OBJECTS) $(pagsh_DEPENDENCIES) 
+pagsh$(EXEEXT): $(pagsh_OBJECTS) $(pagsh_DEPENDENCIES)
 	@rm -f pagsh$(EXEEXT)
 	$(LINK) $(pagsh_OBJECTS) $(pagsh_LDADD) $(LIBS)
 

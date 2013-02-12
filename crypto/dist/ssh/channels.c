@@ -772,14 +772,14 @@ static int channel_tcpwinsz(void)
 	int ret = -1;
 
 	/* if we aren't on a socket return 128KB*/
-	if(!packet_connection_is_on_socket()) 
+	if(!packet_connection_is_on_socket())
 	    return(128*1024);
 	ret = getsockopt(packet_get_connection_in(),
 			 SOL_SOCKET, SO_RCVBUF, &tcpwinsz, &optsz);
 	/* return no more than 64MB */
 	if ((ret == 0) && tcpwinsz > BUFFER_MAX_LEN_HPN)
 	    tcpwinsz = BUFFER_MAX_LEN_HPN;
-	debug2("tcpwinsz: %d for connection: %d", tcpwinsz, 
+	debug2("tcpwinsz: %d for connection: %d", tcpwinsz,
 	       packet_get_connection_in());
 	return(tcpwinsz);
 }
@@ -792,9 +792,9 @@ channel_pre_open(Channel *c, fd_set *readset, fd_set *writeset)
         /* check buffer limits */
 	if ((!c->tcpwinsz) || (c->dynamic_window > 0))
     	    c->tcpwinsz = channel_tcpwinsz();
-	
+
 	limit = MIN(limit, 2 * c->tcpwinsz);
-	
+
 	if (c->istate == CHAN_INPUT_OPEN &&
 	    limit > 0 &&
 	    buffer_len(&c->input) < limit &&
@@ -2364,7 +2364,7 @@ channel_set_af(int af)
 
 static int
 channel_setup_fwd_listener(int type, const char *listen_addr, u_short listen_port,
-    const char *host_to_connect, u_short port_to_connect, int gateway_ports, 
+    const char *host_to_connect, u_short port_to_connect, int gateway_ports,
     int hpn_disabled, int hpn_buffer_size)
 {
 	Channel *c;
@@ -2483,7 +2483,7 @@ channel_setup_fwd_listener(int type, const char *listen_addr, u_short listen_por
 		else
 			c = channel_new("port listener", type, sock, sock, -1,
 		    	  hpn_buffer_size, CHAN_TCP_PACKET_DEFAULT,
-		    	  0, "port listener", 1); 
+		    	  0, "port listener", 1);
 		strlcpy(c->path, host, sizeof(c->path));
 		c->host_port = port_to_connect;
 		c->listening_port = listen_port;
@@ -2520,7 +2520,7 @@ channel_cancel_rport_listener(const char *host, u_short port)
 /* protocol local port fwd, used by ssh (and sshd in v1) */
 int
 channel_setup_local_fwd_listener(const char *listen_host, u_short listen_port,
-    const char *host_to_connect, u_short port_to_connect, int gateway_ports, 
+    const char *host_to_connect, u_short port_to_connect, int gateway_ports,
     int hpn_disabled, int hpn_buffer_size)
 {
 	return channel_setup_fwd_listener(SSH_CHANNEL_PORT_LISTENER,
@@ -2534,7 +2534,7 @@ channel_setup_remote_fwd_listener(const char *listen_address,
     u_short listen_port, int gateway_ports, int hpn_disabled, int hpn_buffer_size)
 {
 	return channel_setup_fwd_listener(SSH_CHANNEL_RPORT_LISTENER,
-	    listen_address, listen_port, NULL, 0, gateway_ports, 
+	    listen_address, listen_port, NULL, 0, gateway_ports,
 	    hpn_disabled, hpn_buffer_size);
 }
 
@@ -2879,7 +2879,7 @@ channel_send_window_changes(void)
  */
 int
 x11_create_display_inet(int x11_display_offset, int x11_use_localhost,
-    int single_connection, u_int *display_numberp, int **chanids, 
+    int single_connection, u_int *display_numberp, int **chanids,
     int hpn_disabled, int hpn_buffer_size)
 {
 	Channel *nc = NULL;
@@ -2953,12 +2953,12 @@ x11_create_display_inet(int x11_display_offset, int x11_use_localhost,
 	for (n = 0; n < num_socks; n++) {
 		sock = socks[n];
 		/* Is this really necassary? */
-		if (hpn_disabled) 
+		if (hpn_disabled)
 		nc = channel_new("x11 listener",
 		    SSH_CHANNEL_X11_LISTENER, sock, sock, -1,
 		    CHAN_X11_WINDOW_DEFAULT, CHAN_X11_PACKET_DEFAULT,
 		    0, "X11 inet listener", 1);
-		else 
+		else
 			nc = channel_new("x11 listener",
 			    SSH_CHANNEL_X11_LISTENER, sock, sock, -1,
 			    hpn_buffer_size, CHAN_X11_PACKET_DEFAULT,

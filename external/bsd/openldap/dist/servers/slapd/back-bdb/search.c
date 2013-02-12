@@ -37,7 +37,7 @@ static int search_candidates(
 
 static int parse_paged_cookie( Operation *op, SlapReply *rs );
 
-static void send_paged_response( 
+static void send_paged_response(
 	Operation *op,
 	SlapReply *rs,
 	ID  *lastid,
@@ -267,7 +267,7 @@ retry1:
 		if ( op->ors_scope == LDAP_SCOPE_ONELEVEL ) break;
 nextido:
 		ido = bdb_idl_next( oldsubs, &cursoro );
-		
+
 		/* If we're done processing the old scopes, did we add any new
 		 * scopes in this iteration? If so, go back and do those now.
 		 */
@@ -494,7 +494,7 @@ dn2entry_retry:
 		/* entry is a referral, don't allow add */
 		struct berval matched_dn = BER_BVNULL;
 		BerVarray erefs = NULL;
-		
+
 		ber_dupbv( &matched_dn, &e->e_name );
 		erefs = get_entry_referrals( op, e );
 
@@ -626,7 +626,7 @@ dn2entry_retry:
 		}
 		id = bdb_idl_first( candidates, &cursor );
 		if ( id == NOID ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				LDAP_XSTRING(bdb_search)
 				": no paged results candidates\n",
 				0, 0, 0 );
@@ -1173,7 +1173,7 @@ done:;
 }
 
 static void
-send_paged_response( 
+send_paged_response(
 	Operation	*op,
 	SlapReply	*rs,
 	ID		*lastid,
@@ -1186,7 +1186,7 @@ send_paged_response(
 	struct berval cookie;
 
 	Debug(LDAP_DEBUG_ARGS,
-		"send_paged_response: lastid=0x%08lx nentries=%d\n", 
+		"send_paged_response: lastid=0x%08lx nentries=%d\n",
 		lastid ? *lastid : 0, rs->sr_nentries, NULL );
 
 	BER_BVZERO( &ctrl.ldctl_value );
@@ -1211,7 +1211,7 @@ send_paged_response(
 		rs->sr_nentries;
 
 	/* return size of 0 -- no estimate */
-	ber_printf( ber, "{iO}", 0, &cookie ); 
+	ber_printf( ber, "{iO}", 0, &cookie );
 
 	if ( ber_flatten2( ber, &ctrls[0]->ldctl_value, 0 ) == -1 ) {
 		goto done;

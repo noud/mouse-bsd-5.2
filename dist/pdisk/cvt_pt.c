@@ -4,7 +4,7 @@
  *	Covert partition type.	$Revision: 1.5 $
  *
  *	Copyright (c)  1999, Eryk Vershen
- * 
+ *
  * History:
  * Log: cvt_pt.c,v
  * Revision 1.2  2000/05/16 13:56:11  eryk
@@ -196,7 +196,7 @@ process(char *filename)
     } else {
 	// 4a)       modify the type
 	strncpy(entry->data->dpme_type, kUnixType, DPISTRLEN);
-	
+
 	// 5)       and write back.
 	write_partition_map(map);
     }

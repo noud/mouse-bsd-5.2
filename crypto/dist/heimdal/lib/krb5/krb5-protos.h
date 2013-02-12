@@ -1619,7 +1619,7 @@ krb5_err (
 	...)
     __attribute__ ((noreturn, format (printf, 4, 5)));
 
-krb5_error_code KRB5_LIB_FUNCTION 
+krb5_error_code KRB5_LIB_FUNCTION
     __attribute__((deprecated)) krb5_free_creds_contents (krb5_context context, krb5_creds *c);
 
 krb5_error_code KRB5_LIB_FUNCTION

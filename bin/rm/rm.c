@@ -153,7 +153,7 @@ rm_tree(char **argv)
 	FTS *fts;
 	FTSENT *p;
 	int flags, needstat, rval;
-			
+
 	/*
 	 * Remove a file hierarchy.  If forcing removal (-f), or interactive
 	 * (-i) or can't ask anyway (stdin_ok), don't stat the file.
@@ -174,7 +174,7 @@ rm_tree(char **argv)
 	if ((fts = fts_open(argv, flags, NULL)) == NULL)
 		err(1, "fts_open failed");
 	while ((p = fts_read(fts)) != NULL) {
-	
+
 		switch (p->fts_info) {
 		case FTS_DNR:
 			if (!fflag || p->fts_errno != ENOENT) {
@@ -348,7 +348,7 @@ rm_file(char **argv)
  * It is impossible to actually conform to the exact procedure given in
  * the matrix if one is overwriting a file, not an entire disk, because
  * the procedure requires examination and comparison of the disk's defect
- * lists.  Any program that claims to securely erase *files* while 
+ * lists.  Any program that claims to securely erase *files* while
  * conforming to the standard, then, is not correct.  We do as much of
  * what the standard requires as can actually be done when erasing a
  * file, rather than an entire disk; but that does not make us conformant.
@@ -362,7 +362,7 @@ rm_file(char **argv)
  *
  * Finally, widely respected research suggests that the given procedure
  * is nowhere near sufficient to prevent the recovery of data using special
- * forensic equipment and techniques that are well-known.  This is 
+ * forensic equipment and techniques that are well-known.  This is
  * presumably one reason that the matrix requires physical media destruction,
  * rather than any technique of the sort attempted here, for secret data.
  *
@@ -448,8 +448,8 @@ rm_overwrite(char *file, struct stat *sbp)
 } while (/* CONSTCOND */ 0)
 
 	/*
-	 * DSS sanitization matrix "clear" for magnetic disks: 
-	 * option 'c' "Overwrite all addressable locations with a single 
+	 * DSS sanitization matrix "clear" for magnetic disks:
+	 * option 'c' "Overwrite all addressable locations with a single
 	 * character."
 	 */
 	randint = arc4random();
@@ -457,7 +457,7 @@ rm_overwrite(char *file, struct stat *sbp)
 	WRITE_PASS(THIS_BYTE, randchar);
 
 	/*
-	 * DSS sanitization matrix "sanitize" for magnetic disks: 
+	 * DSS sanitization matrix "sanitize" for magnetic disks:
 	 * option 'd', sub 2 "Overwrite all addressable locations with a
 	 * character, then its complement.  Verify "complement" character
 	 * was written successfully to all addressable locations, then

@@ -170,7 +170,7 @@
 umask 022
 PATH=/bin:/usr/bin:/usr/sbin:/usr/etc:/sbin:/etc:/usr/contrib/bin:/usr/gnu/bin:/usr/ucb:/usr/bsd
 SHELL=/bin/sh
-IFS=" 	
+IFS=" 	""
 "
 BACKUP_IFS="$IFS"
 
@@ -469,16 +469,16 @@ done
 # Sanity checks
 
 case "$setgid_group" in
- no) (echo $0: Error: the setgid_group parameter no longer accepts 
-     echo \"no\" values. Try again with \"setgid_group=groupname\" on the 
+ no) (echo $0: Error: the setgid_group parameter no longer accepts
+     echo \"no\" values. Try again with \"setgid_group=groupname\" on the
      echo command line or execute \"make install\" and specify setgid_group
      echo interactively.) | ${FMT} 1>&2
      exit 1;;
 esac
 
 case "$manpage_directory" in
- no) (echo $0: Error: the manpage_directory parameter no longer accepts 
-     echo \"no\" values.  Try again with \"manpage_directory=/path/name\" 
+ no) (echo $0: Error: the manpage_directory parameter no longer accepts
+     echo \"no\" values.  Try again with \"manpage_directory=/path/name\"
      echo on the command line or execute \"make install\" and specify
      echo manpage_directory interactively.) | ${FMT} 1>&2
      exit 1;;
@@ -570,9 +570,9 @@ README_DIRECTORY=$install_root$readme_directory
 test -d $DAEMON_DIRECTORY || mkdir -p $DAEMON_DIRECTORY || exit 1
 test -d $COMMAND_DIRECTORY || mkdir -p $COMMAND_DIRECTORY || exit 1
 test -d $COMMAND_DIRECTORY || mkdir -p $COMMAND_DIRECTORY || exit 1
-test "$html_directory" = "no" -o -d $HTML_DIRECTORY || 
+test "$html_directory" = "no" -o -d $HTML_DIRECTORY ||
 	mkdir -p $HTML_DIRECTORY || exit 1
-test "$readme_directory" = "no" -o -d $README_DIRECTORY || 
+test "$readme_directory" = "no" -o -d $README_DIRECTORY ||
 	mkdir -p $README_DIRECTORY || exit 1
 
 # Upgrade or first-time installation?

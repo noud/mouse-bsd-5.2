@@ -96,7 +96,7 @@ struct icmp {
 #define	icmp_data	icmp_dun.id_data
 };
 
-#define ICMP_MPLS_EXT_EXTRACT_VERSION(x) (((x)&0xf0)>>4) 
+#define ICMP_MPLS_EXT_EXTRACT_VERSION(x) (((x)&0xf0)>>4)
 #define ICMP_MPLS_EXT_VERSION 2
 
 /*
@@ -339,7 +339,7 @@ icmp_tstamp_print(u_int tstamp) {
     snprintf(buf, sizeof(buf), "%02u:%02u:%02u.%03u",hrs,min,sec,msec);
     return buf;
 }
- 
+
 void
 icmp_print(const u_char *bp, u_int plen, const u_char *bp2, int fragmented)
 {
@@ -616,7 +616,7 @@ icmp_print(const u_char *bp, u_int plen, const u_char *bp2, int fragmented)
 
             printf("\n\tMPLS extension v%u",
                    ICMP_MPLS_EXT_EXTRACT_VERSION(*(ext_dp->icmp_ext_version_res)));
-            
+
             /*
              * Sanity checking of the header.
              */
@@ -653,7 +653,7 @@ icmp_print(const u_char *bp, u_int plen, const u_char *bp2, int fragmented)
 
                 hlen-=sizeof(struct icmp_mpls_ext_object_header_t); /* length field includes tlv header */
 
-                /* infinite loop protection */                
+                /* infinite loop protection */
                 if ((obj_class_num == 0) ||
                     (obj_tlen < sizeof(struct icmp_mpls_ext_object_header_t))) {
                     return;

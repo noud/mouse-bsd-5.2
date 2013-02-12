@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2005 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "krb5_locl.h"
@@ -145,7 +145,7 @@ krb5_kt_ret_keyblock(krb5_context context, krb5_storage *sp, krb5_keyblock *p)
 
 static krb5_error_code
 krb5_kt_store_keyblock(krb5_context context,
-		       krb5_storage *sp, 
+		       krb5_storage *sp,
 		       krb5_keyblock *p)
 {
     int ret;
@@ -166,7 +166,7 @@ krb5_kt_ret_principal(krb5_context context,
     int ret;
     krb5_principal p;
     int16_t len;
-    
+
     ALLOC(p, 1);
     if(p == NULL) {
 	krb5_set_error_string (context, "malloc: out of memory");
@@ -182,7 +182,7 @@ krb5_kt_ret_principal(krb5_context context,
     if(krb5_storage_is_flags(sp, KRB5_STORAGE_PRINCIPAL_WRONG_NUM_COMPONENTS))
 	len--;
     if (len < 0) {
-	krb5_set_error_string(context, 
+	krb5_set_error_string(context,
 			      "Keytab principal contains invalid length");
 	ret = KRB5_KT_END;
 	goto out;
@@ -225,7 +225,7 @@ krb5_kt_store_principal(krb5_context context,
 {
     int i;
     int ret;
-    
+
     if(krb5_storage_is_flags(sp, KRB5_STORAGE_PRINCIPAL_WRONG_NUM_COMPONENTS))
 	ret = krb5_store_int16(sp, p->name.name_string.len + 1);
     else
@@ -290,10 +290,10 @@ fkt_close(krb5_context context, krb5_keytab id)
     return 0;
 }
 
-static krb5_error_code 
-fkt_get_name(krb5_context context, 
-	     krb5_keytab id, 
-	     char *name, 
+static krb5_error_code
+fkt_get_name(krb5_context context,
+	     krb5_keytab id,
+	     char *name,
 	     size_t namesize)
 {
     /* This function is XXX */
@@ -315,15 +315,15 @@ storage_set_flags(krb5_context context, krb5_storage *sp, int vno)
     case KRB5_KT_VNO_2:
 	break;
     default:
-	krb5_warnx(context, 
+	krb5_warnx(context,
 		   "storage_set_flags called with bad vno (%d)", vno);
     }
     krb5_storage_set_flags(sp, flags);
 }
 
 static krb5_error_code
-fkt_start_seq_get_int(krb5_context context, 
-		      krb5_keytab id, 
+fkt_start_seq_get_int(krb5_context context,
+		      krb5_keytab id,
 		      int flags,
 		      int exclusive,
 		      krb5_kt_cursor *c)
@@ -331,7 +331,7 @@ fkt_start_seq_get_int(krb5_context context,
     int8_t pvno, tag;
     krb5_error_code ret;
     struct fkt_data *d = id->data;
-    
+
     c->fd = open (d->filename, flags);
     if (c->fd < 0) {
 	ret = errno;
@@ -381,17 +381,17 @@ fkt_start_seq_get_int(krb5_context context,
 }
 
 static krb5_error_code
-fkt_start_seq_get(krb5_context context, 
-		  krb5_keytab id, 
+fkt_start_seq_get(krb5_context context,
+		  krb5_keytab id,
 		  krb5_kt_cursor *c)
 {
     return fkt_start_seq_get_int(context, id, O_RDONLY | O_BINARY, 0, c);
 }
 
 static krb5_error_code
-fkt_next_entry_int(krb5_context context, 
-		   krb5_keytab id, 
-		   krb5_keytab_entry *entry, 
+fkt_next_entry_int(krb5_context context,
+		   krb5_keytab id,
+		   krb5_keytab_entry *entry,
 		   krb5_kt_cursor *cursor,
 		   off_t *start,
 		   off_t *end)
@@ -443,16 +443,16 @@ loop:
 }
 
 static krb5_error_code
-fkt_next_entry(krb5_context context, 
-	       krb5_keytab id, 
-	       krb5_keytab_entry *entry, 
+fkt_next_entry(krb5_context context,
+	       krb5_keytab id,
+	       krb5_keytab_entry *entry,
 	       krb5_kt_cursor *cursor)
 {
     return fkt_next_entry_int(context, id, entry, cursor, NULL, NULL);
 }
 
 static krb5_error_code
-fkt_end_seq_get(krb5_context context, 
+fkt_end_seq_get(krb5_context context,
 		krb5_keytab id,
 		krb5_kt_cursor *cursor)
 {
@@ -475,7 +475,7 @@ fkt_setup_keytab(krb5_context context,
 	id->version = KRB5_KT_VNO;
     return krb5_store_int8 (sp, id->version);
 }
-		 
+
 static krb5_error_code
 fkt_add_entry(krb5_context context,
 	      krb5_keytab id,
@@ -487,7 +487,7 @@ fkt_add_entry(krb5_context context,
     struct fkt_data *d = id->data;
     krb5_data keytab;
     int32_t len;
-    
+
     fd = open (d->filename, O_RDWR | O_BINARY);
     if (fd < 0) {
 	fd = open (d->filename, O_RDWR | O_CREAT | O_EXCL | O_BINARY, 0600);
@@ -524,7 +524,7 @@ fkt_add_entry(krb5_context context,
                properly */
 	    ret = fkt_setup_keytab(context, id, sp);
 	    if(ret) {
-		krb5_set_error_string(context, "%s: keytab is corrupted: %s", 
+		krb5_set_error_string(context, "%s: keytab is corrupted: %s",
 				      d->filename, strerror(ret));
 		goto out;
 	    }
@@ -532,13 +532,13 @@ fkt_add_entry(krb5_context context,
 	} else {
 	    if(pvno != 5) {
 		ret = KRB5_KEYTAB_BADVNO;
-		krb5_set_error_string(context, "%s: %s", 
+		krb5_set_error_string(context, "%s: %s",
 				      d->filename, strerror(ret));
 		goto out;
 	    }
 	    ret = krb5_ret_int8 (sp, &tag);
 	    if (ret) {
-		krb5_set_error_string(context, "%s: reading tag: %s", 
+		krb5_set_error_string(context, "%s: reading tag: %s",
 				      d->filename, strerror(ret));
 		goto out;
 	    }
@@ -588,7 +588,7 @@ fkt_add_entry(krb5_context context,
 	if(ret)
 	    goto out;
     }
-    
+
     while(1) {
 	ret = krb5_ret_int32(sp, &len);
 	if(ret == KRB5_KT_END) {
@@ -626,13 +626,13 @@ fkt_remove_entry(krb5_context context,
     off_t pos_start, pos_end;
     int found = 0;
     krb5_error_code ret;
-    
+
     ret = fkt_start_seq_get_int(context, id, O_RDWR | O_BINARY, 1, &cursor);
-    if(ret != 0) 
+    if(ret != 0)
 	goto out; /* return other error here? */
-    while(fkt_next_entry_int(context, id, &e, &cursor, 
+    while(fkt_next_entry_int(context, id, &e, &cursor,
 			     &pos_start, &pos_end) == 0) {
-	if(krb5_kt_compare(context, &e, entry->principal, 
+	if(krb5_kt_compare(context, &e, entry->principal,
 			   entry->vno, entry->keyblock.keytype)) {
 	    int32_t len;
 	    unsigned char buf[128];

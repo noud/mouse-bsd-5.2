@@ -39,7 +39,7 @@ __RCSID("$NetBSD: print-syslog.c,v 1.2 2007/07/24 11:53:48 drochner Exp $");
 #include "extract.h"
 #include "addrtoname.h"
 
-/* 
+/*
  * tokenlists and #defines taken from Ethereal - Network traffic analyzer
  * by Gerald Combs <gerald@ethereal.com>
  */
@@ -134,7 +134,7 @@ syslog_print(register const u_char *pptr, register u_int len)
     facility = (pri & SYSLOG_FACILITY_MASK) >> 3;
     severity = pri & SYSLOG_SEVERITY_MASK;
 
-    
+
     if (vflag < 1 )
     {
         printf("SYSLOG %s.%s, length: %u",
@@ -143,7 +143,7 @@ syslog_print(register const u_char *pptr, register u_int len)
                len);
         return;
     }
-       
+
     printf("SYSLOG, length: %u\n\tFacility %s (%u), Severity %s (%u)\n\tMsg: ",
            len,
            tok2str(syslog_facility_values, "unknown (%u)", facility),
@@ -155,14 +155,14 @@ syslog_print(register const u_char *pptr, register u_int len)
     for (; msg_off < len; msg_off++) {
         if (!TTEST2(*(pptr+msg_off), 1))
             goto trunc;
-        safeputchar(*(pptr+msg_off));        
+        safeputchar(*(pptr+msg_off));
     }
 
     if (vflag > 1) {
         if(!print_unknown_data(pptr,"\n\t",len))
             return;
     }
-    
+
     return;
 
 trunc:

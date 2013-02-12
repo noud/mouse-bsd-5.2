@@ -32,7 +32,7 @@ usage()
 {
 	cat 1>&2 <<USAGE
 Usage: ${prog} [-A] [-a] [-t targetdir] [setname [...]]
-	-A		Append to possible existing checksum files 
+	-A		Append to possible existing checksum files
 	-a		checksum all plain files instead of [setname [...]]
 	-t targetdir	\${RELEASEDIR}		[${targetdir}]
 	setname [...]	sets to checksum 	[*.tgz]
@@ -49,7 +49,7 @@ while getopts aAt: ch; do
 	a)
 		dash_all=yes
 		;;
-	t)	
+	t)
 		targetdir="${OPTARG}"
 		;;
 	*)

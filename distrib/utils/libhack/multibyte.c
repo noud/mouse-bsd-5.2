@@ -56,7 +56,7 @@ mbsrtowcs(wchar_t * __restrict pwcs, const char ** __restrict s, size_t n,
 	wchar_t *d;
 	size_t count;
 
-	for (p = *s, d = pwcs, count = 0; 
+	for (p = *s, d = pwcs, count = 0;
 		count <= n;
 		count++, d++, p++)
 	{

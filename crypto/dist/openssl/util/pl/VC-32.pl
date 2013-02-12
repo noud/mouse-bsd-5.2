@@ -27,7 +27,7 @@ if ($FLAVOR =~ /WIN64/)
     # own desing and limiting its return value to 2GB-1 (see e_os.h). As
     # per 0.9.8 release remaining warnings were explicitly examined and
     # considered safe to ignore.
-    # 
+    #
     $base_cflags= " $mf_cflag";
     my $f = $shlib?' /MD':' /MT';
     $lib_cflag='/Zl' if (!$shlib);	# remove /DEFAULTLIBs from static lib
@@ -316,7 +316,7 @@ sub do_link_rule
 	{
 	local($target,$files,$dep_libs,$libs)=@_;
 	local($ret,$_);
-	
+
 	$file =~ s/\//$o/g if $o ne '/';
 	$n=&bname($targer);
 	$ret.="$target: $files $dep_libs\n";

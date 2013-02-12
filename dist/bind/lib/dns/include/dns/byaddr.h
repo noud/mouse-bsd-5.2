@@ -163,7 +163,7 @@ dns_byaddr_createptrname2(isc_netaddr_t *address, unsigned int options,
  * set.  'options' are the same as for dns_byaddr_create().
  *
  * Requires:
- * 
+ *
  * \li	'address' is a valid address.
  * \li	'name' is a valid name with a dedicated buffer.
  */

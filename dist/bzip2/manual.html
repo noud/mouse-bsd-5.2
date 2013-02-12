@@ -22,14 +22,14 @@ body { font: 80%/126% sans-serif; }
 h1, h2, h3, h4 { color: #74240f; }
 
 dt { color: #336699; font-weight: bold }
-dd { 
- margin-left: 1.5em; 
+dd {
+ margin-left: 1.5em;
  padding-bottom: 0.8em;
 }
 
 /* -- ruler -- */
-div.hr_blue { 
-  height:  3px; 
+div.hr_blue {
+  height:  3px;
   background:#ffffff url("/images/hr_blue.png") repeat-x; }
 div.hr_blue hr { display:none; }
 
@@ -40,18 +40,18 @@ div.hr_blue hr { display:none; }
 
 /* ------ styles for docs|manuals|howto ------ */
 /* -- lists -- */
-ul  { 
+ul  {
  margin:     0px 4px 16px 16px;
  padding:    0px;
- list-style: url("/images/li-blue.png"); 
+ list-style: url("/images/li-blue.png");
 }
-ul li { 
+ul li {
  margin-bottom: 10px;
 }
-ul ul	{ 
- list-style-type:  none; 
- list-style-image: none; 
- margin-left:      0px; 
+ul ul	{
+ list-style-type:  none;
+ list-style-image: none;
+ margin-left:      0px;
 }
 
 /* header / footer nav tables */
@@ -75,7 +75,7 @@ div.literallayout, pre.programlisting, pre.screen {
  background: #eeeeee;
  border:     1px solid #626262;
  background-color: #eeeeee;
- margin: 4px 0px 4px 0px; 
+ margin: 4px 0px 4px 0px;
 }
 </style>
 </head>
@@ -156,7 +156,7 @@ div.literallayout, pre.programlisting, pre.screen {
 <dt><span class="sect1"><a href="#caveats">2.8. CAVEATS</a></span></dt>
 <dt><span class="sect1"><a href="#author">2.9. AUTHOR</a></span></dt>
 </dl></dd>
-<dt><span class="chapter"><a href="#libprog">3. 
+<dt><span class="chapter"><a href="#libprog">3.
 Programming with <code class="computeroutput">libbzip2</code>
 </a></span></dt>
 <dd><dl>
@@ -683,7 +683,7 @@ their help, support and advice.  See the manual in the source
 distribution for pointers to sources of documentation.  Christian
 von Roques encouraged me to look for faster sorting algorithms,
 so as to speed up compression.  Bela Lubkin encouraged me to
-improve the worst-case compression performance.  
+improve the worst-case compression performance.
 Donna Robinson XMLised the documentation.
 Many people sent
 patches, helped with portability problems, lent machines, gave
@@ -815,7 +815,7 @@ concatenated end-to-end.</p>
 <p>For reading files,
 <code class="computeroutput">BZ2_bzReadOpen</code>,
 <code class="computeroutput">BZ2_bzRead</code>,
-<code class="computeroutput">BZ2_bzReadClose</code> and 
+<code class="computeroutput">BZ2_bzReadClose</code> and
 <code class="computeroutput">BZ2_bzReadGetUnused</code> are
 supplied.  For writing files,
 <code class="computeroutput">BZ2_bzWriteOpen</code>,
@@ -907,7 +907,7 @@ denote an error situation.</p>
    successfully.</p></dd>
 <dt><span class="term"><code class="computeroutput">BZ_RUN_OK, BZ_FLUSH_OK,
     BZ_FINISH_OK</code></span></dt>
-<dd><p>In 
+<dd><p>In
    <code class="computeroutput">BZ2_bzCompress</code>, the requested
    flush/finish/nothing-special action was completed
    successfully.</p></dd>
@@ -1032,8 +1032,8 @@ kind.</p>
   void *opaque;
 } bz_stream;
 
-int BZ2_bzCompressInit ( bz_stream *strm, 
-                         int blockSize100k, 
+int BZ2_bzCompressInit ( bz_stream *strm,
+                         int blockSize100k,
                          int verbosity,
                          int workFactor );</pre>
 <p>Prepares for compression.  The
@@ -1124,13 +1124,13 @@ obsolete.</p>
 <pre class="programlisting">BZ_CONFIG_ERROR
   if the library has been mis-compiled
 BZ_PARAM_ERROR
-  if strm is NULL 
+  if strm is NULL
   or blockSize &lt; 1 or blockSize &gt; 9
   or verbosity &lt; 0 or verbosity &gt; 4
   or workFactor &lt; 0 or workFactor &gt; 250
-BZ_MEM_ERROR 
+BZ_MEM_ERROR
   if not enough memory is available
-BZ_OK 
+BZ_OK
   otherwise</pre>
 <p>Allowable next actions:</p>
 <pre class="programlisting">BZ2_bzCompress
@@ -1270,7 +1270,7 @@ RUNNING/BZ_FINISH
   Return value = BZ_FINISH_OK
 
 FLUSHING/BZ_FLUSH
-  Compress from next_in to next_out as much as possible, 
+  Compress from next_in to next_out as much as possible,
   but do not accept any more input.
   If all the existing input has been used up and all compressed
   output has been removed
@@ -1278,13 +1278,13 @@ FLUSHING/BZ_FLUSH
   else
     Next state = FLUSHING; Return value = BZ_FLUSH_OK
 
-FLUSHING/other     
+FLUSHING/other
   Illegal.
   Return value = BZ_SEQUENCE_ERROR
 
 FINISHING/BZ_FINISH
   Compress from next_in to next_out as much as possible,
-  but to not accept any more input.  
+  but to not accept any more input.
   If all the existing input has been used up and all compressed
   output has been removed
     Next state = IDLE; Return value = BZ_STREAM_END
@@ -1537,7 +1537,7 @@ general points.</p>
 <a name="bzreadopen"></a>3.4.1. <code class="computeroutput">BZ2_bzReadOpen</code></h3></div></div></div>
 <pre class="programlisting">typedef void BZFILE;
 
-BZFILE *BZ2_bzReadOpen( int *bzerror, FILE *f, 
+BZFILE *BZ2_bzReadOpen( int *bzerror, FILE *f,
                         int verbosity, int small,
                         void *unused, int nUnused );</pre>
 <p>Prepare to read compressed data from file handle
@@ -1641,13 +1641,13 @@ BZ_SEQUENCE_ERROR
 BZ_IO_ERROR
   if there is an error reading from the compressed file
 BZ_UNEXPECTED_EOF
-  if the compressed file ended before 
+  if the compressed file ended before
   the logical end-of-stream was detected
 BZ_DATA_ERROR
   if a data integrity error was detected in the compressed stream
 BZ_DATA_ERROR_MAGIC
-  if the stream does not begin with the requisite header bytes 
-  (ie, is not a bzip2 data file).  This is really 
+  if the stream does not begin with the requisite header bytes
+  (ie, is not a bzip2 data file).  This is really
   a special case of BZ_DATA_ERROR.
 BZ_MEM_ERROR
   if insufficient memory was available
@@ -1671,7 +1671,7 @@ BZ2_bzReadClose
 <div class="sect2" lang="en">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bzreadgetunused"></a>3.4.3. <code class="computeroutput">BZ2_bzReadGetUnused</code></h3></div></div></div>
-<pre class="programlisting">void BZ2_bzReadGetUnused( int* bzerror, BZFILE *b, 
+<pre class="programlisting">void BZ2_bzReadGetUnused( int* bzerror, BZFILE *b,
                           void** unused, int* nUnused );</pre>
 <p>Returns data which was read from the compressed file but
 was not needed to get to the logical end-of-stream.
@@ -1720,7 +1720,7 @@ BZ_OK
 <div class="sect2" lang="en">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bzwriteopen"></a>3.4.5. <code class="computeroutput">BZ2_bzWriteOpen</code></h3></div></div></div>
-<pre class="programlisting">BZFILE *BZ2_bzWriteOpen( int *bzerror, FILE *f, 
+<pre class="programlisting">BZFILE *BZ2_bzWriteOpen( int *bzerror, FILE *f,
                          int blockSize100k, int verbosity,
                          int workFactor );</pre>
 <p>Prepare to write compressed data to file handle
@@ -1906,7 +1906,7 @@ if (bzerror != BZ_OK) {
 while ( /* condition */ ) {
  /* get data to write into buf, and set nBuf appropriately */
  nWritten = BZ2_bzWrite ( &amp;bzerror, b, buf, nBuf );
- if (bzerror == BZ_IO_ERROR) { 
+ if (bzerror == BZ_IO_ERROR) {
    BZ2_bzWriteClose ( &amp;bzerror, b );
    /* handle error */
  }
@@ -1999,7 +1999,7 @@ BZ_PARAM_ERROR
   or verbosity &lt; 0 or verbosity &gt; 4
   or workFactor &lt; 0 or workFactor &gt; 250
 BZ_MEM_ERROR
-  if insufficient memory is available 
+  if insufficient memory is available
 BZ_OUTBUFF_FULL
   if the size of the compressed data exceeds *destLen
 BZ_OK
@@ -2052,7 +2052,7 @@ BZ_PARAM_ERROR
   or small != 0 &amp;&amp; small != 1
   or verbosity &lt; 0 or verbosity &gt; 4
 BZ_MEM_ERROR
-  if insufficient memory is available 
+  if insufficient memory is available
 BZ_OUTBUFF_FULL
   if the size of the compressed data exceeds *destLen
 BZ_DATA_ERROR
@@ -2438,9 +2438,9 @@ I can possibly begin to figure out what the problem is.</p>
 <p>The rules of the game are: facts, facts, facts.  Don't omit
 them because "oh, they won't be relevant".  At the bare
 minimum:</p>
-<pre class="programlisting">Machine type.  Operating system version.  
-Exact version of bzip2 (do bzip2 -V).  
-Exact version of the compiler used.  
+<pre class="programlisting">Machine type.  Operating system version.
+Exact version of bzip2 (do bzip2 -V).
+Exact version of the compiler used.
 Flags passed to the compiler.</pre>
 <p>However, the most important single thing that will help me
 is the file that you were trying to compress or decompress at the
@@ -2463,13 +2463,13 @@ an intrinsic property of the Burrows-Wheeler transform
 uses less memory but gets pretty good compression, and has
 minimal latency, consider Jean-loup Gailly's and Mark Adler's
 work, <code class="computeroutput">zlib-1.2.1</code> and
-<code class="computeroutput">gzip-1.2.4</code>.  Look for them at 
-<a href="http://www.zlib.org" target="_top">http://www.zlib.org</a> and 
+<code class="computeroutput">gzip-1.2.4</code>.  Look for them at
+<a href="http://www.zlib.org" target="_top">http://www.zlib.org</a> and
 <a href="http://www.gzip.org" target="_top">http://www.gzip.org</a>
 respectively.</p>
 <p>For something faster and lighter still, you might try Markus F
 X J Oberhumer's <code class="computeroutput">LZO</code> real-time
-compression/decompression library, at 
+compression/decompression library, at
 <a href="http://www.oberhumer.com/opensource" target="_top">http://www.oberhumer.com/opensource</a>.</p>
 </div>
 <div class="sect1" lang="en">

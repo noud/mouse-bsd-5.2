@@ -35,7 +35,7 @@ pf_start()
 
 	# The pf_boot script has enabled pf already.
 	if [ "$autoboot" != yes ]; then
-		/sbin/pfctl -q -e 
+		/sbin/pfctl -q -e
 	fi
 
 	if [ -f ${pf_rules} ]; then

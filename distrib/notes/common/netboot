@@ -92,7 +92,7 @@ The bootstrap program uses DHCP for its discovery stage.
 .if \n[hp700] \{\
 Early \*M systems use HP's proprietary RMP (the
 .Xr rbootd 8
-daemon) for the discovery stage, bootstrap download, and kernel download 
+daemon) for the discovery stage, bootstrap download, and kernel download
 stages.  Later \*M systems use  BOOTP for the discovery stage and TFTP for
 the bootstrap and kernel download.
 .\}
@@ -229,7 +229,7 @@ you can achieve this with:
 .disp)
 .Pp
 If your netboot server is not running
-.Nx 
+.Nx
 but other OSs (like Linux, Solaris etc.), you have to use
 YAMAMORI Takenori's
 .Li sun-rbootd
@@ -350,19 +350,19 @@ group {
                 # on one server, this is not needed.
 .if \n[macppc] \{\
                 #
-                # macppc machines will look for their bootloader, 
+                # macppc machines will look for their bootloader,
                 # ofwboot.xcf, on the next-server as well.
 .\}
                 #
                 # next-server server.test.net;
         }
- #you may paste another "host" entry here for additional 
+ #you may paste another "host" entry here for additional
  #clients on this network
 }
 .disp)
 .if \n[sparc] \{\
 Note that for JavaStations booting from OpenFirmware you do not need
-the 
+the
 .(disp
 allow bootp;
 .disp)
@@ -449,7 +449,7 @@ Next, edit
 .Pa /etc/inetd.conf
 and uncomment the line with the TFTP daemon:
 .(disp
-tftp  dgram  udp  wait  root  /usr/libexec/tftpd tftpd -l -s /tftpboot 
+tftp  dgram  udp  wait  root  /usr/libexec/tftpd tftpd -l -s /tftpboot
 .disp)
 .Pp
 Now, restart
@@ -684,7 +684,7 @@ If you are running your \*M diskless, simply use
 .if \n[hp700] \{\
 You do not need to place a kernel in
 .Pa /export/client/root
-since the kernel is contained inside 
+since the kernel is contained inside
 .Pa SYSNBSD .
 .\}
 .if \n[macppc] \{\
@@ -694,7 +694,7 @@ If you are netbooting the installer, use
 Also, copy the distribution files to the client's root directory.
 .Pp
 .(Note
-Some combinations of Open Firmware version and 
+Some combinations of Open Firmware version and
 .Pa ofwboot.xcf
 version have trouble loading compressed kernels.  If you have trouble loading
 a kernel, try uncompressing it with

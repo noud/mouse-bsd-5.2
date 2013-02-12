@@ -29,7 +29,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -722,11 +722,11 @@ adrput(FILE *fp, NODE *p)
    tbl */
 #ifdef notyet
 			printf("%c(%s)%c", (p->n_left->n_op==INCR ? '\0' : '-'),
-				rnames[p->n_left->n_left->n_rval], 
+				rnames[p->n_left->n_left->n_rval],
 				(p->n_left->n_op==INCR ? '+' : '\0') );
 #else
 			printf("%c(%s)%c", '-',
-				rnames[p->n_left->n_left->n_rval], 
+				rnames[p->n_left->n_left->n_rval],
 				'\0' );
 #endif
 			p->n_op = OREG;

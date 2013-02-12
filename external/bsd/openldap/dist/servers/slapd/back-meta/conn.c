@@ -48,7 +48,7 @@ meta_back_conndn_cmp(
 	metaconn_t	*mc1 = ( metaconn_t * )c1;
         metaconn_t	*mc2 = ( metaconn_t * )c2;
 	int		rc;
-	
+
 	/* If local DNs don't match, it is definitely not a match */
 	/* For shared sessions, conn is NULL. Only explicitly
 	 * bound sessions will have non-NULL conn.
@@ -75,7 +75,7 @@ meta_back_conndnmc_cmp(
 	metaconn_t	*mc1 = ( metaconn_t * )c1;
         metaconn_t	*mc2 = ( metaconn_t * )c2;
 	int		rc;
-	
+
 	/* If local DNs don't match, it is definitely not a match */
 	/* For shared sessions, conn is NULL. Only explicitly
 	 * bound sessions will have non-NULL conn.
@@ -104,7 +104,7 @@ meta_back_conn_cmp(
 {
 	metaconn_t	*mc1 = ( metaconn_t * )c1;
         metaconn_t	*mc2 = ( metaconn_t * )c2;
-	
+
 	/* For shared sessions, conn is NULL. Only explicitly
 	 * bound sessions will have non-NULL conn.
 	 */
@@ -131,7 +131,7 @@ meta_back_conndn_dup(
 	{
 		return -1;
 	}
-		
+
 	return 0;
 }
 
@@ -167,9 +167,9 @@ meta_back_ravl_print( Avlnode *root, int depth )
 	if ( root == 0 ) {
 		return;
 	}
-	
+
 	meta_back_ravl_print( root->avl_right, depth + 1 );
-	
+
 	for ( i = 0; i < depth; i++ ) {
 		fprintf( stderr, "-" );
 	}
@@ -198,7 +198,7 @@ meta_back_print_conntree( metainfo_t *mi, char *msg )
 	int	c;
 
 	fprintf( stderr, "========> %s\n", msg );
-	
+
 	for ( c = LDAP_BACK_PCONN_FIRST; c < LDAP_BACK_PCONN_LAST; c++ ) {
 		int		i = 0;
 		metaconn_t	*mc;
@@ -212,14 +212,14 @@ meta_back_print_conntree( metainfo_t *mi, char *msg )
 			i++;
 		}
 	}
-	
+
 	if ( mi->mi_conninfo.lai_tree == NULL ) {
 		fprintf( stderr, "\t(empty)\n" );
 
 	} else {
 		meta_back_ravl_print( mi->mi_conninfo.lai_tree, 0 );
 	}
-	
+
 	fprintf( stderr, "<======== %s\n", msg );
 }
 #endif /* META_BACK_PRINT_CONNTREE */
@@ -229,7 +229,7 @@ meta_back_print_conntree( metainfo_t *mi, char *msg )
 
 /*
  * metaconn_alloc
- * 
+ *
  * Allocates a connection structure, making room for all the referenced targets
  */
 static metaconn_t *
@@ -259,7 +259,7 @@ metaconn_alloc(
 
 /*
  * meta_back_init_one_conn
- * 
+ *
  * Initializes one connection
  */
 int
@@ -384,7 +384,7 @@ retry_lock:;
 	}
 
 	assert( msc->msc_ld == NULL );
-       
+
 	/*
 	 * Attempts to initialize the connection to the target ds
 	 */
@@ -483,10 +483,10 @@ retry:;
 					if ( rs->sr_err == LDAP_SUCCESS ) {
 						rs->sr_err = err;
 					}
-					
-					/* FIXME: in case a referral 
+
+					/* FIXME: in case a referral
 					 * is returned, should we try
-					 * using it instead of the 
+					 * using it instead of the
 					 * configured URI? */
 					if ( rs->sr_err == LDAP_SUCCESS ) {
 						ldap_install_tls( msc->msc_ld );
@@ -520,7 +520,7 @@ retry:;
 
 		/* if StartTLS is requested, only attempt it if the URL
 		 * is not "ldaps://"; this may occur not only in case
-		 * of misconfiguration, but also when used in the chain 
+		 * of misconfiguration, but also when used in the chain
 		 * overlay, where the "uri" can be parsed out of a referral */
 		if ( rs->sr_err == LDAP_SERVER_DOWN
 			|| ( rs->sr_err != LDAP_SUCCESS
@@ -592,7 +592,7 @@ retry:;
 			dc.conn = op->o_conn;
 			dc.rs = rs;
 			dc.ctx = "bindDN";
-		
+
 			/*
 			 * Rewrite the bind dn if needed
 			 */
@@ -612,7 +612,7 @@ retry:;
 				meta_clear_one_candidate( op, mc, candidate );
 				goto error_return;
 			}
-			
+
 			/* copy the DN if needed */
 			if ( msc->msc_bound_ndn.bv_val == op->o_conn->c_dn.bv_val ) {
 				ber_dupbv( &msc->msc_bound_ndn, &op->o_conn->c_dn );
@@ -655,7 +655,7 @@ error_return:;
 
 /*
  * meta_back_retry
- * 
+ *
  * Retries one connection
  */
 int
@@ -982,9 +982,9 @@ meta_back_candidates_get( Operation *op )
 
 /*
  * meta_back_getconn
- * 
+ *
  * Prepares the connection structure
- * 
+ *
  * RATIONALE:
  *
  * - determine what DN is being requested:
@@ -1065,7 +1065,7 @@ meta_back_getconn(
 			|| SLAP_IS_AUTHZ_BACKEND( op ) )
 		{
 			mc_curr.mc_conn = op->o_conn;
-	
+
 		} else {
 			LDAP_BACK_CONN_ISANON_SET( &mc_curr );
 			LDAP_BACK_PCONN_ANON_SET( &mc_curr, op );
@@ -1107,10 +1107,10 @@ retry_lock:;
 			{
 				mc = LDAP_TAILQ_FIRST( &mi->mi_conn_priv[ LDAP_BACK_CONN2PRIV( &mc_curr ) ].mic_priv );
 			}
-			
+
 
 		} else {
-			mc = (metaconn_t *)avl_find( mi->mi_conninfo.lai_tree, 
+			mc = (metaconn_t *)avl_find( mi->mi_conninfo.lai_tree,
 				(caddr_t)&mc_curr, meta_back_conndn_cmp );
 		}
 
@@ -1258,9 +1258,9 @@ retry_lock:;
 				}
 				META_CANDIDATE_SET( &candidates[ i ] );
 				ncandidates++;
-	
+
 			} else {
-				
+
 				/*
 				 * FIXME: in case one target cannot
 				 * be init'd, should the other ones
@@ -1297,7 +1297,7 @@ retry_lock:;
 
 		goto done;
 	}
-	
+
 	/*
 	 * looks in cache, if any
 	 */
@@ -1325,7 +1325,7 @@ retry_lock:;
 			if ( rs->sr_err == LDAP_NO_SUCH_OBJECT && dn_type == META_DNTYPE_PARENT ) {
 				i = meta_back_get_candidate( op, rs, &pndn );
 			}
-	
+
 			if ( i < 0 || rs->sr_err != LDAP_SUCCESS ) {
 				if ( mc != NULL ) {
 					meta_back_release_conn( mi, mc );
@@ -1338,7 +1338,7 @@ retry_lock:;
 					send_ldap_result( op, rs );
 					rs->sr_matched = NULL;
 				}
-			
+
 				return NULL;
 			}
 		}
@@ -1369,7 +1369,7 @@ retry_lock:;
 			if ( !( sendok & LDAP_BACK_BINDING ) ) {
 retry_lock2:;
 				ldap_pvt_thread_mutex_lock( &mi->mi_conninfo.lai_mutex );
-				mc = (metaconn_t *)avl_find( mi->mi_conninfo.lai_tree, 
+				mc = (metaconn_t *)avl_find( mi->mi_conninfo.lai_tree,
 					(caddr_t)&mc_curr, meta_back_conndn_cmp );
 				if ( mc != NULL ) {
 					/* catch taint errors */
@@ -1482,7 +1482,7 @@ retry_lock2:;
 
 			META_CANDIDATE_RESET( &candidates[ i ] );
 
-			if ( i == cached 
+			if ( i == cached
 				|| meta_back_is_candidate( mt, &op->o_req_ndn,
 					LDAP_SCOPE_SUBTREE ) )
 			{
@@ -1510,7 +1510,7 @@ retry_lock2:;
 						mt->mt_isquarantined != LDAP_BACK_FQ_NO ? "quarantined" : "unavailable" );
 
 				} else {
-				
+
 					/*
 					 * FIXME: in case one target cannot
 					 * be init'd, should the other ones
@@ -1640,9 +1640,9 @@ done:;
 				LDAP_BACK_CONN_CACHED_CLEAR( mc );
 				/* duplicate: free and try to get the newly created one */
 				if ( !( sendok & LDAP_BACK_BINDING ) && !LDAP_BACK_USE_TEMPORARIES( mi ) ) {
-					mc->mc_refcnt = 0;	
+					mc->mc_refcnt = 0;
 					meta_back_conn_free( mc );
-	
+
 					new_conn = 0;
 					goto retry_lock;
 				}
@@ -1656,8 +1656,8 @@ done:;
 					"%s meta_back_getconn: candidates=%d conn=%ld insert failed\n",
 					op->o_log_prefix, ncandidates,
 					LDAP_BACK_PCONN_ID( mc ) );
-	
-				mc->mc_refcnt = 0;	
+
+				mc->mc_refcnt = 0;
 				meta_back_conn_free( mc );
 
 				rs->sr_err = LDAP_OTHER;

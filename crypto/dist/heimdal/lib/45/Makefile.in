@@ -401,7 +401,7 @@ uninstall-libLIBRARIES:
 
 clean-libLIBRARIES:
 	-test -z "$(lib_LIBRARIES)" || rm -f $(lib_LIBRARIES)
-lib45.a: $(lib45_a_OBJECTS) $(lib45_a_DEPENDENCIES) 
+lib45.a: $(lib45_a_OBJECTS) $(lib45_a_DEPENDENCIES)
 	-rm -f lib45.a
 	$(lib45_a_AR) lib45.a $(lib45_a_OBJECTS) $(lib45_a_LIBADD)
 	$(RANLIB) lib45.a

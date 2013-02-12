@@ -36,7 +36,7 @@ showfreg=no
 #		for dynamic '00:00:00.0 of current day' is used
 timebase=dynamic
 #
-# freqbase:	dynamic/<baseval> 
+# freqbase:	dynamic/<baseval>
 #		if a number is given, subtract this from sampling values for display
 #		if dynamic is selected, freqbase is adjusted to fit into the range of
 #		offset values
@@ -76,7 +76,7 @@ MinOffset=none
 
 #
 # verbose:	<number>
-# 		specify level for debugging 
+# 		specify level for debugging
 #		default is 0 for printing and 1 for monitoring
 #		level 1 will just print a timestamp for any display update
 #		(this is every delay seconds)

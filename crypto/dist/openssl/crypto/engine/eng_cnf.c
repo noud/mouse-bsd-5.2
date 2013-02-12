@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -87,7 +87,7 @@ static int int_engine_init(ENGINE *e)
 		}
 	return 1;
 	}
-	
+
 
 static int int_engine_configure(char *name, char *value, const CONF *cnf)
 	{
@@ -229,7 +229,7 @@ static void int_engine_module_finish(CONF_IMODULE *md)
 	sk_ENGINE_free(initialized_engines);
 	initialized_engines = NULL;
 	}
-	
+
 
 void ENGINE_add_conf_module(void)
 	{

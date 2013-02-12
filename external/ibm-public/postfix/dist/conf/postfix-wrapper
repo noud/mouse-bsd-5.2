@@ -120,7 +120,7 @@
 #	    # mkdir /etc/postfix-test
 #	    # cp /usr/libexec/postfix/main.cf /etc/postfix-test
 #	    # cp /usr/libexec/postfix/master.cf /etc/postfix-test
-#	    # postconf -c /etc/postfix-test -e 
+#	    # postconf -c /etc/postfix-test -e
 #		"multi_instance_name=postfix-test"
 #	    # postfix -c /etc/postfix post-install
 #		"config_directory=/etc/postfix-test"

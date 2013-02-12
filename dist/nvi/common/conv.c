@@ -43,7 +43,7 @@ typedef int	iconv_t;
 #include <locale.h>
 
 #ifdef USE_WIDECHAR
-static int 
+static int
 raw2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw, size_t *tolen,
 	const CHAR_T **dst)
 {
@@ -87,8 +87,8 @@ raw2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw, size_t *tolen,
 #define CONVERT(str, left, src, len)
 #endif
 
-static int 
-default_char2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw, 
+static int
+default_char2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw,
 		size_t *tolen, const CHAR_T **dst, const char *enc)
 {
     int i = 0, j;
@@ -148,29 +148,29 @@ err:
     return error;
 }
 
-static int 
-fe_char2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw, 
+static int
+fe_char2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw,
 	    size_t *tolen, const CHAR_T **dst)
 {
     return default_char2int(sp, str, len, cw, tolen, dst, O_STR(sp, O_FILEENCODING));
 }
 
-static int 
-ie_char2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw, 
+static int
+ie_char2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw,
 	    size_t *tolen, const CHAR_T **dst)
 {
     return default_char2int(sp, str, len, cw, tolen, dst, O_STR(sp, O_INPUTENCODING));
 }
 
-static int 
-cs_char2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw, 
+static int
+cs_char2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw,
 	    size_t *tolen, const CHAR_T **dst)
 {
     return default_char2int(sp, str, len, cw, tolen, dst, LANGCODESET);
 }
 
-static int 
-CHAR_T_int2char(SCR *sp, const CHAR_T * str, ssize_t len, CONVWIN *cw, 
+static int
+CHAR_T_int2char(SCR *sp, const CHAR_T * str, ssize_t len, CONVWIN *cw,
 	size_t *tolen, const char **dst)
 {
     *tolen = len * sizeof(CHAR_T);
@@ -179,8 +179,8 @@ CHAR_T_int2char(SCR *sp, const CHAR_T * str, ssize_t len, CONVWIN *cw,
     return 0;
 }
 
-static int 
-CHAR_T_char2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw, 
+static int
+CHAR_T_char2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw,
 	size_t *tolen, const CHAR_T **dst)
 {
     *tolen = len / sizeof(CHAR_T);
@@ -189,7 +189,7 @@ CHAR_T_char2int(SCR *sp, const char * str, ssize_t len, CONVWIN *cw,
     return 0;
 }
 
-static int 
+static int
 int2raw(SCR *sp, const CHAR_T * str, ssize_t len, CONVWIN *cw, size_t *tolen,
 	const char **dst)
 {
@@ -208,8 +208,8 @@ int2raw(SCR *sp, const CHAR_T * str, ssize_t len, CONVWIN *cw, size_t *tolen,
     return 0;
 }
 
-static int 
-default_int2char(SCR *sp, const CHAR_T * str, ssize_t len, CONVWIN *cw, 
+static int
+default_int2char(SCR *sp, const CHAR_T * str, ssize_t len, CONVWIN *cw,
 		size_t *tolen, const char **pdst, const char *enc)
 {
     size_t i, j;
@@ -300,15 +300,15 @@ err:
     return 1;
 }
 
-static int 
-fe_int2char(SCR *sp, const CHAR_T * str, ssize_t len, CONVWIN *cw, 
+static int
+fe_int2char(SCR *sp, const CHAR_T * str, ssize_t len, CONVWIN *cw,
 	    size_t *tolen, const char **dst)
 {
     return default_int2char(sp, str, len, cw, tolen, dst, O_STR(sp, O_FILEENCODING));
 }
 
-static int 
-cs_int2char(SCR *sp, const CHAR_T * str, ssize_t len, CONVWIN *cw, 
+static int
+cs_int2char(SCR *sp, const CHAR_T * str, ssize_t len, CONVWIN *cw,
 	    size_t *tolen, const char **dst)
 {
     return default_int2char(sp, str, len, cw, tolen, dst, LANGCODESET);

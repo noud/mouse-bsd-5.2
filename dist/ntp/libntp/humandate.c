@@ -31,11 +31,11 @@ humandate(
 		return "--- --- -- ---- --:--:--";
 
 	LIB_GETBUF(bp);
-	
+
 	(void) sprintf(bp, "%s, %s %2d %4d %2d:%02d:%02d",
 		       days[tm->tm_wday], months[tm->tm_mon], tm->tm_mday,
 		       1900+tm->tm_year, tm->tm_hour, tm->tm_min, tm->tm_sec);
-	
+
 	return bp;
 }
 
@@ -49,16 +49,16 @@ humanlogtime(void)
 	char *bp;
 	time_t cursec = time((time_t *) 0);
 	struct tm *tm;
-	
+
 	tm = localtime(&cursec);
 	if (!tm)
 		return "-- --- --:--:--";
 
 	LIB_GETBUF(bp);
-	
+
 	(void) sprintf(bp, "%2d %s %02d:%02d:%02d",
 		       tm->tm_mday, months[tm->tm_mon],
 		       tm->tm_hour, tm->tm_min, tm->tm_sec);
-		
+
 	return bp;
 }

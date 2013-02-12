@@ -252,7 +252,7 @@ static int prism54_set_encryption(const char *ifname, void *priv,
 	hdr->oid = htonl(DOT11_OID_STAKEY);
 
 	memcpy(buf, key, key_len);
-	
+
 	ret = send(drv->pim_sock, hdr, blen, 0);
 	if (ret < 0) {
 		free(hdr);
@@ -282,7 +282,7 @@ static int prism54_get_seqnum(const char *ifname, void *priv, const u8 *addr,
 		return -1;
 
 	stasc = (struct obj_stasc *) &hdr[1];
-	
+
 	if (addr == NULL)
 		memset(&stasc->address[0], 0xff, ETH_ALEN);
 	else
@@ -377,7 +377,7 @@ static int prism54_set_privacy_invoked(const char *ifname, void *priv,
 	return ret;
 }
 
- 
+
 static int prism54_ioctl_setiwessid(const char *ifname, void *priv,
 				    const u8 *buf, int len)
 {
@@ -680,7 +680,7 @@ static void prism54_handle_auth(struct prism54_driver_data *drv,
 			goto fail;
 		}
 		sta->flags &= ~WLAN_STA_PREAUTH;
-		
+
 		ieee802_1x_notify_pre_auth(sta->eapol_sm, 0);
 		sta->flags |= WLAN_STA_AUTH;
 		wpa_auth_sm_event(sta->wpa_sm, WPA_AUTH);
@@ -1067,7 +1067,7 @@ static void prism54_driver_deinit(void *priv)
 
 	if (drv->sock >= 0)
 		close(drv->sock);
-	
+
 	free(drv);
 }
 

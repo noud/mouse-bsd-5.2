@@ -238,7 +238,7 @@ EnvelopedData (certificate encrypted).
 hx509 can use PKCS11 tokens, PKCS12 files, PEM files, DER encoded files.
 
 @node What is X.509 ?, Setting up a CA, Introduction, Top
-@chapter What is X.509, PKIX, PKCS7 and CMS ? 
+@chapter What is X.509, PKIX, PKCS7 and CMS ?
 
 X.509 is from the beginning created by CCITT (later ITU) for the X.500
 directory service. But today when people are talking about X.509 they

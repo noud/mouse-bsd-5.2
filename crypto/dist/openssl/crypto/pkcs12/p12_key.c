@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -170,7 +170,7 @@ int PKCS12_key_gen_uni(unsigned char *pass, int passlen, unsigned char *salt,
 			fprintf(stderr, "Output KEY (length %d)\n", tmpn);
 			h__dump(tmpout, tmpn);
 #endif
-			return 1;	
+			return 1;
 		}
 		n -= u;
 		out += u;
@@ -191,7 +191,7 @@ int PKCS12_key_gen_uni(unsigned char *pass, int passlen, unsigned char *salt,
 			/* If less than v bytes pad with zeroes */
 			} else if (Ijlen < v) {
 				memset(I + j, 0, v - Ijlen);
-				BN_bn2bin(Ij, I + j + v - Ijlen); 
+				BN_bn2bin(Ij, I + j + v - Ijlen);
 #endif
 			} else BN_bn2bin (Ij, I + j);
 		}
@@ -201,6 +201,6 @@ int PKCS12_key_gen_uni(unsigned char *pass, int passlen, unsigned char *salt,
 void h__dump (unsigned char *p, int len)
 {
 	for (; len --; p++) fprintf(stderr, "%02X", *p);
-	fprintf(stderr, "\n");	
+	fprintf(stderr, "\n");
 }
 #endif

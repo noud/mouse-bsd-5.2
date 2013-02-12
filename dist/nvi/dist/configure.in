@@ -436,7 +436,7 @@ if test "$vi_cv_perlinterp" = "yes"; then
         	-e 'ccdlflags'`
 	LIBOBJS="perl.o perlxsi.o perlsfio.o $LIBOBJS"
 	AC_DEFINE(HAVE_PERL_INTERP)
-	AC_CACHE_CHECK([whether we need to use perl's setenv], 
+	AC_CACHE_CHECK([whether we need to use perl's setenv],
 		vi_cv_perl_setenv, [
 		AC_TRY_RUN([
 #include <EXTERN.h>
@@ -493,7 +493,7 @@ dnl 	AC_DEFINE(USE_SLANG_CURSES)
 dnl         AC_CHECK_LIB(slang, SLtt_get_terminfo,
 dnl                 [CURSLIBS="$CURSLIBS -lslang -lm"],
 dnl                 [AC_MSG_ERROR(unable to compile.  check config.log)], -lm)
-dnl 
+dnl
 dnl 	vi_cv_curses=slcurses
 dnl 	],
 dnl 	[
@@ -514,7 +514,7 @@ dnl 	[
 		AC_CHECK_LIB($vi_cv_curses, waddnwstr,[break])
 		vi_cv_curses=unknown
 	    done
-	else 
+	else
 	    for vi_cv_curses in ncurses ncursesw curses; do
 		AC_CHECK_LIB($vi_cv_curses, initscr, [break])
 		vi_cv_curses=unknown
@@ -527,7 +527,7 @@ dnl 	[
 		AC_CHECK_HEADERS(ncurses.h, [CURSHEADER=ncurses.h])
 	    fi
 	    if test "$vi_cv_curses" = "ncursesw"; then
-		AC_CHECK_HEADERS(ncursesw/ncurses.h, 
+		AC_CHECK_HEADERS(ncursesw/ncurses.h,
 			[CURSHEADER=ncursesw/ncurses.h])
 	    fi
 	    vi_programs="vi $vi_programs"
@@ -936,8 +936,8 @@ AC_SUBST(NEED_FPRINTF_PROTO)
 AC_CACHE_CHECK([fprintf prototype needed], vi_cv_proto_fprintf,
 [AC_TRY_COMPILE([ #include <stdio.h>
 typedef int     (*funcPtr)();
-],[funcPtr ptr = (funcPtr) fprintf;], 
-vi_cv_proto_fprintf=no, 
+],[funcPtr ptr = (funcPtr) fprintf;],
+vi_cv_proto_fprintf=no,
 [vi_cv_proto_fprintf=yes])])
 if test "$vi_cv_proto_fprintf" = yes; then
 	AC_DEFINE(NEED_FPRINTF_PROTO)

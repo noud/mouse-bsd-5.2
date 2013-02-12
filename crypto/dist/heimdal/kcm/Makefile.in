@@ -431,7 +431,7 @@ clean-libexecPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-kcm$(EXEEXT): $(kcm_OBJECTS) $(kcm_DEPENDENCIES) 
+kcm$(EXEEXT): $(kcm_OBJECTS) $(kcm_DEPENDENCIES)
 	@rm -f kcm$(EXEEXT)
 	$(LINK) $(kcm_OBJECTS) $(kcm_LDADD) $(LIBS)
 

@@ -646,16 +646,16 @@ command(Widget widget, XKeyEvent *event, String *str, Cardinal *cardinal)
 
 /* mouse or keyboard input. */
 #if defined(__STDC__)
-static	void	insert_string( Widget widget, 
-			       XKeyEvent *event, 
-			       String *str, 
+static	void	insert_string( Widget widget,
+			       XKeyEvent *event,
+			       String *str,
 			       Cardinal *cardinal
 			       )
 #else
 static	void	insert_string( widget, event, str, cardinal )
-Widget          widget; 
-XKeyEvent       *event; 
-String          *str;  
+Widget          widget;
+XKeyEvent       *event;
+String          *str;
 Cardinal        *cardinal;
 #endif
 {
@@ -676,16 +676,16 @@ Cardinal        *cardinal;
 
 /* mouse or keyboard input. */
 #if defined(__STDC__)
-static	void	key_press( Widget widget, 
-			   XKeyEvent *event, 
-			   String str, 
+static	void	key_press( Widget widget,
+			   XKeyEvent *event,
+			   String str,
 			   Cardinal *cardinal
 			   )
 #else
 static	void	key_press( widget, event, str, cardinal )
-Widget          widget; 
-XKeyEvent       *event; 
-String          str;  
+Widget          widget;
+XKeyEvent       *event;
+String          str;
 Cardinal        *cardinal;
 #endif
 {
@@ -778,7 +778,7 @@ static	xvi_screen	*create_screen( parent, rows, cols )
     resize_backing_store( new_screen );
 
     /* set up a translation table for the X toolkit */
-    if ( area_trans == NULL ) 
+    if ( area_trans == NULL )
 	area_trans = XtParseTranslationTable(areaTrans);
 
     /* future, new screen gets inserted into the parent sash
@@ -858,7 +858,7 @@ static	xvi_screen	*create_screen( parent, rows, cols )
 		   new_screen
 		   );
 
-    /* this callback is for when we expose obscured bits 
+    /* this callback is for when we expose obscured bits
      * (e.g. there is a window over part of our drawing area
      */
     XtAddEventHandler( new_screen->area,
@@ -1154,16 +1154,16 @@ int		*end;
 
 
 #if defined(__STDC__)
-static	void	select_start( Widget widget, 
+static	void	select_start( Widget widget,
 			      XEvent *event,
-			      String str, 
+			      String str,
 			      Cardinal *cardinal
 			      )
 #else
 static	void	select_start( widget, event, str, cardinal )
-Widget		widget;   
+Widget		widget;
 XEvent		*event;
-String		str; 
+String		str;
 Cardinal        *cardinal;
 #endif
 {
@@ -1216,16 +1216,16 @@ Cardinal        *cardinal;
 
 
 #if defined(__STDC__)
-static	void	select_extend( Widget widget, 
+static	void	select_extend( Widget widget,
 			       XEvent *event,
-			       String str, 
+			       String str,
 			       Cardinal *cardinal
 			       )
 #else
 static	void	select_extend( widget, event, str, cardinal )
-Widget		widget;   
+Widget		widget;
 XEvent		*event;
-String		str; 
+String		str;
 Cardinal        *cardinal;
 #endif
 {
@@ -1276,16 +1276,16 @@ Cardinal        *cardinal;
 
 
 #if defined(__STDC__)
-static	void	select_paste( Widget widget, 
+static	void	select_paste( Widget widget,
 			      XEvent *event,
-			      String str, 
+			      String str,
 			      Cardinal *cardinal
 			      )
 #else
 static	void	select_paste( widget, event, str, cardinal )
-Widget		widget;   
+Widget		widget;
 XEvent		*event;
-String		str; 
+String		str;
 Cardinal        *cardinal;
 #endif
 {

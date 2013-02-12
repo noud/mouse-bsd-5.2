@@ -192,7 +192,7 @@ clkinput(c, tp)
 
 	if (putc(c, &clk->clkbuf) == -1)
 		goto flushout;
-	
+
 #ifdef CLKLDISC
 	/*
 	 * STREAMS people started writing timestamps this way.
@@ -227,7 +227,7 @@ clkinput(c, tp)
 	 */
 	if (tp->t_rawq.c_cc > NCLKCHARS)
 		ndflush(&tp->t_rawq, tp->t_rawq.c_cc);
-	
+
 	/*
 	 * Now copy the buffer in.  There is a special case optimization
 	 * here.  If there is nothing on the rawq at present we can
@@ -310,7 +310,7 @@ clkioctl(tp, cmd, data, flag)
 				clk_bflush(clk);
 		}
 		return (-1);
-	
+
 	default:
 		break;
 	}

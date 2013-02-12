@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2006 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "krb5/gsskrb5_locl.h"
@@ -48,7 +48,7 @@ _gsskrb5_register_acceptor_identity (const char *identity)
     ret = _gsskrb5_init(&context);
     if(ret)
 	return GSS_S_FAILURE;
-    
+
     HEIMDAL_MUTEX_lock(&gssapi_keytab_mutex);
 
     if(_gsskrb5_keytab != NULL) {
@@ -98,7 +98,7 @@ _gsskrb5i_is_cfx(gsskrb5_ctx ctx, int *is_cfx)
 
     if (key == NULL)
 	return;
-	    
+
     switch (key->keytype) {
     case ETYPE_DES_CBC_CRC:
     case ETYPE_DES_CBC_MD4:
@@ -129,7 +129,7 @@ gsskrb5_accept_delegated_token
     krb5_ccache ccache = NULL;
     krb5_error_code kret;
     int32_t ac_flags, ret = GSS_S_COMPLETE;
-      
+
     *minor_status = 0;
 
     /* XXX Create a new delegated_cred_handle? */
@@ -149,7 +149,7 @@ gsskrb5_accept_delegated_token
 	ctx->flags &= ~GSS_C_DELEG_FLAG;
 	goto out;
     }
-      
+
     krb5_auth_con_removeflags(context,
 			      ctx->auth_context,
 			      KRB5_AUTH_CONTEXT_DO_TIME,
@@ -180,7 +180,7 @@ gsskrb5_accept_delegated_token
 	    goto out;
 
 	handle = (gsskrb5_cred) *delegated_cred_handle;
-    
+
 	handle->cred_flags |= GSS_CF_DESTROY_CRED_ON_RELEASE;
 	krb5_cc_close(context, ccache);
 	ccache = NULL;
@@ -220,7 +220,7 @@ gsskrb5_acceptor_ready(OM_uint32 * minor_status,
     if (ret)
 	return ret;
 
-    /* 
+    /*
      * If requested, set local sequence num to remote sequence if this
      * isn't a mutual authentication context
      */
@@ -297,7 +297,7 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
     } else if (acceptor_cred->keytab != NULL) {
 	keytab = acceptor_cred->keytab;
     }
-    
+
     /*
      * We need to check the ticket and create the AP-REP packet
      */
@@ -335,7 +335,7 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
 	kret = krb5_rd_req_out_get_ap_req_options(context, out,
 						  &ap_options);
 	if (kret == 0)
-	    kret = krb5_rd_req_out_get_ticket(context, out, 
+	    kret = krb5_rd_req_out_get_ticket(context, out,
 					      &ctx->ticket);
 	if (kret == 0)
 	    kret = krb5_rd_req_out_get_keyblock(context, out,
@@ -349,8 +349,8 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
 	    return ret;
 	}
     }
-    
-    
+
+
     /*
      * We need to copy the principal names to the context and the
      * calling layer.
@@ -363,7 +363,7 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
 	*minor_status = kret;
     }
 
-    kret = krb5_copy_principal(context, 
+    kret = krb5_copy_principal(context,
 			       ctx->ticket->server,
 			       &ctx->target);
     if (kret) {
@@ -371,7 +371,7 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
 	*minor_status = kret;
 	return ret;
     }
-    
+
     /*
      * We need to setup some compat stuff, this assumes that
      * context_handle->target is already set.
@@ -396,7 +396,7 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
      */
     {
 	krb5_authenticator authenticator;
-      
+
 	kret = krb5_auth_con_getauthenticator(context,
 					      ctx->auth_context,
 					      &authenticator);
@@ -420,8 +420,8 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
         } else {
 	    krb5_crypto crypto;
 
-	    kret = krb5_crypto_init(context, 
-				    ctx->auth_context->keyblock, 
+	    kret = krb5_crypto_init(context,
+				    ctx->auth_context->keyblock,
 				    0, &crypto);
 	    if(kret) {
 		krb5_free_authenticator(context, &authenticator);
@@ -431,9 +431,9 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
 		return ret;
 	    }
 
-	    /* 
+	    /*
 	     * Windows accepts Samba3's use of a kerberos, rather than
-	     * GSSAPI checksum here 
+	     * GSSAPI checksum here
 	     */
 
 	    kret = krb5_verify_checksum(context,
@@ -448,20 +448,20 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
 		return ret;
 	    }
 
-	    /* 
+	    /*
 	     * Samba style get some flags (but not DCE-STYLE)
 	     */
-	    ctx->flags = 
+	    ctx->flags =
 		GSS_C_MUTUAL_FLAG | GSS_C_REPLAY_FLAG | GSS_C_SEQUENCE_FLAG;
         }
     }
-    
+
     if(ctx->flags & GSS_C_MUTUAL_FLAG) {
 	krb5_data outbuf;
-	    
+
 	_gsskrb5i_is_cfx(ctx, &is_cfx);
-	    
-	if (is_cfx != 0 
+
+	if (is_cfx != 0
 	    || (ap_options & AP_OPTS_USE_SUBKEY)) {
 	    kret = krb5_auth_con_addflags(context,
 					  ctx->auth_context,
@@ -469,7 +469,7 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
 					  NULL);
 	    ctx->more_flags |= ACCEPTOR_SUBKEY;
 	}
-	    
+
 	kret = krb5_mk_rep(context,
 			   ctx->auth_context,
 			   &outbuf);
@@ -477,7 +477,7 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
 	    *minor_status = kret;
 	    return GSS_S_FAILURE;
 	}
-	    
+
 	if (IS_DCE_STYLE(ctx)) {
 	    output_token->length = outbuf.length;
 	    output_token->value = outbuf.data;
@@ -492,17 +492,17 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
 		return ret;
 	}
     }
-    
+
     ctx->flags |= GSS_C_TRANS_FLAG;
 
     /* Remember the flags */
-    
+
     ctx->lifetime = ctx->ticket->ticket.endtime;
     ctx->more_flags |= OPEN;
-    
+
     if (mech_type)
 	*mech_type = GSS_KRB5_MECHANISM;
-    
+
     if (time_rec) {
 	ret = _gsskrb5_lifetime_left(minor_status,
 				     context,
@@ -529,7 +529,7 @@ gsskrb5_acceptor_start(OM_uint32 * minor_status,
 	return GSS_S_CONTINUE_NEEDED;
     }
 
-    ret = gsskrb5_acceptor_ready(minor_status, ctx, context, 
+    ret = gsskrb5_acceptor_ready(minor_status, ctx, context,
 				 delegated_cred_handle);
 
     if (ret_flags)
@@ -556,15 +556,15 @@ acceptor_wait_for_dcestyle(OM_uint32 * minor_status,
     krb5_error_code kret;
     krb5_data inbuf;
     int32_t r_seq_number, l_seq_number;
-	
-    /* 
+
+    /*
      * We know it's GSS_C_DCE_STYLE so we don't need to decapsulate the AP_REP
      */
 
     inbuf.length = input_token_buffer->length;
     inbuf.data = input_token_buffer->value;
 
-    /* 
+    /*
      * We need to remeber the old remote seq_number, then check if the
      * client has replied with our local seq_number, and then reset
      * the remote seq_number to the old value
@@ -595,15 +595,15 @@ acceptor_wait_for_dcestyle(OM_uint32 * minor_status,
 	}
     }
 
-    /* 
+    /*
      * We need to verify the AP_REP, but we need to flag that this is
      * DCE_STYLE, so don't check the timestamps this time, but put the
      * flag DO_TIME back afterward.
-    */ 
+    */
     {
 	krb5_ap_rep_enc_part *repl;
 	int32_t auth_flags;
-		
+
 	krb5_auth_con_removeflags(context,
 				  ctx->auth_context,
 				  KRB5_AUTH_CONTEXT_DO_TIME,
@@ -632,7 +632,7 @@ acceptor_wait_for_dcestyle(OM_uint32 * minor_status,
 	if (lifetime_rec == 0) {
 	    return GSS_S_CONTEXT_EXPIRED;
 	}
-	
+
 	if (time_rec) *time_rec = lifetime_rec;
     }
 
@@ -690,14 +690,14 @@ acceptor_wait_for_dcestyle(OM_uint32 * minor_status,
     {
 	kret = krb5_auth_con_setremoteseqnumber(context,
 						ctx->auth_context,
-						r_seq_number);	
+						r_seq_number);
 	if (kret) {
 	    *minor_status = kret;
 	    return GSS_S_FAILURE;
 	}
     }
 
-    return gsskrb5_acceptor_ready(minor_status, ctx, context, 
+    return gsskrb5_acceptor_ready(minor_status, ctx, context,
 				  delegated_cred_handle);
 }
 
@@ -738,17 +738,17 @@ _gsskrb5_accept_sec_context(OM_uint32 * minor_status,
 	if (ret)
 	    return ret;
     }
-    
+
     ctx = (gsskrb5_ctx)*context_handle;
 
-    
+
     /*
-     * TODO: check the channel_bindings 
+     * TODO: check the channel_bindings
      * (above just sets them to krb5 layer)
      */
 
     HEIMDAL_MUTEX_lock(&ctx->ctx_id_mutex);
-    
+
     switch (ctx->state) {
     case ACCEPTOR_START:
 	ret = gsskrb5_acceptor_start(minor_status,
@@ -779,7 +779,7 @@ _gsskrb5_accept_sec_context(OM_uint32 * minor_status,
 					 delegated_cred_handle);
 	break;
     case ACCEPTOR_READY:
-	/* 
+	/*
 	 * If we get there, the caller have called
 	 * gss_accept_sec_context() one time too many.
 	 */
@@ -790,9 +790,9 @@ _gsskrb5_accept_sec_context(OM_uint32 * minor_status,
 	ret =  GSS_S_BAD_STATUS;
 	break;
     }
-    
+
     HEIMDAL_MUTEX_unlock(&ctx->ctx_id_mutex);
-    
+
     if (GSS_ERROR(ret)) {
 	OM_uint32 min2;
 	_gsskrb5_delete_sec_context(&min2, context_handle, GSS_C_NO_BUFFER);

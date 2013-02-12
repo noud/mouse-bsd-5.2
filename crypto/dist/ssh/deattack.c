@@ -35,17 +35,17 @@ __RCSID("$NetBSD: deattack.c,v 1.16 2006/09/28 21:22:14 christos Exp $");
 
 /*
  * CRC attack detection has a worst-case behaviour that is O(N^3) over
- * the number of identical blocks in a packet. This behaviour can be 
- * exploited to create a limited denial of service attack. 
- * 
+ * the number of identical blocks in a packet. This behaviour can be
+ * exploited to create a limited denial of service attack.
+ *
  * However, because we are dealing with encrypted data, identical
- * blocks should only occur every 2^35 maximally-sized packets or so. 
+ * blocks should only occur every 2^35 maximally-sized packets or so.
  * Consequently, we can detect this DoS by looking for identical blocks
  * in a packet.
  *
  * The parameter below determines how many identical blocks we will
  * accept in a single packet, trading off between attack detection and
- * likelihood of terminating a legitimate connection. A value of 32 
+ * likelihood of terminating a legitimate connection. A value of 32
  * corresponds to an average of 2^40 messages before an attack is
  * misdetected
  */

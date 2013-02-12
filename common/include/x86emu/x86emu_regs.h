@@ -97,8 +97,8 @@
 #define F_ALWAYS_ON  (0x0002)   /* flag bits always on */
 
 /*
- * Define a mask for only those flag bits we will ever pass back 
- * (via PUSHF) 
+ * Define a mask for only those flag bits we will ever pass back
+ * (via PUSHF)
  */
 #define F_MSK (FB_CF|FB_PF|FB_AF|FB_ZF|FB_SF|FB_TF|FB_IF|FB_DF|FB_OF)
 

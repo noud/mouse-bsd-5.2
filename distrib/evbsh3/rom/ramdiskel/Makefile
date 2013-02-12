@@ -42,7 +42,7 @@ ${IMAGE}: ${CBIN} ${MTREECONF} ${LISTS}
 		512/${RAMDISKSPC}/1/${RAMDISKCYLS}
 	-${DISKLABEL} ${VND_CDEV} >tmplabel
 	${DISKLABEL} -r -R ${VND_CDEV} tmplabel
-	${NEWFS} -B le -m 0 -o space ${VND_RDEV} 
+	${NEWFS} -B le -m 0 -o space ${VND_RDEV}
 	${MOUNT} ${VND_DEV} ${MOUNT_POINT}
 	${TOOL_MTREE} -def ${.CURDIR}/${MTREECONF} -p ${MOUNT_POINT}/ -U
 	TOPDIR=${TOP} CURDIR=${.CURDIR} OBJDIR=${.OBJDIR} \

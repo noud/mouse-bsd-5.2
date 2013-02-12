@@ -573,6 +573,6 @@ int fd;
 	obj.ipfo_type = IPFOBJ_STATETQTAB;
 
 	if (ioctl(fd, SIOCGTQTAB, &obj) == 0) {
-		printtqtable(table);      
+		printtqtable(table);
 	}
 }

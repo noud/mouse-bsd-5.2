@@ -114,7 +114,7 @@ HMAC_Final(HMAC_CTX *ctx, void *md, unsigned int *len)
 void *
 HMAC(const EVP_MD *md,
      const void *key, size_t key_size,
-     const void *data, size_t data_size, 
+     const void *data, size_t data_size,
      void *hash, unsigned int *hash_len)
 {
     HMAC_CTX ctx;

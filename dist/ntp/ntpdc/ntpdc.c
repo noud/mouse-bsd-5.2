@@ -465,7 +465,7 @@ ntpdcmain(
 		for (ihost = 0; ihost < numhosts; ihost++) {
 			if (openhost(chosts[ihost]))
 			    for (icmd = 0; icmd < numcmds; icmd++) {
-				    if (numhosts > 1) 
+				    if (numhosts > 1)
 					printf ("--- %s ---\n",chosts[ihost]);
 				    docmd(ccmds[icmd]);
 			    }
@@ -494,18 +494,18 @@ openhost(
 	char service[5];
 
 	/*
-	 * We need to get by the [] if they were entered 
+	 * We need to get by the [] if they were entered
 	 */
-	
+
 	cp = hname;
-	
+
 	if (*cp == '[') {
-		cp++;	
+		cp++;
 		for(i = 0; *cp != ']'; cp++, i++)
-			name[i] = *cp;	
+			name[i] = *cp;
 		name[i] = '\0';
 		hname = name;
-	}	
+	}
 
 	/*
 	 * First try to resolve it as an ip address and if that fails,
@@ -531,12 +531,12 @@ openhost(
 #ifdef AI_ADDRCONFIG
 		hints.ai_flags |= AI_ADDRCONFIG;
 #endif
-		a_info = getaddrinfo(hname, service, &hints, &ai);	
+		a_info = getaddrinfo(hname, service, &hints, &ai);
 	}
 	/* Some older implementations don't like AI_ADDRCONFIG. */
 	if (a_info == EAI_BADFLAGS) {
 		hints.ai_flags = AI_CANONNAME;
-		a_info = getaddrinfo(hname, service, &hints, &ai);	
+		a_info = getaddrinfo(hname, service, &hints, &ai);
 	}
 	if (a_info != 0) {
 		(void) fprintf(stderr, "%s\n", gai_strerror(a_info));
@@ -564,16 +564,16 @@ openhost(
 		havehost = 0;
 	}
 	(void) strcpy(currenthost, temphost);
-	
+
 	/* port maps to the same in both families */
-	s_port = ((struct sockaddr_in6 *)ai->ai_addr)->sin6_port; 
+	s_port = ((struct sockaddr_in6 *)ai->ai_addr)->sin6_port;
 #ifdef SYS_VXWORKS
 	((struct sockaddr_in6 *)&hostaddr)->sin6_port = htons(SERVER_PORT_NUM);
 	if (ai->ai_family == AF_INET)
-		*(struct sockaddr_in *)&hostaddr= 
+		*(struct sockaddr_in *)&hostaddr=
 			*((struct sockaddr_in *)ai->ai_addr);
-	else 
-		*(struct sockaddr_in6 *)&hostaddr= 
+	else
+		*(struct sockaddr_in6 *)&hostaddr=
 			*((struct sockaddr_in6 *)ai->ai_addr);
 #endif /* SYS_VXWORKS */
 
@@ -600,7 +600,7 @@ openhost(
 	    error("socket", "", "");
 #endif /* SYS_WINNT */
 
-	
+
 #ifdef NEED_RCVBUF_SLOP
 # ifdef SO_RCVBUF
 	{
@@ -614,7 +614,7 @@ openhost(
 #endif
 
 #ifdef SYS_VXWORKS
-	if (connect(sockfd, (struct sockaddr *)&hostaddr, 
+	if (connect(sockfd, (struct sockaddr *)&hostaddr,
 		    sizeof(hostaddr)) == -1)
 #else
 	if (connect(sockfd, (struct sockaddr *)ai->ai_addr,
@@ -715,7 +715,7 @@ getresponse(
 	    tvo = tvout;
 	else
 	    tvo = tvsout;
-	
+
 	FD_SET(sockfd, &fds);
 	n = select(sockfd+1, &fds, (fd_set *)0, (fd_set *)0, &tvo);
 
@@ -823,7 +823,7 @@ getresponse(
 	size = INFO_ITEMSIZE(rpkt.mbz_itemsize);
 	if (esize > size)
 		pad = esize - size;
-	else 
+	else
 		pad = 0;
 	if ((datasize = items*size) > (n-RESP_HEADER_SIZE)) {
 		if (debug)
@@ -874,7 +874,7 @@ getresponse(
 	        *rdata = pktdata; /* might have been realloced ! */
 		datap = pktdata + offset;
 	}
-	/* 
+	/*
 	 * We now move the pointer along according to size and number of
 	 * items.  This is so we can play nice with older implementations
 	 */
@@ -978,7 +978,7 @@ sendrequest(
 		HTONL_FP(&ts, &qpktail->tstamp);
 		maclen = authencrypt(info_auth_keyid, (u_int32 *)&qpkt,
 		    req_pkt_size);
-		if (maclen == 0) {  
+		if (maclen == 0) {
 			(void) fprintf(stderr, "Key not found\n");
 			return (1);
 		}
@@ -1044,7 +1044,7 @@ again:
 	res = sendrequest(implcode, reqcode, auth, qitems, qsize, qdata);
 	if (res != 0)
 	    return res;
-	
+
 	/*
 	 * Get the response.  If we got a standard error, print a message
 	 */
@@ -1196,7 +1196,7 @@ docmd(
 	tokenize(cmdline, tokens, &ntok);
 	if (ntok == 0)
 	    return;
-	
+
 	/*
 	 * Find the appropriate command description.
 	 */
@@ -1210,7 +1210,7 @@ docmd(
 			       tokens[0]);
 		return;
 	}
-	
+
 	/*
 	 * Save the keyword, then walk through the arguments, interpreting
 	 * as we go.
@@ -1500,13 +1500,13 @@ getnetnum(
 #ifdef AI_ADDRCONFIG
 	hints.ai_flags |= AI_ADDRCONFIG;
 #endif
-	
+
 	/* decodenetnum only works with addresses */
 	if (decodenetnum(hname, num)) {
 		if (fullhost != 0) {
-			getnameinfo((struct sockaddr *)num, sockaddr_len, 
-				    fullhost, sizeof(fullhost), NULL, 0, 
-				    NI_NUMERICHOST); 
+			getnameinfo((struct sockaddr *)num, sockaddr_len,
+				    fullhost, sizeof(fullhost), NULL, 0,
+				    NI_NUMERICHOST);
 		}
 		return 1;
 	} else if (getaddrinfo(hname, "ntp", &hints, &ai) == 0) {
@@ -1555,7 +1555,7 @@ help(
 	struct xcmd *xcp;
 	char *cmd;
 	const char *list[100];
-	int word, words;     
+	int word, words;
         int row, rows;
 	int col, cols;
 

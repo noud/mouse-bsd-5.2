@@ -109,7 +109,7 @@ static long i_support_encrypt = typemask(ENCTYPE_DES_CFB64)
      static Encryptions encryptions[] = {
 #if	defined(DES_ENCRYPTION)
 	 { "DES_CFB64",	ENCTYPE_DES_CFB64,
-	   cfb64_encrypt,	
+	   cfb64_encrypt,
 	   cfb64_decrypt,
 	   cfb64_init,
 	   cfb64_start,
@@ -119,7 +119,7 @@ static long i_support_encrypt = typemask(ENCTYPE_DES_CFB64)
 	   cfb64_keyid,
 	   cfb64_printsub },
 	 { "DES_OFB64",	ENCTYPE_DES_OFB64,
-	   ofb64_encrypt,	
+	   ofb64_encrypt,
 	   ofb64_decrypt,
 	   ofb64_init,
 	   ofb64_start,
@@ -389,7 +389,7 @@ encrypt_display(void)
 	       ENCTYPE_NAME(encrypt_mode));
     else
 	printf("Currently not encrypting output\r\n");
-	
+
     if (decrypt_input)
 	printf("Currently decrypting input with %s\r\n",
 	       ENCTYPE_NAME(decrypt_mode));
@@ -412,7 +412,7 @@ EncryptStatus(void)
 	       ENCTYPE_NAME(encrypt_mode));
     } else
 	printf("Currently not encrypting output\r\n");
-	
+
     if (decrypt_input) {
 	printf("Currently decrypting input with %s\r\n",
 	       ENCTYPE_NAME(decrypt_mode));
@@ -715,7 +715,7 @@ encrypt_request_end(void)
  * Called when ENCRYPT REQUEST-START is received.  If we receive
  * this before a type is picked, then that indicates that the
  * other side wants us to start encrypting data as soon as we
- * can. 
+ * can.
  */
 void
 encrypt_request_start(unsigned char *data, int cnt)
@@ -842,7 +842,7 @@ encrypt_start_output(int type)
 	i = (*ep->start)(DIR_ENCRYPT, Server);
 	if (encrypt_debug_mode) {
 	    printf(">>>%s: Encrypt start: %s (%d) %s\r\n",
-		   Name, 
+		   Name,
 		   (i < 0) ? "failed" :
 		   "initial negotiation in progress",
 		   i, ENCTYPE_NAME(type));
@@ -966,7 +966,7 @@ encrypt_debug(int mode)
     encrypt_debug_mode = mode;
 }
 
-void encrypt_gen_printsub(unsigned char *data, int cnt, 
+void encrypt_gen_printsub(unsigned char *data, int cnt,
 			  unsigned char *buf, int buflen)
 {
     char tbuf[16], *cp;

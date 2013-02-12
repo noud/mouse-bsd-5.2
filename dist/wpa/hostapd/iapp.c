@@ -200,7 +200,7 @@ static void iapp_send_add(struct iapp_data *iapp, u8 *mac_addr, u16 seq_num)
 	os_memcpy(add->mac_addr, mac_addr, ETH_ALEN);
 
 	add->seq_num = host_to_be16(seq_num);
-	
+
 	os_memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = iapp->multicast.s_addr;

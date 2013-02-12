@@ -33,8 +33,8 @@
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif      
-             
+#endif
+
 #ifdef HAVE_NETINET_IN_H
 #include <netinet/in.h>
 #endif
@@ -42,7 +42,7 @@
 #ifdef HAVE_SYS_UIO_H
 #include <sys/uio.h>
 #endif
-   
+
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
@@ -50,7 +50,7 @@
 #ifdef HAVE_INTTYPES_H
 #include <inttypes.h>
 #endif
-           
+
 #include "iscsi.h"
 #include "iscsiutil.h"
 
@@ -59,7 +59,7 @@
  * Task Command
  */
 
-int 
+int
 iscsi_task_cmd_encap(uint8_t *header, iscsi_task_cmd_t * cmd)
 {
 	iscsi_trace(TRACE_ISCSI_ARGS, __FILE__, __LINE__, "Immediate: %d\n", cmd->immediate);
@@ -90,7 +90,7 @@ iscsi_task_cmd_encap(uint8_t *header, iscsi_task_cmd_t * cmd)
 	return 0;
 }
 
-int 
+int
 iscsi_task_cmd_decap(uint8_t *header, iscsi_task_cmd_t * cmd)
 {
 
@@ -130,7 +130,7 @@ iscsi_task_cmd_decap(uint8_t *header, iscsi_task_cmd_t * cmd)
  * Task Response
  */
 
-int 
+int
 iscsi_task_rsp_encap(uint8_t *header, iscsi_task_rsp_t * rsp)
 {
 
@@ -158,7 +158,7 @@ iscsi_task_rsp_encap(uint8_t *header, iscsi_task_rsp_t * rsp)
 	return 0;
 }
 
-int 
+int
 iscsi_task_rsp_decap(uint8_t *header, iscsi_task_rsp_t * rsp)
 {
 
@@ -194,7 +194,7 @@ iscsi_task_rsp_decap(uint8_t *header, iscsi_task_rsp_t * rsp)
  * NOP-Out
  */
 
-int 
+int
 iscsi_nop_out_encap(uint8_t *header, iscsi_nop_out_args_t * cmd)
 {
 
@@ -226,7 +226,7 @@ iscsi_nop_out_encap(uint8_t *header, iscsi_nop_out_args_t * cmd)
 	return 0;
 }
 
-int 
+int
 iscsi_nop_out_decap(uint8_t *header, iscsi_nop_out_args_t * cmd)
 {
 
@@ -264,7 +264,7 @@ iscsi_nop_out_decap(uint8_t *header, iscsi_nop_out_args_t * cmd)
  * NOP-In
  */
 
-int 
+int
 iscsi_nop_in_encap(uint8_t *header, iscsi_nop_in_args_t * cmd)
 {
 	uint32_t        length;
@@ -293,7 +293,7 @@ iscsi_nop_in_encap(uint8_t *header, iscsi_nop_in_args_t * cmd)
 	return 0;
 }
 
-int 
+int
 iscsi_nop_in_decap(uint8_t *header, iscsi_nop_in_args_t * cmd)
 {
 
@@ -332,7 +332,7 @@ iscsi_nop_in_decap(uint8_t *header, iscsi_nop_in_args_t * cmd)
  * Text Command
  */
 
-int 
+int
 iscsi_text_cmd_encap(uint8_t *header, iscsi_text_cmd_args_t * cmd)
 {
 	uint32_t        length;
@@ -370,7 +370,7 @@ iscsi_text_cmd_encap(uint8_t *header, iscsi_text_cmd_args_t * cmd)
 	return 0;
 }
 
-int 
+int
 iscsi_text_cmd_decap(uint8_t *header, iscsi_text_cmd_args_t * cmd)
 {
 
@@ -414,7 +414,7 @@ iscsi_text_cmd_decap(uint8_t *header, iscsi_text_cmd_args_t * cmd)
  * Text Response
  */
 
-int 
+int
 iscsi_text_rsp_encap(uint8_t *header, iscsi_text_rsp_args_t * rsp)
 {
 	uint32_t        length;
@@ -449,7 +449,7 @@ iscsi_text_rsp_encap(uint8_t *header, iscsi_text_rsp_args_t * rsp)
 	return 0;
 }
 
-int 
+int
 iscsi_text_rsp_decap(uint8_t *header, iscsi_text_rsp_args_t * rsp)
 {
 
@@ -492,7 +492,7 @@ iscsi_text_rsp_decap(uint8_t *header, iscsi_text_rsp_args_t * rsp)
  * Login Command
  */
 
-int 
+int
 iscsi_login_cmd_encap(uint8_t *header, iscsi_login_cmd_args_t * cmd)
 {
 	uint32_t        length;
@@ -538,7 +538,7 @@ iscsi_login_cmd_encap(uint8_t *header, iscsi_login_cmd_args_t * cmd)
 	return 0;
 }
 
-int 
+int
 iscsi_login_cmd_decap(uint8_t *header, iscsi_login_cmd_args_t * cmd)
 {
 
@@ -596,7 +596,7 @@ iscsi_login_cmd_decap(uint8_t *header, iscsi_login_cmd_args_t * cmd)
  * Login Response
  */
 
-int 
+int
 iscsi_login_rsp_encap(uint8_t *header, iscsi_login_rsp_args_t * rsp)
 {
 
@@ -646,7 +646,7 @@ iscsi_login_rsp_encap(uint8_t *header, iscsi_login_rsp_args_t * rsp)
 	return 0;
 }
 
-int 
+int
 iscsi_login_rsp_decap(uint8_t *header, iscsi_login_rsp_args_t * rsp)
 {
 
@@ -702,7 +702,7 @@ iscsi_login_rsp_decap(uint8_t *header, iscsi_login_rsp_args_t * rsp)
  * Logout Command
  */
 
-int 
+int
 iscsi_logout_cmd_encap(uint8_t *header, iscsi_logout_cmd_args_t * cmd)
 {
 
@@ -728,7 +728,7 @@ iscsi_logout_cmd_encap(uint8_t *header, iscsi_logout_cmd_args_t * cmd)
 	return 0;
 }
 
-int 
+int
 iscsi_logout_cmd_decap(uint8_t *header, iscsi_logout_cmd_args_t * cmd)
 {
 
@@ -769,7 +769,7 @@ iscsi_logout_cmd_decap(uint8_t *header, iscsi_logout_cmd_args_t * cmd)
  * Logout Response
  */
 
-int 
+int
 iscsi_logout_rsp_encap(uint8_t *header, iscsi_logout_rsp_args_t * rsp)
 {
 
@@ -799,7 +799,7 @@ iscsi_logout_rsp_encap(uint8_t *header, iscsi_logout_rsp_args_t * rsp)
 	return 0;
 }
 
-int 
+int
 iscsi_logout_rsp_decap(uint8_t *header, iscsi_logout_rsp_args_t * rsp)
 {
 
@@ -840,7 +840,7 @@ iscsi_logout_rsp_decap(uint8_t *header, iscsi_logout_rsp_args_t * rsp)
  * SCSI Command
  */
 
-int 
+int
 iscsi_scsi_cmd_encap(uint8_t *header, iscsi_scsi_cmd_args_t * cmd)
 {
 
@@ -887,7 +887,7 @@ iscsi_scsi_cmd_encap(uint8_t *header, iscsi_scsi_cmd_args_t * cmd)
 	return 0;
 }
 
-int 
+int
 iscsi_scsi_cmd_decap(uint8_t *header, iscsi_scsi_cmd_args_t * cmd)
 {
 
@@ -934,7 +934,7 @@ iscsi_scsi_cmd_decap(uint8_t *header, iscsi_scsi_cmd_args_t * cmd)
  * SCSI Response
  */
 
-int 
+int
 iscsi_scsi_rsp_encap(uint8_t *header, iscsi_scsi_rsp_t * rsp)
 {
 
@@ -984,7 +984,7 @@ iscsi_scsi_rsp_encap(uint8_t *header, iscsi_scsi_rsp_t * rsp)
 	return 0;
 }
 
-int 
+int
 iscsi_scsi_rsp_decap(uint8_t *header, iscsi_scsi_rsp_t * rsp)
 {
 
@@ -1037,7 +1037,7 @@ iscsi_scsi_rsp_decap(uint8_t *header, iscsi_scsi_rsp_t * rsp)
  * Ready To Transfer
  */
 
-int 
+int
 iscsi_r2t_encap(uint8_t *header, iscsi_r2t_t * cmd)
 {
 	uint32_t        length;
@@ -1072,7 +1072,7 @@ iscsi_r2t_encap(uint8_t *header, iscsi_r2t_t * cmd)
 	return 0;
 }
 
-int 
+int
 iscsi_r2t_decap(uint8_t *header, iscsi_r2t_t * cmd)
 {
 
@@ -1113,7 +1113,7 @@ iscsi_r2t_decap(uint8_t *header, iscsi_r2t_t * cmd)
  * SCSI Write Data
  */
 
-int 
+int
 iscsi_write_data_encap(uint8_t *header, iscsi_write_data_t * cmd)
 {
 
@@ -1142,7 +1142,7 @@ iscsi_write_data_encap(uint8_t *header, iscsi_write_data_t * cmd)
 	return 0;
 }
 
-int 
+int
 iscsi_write_data_decap(uint8_t *header, iscsi_write_data_t * cmd)
 {
 
@@ -1181,7 +1181,7 @@ iscsi_write_data_decap(uint8_t *header, iscsi_write_data_t * cmd)
  * SCSI Read Data
  */
 
-int 
+int
 iscsi_read_data_encap(uint8_t *header, iscsi_read_data_t * cmd)
 {
 
@@ -1241,7 +1241,7 @@ iscsi_read_data_encap(uint8_t *header, iscsi_read_data_t * cmd)
 	return 0;
 }
 
-int 
+int
 iscsi_read_data_decap(uint8_t *header, iscsi_read_data_t * cmd)
 {
 
@@ -1293,7 +1293,7 @@ iscsi_read_data_decap(uint8_t *header, iscsi_read_data_t * cmd)
  * Reject
  */
 
-int 
+int
 iscsi_reject_encap(uint8_t *header, iscsi_reject_t * cmd)
 {
 
@@ -1318,7 +1318,7 @@ iscsi_reject_encap(uint8_t *header, iscsi_reject_t * cmd)
 	return 0;
 }
 
-int 
+int
 iscsi_reject_decap(uint8_t *header, iscsi_reject_t * cmd)
 {
 
@@ -1350,7 +1350,7 @@ iscsi_reject_decap(uint8_t *header, iscsi_reject_t * cmd)
 	return 0;
 }
 
-int 
+int
 iscsi_amsg_decap(uint8_t *header, iscsi_async_msg_t * msg)
 {
 

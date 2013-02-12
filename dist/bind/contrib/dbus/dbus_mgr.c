@@ -2,7 +2,7 @@
 
 /* dbus_mgr.c
  *
- *  named module to provide dynamic forwarding zones in 
+ *  named module to provide dynamic forwarding zones in
  *  response to D-BUS dhcp events or commands.
  *
  *  Copyright(C) Jason Vas Dias, Red Hat Inc., 2005
@@ -10,7 +10,7 @@
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation at 
+ *  the Free Software Foundation at
  *           http://www.fsf.org/licensing/licenses/gpl.txt
  *  and included in this software distribution as the "LICENSE" file.
  *
@@ -73,11 +73,11 @@ struct ns_dbus_mgr
     unsigned int        magic;
     isc_mem_t         *	mctx;		/* Memory context. */
     isc_taskmgr_t     * taskmgr;	/* Task manager.   */
-    isc_socketmgr_t   *	socketmgr;	/* Socket manager. */   
-    isc_timermgr_t    *	timermgr;	/* Timer manager.  */   
+    isc_socketmgr_t   *	socketmgr;	/* Socket manager. */
+    isc_timermgr_t    *	timermgr;	/* Timer manager.  */
     isc_task_t        * task;           /* task            */
     isc_timer_t       * timer;          /* dbus_init retry */
-    void              * sockets;        /* dbus fd tree    */ 
+    void              * sockets;        /* dbus fd tree    */
     void              * dhc_if;         /* dhcp interface tree */
     void              * ifwdt;          /* initial forwarder tree */
     char              * dhcdbd_name;    /* dhcdbd destination  */
@@ -114,7 +114,7 @@ enum dhc_state_e
    DHC_ABEND,  		/* dhclient exited abnormally    */
    DHC_END, 		/* dhclient exited normally      */
    DHC_END_OPTIONS,     /* last option in subscription sent */
-   DHC_INVALID=255      
+   DHC_INVALID=255
 } DHC_State;
 
 typedef ISC_LIST(dns_name_t) DNSNameList;
@@ -141,13 +141,13 @@ struct dhc_if_s
     SockAddrList   dns;
 } DHC_IF;
 
-static void 
+static void
 dbus_mgr_watch_handler( int fd, dbus_svc_WatchFlags flags, void *mgrp );
 
 static
-dbus_svc_HandlerResult 
+dbus_svc_HandlerResult
 dbus_mgr_message_handler
-(  
+(
     DBusMsgHandlerArgs
 );
 
@@ -175,10 +175,10 @@ dns_fwdtable_t *dbus_mgr_get_fwdtable(void);
 static void
 dbus_mgr_free_initial_fwdtable(ns_dbus_mgr_t *);
 
-static 
+static
 uint8_t dbus_mgr_subscribe_to_dhcdbd( ns_dbus_mgr_t * );
 
-static 
+static
 void dbus_mgr_dbus_shutdown_handler ( ns_dbus_mgr_t * );
 
 static
@@ -186,9 +186,9 @@ int dbus_mgr_log_err( const char *fmt, ...)
 {
     va_list  va;
     va_start(va, fmt);
-    isc_log_vwrite(ns_g_lctx,		  
+    isc_log_vwrite(ns_g_lctx,
 		   NS_LOGCATEGORY_DBUS,
-		   NS_LOGMODULE_DBUS,	
+		   NS_LOGMODULE_DBUS,
 		   ISC_LOG_NOTICE,
 		   fmt, va
 	          );
@@ -201,9 +201,9 @@ int dbus_mgr_log_dbg( const char *fmt, ...)
 {
     va_list  va;
     va_start(va, fmt);
-    isc_log_vwrite(ns_g_lctx,		  
+    isc_log_vwrite(ns_g_lctx,
 		   NS_LOGCATEGORY_DBUS,
-		   NS_LOGMODULE_DBUS,	
+		   NS_LOGMODULE_DBUS,
 		   ISC_LOG_DEBUG(80),
 		   fmt, va
 	          );
@@ -216,9 +216,9 @@ int dbus_mgr_log_info( const char *fmt, ...)
 {
     va_list  va;
     va_start(va, fmt);
-    isc_log_vwrite(ns_g_lctx,		  
+    isc_log_vwrite(ns_g_lctx,
 		   NS_LOGCATEGORY_DBUS,
-		   NS_LOGMODULE_DBUS,	
+		   NS_LOGMODULE_DBUS,
 		   ISC_LOG_DEBUG(1),
 		   fmt, va
 	          );
@@ -226,9 +226,9 @@ int dbus_mgr_log_info( const char *fmt, ...)
     return 0;
 }
 
-isc_result_t 
+isc_result_t
 dbus_mgr_create
-(   isc_mem_t *mctx, 
+(   isc_mem_t *mctx,
     isc_taskmgr_t *taskmgr,
     isc_socketmgr_t *socketmgr,
     isc_timermgr_t *timermgr,
@@ -237,8 +237,8 @@ dbus_mgr_create
 {
     isc_result_t result;
     ns_dbus_mgr_t *mgr;
-    
-    *dbus_mgr = 0L; 
+
+    *dbus_mgr = 0L;
 
     mgr = isc_mem_get(mctx, sizeof(*mgr));
     if (mgr == NULL)
@@ -259,7 +259,7 @@ dbus_mgr_create
     if( (result = isc_task_create( taskmgr, 100, &(mgr->task)))
         != ISC_R_SUCCESS
       )	goto cleanup_mgr;
-    
+
     isc_task_setname( mgr->task, "dbusmgr", mgr );
 
     mgr->dbus = 0L;
@@ -269,11 +269,11 @@ dbus_mgr_create
       )	goto cleanup_mgr;
 
     if( (result = dbus_mgr_init_dbus( mgr ))
-	!= ISC_R_SUCCESS 
-      )	goto cleanup_mgr;     
+	!= ISC_R_SUCCESS
+      )	goto cleanup_mgr;
 
-    *dbus_mgr = mgr; 
-   
+    *dbus_mgr = mgr;
+
     return ISC_R_SUCCESS;
 
  cleanup_mgr:
@@ -333,14 +333,14 @@ dbus_mgr_init_dbus(ns_dbus_mgr_t * mgr)
 	  "type=signal,path=/org/freedesktop/DBus,member=NameOwnerChanged",
 	  "type=signal,path=/org/freedesktop/DBus/Local,member=Disconnected",
 	  "type=signal,interface=com.redhat.dhcp.subscribe.binary",
-	  "type=method_call,destination=com.redhat.named,path=/com/redhat/named" 	 
+	  "type=method_call,destination=com.redhat.named,path=/com/redhat/named"
 	)
       )
     {
 	dbus_mgr_log_err( "dbus_svc_add_filter failed" );
 	goto cleanup;
     }
-    
+
     if( mgr->timer != 0L )
     {
 	isc_timer_reset(mgr->timer,
@@ -368,15 +368,15 @@ dbus_mgr_init_dbus(ns_dbus_mgr_t * mgr)
     return ISC_R_FAILURE;
 }
 
-static 
+static
 uint8_t dbus_mgr_subscribe_to_dhcdbd( ns_dbus_mgr_t *mgr )
 {
     DBUS_SVC dbus = mgr->dbus;
-    char subs[1024], path[1024], 
+    char subs[1024], path[1024],
 	dhcdbd_destination[]="com.redhat.dhcp", *ddp[1]={ &(dhcdbd_destination[0]) },
 	*dhcdbd_name=0L;
-    const char *options[] = { "reason", "ip-address", "subnet-mask", 
-			      "domain-name", "domain-name-servers" 
+    const char *options[] = { "reason", "ip-address", "subnet-mask",
+			      "domain-name", "domain-name-servers"
                             };
     dbus_svc_MessageHandle msg;
     int i, n_opts = 5;
@@ -387,18 +387,18 @@ uint8_t dbus_mgr_subscribe_to_dhcdbd( ns_dbus_mgr_t *mgr )
 	      ( dbus,
 		"org.freedesktop.DBus",
 		"/org/freedesktop/DBus",
-		"GetNameOwner",		
+		"GetNameOwner",
 		"org.freedesktop.DBus",
 		TYPE_STRING, &ddp,
 		TYPE_INVALID
 	       );
-	if( msg == 0L )	
-	    return 0;    
+	if( msg == 0L )
+	    return 0;
 
 	if( !dbus_svc_get_args(dbus, msg,
 			       TYPE_STRING, &(dhcdbd_name),
 			       TYPE_INVALID
-		              ) 
+		              )
 	  )	return 0;
 
 	mgr->dhcdbd_name = isc_mem_get(mgr->mctx, strlen(dhcdbd_name) + 1);
@@ -409,7 +409,7 @@ uint8_t dbus_mgr_subscribe_to_dhcdbd( ns_dbus_mgr_t *mgr )
 
     }
 
-    sprintf(path,"/com/redhat/dhcp/subscribe");    
+    sprintf(path,"/com/redhat/dhcp/subscribe");
     sprintf(subs,"com.redhat.dhcp.binary");
 
     for(i = 0; i < n_opts; i++)
@@ -418,8 +418,8 @@ uint8_t dbus_mgr_subscribe_to_dhcdbd( ns_dbus_mgr_t *mgr )
 	      ( dbus,
 		"com.redhat.dhcp",
 		path,
-		"binary",		
-		subs,		
+		"binary",
+		subs,
 		TYPE_STRING, &(options[i]),
 		TYPE_INVALID
 	      );
@@ -432,7 +432,7 @@ uint8_t dbus_mgr_subscribe_to_dhcdbd( ns_dbus_mgr_t *mgr )
     return 1;
 }
 
-void 
+void
 dbus_mgr_shutdown
 (   ns_dbus_mgr_t *mgr
 )
@@ -459,11 +459,11 @@ dbus_mgr_shutdown
     isc_mem_put(mgr->mctx, mgr, sizeof(ns_dbus_mgr_t));
 }
 
-static 
+static
 void dbus_mgr_restart_dbus(isc_task_t *t, isc_event_t *ev)
-{   
+{
     ns_dbus_mgr_t *mgr = (ns_dbus_mgr_t*)(ev->ev_arg) ;
-    t=t;    
+    t=t;
     isc_event_free(&ev);
     dbus_mgr_log_dbg("attempting to connect to D-BUS");
     dbus_mgr_init_dbus( mgr );
@@ -491,7 +491,7 @@ void dbus_mgr_handle_dbus_shutdown_event(isc_task_t *t, isc_event_t *ev)
 	    tdestroy(mgr->sockets, dbus_mgr_destroy_socket);
 	    mgr->sockets = 0L;
 	}
-	dbus_svc_shutdown(dbus);    
+	dbus_svc_shutdown(dbus);
     }
 
     dbus_mgr_log_err( "D-BUS service disabled." );
@@ -518,13 +518,13 @@ void dbus_mgr_handle_dbus_shutdown_event(isc_task_t *t, isc_event_t *ev)
     }
 }
 
-static 
+static
 void dbus_mgr_dbus_shutdown_handler ( ns_dbus_mgr_t *mgr )
-{ 
-    isc_event_t *dbus_shutdown_event = 
+{
+    isc_event_t *dbus_shutdown_event =
 	isc_event_allocate
-	(   mgr->mctx, 
-	    mgr->task, 
+	(   mgr->mctx,
+	    mgr->task,
 	    1,
 	    dbus_mgr_handle_dbus_shutdown_event,
 	    mgr,
@@ -549,33 +549,33 @@ dns_view_t *dbus_mgr_get_localhost_view(void)
 	 view != NULL;
 	 view = ISC_LIST_NEXT(view, link)
         )
-    {	
+    {
 	/* return first view matching "localhost" source and dest */
 
 	if(( (view->matchclients != 0L )   /* 0L: accept "any" */
-	   &&(( dns_acl_match( &localhost, 
+	   &&(( dns_acl_match( &localhost,
 			     NULL, /* unsigned queries */
 			     view->matchclients,
 		  	     &(ns_g_server->aclenv),
-			     &match, 
-			     NULL  /* no match list */
-		            ) != ISC_R_SUCCESS
-	      ) || (match <= 0)
-	     )
-	    ) 
-	 ||( (view->matchdestinations != 0L )   /* 0L: accept "any" */
-	   &&(( dns_acl_match( &localhost, 
-			     NULL, /* unsigned queries */
-			     view->matchdestinations,
-		  	     &(ns_g_server->aclenv),
-			     &match, 
+			     &match,
 			     NULL  /* no match list */
 		            ) != ISC_R_SUCCESS
 	      ) || (match <= 0)
 	     )
 	    )
-	  ) continue;	
-	
+	 ||( (view->matchdestinations != 0L )   /* 0L: accept "any" */
+	   &&(( dns_acl_match( &localhost,
+			     NULL, /* unsigned queries */
+			     view->matchdestinations,
+		  	     &(ns_g_server->aclenv),
+			     &match,
+			     NULL  /* no match list */
+		            ) != ISC_R_SUCCESS
+	      ) || (match <= 0)
+	     )
+	    )
+	  ) continue;
+
 	break;
     }
     return view;
@@ -607,8 +607,8 @@ static int dbus_mgr_ifwdr_comparator( const void *p1, const void *p2 )
     dns_name_t *dn2;
     DE_CONST(&(((const DBusMgrInitialFwdr*)p1)->dn), dn1);
     DE_CONST(&(((const DBusMgrInitialFwdr*)p2)->dn), dn2);
-    dns_name_format(dn1, n1p, DNS_NAME_FORMATSIZE );    
-    dns_name_format(dn2, n2p, DNS_NAME_FORMATSIZE );    
+    dns_name_format(dn1, n1p, DNS_NAME_FORMATSIZE );
+    dns_name_format(dn2, n2p, DNS_NAME_FORMATSIZE );
     return strcmp(n1buf, n2buf);
 }
 
@@ -619,8 +619,8 @@ static void dbus_mgr_record_initial_forwarder( dns_name_t *name, dns_forwarders_
     ns_dbus_mgr_t *mgr = mp;
     isc_sockaddr_t *sa, *nsa;
     DBusMgrInitialFwdr *ifwdr;
- 
-    if( ISC_LIST_HEAD(fwdr->addrs) == 0L) 
+
+    if( ISC_LIST_HEAD(fwdr->addrs) == 0L)
 	return;
 
     if( (ifwdr = isc_mem_get(mgr->mctx, sizeof(DBusMgrInitialFwdr))) == 0L)
@@ -633,14 +633,14 @@ static void dbus_mgr_record_initial_forwarder( dns_name_t *name, dns_forwarders_
 	goto namedup_err;
 
     ISC_LIST_INIT(ifwdr->sa);
-    
+
     for( sa = ISC_LIST_HEAD(fwdr->addrs);
 	 sa != 0L;
 	 sa = ISC_LIST_NEXT(sa,link)
        )
     {
 	nsa = isc_mem_get(mgr->mctx, sizeof(isc_sockaddr_t));
-	if( nsa == 0L ) 
+	if( nsa == 0L )
 	    goto nsa_err;
 	*nsa = *sa;
 	ISC_LINK_INIT(nsa, link);
@@ -667,7 +667,7 @@ static isc_result_t
 dbus_mgr_record_initial_fwdtable( ns_dbus_mgr_t *mgr )
 {
     dns_fwdtable_t *fwdtable = dbus_mgr_get_fwdtable();
-    
+
     if( fwdtable == 0L )
 	return ISC_R_SUCCESS; /* no initial fwdtable */
     dns_fwdtable_foreach( fwdtable, dbus_mgr_record_initial_forwarder, mgr);
@@ -706,7 +706,7 @@ dbus_mgr_log_forwarders( const char *pfx, dns_name_t *name, SockAddrList *saList
     isc_sockaddr_t   *sa;
     char nameP[DNS_NAME_FORMATSIZE], addrP[128];
     int s=0;
-    dns_name_format(name, nameP, DNS_NAME_FORMATSIZE );    
+    dns_name_format(name, nameP, DNS_NAME_FORMATSIZE );
     for( sa = ISC_LIST_HEAD(*saList);
 	 sa != 0L;
 	 sa = ISC_LIST_NEXT(sa,link)
@@ -714,19 +714,19 @@ dbus_mgr_log_forwarders( const char *pfx, dns_name_t *name, SockAddrList *saList
     {
 	isc_sockaddr_format(sa, addrP, 128);
 	dbus_mgr_log_info("%s zone %s server %d: %s", pfx, nameP, s++, addrP);
-    }		
+    }
 }
 
 static
 isc_result_t dbus_mgr_set_forwarders
-(   
+(
     ns_dbus_mgr_t *mgr,
     DNSNameList *nameList,
     SockAddrList *saList,
     dns_fwdpolicy_t fwdpolicy
 )
 {
-    isc_result_t   result = ISC_R_SUCCESS;    
+    isc_result_t   result = ISC_R_SUCCESS;
     dns_fwdtable_t *fwdtable;
     dns_view_t     *view=0L;
     dns_name_t     *dnsName;
@@ -763,17 +763,17 @@ isc_result_t dbus_mgr_set_forwarders
 		dbus_mgr_log_info("Created forwarder table.");
 	}
     }
-	
+
     for( dnsName = ISC_LIST_HEAD(*nameList);
 	 dnsName != NULL;
 	 dnsName = ISC_LIST_NEXT(dnsName,link)
 	)
-    {   	
+    {
 	fwdr = 0L;
 	if( ( dns_fwdtable_find_exact( fwdtable, dnsName, &fwdr ) != ISC_R_SUCCESS )
 	  ||( fwdr == 0L )
 	  )
-	{ 
+	{
 	    if( ISC_LIST_HEAD( *saList )  == 0L )
 		continue;
 	   /* no forwarders for name - add forwarders */
@@ -782,15 +782,15 @@ isc_result_t dbus_mgr_set_forwarders
 
 	    if( result == ISC_R_SUCCESS )
 	    {
-		result = dns_fwdtable_add( fwdtable, dnsName, 
-					   (isc_sockaddrlist_t*)saList, 
+		result = dns_fwdtable_add( fwdtable, dnsName,
+					   (isc_sockaddrlist_t*)saList,
 					   fwdpolicy
 					 ) ;
 
 		if( view != 0L )
 		    dns_view_flushcache( view );
 
-		isc_task_endexclusive(mgr->task);	
+		isc_task_endexclusive(mgr->task);
 
 		if( result != ISC_R_SUCCESS )
 		    return result;
@@ -818,20 +818,20 @@ isc_result_t dbus_mgr_set_forwarders
 		isc_task_endexclusive(mgr->task);
 
 		if( result != ISC_R_SUCCESS )
-		    return result;	
+		    return result;
 	    }
 	    continue;
-	}	
+	}
 
 	result = isc_task_beginexclusive(mgr->task);
 
 	if( result == ISC_R_SUCCESS )
-	{	 	   
+	{
 	    fwdr->fwdpolicy = fwdpolicy;
 
 	    if( isc_log_getdebuglevel(ns_g_lctx) >= 1 )
 		dbus_mgr_log_forwarders("Removing forwarder", dnsName, (SockAddrList*)&(fwdr->addrs));
-	    
+
 	    for( sa = ISC_LIST_HEAD(fwdr->addrs);
 		 sa != 0L ;
 		 sa = ISC_LIST_HEAD(fwdr->addrs)
@@ -843,7 +843,7 @@ isc_result_t dbus_mgr_set_forwarders
 	    }
 
 	    ISC_LIST_INIT( fwdr->addrs );
-	    
+
 	    for( sa = ISC_LIST_HEAD(*saList);
 		 sa != 0L;
 		 sa = ISC_LIST_NEXT(sa,link)
@@ -858,7 +858,7 @@ isc_result_t dbus_mgr_set_forwarders
 		*nsa = *sa;
 		ISC_LINK_INIT( nsa, link );
 		ISC_LIST_APPEND( fwdr->addrs, nsa, link );
-	    }	    
+	    }
 
 	    if( view != 0L )
 		dns_view_flushcache( view );
@@ -877,9 +877,9 @@ isc_result_t dbus_mgr_set_forwarders
 
 static void
 dbus_mgr_get_name_list
-( 
+(
     ns_dbus_mgr_t *mgr,
-    char *domains, 
+    char *domains,
     DNSNameList *nameList,
     char *error_name,
     char *error_message
@@ -891,7 +891,7 @@ dbus_mgr_get_name_list
     isc_buffer_t     buffer;
     isc_result_t     result;
     uint32_t total_length;
-    
+
     total_length = strlen(domains);
     endp = domains + total_length;
 
@@ -899,7 +899,7 @@ dbus_mgr_get_name_list
 
     for( name =   domains + strspn(domains," \t\n"),
 	 endName = name + strcspn(name," \t\n");
-	 (name < endp) && (endName <= endp); 
+	 (name < endp) && (endName <= endp);
 	 name =  endName + 1 + strspn(endName+1," \t\n"),
 	 endName = name + strcspn(name," \t\n")
        )
@@ -907,8 +907,8 @@ dbus_mgr_get_name_list
 	*endName = '\0';
 
 	isc_buffer_init( &buffer, name, endName - name );
-	isc_buffer_add(&buffer, endName - name);		
-	
+	isc_buffer_add(&buffer, endName - name);
+
 	fixedname = isc_mem_get( mgr->mctx, sizeof( dns_fixedname_t ));
 
 	dns_fixedname_init(fixedname);
@@ -956,8 +956,8 @@ dbus_mgr_get_sa_list
 {
     DBUS_SVC dbus = mgr->dbus;
     isc_sockaddr_t *nsSA=0L, *nsSA_Q=0L;
-    uint32_t argType = dbus_svc_message_next_arg_type( dbus, iter ), 
-	     length;    
+    uint32_t argType = dbus_svc_message_next_arg_type( dbus, iter ),
+	     length;
     isc_result_t result;
     in_port_t port;
     char *ip;
@@ -965,9 +965,9 @@ dbus_mgr_get_sa_list
 
     ISC_LIST_INIT(*saList);
 
-    if( argType == TYPE_INVALID ) 
+    if( argType == TYPE_INVALID )
 	return ISC_R_SUCCESS; /* address list "removal" */
-   
+
     do
     {
 	switch( argType )
@@ -979,7 +979,7 @@ dbus_mgr_get_sa_list
 	    {
 		memset(nsSA,'\0', sizeof(isc_sockaddr_t));
 		nsSA_Q = nsSA;
-		dbus_svc_message_next_arg(dbus, iter, &(nsSA->type.sin.sin_addr.s_addr));	
+		dbus_svc_message_next_arg(dbus, iter, &(nsSA->type.sin.sin_addr.s_addr));
 		nsSA->type.sa.sa_family = AF_INET;
 		nsSA->length = sizeof( nsSA->type.sin );
 	    }
@@ -994,7 +994,7 @@ dbus_mgr_get_sa_list
 		length = 0;
 
 		dbus_svc_message_get_elements(dbus, iter, &length, &iparray);
-		
+
 		if( iparray != 0L )
 		{
 		    if (length == sizeof( struct in_addr ))
@@ -1017,7 +1017,7 @@ dbus_mgr_get_sa_list
 			{
 			    memset(nsSA,'\0', sizeof(isc_sockaddr_t));
 			    nsSA_Q = nsSA;
-			
+
 			    memcpy(&(nsSA->type.sin6.sin6_addr), iparray, sizeof( struct in6_addr ));
 			    nsSA->type.sa.sa_family = AF_INET6;
 			    nsSA->length = sizeof( nsSA->type.sin6 );
@@ -1030,14 +1030,14 @@ dbus_mgr_get_sa_list
 	case TYPE_STRING:
 
 	    ip = 0L;
-	    dbus_svc_message_next_arg(dbus, iter, &(ip));	
+	    dbus_svc_message_next_arg(dbus, iter, &(ip));
 	    if( ip != 0L )
 	    {
 		length = strlen(ip);
 		if( strspn(ip, "0123456789.") == length )
 		{
 		    nsSA = isc_mem_get(mgr->mctx, sizeof(isc_sockaddr_t));
-		    if( nsSA != 0L) 
+		    if( nsSA != 0L)
 		    {
 			memset(nsSA,'\0', sizeof(isc_sockaddr_t));
 			if( inet_pton( AF_INET, ip, &(nsSA->type.sin.sin_addr)) )
@@ -1064,9 +1064,9 @@ dbus_mgr_get_sa_list
 		}
 	    }
 	    break;
-	   
+
 	case TYPE_UINT16:
-	    
+
 	    if( (nsSA == 0L) || (nsSA->type.sa.sa_family == AF_UNSPEC) )
 		break;
 	    else
@@ -1086,13 +1086,13 @@ dbus_mgr_get_sa_list
 
 	default:
 
-	    if(nsSA != 0L) 
+	    if(nsSA != 0L)
 		nsSA->type.sa.sa_family = AF_UNSPEC;
 	    sprintf(error_message,"Unhandled argument type: %c", argType);
 	    break;
 	}
 
-	if( (nsSA != 0L) 
+	if( (nsSA != 0L)
 	  &&(nsSA->type.sa.sa_family == AF_UNSPEC)
 	  )
 	{
@@ -1133,8 +1133,8 @@ dbus_mgr_get_sa_list
 			port = 53;
 		    nsSA->type.sin.sin_port = htons( port );
 		}
-	    }	
-	
+	    }
+
 	    if( nsSA_Q != 0L )
 	    {
 		ISC_LINK_INIT(nsSA,link);
@@ -1143,7 +1143,7 @@ dbus_mgr_get_sa_list
 	    }
 	}
 
-	argType = dbus_svc_message_next_arg_type( dbus, iter );    
+	argType = dbus_svc_message_next_arg_type( dbus, iter );
 
     } while ( argType != TYPE_INVALID );
 
@@ -1154,26 +1154,26 @@ static void
 dbus_mgr_handle_set_forwarders
 (
     ns_dbus_mgr_t *mgr,
-    DBUS_SVC dbus, 
+    DBUS_SVC dbus,
     uint8_t  reply_expected,
-    uint32_t serial,        
-    const char *path,         
-    const char *member,         
+    uint32_t serial,
+    const char *path,
+    const char *member,
     const char *interface,
-    const char *sender,   
+    const char *sender,
     dbus_svc_MessageHandle msg
 )
 {
     dbus_svc_MessageIterator iter;
     char error_name[1024]="", error_message[1024]="", *domains=0L;
     uint32_t       argType, new_serial;
-    DNSNameList nameList; 
+    DNSNameList nameList;
     dns_name_t     *dnsName;
-    SockAddrList  saList;    
+    SockAddrList  saList;
     isc_sockaddr_t *nsSA;
     isc_result_t   result;
     uint8_t fwdpolicy = dns_fwdpolicy_only;
-    
+
     iter = dbus_svc_message_iterator_new( dbus, msg );
 
     if( iter == 0L )
@@ -1183,12 +1183,12 @@ dbus_mgr_handle_set_forwarders
 	    sprintf(error_name, "com.redhat.named.InvalidArguments");
 	    sprintf(error_message,"SetForwarders requires DNS name and nameservers arguments.");
 	    dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
+			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
 		         );
 	}
 	return;
     }
-    
+
     argType = dbus_svc_message_next_arg_type( dbus, iter );
 
     if( argType != TYPE_STRING )
@@ -1198,12 +1198,12 @@ dbus_mgr_handle_set_forwarders
 	    sprintf(error_name, "com.redhat.named.InvalidArguments");
 	    sprintf(error_message,"SetForwarders requires DNS name string initial argument.");
 	    dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
+			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
 		         );
 	}
 	return;
-    } 
-    
+    }
+
     dbus_svc_message_next_arg( dbus, iter, &domains );
 
     if( ( domains == 0L ) || (*domains == '\0') )
@@ -1213,27 +1213,27 @@ dbus_mgr_handle_set_forwarders
 	    sprintf(error_name, "com.redhat.named.InvalidArguments");
 	    sprintf(error_message,"SetForwarders requires DNS name string initial argument.");
 	    dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
+			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
 		         );
 	}
 	return;
     }
-    
+
     dbus_mgr_get_name_list( mgr, domains, &nameList, error_name, error_message );
-    
+
     if( error_name[0] != '\0' )
     {
 	if( reply_expected )
 	{
 	    dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
+			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
 		         );
 	}
 	return;
     }
 
     if( ISC_LIST_HEAD( nameList ) == 0L )
-	return;	
+	return;
 
     result = dbus_mgr_get_sa_list( mgr, iter, &saList , &fwdpolicy, error_name, error_message );
 
@@ -1248,10 +1248,10 @@ dbus_mgr_handle_set_forwarders
 		sprintf(error_name, "com.redhat.named.Failure");
 		sprintf(error_message, isc_result_totext(result));
 		dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-			       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
+			       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
 		             );
 	    }
-	}else	
+	}else
 	    if( reply_expected )
 		dbus_svc_send( dbus, RETURN, serial, &new_serial, sender, path, interface, member,
 		       TYPE_UINT32, &result, TYPE_INVALID
@@ -1261,7 +1261,7 @@ dbus_mgr_handle_set_forwarders
 	if( reply_expected )
 	{
 	    dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
+			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
 		         );
 	}
     }
@@ -1287,16 +1287,16 @@ dbus_mgr_handle_set_forwarders
     }
 }
 
-static 
+static
 int dbus_mgr_msg_append_dns_name
-(   DBUS_SVC dbus, 
+(   DBUS_SVC dbus,
     dbus_svc_MessageHandle msg,
     dns_name_t *name
 )
 {
     char  nameBuf[ DNS_NAME_FORMATSIZE ]="", *nameP=&(nameBuf[0]);
 
-    dns_name_format(name, nameP, DNS_NAME_FORMATSIZE );    
+    dns_name_format(name, nameP, DNS_NAME_FORMATSIZE );
 
     if( *nameP == '\0' )
 	return 0;
@@ -1307,12 +1307,12 @@ int dbus_mgr_msg_append_dns_name
 typedef enum dbmoi_e
 {
     OUTPUT_BINARY,
-    OUTPUT_TEXT    
+    OUTPUT_TEXT
 }   DBusMgrOutputInterface;
 
-static 
+static
 int dbus_mgr_msg_append_forwarders
-(   DBUS_SVC               dbus, 
+(   DBUS_SVC               dbus,
     dbus_svc_MessageHandle msg,
     dns_forwarders_t      *fwdr,
     DBusMgrOutputInterface outputType
@@ -1325,7 +1325,7 @@ int dbus_mgr_msg_append_forwarders
     if( outputType == OUTPUT_BINARY )
     {
 	if(!dbus_svc_message_append_args
-	   (   dbus, msg, 
+	   (   dbus, msg,
 	       TYPE_BYTE, &(fwdr->fwdpolicy),
 	       TYPE_INVALID
 	   )
@@ -1341,7 +1341,7 @@ int dbus_mgr_msg_append_forwarders
 		   : "only"
 	       );
 	if(!dbus_svc_message_append_args
-	   (   dbus, msg, 
+	   (   dbus, msg,
 	       TYPE_STRING, pbp,
 	       TYPE_INVALID
 	   )
@@ -1359,14 +1359,14 @@ int dbus_mgr_msg_append_forwarders
 	    if( sa->type.sa.sa_family == AF_INET )
 	    {
 		if(!dbus_svc_message_append_args
-		   (   dbus, msg, 
+		   (   dbus, msg,
 		       TYPE_UINT32, &(sa->type.sin.sin_addr.s_addr),
 		       TYPE_INVALID
 		   )
 		  ) return 0;
-		
+
 		if(!dbus_svc_message_append_args
-		   (   dbus, msg, 
+		   (   dbus, msg,
 		       TYPE_UINT16, &(sa->type.sin.sin_port),
 		       TYPE_INVALID
 		   )
@@ -1376,14 +1376,14 @@ int dbus_mgr_msg_append_forwarders
 	    {
 		byteArray[0] = (uint8_t*)&(sa->type.sin6.sin6_addr);
 		if(!dbus_svc_message_append_args
-		   (   dbus, msg, 
+		   (   dbus, msg,
 		       TYPE_ARRAY, TYPE_BYTE, &byteArray, sizeof(struct in6_addr),
 		       TYPE_INVALID
 		   )
 		  ) return 0;
 
 		if(!dbus_svc_message_append_args
-		   (   dbus, msg, 
+		   (   dbus, msg,
 		       TYPE_UINT16, &(sa->type.sin6.sin6_port),
 		       TYPE_INVALID
 		   )
@@ -1398,14 +1398,14 @@ int dbus_mgr_msg_append_forwarders
 		if( inet_ntop( AF_INET, &(sa->type.sin.sin_addr), addressBuf, sizeof(addressBuf)) == 0L )
 		    continue;
 		if(!dbus_svc_message_append_args
-		   (   dbus, msg, 
+		   (   dbus, msg,
 		       TYPE_STRING, abp,
 		       TYPE_INVALID
 		   )
 		  ) return 0;
 		sprintf(addressBuf, "%hu", ntohs( sa->type.sin.sin_port ));
 		if(!dbus_svc_message_append_args
-		   (   dbus, msg, 
+		   (   dbus, msg,
 		       TYPE_STRING, abp,
 		       TYPE_INVALID
 		   )
@@ -1416,18 +1416,18 @@ int dbus_mgr_msg_append_forwarders
 		if( inet_ntop( AF_INET6, &(sa->type.sin6.sin6_addr), addressBuf, sizeof(addressBuf)) == 0L )
 		    continue;
 		if(!dbus_svc_message_append_args
-		   (   dbus, msg, 
+		   (   dbus, msg,
 		       TYPE_STRING, abp,
 		       TYPE_INVALID
 		   )
 		  ) return 0;
 		sprintf(addressBuf, "%hu", ntohs( sa->type.sin6.sin6_port ));
 		if(!dbus_svc_message_append_args
-		   (   dbus, msg, 
+		   (   dbus, msg,
 		       TYPE_STRING, abp,
 		       TYPE_INVALID
 		   )
-		  ) return 0;		
+		  ) return 0;
 	    }else
 		continue;
 	}else
@@ -1447,23 +1447,23 @@ static
 void forwarders_to_msg( dns_name_t *name, dns_forwarders_t *fwdr, void *mp )
 {
     DBusMgrMsg *m = mp;
-    
+
     if( (fwdr == 0L) || (name == 0L) || (mp == 0L))
 	return;
     dbus_mgr_msg_append_dns_name  ( m->dbus, m->msg, name );
-    dbus_mgr_msg_append_forwarders( m->dbus, m->msg, fwdr, m->outputType );    
+    dbus_mgr_msg_append_forwarders( m->dbus, m->msg, fwdr, m->outputType );
 }
 
 static void
 dbus_mgr_handle_list_forwarders
 (
-    DBUS_SVC dbus, 
+    DBUS_SVC dbus,
     uint8_t  reply_expected,
-    uint32_t serial,        
-    const char *path,         
-    const char *member,         
+    uint32_t serial,
+    const char *path,
+    const char *member,
     const char *interface,
-    const char *sender,   
+    const char *sender,
     dbus_svc_MessageHandle msg
 )
 {
@@ -1473,7 +1473,7 @@ dbus_mgr_handle_list_forwarders
     dns_fwdtable_t *fwdtable = dbus_mgr_get_fwdtable();
     DBusMgrOutputInterface outputType = OUTPUT_BINARY;
     uint32_t length = strlen(interface);
-        
+
     if( !reply_expected )
 	return;
 
@@ -1481,12 +1481,12 @@ dbus_mgr_handle_list_forwarders
 	outputType = OUTPUT_TEXT;
 
     if( fwdtable == 0L )
-    {	
+    {
 	sprintf(error_name,"com.redhat.dbus.Failure");
 	sprintf(error_message, "%s", isc_result_totext(ISC_R_NOPERM));
 	dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-		       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
-	             );	    
+		       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
+	             );
 	return;
     }
 
@@ -1501,10 +1501,10 @@ dbus_mgr_handle_list_forwarders
 	sprintf(error_name,"com.redhat.dbus.OutOfMemory");
 	sprintf(error_message,"out of memory");
 	dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-		       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
-	             );	    
+		       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
+	             );
     }
-    
+
     dns_fwdtable_foreach( fwdtable, forwarders_to_msg, &m );
 
     dbus_svc_send_message( dbus, msg, &new_serial );
@@ -1513,13 +1513,13 @@ dbus_mgr_handle_list_forwarders
 static void
 dbus_mgr_handle_get_forwarders
 (
-    DBUS_SVC dbus, 
+    DBUS_SVC dbus,
     uint8_t  reply_expected,
-    uint32_t serial,        
-    const char *path,         
-    const char *member,         
+    uint32_t serial,
+    const char *path,
+    const char *member,
     const char *interface,
-    const char *sender,   
+    const char *sender,
     dbus_svc_MessageHandle msg
 )
 {
@@ -1600,14 +1600,14 @@ dbus_mgr_handle_get_forwarders
 	sprintf(error_name,"com.redhat.dbus.Failure");
 	sprintf(error_message, "%s", isc_result_totext(ISC_R_NOPERM));
 	dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-		       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
-	             );	    
+		       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
+	             );
 	return;
     }
 
     dns_fixedname_init(&fixedFoundName);
     foundname = dns_fixedname_name(&fixedFoundName);
-	
+
     if( ( dns_fwdtable_find_closest( fwdtable, dnsName, foundname, &fwdr ) == ISC_R_SUCCESS )
       &&( fwdr != 0L )
       )
@@ -1619,17 +1619,17 @@ dbus_mgr_handle_get_forwarders
 	    sprintf(error_name,"com.redhat.dbus.OutOfMemory");
 	    sprintf(error_message,"out of memory");
 	    dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
-		);	    
+			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
+		);
 	    return;
-	}	
-	
+	}
+
     }else
     {
 	result = ISC_R_NOTFOUND;
 	if( outputType == OUTPUT_BINARY )
 	{
-	    dbus_svc_message_append_args( dbus, msg, 
+	    dbus_svc_message_append_args( dbus, msg,
 					  TYPE_UINT32, &(result),
 					  TYPE_INVALID
 		                        ) ;
@@ -1638,8 +1638,8 @@ dbus_mgr_handle_get_forwarders
 	    sprintf(error_name,"com.redhat.dbus.NotFound");
 	    sprintf(error_message,"Not Found");
 	    dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
-		         );	   
+			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
+		         );
 	    return;
 	}
     }
@@ -1653,7 +1653,7 @@ dbus_mgr_check_dhcdbd_state( ns_dbus_mgr_t *mgr, dbus_svc_MessageHandle msg )
     char *name_owned = 0L,
 	 *old_owner = 0L,
 	 *new_owner = 0L;
-    
+
     if( !dbus_svc_get_args( dbus, msg,
 			    TYPE_STRING, &name_owned,
 			    TYPE_STRING, &old_owner,
@@ -1661,7 +1661,7 @@ dbus_mgr_check_dhcdbd_state( ns_dbus_mgr_t *mgr, dbus_svc_MessageHandle msg )
 			    TYPE_INVALID
 	                  )
       ) return;
-	
+
     dbus_mgr_log_dbg("NameOwnerChanged: %s %s %s ( %s )", name_owned, old_owner, new_owner, mgr->dhcdbd_name);
 
     if( (name_owned == 0L) || (new_owner == 0L) || (old_owner == 0L) )
@@ -1676,7 +1676,7 @@ dbus_mgr_check_dhcdbd_state( ns_dbus_mgr_t *mgr, dbus_svc_MessageHandle msg )
 	    dbus_mgr_log_err("D-BUS dhcdbd subscription disabled.");
 	    return;
 	}
-	if( (mgr->dhcdbd_name == 0L) 
+	if( (mgr->dhcdbd_name == 0L)
 	  ||( strcmp( mgr->dhcdbd_name, new_owner) != 0 )
 	  )
 	{
@@ -1692,10 +1692,10 @@ dbus_mgr_check_dhcdbd_state( ns_dbus_mgr_t *mgr, dbus_svc_MessageHandle msg )
 	    dbus_mgr_subscribe_to_dhcdbd( mgr );
 	}
     }else
-    if(  ( mgr->dhcdbd_name != 0L ) 
+    if(  ( mgr->dhcdbd_name != 0L )
       && ( strcmp(mgr->dhcdbd_name, name_owned) == 0L )
       && ( *new_owner == '\0' )
-      ) 
+      )
     {
 	isc_mem_put(mgr->mctx, mgr->dhcdbd_name, strlen(mgr->dhcdbd_name));
 	mgr->dhcdbd_name = 0L;
@@ -1708,11 +1708,11 @@ static int dbus_mgr_dhc_if_comparator( const void *p1, const void *p2 )
     return( strcmp( ((const DHC_IF*)p1)->if_name, ((const DHC_IF*)p2)->if_name) );
 }
 
-static 
+static
 dns_name_t *dbus_mgr_if_reverse_ip_name
 (   ns_dbus_mgr_t *mgr,
-    struct in_addr ip_address, 
-    struct in_addr subnet_mask 
+    struct in_addr ip_address,
+    struct in_addr subnet_mask
 )
 {
     dns_name_t *dns_name =0L;
@@ -1724,7 +1724,7 @@ dns_name_t *dbus_mgr_if_reverse_ip_name
 
     if( (ip == 0) || (ip == 0xffffffff) )
 	return 0L;
-    
+
     for(i = 8, p = name; (i < 32); i += 8)
 	if( ip & ( 0xff << i ) )
 	    p += sprintf(p, "%u.", (((ip & ( 0xff << i )) >> i ) & 0xff) );
@@ -1733,8 +1733,8 @@ dns_name_t *dbus_mgr_if_reverse_ip_name
     {
 	p += sprintf(p, "in-addr.arpa");
 	isc_buffer_init( &buffer, name, p - name );
-	isc_buffer_add(&buffer, p - name);		
-	
+	isc_buffer_add(&buffer, p - name);
+
 	fixedname = isc_mem_get( mgr->mctx, sizeof( dns_fixedname_t ));
 
 	dns_fixedname_init(fixedname);
@@ -1778,7 +1778,7 @@ dbus_mgr_free_dhc( void *p )
 	    ISC_LIST_UNLINK( d_if->dn, dn, link );
 	isc_mem_put( ns_g_mctx, dn, sizeof( dns_fixedname_t ) );
     }
-    isc_mem_put( ns_g_mctx, d_if, sizeof(DHC_IF));    
+    isc_mem_put( ns_g_mctx, d_if, sizeof(DHC_IF));
 }
 
 static void
@@ -1803,7 +1803,7 @@ dbus_mgr_handle_dhcdbd_message
     in_port_t port;
     char dnBuf[ DNS_NAME_FORMATSIZE ];
     isc_buffer_t buffer;
-    DBusMgrInitialFwdr *ifwdr, *const*ifwdpp, ifwd;    
+    DBusMgrInitialFwdr *ifwdr, *const*ifwdpp, ifwd;
     ISC_LIST(DBusMgrInitialFwdr) ifwdrList;
     DNSNameList nameList;
     dbus_mgr_log_dbg("Got dhcdbd message: %s %s %p", path, member, msg );
@@ -1822,7 +1822,7 @@ dbus_mgr_handle_dhcdbd_message
       )
     {
 	d_if = isc_mem_get( mgr->mctx, sizeof(DHC_IF));
-	if( d_if == 0L )	  
+	if( d_if == 0L )
 	{
 	    dbus_mgr_log_err("out of memory");
 	    return;
@@ -1872,12 +1872,12 @@ dbus_mgr_handle_dhcdbd_message
 	    case  DHC_END_OPTIONS:
 		break;
 
-	    case  DHC_RENEW: 
-	    case  DHC_REBIND:		
-		if( ( d_if->previous_state != DHC_INVALID ) 
+	    case  DHC_RENEW:
+	    case  DHC_REBIND:
+		if( ( d_if->previous_state != DHC_INVALID )
 		  &&( d_if->previous_state != DHC_RELEASE )
-		  ) break; 
-		    /* DHC_RENEW means the same lease parameters were obtained. 
+		  ) break;
+		    /* DHC_RENEW means the same lease parameters were obtained.
 		     * Only do configuration if we started up with existing dhclient
 		     * which has now renewed - else we are already configured correctly.
 		     */
@@ -1890,12 +1890,12 @@ dbus_mgr_handle_dhcdbd_message
 		if( (dn = dbus_mgr_if_reverse_ip_name(mgr, d_if->ip, d_if->subnet_mask )) != 0L )
 		{
 		    ISC_LIST_APPEND(d_if->dn, dn, link );
-		} 
+		}
 		if( ( ISC_LIST_HEAD( d_if->dn ) != NULL )
 		  &&( ISC_LIST_HEAD( d_if->dns ) != NULL )
 		  )
 		{
-		    dbus_mgr_log_err("D-BUS: dhclient for interface %s acquired new lease - creating forwarders.", 
+		    dbus_mgr_log_err("D-BUS: dhclient for interface %s acquired new lease - creating forwarders.",
 				     if_name
 			            );
 		    result = dbus_mgr_set_forwarders( mgr, &(d_if->dn), &(d_if->dns), dns_fwdpolicy_only );
@@ -1904,7 +1904,7 @@ dbus_mgr_handle_dhcdbd_message
 			dbus_mgr_log_err("D-BUS: forwarder configuration failed: %s", isc_result_totext(result));
 		    }
 		}
-		break;	  
+		break;
 
 	    case  DHC_STOP:
 	    case  DHC_TIMEOUT:
@@ -1915,7 +1915,7 @@ dbus_mgr_handle_dhcdbd_message
 		d_if->dhc_state = DHC_RELEASE;
 		if( ISC_LIST_HEAD( d_if->dn ) != NULL )
 		{
-		    dbus_mgr_log_err("D-BUS: dhclient for interface %s released lease - removing forwarders.", 
+		    dbus_mgr_log_err("D-BUS: dhclient for interface %s released lease - removing forwarders.",
 				     if_name);
 		    for( sa = ISC_LIST_HEAD( d_if->dns );
 			 sa != 0L;
@@ -1943,9 +1943,9 @@ dbus_mgr_handle_dhcdbd_message
 			  )
 			{
 			    ISC_LIST_APPEND( ifwdrList, ifwdr, link );
-			}			
+			}
 		    }
-		    
+
 		    result = dbus_mgr_set_forwarders( mgr, &(d_if->dn), &(d_if->dns), dns_fwdpolicy_none );
 		    if( result != ISC_R_SUCCESS )
 		    {
@@ -1958,7 +1958,7 @@ dbus_mgr_handle_dhcdbd_message
 		       )
 		    {
 			if( ISC_LINK_LINKED( dn, link ) )
-			    ISC_LIST_UNLINK( d_if->dn, dn, link );			
+			    ISC_LIST_UNLINK( d_if->dn, dn, link );
 			isc_mem_put( mgr->mctx, dn, sizeof( dns_fixedname_t ) );
 		    }
 		    ISC_LIST_INIT( d_if->dn );
@@ -1974,14 +1974,14 @@ dbus_mgr_handle_dhcdbd_message
 			ISC_LIST_INIT(nameList);
 			ISC_LINK_INIT(&(ifwdr->dn), link);
 			ISC_LIST_APPEND( nameList, &(ifwdr->dn), link );
-			result = dbus_mgr_set_forwarders( mgr, &nameList, 
-							  &(ifwdr->sa), 
-							  ifwdr->fwdpolicy 
+			result = dbus_mgr_set_forwarders( mgr, &nameList,
+							  &(ifwdr->sa),
+							  ifwdr->fwdpolicy
 			                                );
 			if( result != ISC_R_SUCCESS )
 			{
 			    dbus_mgr_log_err("D-BUS: restore of forwarders failed: %s", isc_result_totext(result));
-			}			
+			}
 		    }
 		}
 
@@ -1999,7 +1999,7 @@ dbus_mgr_handle_dhcdbd_message
 
 	case  DHC_BOUND:
 	case  DHC_REBOOT:
-	case  DHC_REBIND:	
+	case  DHC_REBIND:
 	case  DHC_RENEW:
         case  DHC_STOP:
         case  DHC_TIMEOUT:
@@ -2018,10 +2018,10 @@ dbus_mgr_handle_dhcdbd_message
 	case  DHC_INVALID:
 	default:
 	    break;
-	}	
+	}
     }else
     if( strcmp( member, "domain_name" ) == 0 )
-    {	
+    {
 	if( (!dbus_svc_get_args( dbus, msg,
 				 TYPE_STRING, &opt_name,
 				 TYPE_ARRAY, TYPE_BYTE, &value, &length,
@@ -2033,7 +2033,7 @@ dbus_mgr_handle_dhcdbd_message
 	  )
 	{
 	    dbus_mgr_log_err("Invalid domain_name value received from dhcdbd");
-	    return;	
+	    return;
 	}
 	dbus_mgr_log_dbg("domain-name %s", (char*)value);
 	dbus_mgr_get_name_list( mgr, (char*)value, &(d_if->dn), error_name, error_message );
@@ -2055,8 +2055,8 @@ dbus_mgr_handle_dhcdbd_message
 	  )
 	{
 	    dbus_mgr_log_err("Invalid domain_name_servers value received from dhcdbd");
-	    return;	
-	}	
+	    return;
+	}
 	for(ip = (struct in_addr*) value; ip < ((struct in_addr*)(value + length)); ip++)
 	{
 	    dbus_mgr_log_dbg("domain-name-servers: %s", inet_ntop(AF_INET, value, error_name, 16));
@@ -2089,7 +2089,7 @@ dbus_mgr_handle_dhcdbd_message
 	}
 	dbus_mgr_log_dbg("ip-address: %s", inet_ntop(AF_INET, value, error_name, 16));
 	d_if->ip = *((struct in_addr*)value);
-    
+
     }else
     if( strcmp(member, "subnet_mask") == 0 )
     {
@@ -2112,9 +2112,9 @@ dbus_mgr_handle_dhcdbd_message
 }
 
 static
-dbus_svc_HandlerResult 
+dbus_svc_HandlerResult
 dbus_mgr_message_handler
-(  
+(
     DBusMsgHandlerArgs
 )
 {
@@ -2143,14 +2143,14 @@ dbus_mgr_message_handler
     {
 	dbus_mgr_check_dhcdbd_state( mgr, msg );
     }else
-    if( ( type == SIGNAL ) 
-      &&( (sender != 0L) && (mgr->dhcdbd_name != 0L) && (strcmp(sender,mgr->dhcdbd_name)   == 0)) 
+    if( ( type == SIGNAL )
+      &&( (sender != 0L) && (mgr->dhcdbd_name != 0L) && (strcmp(sender,mgr->dhcdbd_name)   == 0))
       &&( strcmp(interface,"com.redhat.dhcp.subscribe.binary") == 0 )
       )
     {
 	dbus_mgr_handle_dhcdbd_message( mgr, path, member, msg );
     }else
-    if( (type == CALL) 
+    if( (type == CALL)
       &&( strcmp(destination, DBUSMGR_DESTINATION)==0)
       &&( strcmp(path, DBUSMGR_OBJECT_PATH)==0)
       )
@@ -2161,10 +2161,10 @@ dbus_mgr_message_handler
 	else
 	if( strcmp(member, "GetForwarders") == 0 )
 	{
-	    if( *signature != '\0' )	   
+	    if( *signature != '\0' )
 		dbus_mgr_handle_get_forwarders
 		( dbus, reply_expected, serial, path, member, interface, sender, msg );
-	    else       
+	    else
 		dbus_mgr_handle_list_forwarders
 		( dbus, reply_expected, serial, path, member, interface, sender, msg );
 	}else
@@ -2173,8 +2173,8 @@ dbus_mgr_message_handler
 	    sprintf(error_name, "InvalidOperation");
 	    sprintf(error_message, "Unrecognized path / interface / member");
 	    dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
-		);	    
+			   TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
+		);
 	}
     }
     return HANDLED;
@@ -2186,7 +2186,7 @@ dbus_mgr_read_watch_activated(isc_task_t *t, isc_event_t *ev)
     DBusMgrSocket *sfd = (DBusMgrSocket*)(ev->ev_arg);
     t = t;
     isc_mem_put(sfd->mgr->mctx, ev, ev->ev_size);
-    dbus_mgr_log_dbg("watch %d READ",sfd->fd);  
+    dbus_mgr_log_dbg("watch %d READ",sfd->fd);
     isc_socket_fd_handle_reads( sfd->sock, sfd->ser );
     dbus_svc_handle_watch( sfd->mgr->dbus, sfd->fd, WATCH_ENABLE | WATCH_READ );
 }
@@ -2199,7 +2199,7 @@ dbus_mgr_write_watch_activated(isc_task_t *t, isc_event_t *ev)
     isc_mem_put(sfd->mgr->mctx, ev, ev->ev_size);
     dbus_mgr_log_dbg("watch %d WRITE",sfd->fd);
     isc_socket_fd_handle_writes( sfd->sock, sfd->ser );
-    dbus_svc_handle_watch( sfd->mgr->dbus, sfd->fd, WATCH_ENABLE | WATCH_WRITE );    
+    dbus_svc_handle_watch( sfd->mgr->dbus, sfd->fd, WATCH_ENABLE | WATCH_WRITE );
 }
 
 static void
@@ -2219,17 +2219,17 @@ dbus_mgr_watches_selected(isc_task_t *t, isc_event_t *ev)
 
 static int dbus_mgr_socket_comparator( const void *p1, const void *p2 )
 {
-    return( (   ((const DBusMgrSocket*)p1)->fd 
+    return( (   ((const DBusMgrSocket*)p1)->fd
 	     == ((const DBusMgrSocket*)p2)->fd
 	    ) ? 0
-	      : (   ((const DBusMgrSocket*)p1)->fd 
+	      : (   ((const DBusMgrSocket*)p1)->fd
 	          > ((const DBusMgrSocket*)p2)->fd
 	        ) ? 1
 	          : -1
 	  );
 }
 
-static void 
+static void
 dbus_mgr_watch_handler( int fd, dbus_svc_WatchFlags flags, void *mgrp )
 {
     ns_dbus_mgr_t *mgr = mgrp;
@@ -2275,7 +2275,7 @@ dbus_mgr_watch_handler( int fd, dbus_svc_WatchFlags flags, void *mgrp )
 	result = isc_socket_create( mgr->socketmgr, fd, isc_sockettype_fd, &(sfd->sock) );
 	if( result != ISC_R_SUCCESS )
 	{
-	    dbus_mgr_log_err("dbus_mgr: isc_socket_create failed: %s", 
+	    dbus_mgr_log_err("dbus_mgr: isc_socket_create failed: %s",
 			     isc_result_totext(result)
 	                    );
 	    tdelete(sfd,  &(mgr->sockets), dbus_mgr_socket_comparator);
@@ -2283,7 +2283,7 @@ dbus_mgr_watch_handler( int fd, dbus_svc_WatchFlags flags, void *mgrp )
 	    return;
 	}
     }
-    
+
     if( (flags & WATCH_ENABLE) == WATCH_ENABLE )
     {
 	if( (flags & WATCH_READ) == WATCH_READ )
@@ -2305,7 +2305,7 @@ dbus_mgr_watch_handler( int fd, dbus_svc_WatchFlags flags, void *mgrp )
 		    dbus_mgr_log_err("dbus_mgr: out of memory" );
 		    tdelete(sfd,  &(mgr->sockets), dbus_mgr_socket_comparator);
 		    isc_mem_put(mgr->mctx, sfd, sizeof(DBusMgrSocket));
-		    return;		    
+		    return;
 		}
 
 		sev = isc_socket_fd_handle_reads(sfd->sock, sfd->ser );
@@ -2333,11 +2333,11 @@ dbus_mgr_watch_handler( int fd, dbus_svc_WatchFlags flags, void *mgrp )
 		    dbus_mgr_log_err("dbus_mgr: out of memory" );
 		    tdelete(sfd,  &(mgr->sockets), dbus_mgr_socket_comparator);
 		    isc_mem_put(mgr->mctx, sfd, sizeof(DBusMgrSocket));
-		    return;		    
+		    return;
 		}
-		
+
 		sev = isc_socket_fd_handle_writes(sfd->sock, sfd->sew );
-		
+
 	    }else
 	    {
 		sev = isc_socket_fd_handle_writes(sfd->sock, sfd->sew );
@@ -2361,11 +2361,11 @@ dbus_mgr_watch_handler( int fd, dbus_svc_WatchFlags flags, void *mgrp )
 		    dbus_mgr_log_err("dbus_mgr: out of memory" );
 		    tdelete(sfd,  &(mgr->sockets), dbus_mgr_socket_comparator);
 		    isc_mem_put(mgr->mctx, sfd, sizeof(DBusMgrSocket));
-		    return;		    
+		    return;
 		}
-		
+
 		sev = isc_socket_fd_handle_selected(sfd->sock, sfd->sel );
-		
+
 	    }else
 	    {
 		sev = isc_socket_fd_handle_selected(sfd->sock, sfd->sel);
@@ -2421,10 +2421,10 @@ void dbus_mgr_close_socket( const void *p, const VISIT which, const int level)
     int i =  level ? 0 :1;
     i &= i;
 
-    if( (spp==0L) || ((sfd = *spp)==0L) 
+    if( (spp==0L) || ((sfd = *spp)==0L)
       ||((which != leaf) && (which != postorder))
       ) return;
-   
+
     if( sfd->ser != 0L )
     {
 	ev = (isc_event_t *)isc_socket_fd_handle_reads(sfd->sock, 0);

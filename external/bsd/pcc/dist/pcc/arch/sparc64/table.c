@@ -1,10 +1,10 @@
 /*
  * Copyright (c) 2008 David Crawshaw <david@zentus.com>
- * 
+ *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
@@ -381,14 +381,14 @@ struct optab table[] = {
 	SAREG,	TSHORT|TUSHORT,
 		0,	RDEST,
         	"	sth AR,[AL]		! store (u)int16\n"
-		"	nop\n", },	
+		"	nop\n", },
 
 { ASSIGN,	FOREFF|INAREG,
 	SOREG,	TCHAR|TUCHAR,
 	SAREG,	TCHAR|TUCHAR,
 		0,	RDEST,
         	"	stb AR,[AL]		! store (u)int8\n"
-		"	nop\n", },	
+		"	nop\n", },
 
 { ASSIGN,	FOREFF|INAREG,
 	SOREG,	T64,

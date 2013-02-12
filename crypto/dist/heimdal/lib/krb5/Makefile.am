@@ -258,7 +258,7 @@ dist_include_HEADERS = \
 	krb5-private.h \
 	krb5_ccapi.h
 
-nodist_include_HEADERS = krb5_err.h heim_err.h k524_err.h 
+nodist_include_HEADERS = krb5_err.h heim_err.h k524_err.h
 
 # XXX use nobase_include_HEADERS = krb5/locate_plugin.h
 krb5dir = $(includedir)/krb5

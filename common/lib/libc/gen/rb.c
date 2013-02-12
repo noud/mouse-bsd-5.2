@@ -126,7 +126,7 @@ rb_tree_find_node(struct rb_tree *rbt, const void *key)
 
 	return NULL;
 }
- 
+
 struct rb_node *
 rb_tree_find_node_geq(struct rb_tree *rbt, const void *key)
 {
@@ -145,7 +145,7 @@ rb_tree_find_node_geq(struct rb_tree *rbt, const void *key)
 
 	return last;
 }
- 
+
 struct rb_node *
 rb_tree_find_node_leq(struct rb_tree *rbt, const void *key)
 {
@@ -497,7 +497,7 @@ rb_tree_prune_node(struct rb_tree *rbt, struct rb_node *self, bool rebalance)
 		rbt->rbt_minmax[RB_POSITION(self)] = father;
 		/*
 		 * When removing the root, rbt->rbt_minmax[RB_DIR_LEFT] is
-		 * updated automatically, but we also need to update 
+		 * updated automatically, but we also need to update
 		 * rbt->rbt_minmax[RB_DIR_RIGHT];
 		 */
 		if (__predict_false(was_root)) {
@@ -806,7 +806,7 @@ rb_tree_removal_rebalance(struct rb_tree *rbt, struct rb_node *parent,
 			if (RB_RED_P(brother)) {
 				/*
 				 * Case 1: Our brother is red, swap its
-				 * position (and colors) with our parent. 
+				 * position (and colors) with our parent.
 				 * This should now be case 2b (unless C or E
 				 * has a red child which is case 3; thus no
 				 * explicit branch to case 2b).
@@ -883,7 +883,7 @@ rb_tree_removal_rebalance(struct rb_tree *rbt, struct rb_node *parent,
 				/*
 				 * Case 3: our brother is black, our near
 				 * nephew is red, and our far nephew is black.
-				 * Swap our brother with our near nephew.  
+				 * Swap our brother with our near nephew.
 				 * This result in a tree that matches case 4.
 				 * (Our father could be red or black).
 				 *
@@ -919,7 +919,7 @@ rb_tree_removal_rebalance(struct rb_tree *rbt, struct rb_node *parent,
 			 *	|      n  ->      N  -->         |
 			 *
 			 * If we had two red nephews, then after the swap,
-			 * our former father would have a red grandson. 
+			 * our former father would have a red grandson.
 			 */
 			KASSERT(RB_BLACK_P(brother));
 			KASSERT(RB_RED_P(brother->rb_nodes[other]));
@@ -1085,7 +1085,7 @@ rb_tree_check_node(const struct rb_tree *rbt, const struct rb_node *self,
 
 	/*
 	 * The root must be black.
-	 * There can never be two adjacent red nodes. 
+	 * There can never be two adjacent red nodes.
 	 */
 	if (red_check) {
 		KASSERT(!RB_ROOT_P(rbt, self) || RB_BLACK_P(self));
@@ -1095,7 +1095,7 @@ rb_tree_check_node(const struct rb_tree *rbt, const struct rb_node *self,
 			KASSERT(!RB_ROOT_P(rbt, self));
 			brother = RB_FATHER(self)->rb_nodes[RB_POSITION(self) ^ RB_DIR_OTHER];
 			KASSERT(RB_BLACK_P(RB_FATHER(self)));
-			/* 
+			/*
 			 * I'm red and have no children, then I must either
 			 * have no brother or my brother also be red and
 			 * also have no children.  (black count == 0)
@@ -1270,7 +1270,7 @@ rb_tree_check(const struct rb_tree *rbt, bool red_check)
 
 		/*
 		 * The root must be black.
-		 * There can never be two adjacent red nodes. 
+		 * There can never be two adjacent red nodes.
 		 */
 		TAILQ_FOREACH(self, &rbt->rbt_nodes, rb_link) {
 			rb_tree_check_node(rbt, self, NULL, true);

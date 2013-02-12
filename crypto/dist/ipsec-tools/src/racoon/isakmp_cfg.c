@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 2004-2006 Emmanuel Dreyfus
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -112,12 +112,12 @@ static vchar_t *isakmp_cfg_net(struct ph1handle *, struct isakmp_data *);
 #if 0
 static vchar_t *isakmp_cfg_void(struct ph1handle *, struct isakmp_data *);
 #endif
-static vchar_t *isakmp_cfg_addr4(struct ph1handle *, 
+static vchar_t *isakmp_cfg_addr4(struct ph1handle *,
 				 struct isakmp_data *, in_addr_t *);
 static void isakmp_cfg_getaddr4(struct isakmp_data *, struct in_addr *);
 static vchar_t *isakmp_cfg_addr4_list(struct ph1handle *,
 				      struct isakmp_data *, in_addr_t *, int);
-static void isakmp_cfg_appendaddr4(struct isakmp_data *, 
+static void isakmp_cfg_appendaddr4(struct isakmp_data *,
 				   struct in_addr *, int *, int);
 static void isakmp_cfg_getstring(struct isakmp_data *,char *);
 void isakmp_cfg_iplist_to_str(char *, int, void *, int);
@@ -129,7 +129,7 @@ static int isakmp_cfg_accounting(struct ph1handle *, int);
 static int isakmp_cfg_accounting_radius(struct ph1handle *, int);
 #endif
 
-/* 
+/*
  * Handle an ISAKMP config mode packet
  * We expect HDR, HASH, ATTR
  */
@@ -156,24 +156,24 @@ isakmp_cfg_r(iph1, msg)
 
 	/* Is it encrypted? It should be encrypted */
 	if ((packet->flags & ISAKMP_FLAG_E) == 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "User credentials sent in cleartext!\n");
 		return;
 	}
 
-	/* 
+	/*
 	 * Decrypt the packet. If this is the beginning of a new
 	 * exchange, reinitialize the IV
 	 */
 	if (iph1->mode_cfg->ivm == NULL ||
 	    iph1->mode_cfg->last_msgid != packet->msgid )
-		iph1->mode_cfg->ivm = 
+		iph1->mode_cfg->ivm =
 		    isakmp_cfg_newiv(iph1, packet->msgid);
 	ivm = iph1->mode_cfg->ivm;
 
 	dmsg = oakley_do_decrypt(iph1, msg, ivm->iv, ivm->ive);
 	if (dmsg == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "failed to decrypt message\n");
 		return;
 	}
@@ -190,18 +190,18 @@ isakmp_cfg_r(iph1, msg)
 	while ((tlen > 0) && (np != ISAKMP_NPTYPE_NONE)) {
 		/* Check that the payload header fits in the packet */
 		if (tlen < sizeof(*ph)) {
-			 plog(LLV_WARNING, LOCATION, NULL, 
+			 plog(LLV_WARNING, LOCATION, NULL,
 			      "Short payload header\n");
 			 goto out;
 		}
 
 		/* Check that the payload fits in the packet */
 		if (tlen < ntohs(ph->len)) {
-			plog(LLV_WARNING, LOCATION, NULL, 
+			plog(LLV_WARNING, LOCATION, NULL,
 			      "Short payload\n");
 			goto out;
 		}
-		
+
 		plog(LLV_DEBUG, LOCATION, NULL, "Seen payload %d\n", np);
 		plogdump(LLV_DEBUG, ph, ntohs(ph->len));
 
@@ -217,22 +217,22 @@ isakmp_cfg_r(iph1, msg)
 			plen = ntohs(nph->len);
 
 			if ((payload = vmalloc(plen)) == NULL) {
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "Cannot allocate memory\n");
 				goto out;
 			}
 			memcpy(payload->v, nph, plen);
 
-			if ((check = oakley_compute_hash1(iph1, 
+			if ((check = oakley_compute_hash1(iph1,
 			    packet->msgid, payload)) == NULL) {
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "Cannot compute hash\n");
 				vfree(payload);
 				goto out;
 			}
 
 			if (memcmp(ph + 1, check->v, check->l) != 0) {
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "Hash verification failed\n");
 				vfree(payload);
 				vfree(check);
@@ -251,7 +251,7 @@ isakmp_cfg_r(iph1, msg)
 			break;
 		}
 		default:
-			 plog(LLV_WARNING, LOCATION, NULL, 
+			 plog(LLV_WARNING, LOCATION, NULL,
 			      "Unexpected next payload %d\n", np);
 			 /* Skip to the next payload */
 			 break;
@@ -269,7 +269,7 @@ out:
 }
 
 int
-isakmp_cfg_attr_r(iph1, msgid, attrpl) 
+isakmp_cfg_attr_r(iph1, msgid, attrpl)
 	struct ph1handle *iph1;
 	u_int32_t msgid;
 	struct isakmp_pl_attr *attrpl;
@@ -326,7 +326,7 @@ isakmp_cfg_reply(iph1, attrpl)
 	tlen = ntohs(attrpl->h.len);
 	attr = (struct isakmp_data *)(attrpl + 1);
 	tlen -= sizeof(*attrpl);
-	
+
 	while (tlen > 0) {
 		type = ntohs(attr->type);
 
@@ -335,12 +335,12 @@ isakmp_cfg_reply(iph1, attrpl)
 			type &= ~ISAKMP_GEN_MASK;
 
 			plog(LLV_DEBUG, LOCATION, NULL,
-			     "Short attribute %s = %d\n", 
+			     "Short attribute %s = %d\n",
 			     s_isakmp_cfg_type(type), ntohs(attr->lorv));
 
 			switch (type) {
 			case XAUTH_TYPE:
-				if ((error = xauth_attr_reply(iph1, 
+				if ((error = xauth_attr_reply(iph1,
 				    attr, ntohs(attrpl->id))) != 0)
 					return error;
 				break;
@@ -369,7 +369,7 @@ isakmp_cfg_reply(iph1, attrpl)
 		}
 
 		plog(LLV_DEBUG, LOCATION, NULL,
-		     "Attribute %s, len %zu\n", 
+		     "Attribute %s, len %zu\n",
 		     s_isakmp_cfg_type(type), alen);
 
 		switch(type) {
@@ -383,7 +383,7 @@ isakmp_cfg_reply(iph1, attrpl)
 		case XAUTH_STATUS:
 		case XAUTH_NEXT_PIN:
 		case XAUTH_ANSWER:
-			if ((error = xauth_attr_reply(iph1, 
+			if ((error = xauth_attr_reply(iph1,
 			    attr, ntohs(attrpl->id))) != 0)
 				return error;
 			break;
@@ -396,19 +396,19 @@ isakmp_cfg_reply(iph1, attrpl)
 			iph1->mode_cfg->flags |= ISAKMP_CFG_GOT_MASK4;
 			break;
 		case INTERNAL_IP4_DNS:
-			isakmp_cfg_appendaddr4(attr, 
+			isakmp_cfg_appendaddr4(attr,
 			    &iph1->mode_cfg->dns4[iph1->mode_cfg->dns4_index],
 			    &iph1->mode_cfg->dns4_index, MAXNS);
 			iph1->mode_cfg->flags |= ISAKMP_CFG_GOT_DNS4;
 			break;
 		case INTERNAL_IP4_NBNS:
-			isakmp_cfg_appendaddr4(attr, 
+			isakmp_cfg_appendaddr4(attr,
 			    &iph1->mode_cfg->wins4[iph1->mode_cfg->wins4_index],
 			    &iph1->mode_cfg->wins4_index, MAXNS);
 			iph1->mode_cfg->flags |= ISAKMP_CFG_GOT_WINS4;
 			break;
 		case UNITY_DEF_DOMAIN:
-			isakmp_cfg_getstring(attr, 
+			isakmp_cfg_getstring(attr,
 			    iph1->mode_cfg->default_domain);
 			iph1->mode_cfg->flags |= ISAKMP_CFG_GOT_DEFAULT_DOMAIN;
 			break;
@@ -438,30 +438,30 @@ isakmp_cfg_reply(iph1, attrpl)
 		tlen -= (sizeof(*attr) + alen);
 	}
 
-	/* 
+	/*
 	 * Call the SA up script hook now that we have the configuration
 	 * It is done at the end of phase 1 if ISAKMP mode config is not
 	 * requested.
 	 */
-	
-	if ((iph1->status == PHASE1ST_ESTABLISHED) && 
+
+	if ((iph1->status == PHASE1ST_ESTABLISHED) &&
 	    iph1->rmconf->mode_cfg) {
 		switch (AUTHMETHOD(iph1)) {
 		case FICTIVE_AUTH_METHOD_XAUTH_PSKEY_I:
 		case OAKLEY_ATTR_AUTH_METHOD_HYBRID_RSA_I:
 		/* Unimplemented */
-		case OAKLEY_ATTR_AUTH_METHOD_HYBRID_DSS_I: 
-		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_DSSSIG_I: 
+		case OAKLEY_ATTR_AUTH_METHOD_HYBRID_DSS_I:
+		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_DSSSIG_I:
 		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_RSASIG_I:
-		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_RSAENC_I: 
-		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_RSAREV_I: 
+		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_RSAENC_I:
+		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_RSAREV_I:
 			script_hook(iph1, SCRIPT_PHASE1_UP);
 			break;
 		default:
 			break;
 		}
 	}
-		
+
 
 #ifdef ENABLE_ADMINPORT
 	{
@@ -469,11 +469,11 @@ isakmp_cfg_reply(iph1, attrpl)
 
 		alen = ntohs(attrpl->h.len) - sizeof(*attrpl);
 		if ((buf = vmalloc(alen)) == NULL) {
-			plog(LLV_WARNING, LOCATION, NULL, 
+			plog(LLV_WARNING, LOCATION, NULL,
 			    "Cannot allocate memory: %s\n", strerror(errno));
 		} else {
 			memcpy(buf->v, attrpl + 1, buf->l);
-			EVT_PUSH(iph1->local, iph1->remote, 
+			EVT_PUSH(iph1->local, iph1->remote,
 			    EVTT_ISAKMP_CFG_DONE, buf);
 			vfree(buf);
 		}
@@ -507,7 +507,7 @@ isakmp_cfg_request(iph1, attrpl)
 	tlen = ntohs(attrpl->h.len);
 	attr = (struct isakmp_data *)(attrpl + 1);
 	tlen -= sizeof(*attrpl);
-	
+
 	while (tlen > 0) {
 		reply_attr = NULL;
 		type = ntohs(attr->type);
@@ -517,7 +517,7 @@ isakmp_cfg_request(iph1, attrpl)
 			type &= ~ISAKMP_GEN_MASK;
 
 			plog(LLV_DEBUG, LOCATION, NULL,
-			     "Short attribute %s = %d\n", 
+			     "Short attribute %s = %d\n",
 			     s_isakmp_cfg_type(type), ntohs(attr->lorv));
 
 			switch (type) {
@@ -580,7 +580,7 @@ isakmp_cfg_request(iph1, attrpl)
 			break;
 
 		case APPLICATION_VERSION:
-			reply_attr = isakmp_cfg_string(iph1, 
+			reply_attr = isakmp_cfg_string(iph1,
 			    attr, ISAKMP_CFG_RACOON_VERSION);
 			break;
 
@@ -622,10 +622,10 @@ isakmp_cfg_request(iph1, attrpl)
 	reply->type = ISAKMP_CFG_REPLY;
 	reply->id = attrpl->id;
 
-	plog(LLV_DEBUG, LOCATION, NULL, 
+	plog(LLV_DEBUG, LOCATION, NULL,
 		    "Sending MODE_CFG REPLY\n");
 
-	error = isakmp_cfg_send(iph1, payload, 
+	error = isakmp_cfg_send(iph1, payload,
 	    ISAKMP_NPTYPE_ATTR, ISAKMP_FLAG_E, 0);
 
 	if (iph1->status == PHASE1ST_ESTABLISHED) {
@@ -633,18 +633,18 @@ isakmp_cfg_request(iph1, attrpl)
 		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_PSKEY_R:
 		case OAKLEY_ATTR_AUTH_METHOD_HYBRID_RSA_R:
 		/* Unimplemented */
-		case OAKLEY_ATTR_AUTH_METHOD_HYBRID_DSS_R: 
-		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_DSSSIG_R: 
+		case OAKLEY_ATTR_AUTH_METHOD_HYBRID_DSS_R:
+		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_DSSSIG_R:
 		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_RSASIG_R:
-		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_RSAENC_R: 
-		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_RSAREV_R: 
+		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_RSAENC_R:
+		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_RSAREV_R:
 			script_hook(iph1, SCRIPT_PHASE1_UP);
 			break;
 		default:
 			break;
 		}
 	}
-	
+
 end:
 	vfree(payload);
 
@@ -675,25 +675,25 @@ isakmp_cfg_set(iph1, attrpl)
 	tlen = ntohs(attrpl->h.len);
 	attr = (struct isakmp_data *)(attrpl + 1);
 	tlen -= sizeof(*attrpl);
-	
-	/* 
-	 * We should send ack for the attributes we accepted 
+
+	/*
+	 * We should send ack for the attributes we accepted
 	 */
 	while (tlen > 0) {
 		reply_attr = NULL;
 		type = ntohs(attr->type);
 
 		plog(LLV_DEBUG, LOCATION, NULL,
-		     "Attribute %s\n", 
+		     "Attribute %s\n",
 		     s_isakmp_cfg_type(type & ~ISAKMP_GEN_MASK));
-		
+
 		switch (type & ~ISAKMP_GEN_MASK) {
 		case XAUTH_STATUS:
 			reply_attr = isakmp_xauth_set(iph1, attr);
 			break;
 		default:
 			plog(LLV_DEBUG, LOCATION, NULL,
-			     "Unexpected SET attribute %s\n", 
+			     "Unexpected SET attribute %s\n",
 		     	     s_isakmp_cfg_type(type & ~ISAKMP_GEN_MASK));
 			break;
 		}
@@ -703,9 +703,9 @@ isakmp_cfg_set(iph1, attrpl)
 			vfree(reply_attr);
 		}
 
-		/* 
-		 * Move to next attribute. If we run out of the packet, 
-		 * tlen becomes negative and we exit. 
+		/*
+		 * Move to next attribute. If we run out of the packet,
+		 * tlen becomes negative and we exit.
 		 */
 		if ((type & ISAKMP_GEN_MASK) == ISAKMP_GEN_TV) {
 			tlen -= sizeof(*attr);
@@ -727,7 +727,7 @@ isakmp_cfg_set(iph1, attrpl)
 	plog(LLV_DEBUG, LOCATION, NULL,
 		     "Sending MODE_CFG ACK\n");
 
-	error = isakmp_cfg_send(iph1, payload, 
+	error = isakmp_cfg_send(iph1, payload,
 	    ISAKMP_NPTYPE_ATTR, ISAKMP_FLAG_E, 0);
 
 	if (iph1->mode_cfg->flags & ISAKMP_CFG_DELETE_PH1) {
@@ -740,7 +740,7 @@ isakmp_cfg_set(iph1, attrpl)
 end:
 	vfree(payload);
 
-	/* 
+	/*
 	 * If required, request ISAKMP mode config information
 	 */
 	if ((iph1 != NULL) && (iph1->rmconf->mode_cfg) && (error == 0))
@@ -759,7 +759,7 @@ buffer_cat(s, append)
 
 	new = vmalloc(s->l + append->l);
 	if (new == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot allocate memory\n");
 		return s;
 	}
@@ -782,7 +782,7 @@ isakmp_cfg_net(iph1, attr)
 
 	type = ntohs(attr->type);
 
-	/* 
+	/*
 	 * Don't give an address to a peer that did not succeed Xauth
 	 */
 	if (xauth_check(iph1) != 0) {
@@ -806,7 +806,7 @@ retry_source:
 		case ISAKMP_CFG_CONF_LDAP:
 			if (iph1->mode_cfg->flags & ISAKMP_CFG_ADDR4_EXTERN)
 			    break;
-			plog(LLV_INFO, LOCATION, NULL, 
+			plog(LLV_INFO, LOCATION, NULL,
 			    "No IP from LDAP, using local pool\n");
 			/* FALLTHROUGH */
 			confsource = ISAKMP_CFG_CONF_LOCAL;
@@ -821,7 +821,7 @@ retry_source:
 			     * to instruct the NAS to use a local pool
 			     */
 			    break;
-			plog(LLV_INFO, LOCATION, NULL, 
+			plog(LLV_INFO, LOCATION, NULL,
 			    "No IP from RADIUS, using local pool\n");
 			/* FALLTHROUGH */
 			confsource = ISAKMP_CFG_CONF_LOCAL;
@@ -829,26 +829,26 @@ retry_source:
 #endif
 		case ISAKMP_CFG_CONF_LOCAL:
 			if (isakmp_cfg_getport(iph1) == -1) {
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "Port pool depleted\n");
 				break;
 			}
 
-			iph1->mode_cfg->addr4.s_addr = 
-			    htonl(ntohl(isakmp_cfg_config.network4) 
+			iph1->mode_cfg->addr4.s_addr =
+			    htonl(ntohl(isakmp_cfg_config.network4)
 			    + iph1->mode_cfg->port);
 			iph1->mode_cfg->flags |= ISAKMP_CFG_ADDR4_LOCAL;
 			break;
 
 		default:
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Unexpected confsource\n");
 		}
-			
+
 		if (isakmp_cfg_accounting(iph1, ISAKMP_CFG_LOGIN) != 0)
 			plog(LLV_ERROR, LOCATION, NULL, "Accounting failed\n");
 
-		return isakmp_cfg_addr4(iph1, 
+		return isakmp_cfg_addr4(iph1,
 		    attr, &iph1->mode_cfg->addr4.s_addr);
 		break;
 
@@ -858,7 +858,7 @@ retry_source:
 		case ISAKMP_CFG_CONF_LDAP:
 			if (iph1->mode_cfg->flags & ISAKMP_CFG_MASK4_EXTERN)
 				break;
-			plog(LLV_INFO, LOCATION, NULL, 
+			plog(LLV_INFO, LOCATION, NULL,
 			    "No mask from LDAP, using local pool\n");
 			/* FALLTHROUGH */
 			confsource = ISAKMP_CFG_CONF_LOCAL;
@@ -868,40 +868,40 @@ retry_source:
 		case ISAKMP_CFG_CONF_RADIUS:
 			if (iph1->mode_cfg->flags & ISAKMP_CFG_MASK4_EXTERN)
 				break;
-			plog(LLV_INFO, LOCATION, NULL, 
+			plog(LLV_INFO, LOCATION, NULL,
 			    "No mask from RADIUS, using local pool\n");
 			/* FALLTHROUGH */
 			confsource = ISAKMP_CFG_CONF_LOCAL;
 			goto retry_source;
 #endif
 		case ISAKMP_CFG_CONF_LOCAL:
-			iph1->mode_cfg->mask4.s_addr 
+			iph1->mode_cfg->mask4.s_addr
 			    = isakmp_cfg_config.netmask4;
 			iph1->mode_cfg->flags |= ISAKMP_CFG_MASK4_LOCAL;
 			break;
 
 		default:
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Unexpected confsource\n");
 		}
-		return isakmp_cfg_addr4(iph1, attr, 
+		return isakmp_cfg_addr4(iph1, attr,
 		    &iph1->mode_cfg->mask4.s_addr);
 		break;
 
 	case INTERNAL_IP4_DNS:
-		return isakmp_cfg_addr4_list(iph1, 
-		    attr, &isakmp_cfg_config.dns4[0], 
+		return isakmp_cfg_addr4_list(iph1,
+		    attr, &isakmp_cfg_config.dns4[0],
 		    isakmp_cfg_config.dns4_index);
 		break;
 
 	case INTERNAL_IP4_NBNS:
-		return isakmp_cfg_addr4_list(iph1, 
-		    attr, &isakmp_cfg_config.nbns4[0], 
+		return isakmp_cfg_addr4_list(iph1,
+		    attr, &isakmp_cfg_config.nbns4[0],
 		    isakmp_cfg_config.nbns4_index);
 		break;
 
 	case INTERNAL_IP4_SUBNET:
-		return isakmp_cfg_addr4(iph1, 
+		return isakmp_cfg_addr4(iph1,
 		    attr, &isakmp_cfg_config.network4);
 		break;
 
@@ -1003,7 +1003,7 @@ isakmp_cfg_varlen(iph1, attr, string, len)
 	data = (char *)(new + 1);
 
 	memcpy(data, string, len);
-	
+
 	return buffer;
 }
 vchar_t *
@@ -1037,7 +1037,7 @@ isakmp_cfg_addr4(iph1, attr, addr)
 	new->type = attr->type;
 	new->lorv = htons(len);
 	memcpy(new + 1, addr, len);
-	
+
 	return buffer;
 }
 
@@ -1062,7 +1062,7 @@ isakmp_cfg_addr4_list(iph1, attr, addr, nbr)
 	}
 	for(i = 0; i < nbr; i++) {
 		if ((bufone = vmalloc(sizeof(*attr) + len)) == NULL) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot allocate memory\n");
 			goto out;
 		}
@@ -1127,10 +1127,10 @@ isakmp_cfg_send(iph1, payload, np, flags, new_exchange)
 	struct isakmp_cfg_state *ics = iph1->mode_cfg;
 
 	/* Check if phase 1 is established */
-	if ((iph1->status != PHASE1ST_ESTABLISHED) || 
+	if ((iph1->status != PHASE1ST_ESTABLISHED) ||
 	    (iph1->local == NULL) ||
 	    (iph1->remote == NULL)) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "ISAKMP mode config exchange with immature phase 1\n");
 		goto end;
 	}
@@ -1207,7 +1207,7 @@ isakmp_cfg_send(iph1, payload, np, flags, new_exchange)
 
 	/* create buffer for isakmp payload */
 	iph2->sendbuf = vmalloc(tlen);
-	if (iph2->sendbuf == NULL) { 
+	if (iph2->sendbuf == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get buffer to send.\n");
 		goto err;
@@ -1242,7 +1242,7 @@ isakmp_cfg_send(iph1, payload, np, flags, new_exchange)
 #ifdef HAVE_PRINT_ISAKMP_C
 	isakmp_printpacket(iph2->sendbuf, iph1->local, iph1->remote, 1);
 #endif
-	
+
 	plog(LLV_DEBUG, LOCATION, NULL, "MODE_CFG packet to send\n");
 	plogdump(LLV_DEBUG, iph2->sendbuf->v, iph2->sendbuf->l);
 
@@ -1250,7 +1250,7 @@ isakmp_cfg_send(iph1, payload, np, flags, new_exchange)
 	if (ISSET(isakmp->flags, ISAKMP_FLAG_E)) {
 		vchar_t *tmp;
 
-		tmp = oakley_do_encrypt(iph2->ph1, iph2->sendbuf, 
+		tmp = oakley_do_encrypt(iph2->ph1, iph2->sendbuf,
 			ics->ivm->ive, ics->ivm->iv);
 		VPTRINIT(iph2->sendbuf);
 		if (tmp == NULL)
@@ -1288,7 +1288,7 @@ end:
 }
 
 
-void 
+void
 isakmp_cfg_rmstate(iph1)
 	struct ph1handle *iph1;
 {
@@ -1298,7 +1298,7 @@ isakmp_cfg_rmstate(iph1)
 		plog(LLV_ERROR, LOCATION, NULL, "Accounting failed\n");
 
 	if (state->flags & ISAKMP_CFG_PORT_ALLOCATED)
-		isakmp_cfg_putport(iph1, state->port);	
+		isakmp_cfg_putport(iph1, state->port);
 
 	/* Delete the IV if it's still there */
 	if(iph1->mode_cfg->ivm) {
@@ -1323,7 +1323,7 @@ isakmp_cfg_rmstate(iph1)
 }
 
 struct isakmp_cfg_state *
-isakmp_cfg_mkstate(void) 
+isakmp_cfg_mkstate(void)
 {
 	struct isakmp_cfg_state *state;
 
@@ -1337,7 +1337,7 @@ isakmp_cfg_mkstate(void)
 	return state;
 }
 
-int 
+int
 isakmp_cfg_getport(iph1)
 	struct ph1handle *iph1;
 {
@@ -1359,7 +1359,7 @@ isakmp_cfg_getport(iph1)
 	}
 
 	if (i == size) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "No more addresses available\n");
 			return -1;
 	}
@@ -1374,19 +1374,19 @@ isakmp_cfg_getport(iph1)
 	return i;
 }
 
-int 
+int
 isakmp_cfg_putport(iph1, index)
 	struct ph1handle *iph1;
 	unsigned int index;
 {
 	if (isakmp_cfg_config.port_pool == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "isakmp_cfg_config.port_pool == NULL\n");
 		return -1;
 	}
 
 	if (isakmp_cfg_config.port_pool[index].used == 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Attempt to release an unallocated address (port %d)\n",
 		    index);
 		return -1;
@@ -1427,9 +1427,9 @@ isakmp_cfg_accounting(iph1, inout)
 {
 #ifdef HAVE_LIBPAM
 	if (isakmp_cfg_config.accounting == ISAKMP_CFG_ACCT_PAM)
-		return privsep_accounting_pam(iph1->mode_cfg->port, 
+		return privsep_accounting_pam(iph1->mode_cfg->port,
 		    inout);
-#endif 
+#endif
 #ifdef HAVE_LIBRADIUS
 	if (isakmp_cfg_config.accounting == ISAKMP_CFG_ACCT_RADIUS)
 		return isakmp_cfg_accounting_radius(iph1, inout);
@@ -1441,7 +1441,7 @@ isakmp_cfg_accounting(iph1, inout)
 }
 
 #ifdef HAVE_LIBPAM
-int 
+int
 isakmp_cfg_accounting_pam(port, inout)
 	int port;
 	int inout;
@@ -1450,11 +1450,11 @@ isakmp_cfg_accounting_pam(port, inout)
 	pam_handle_t *pam;
 
 	if (isakmp_cfg_config.port_pool == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "isakmp_cfg_config.port_pool == NULL\n");
 		return -1;
 	}
-	
+
 	pam = isakmp_cfg_config.port_pool[port].pam;
 	if (pam == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL, "pam handle is NULL\n");
@@ -1474,11 +1474,11 @@ isakmp_cfg_accounting_pam(port, inout)
 		plog(LLV_ERROR, LOCATION, NULL, "Unepected inout\n");
 		break;
 	}
-	
+
 	if (error != 0) {
 		plog(LLV_ERROR, LOCATION, NULL,
 		    "pam_open_session/pam_close_session failed: %s\n",
-		    pam_strerror(pam, error)); 
+		    pam_strerror(pam, error));
 		return -1;
         }
 
@@ -1510,7 +1510,7 @@ isakmp_cfg_accounting_radius(iph1, inout)
 		}
 	}
 
-	if (rad_create_request(radius_acct_state, 
+	if (rad_create_request(radius_acct_state,
 	    RAD_ACCOUNTING_REQUEST) != 0) {
 		plog(LLV_ERROR, LOCATION, NULL,
 		    "rad_create_request failed: %s\n",
@@ -1518,7 +1518,7 @@ isakmp_cfg_accounting_radius(iph1, inout)
 		return -1;
 	}
 
-	if (rad_put_string(radius_acct_state, RAD_USER_NAME, 
+	if (rad_put_string(radius_acct_state, RAD_USER_NAME,
 	    iph1->mode_cfg->login) != 0) {
 		plog(LLV_ERROR, LOCATION, NULL,
 		    "rad_put_string failed: %s\n",
@@ -1538,7 +1538,7 @@ isakmp_cfg_accounting_radius(iph1, inout)
 		break;
 	}
 
-	if (rad_put_addr(radius_acct_state, 
+	if (rad_put_addr(radius_acct_state,
 	    RAD_FRAMED_IP_ADDRESS, iph1->mode_cfg->addr4) != 0) {
 		plog(LLV_ERROR, LOCATION, NULL,
 		    "rad_put_addr failed: %s\n",
@@ -1546,7 +1546,7 @@ isakmp_cfg_accounting_radius(iph1, inout)
 		return -1;
 	}
 
-	if (rad_put_addr(radius_acct_state, 
+	if (rad_put_addr(radius_acct_state,
 	    RAD_LOGIN_IP_HOST, iph1->mode_cfg->addr4) != 0) {
 		plog(LLV_ERROR, LOCATION, NULL,
 		    "rad_put_addr failed: %s\n",
@@ -1561,7 +1561,7 @@ isakmp_cfg_accounting_radius(iph1, inout)
 		return -1;
 	}
 
-	if (isakmp_cfg_radius_common(radius_acct_state, 
+	if (isakmp_cfg_radius_common(radius_acct_state,
 	    iph1->mode_cfg->port) != 0)
 		return -1;
 
@@ -1584,12 +1584,12 @@ int
 isakmp_cfg_radius_common(radius_state, port)
 	struct rad_handle *radius_state;
 	int port;
-{ 
+{
 	struct utsname name;
 	static struct hostent *host = NULL;
 	struct in_addr nas_addr;
 
-	/* 
+	/*
 	 * Find our own IP by resolving our nodename
 	 */
 	if (host == NULL) {
@@ -1634,7 +1634,7 @@ isakmp_cfg_radius_common(radius_state, port)
 		    rad_strerror(radius_state));
 		return -1;
 	}
-	
+
 	return 0;
 }
 #endif
@@ -1654,7 +1654,7 @@ isakmp_cfg_accounting_system(port, raddr, usr, inout)
 	struct utmp ut;
 	char term[UT_LINESIZE];
 	char addr[NI_MAXHOST];
-	
+
 	if (usr == NULL || usr[0]=='\0') {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"system accounting : no login found\n");
@@ -1676,7 +1676,7 @@ isakmp_cfg_accounting_system(port, raddr, usr, inout)
 		ut.ut_host[UT_HOSTSIZE - 1] = '\0';
 
 		ut.ut_time = time(NULL);
- 
+
 		plog(LLV_INFO, LOCATION, NULL,
 			"Accounting : '%s' logging on '%s' from %s.\n",
 			ut.ut_name, ut.ut_line, ut.ut_host);
@@ -1684,7 +1684,7 @@ isakmp_cfg_accounting_system(port, raddr, usr, inout)
 		login(&ut);
 
 		break;
-	case ISAKMP_CFG_LOGOUT:	
+	case ISAKMP_CFG_LOGOUT:
 
 		plog(LLV_INFO, LOCATION, NULL,
 			"Accounting : '%s' unlogging from '%s'.\n",
@@ -1700,8 +1700,8 @@ isakmp_cfg_accounting_system(port, raddr, usr, inout)
 
 	return 0;
 }
-	
-int 
+
+int
 isakmp_cfg_getconfig(iph1)
 	struct ph1handle *iph1;
 {
@@ -1727,7 +1727,7 @@ isakmp_cfg_getconfig(iph1)
 
 	attrcount = sizeof(attrlist) / sizeof(*attrlist);
 	len = sizeof(*attrpl) + sizeof(*attr) * attrcount;
-	    
+
 	if ((buffer = vmalloc(len)) == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL, "Cannot allocate memory\n");
 		return -1;
@@ -1746,7 +1746,7 @@ isakmp_cfg_getconfig(iph1)
 		attr++;
 	}
 
-	plog(LLV_DEBUG, LOCATION, NULL, 
+	plog(LLV_DEBUG, LOCATION, NULL,
 		    "Sending MODE_CFG REQUEST\n");
 
 	error = isakmp_cfg_send(iph1, buffer,
@@ -1838,7 +1838,7 @@ isakmp_cfg_iplist_to_str(dest, count, addr, withmask)
 		addr += l;
 		if((uint32_t)tmp.addr4.s_addr == 0)
 			break;
-	
+
 		inet_ntop(AF_INET, &tmp.addr4, dest + p, IP_MAX);
 		p += strlen(dest + p);
 		if(withmask == 1) {
@@ -1858,7 +1858,7 @@ isakmp_cfg_iplist_to_str(dest, count, addr, withmask)
 
 int
 isakmp_cfg_setenv(iph1, envp, envc)
-	struct ph1handle *iph1; 
+	struct ph1handle *iph1;
 	char ***envp;
 	int *envc;
 {
@@ -1873,8 +1873,8 @@ isakmp_cfg_setenv(iph1, envp, envc)
 
 	plog(LLV_DEBUG, LOCATION, NULL, "Starting a script.\n");
 
-	/* 
-	 * Internal IPv4 address, either if 
+	/*
+	 * Internal IPv4 address, either if
 	 * we are a client or a server.
 	 */
 	if ((iph1->mode_cfg->flags & ISAKMP_CFG_GOT_ADDR4) ||
@@ -1885,7 +1885,7 @@ isakmp_cfg_setenv(iph1, envp, envc)
 	    (iph1->mode_cfg->flags & ISAKMP_CFG_ADDR4_EXTERN) ||
 #endif
 	    (iph1->mode_cfg->flags & ISAKMP_CFG_ADDR4_LOCAL)) {
-		inet_ntop(AF_INET, &iph1->mode_cfg->addr4, 
+		inet_ntop(AF_INET, &iph1->mode_cfg->addr4,
 		    addrstr, IP_MAX);
 	} else
 		addrstr[0] = '\0';
@@ -1896,33 +1896,33 @@ isakmp_cfg_setenv(iph1, envp, envc)
 	}
 
 	if (iph1->mode_cfg->xauth.authdata.generic.usr != NULL) {
-		if (script_env_append(envp, envc, "XAUTH_USER", 
+		if (script_env_append(envp, envc, "XAUTH_USER",
 		    iph1->mode_cfg->xauth.authdata.generic.usr) != 0) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot set XAUTH_USER\n");
 			return -1;
 		}
 	}
 
 	/* Internal IPv4 mask */
-	if (iph1->mode_cfg->flags & ISAKMP_CFG_GOT_MASK4) 
-		inet_ntop(AF_INET, &iph1->mode_cfg->mask4, 
+	if (iph1->mode_cfg->flags & ISAKMP_CFG_GOT_MASK4)
+		inet_ntop(AF_INET, &iph1->mode_cfg->mask4,
 		    addrstr, IP_MAX);
 	else
 		addrstr[0] = '\0';
 
-	/* 	
+	/*
 	 * During several releases, documentation adverised INTERNAL_NETMASK4
 	 * while code was using INTERNAL_MASK4. We now do both.
 	 */
 
-	if (script_env_append(envp, envc, "INTERNAL_MASK4", addrstr) != 0) { 
+	if (script_env_append(envp, envc, "INTERNAL_MASK4", addrstr) != 0) {
 		plog(LLV_ERROR, LOCATION, NULL, "Cannot set INTERNAL_MASK4\n");
 		return -1;
 	}
 
-	if (script_env_append(envp, envc, "INTERNAL_NETMASK4", addrstr) != 0) { 
-		plog(LLV_ERROR, LOCATION, NULL, 
+	if (script_env_append(envp, envc, "INTERNAL_NETMASK4", addrstr) != 0) {
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot set INTERNAL_NETMASK4\n");
 		return -1;
 	}
@@ -1940,7 +1940,7 @@ isakmp_cfg_setenv(iph1, envp, envc)
 	/* Internal IPv4 DNS */
 	if (iph1->mode_cfg->flags & ISAKMP_CFG_GOT_DNS4) {
 		/* First Internal IPv4 DNS (for compatibilty with older code */
-		inet_ntop(AF_INET, &iph1->mode_cfg->dns4[0], 
+		inet_ntop(AF_INET, &iph1->mode_cfg->dns4[0],
 		    addrstr, IP_MAX);
 
 		/* Internal IPv4 DNS - all */
@@ -1956,18 +1956,18 @@ isakmp_cfg_setenv(iph1, envp, envc)
 		return -1;
 	}
 	if (script_env_append(envp, envc, "INTERNAL_DNS4_LIST", addrlist) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot set INTERNAL_DNS4_LIST\n");
 		return -1;
 	}
-	
+
 	/* Internal IPv4 WINS */
 	if (iph1->mode_cfg->flags & ISAKMP_CFG_GOT_WINS4) {
-		/* 
-		 * First Internal IPv4 WINS 
-		 * (for compatibilty with older code 
+		/*
+		 * First Internal IPv4 WINS
+		 * (for compatibilty with older code
 		 */
-		inet_ntop(AF_INET, &iph1->mode_cfg->wins4[0], 
+		inet_ntop(AF_INET, &iph1->mode_cfg->wins4[0],
 		    addrstr, IP_MAX);
 
 		/* Internal IPv4 WINS - all */
@@ -1979,27 +1979,27 @@ isakmp_cfg_setenv(iph1, envp, envc)
 	}
 
 	if (script_env_append(envp, envc, "INTERNAL_WINS4", addrstr) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot set INTERNAL_WINS4\n");
 		return -1;
 	}
-	if (script_env_append(envp, envc, 
+	if (script_env_append(envp, envc,
 	    "INTERNAL_WINS4_LIST", addrlist) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot set INTERNAL_WINS4_LIST\n");
 		return -1;
 	}
 
 	/* Deault domain */
-	if(iph1->mode_cfg->flags & ISAKMP_CFG_GOT_DEFAULT_DOMAIN) 
-		strncpy(defdom, 
-		    iph1->mode_cfg->default_domain, 
+	if(iph1->mode_cfg->flags & ISAKMP_CFG_GOT_DEFAULT_DOMAIN)
+		strncpy(defdom,
+		    iph1->mode_cfg->default_domain,
 		    MAXPATHLEN + 1);
 	else
 		defdom[0] = '\0';
-	
-	if (script_env_append(envp, envc, "DEFAULT_DOMAIN", defdom) != 0) { 
-		plog(LLV_ERROR, LOCATION, NULL, 
+
+	if (script_env_append(envp, envc, "DEFAULT_DOMAIN", defdom) != 0) {
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot set DEFAULT_DOMAIN\n");
 		return -1;
 	}
@@ -2032,7 +2032,7 @@ isakmp_cfg_setenv(iph1, envp, envc)
 	}
 	if (splitlist != addrlist)
 		racoon_free(splitlist);
-	
+
 	return 0;
 }
 
@@ -2056,20 +2056,20 @@ isakmp_cfg_resize_pool(size)
 	    (size < isakmp_cfg_config.pool_size)) {
 		for (i = isakmp_cfg_config.pool_size; i >= size; --i) {
 			if (isakmp_cfg_config.port_pool[i].used) {
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "resize pool from %zu to %d impossible "
-				    "port %d is in use\n", 
+				    "port %d is in use\n",
 				    isakmp_cfg_config.pool_size, size, i);
 				size = i;
 				break;
-			}	
+			}
 		}
 	}
 
 	len = size * sizeof(*isakmp_cfg_config.port_pool);
 	new_pool = racoon_realloc(isakmp_cfg_config.port_pool, len);
 	if (new_pool == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "resize pool from %zu to %d impossible: %s",
 		    isakmp_cfg_config.pool_size, size, strerror(errno));
 		return -1;
@@ -2083,7 +2083,7 @@ isakmp_cfg_resize_pool(size)
 		unit =  sizeof(*isakmp_cfg_config.port_pool);
 		old_size = isakmp_cfg_config.pool_size;
 
-		bzero((char *)new_pool + (old_size * unit), 
+		bzero((char *)new_pool + (old_size * unit),
 		    (size - old_size) * unit);
 	}
 
@@ -2094,7 +2094,7 @@ isakmp_cfg_resize_pool(size)
 }
 
 int
-isakmp_cfg_init(cold) 
+isakmp_cfg_init(cold)
 	int cold;
 {
 	int i;

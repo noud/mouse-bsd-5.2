@@ -95,7 +95,7 @@ on a file you are familiar with while you are reading this.
 The first part of this document (sections 1 through 5)
 describes the basics of using
 .I vi.
-Some topics of special interest are presented in section 6, and 
+Some topics of special interest are presented in section 6, and
 some nitty-gritty details of how the editor functions are saved for section
 7 to avoid cluttering the presentation here.
 .PP
@@ -221,7 +221,7 @@ by a carriage return.
 .NH 2
 The editor's copy: the buffer
 .PP
-The editor does not directly modify the file which you are editing. 
+The editor does not directly modify the file which you are editing.
 Rather, the editor makes a copy of this file, in a place called the
 .I buffer,
 and remembers the file's
@@ -649,7 +649,7 @@ You can make small corrections in existing text quite easily.
 Find a single character which is wrong or just pick any character.
 Use the arrow keys to find the character, or
 get near the character with the word motion keys and then either
-backspace (hit the \s-2BS\s0 key or \fB^H\fR or even just \fBh\fR) or 
+backspace (hit the \s-2BS\s0 key or \fB^H\fR or even just \fBh\fR) or
 \s-2SPACE\s0 (using the space bar)
 until the cursor is on the character which is wrong.
 If the character is not needed then hit the \fBx\fP key; this deletes
@@ -672,7 +672,7 @@ the number of characters to be deleted.
 More corrections: operators
 .PP
 You already know almost enough to make changes at a higher level.
-All you need to know now is that the 
+All you need to know now is that the
 .B d
 key acts as a delete operator.  Try the command
 .B dw
@@ -684,13 +684,13 @@ made a change.  You can remember it by analogy with an ellipsis `\fB...\fR'.
 Now try
 \fBdb\fR.
 This deletes a word backwards, namely the preceding word.
-Try 
+Try
 \fBd\fR\s-2SPACE\s0.  This deletes a single character, and is equivalent
 to the \fBx\fR command.
 .PP
 Another very useful operator is
 .B c
-or change.  The command 
+or change.  The command
 .B cw
 thus changes the text of a single word.
 You follow it by the replacement text ending with an \s-2ESC\s0.
@@ -703,7 +703,7 @@ Notice that the end of the text to be changed was marked with the character
 Operating on lines
 .PP
 It is often the case that you want to operate on lines.
-Find a line which you want to delete, and type 
+Find a line which you want to delete, and type
 \fBdd\fR,
 the
 .B d
@@ -802,7 +802,7 @@ same character.  By using the \fBf\fR command and then a sequence of
 \fB;\fR's you can often
 get to a particular place in a line much faster than with a sequence
 of word motions or \s-2SPACE\s0s.
-There is also a \fBF\fR command, which is like \fBf\fR, but searches 
+There is also a \fBF\fR command, which is like \fBf\fR, but searches
 backward.  The \fB;\fR command repeats \fBF\fR also.
 .PP
 When you are operating on the text in a line it is often desirable to
@@ -830,7 +830,7 @@ When the cursor is at a tab, it sits on the last of the several spaces
 which represent that tab.  Try moving the cursor back and forth over
 tabs so you understand how this works.
 .PP
-On rare occasions, your file may have nonprinting characters in it. 
+On rare occasions, your file may have nonprinting characters in it.
 These characters are displayed in the same way they are represented in
 this document, that is with a two character code, the first character
 of which is `^'.  On the screen non-printing characters resemble a `^'
@@ -904,7 +904,7 @@ The section commands interpret a preceding count as a different window size in
 which to redraw the screen at the new location, and this window size
 is the base size for newly drawn windows until another size is specified.
 This is very useful
-if you are on a slow terminal and are looking for a particular section. 
+if you are on a slow terminal and are looking for a particular section.
 You can give the first section command a small count to then see each successive
 section heading in a small window.
 .NH 2
@@ -1290,7 +1290,7 @@ Recovering lost files
 .PP
 If the system crashes, you can recover the work you were doing
 to within a few changes.  You will normally receive mail when you next
-login giving you the name of the file which has been saved for you. 
+login giving you the name of the file which has been saved for you.
 You should then change to the directory where you were when the system
 crashed and give a command of the form:
 .DS
@@ -1428,7 +1428,7 @@ option.
 Try setting it with
 \fB:se sm\fR\s-2CR\s0
 and then try typing a `(' some words and then a `)'.  Notice that the
-cursor shows the position of the `(' which matches the `)' briefly. 
+cursor shows the position of the `(' which matches the `)' briefly.
 This happens only if the matching `(' is on the screen, and the cursor
 stays there for at most one second.
 .PP
@@ -1808,7 +1808,7 @@ If you do not want or need this facility, you should
 set nomagic
 .DE
 in your EXINIT.
-In this case, 
+In this case,
 only the characters \fB\(ua\fR and \fB$\fR are special in patterns.
 The character \fB\e\fR is also then special (as it is most everywhere in
 the system), and may be used to get at the

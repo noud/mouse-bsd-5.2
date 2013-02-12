@@ -353,7 +353,7 @@ void dump_rc_history (void *addr)
 			i += RC_HISTORY_MAX;
 	}
 	rc_history_count = 0;
-		
+
 	while (rc_history [i].file) {
 		if (!addr || addr == rc_history [i].addr)
 			print_rc_hist_entry (i);
@@ -524,11 +524,11 @@ isc_result_t omapi_object_allocate (omapi_object_t **o,
 			tsize = (*type -> sizer) (size);
 		else
 			tsize = type -> size;
-		
+
 		/* Sanity check. */
 		if (tsize < sizeof (omapi_object_t))
 			return ISC_R_INVALIDARG;
-		
+
 		foo = dmalloc (tsize, file, line);
 		if (!foo)
 			return ISC_R_NOMEMORY;
@@ -599,7 +599,7 @@ isc_result_t omapi_object_dereference (omapi_object_t **h,
 		return ISC_R_INVALIDARG;
 #endif
 	}
-	
+
 	if ((*h) -> refcnt <= 0) {
 #if defined (POINTER_DEBUG)
 		log_error ("%s(%d): dereference of pointer with refcnt of zero!",
@@ -613,7 +613,7 @@ isc_result_t omapi_object_dereference (omapi_object_t **h,
 		return ISC_R_INVALIDARG;
 #endif
 	}
-	
+
 	/* See if this object's inner object refers to it, but don't
 	   count this as a reference if we're being asked to free the
 	   reference from the inner object. */
@@ -711,7 +711,7 @@ isc_result_t omapi_buffer_new (omapi_buffer_t **h,
 {
 	omapi_buffer_t *t;
 	isc_result_t status;
-	
+
 	t = (omapi_buffer_t *)dmalloc (sizeof *t, file, line);
 	if (!t)
 		return ISC_R_NOMEMORY;
@@ -759,7 +759,7 @@ isc_result_t omapi_buffer_dereference (omapi_buffer_t **h,
 		return ISC_R_INVALIDARG;
 #endif
 	}
-	
+
 	if ((*h) -> refcnt <= 0) {
 #if defined (POINTER_DEBUG)
 		log_error ("%s(%d): dereference of pointer with refcnt of zero!",
@@ -891,7 +891,7 @@ isc_result_t omapi_typed_data_dereference (omapi_typed_data_t **h,
 		return ISC_R_INVALIDARG;
 #endif
 	}
-	
+
 	if ((*h) -> refcnt <= 0) {
 #if defined (POINTER_DEBUG)
 		log_error ("%s(%d): dereference of pointer with refcnt of zero!",
@@ -905,7 +905,7 @@ isc_result_t omapi_typed_data_dereference (omapi_typed_data_t **h,
 		return ISC_R_INVALIDARG;
 #endif
 	}
-	
+
 	--((*h) -> refcnt);
 	rc_register (file, line, h, *h, (*h) -> refcnt, 1, RC_MISC);
 	if ((*h) -> refcnt <= 0 ) {
@@ -974,7 +974,7 @@ isc_result_t omapi_data_string_dereference (omapi_data_string_t **h,
 		return ISC_R_INVALIDARG;
 #endif
 	}
-	
+
 	if ((*h) -> refcnt <= 0) {
 #if defined (POINTER_DEBUG)
 		log_error ("%s(%d): dereference of pointer with refcnt of zero!",
@@ -1046,7 +1046,7 @@ isc_result_t omapi_value_dereference (omapi_value_t **h,
 		return ISC_R_INVALIDARG;
 #endif
 	}
-	
+
 	if ((*h) -> refcnt <= 0) {
 #if defined (POINTER_DEBUG)
 		log_error ("%s(%d): dereference of pointer with refcnt of zero!",
@@ -1060,7 +1060,7 @@ isc_result_t omapi_value_dereference (omapi_value_t **h,
 		return ISC_R_INVALIDARG;
 #endif
 	}
-	
+
 	--((*h) -> refcnt);
 	rc_register (file, line, h, *h, (*h) -> refcnt, 1, RC_MISC);
 	if ((*h) -> refcnt == 0) {
@@ -1128,7 +1128,7 @@ isc_result_t omapi_addr_list_dereference (omapi_addr_list_t **h,
 		return ISC_R_INVALIDARG;
 #endif
 	}
-	
+
 	if ((*h) -> refcnt <= 0) {
 #if defined (POINTER_DEBUG)
 		log_error ("%s(%d): dereference of pointer with zero refcnt!",

@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -188,7 +188,7 @@ static int do_buf(unsigned char *buf, int buflen,
 			case 1:
 			c = *p++;
 			break;
-			
+
 			case 0:
 			i = UTF8_getc(p, buflen, &c);
 			if(i < 0) return -1;	/* Invalid UTF8String */
@@ -204,8 +204,8 @@ static int do_buf(unsigned char *buf, int buflen,
 			utflen = UTF8_putc(utfbuf, sizeof utfbuf, c);
 			for(i = 0; i < utflen; i++) {
 				/* We don't need to worry about setting orflags correctly
-				 * because if utflen==1 its value will be correct anyway 
-				 * otherwise each character will be > 0x7f and so the 
+				 * because if utflen==1 its value will be correct anyway
+				 * otherwise each character will be > 0x7f and so the
 				 * character will never be escaped on first and last.
 				 */
 				len = do_esc_char(utfbuf[i], (unsigned char)(flags | orflags), quotes, io_ch, arg);
@@ -323,7 +323,7 @@ static int do_print_ex(char_io *io_ch, void *arg, unsigned long lflags, ASN1_STR
 		const char *tagname;
 		tagname = ASN1_tag2str(type);
 		outlen += strlen(tagname);
-		if(!io_ch(arg, tagname, outlen) || !io_ch(arg, ":", 1)) return -1; 
+		if(!io_ch(arg, tagname, outlen) || !io_ch(arg, ":", 1)) return -1;
 		outlen++;
 	}
 
@@ -445,7 +445,7 @@ static int do_name_ex(char_io *io_ch, void *arg, X509_NAME *n,
 
 	fn_opt = flags & XN_FLAG_FN_MASK;
 
-	cnt = X509_NAME_entry_count(n);	
+	cnt = X509_NAME_entry_count(n);
 	for(i = 0; i < cnt; i++) {
 		if(flags & XN_FLAG_DN_REV)
 				ent = X509_NAME_get_entry(n, cnt - i - 1);
@@ -496,10 +496,10 @@ static int do_name_ex(char_io *io_ch, void *arg, X509_NAME *n,
 		 * flag. We might want to limit this further so it will
  		 * DER dump on anything other than a few 'standard' fields.
 		 */
-		if((fn_nid == NID_undef) && (flags & XN_FLAG_DUMP_UNKNOWN_FIELDS)) 
+		if((fn_nid == NID_undef) && (flags & XN_FLAG_DUMP_UNKNOWN_FIELDS))
 					orflags = ASN1_STRFLGS_DUMP_ALL;
 		else orflags = 0;
-     
+
 		len = do_print_ex(io_ch, arg, flags | orflags, val);
 		if(len < 0) return -1;
 		outlen += len;

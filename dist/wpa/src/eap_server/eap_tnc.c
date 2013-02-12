@@ -468,7 +468,7 @@ static void eap_tnc_process(struct eap_sm *sm, void *priv,
 		data->state = FAIL;
 		return;
 	}
-		
+
 	if (flags & EAP_TNC_FLAGS_MORE_FRAGMENTS) {
 		if (eap_tnc_process_fragment(data, flags, message_length,
 					     pos, end - pos) < 0)

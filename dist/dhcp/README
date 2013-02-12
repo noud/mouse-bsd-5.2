@@ -287,7 +287,7 @@ vendor/guru for help - please don't ask us.
 
 If you set CONFIG_PACKET=m or CONFIG_FILTER=m, then you must tell the
 kernel module loader to load the appropriate modules.  If this doesn't
-make sense to you, don't use CONFIG_whatever=m - use CONFIG_whatever=y.  
+make sense to you, don't use CONFIG_whatever=m - use CONFIG_whatever=y.
 Don't ask for help with this on the DHCP mailing list - it's a Linux
 kernel issue.   This is probably not a problem with the most recent
 Linux 2.2.x kernels.
@@ -421,7 +421,7 @@ Versions of FreeBSD prior to 2.2 have a bug in BPF support in that the
 ethernet driver swaps the ethertype field in the ethernet header
 downstream from BPF, which corrupts the output packet.   If you are
 running a version of FreeBSD prior to 2.2, and you find that dhcpd
-can't communicate with its clients, you should #define BROKEN_FREEBSD_BPF 
+can't communicate with its clients, you should #define BROKEN_FREEBSD_BPF
 in site.h and recompile.
 
 Modern versions of FreeBSD include the ISC DHCP 3.0 client as part of

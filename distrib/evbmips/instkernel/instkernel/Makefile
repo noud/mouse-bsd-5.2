@@ -11,7 +11,7 @@ RAMDISK=		${RAMDISKDIR}/ramdisk.fs
 MDSETTARGETS=		INSTALL_OMSAL400	${RAMDISK}	-
 .else
 # Big endian platforms.
-MDSETTARGETS=		
+MDSETTARGETS=
 .endif
 MDSET_RELEASEDIR=	installation
 MDSET_SUFFIXES.-=	srec create-srec

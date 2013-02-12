@@ -140,7 +140,7 @@ void OPENSSL_cpuid_setup(void)
 void OPENSSL_cpuid_setup(void)
 	{
 	char *e;
- 
+
 	if ((e=getenv("OPENSSL_sparcv9cap")))
 		{
 		OPENSSL_sparcv9cap_P=strtoul(e,NULL,0);

@@ -19,7 +19,7 @@
 <!--
   - Whack &mdash; into something that won't choke LaTeX.
   - There's probably a better way to do this, but this will work for now.
-  --> 
+  -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 

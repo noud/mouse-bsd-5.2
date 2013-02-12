@@ -85,7 +85,7 @@ rm -fr $RPM_BUILD_ROOT
 %{prefix}/share/idnkit/*
 %config %{sysconfdir}/idn.conf
 %config %{sysconfdir}/idnalias.conf
-%attr(0644, root, root) %config(noreplace) 
+%attr(0644, root, root) %config(noreplace)
 %attr(0644, root, man) %{prefix}/man/man1/*
 %attr(0644, root, man) %{prefix}/man/man3/*
 %attr(0644, root, man) %{prefix}/man/man5/*

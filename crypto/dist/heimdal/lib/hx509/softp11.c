@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 2004 - 2008 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "hx_locl.h"
@@ -301,7 +301,7 @@ add_st_object(void)
     memset(o, 0, sizeof(*o));
     o->attrs = NULL;
     o->num_attributes = 0;
-    
+
     for (i = 0; i < soft_token.object.num_objs; i++) {
 	if (soft_token.object.objs == NULL) {
 	    soft_token.object.objs[i] = o;
@@ -317,7 +317,7 @@ add_st_object(void)
 	}
 	soft_token.object.objs = objs;
 	soft_token.object.objs[soft_token.object.num_objs++] = o;
-    }	
+    }
     soft_token.object.objs[i]->object_handle =
 	(random() & (~OBJECT_ID_MASK)) | i;
 
@@ -325,7 +325,7 @@ add_st_object(void)
 }
 
 static CK_RV
-add_object_attribute(struct st_object *o, 
+add_object_attribute(struct st_object *o,
 		     int secret,
 		     CK_ATTRIBUTE_TYPE type,
 		     CK_VOID_PTR pValue,
@@ -361,14 +361,14 @@ add_pubkey_info(hx509_context hxctx, struct st_object *o,
     CK_ULONG modulus_bits = 0;
     CK_BYTE *exponent = NULL;
     size_t exponent_len = 0;
-    
+
     if (key_type != CKK_RSA)
 	return CKR_OK;
     if (_hx509_cert_private_key(cert) == NULL)
 	return CKR_OK;
 
-    num = _hx509_private_key_get_internal(context, 
-					  _hx509_cert_private_key(cert), 
+    num = _hx509_private_key_get_internal(context,
+					  _hx509_cert_private_key(cert),
 					  "rsa-modulus");
     if (num == NULL)
 	return CKR_GENERAL_ERROR;
@@ -384,9 +384,9 @@ add_pubkey_info(hx509_context hxctx, struct st_object *o,
 			 &modulus_bits, sizeof(modulus_bits));
 
     free(modulus);
-	
-    num = _hx509_private_key_get_internal(context, 
-					  _hx509_cert_private_key(cert), 
+
+    num = _hx509_private_key_get_internal(context,
+					  _hx509_cert_private_key(cert),
 					  "rsa-exponent");
     if (num == NULL)
 	return CKR_GENERAL_ERROR;
@@ -715,10 +715,10 @@ read_conf_file(const char *fn, CK_USER_TYPE userType, const char *pin)
 	type = strtok_r(p, "\t", &s);
 	if (type == NULL)
 	    continue;
-	
+
 	if (strcasecmp("certificate", type) == 0) {
 	    char *cert, *id, *label;
-	    
+
 	    id = strtok_r(NULL, "\t", &s);
 	    if (id == NULL) {
 		st_logf("no id\n");
@@ -735,9 +735,9 @@ read_conf_file(const char *fn, CK_USER_TYPE userType, const char *pin)
 		st_logf("no certfiicate store\n");
 		continue;
 	    }
-	    
+
 	    st_logf("adding: %s: %s in file %s\n", id, label, cert);
-	    
+
 	    ret = add_certificate(cert, pin, id, label);
 	    if (ret)
 		failed = ret;
@@ -759,7 +759,7 @@ read_conf_file(const char *fn, CK_USER_TYPE userType, const char *pin)
 		soft_token.logfile = fopen(name, "a");
 	    if (soft_token.logfile == NULL)
 		st_logf("failed to open file: %s\n", name);
-		
+
 	} else if (strcasecmp("app-fatal", type) == 0) {
 	    char *name;
 
@@ -822,7 +822,7 @@ C_Initialize(CK_VOID_PTR a)
 
     soft_token.object.objs = NULL;
     soft_token.object.num_objs = 0;
-    
+
     soft_token.logfile = NULL;
 #if 0
     soft_token.logfile = stdout;
@@ -849,7 +849,7 @@ C_Initialize(CK_VOID_PTR a)
 	    home = getenv("HOME");
 	}
 	if (fn == NULL && home == NULL) {
-	    struct passwd *pw = getpwuid(getuid());	
+	    struct passwd *pw = getpwuid(getuid());
 	    if(pw != NULL)
 		home = pw->pw_dir;
 	}
@@ -904,11 +904,11 @@ C_GetInfo(CK_INFO_PTR args)
     memset(args, 17, sizeof(*args));
     args->cryptokiVersion.major = 2;
     args->cryptokiVersion.minor = 10;
-    snprintf_fill((char *)args->manufacturerID, 
+    snprintf_fill((char *)args->manufacturerID,
 		  sizeof(args->manufacturerID),
 		  ' ',
 		  "Heimdal hx509 SoftToken");
-    snprintf_fill((char *)args->libraryDescription, 
+    snprintf_fill((char *)args->libraryDescription,
 		  sizeof(args->libraryDescription), ' ',
 		  "Heimdal hx509 SoftToken");
     args->libraryVersion.major = 2;
@@ -954,7 +954,7 @@ C_GetSlotInfo(CK_SLOT_ID slotID,
     if (slotID != 1)
 	return CKR_ARGUMENTS_BAD;
 
-    snprintf_fill((char *)pInfo->slotDescription, 
+    snprintf_fill((char *)pInfo->slotDescription,
 		  sizeof(pInfo->slotDescription),
 		  ' ',
 		  "Heimdal hx509 SoftToken (slot)");
@@ -969,7 +969,7 @@ C_GetSlotInfo(CK_SLOT_ID slotID,
     pInfo->hardwareVersion.minor = 0;
     pInfo->firmwareVersion.major = 1;
     pInfo->firmwareVersion.minor = 0;
-    
+
     return CKR_OK;
 }
 
@@ -978,15 +978,15 @@ C_GetTokenInfo(CK_SLOT_ID slotID,
 	       CK_TOKEN_INFO_PTR pInfo)
 {
     INIT_CONTEXT();
-    st_logf("GetTokenInfo: %s\n", has_session()); 
+    st_logf("GetTokenInfo: %s\n", has_session());
 
     memset(pInfo, 19, sizeof(*pInfo));
 
-    snprintf_fill((char *)pInfo->label, 
+    snprintf_fill((char *)pInfo->label,
 		  sizeof(pInfo->label),
 		  ' ',
 		  "Heimdal hx509 SoftToken (token)");
-    snprintf_fill((char *)pInfo->manufacturerID, 
+    snprintf_fill((char *)pInfo->manufacturerID,
 		  sizeof(pInfo->manufacturerID),
 		  ' ',
 		  "Heimdal hx509 SoftToken (token)");
@@ -994,12 +994,12 @@ C_GetTokenInfo(CK_SLOT_ID slotID,
 		  sizeof(pInfo->model),
 		  ' ',
 		  "Heimdal hx509 SoftToken (token)");
-    snprintf_fill((char *)pInfo->serialNumber, 
+    snprintf_fill((char *)pInfo->serialNumber,
 		  sizeof(pInfo->serialNumber),
 		  ' ',
 		  "4711");
-    pInfo->flags = 
-	CKF_TOKEN_INITIALIZED | 
+    pInfo->flags =
+	CKF_TOKEN_INITIALIZED |
 	CKF_USER_PIN_INITIALIZED;
 
     if (soft_token.flags.login_done == 0)
@@ -1076,7 +1076,7 @@ C_OpenSession(CK_SLOT_ID slotID,
     int i;
     INIT_CONTEXT();
     st_logf("OpenSession: slot: %d\n", (int)slotID);
-    
+
     if (soft_token.open_sessions == MAX_NUM_SESSION)
 	return CKR_SESSION_COUNT;
 
@@ -1134,7 +1134,7 @@ C_GetSessionInfo(CK_SESSION_HANDLE hSession,
 {
     st_logf("GetSessionInfo\n");
     INIT_CONTEXT();
-    
+
     VERIFY_SESSION_HANDLE(hSession, NULL);
 
     memset(pInfo, 20, sizeof(*pInfo));
@@ -1178,7 +1178,7 @@ C_Login(CK_SESSION_HANDLE hSession,
 	soft_token.flags.login_done = 1;
 
     free(pin);
-    
+
     return soft_token.flags.login_done ? CKR_OK : CKR_PIN_INCORRECT;
 }
 
@@ -1276,12 +1276,12 @@ C_FindObjectsInit(CK_SESSION_HANDLE hSession,
 
 	print_attributes(pTemplate, ulCount);
 
-	state->find.attributes = 
+	state->find.attributes =
 	    calloc(1, ulCount * sizeof(state->find.attributes[0]));
 	if (state->find.attributes == NULL)
 	    return CKR_DEVICE_MEMORY;
 	for (i = 0; i < ulCount; i++) {
-	    state->find.attributes[i].pValue = 
+	    state->find.attributes[i].pValue =
 		malloc(pTemplate[i].ulValueLen);
 	    if (state->find.attributes[i].pValue == NULL) {
 		find_object_final(state);
@@ -1433,15 +1433,15 @@ C_SignInit(CK_SESSION_HANDLE hSession,
     INIT_CONTEXT();
     st_logf("SignInit\n");
     VERIFY_SESSION_HANDLE(hSession, &state);
-    
-    ret = commonInit(attr, sizeof(attr)/sizeof(attr[0]), 
+
+    ret = commonInit(attr, sizeof(attr)/sizeof(attr[0]),
 		     mechs, sizeof(mechs)/sizeof(mechs[0]),
 		     pMechanism, hKey, &o);
     if (ret)
 	return ret;
 
     ret = dup_mechanism(&state->sign_mechanism, pMechanism);
-    if (ret == CKR_OK) 
+    if (ret == CKR_OK)
 	state->sign_object = OBJECT_ID(o);
 
     return CKR_OK;
@@ -1498,7 +1498,7 @@ C_Sign(CK_SESSION_HANDLE hSession,
 	ret = CKR_FUNCTION_NOT_SUPPORTED;
 	goto out;
     }
-    
+
     data.data = pData;
     data.length = ulDataLen;
 
@@ -1566,17 +1566,17 @@ C_VerifyInit(CK_SESSION_HANDLE hSession,
     INIT_CONTEXT();
     st_logf("VerifyInit\n");
     VERIFY_SESSION_HANDLE(hSession, &state);
-    
-    ret = commonInit(attr, sizeof(attr)/sizeof(attr[0]), 
+
+    ret = commonInit(attr, sizeof(attr)/sizeof(attr[0]),
 		     mechs, sizeof(mechs)/sizeof(mechs[0]),
 		     pMechanism, hKey, &o);
     if (ret)
 	return ret;
 
     ret = dup_mechanism(&state->verify_mechanism, pMechanism);
-    if (ret == CKR_OK) 
+    if (ret == CKR_OK)
 	state->verify_object = OBJECT_ID(o);
-			
+
     return ret;
 }
 

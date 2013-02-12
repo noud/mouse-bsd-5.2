@@ -48,7 +48,7 @@ void
 init_network(void)
 {
     void *obuf, *ibuf;
-    
+
     if ((obuf = malloc(netobufsize)) == NULL)
 	exit(1);
     if ((ibuf = malloc(netibufsize)) == NULL)

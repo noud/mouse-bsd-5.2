@@ -449,7 +449,7 @@ ChangeSet@1.1531.1.2, 2008-08-05 09:56:08+02:00, burnicki@pogo.udel.edu +1 -0
     Removed Windows-specific debug code which has been added in ntp-dev and fails to compile in ntp-stable.
 
 ChangeSet@1.1531.1.1, 2008-08-05 09:50:23+02:00, burnicki@pogo.udel.edu +10 -0
-  [Bug 841] Obsolete the "dynamic" keyword and make deferred binding 
+  [Bug 841] Obsolete the "dynamic" keyword and make deferred binding
   to local interfaces the default.
   Emit a warning if that keyword is used for configuration.
 
@@ -4181,12 +4181,12 @@ ChangeSet@1.1458, 2007-02-04 17:56:17+00:00, kardel@pogo.udel.edu +1 -0
 ChangeSet@1.1451.1.1, 2007-02-04 17:47:20+00:00, kardel@pogo.udel.edu +1 -0
   ntpd.c:
     Bug 765:
-    use Linux capability mechanism to allow dynamic interface tracking to continue in 
+    use Linux capability mechanism to allow dynamic interface tracking to continue in
     unprivileged mode.
 
   ntpd/ntpd.c@1.83, 2007-02-04 17:45:55+00:00, kardel@pogo.udel.edu +11 -1
     Bug 765:
-    use Linux capability mechanism to allow dynamic interface tracking to continue in 
+    use Linux capability mechanism to allow dynamic interface tracking to continue in
     unprivileged mode.
 
 ChangeSet@1.1456, 2007-01-30 06:44:11-05:00, stenn@whimsy.udel.edu +25 -0
@@ -10424,13 +10424,13 @@ ChangeSet@1.1353.9.6, 2006-08-05 02:10:36-04:00, stenn@whimsy.udel.edu +2 -0
 
   ntpd/ntp_loopfilter.c@1.124, 2006-08-05 02:10:29-04:00, stenn@whimsy.udel.edu +22 -22
     Dave sez:
-    
+
     At cold start (no frequency file) the daemon sets the clock at the
     first update, then waits 15 minutes, measures and corrects the
     frequency (usually within 1 PPM) and assumes normal operation. This
     saves many hours to converge the frequency within 1 PPM, especially
     if the intrinsic frequency error is large, like 200 PPM.
-    
+
     Until the frequency is corrected, the machine can have serious
     offset and frequency errors that would drive dependent clients nuts.
     Up to now, the leap bits and stratum were not initialized until the
@@ -10443,13 +10443,13 @@ ChangeSet@1.1353.9.6, 2006-08-05 02:10:36-04:00, stenn@whimsy.udel.edu +2 -0
 
   ntpd/ntp_proto.c@1.246, 2006-08-05 02:10:31-04:00, stenn@whimsy.udel.edu +19 -15
     Dave sez:
-    
+
     At cold start (no frequency file) the daemon sets the clock at the
     first update, then waits 15 minutes, measures and corrects the
     frequency (usually within 1 PPM) and assumes normal operation. This
     saves many hours to converge the frequency within 1 PPM, especially
     if the intrinsic frequency error is large, like 200 PPM.
-    
+
     Until the frequency is corrected, the machine can have serious
     offset and frequency errors that would drive dependent clients nuts.
     Up to now, the leap bits and stratum were not initialized until the
@@ -11118,7 +11118,7 @@ ChangeSet@1.1251.94.25, 2006-07-19 03:10:22-04:00, stenn@pogo.udel.edu +2 -0
 ChangeSet@1.1353.1.67, 2006-07-15 09:35:45+00:00, kardel@pogo.udel.edu +3 -0
   ntp_io.c:
     cleanup debug messages
-    add RTM_REDIRECT, RTM_CHANGE as additional interface list scan 
+    add RTM_REDIRECT, RTM_CHANGE as additional interface list scan
     routing message triggers
   ntpd.h:
     select_peerinterface() is comletely private to ntp_peer.c
@@ -11133,7 +11133,7 @@ ChangeSet@1.1353.1.67, 2006-07-15 09:35:45+00:00, kardel@pogo.udel.edu +3 -0
 
   ntpd/ntp_io.c@1.230, 2006-07-15 08:59:23+00:00, kardel@pogo.udel.edu +9 -3
     cleanup debug messages
-    add RTM_REDIRECT, RTM_CHANGE as additional interface list scan 
+    add RTM_REDIRECT, RTM_CHANGE as additional interface list scan
     routing message triggers
 
   ntpd/ntp_peer.c@1.95, 2006-07-15 09:04:48+00:00, kardel@pogo.udel.edu +43 -31
@@ -12792,7 +12792,7 @@ ChangeSet@1.1347.1.7, 2006-06-11 01:34:07+00:00, rick@pogo.udel.edu +1 -0
   pre-resolve.fixlic:
   Block bad repos from being pulled into this repo,
   or if this repo is bad, stops it from being used.
-  
+
   Please do a 'bk fix -c' and edit pre-resolve.fixlic
   to either rename it or make it better.
   Then bk new them and bk commit.
@@ -13885,7 +13885,7 @@ ChangeSet@1.1251.77.3, 2006-02-25 19:18:31-05:00, clemens@pogo.udel.edu +2 -0
           read.
       (5) Apply patch for new PPS implementation by Rodolfo Giometti
           <giometti@linux.it>.  The code can now useither the old
-          Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de> implementation, or 
+          Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de> implementation, or
           the new one, depending on the timepps.h seen.
 
   BitKeeper/etc/logging_ok@1.57.4.1, 2006-02-25 19:18:30-05:00, clemens@pogo.udel.edu +1 -0
@@ -13902,7 +13902,7 @@ ChangeSet@1.1251.77.3, 2006-02-25 19:18:31-05:00, clemens@pogo.udel.edu +2 -0
         read.
     (5) Apply patch for new PPS implementation by Rodolfo Giometti
         <giometti@linux.it>.  The code can now useither the old
-        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de> implementation, or 
+        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de> implementation, or
         the new one, depending on the timepps.h seen.
 
 ChangeSet@1.1178.5.9, 2006-02-24 04:24:12-05:00, stenn@deacon.udel.edu +1 -0
@@ -15222,7 +15222,7 @@ ChangeSet@1.1251.60.3, 2005-09-25 12:10:35+00:00, kardel@pogo.udel.edu +4 -0
     support fully bounded buffers
   clk_meinberg.c:
     cleanup buffer bounds
-  mbg_gps166.h 
+  mbg_gps166.h
     support fully bounded buffers
 
   include/mbg_gps166.h@1.6, 2005-09-25 12:06:41+00:00, kardel@pogo.udel.edu +7 -4
@@ -19303,23 +19303,23 @@ ChangeSet@1.1251.1.68, 2005-02-05 22:44:47-05:00, stenn@whimsy.udel.edu +1 -0
 ChangeSet@1.1251.1.67, 2005-02-03 01:18:23-05:00, stenn@whimsy.udel.edu +4 -0
   ntp_config.h, ntp.h, ntp_proto.c, ntp_config.c:
     Fixes from Dave Mills.  In particular, Dave writes:
-  
-    After discovering the situation reported on the newsgroup where 
-    misconfigured NTP had the Netgear disease, I put it through some 
-    wickedly broken configuration tests and found and fixed a few minor 
+
+    After discovering the situation reported on the newsgroup where
+    misconfigured NTP had the Netgear disease, I put it through some
+    wickedly broken configuration tests and found and fixed a few minor
     things in ntp-dev (not anything like the PPS oscillator).
-  
-    1. If a notrust error and iburst are configured, the client did not back 
-    off the poll interval. It now does that under all circumstances where 
+
+    1. If a notrust error and iburst are configured, the client did not back
+    off the poll interval. It now does that under all circumstances where
     the reply is absent or corrupt.
-  
-    2. An unresponsive server with iburst got hammered with eight messages 
-    every poll interval until the unreach counter reaches 12, then backs off 
-    sending only a single packet per burst. I changed that to send a burst 
+
+    2. An unresponsive server with iburst got hammered with eight messages
+    every poll interval until the unreach counter reaches 12, then backs off
+    sending only a single packet per burst. I changed that to send a burst
     only the first time after initial start or loss of reach.
-  
-    3. By popular demand I put in "tos maxdist N", where N is the selection 
-    threshold, normally 1. Set N to 16 and the clock will be set upon first 
+
+    3. By popular demand I put in "tos maxdist N", where N is the selection
+    threshold, normally 1. Set N to 16 and the clock will be set upon first
     receiving a response from any server. Y'know, like SNTP.
 
   include/ntp.h@1.105, 2005-02-03 01:16:38-05:00, stenn@whimsy.udel.edu +2 -1
@@ -19978,7 +19978,7 @@ ChangeSet@1.1251.8.1, 2004-12-20 20:36:18-05:00, stenn@whimsy.udel.edu +1 -0
     [Bug 378]: Added macros for Danny
 
 ChangeSet@1.1251.7.26, 2004-12-18 04:55:09+00:00, abe@pogo.udel.edu +3 -0
-  
+
 
   BitKeeper/etc/logging_ok@1.51, 2004-12-18 04:55:08+00:00, abe@pogo.udel.edu +1 -0
     Logging to logging@openlogging.org accepted
@@ -20041,7 +20041,7 @@ ChangeSet@1.1251.7.18, 2004-12-13 13:53:13-05:00, stenn@whimsy.udel.edu +1 -0
   ntpd/refclock_atom.c@1.48, 2004-12-13 13:53:10-05:00, stenn@whimsy.udel.edu +28 -25
     Call atom_shutdown at shutdown time (Dave Mills).
     Isolate HAVE_PPSAPI-specific code in atom_shutdown (Dave Mills).
-    
+
     [Bug 366] Fix uninitialized pointer (Dave Mills, Martin Burnicki).
 
 ChangeSet@1.1251.7.17, 2004-12-13 02:11:09-05:00, stenn@whimsy.udel.edu +1 -0
@@ -20058,9 +20058,9 @@ ChangeSet@1.1251.7.16, 2004-12-11 22:42:45-05:00, stenn@whimsy.udel.edu +2 -0
 
   ntpd/refclock_atom.c@1.47, 2004-12-11 22:42:41-05:00, stenn@whimsy.udel.edu +42 -35
     flag2 controls the on-time edge (assert/clear).
-    
+
     flag3 enables or disables kernel PPS support.
-    
+
     ppsapi-timepps header cleanup.
 
 ChangeSet@1.1251.7.15, 2004-12-11 22:28:49-05:00, stenn@whimsy.udel.edu +6 -0
@@ -21342,7 +21342,7 @@ ChangeSet@1.1202.2.3, 2004-09-12 01:00:57-04:00, stenn@whimsy.udel.edu +10 -0
 
   include/ntp.h@1.101.1.2, 2004-09-12 01:00:50-04:00, stenn@whimsy.udel.edu +5 -11
     Combine the modem refclocks into a single driver.
-    
+
     Update the poll randomization stuff.
 
   include/ntp_refclock.h@1.16, 2004-09-12 01:00:50-04:00, stenn@whimsy.udel.edu +2 -1
@@ -22812,21 +22812,21 @@ ChangeSet@1.1152.1.61, 2004-02-18 19:56:01-05:00, stenn@whimsy.udel.edu +3 -0
 
 ChangeSet@1.1152.1.60, 2004-02-18 00:56:22-05:00, stenn@whimsy.udel.edu +2 -0
   Revert the change that required Recent auto*, to fix bug 230.
-  
+
   I will still roll tarballs with these recent releases so folks who
   get tarballs won't see that bug.  Only folks otherwise affected by
   bug 230 will need the latest auto*.
 
   Makefile.am@1.46, 2004-02-18 00:56:17-05:00, stenn@whimsy.udel.edu +1 -1
     Revert the change that required Recent auto*, to fix bug 230.
-    
+
     I will still roll tarballs with these recent releases so folks who
     get tarballs won't see that bug.  Only folks otherwise affected by
     bug 230 will need the latest auto*.
 
   configure.in@1.344, 2004-02-18 00:56:18-05:00, stenn@whimsy.udel.edu +1 -1
     Revert the change that required Recent auto*, to fix bug 230.
-    
+
     I will still roll tarballs with these recent releases so folks who
     get tarballs won't see that bug.  Only folks otherwise affected by
     bug 230 will need the latest auto*.
@@ -22884,7 +22884,7 @@ ChangeSet@1.1152.25.4, 2004-02-13 23:54:07-05:00, stenn@whimsy.udel.edu +1 -0
 
 ChangeSet@1.1152.25.3, 2004-02-12 04:27:25-05:00, stenn@whimsy.udel.edu +4 -0
   Changes from Dave Mills:
-  
+
   1. Servers presented with key IDs they don't have (a common mistake)
   return a crypt-NAK. This also happens when the server rolls new private
   values daily without telling the clients. To protect against bad guys
@@ -22896,30 +22896,30 @@ ChangeSet@1.1152.25.3, 2004-02-12 04:27:25-05:00, stenn@whimsy.udel.edu +4 -0
   disabling burst mode). If really invalid, the association timeout will
   eventually expire following which a persistent association is marked
   permanently disabled or an ephemeral association is demobilized.
-  
+
   2. One of the most common mistakes is to goof up the identity
   credentials. If the client received these credentials via mail, the
   script in the message installs the file and link automatically. If done
   by hand and done wrong, either the server or client will find the error
   and disable the association. As in all such cases, a server or client
   ephemeral association is demobilized and the resources recovered.
-  
+
   3. Symmetric modes have always been tricky, much more so with Autokey,
   and even more so with misconfigured identity keys. It gets even wilder
   when either peer is restarted in the middle of negotiations. All the
   evil scenarios I can thing of seem to come out on the other side,
   although there are a few that have to wait the association timeout to
   properly close down and recover resources.
-  
+
   4. The association is permanently disabled upon kiss-o'-death or
   unrecoverable crypto error. So, I re-enabled log reporting for these
   smooches. At least the offender is notified.
-  
+
   5. When a really tenacious clogger shows up and lights the call-gap, the
   server puts it in the restrict list. He stays there until the server is
   restarted. Not only does this discourage the terriot, but evidence is
   collected for possible further action.
-  
+
   What more do we have to do to turn this stuff into a real Secure
   Timestamping Service? I think the security model, protocols, abuse
   hardening and time performance are consistent with a bulletproof service
@@ -23067,7 +23067,7 @@ ChangeSet@1.1152.22.2, 2004-01-10 21:10:11-05:00, stenn@whimsy.udel.edu +2 -0
 
 ChangeSet@1.1152.14.10, 2004-01-10 02:27:07-05:00, stenn@pogo.udel.edu +2 -0
   Fixes from Reg Clemens:
-  
+
   Cleanup.
   [Bug 233]
   [Bug 246]
@@ -23075,24 +23075,24 @@ ChangeSet@1.1152.14.10, 2004-01-10 02:27:07-05:00, stenn@pogo.udel.edu +2 -0
 
   html/drivers/driver30.html@1.16, 2004-01-10 02:27:01-05:00, stenn@pogo.udel.edu +8 -8
     Fixes from Reg Clemens:
-    
+
     I have changed the documentation page for the ONCORE so it no longer
     references Flag2/Flag3.
 
   ntpd/refclock_oncore.c@1.47, 2004-01-10 02:27:01-05:00, stenn@pogo.udel.edu +104 -137
     Fixes from Reg Clemens:
-    
+
     some (minor) changes:
        (a) some changes to messages printed.
        (b) can now find config file in /etc/ntp/ as well as /etc/
-    
+
     Bug 233: New LP64 Patches
     patch imported from original author
-    
+
     Bug 246: 3 issues with the ONCORE driver
     (1) You can reset the ONCORE driver back to defaults by *reading*
         the variables from across the net.
-    
+
     This bug was introduced when I (foolishly) 'fixed' the code so it
     would understand the FLAG variables that corresponded to its own
     input variables from the ntp.ONCORE.x file.  Since I do NOT understand
@@ -23101,41 +23101,41 @@ ChangeSet@1.1152.14.10, 2004-01-10 02:27:07-05:00, stenn@pogo.udel.edu +2 -0
     changed dynamically.  The documentation will be changed back.  Perhaps
     at some time in the future I will dig through the ntp code to
     understand ntp_control.
-    
+
     (2) Fudge acted upon AFTER ntp.ONCORE.
-    
+
     Fixed by (1) the FUDGE flag/time variables are ignored, use the
     ntp.ONCORE file.
-    
+
     (3) In the driver, ONCORE_start and a few other procedures do not
         produce any output in the clockstats file.
-    
+
     The originator of the bug is running FreeBSD 5.1.
     I have looked at the output from MY copy of FreeBSD 5.1, and several
     Linux versions (7.3 -> 9), and Fedora and do NOT see any missing
     messages.  The messages start with an "ONCORE DRIVER -- CONFIGURING"
     message written when the driver is first entered, and contain all the
     messages I would expect after that.
-    
+
     I have no idea why he is not seeing the messages.
-    
+
     No action.
-    
+
     Bug 260, Patches for item (1) in the above.
-    
+
     The patch purports to fix the problem in Bug 246.
-    
+
     As noted I don't understand the details of what is going on behind the
     curtain, so I would rather remove the offending code, than try to fix it.
-    
+
     There is also an increase buffer size so that longer messages can be
     sent to the clockstats file.  Ill leave that for the user to do on his
     own if he wants to change the messages, but with slightly more effort
     he could do the same using SHMEM.
-    
+
     He found an error in determining the ONCORE M12/M12+T. (thanks)
     Rather than his #ifdef, I have corrected the code.
-    
+
 
 ChangeSet@1.1152.19.3, 2004-01-08 18:21:43-05:00, mayer@pogo.udel.edu +1 -0
   Make call to get_scopeid conditional
@@ -23179,11 +23179,11 @@ ChangeSet@1.1152.18.1, 2004-01-06 21:19:51+01:00, a115350@y3111429.nh.ad.hydro.c
     Logging to logging@openlogging.org accepted
 
   libntp/caljulian.c@1.5, 2004-01-06 21:14:58+01:00, a115350@y3111429.nh.ad.hydro.com +32 -0
-    Fix for NTP epoch rollover: Uses time_t and 
+    Fix for NTP epoch rollover: Uses time_t and
     localtime/gmtime for conversion
 
   libntp/humandate.c@1.5, 2004-01-06 21:14:58+01:00, a115350@y3111429.nh.ad.hydro.com +5 -4
-    Fix for NTP epoch rollover: Uses time_t and 
+    Fix for NTP epoch rollover: Uses time_t and
     localtime/gmtime for conversion
 
   libntp/prettydate.c@1.4, 2004-01-06 21:14:58+01:00, a115350@y3111429.nh.ad.hydro.com +64 -9

@@ -74,9 +74,9 @@ __RCSID("$NetBSD: print-gre.c,v 1.4 2007/07/24 11:53:43 drochner Exp $");
 
 struct tok gre_flag_values[] = {
     { GRE_CP, "checksum present"},
-    { GRE_RP, "routing present"}, 
-    { GRE_KP, "key present"}, 
-    { GRE_SP, "sequence# present"}, 
+    { GRE_RP, "routing present"},
+    { GRE_KP, "key present"},
+    { GRE_SP, "sequence# present"},
     { GRE_sP, "source routing present"},
     { GRE_RECRS, "recursion count"},
     { GRE_AP, "ack present"},

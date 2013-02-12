@@ -95,7 +95,7 @@ api_aline(SCR *sp, db_recno_t lno, char *line, size_t len)
  *
  * PUBLIC: int api_extend __P((SCR *, db_recno_t));
  */
-int 
+int
 api_extend(SCR *sp, db_recno_t lno)
 {
 	db_recno_t lastlno;
@@ -294,7 +294,7 @@ api_imessage(SCR *sp, char *text)
 
 /*
  * api_edit
- *	Create a new screen and return its id 
+ *	Create a new screen and return its id
  *	or edit a new file in the current screen.
  *
  * PUBLIC: int api_edit __P((SCR *, char *, SCR **, int));
@@ -387,7 +387,7 @@ api_map(SCR *sp, char *name, char *map, size_t len)
  *
  * PUBLIC: int api_unmap __P((SCR *, char *));
  */
-int 
+int
 api_unmap(SCR *sp, char *name)
 {
 	EXCMD cmd;
@@ -456,7 +456,7 @@ api_opts_get(SCR *sp, const CHAR_T *name, char **value, int *boolvalue)
  * PUBLIC: int api_opts_set __P((SCR *, CHAR_T *, char *, u_long, int));
  */
 int
-api_opts_set(SCR *sp, const CHAR_T *name, 
+api_opts_set(SCR *sp, const CHAR_T *name,
 	     const char *str_value, u_long num_value, int bool_value)
 {
 	ARGS *ap[2], a, b;
@@ -507,7 +507,7 @@ api_opts_set(SCR *sp, const CHAR_T *name,
  *
  * PUBLIC: int api_run_str __P((SCR *, char *));
  */
-int     
+int
 api_run_str(SCR *sp, char *cmd)
 {
 	size_t wlen;
@@ -552,8 +552,8 @@ api_tagq_add(SCR *sp, TAGQ *tqp, char *filename, char *search, char *msg)
 	size_t slen = strlen(search);
 	size_t mlen = strlen(msg);
 
-	CALLOC_GOTO(sp, tp, TAG *, 1, 
-		    sizeof(TAG) - 1 + flen + 1 + 
+	CALLOC_GOTO(sp, tp, TAG *, 1,
+		    sizeof(TAG) - 1 + flen + 1 +
 		    (slen + 1 + mlen + 1) * sizeof(CHAR_T));
 	tp->fname = (char *)tp->buf;
 	memcpy(tp->fname, filename, flen + 1);

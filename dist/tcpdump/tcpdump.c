@@ -384,7 +384,7 @@ droproot(const char *username, const char *chroot_dir)
 		fprintf(stderr, "tcpdump: Chroot without dropping root is insecure\n");
 		exit(1);
 	}
-	
+
 	pw = getpwnam(username);
 	if (pw) {
 		if (chroot_dir) {
@@ -397,7 +397,7 @@ droproot(const char *username, const char *chroot_dir)
 		if (initgroups(pw->pw_name, pw->pw_gid) != 0 ||
 		    setgid(pw->pw_gid) != 0 || setuid(pw->pw_uid) != 0) {
 			fprintf(stderr, "tcpdump: Couldn't change to '%.32s' uid=%lu gid=%lu: %s\n",
-			    username, 
+			    username,
 			    (unsigned long)pw->pw_uid,
 			    (unsigned long)pw->pw_gid,
 			    pcap_strerror(errno));
@@ -439,7 +439,7 @@ MakeFilename(char *buffer, char *orig_name, int cnt, int max_chars)
 static int tcpdump_printf(netdissect_options *ndo _U_,
 			  const char *fmt, ...)
 {
-  
+
   va_list args;
   int ret;
 
@@ -486,7 +486,7 @@ main(int argc, char **argv)
 	gndo->ndo_error=ndo_error;
 	gndo->ndo_warning=ndo_warning;
 	gndo->ndo_snaplen = DEFAULT_SNAPLEN;
-  
+
 	cnt = -1;
 	device = NULL;
 	infile = NULL;
@@ -583,7 +583,7 @@ main(int argc, char **argv)
 		case 'i':
 			if (optarg[0] == '0' && optarg[1] == 0)
 				error("Invalid adapter index");
-			
+
 #ifdef HAVE_PCAP_FINDALLDEVS
 			/*
 			 * If the argument is a number, treat it as
@@ -749,7 +749,7 @@ main(int argc, char **argv)
 
 		case 'W':
 			Wflag = atoi(optarg);
-			if (Wflag < 0) 
+			if (Wflag < 0)
 				error("invalid number of output files %s", optarg);
 			WflagChars = getWflagChars(Wflag);
 			break;
@@ -830,7 +830,7 @@ main(int argc, char **argv)
 #ifdef WITH_USER
 	/* if run as root, prepare for dropping root privileges */
 	if (getuid() == 0 || geteuid() == 0) {
-		/* Run with '-Z root' to restore old behaviour */ 
+		/* Run with '-Z root' to restore old behaviour */
 		if (!username)
 			username = WITH_USER;
 	}
@@ -887,7 +887,7 @@ main(int argc, char **argv)
 			fprintf(stderr, "%s: listening on %s\n", program_name, device);
 		}
 
-		fflush(stderr);	
+		fflush(stderr);
 #endif /* WIN32 */
 		*ebuf = '\0';
 		pd = pcap_open_live(device, snaplen, !pflag, 1000, ebuf);
@@ -954,13 +954,13 @@ main(int argc, char **argv)
 	}
 	init_addrtoname(localnet, netmask);
 
-#ifndef WIN32	
+#ifndef WIN32
 	(void)setsignal(SIGPIPE, cleanup);
 #endif /* WIN32 */
 	(void)setsignal(SIGTERM, cleanup);
 	(void)setsignal(SIGINT, cleanup);
 	/* Cooperate with nohup(1) */
-#ifndef WIN32	
+#ifndef WIN32
 	if ((oldhandler = setsignal(SIGHUP, cleanup)) != SIG_DFL)
 		(void)setsignal(SIGHUP, oldhandler);
 #endif /* WIN32 */

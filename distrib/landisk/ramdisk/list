@@ -77,6 +77,6 @@ COPY	${CURDIR}/disktab.preinstall		etc/disktab.preinstall
 COPY	${CURDIR}/dot.profile			.profile
 COPY	${CURDIR}/dot.hdprofile			tmp/.hdprofile
 
-# we need the boot 
+# we need the boot
 COPY    ${DESTDIR}/usr/mdec/boot		usr/mdec/boot
 COPY    ${DESTDIR}/usr/mdec/bootxx_ffsv1	usr/mdec/bootxx_ffsv1

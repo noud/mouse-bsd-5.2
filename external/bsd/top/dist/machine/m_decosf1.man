@@ -1,6 +1,6 @@
 .SH "DEC OSF/1 NOTES"
 Original author was Anthony Baxter, <anthony@aaii.oz.au>.
-Derived originally from m_ultrix, by David S. Comay <dsc@seismo.css.gov>, 
+Derived originally from m_ultrix, by David S. Comay <dsc@seismo.css.gov>,
 although by now there is hardly any of the code from m_ultrix left.
 Helped a lot by having the source for syd(1), by Claus Kalle, and
 from several people at DEC who helped with providing information on

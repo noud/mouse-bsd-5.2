@@ -33,7 +33,7 @@ CONFIGURE_ARGS+=	--with-tls=openssl
 CONFIGURE_ARGS+=	--with-threads
 CONFIGURE_ARGS+=	--without-cyrus-sasl
 
-configure: work/config.status .PHONY 
+configure: work/config.status .PHONY
 
 work/config.status: ${LDAP_DISTDIR}/configure Makefile openldap.mk
 	mkdir -p work

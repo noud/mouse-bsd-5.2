@@ -14,7 +14,7 @@ port = 49188
 do_subst = sed -e 's,[@]srcdir[@],$(srcdir),g' \
 	-e 's,[@]port[@],$(port),g' \
 	-e 's,[@]objdir[@],$(top_builddir)/tests/ldap,g' \
-	-e 's,[@]EGREP[@],$(EGREP),g' 
+	-e 's,[@]EGREP[@],$(EGREP),g'
 
 check-ldap: check-ldap.in Makefile
 	$(do_subst) < $(srcdir)/check-ldap.in > check-ldap.tmp

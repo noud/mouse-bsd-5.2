@@ -339,7 +339,7 @@ LIB_kafs = $(top_builddir)/lib/kafs/libkafs.la $(AIX_EXTRA_KAFS)
 @KRB5_TRUE@LIB_gssapi = $(top_builddir)/lib/gssapi/libgssapi.la
 @KRB5_TRUE@LIB_tsasl = $(top_builddir)/lib/tsasl/libtsasl.la
 @DCE_TRUE@LIB_kdfs = $(top_builddir)/lib/kdfs/libkdfs.la
-CHECK_LOCAL = 
+CHECK_LOCAL =
 telnetd_SOURCES = telnetd.c state.c termstat.c slc.c sys_term.c \
 		   utility.c global.c authenc.c defs.h ext.h telnetd.h
 
@@ -418,7 +418,7 @@ clean-libexecPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-telnetd$(EXEEXT): $(telnetd_OBJECTS) $(telnetd_DEPENDENCIES) 
+telnetd$(EXEEXT): $(telnetd_OBJECTS) $(telnetd_DEPENDENCIES)
 	@rm -f telnetd$(EXEEXT)
 	$(LINK) $(telnetd_OBJECTS) $(telnetd_LDADD) $(LIBS)
 

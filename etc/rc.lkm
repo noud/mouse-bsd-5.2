@@ -7,7 +7,7 @@ if [ -s /etc/lkm.conf ]; then
 	start)
 		(while read path options entry postinstall output when; do
 			flags=''
-	
+
 			case $path in
 			\#*|"")
 				continue
@@ -24,7 +24,7 @@ if [ -s /etc/lkm.conf ]; then
 				fi
 				;;
 			esac
-	
+
 			case $options in
 			-)
 				;;
@@ -32,7 +32,7 @@ if [ -s /etc/lkm.conf ]; then
 				flags="$flags $options"
 				;;
 			esac
-	
+
 			case $entry in
 			-)
 				;;
@@ -40,7 +40,7 @@ if [ -s /etc/lkm.conf ]; then
 				flags="$flags -e $entry"
 				;;
 			esac
-	
+
 			case $postinstall in
 			-)
 				;;
@@ -48,7 +48,7 @@ if [ -s /etc/lkm.conf ]; then
 				flags="$flags -p $postinstall"
 				;;
 			esac
-	
+
 			case $output in
 			-)
 				;;
@@ -60,7 +60,7 @@ if [ -s /etc/lkm.conf ]; then
 				fi
 				;;
 			esac
-	
+
 			case $when in
 			-)
 				when=BEFORENET
@@ -72,11 +72,11 @@ if [ -s /etc/lkm.conf ]; then
 				continue
 				;;
 			esac
-	
+
 			if [ "$when" != "$lkmstage" ]; then
 				continue
 			fi
-	
+
 			echo -n "${path##*/}: "
 			modload $flags $path
 			rm -f /tmp/lkm.$$

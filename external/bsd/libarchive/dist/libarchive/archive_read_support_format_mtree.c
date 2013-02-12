@@ -1291,7 +1291,7 @@ readline(struct archive_read *a, struct mtree *mtree, char **start, ssize_t limi
 				memmove(u, u + 1,
 				    total_size - (u - mtree->line.s) + 1);
 				--total_size;
-				continue;    
+				continue;
 			}
 		}
 	}

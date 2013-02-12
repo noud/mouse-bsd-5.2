@@ -421,7 +421,7 @@ md_mv_aout_libs()
 	echo "a.out emulation environment setup completed."
 }
 
-md_prepare_upgrade()  
+md_prepare_upgrade()
 {
 cat << 'EOF'
 This release uses the ELF binary object format. Existing (a.out) binaries

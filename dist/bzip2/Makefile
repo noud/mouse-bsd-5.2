@@ -5,7 +5,7 @@
 # bzip2/libbzip2 version 1.0.5 of 10 December 2007
 # Copyright (C) 1996-2007 Julian Seward <jseward@bzip.org>
 #
-# Please read the WARNING, DISCLAIMER and PATENTS sections in the 
+# Please read the WARNING, DISCLAIMER and PATENTS sections in the
 # README file.
 #
 # This program is released under the terms of the license contained
@@ -61,7 +61,7 @@ test: bzip2
 	./bzip2 -d  < sample1.bz2 > sample1.tst
 	./bzip2 -d  < sample2.bz2 > sample2.tst
 	./bzip2 -ds < sample3.bz2 > sample3.tst
-	cmp sample1.bz2 sample1.rb2 
+	cmp sample1.bz2 sample1.rb2
 	cmp sample2.bz2 sample2.rb2
 	cmp sample3.bz2 sample3.rb2
 	cmp sample1.tst sample1.ref
@@ -108,7 +108,7 @@ install: bzip2 bzip2recover
 	echo ".so man1/bzmore.1" > $(PREFIX)/man/man1/bzless.1
 	echo ".so man1/bzdiff.1" > $(PREFIX)/man/man1/bzcmp.1
 
-clean: 
+clean:
 	rm -f *.o libbz2.a bzip2 bzip2recover \
 	sample1.rb2 sample2.rb2 sample3.rb2 \
 	sample1.tst sample2.tst sample3.tst
@@ -203,7 +203,7 @@ dist: check manual
 # For rebuilding the manual from sources on my SuSE 9.1 box
 
 MANUAL_SRCS= 	bz-common.xsl bz-fo.xsl bz-html.xsl bzip.css \
-		entities.xml manual.xml 
+		entities.xml manual.xml
 
 manual: manual.html manual.ps manual.pdf
 

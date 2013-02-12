@@ -254,10 +254,10 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-dcfd$(EXEEXT): $(dcfd_OBJECTS) $(dcfd_DEPENDENCIES) 
+dcfd$(EXEEXT): $(dcfd_OBJECTS) $(dcfd_DEPENDENCIES)
 	@rm -f dcfd$(EXEEXT)
 	$(LINK) $(dcfd_LDFLAGS) $(dcfd_OBJECTS) $(dcfd_LDADD) $(LIBS)
-testdcf$(EXEEXT): $(testdcf_OBJECTS) $(testdcf_DEPENDENCIES) 
+testdcf$(EXEEXT): $(testdcf_OBJECTS) $(testdcf_DEPENDENCIES)
 	@rm -f testdcf$(EXEEXT)
 	$(LINK) $(testdcf_LDFLAGS) $(testdcf_OBJECTS) $(testdcf_LDADD) $(LIBS)
 

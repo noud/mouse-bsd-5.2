@@ -229,7 +229,7 @@ move_log(const char *name)
 		if (errno != EEXIST && errno != EINTR) {
 			logmsg(LOG_ERR, "[priv] failed to create new name: %s",
 			    strerror(errno));
-			return (1);			
+			return (1);
 		}
 	}
 

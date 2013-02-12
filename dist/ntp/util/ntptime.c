@@ -42,7 +42,7 @@
 #define TIMEX_MOD_BITS \
 "\20\1OFFSET\2FREQUENCY\3MAXERROR\4ESTERROR\5STATUS\6TIMECONST\
 \13PLL\14FLL\15MICRO\16NANO\17CLKB\20CLKA"
- 
+
 #define TIMEX_STA_BITS \
 "\20\1PLL\2PPSFREQ\3PPSTIME\4FLL\5INS\6DEL\7UNSYNC\10FREQHOLD\
 \11PPSSIGNAL\12PPSJITTER\13PPSWANDER\14PPSERROR\15CLOCKERR\
@@ -310,7 +310,7 @@ main(
 	}
 	status = ntp_adjtime(&ntx);
 	if (status < 0)
-		perror((errno == EPERM) ? 
+		perror((errno == EPERM) ?
 		   "Must be root to set kernel values\nntp_adjtime() call fails" :
 		   "ntp_adjtime() call fails");
 	else {

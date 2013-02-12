@@ -10,7 +10,7 @@ LISTS=		${.CURDIR}/list ${.CURDIR}/../common/list.images
 MTREECONF=	${DISTRIBDIR}/common/mtree.common
 IMAGEENDIAN=	be
 IMAGEDEPENDS+=	${CRUNCHBIN} \
-		${NETBSDSRCDIR}/etc/group ${NETBSDSRCDIR}/etc/master.passwd 
+		${NETBSDSRCDIR}/etc/group ${NETBSDSRCDIR}/etc/master.passwd
 
 IMAGE_RELEASEDIR=	installation/miniroot
 

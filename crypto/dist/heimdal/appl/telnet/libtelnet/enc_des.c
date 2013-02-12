@@ -457,7 +457,7 @@ int fb64_keyid(int dir, unsigned char *kp, int *lenp, struct fb *fbp)
 	return(fbp->state[dir-1] = state);
 }
 
-void fb64_printsub(unsigned char *data, int cnt, 
+void fb64_printsub(unsigned char *data, int cnt,
 		   unsigned char *buf, int buflen, char *type)
 {
 	char lbuf[32];
@@ -498,7 +498,7 @@ void fb64_printsub(unsigned char *data, int cnt,
 	}
 }
 
-void cfb64_printsub(unsigned char *data, int cnt, 
+void cfb64_printsub(unsigned char *data, int cnt,
 		    unsigned char *buf, int buflen)
 {
 	fb64_printsub(data, cnt, buf, buflen, "CFB64");
@@ -541,7 +541,7 @@ void fb64_stream_key(DES_cblock key, struct stinfo *stp)
  *  INPUT --(--------->(+)+---> DATA
  *          |             |
  *	    +-------------+
- *         
+ *
  *
  * Given:
  *	iV: Initial vector, 64 bits (8 bytes) long.
@@ -597,7 +597,7 @@ int cfb64_decrypt(int data)
 		DES_ecb_encrypt(&stp->str_output,&b, &stp->str_sched, 1);
 		memcpy(stp->str_feed, b, sizeof(DES_cblock));
 		stp->str_index = 1;	/* Next time will be 1 */
-		index = 0;		/* But now use 0 */ 
+		index = 0;		/* But now use 0 */
 	}
 
 	/* On decryption we store (data) which is cypher. */
@@ -666,7 +666,7 @@ int ofb64_decrypt(int data)
 		DES_ecb_encrypt(&stp->str_feed,&b,&stp->str_sched, 1);
 		memcpy(stp->str_feed, b, sizeof(DES_cblock));
 		stp->str_index = 1;	/* Next time will be 1 */
-		index = 0;		/* But now use 0 */ 
+		index = 0;		/* But now use 0 */
 	}
 
 	return(data ^ stp->str_feed[index]);

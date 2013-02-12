@@ -18,7 +18,7 @@ This document is a submission to the IETF IP Security Protocol
 (IPSEC) Working Group.  Comments are solicited and should be
 addressed to the working group mailing list (ipsec@lists.tislabs.com)
 or to the editor.
- 
+
 This document is an Internet-Draft and is in full conformance
 with all provisions of Section 10 of RFC2026.
 
@@ -58,7 +58,7 @@ Internet Key Exchange (IKE).
 T. Kivinen, et. al.                                             [page 1]
 
 INTERNET-DRAFT                                              29 Sep 2003
- 
+
 Table of Contents
 
 1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . .  2
@@ -117,7 +117,7 @@ The detection of the support for the NAT-Traversal and detection of the
 T. Kivinen, et. al.                                             [page 2]
 
 INTERNET-DRAFT                                              29 Sep 2003
- 
+
 NAT along the path happens in the IKE [RFC-2409] phase 1.
 The NAT may change the IKE UDP source port, and recipients MUST be able
 to process IKE packets whose source port is different than 500.  There
@@ -176,7 +176,7 @@ packet (as separate NAT-D payloads). In this case the NAT is detected if
 T. Kivinen, et. al.                                             [page 3]
 
 INTERNET-DRAFT                                              29 Sep 2003
- 
+
 and only if none of the hashes match.
 
 The hashes are sent as a series of NAT-D (NAT discovery) payloads.  Each
@@ -235,7 +235,7 @@ An example of phase 1 exchange using NAT-Traversal in main mode
 T. Kivinen, et. al.                                             [page 4]
 
 INTERNET-DRAFT                                              29 Sep 2003
- 
+
                                      <-- HDR, KE, Nr, NAT-D, NAT-D
         HDR*#, IDii, [CERT, ] SIG_I   -->
                                      <-- HDR*#, IDir, [ CERT, ], SIG_R
@@ -294,7 +294,7 @@ generally be different since the NAT will map UDP(500,500) to
 T. Kivinen, et. al.                                             [page 5]
 
 INTERNET-DRAFT                                              29 Sep 2003
- 
+
 UDP(X,500), and UDP(4500,4500) to UDP(Y,4500). The IP address will
 seldom be different from the pre-change IP address. The responder MUST
 respond with all subsequent IKE packets to this peer using UDP(4500,Y).
@@ -353,7 +353,7 @@ packets to this peer using UDP(4500,Y).
 T. Kivinen, et. al.                                             [page 6]
 
 INTERNET-DRAFT                                              29 Sep 2003
- 
+
 While changing ports, the port in the ID payload in Main Mode/Aggressive
 Mode MUST be 0.
 
@@ -412,7 +412,7 @@ proposals.
 T. Kivinen, et. al.                                             [page 7]
 
 INTERNET-DRAFT                                              29 Sep 2003
- 
+
 5.2.  Sending the original source and destination addresses
 
 In order to perform incremental TCP checksum fix ups, both peers may
@@ -471,7 +471,7 @@ In case of transport mode both ends MUST send the both original
 T. Kivinen, et. al.                                             [page 8]
 
 INTERNET-DRAFT                                              29 Sep 2003
- 
+
 Initiator and Responder addresses to the other end. For the tunnel mode
 both ends SHOULD NOT send original addresses to the other end.
 
@@ -530,7 +530,7 @@ alive (for example, the keepalive interval is too long, or the NAT box
 T. Kivinen, et. al.                                             [page 9]
 
 INTERNET-DRAFT                                              29 Sep 2003
- 
+
 is rebooted). To recover from those ends which are NOT behind NAT SHOULD
 use the last valid authenticated packet from the other end to determine
 which IP and port addresses should be used. The host behind dynamic NAT
@@ -589,7 +589,7 @@ o  The sending of the original source address in the Quick Mode reveals
 T. Kivinen, et. al.                                            [page 10]
 
 INTERNET-DRAFT                                              29 Sep 2003
- 
+
    the internal IP address behind the NAT to the other end. In this case
    we have already authenticated the other end, and sending of the
    original source address is only needed in transport mode.
@@ -648,7 +648,7 @@ For more information consult the online list of claimed rights.
 T. Kivinen, et. al.                                            [page 11]
 
 INTERNET-DRAFT                                              29 Sep 2003
- 
+
 11.  Acknowledgments
 
 Thanks to Markus Stenberg, Larry DiBurro and William Dixon who
@@ -707,7 +707,7 @@ draft-ietf-ipsec-nat-reqts-04.txt, March 2003.
 T. Kivinen, et. al.                                            [page 12]
 
 INTERNET-DRAFT                                              29 Sep 2003
- 
+
     Franklin, MA 02038
     E-mail: vvolpe@cisco.com
 

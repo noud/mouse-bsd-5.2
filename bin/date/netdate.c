@@ -184,7 +184,7 @@ loop:
 			(void)close(s);
 			return (0);
 		default:
-			warnx("wrong ack received from timed: %s", 
+			warnx("wrong ack received from timed: %s",
 			    tsp_type_to_string(&msg));
 			timed_ack = -1;
 			break;

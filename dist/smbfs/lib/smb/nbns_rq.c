@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: nbns_rq.c,v 1.5 2001/02/17 03:07:24 bp Exp 
+ * from: Id: nbns_rq.c,v 1.5 2001/02/17 03:07:24 bp Exp
  */
 
 #include <sys/cdefs.h>

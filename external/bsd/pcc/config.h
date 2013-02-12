@@ -37,7 +37,7 @@
 /* #undef ECOFFABI */
 
 /* Using ELF ABI */
-#define ELFABI 
+#define ELFABI
 
 /* Define to 1 if you have `alloca', as a function or macro. */
 #define HAVE_ALLOCA 1

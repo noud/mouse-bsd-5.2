@@ -22,7 +22,7 @@
 
   <!-- Import the Docbook manpages stuff -->
   <xsl:import href="@XSLT_DOCBOOK_STYLE_MAN@"/>
-  
+
   <!-- Include our copyright generator -->
   <xsl:include href="copyright.xsl"/>
 
@@ -47,7 +47,7 @@
     <xsl:text>.ad l&#10;</xsl:text>
   </xsl:variable>
 
-  <!-- 
+  <!--
     - Override Docbook template to insert our copyright,
     - disable chunking, and suppress output of .so files.
    -->
@@ -87,7 +87,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <!-- 
+  <!--
     - Override Docbook template to change formatting.
     - We just want the element name in boldface, no subsection header.
    -->
@@ -138,7 +138,7 @@
 
 </xsl:stylesheet>
 
-<!-- 
+<!--
   - Local variables:
   - mode: sgml
   - End:

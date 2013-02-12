@@ -2,11 +2,11 @@
 
 /*
  * Copyright (C) 2002-2003 by Darren Reed.
- * 
- * See the IPFILTER.LICENCE file for details on licencing.  
- *   
- * Id: hostname.c,v 1.6.2.2 2007/01/16 02:25:22 darrenr Exp 
- */     
+ *
+ * See the IPFILTER.LICENCE file for details on licencing.
+ *
+ * Id: hostname.c,v 1.6.2.2 2007/01/16 02:25:22 darrenr Exp
+ */
 
 #include "ipf.h"
 

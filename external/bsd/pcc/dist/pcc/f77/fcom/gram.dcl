@@ -304,7 +304,7 @@ letter:  SFNAME
 	;
 
 in_dcl:
-		{ switch(parstate)	
+		{ switch(parstate)
 			{
 			case OUTSIDE:	newproc();
 					startproc(0, CLMAIN);

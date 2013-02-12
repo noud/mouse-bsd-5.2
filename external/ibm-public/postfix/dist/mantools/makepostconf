@@ -45,7 +45,7 @@ while(<POSTCONF>) {
 	warn "unexpected $POSTCONF output: $_\n";
     }
 }
-close(POSTCONF) || die "$POSTCONF failed: $!\n"; 
+close(POSTCONF) || die "$POSTCONF failed: $!\n";
 
 # Print all parameter definition text that we found, and warn about
 # missing definition text.

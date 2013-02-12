@@ -89,9 +89,9 @@ message installusure
 {Vous avez choisi d'installer NetBSD sur votre disque dur. Ceci va changer les
 informations contenues sur ce dernier. Vous devriez faire une sauvegarde
 complète de son contenu avant de poursuivre cette installation. Cette
-procédure va mener les actions suivantes : 
-	a) Partitionner votre disque dur. 
-	b) Créer de nouveaux systèmes de fichier BSD. 
+procédure va mener les actions suivantes :
+	a) Partitionner votre disque dur.
+	b) Créer de nouveaux systèmes de fichier BSD.
 	c) Installer les différents composants.
 
 (Une fois le partitionnement configuré, le système d'installation vous
@@ -167,12 +167,12 @@ message megname
 message layout
 {NetBSD utilise un "disklabel" BSD pour diviser la portion du disque réservée à
 NetBSD en de multiples partitions. Vous devez paramétrer ce dernier.
-Deux possibilités: 
--- Standard : calcul automatique des partitions. 
+Deux possibilités:
+-- Standard : calcul automatique des partitions.
 -- Use existing: les partitions déjà existantes seront utilisées. Vous devrez toutefois assigner les points de montage.
 
-La taille allouée pour NetBSD sur votre disque est de %d Mo. 
-L'installation standard requiert au moins %d Mo. 
+La taille allouée pour NetBSD sur votre disque est de %d Mo.
+L'installation standard requiert au moins %d Mo.
 L'installation standard avec X requiert au moins %d Mo.
 }
 
@@ -316,7 +316,7 @@ message mountpt_fmt
 message toggle
 {Basculer}
 
-message restore	
+message restore
 {Revenir aux valeurs initiales}
 
 message Select_the_type
@@ -552,14 +552,14 @@ message net_media
 message netok
 {Vous avez spécifié les valeurs suivantes:
 
-Nom de domaine (DNS):		 %s 
-Nom d'ordinateur:		 %s 
+Nom de domaine (DNS):		 %s
+Nom d'ordinateur:		 %s
 Interface réseau:		 %s
 Adresse IPv4:			 %s
 Masque de sous-réseau:	 %s
 Adresse IPv4 du serveur de noms: %s
 Adresse IPv4 de la passerelle: 	 %s
-Type de réseau (media)	 %s 
+Type de réseau (media)	 %s
 }
 
 message netok_slip
@@ -577,8 +577,8 @@ Type de réseau (media):	 %s
 }
 
 message netokv6
-{Auto-configuration IPv6:	 %s 
-Adresse du serveur de noms IPv6: %s 
+{Auto-configuration IPv6:	 %s
+Adresse du serveur de noms IPv6: %s
 }
 
 message netok_ok
@@ -881,7 +881,7 @@ message config_open_error
 Impossible d'ouvrir le fichier de configuration %s.\n
 }
 
-message choose_timezone	
+message choose_timezone
 {
 Veuillez sélectionner votre zone horaire dans la liste suivante.
 Appuyez sur Entrée pour confirmer votre choix.
@@ -895,7 +895,7 @@ Appuyez sur "x" puis Entree pour valider la sélection en cours.
 message tz_back
 { Retour à la liste principale des fuseaux horaires}
 
-message choose_crypt	
+message choose_crypt
 {
 Veuillez sélectionner le type de hachage des mots de passe.
 NetBSD supporte le DES, MD et Blowfish.
@@ -930,7 +930,7 @@ sur le disque cible pour l'installation. Vous devez redémarrer et tenter
 à nouveau.
 }
 
-message rootpw	
+message rootpw
 {
 Aucun mot de passe pour le compte root n'a été défini.
 Nous vous recommandons de spéficier un mot de passe dès à présent.
@@ -938,7 +938,7 @@ Nous vous recommandons de spéficier un mot de passe dès à présent.
 Le souhaitez-vous ?
 }
 
-message rootsh	
+message rootsh
 {
 Vous pouvez à présent déterminer le shell par défaut qui sera
 utilisé par root. Par défaut, il s'agit de /bin/sh

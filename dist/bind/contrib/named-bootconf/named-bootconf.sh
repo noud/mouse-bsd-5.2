@@ -49,7 +49,7 @@
 if [ ${OPTIONFILE-X} = X ]; then
 	WORKDIR=/tmp/`date +%s`.$$
 	( umask 077 ; mkdir $WORKDIR ) || {
-		echo "unable to create work directory '$WORKDIR'" >&2 
+		echo "unable to create work directory '$WORKDIR'" >&2
 		exit 1
 	}
 	OPTIONFILE=$WORKDIR/options

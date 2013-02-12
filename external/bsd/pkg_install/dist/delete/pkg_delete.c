@@ -286,7 +286,7 @@ sort_and_recurse(lpkg_head_t *pkgs, lpkg_head_t *sorted_pkgs)
 		TAILQ_REMOVE(pkgs, lpp, lp_link);
 		fprintf(stderr,
 		    "Package `%s' is still required by other packages:\n",
-		    lpp->lp_name);		
+		    lpp->lp_name);
 		process_required_by(lpp->lp_name, NULL, sorted_pkgs, 2);
 		if (Force) {
 			TAILQ_INSERT_TAIL(sorted_pkgs, lpp, lp_link);
@@ -437,7 +437,7 @@ remove_pkg_from_view(const char *pkg)
 		}
 	}
 	fclose(fp);
-	return 0;	
+	return 0;
 }
 
 /*
@@ -908,7 +908,7 @@ main(int argc, char *argv[])
 	bad_count = 0;
 	while (!TAILQ_EMPTY(&sorted_pkgs)) {
 		lpkg_t *lpp;
-		
+
 		lpp = TAILQ_FIRST(&sorted_pkgs);
 		TAILQ_REMOVE(&sorted_pkgs, lpp, lp_link);
 		if (remove_pkg(lpp->lp_name)) {

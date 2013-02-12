@@ -19,7 +19,7 @@ static const char sccsid[] = "Id: ip_term.c,v 8.9 2001/06/25 15:19:24 skimo Exp 
 #include <bitstring.h>
 #include <stdio.h>
 #include <string.h>
- 
+
 #include "../common/common.h"
 #include "../ipc/ip.h"
 #include "extern.h"

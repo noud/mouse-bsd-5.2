@@ -14,7 +14,7 @@ OpenSSL  -  Frequently Asked Questions
 [LEGAL] Legal questions
 
 * Do I need patent licenses to use OpenSSL?
-* Can I use OpenSSL with GPL software? 
+* Can I use OpenSSL with GPL software?
 
 [USER] Questions on using the OpenSSL applications
 
@@ -536,7 +536,7 @@ This will only compile sha_dgst.c with -O0, the rest with the optimization
 level chosen by the configuration process.  When the above is done, do the
 test and installation and you're set.
 
-3. Reconfigure the toolkit with no-sha0 option to leave out SHA0. It 
+3. Reconfigure the toolkit with no-sha0 option to leave out SHA0. It
 should not be used and is not used in SSL/TLS nor any other recognized
 protocol in either case.
 
@@ -820,7 +820,7 @@ macros with a C++ compiler. There is hardly ever any need to use the
 PKCS#12 macros in a program, it is much easier to parse and create
 PKCS#12 files using the PKCS12_parse() and PKCS12_create() functions
 documented in doc/openssl.txt and with examples in demos/pkcs12. The
-'pkcs12' application has to use the macros because it prints out 
+'pkcs12' application has to use the macros because it prints out
 debugging information.
 
 

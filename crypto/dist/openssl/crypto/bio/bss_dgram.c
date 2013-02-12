@@ -1,7 +1,7 @@
 /* crypto/bio/bio_dgram.c */
-/* 
+/*
  * DTLS implementation written by Nagendra Modadugu
- * (nagendra@cs.stanford.edu) for the OpenSSL project 2005.  
+ * (nagendra@cs.stanford.edu) for the OpenSSL project 2005.
  */
 /* ====================================================================
  * Copyright (c) 1999-2005 The OpenSSL Project.  All rights reserved.
@@ -11,7 +11,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -165,7 +165,7 @@ static int dgram_clear(BIO *a)
 		}
 	return(1);
 	}
-	
+
 static int dgram_read(BIO *b, char *out, int outl)
 	{
 	int ret=0;
@@ -221,7 +221,7 @@ static int dgram_write(BIO *b, const char *in, int inl)
 		{
 		if (BIO_sock_should_retry(ret))
 			{
-			BIO_set_retry_write(b);  
+			BIO_set_retry_write(b);
 			data->_errno = get_last_socket_error();
 
 #if 0 /* higher layers are responsible for querying MTU, if necessary */
@@ -352,7 +352,7 @@ static long dgram_ctrl(BIO *b, int cmd, long num, void *ptr)
 			{ perror("setsockopt");	ret = -1; }
 		break;
 	case BIO_CTRL_DGRAM_GET_RECV_TIMEOUT:
-		if ( getsockopt(b->num, SOL_SOCKET, SO_RCVTIMEO, 
+		if ( getsockopt(b->num, SOL_SOCKET, SO_RCVTIMEO,
 			ptr, (void *)&ret) < 0)
 			{ perror("getsockopt"); ret = -1; }
 		break;
@@ -364,7 +364,7 @@ static long dgram_ctrl(BIO *b, int cmd, long num, void *ptr)
 			{ perror("setsockopt");	ret = -1; }
 		break;
 	case BIO_CTRL_DGRAM_GET_SEND_TIMEOUT:
-		if ( getsockopt(b->num, SOL_SOCKET, SO_SNDTIMEO, 
+		if ( getsockopt(b->num, SOL_SOCKET, SO_SNDTIMEO,
 			ptr, (void *)&ret) < 0)
 			{ perror("getsockopt"); ret = -1; }
 		break;

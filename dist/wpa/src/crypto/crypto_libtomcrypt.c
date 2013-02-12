@@ -304,7 +304,7 @@ struct crypto_cipher {
 struct crypto_cipher * crypto_cipher_init(enum crypto_cipher_alg alg,
 					  const u8 *iv, const u8 *key,
 					  size_t key_len)
-{	
+{
 	struct crypto_cipher *ctx;
 	int idx, res, rc4 = 0;
 

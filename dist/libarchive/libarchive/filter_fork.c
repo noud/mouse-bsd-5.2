@@ -90,7 +90,7 @@ __archive_create_child(const char *path, int *child_stdin, int *child_stdout)
 		if (stdout_pipe[1] != STDOUT_FILENO)
 			close(stdout_pipe[1]);
 		execlp(path, path, (char *)NULL);
-		_exit(254);		
+		_exit(254);
 	default:
 		close(stdin_pipe[0]);
 		close(stdout_pipe[1]);

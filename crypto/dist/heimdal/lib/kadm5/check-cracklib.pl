@@ -13,7 +13,7 @@
 # twice when getting "no" back and thus the error message
 # would be wrong.
 #
-# Prereqs (example versions): 
+# Prereqs (example versions):
 #
 # * perl (5.8.5) http://www.perl.org/
 # * cracklib (2.8.5) http://sourceforge.net/projects/cracklib

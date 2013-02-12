@@ -66,7 +66,7 @@ string LDAPCtrl::getData() const {
     DEBUG(LDAP_DEBUG_TRACE,"LDAPCtrl::getData()" << endl);
     return m_data;
 }
-         
+
 LDAPControl* LDAPCtrl::getControlStruct() const {
     DEBUG(LDAP_DEBUG_TRACE,"LDAPCtrl::getControlStruct()" << endl);
     LDAPControl* ret = new LDAPControl;

@@ -19,11 +19,11 @@ DBL =	d_abs.o d_acos.o d_asin.o d_atan.o d_atn2.o\
 	d_cnjg.o d_cos.o d_cosh.o d_dim.o d_exp.o\
 	d_imag.o d_int.o d_lg10.o d_log.o d_mod.o\
 	d_nint.o d_prod.o d_sign.o d_sin.o d_sinh.o\
-	d_sqrt.o d_tan.o d_tanh.o 
+	d_sqrt.o d_tan.o d_tanh.o
 INT =	i_abs.o i_dim.o i_dnnt.o i_indx.o i_len.o i_mod.o i_nint.o i_sign.o
 HALF =	h_abs.o h_dim.o h_dnnt.o h_indx.o h_len.o h_mod.o  h_nint.o h_sign.o
 CMP =	l_ge.o l_gt.o l_le.o l_lt.o hl_ge.o hl_gt.o hl_le.o hl_lt.o
-CHAR =	s_cat.o s_cmp.o s_copy.o 
+CHAR =	s_cat.o s_cmp.o s_copy.o
 
 libF77.a : $(MISC) $(POW) $(CX) $(DCX) $(REAL) $(DBL) $(INT) $(HALF) $(CMP) $(CHAR) cabs.o
 	ar r libF77.a $?

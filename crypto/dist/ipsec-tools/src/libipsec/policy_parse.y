@@ -39,7 +39,7 @@
  * <priority> is one of the following:
  * priority <signed int> where the integer is an offset from the default
  *                       priority, where negative numbers indicate lower
- *                       priority (towards end of list) and positive numbers 
+ *                       priority (towards end of list) and positive numbers
  *                       indicate higher priority (towards beginning of list)
  *
  * priority {low,def,high} {+,-} <unsigned int>  where low and high are
@@ -135,10 +135,10 @@ extern char *__libipsectext;	/*XXX*/
 	} val;
 }
 
-%token DIR 
+%token DIR
 %token PRIORITY PLUS
-%token <num32> PRIO_BASE 
-%token <val> PRIO_OFFSET 
+%token <num32> PRIO_BASE
+%token <val> PRIO_OFFSET
 %token ACTION PROTOCOL MODE LEVEL LEVEL_SPECIFY IPADDRESS PORT
 %token ME ANY
 %token SLASH HYPHEN
@@ -171,7 +171,7 @@ policy_spec
 
 			/* buffer big enough to hold a prepended negative sign */
 			offset_buf = malloc($3.len + 2);
-			if (offset_buf == NULL) 
+			if (offset_buf == NULL)
 			{
 				__ipsec_errcode = EIPSEC_NO_BUFS;
 				return -1;
@@ -511,7 +511,7 @@ init_x_policy()
 #ifdef HAVE_PFKEY_POLICY_PRIORITY
 	p->sadb_x_policy_priority = p_priority;
 #else
-    /* fail if given a priority and libipsec was not compiled with 
+    /* fail if given a priority and libipsec was not compiled with
 	   priority support */
 	if (p_priority != 0)
 	{

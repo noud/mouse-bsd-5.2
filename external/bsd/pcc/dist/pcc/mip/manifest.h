@@ -29,7 +29,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -69,7 +69,7 @@
 #define	INT		6
 #define	UNSIGNED	7
 #define	LONG		8
-#define	ULONG		9      
+#define	ULONG		9
 #define	LONGLONG	10
 #define	ULONGLONG	11
 #define	FLOAT		12
@@ -87,7 +87,7 @@
  */
 #define NOLAB	(-1)
 
-/* 
+/*
  * Type modifiers.
  */
 #define	PTR		0x20
@@ -174,7 +174,7 @@
 #define	regno(p)	((p)->n_rval)	/* register number */
 
 /*
- * 
+ *
  */
 extern int bdebug, tdebug, edebug;
 extern int ddebug, xdebug, f2debug;

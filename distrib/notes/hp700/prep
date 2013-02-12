@@ -2,33 +2,33 @@
 .
 .Ss2 Get to the Boot Administration prompt
 .
-All \*M workstations have a Boot Administration command line 
-utility in their Boot ROM which lets you configure various settings.  For 
-example, you can set whether the system automatically boots an OS, which 
-device to try booting from first, determine the ethernet MAC address, set 
-up a serial console, and possibly do some low level hardware access.  
+All \*M workstations have a Boot Administration command line
+utility in their Boot ROM which lets you configure various settings.  For
+example, you can set whether the system automatically boots an OS, which
+device to try booting from first, determine the ethernet MAC address, set
+up a serial console, and possibly do some low level hardware access.
 .Pp
-To get to the 
+To get to the
 .Li BOOT_ADMIN\*[Gt]
 prompt, you must press the
 .Key ESCAPE
-key before it tries to boot an OS.  Since these machines often take a 
-long time between powering on and the brief window of time where you can 
+key before it tries to boot an OS.  Since these machines often take a
+long time between powering on and the brief window of time where you can
 hit the
 .Key ESCAPE
-key, you must pay attention.  Depending on how much RAM your system has, it 
-may take over a minute after pressing the power button before anything 
+key, you must pay attention.  Depending on how much RAM your system has, it
+may take over a minute after pressing the power button before anything
 will show up on screen.
 .Pp
-Once you have escaped out of the 
+Once you have escaped out of the
 .Li "Selecting a system to boot"
 and
 .Li "Searching for Potential Boot Devices"
 you need to type the
 .Key Sq a
-key to get to the 
+key to get to the
 .Li BOOT_ADMIN\*[Gt]
-prompt.  Now, use the online help with the 
+prompt.  Now, use the online help with the
 .Ic help
 command.
 .Pp
@@ -70,7 +70,7 @@ LAN Station Address:  080009-123456
 .
 .Ss2 Change the configuration parameters to netboot
 .
-The command syntax is different on the various models.  Use the 
+The command syntax is different on the various models.  Use the
 .Ic "help path" ,
 .Ic "help lan" ,
 and
@@ -83,12 +83,12 @@ On a 735/99, you would type:
 .No BOOT_ADMIN\*[Gt] Ic "reset"
 .disp)
 .Pp
-The first command sets the primary boot device to be the network 
+The first command sets the primary boot device to be the network
 interface, and the second command sets the system to always try booting
-from the primary boot path when it is reset or powered on.  The last 
+from the primary boot path when it is reset or powered on.  The last
 command stores the new settings and resets the machine.
 .Pp
-To return to using the SCSI disk at ID 6 as your primary boot device, you 
+To return to using the SCSI disk at ID 6 as your primary boot device, you
 would use something like the following command:
 .(disp
 .No BOOT_ADMIN\*[Gt] Ic "path primary scsi.6.0"
@@ -97,11 +97,11 @@ would use something like the following command:
 .Ss2 Determine netboot method
 .
 Most older Series 700 workstations (with PA-7000 (PCXS), PA-7100 (PCXT),
-or PA-7150 (PCXT)) use the RMP (Remote Maintenance Protocol) to netboot. 
+or PA-7150 (PCXT)) use the RMP (Remote Maintenance Protocol) to netboot.
 Specifically, they retrieve their boot program from an
 .Xr rbootd 8
 server.  The following list of RMP-only Series 700 workstations is
-probably complete, but has not been tested: 
+probably complete, but has not been tested:
 .(bullet -compact
 705
 .It
@@ -126,14 +126,14 @@ probably complete, but has not been tested:
 755
 .bullet)
 .Pp
-Newer Series 700 workstations retrieve their boot program from a server 
+Newer Series 700 workstations retrieve their boot program from a server
 running
 .Xr dhcpd 8
 in
 .Xr bootpd 8
 compatible mode and
 .Xr tftpd 8 .
-The following list of BOOTP-only Series 700 workstations is 
+The following list of BOOTP-only Series 700 workstations is
 probably complete, but has not been tested:
 .(bullet -compact
 712

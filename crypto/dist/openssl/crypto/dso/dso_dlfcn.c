@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -455,7 +455,7 @@ static int dlfcn_pathbyaddr(void *addr,char *path,int sz)
 static void *dlfcn_globallookup(const char *name)
 	{
 	void *ret = NULL,*handle = dlopen(NULL,RTLD_LAZY);
-	
+
 	if (handle)
 		{
 		ret = dlsym(handle,name);

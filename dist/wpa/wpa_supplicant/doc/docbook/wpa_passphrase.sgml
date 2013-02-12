@@ -18,7 +18,7 @@
   </refsynopsisdiv>
 
   <refsect1>
-    <title>Overview</title> 
+    <title>Overview</title>
 
     <para><command>wpa_passphrase</command> pre-computes PSK entries for
     network configuration blocks of a

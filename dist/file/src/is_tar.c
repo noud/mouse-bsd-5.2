@@ -4,7 +4,7 @@
  * Copyright (c) Ian F. Darwin 1986-1995.
  * Software written by Ian F. Darwin and others;
  * maintained 1995-present by Christos Zoulas and others.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -14,7 +14,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- *  
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -88,8 +88,8 @@ file_is_tar(struct magic_set *ms, const unsigned char *buf, size_t nbytes)
 }
 
 /*
- * Return 
- *	0 if the checksum is bad (i.e., probably not a tar archive), 
+ * Return
+ *	0 if the checksum is bad (i.e., probably not a tar archive),
  *	1 for old UNIX tar file,
  *	2 for Unix Std (POSIX) tar file,
  *	3 for GNU tar file.
@@ -120,14 +120,14 @@ is_tar(const unsigned char *buf, size_t nbytes)
 	/* Adjust checksum to count the "chksum" field as blanks. */
 	for (i = sizeof(header->header.chksum); --i >= 0;)
 		sum -= 0xFF & header->header.chksum[i];
-	sum += ' '* sizeof header->header.chksum;	
+	sum += ' '* sizeof header->header.chksum;
 
 	if (sum != recsum)
 		return 0;	/* Not a tar archive */
-	
-	if (strcmp(header->header.magic, GNUTMAGIC) == 0) 
+
+	if (strcmp(header->header.magic, GNUTMAGIC) == 0)
 		return 3;		/* GNU Unix Standard tar archive */
-	if (strcmp(header->header.magic, TMAGIC) == 0) 
+	if (strcmp(header->header.magic, TMAGIC) == 0)
 		return 2;		/* Unix Standard tar archive */
 
 	return 1;			/* Old fashioned tar archive */

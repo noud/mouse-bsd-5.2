@@ -7,12 +7,12 @@ $!               byer@mail.all-net.net
 $!
 $!  Changes by Richard Levitte <richard@levitte.org>
 $!
-$!  This command file compiles and creates the "[.xxx.EXE.SSL]LIBSSL.OLB" 
-$!  library for OpenSSL.  The "xxx" denotes the machine architecture of AXP 
+$!  This command file compiles and creates the "[.xxx.EXE.SSL]LIBSSL.OLB"
+$!  library for OpenSSL.  The "xxx" denotes the machine architecture of AXP
 $!  or VAX.
 $!
 $!  It is written to detect what type of machine you are compiling on
-$!  (i.e. AXP or VAX) and which "C" compiler you have (i.e. VAXC, DECC 
+$!  (i.e. AXP or VAX) and which "C" compiler you have (i.e. VAXC, DECC
 $!  or GNU C) or you can specify which compiler to use.
 $!
 $!  Specify the following as P1 to build just that part or ALL to just
@@ -149,7 +149,7 @@ $! Time To EXIT.
 $!
 $ EXIT:
 $ GOSUB CLEANUP
-$ EXIT   
+$ EXIT
 $!
 $! Compile The Library.
 $!
@@ -296,7 +296,7 @@ $ ENDIF
 $!
 $! Tell The User We Are Creating The SSL_TASK.
 $!
-$ WRITE SYS$OUTPUT "Creating SSL_TASK OSU HTTP SSL Engine."	
+$ WRITE SYS$OUTPUT "Creating SSL_TASK OSU HTTP SSL Engine."
 $!
 $! Compile The File.
 $!
@@ -355,7 +355,7 @@ $!
 $     CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File To Link Agianst 
+! Default System Options File To Link Agianst
 ! The Sharable VAX C Runtime Library.
 !
 SYS$SHARE:VAXCRTL.EXE/SHARE
@@ -384,7 +384,7 @@ $!
 $     CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File To Link Agianst 
+! Default System Options File To Link Agianst
 ! The Sharable C Runtime Library.
 !
 GNU_CC:[000000]GCCLIB/LIBRARY
@@ -419,7 +419,7 @@ $!
 $       CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File To Link Agianst 
+! Default System Options File To Link Agianst
 ! The Sharable DEC C Runtime Library.
 !
 SYS$SHARE:DECC$SHR.EXE/SHARE
@@ -434,7 +434,7 @@ $!
 $       CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File For AXP To Link Agianst 
+! Default System Options File For AXP To Link Agianst
 ! The Sharable C Runtime Library.
 !
 SYS$SHARE:CMA$OPEN_LIB_SHR/SHARE
@@ -455,7 +455,7 @@ $ ENDIF
 $!
 $!  Tell The User What Linker Option File We Are Using.
 $!
-$ WRITE SYS$OUTPUT "Using Linker Option File ",OPT_FILE,"."	
+$ WRITE SYS$OUTPUT "Using Linker Option File ",OPT_FILE,"."
 $!
 $! Time To RETURN.
 $!
@@ -571,7 +571,7 @@ $!
 $!   P2 Is NODEBUG, So Compile Without Debugger Information.
 $!
 $    DEBUGGER  = "NODEBUG"
-$    TRACEBACK = "NOTRACEBACK" 
+$    TRACEBACK = "NOTRACEBACK"
 $    GCC_OPTIMIZE = "OPTIMIZE"
 $    CC_OPTIMIZE = "OPTIMIZE"
 $    WRITE SYS$OUTPUT "No Debugger Information Will Be Produced During Compile."
@@ -675,7 +675,7 @@ $!
 $!  Check To See If We Have VAXC Or DECC.
 $!
 $     IF (ARCH.EQS."AXP").OR.(F$TRNLNM("DECC$CC_DEFAULT").NES."")
-$     THEN 
+$     THEN
 $!
 $!      Looks Like DECC, Set To Use DECC.
 $!

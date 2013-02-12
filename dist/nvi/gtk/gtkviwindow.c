@@ -70,7 +70,7 @@ GtkType
 gtk_vi_window_get_type (void)
 {
   static GtkType vi_window_type = 0;
-  
+
   if (!vi_window_type)
     {
       static const GtkTypeInfo vi_window_info =
@@ -84,10 +84,10 @@ gtk_vi_window_get_type (void)
         /* reserved_2 */ NULL,
         (GtkClassInitFunc) NULL,
       };
-      
+
       vi_window_type = gtk_type_unique (GTK_TYPE_NOTEBOOK, &vi_window_info);
     }
-  
+
   return vi_window_type;
 }
 
@@ -95,7 +95,7 @@ static void
 gtk_vi_window_class_init (GtkViWindowClass *class)
 {
   GtkObjectClass *object_class;
-  
+
   object_class = (GtkObjectClass*) class;
   parent_class = gtk_type_class (GTK_TYPE_WIDGET);
 
@@ -114,7 +114,7 @@ gtk_vi_window_class_init (GtkViWindowClass *class)
   object_class->destroy = gtk_vi_window_destroy;
 }
 
-static void 
+static void
 gtk_vi_window_init (GtkViWindow *vi)
 {
 }
@@ -153,7 +153,7 @@ gtk_vi_window_new (GtkVi *vi)
     gtk_table_attach(GTK_TABLE(table), vscroll, 1, 2, 0, 1,
 	(GtkAttachOptions)0, GTK_FILL, 0, 0);
     gtk_widget_show(table);
-    gtk_signal_connect(GTK_OBJECT(table), "map", GTK_SIGNAL_FUNC(vi_map), 
+    gtk_signal_connect(GTK_OBJECT(table), "map", GTK_SIGNAL_FUNC(vi_map),
 			vi_widget/*->ipvi*/);
     window->table = table;
 
@@ -183,8 +183,8 @@ gtk_vi_window_new (GtkVi *vi)
 	GTK_SIGNAL_FUNC(vi_resized), window->ipviwin);
     gtk_signal_connect(GTK_OBJECT(vi_widget), "key_press_event",
 	(GtkSignalFunc) vi_key_press_event, window);
-    window->value_changed = 
-	gtk_signal_connect(GTK_OBJECT(GTK_VI_SCREEN(vi_widget)->vadj), 
+    window->value_changed =
+	gtk_signal_connect(GTK_OBJECT(GTK_VI_SCREEN(vi_widget)->vadj),
 	    "value_changed",
 	    (GtkSignalFunc) vi_adjustment_value_changed, window->ipviwin);
 
@@ -195,22 +195,22 @@ static void
 gtk_vi_window_destroy (GtkObject *object)
 {
   GtkViWindow *vi_window;
-  
+
   g_return_if_fail (object != NULL);
   g_return_if_fail (GTK_IS_VI_WINDOW (object));
-  
+
   vi_window = (GtkViWindow*) object;
 
   if (vi_window->table) {
-    gtk_signal_disconnect_by_data(GTK_OBJECT(vi_window->table), 
+    gtk_signal_disconnect_by_data(GTK_OBJECT(vi_window->table),
 				  vi_window->vi_screen);
     vi_window->table = 0;
   }
 
   if (vi_window->vi_screen) {
-    gtk_signal_disconnect_by_data(GTK_OBJECT(vi_window->vi_screen), 
+    gtk_signal_disconnect_by_data(GTK_OBJECT(vi_window->vi_screen),
 				  vi_window->ipviwin);
-    gtk_signal_disconnect(GTK_OBJECT(GTK_VI_SCREEN(vi_window->vi_screen)->vadj), 
+    gtk_signal_disconnect(GTK_OBJECT(GTK_VI_SCREEN(vi_window->vi_screen)->vadj),
 	vi_window->value_changed);
     gtk_widget_destroy(vi_window->vi_screen);
     vi_window->vi_screen = 0;
@@ -304,7 +304,7 @@ gtk_vi_key_press_event(window, event)
 #if 0
     for (i = 0; i < sizeof(table)/sizeof(*table); ++i)
 	if (table[i].key == event->keyval) {
-	    int (*fun) __P((IPVI*)) = 
+	    int (*fun) __P((IPVI*)) =
 		*(int (**) __P((IPVI*)) )(((char *)vi->ipvi)+table[i].offset);
 	    fun(vi->ipvi);
 	    return;
@@ -322,7 +322,7 @@ gtk_vi_key_press_event(window, event)
 	key -= '@';
     }
     /*
-    fprintf(stderr, "key_press %d %d %d %c %p\n", 
+    fprintf(stderr, "key_press %d %d %d %c %p\n",
 	event->length, event->keyval, event->keyval, key, ipvi);
     */
     if (event->length > 0)
@@ -339,7 +339,7 @@ vi_key_press_event(vi_screen, event, vi)
 {
     gint handled;
 
-    handled = gtk_accel_groups_activate (GTK_OBJECT (vi), 
+    handled = gtk_accel_groups_activate (GTK_OBJECT (vi),
 		    event->keyval, (GdkModifierType) event->state);
     if (handled)
 	return 1;
@@ -370,7 +370,7 @@ vi_resized(vi_screen, rows, cols, ipviwin)
 	vi_window->resized = 1;
 }
 
-static void 
+static void
 vi_adjustment_value_changed (adjustment, ipviwin)
     GtkAdjustment *adjustment;
     IPVIWIN *ipviwin;
@@ -382,7 +382,7 @@ vi_adjustment_value_changed (adjustment, ipviwin)
 }
 
 
-static void 
+static void
 vi_input_func (gpointer data, gint source, GdkInputCondition condition)
 {
     IPVIWIN *ipviwin = (IPVIWIN *) data;
@@ -421,8 +421,8 @@ vi_init_window (GtkViWindow *window, int fd)
 
     window->ipviwin->private_data = window;
     window->ipviwin->set_ops(window->ipviwin, &ipsi_ops_gtk);
-    window->input_func = gtk_input_add_full(window->ipviwin->ifd, 
-			    GDK_INPUT_READ, 
+    window->input_func = gtk_input_add_full(window->ipviwin->ifd,
+			    GDK_INPUT_READ,
 			    vi_input_func, 0, (gpointer)window->ipviwin, 0);
 }
 
@@ -482,7 +482,7 @@ vi_bell(ipbp)
 	return (0);
 }
 
-static int 
+static int
 vi_busyon (IPVIWIN* ipviwin, const char *a, u_int32_t s)
 {
     /*
@@ -527,7 +527,7 @@ vi_deleteln(ipviwin)
 	return (0);
 }
 
-static int 
+static int
 vi_editopt (IPVIWIN* a, const char *b, u_int32_t c,
                             const char *d, u_int32_t e, u_int32_t f)
 {

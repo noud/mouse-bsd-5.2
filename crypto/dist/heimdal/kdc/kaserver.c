@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2005 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "kdc_locl.h"
@@ -281,7 +281,7 @@ krb5_store_xdr_data(krb5_storage *sp,
 
 
 static krb5_error_code
-create_reply_ticket (krb5_context context, 
+create_reply_ticket (krb5_context context,
 		     struct rx_header *hdr,
 		     Key *skey,
 		     char *name, char *instance, char *realm,
@@ -365,7 +365,7 @@ create_reply_ticket (krb5_context context,
     {
         DES_key_schedule schedule;
 	DES_cblock deskey;
-	
+
 	memcpy (&deskey, key->keyvalue.data, sizeof(deskey));
 	DES_set_key (&deskey, &schedule);
 	DES_pcbc_encrypt (enc_data.data,
@@ -431,7 +431,7 @@ unparse_auth_args (krb5_storage *sp,
 }
 
 static void
-do_authenticate (krb5_context context, 
+do_authenticate (krb5_context context,
 		 krb5_kdc_configuration *config,
 		 struct rx_header *hdr,
 		 krb5_storage *sp,
@@ -456,7 +456,7 @@ do_authenticate (krb5_context context,
     int32_t chal;
     char client_name[256];
     char server_name[256];
-	
+
     krb5_data_zero (&request);
 
     ret = unparse_auth_args (sp, &name, &instance, &start_time, &end_time,
@@ -474,7 +474,7 @@ do_authenticate (krb5_context context,
     kdc_log(context, config, 0, "AS-REQ (kaserver) %s from %s for %s",
 	    client_name, from, server_name);
 
-    ret = _kdc_db_fetch4 (context, config, name, instance, 
+    ret = _kdc_db_fetch4 (context, config, name, instance,
 			  config->v4_realm, HDB_F_GET_CLIENT,
 			  &client_entry);
     if (ret) {
@@ -484,8 +484,8 @@ do_authenticate (krb5_context context,
 	goto out;
     }
 
-    ret = _kdc_db_fetch4 (context, config, "krbtgt", 
-			  config->v4_realm, config->v4_realm, 
+    ret = _kdc_db_fetch4 (context, config, "krbtgt",
+			  config->v4_realm, config->v4_realm,
 			  HDB_F_GET_KRBTGT, &server_entry);
     if (ret) {
 	kdc_log(context, config, 0, "Server not found in database: %s: %s",
@@ -522,7 +522,7 @@ do_authenticate (krb5_context context,
     {
 	DES_cblock key;
 	DES_key_schedule schedule;
-	
+
 	/* try to decode the `request' */
 	memcpy (&key, ckey->key.keyvalue.data, sizeof(key));
 	DES_set_key (&key, &schedule);
@@ -565,7 +565,7 @@ do_authenticate (krb5_context context,
 
     life = krb_time_to_life(kdc_time, kdc_time + max_life);
 
-    create_reply_ticket (context, 
+    create_reply_ticket (context,
 			 hdr, skey,
 			 name, instance, config->v4_realm,
 			 addr, life, server_entry->entry.kvno,
@@ -644,7 +644,7 @@ unparse_getticket_args (krb5_storage *sp,
 }
 
 static void
-do_getticket (krb5_context context, 
+do_getticket (krb5_context context,
 	      krb5_kdc_configuration *config,
 	      struct rx_header *hdr,
 	      krb5_storage *sp,
@@ -685,13 +685,13 @@ do_getticket (krb5_context context,
     if (times.length < 8) {
 	make_error_reply (hdr, KABADREQUEST, reply);
 	goto out;
-	
+
     }
 
     snprintf (server_name, sizeof(server_name),
 	      "%s.%s@%s", name, instance, config->v4_realm);
 
-    ret = _kdc_db_fetch4 (context, config, name, instance, 
+    ret = _kdc_db_fetch4 (context, config, name, instance,
 			  config->v4_realm, HDB_F_GET_SERVER, &server_entry);
     if (ret) {
 	kdc_log(context, config, 0, "Server not found in database: %s: %s",
@@ -700,7 +700,7 @@ do_getticket (krb5_context context,
 	goto out;
     }
 
-    ret = _kdc_db_fetch4 (context, config, "krbtgt", 
+    ret = _kdc_db_fetch4 (context, config, "krbtgt",
 		     config->v4_realm, config->v4_realm, HDB_F_GET_KRBTGT, &krbtgt_entry);
     if (ret) {
 	kdc_log(context, config, 0,
@@ -735,7 +735,7 @@ do_getticket (krb5_context context,
 	char *sname = NULL;
 	char *sinstance = NULL;
 
-	ret = _krb5_krb_decomp_ticket(context, &aticket, &kkey->key, 
+	ret = _krb5_krb_decomp_ticket(context, &aticket, &kkey->key,
 				      config->v4_realm, &sname,
 				      &sinstance, &ad);
 	if (ret) {
@@ -773,7 +773,7 @@ do_getticket (krb5_context context,
     kdc_log(context, config, 0, "TGS-REQ (kaserver) %s from %s for %s",
 	    client_name, from, server_name);
 
-    ret = _kdc_db_fetch4 (context, config, 
+    ret = _kdc_db_fetch4 (context, config,
 			  ad.pname, ad.pinst, ad.prealm, HDB_F_GET_CLIENT,
 			  &client_entry);
     if(ret && ret != HDB_ERR_NOENTRY) {
@@ -784,14 +784,14 @@ do_getticket (krb5_context context,
 	goto out;
     }
     if (client_entry == NULL && strcmp(ad.prealm, config->v4_realm) == 0) {
-	kdc_log(context, config, 0, 
+	kdc_log(context, config, 0,
 		"Local client not found in database: (krb4) "
 		"%s", client_name);
 	make_error_reply (hdr, KANOENT, reply);
 	goto out;
     }
 
-    ret = _kdc_check_flags (context, config, 
+    ret = _kdc_check_flags (context, config,
 			    client_entry, client_name,
 			    server_entry, server_name,
 			    FALSE);
@@ -840,7 +840,7 @@ do_getticket (krb5_context context,
 
     life = _krb5_krb_time_to_life(kdc_time, kdc_time + max_life);
 
-    create_reply_ticket (context, 
+    create_reply_ticket (context,
 			 hdr, skey,
 			 ad.pname, ad.pinst, ad.prealm,
 			 addr, life, server_entry->entry.kvno,
@@ -848,7 +848,7 @@ do_getticket (krb5_context context,
 			 name, instance,
 			 0, "gtkt",
 			 &ad.session, reply);
-    
+
  out:
     _krb5_krb_free_auth_data(context, &ad);
     if (aticket.length) {
@@ -872,7 +872,7 @@ do_getticket (krb5_context context,
 }
 
 krb5_error_code
-_kdc_do_kaserver(krb5_context context, 
+_kdc_do_kaserver(krb5_context context,
 		 krb5_kdc_configuration *config,
 		 unsigned char *buf,
 		 size_t len,

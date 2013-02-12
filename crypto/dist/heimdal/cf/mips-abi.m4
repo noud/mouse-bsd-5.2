@@ -23,7 +23,7 @@ if test -n "$GCC"; then
 #
 # Don't you just love *all* the different SGI ABIs?
 
-case "${with_mips_abi}" in 
+case "${with_mips_abi}" in
         32|o32) abi='-mabi=32';  abilibdirext=''     ;;
        n32|yes) abi='-mabi=n32'; abilibdirext='32'  ;;
         64) abi='-mabi=64';  abilibdirext='64'   ;;
@@ -48,7 +48,7 @@ AC_MSG_RESULT($ac_res)
 if test $ac_res = no; then
 # Try to figure out why that failed...
 case $abi in
-	-mabi=32) 
+	-mabi=32)
 	save_CFLAGS="$CFLAGS"
 	CFLAGS="$CFLAGS -mabi=n32"
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]],[[int x;]])],[ac_res=yes],[ac_res=no])dnl

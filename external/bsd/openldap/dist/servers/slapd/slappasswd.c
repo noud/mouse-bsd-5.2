@@ -163,7 +163,7 @@ slappasswd( int argc, char *argv[] )
 
 	if( argc - optind != 0 ) {
 		usage( progname );
-	} 
+	}
 
 	if( pwfile != NULL ) {
 		if( lutil_get_filed_password( pwfile, &passwd )) {
@@ -175,7 +175,7 @@ slappasswd( int argc, char *argv[] )
 			char *cknewpw;
 			newpw = ch_strdup(getpassphrase("New password: "));
 			cknewpw = getpassphrase("Re-enter new password: ");
-	
+
 			if( strcmp( newpw, cknewpw )) {
 				fprintf( stderr, "Password values do not match\n" );
 				return EXIT_FAILURE;

@@ -212,7 +212,7 @@ check_scope( BackendDB *be, AccessControl *a )
 			ber_len_t	rebuflen;
 			regex_t		re;
 			int		rc;
-			
+
 			/* add trailing '$' to database suffix to form
 			 * a simple trial regex pattern "<suffix>$" */
 			AC_MEMCPY( dnbuf, be->be_nsuffix[0].bv_val,
@@ -423,12 +423,12 @@ parse_acl(
 							a->acl_dn_style = ACL_STYLE_BASE;
 							ber_str2bv( right, 0, 1, &a->acl_dn_pat );
 
-						} else if ( strcmp(right, "*") == 0 
-							|| strcmp(right, ".*") == 0 
-							|| strcmp(right, ".*$") == 0 
-							|| strcmp(right, "^.*") == 0 
+						} else if ( strcmp(right, "*") == 0
+							|| strcmp(right, ".*") == 0
+							|| strcmp(right, ".*$") == 0
+							|| strcmp(right, "^.*") == 0
 							|| strcmp(right, "^.*$") == 0
-							|| strcmp(right, ".*$$") == 0 
+							|| strcmp(right, ".*$$") == 0
 							|| strcmp(right, "^.*$$") == 0 )
 						{
 							ber_str2bv( "*", STRLENOF("*"), 1, &a->acl_dn_pat );
@@ -478,7 +478,7 @@ parse_acl(
 				} else if ( strncasecmp( left, "val", 3 ) == 0 ) {
 					struct berval	bv;
 					char		*mr;
-					
+
 					if ( !BER_BVISEMPTY( &a->acl_attrval ) ) {
 						Debug( LDAP_DEBUG_ANY,
 				"%s: line %d: attr val already specified in to clause.\n",
@@ -517,14 +517,14 @@ parse_acl(
 								"matching rule \"%s\" use "
 								"with attr \"%s\" not appropriate.",
 								mr, a->acl_attrs[ 0 ].an_name.bv_val );
-								
+
 
 							Debug( LDAP_DEBUG_ANY, "%s: line %d: %s\n",
 								fname, lineno, buf );
 							goto fail;
 						}
 					}
-					
+
 					if ( style != NULL ) {
 						if ( strcasecmp( style, "regex" ) == 0 ) {
 							int e = regcomp( &a->acl_attrval_re, bv.bv_val,
@@ -578,7 +578,7 @@ parse_acl(
 										style,
 										a->acl_attrs[0].an_desc->ad_cname.bv_val );
 
-									Debug( LDAP_DEBUG_CONFIG | LDAP_DEBUG_ACL, 
+									Debug( LDAP_DEBUG_CONFIG | LDAP_DEBUG_ACL,
 										"%s: line %d: %s\n",
 										fname, lineno, buf );
 									goto fail;
@@ -594,7 +594,7 @@ parse_acl(
 										bv.bv_val,
 										a->acl_attrs[0].an_desc->ad_cname.bv_val,
 										rc );
-									Debug( LDAP_DEBUG_ANY, 
+									Debug( LDAP_DEBUG_ANY,
 										"%s: line %d: %s\n",
 										fname, lineno, buf );
 									goto fail;
@@ -606,7 +606,7 @@ parse_acl(
 								snprintf( buf, sizeof( buf ),
 									"unknown val.<style> \"%s\" for attributeType \"%s\".",
 									style, a->acl_attrs[0].an_desc->ad_cname.bv_val );
-								Debug( LDAP_DEBUG_CONFIG | LDAP_DEBUG_ACL, 
+								Debug( LDAP_DEBUG_CONFIG | LDAP_DEBUG_ACL,
 									"%s: line %d: %s\n",
 									fname, lineno, buf );
 								goto fail;
@@ -662,16 +662,16 @@ parse_acl(
 				}
 			}
 
-			if ( !BER_BVISNULL( &a->acl_dn_pat ) && 
+			if ( !BER_BVISNULL( &a->acl_dn_pat ) &&
 					ber_bvccmp( &a->acl_dn_pat, '*' ) )
 			{
 				free( a->acl_dn_pat.bv_val );
 				BER_BVZERO( &a->acl_dn_pat );
 				a->acl_dn_style = ACL_STYLE_REGEX;
 			}
-			
+
 			if ( !BER_BVISEMPTY( &a->acl_dn_pat ) ||
-					a->acl_dn_style != ACL_STYLE_REGEX ) 
+					a->acl_dn_style != ACL_STYLE_REGEX )
 			{
 				if ( a->acl_dn_style != ACL_STYLE_REGEX ) {
 					struct berval bv;
@@ -1018,7 +1018,7 @@ parse_acl(
 								"\"expand\" used with no expansions in \"pattern\".\n",
 								fname, lineno, 0 );
 							goto fail;
-						} 
+						}
 					}
 					if ( sty == ACL_STYLE_SELF ) {
 						bdn->a_self_level = level;
@@ -1371,7 +1371,7 @@ parse_acl(
 										fname, lineno, mask );
 									goto fail;
 								}
-							} 
+							}
 
 							b->a_peername_port = -1;
 							if ( port ) {
@@ -1477,7 +1477,7 @@ parse_acl(
 							regtest( fname, lineno, bv.bv_val );
 						}
 						b->a_sockname_pat = bv;
-						
+
 					} else {
 						ber_str2bv( right, 0, 1, &b->a_sockname_pat );
 					}
@@ -1582,7 +1582,7 @@ parse_acl(
 							regtest( fname, lineno, bv.bv_val );
 						}
 						b->a_sockurl_pat = bv;
-						
+
 					} else {
 						ber_str2bv( right, 0, 1, &b->a_sockurl_pat );
 					}
@@ -1601,7 +1601,7 @@ parse_acl(
 							fname, lineno, 0 );
 						sty = ACL_STYLE_EXPAND;
 						/* FALLTHRU */
-						
+
 					case ACL_STYLE_BASE:
 					case ACL_STYLE_EXPAND:
 						break;
@@ -1645,7 +1645,7 @@ parse_acl(
 							"is superseded by \"dynacl/aci\".\n",
 							fname, lineno, 0 );
 						name = "aci";
-						
+
 					} else
 #endif /* tolerate legacy "aci" <who> */
 					if ( strncasecmp( left, "dynacl/", STRLENOF( "dynacl/" ) ) == 0 ) {
@@ -1829,7 +1829,7 @@ parse_acl(
 				break;
 			}
 
-			if ( i == argc || ( strcasecmp( left, "stop" ) == 0 ) ) { 
+			if ( i == argc || ( strcasecmp( left, "stop" ) == 0 ) ) {
 				/* out of arguments or plain stop */
 
 				ACL_PRIV_ASSIGN( b->a_access_mask, ACL_PRIV_ADDITIVE );
@@ -1942,7 +1942,7 @@ parse_acl(
 			print_acl( be, a );
 		}
 #endif
-	
+
 		if ( a->acl_access == NULL ) {
 			Debug( LDAP_DEBUG_ANY, "%s: line %d: "
 				"warning: no by clause(s) specified in access line.\n",
@@ -1983,7 +1983,7 @@ parse_acl(
 						"backend naming context\n",
 						fname, lineno, 0 );
 					break;
-	
+
 				case ACL_SCOPE_ERR:
 					Debug( LDAP_DEBUG_ACL, "%s: line %d: warning: "
 						"ACL appears to be out of scope within "
@@ -2058,7 +2058,7 @@ accessmask2str( slap_mask_t mask, char *buf, int debug )
 		} else {
 			ptr = lutil_strcopy( ptr, "unknown" );
 		}
-		
+
 		if ( !debug ) {
 			*ptr = '\0';
 			return buf;
@@ -2079,7 +2079,7 @@ accessmask2str( slap_mask_t mask, char *buf, int debug )
 	if ( ACL_PRIV_ISSET(mask, ACL_PRIV_MANAGE) ) {
 		none = 0;
 		*ptr++ = 'm';
-	} 
+	}
 
 	if ( ACL_PRIV_ISSET(mask, ACL_PRIV_WRITE) ) {
 		none = 0;
@@ -2092,37 +2092,37 @@ accessmask2str( slap_mask_t mask, char *buf, int debug )
 	} else if ( ACL_PRIV_ISSET(mask, ACL_PRIV_WDEL) ) {
 		none = 0;
 		*ptr++ = 'z';
-	} 
+	}
 
 	if ( ACL_PRIV_ISSET(mask, ACL_PRIV_READ) ) {
 		none = 0;
 		*ptr++ = 'r';
-	} 
+	}
 
 	if ( ACL_PRIV_ISSET(mask, ACL_PRIV_SEARCH) ) {
 		none = 0;
 		*ptr++ = 's';
-	} 
+	}
 
 	if ( ACL_PRIV_ISSET(mask, ACL_PRIV_COMPARE) ) {
 		none = 0;
 		*ptr++ = 'c';
-	} 
+	}
 
 	if ( ACL_PRIV_ISSET(mask, ACL_PRIV_AUTH) ) {
 		none = 0;
 		*ptr++ = 'x';
-	} 
+	}
 
 	if ( ACL_PRIV_ISSET(mask, ACL_PRIV_DISCLOSE) ) {
 		none = 0;
 		*ptr++ = 'd';
-	} 
+	}
 
 	if ( none && ACL_PRIV_ISSET(mask, ACL_PRIV_NONE) ) {
 		none = 0;
 		*ptr++ = '0';
-	} 
+	}
 
 	if ( none ) {
 		ptr = buf;
@@ -2286,7 +2286,7 @@ acl_usage( void )
 
 /*
  * Set pattern to a "normalized" DN from src.
- * At present it simply eats the (optional) space after 
+ * At present it simply eats the (optional) space after
  * a RDN separator (,)
  * Eventually will evolve in a more complete normalization
  */
@@ -2304,10 +2304,10 @@ acl_regex_normalized_dn(
 	for ( p = str; p && p[0]; p++ ) {
 		/* escape */
 		if ( p[0] == '\\' && p[1] ) {
-			/* 
+			/*
 			 * if escaping a hex pair we should
-			 * increment p twice; however, in that 
-			 * case the second hex number does 
+			 * increment p twice; however, in that
+			 * case the second hex number does
 			 * no harm
 			 */
 			p++;
@@ -2315,7 +2315,7 @@ acl_regex_normalized_dn(
 
 		if ( p[0] == ',' && p[1] == ' ' ) {
 			char *q;
-			
+
 			/*
 			 * too much space should be an error if we are pedantic
 			 */
@@ -2563,7 +2563,7 @@ dnaccess2text( slap_dn_access *bdn, char *ptr, int is_realdn )
 		if ( is_realdn ) {
 			assert( ! ber_bvccmp( &bdn->a_pat, '*' ) );
 		}
-			
+
 		ptr = lutil_strcopy( ptr, bdn->a_pat.bv_val );
 		if ( bdn->a_style == ACL_STYLE_SELF && bdn->a_self_level != 0 ) {
 			int n = sprintf( ptr, ".level{%d}", bdn->a_self_level );
@@ -2576,7 +2576,7 @@ dnaccess2text( slap_dn_access *bdn, char *ptr, int is_realdn )
 		ptr = lutil_strcopy( ptr, "dn." );
 		if ( bdn->a_style == ACL_STYLE_BASE )
 			ptr = lutil_strcopy( ptr, style_base );
-		else 
+		else
 			ptr = lutil_strcopy( ptr, style_strings[bdn->a_style] );
 		if ( bdn->a_style == ACL_STYLE_LEVEL ) {
 			int n = sprintf( ptr, "{%d}", bdn->a_level );
@@ -2702,7 +2702,7 @@ access2text( Access *b, char *ptr )
 
 	/* Security Strength Factors */
 	if ( b->a_authz.sai_ssf ) {
-		ptr += sprintf( ptr, " ssf=%u", 
+		ptr += sprintf( ptr, " ssf=%u",
 			b->a_authz.sai_ssf );
 	}
 	if ( b->a_authz.sai_transport_ssf ) {

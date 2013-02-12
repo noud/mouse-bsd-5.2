@@ -43,7 +43,7 @@ __RCSID("$NetBSD: auth2-chall.c,v 1.20 2008/04/06 23:38:19 christos Exp $");
 #include "log.h"
 #include "servconf.h"
 
-/* import */    
+/* import */
 extern ServerOptions options;
 
 static int auth2_challenge_start(Authctxt *);

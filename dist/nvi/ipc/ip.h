@@ -72,7 +72,7 @@ typedef int (*IPFunc) (struct _ip_vi_win *);
 typedef int (*IPFunc_1) (struct _ip_vi_win *, u_int32_t);
 typedef int (*IPFunc_1a) (struct _ip_vi_win *, u_int32_t, const char *, u_int32_t);
 typedef int (*IPFunc_a) (struct _ip_vi_win *, const char *, u_int32_t);
-typedef int (*IPFunc_ab1) (struct _ip_vi_win *, const char *, u_int32_t, 
+typedef int (*IPFunc_ab1) (struct _ip_vi_win *, const char *, u_int32_t,
 			    const char *, u_int32_t, u_int32_t);
 typedef int (*IPFunc_12) (struct _ip_vi_win *, u_int32_t, u_int32_t);
 typedef int (*IPFunc_123) (struct _ip_vi_win *, u_int32_t, u_int32_t, u_int32_t);
@@ -113,7 +113,7 @@ typedef struct ip_si_operations {
     IPFunc_a	waddstr;
 } IPSIOPS;
 
-struct _ip_vi;	
+struct _ip_vi;
 typedef struct _ip_vi IPVI;
 
 struct _ip_vi_win;

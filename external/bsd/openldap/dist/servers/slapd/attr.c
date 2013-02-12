@@ -86,7 +86,7 @@ attr_alloc( AttributeDescription *ad )
 	attr_list = a->a_next;
 	a->a_next = NULL;
 	ldap_pvt_thread_mutex_unlock( &attr_mutex );
-	
+
 	a->a_desc = ad;
 
 	return a;
@@ -487,7 +487,7 @@ attr_merge(
 
 /*
  * if a normalization function is defined for the equality matchingRule
- * of desc, the value is normalized and stored in nval; otherwise nval 
+ * of desc, the value is normalized and stored in nval; otherwise nval
  * is NULL
  */
 int
@@ -506,7 +506,7 @@ attr_normalize(
 		desc->ad_type->sat_equality->smr_normalize )
 	{
 		int	i;
-		
+
 		for ( i = 0; !BER_BVISNULL( &vals[i] ); i++ );
 
 		nvals = slap_sl_calloc( sizeof(struct berval), i + 1, memctx );
@@ -578,7 +578,7 @@ attr_merge_one(
 
 /*
  * if a normalization function is defined for the equality matchingRule
- * of desc, the value is normalized and stored in nval; otherwise nval 
+ * of desc, the value is normalized and stored in nval; otherwise nval
  * is NULL
  */
 int

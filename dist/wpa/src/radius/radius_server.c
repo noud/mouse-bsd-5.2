@@ -533,7 +533,7 @@ static int radius_server_request(struct radius_server_data *data,
 			     "message");
 		return -1;
 	}
-		      
+
 	eap = radius_msg_get_eap(msg, &eap_len);
 	if (eap == NULL) {
 		RADIUS_DEBUG("No EAP-Message in RADIUS packet from %s",

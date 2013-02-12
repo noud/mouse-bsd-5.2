@@ -124,9 +124,9 @@ int slap_str2ad(
 }
 
 static char *strchrlen(
-	const char *beg, 
+	const char *beg,
 	const char *end,
-	const char ch, 
+	const char ch,
 	int *len )
 {
 	const char *p;
@@ -206,13 +206,13 @@ int slap_bv2ad(
 
 	for( opt=options; opt != NULL; opt=next ) {
 		int optlen;
-		opt++; 
+		opt++;
 		next = strchrlen( opt, optn, ';', &optlen );
 
 		if( optlen == 0 ) {
 			*text = "zero length option is invalid";
 			return rtn;
-		
+
 		} else if ( optlen == STRLENOF("binary") &&
 			strncasecmp( opt, "binary", STRLENOF("binary") ) == 0 )
 		{
@@ -442,7 +442,7 @@ done:;
 }
 
 static int is_ad_subtags(
-	struct berval *subtagsbv, 
+	struct berval *subtagsbv,
 	struct berval *suptagsbv )
 {
 	const char *suptags, *supp, *supdelimp, *supn;
@@ -517,7 +517,7 @@ int ad_inlist(
 	for( ; attrs->an_name.bv_val; attrs++ ) {
 		AttributeType *a;
 		ObjectClass *oc;
-		
+
 		if ( attrs->an_desc ) {
 			int lr;
 
@@ -532,7 +532,7 @@ int ad_inlist(
 			if ( attrs->an_name.bv_val[0] == '-' ) {
 				continue;
 			}
-			
+
 			/* Is this a subtype of the requested attr? */
 			for (a = desc->ad_type; a; a=a->sat_sup) {
 				if ( a == attrs->an_desc->ad_type )
@@ -612,7 +612,7 @@ int ad_inlist(
 				if( oc->soc_required ) {
 					/* allow return of required attributes */
 					int i;
-				
+
    					for ( i = 0; oc->soc_required[i] != NULL; i++ ) {
 						for (a = desc->ad_type; a; a=a->sat_sup) {
 							if ( a == oc->soc_required[i] ) {
@@ -636,7 +636,7 @@ int ad_inlist(
 
 				return 1;
 			}
-			
+
 			if ( oc == slap_schema.si_oc_extensibleObject ) {
 				/* extensibleObject allows the return of anything */
 				return 1;
@@ -645,7 +645,7 @@ int ad_inlist(
 			if( oc->soc_required ) {
 				/* allow return of required attributes */
 				int i;
-				
+
    				for ( i = 0; oc->soc_required[i] != NULL; i++ ) {
 					for (a = desc->ad_type; a; a=a->sat_sup) {
 						if ( a == oc->soc_required[i] ) {
@@ -737,10 +737,10 @@ int slap_bv2undef_ad(
 			*text = NULL;
 			return LDAP_UNDEFINED_TYPE;
 		}
-	
+
 		desc = ch_malloc(sizeof(AttributeDescription) + 1 +
 			bv->bv_len);
-		
+
 		desc->ad_flags = SLAP_DESC_NONE;
 		BER_BVZERO( &desc->ad_tags );
 
@@ -872,7 +872,7 @@ an_find(
  * and the remaining name is tried again; if a '@' (or '+') is
  * prepended, an objectclass name is searched instead; if a '!'
  * is prepended, the objectclass name is negated.
- * 
+ *
  * NOTE: currently, if a valid attribute name is not found, the
  * same string is also checked as valid objectclass name; however,
  * this behavior is deprecated.
@@ -893,7 +893,7 @@ str2anlist( AttributeName *an, char *in, const char *brkstr )
 		for ( i = 0; !BER_BVISNULL( &an[ i ].an_name ) ; i++)
 			;
 	}
-	
+
 	/* protect the input string from strtok */
 	str = ch_strdup( in );
 
@@ -996,7 +996,7 @@ char **anlist2charray_x( AttributeName *an, int dup, void *ctx )
 {
     char **attrs;
     int i;
-                                                                                
+
     if ( an != NULL ) {
         for ( i = 0; !BER_BVISNULL( &an[i].an_name ); i++ )
             ;
@@ -1011,7 +1011,7 @@ char **anlist2charray_x( AttributeName *an, int dup, void *ctx )
     } else {
         attrs = NULL;
     }
-                                                                                
+
     return attrs;
 }
 
@@ -1042,11 +1042,11 @@ anlist2attrs( AttributeName * anlist )
 
 	if ( i == 0 )
 		return NULL;
-                                                                                
+
 	attrs = anlist2charray( anlist, 1 );
-                                                                                
+
 	n = i;
-                                                                                
+
 	if ( k )
 		attrs = (char **) ch_realloc( attrs, (i + k + 1) * sizeof( char * ));
 
@@ -1062,7 +1062,7 @@ anlist2attrs( AttributeName * anlist )
 			}
 		}
 	}
-	
+
 	if ( attrs )
 		attrs[n] = NULL;
 

@@ -260,7 +260,7 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-propdelay$(EXEEXT): $(propdelay_OBJECTS) $(propdelay_DEPENDENCIES) 
+propdelay$(EXEEXT): $(propdelay_OBJECTS) $(propdelay_DEPENDENCIES)
 	@rm -f propdelay$(EXEEXT)
 	$(LINK) $(propdelay_LDFLAGS) $(propdelay_OBJECTS) $(propdelay_LDADD) $(LIBS)
 

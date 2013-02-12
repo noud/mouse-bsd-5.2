@@ -55,7 +55,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -394,7 +394,7 @@ redec:			uerror("redeclaration of %s", p->sname);
 		else
 			oalloc(p, &argoff);
 		break;
-		
+
 	case STATIC:
 	case EXTDEF:
 	case EXTERN:
@@ -598,7 +598,7 @@ defstr(struct symtab *sp, int class)
 {
 	sp->ssue = permalloc(sizeof(struct suedef));
 	sp->ssue->suesize = 0;
-	sp->ssue->sylnk = NULL; 
+	sp->ssue->sylnk = NULL;
 	sp->ssue->suealign = 0;
 	sp->sclass = class;
 	if (class == STNAME)
@@ -873,10 +873,10 @@ soumemb(NODE *n, char *name, int class)
 {
 	struct symtab *sp, *lsp;
 	int incomp;
- 
+
 	if (rpole == NULL)
 		cerror("soumemb");
- 
+
 	lsp = NULL;
 	for (sp = rpole->rb; sp != NULL; lsp = sp, sp = sp->snext)
 		if (sp->sname == name)

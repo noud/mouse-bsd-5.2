@@ -105,7 +105,7 @@ static safe_string *
 new_safe_string(int size)
 {
 	safe_string * ss;
-	
+
 	ss = LDAP_MALLOC(sizeof(safe_string));
 	if ( !ss )
 		return(NULL);
@@ -240,7 +240,7 @@ print_qdescrlist(safe_string *ss, char **sa)
 {
 	char **sp;
 	int ret = 0;
-	
+
 	for (sp=sa; *sp; sp++) {
 		ret = print_qdescr(ss,*sp);
 	}
@@ -379,7 +379,7 @@ struct berval *
 ldap_syntax2bv( LDAPSyntax * syn, struct berval *bv )
 {
 	safe_string * ss;
-	
+
 	ss = new_safe_string(256);
 	if ( !ss )
 		return NULL;
@@ -421,7 +421,7 @@ struct berval *
 ldap_matchingrule2bv( LDAPMatchingRule * mr, struct berval *bv )
 {
 	safe_string * ss;
-	
+
 	ss = new_safe_string(256);
 	if ( !ss )
 		return NULL;
@@ -480,7 +480,7 @@ struct berval *
 ldap_matchingruleuse2bv( LDAPMatchingRuleUse * mru, struct berval *bv )
 {
 	safe_string * ss;
-	
+
 	ss = new_safe_string(256);
 	if ( !ss )
 		return NULL;
@@ -539,7 +539,7 @@ struct berval *
 ldap_objectclass2bv( LDAPObjectClass * oc, struct berval *bv )
 {
 	safe_string * ss;
-	
+
 	ss = new_safe_string(256);
 	if ( !ss )
 		return NULL;
@@ -587,7 +587,7 @@ ldap_objectclass2bv( LDAPObjectClass * oc, struct berval *bv )
 		break;
 	}
 	print_whsp(ss);
-	
+
 	if ( oc->oc_at_oids_must ) {
 		print_literal(ss,"MUST");
 		print_whsp(ss);
@@ -628,7 +628,7 @@ struct berval *
 ldap_contentrule2bv( LDAPContentRule * cr, struct berval *bv )
 {
 	safe_string * ss;
-	
+
 	ss = new_safe_string(256);
 	if ( !ss )
 		return NULL;
@@ -707,7 +707,7 @@ struct berval *
 ldap_structurerule2bv( LDAPStructureRule * sr, struct berval *bv )
 {
 	safe_string * ss;
-	
+
 	ss = new_safe_string(256);
 	if ( !ss )
 		return NULL;
@@ -771,7 +771,7 @@ struct berval *
 ldap_nameform2bv( LDAPNameForm * nf, struct berval *bv )
 {
 	safe_string * ss;
-	
+
 	ss = new_safe_string(256);
 	if ( !ss )
 		return NULL;
@@ -840,7 +840,7 @@ struct berval *
 ldap_attributetype2bv(  LDAPAttributeType * at, struct berval *bv )
 {
 	safe_string * ss;
-	
+
 	ss = new_safe_string(256);
 	if ( !ss )
 		return NULL;
@@ -926,7 +926,7 @@ ldap_attributetype2bv(  LDAPAttributeType * at, struct berval *bv )
 			break;
 		}
 	}
-	
+
 	print_whsp(ss);
 
 	print_extensions(ss, at->at_extensions);
@@ -1047,7 +1047,7 @@ get_token( const char ** sp, char ** token_val )
 /*  		kind = TK_UNEXPCHAR; */
 /*  		break; */
 	}
-	
+
 	return kind;
 }
 
@@ -1276,7 +1276,7 @@ parse_noidlen(const char **sp, int *code, int *len, int flags)
 			return NULL;
 		}
 		(*sp)++;
-	}		
+	}
 	if ( allow_quoted && quoted ) {
 		if ( **sp == '\'' ) {
 			(*sp)++;

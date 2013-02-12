@@ -321,7 +321,7 @@ primary(enum token n)
 
 	if (t_lex(t_wp[1]), t_wp_op && t_wp_op->op_type == BINOP) {
 		return binop();
-	}	  
+	}
 
 	return strlen(*t_wp) > 0;
 }
@@ -338,7 +338,7 @@ binop(void)
 
 	if ((opnd2 = *++t_wp) == NULL)
 		syntax(op->op_text, "argument expected");
-		
+
 	switch (op->op_num) {
 	case STREQ:
 		return strcmp(opnd1, opnd2) == 0;
@@ -450,21 +450,21 @@ binop(void)
  * totally useless for the case in question since its 'test -w' and 'test -r'
  * can never fail for root for any existing files, i.e. files for which 'test
  * -e' succeeds.)
- * 
+ *
  * The rationale for 1003.1-2001 suggests that the wording was "clarified" in
  * 1003.1-2001 to align with the 1003.2b draft.  1003.2b Draft 12 (July 1999),
  * which is the latest copy I have, does carry the same suggested wording as is
  * in 1003.1-2001, with its rationale saying:
- * 
+ *
  * 	This change is a clarification and is the result of interpretation
  * 	request PASC 1003.2-92 #23 submitted for IEEE Std 1003.2-1992.
- * 
+ *
  * That interpretation can be found here:
- * 
+ *
  *   http://www.pasc.org/interps/unofficial/db/p1003.2/pasc-1003.2-23.html
- * 
+ *
  * Not terribly helpful, unfortunately.  I wonder who that fence sitter was.
- * 
+ *
  * Worse, IMVNSHO, I think the authors of 1003.2b-D12 have mis-interpreted the
  * PASC interpretation and appear to be gone against at least one widely used
  * implementation (namely 4.4BSD).  The problem is that for file access by root
@@ -474,17 +474,17 @@ binop(void)
  * the output of 'ls -l'.  This was widely considered to be a bug in V7's
  * "test" and is, I believe, one of the reasons why direct use of access() was
  * avoided in some more recent implementations!
- * 
+ *
  * I have always interpreted '-r' to match '-w' and '-x' as per the original
  * wording in 1003.2-1992, not the other way around.  I think 1003.2b goes much
  * too far the wrong way without any valid rationale and that it's best if we
  * stick with 1003.2-1992 and test the flags, and not mimic the behaviour of
  * open() since we already know very well how it will work -- existance of the
  * file is all that matters to open() for root.
- * 
+ *
  * Unfortunately the SVID is no help at all (which is, I guess, partly why
  * we're in this mess in the first place :-).
- * 
+ *
  * The SysV implementation (at least in the 'test' builtin in /bin/sh) does use
  * access(name, 2) even though it also goes to much greater lengths for '-x'
  * matching the 1003.2-1992 definition (which is no doubt where that definition
@@ -497,7 +497,7 @@ binop(void)
 static int
 test_access(struct stat *sp, mode_t stmode)
 {
-	gid_t *groups; 
+	gid_t *groups;
 	register int n;
 	uid_t euid;
 	int maxgroups;
@@ -660,7 +660,7 @@ isoperand(void)
 	if ((t = *(t_wp+2)) == 0)
 		return 0;
 	if ((op = findop(s)) != NULL)
-		return op->op_type == BINOP && (t[0] != ')' || t[1] != '\0'); 
+		return op->op_type == BINOP && (t[0] != ')' || t[1] != '\0');
 	return 0;
 }
 
@@ -680,7 +680,7 @@ getn(const char *s)
 
 	while (isspace((unsigned char)*p))
 	      p++;
-	
+
 	if (*p || p == s)
 	      error("%s: bad number", s);
 

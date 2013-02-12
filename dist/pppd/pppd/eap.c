@@ -200,7 +200,7 @@ static void eap_rechallenge __P((void *));
 static void srp_lwrechallenge __P((void *));
 static void eap_send_response __P((eap_state *, u_char, u_char, u_char *, int));
 static void eap_chap_response __P((eap_state *, u_char, u_char *, char *, int));
-static void eap_send_nak __P((eap_state *,u_char,u_char)); 
+static void eap_send_nak __P((eap_state *,u_char,u_char));
 static void eap_request __P((eap_state *, u_char *, int, int));
 static void eap_response __P((eap_state *, u_char *, int, int));
 static void eap_success __P((eap_state *, u_char *, int, int));
@@ -294,7 +294,7 @@ eap_state *esp;
 	u_char *outp;
 
 	outp = outpacket_buf;
-    
+
 	MAKEHEADER(outp, PPP_EAP);
 
 	PUTCHAR(EAP_FAILURE, outp);
@@ -319,7 +319,7 @@ eap_state *esp;
 	u_char *outp;
 
 	outp = outpacket_buf;
-    
+
 	MAKEHEADER(outp, PPP_EAP);
 
 	PUTCHAR(EAP_SUCCESS, outp);
@@ -707,7 +707,7 @@ eap_state *esp;
 	}
 
 	outp = outpacket_buf;
-    
+
 	MAKEHEADER(outp, PPP_EAP);
 
 	PUTCHAR(EAP_REQUEST, outp);
@@ -1107,7 +1107,7 @@ int namelen;
 	int msglen;
 
 	outp = outpacket_buf;
-    
+
 	MAKEHEADER(outp, PPP_EAP);
 
 	PUTCHAR(EAP_RESPONSE, outp);
@@ -1143,7 +1143,7 @@ int lenstr;
 	int msglen;
 
 	outp = outpacket_buf;
-    
+
 	MAKEHEADER(outp, PPP_EAP);
 
 	PUTCHAR(EAP_RESPONSE, outp);
@@ -1174,7 +1174,7 @@ u_char *str;
 	int msglen;
 
 	outp = outpacket_buf;
-    
+
 	MAKEHEADER(outp, PPP_EAP);
 
 	PUTCHAR(EAP_RESPONSE, outp);

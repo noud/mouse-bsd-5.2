@@ -56,7 +56,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 /*
@@ -518,7 +518,7 @@ nametree(struct symtab *sp)
 #ifndef NO_C_BUILTINS
 	if (sp->sname[0] == '_' && strncmp(sp->sname, "__builtin_", 10) == 0)
 		return p;  /* do not touch builtins here */
-	
+
 #endif
 
 	if (sp->sflags & STNODE) {
@@ -861,7 +861,7 @@ stref(NODE *p)
 //		int sz = tsize(s->stype, s->sdf, s->ssue);
 //		int al = talign(s->stype, s->ssue);
 //		int sz1 = al - (off % al);
-		
+
 	}
 #endif
 
@@ -1197,7 +1197,7 @@ tymatch(p)  register NODE *p; {
 #if 0
 	else if (t1==SHORT || t2==SHORT)
 		t = SHORT;
-	else 
+	else
 		t = CHAR;
 #endif
 
@@ -1335,18 +1335,18 @@ icons(NODE *p)
 	return(val);
 }
 
-/* 
+/*
  * the intent of this table is to examine the
  * operators, and to check them for
  * correctness.
- * 
+ *
  * The table is searched for the op and the
  * modified type (where this is one of the
  * types INT (includes char and short), LONG,
  * DOUBLE (includes FLOAT), and POINTER
- * 
+ *
  * The default action is to make the node type integer
- * 
+ *
  * The actions taken include:
  * 	PUN	  check for puns
  * 	CVTL	  convert the left operand
@@ -1360,7 +1360,7 @@ icons(NODE *p)
  * 	NCVT	  do not convert the operands
  * 	OTHER	  handled by code
  * 	NCVTR	  convert the left operand, not the right...
- * 
+ *
  */
 
 # define MINT 01	/* integer */
@@ -1697,13 +1697,13 @@ andorbr(NODE *p, int true, int false)
 	int o, lab;
 
 	lab = -1;
-	switch (o = p->n_op) { 
+	switch (o = p->n_op) {
 	case EQ:
 	case NE:
 		/*
 		 * Remove redundant EQ/NE nodes.
 		 */
-		while (((o = p->n_left->n_op) == EQ || o == NE) && 
+		while (((o = p->n_left->n_op) == EQ || o == NE) &&
 		    p->n_right->n_op == ICON) {
 			o = p->n_op;
 			q = p->n_left;
@@ -1723,7 +1723,7 @@ andorbr(NODE *p, int true, int false)
 //					p->n_op = EQ; /* toggla */
 			} else
 				break; /* XXX - should always be false */
-			
+
 		}
 		/* FALLTHROUGH */
 	case LE:
@@ -1972,7 +1972,7 @@ delasgop(NODE *p)
 			/* Now the left side of node p has no side effects. */
 			/* side effects on the right side must be obeyed */
 			p = delasgop(p);
-			
+
 			r = buildtree(ASSIGN, r, ll);
 			r = delasgop(r);
 			ecode(r);
@@ -1988,7 +1988,7 @@ delasgop(NODE *p)
 			p->n_right = delasgop(p->n_right);
 			p->n_right = clocal(p->n_right);
 		}
-		
+
 	} else {
 		if (coptype(p->n_op) == LTYPE)
 			return p;
@@ -2024,7 +2024,7 @@ ecomp(NODE *p)
 
 
 #if defined(MULTIPASS)
-void	
+void
 p2tree(NODE *p)
 {
 	struct symtab *q;
@@ -2218,15 +2218,15 @@ delvoid(NODE *p)
 		} else
 			p->n_type = (p->n_type & ~BTMASK) | BOOL_TYPE;
 	}
-		
+
 }
 
 void
-ecode(NODE *p)	
+ecode(NODE *p)
 {
 	/* walk the tree and write out the nodes.. */
 
-	if (nerrors)	
+	if (nerrors)
 		return;
 
 	p = optim(p);
@@ -2234,8 +2234,8 @@ ecode(NODE *p)
 	walkf(p, delvoid);
 #ifdef PCC_DEBUG
 	if (xdebug) {
-		printf("Fulltree:\n"); 
-		fwalk(p, eprint, 0); 
+		printf("Fulltree:\n");
+		fwalk(p, eprint, 0);
 	}
 #endif
 	p2tree(p);
@@ -2400,12 +2400,12 @@ cdope(int op)
 	return 0; /* XXX gcc */
 }
 
-/* 
+/*
  * make a fresh copy of p
  */
 NODE *
-ccopy(NODE *p) 
-{  
+ccopy(NODE *p)
+{
 	NODE *q;
 
 	q = talloc();
@@ -2414,7 +2414,7 @@ ccopy(NODE *p)
 	switch (coptype(q->n_op)) {
 	case BITYPE:
 		q->n_right = ccopy(p->n_right);
-	case UTYPE: 
+	case UTYPE:
 		q->n_left = ccopy(p->n_left);
 	}
 

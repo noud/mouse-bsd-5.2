@@ -25,7 +25,7 @@
 		minutes </i> [<i> tolerance </i>] ]</tt>
 			<dd>This command specifies the complete path and name of the file used to record the frequency of the local clock oscillator. This is the same operation as the <tt>-f</tt> command linke option. If the file exists, it is read at startup in order to set the initial frequency and then updated once per hour with the current frequency computed by the daemon. If the file name is specified, but the file itself does not exist, the starts with an initial frequency of zero and creates the file when writing it for the first time. If this command is not given, the daemon will always start with an initial frequency of zero.
 				<p>The file format consists of a single line containing a single floating point number, which records the frequency offset measured in parts-per-million (PPM). The file is updated by first writing the current drift value into a temporary file and then renaming this file to replace the old version. This implies that <tt>ntpd</tt> must have write permission for the directory the drift file is located in, and that file system links, symbolic or otherwise, should be avoided.</p>
-			
+
 <p>The two optional values determine how often the file is written, and
 are particuarly useful when is it desirable to avoid spinning up the
 disk unnecessarily.  The parameter <tt>minutes</tt> is how often the file will be written.  If omitted or less
@@ -67,21 +67,21 @@ unless the current and previous values are the same.  A tolerance of
 				<dl>
 					<dd>
 						<p>This would just list the synchronizations state of <tt>ntpd</tt> and the major system events. For a simple reference server, the following minimum message configuration could be useful:</p>
-					
+
 				</dl>
-			
+
 			<dd>
 				<p><tt>logconfig=allsync +allclock</tt></p>
 				<dl>
 					<dd>
 						<p>This configuration will list all clock information and synchronization information. All other events and messages about peers, system events and so on is suppressed.</p>
-					
+
 				</dl>
 				<dt><tt>logfile <i>logfile</i></tt>
 				<dl>
 					<dd>
 						<p>This command specifies the location of an alternate log file to be used instead of the default system <tt>syslog</tt> facility. This is the same operation as the <tt>-l </tt>command line option.</p>
-					
+
 				</dl>
 			<dt><tt>phone <i>dial</i>1 <i>dial</i>2 ...</tt>
 				<dl>

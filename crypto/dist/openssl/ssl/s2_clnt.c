@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -63,7 +63,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -121,7 +121,7 @@ static const SSL_METHOD *ssl2_get_client_method(int ver);
 static int get_server_finished(SSL *s);
 static int get_server_verify(SSL *s);
 static int get_server_hello(SSL *s);
-static int client_hello(SSL *s); 
+static int client_hello(SSL *s);
 static int client_master_key(SSL *s);
 static int client_finished(SSL *s);
 static int client_certificate(SSL *s);
@@ -210,7 +210,7 @@ int ssl2_connect(SSL *s)
 			s->init_num=0;
 			s->state=SSL2_ST_GET_SERVER_HELLO_A;
 			BREAK;
-		
+
 		case SSL2_ST_GET_SERVER_HELLO_A:
 		case SSL2_ST_GET_SERVER_HELLO_B:
 			ret=get_server_hello(s);
@@ -219,14 +219,14 @@ int ssl2_connect(SSL *s)
 			if (!s->hit) /* new session */
 				{
 				s->state=SSL2_ST_SEND_CLIENT_MASTER_KEY_A;
-				BREAK; 
+				BREAK;
 				}
 			else
 				{
 				s->state=SSL2_ST_CLIENT_START_ENCRYPTION;
 				break;
 				}
-	
+
 		case SSL2_ST_SEND_CLIENT_MASTER_KEY_A:
 		case SSL2_ST_SEND_CLIENT_MASTER_KEY_B:
 			ret=client_master_key(s);
@@ -324,7 +324,7 @@ end:
 	s->in_handshake--;
 	if (buf != NULL)
 		BUF_MEM_free(buf);
-	if (cb != NULL) 
+	if (cb != NULL)
 		cb(s,SSL_CB_CONNECT_EXIT,ret);
 	return(ret);
 	}
@@ -342,7 +342,7 @@ static int get_server_hello(SSL *s)
 	if (s->state == SSL2_ST_GET_SERVER_HELLO_A)
 		{
 		i=ssl2_read(s,(char *)&(buf[s->init_num]),11-s->init_num);
-		if (i < (11-s->init_num)) 
+		if (i < (11-s->init_num))
 			return(ssl2_part_read(s,SSL_F_GET_SERVER_HELLO,i));
 		s->init_num = 11;
 
@@ -393,7 +393,7 @@ static int get_server_hello(SSL *s)
 	p = buf + 11;
 	if (s->hit)
 		{
-		if (s->s2->tmp.cert_length != 0) 
+		if (s->s2->tmp.cert_length != 0)
 			{
 			SSLerr(SSL_F_GET_SERVER_HELLO,SSL_R_REUSE_CERT_LENGTH_NOT_ZERO);
 			return(-1);
@@ -423,7 +423,7 @@ static int get_server_hello(SSL *s)
 		*/
 #endif
 
-		/* we need to do this in case we were trying to reuse a 
+		/* we need to do this in case we were trying to reuse a
 		 * client session but others are already reusing it.
 		 * If this was a new 'blank' session ID, the session-id
 		 * length will still be 0 */
@@ -520,7 +520,7 @@ static int get_server_hello(SSL *s)
 		CRYPTO_add(&s->session->peer->references, 1, CRYPTO_LOCK_X509);
 		}
 
-	if (s->session->sess_cert == NULL 
+	if (s->session->sess_cert == NULL
       || s->session->peer != s->session->sess_cert->peer_key->x509)
 		/* can't happen */
 		{
@@ -528,7 +528,7 @@ static int get_server_hello(SSL *s)
 		SSLerr(SSL_F_GET_SERVER_HELLO, ERR_R_INTERNAL_ERROR);
 		return(-1);
 		}
-		
+
 	s->s2->conn_id_length=s->s2->tmp.conn_id_length;
 	if (s->s2->conn_id_length > sizeof s->s2->conn_id)
 		{
@@ -700,7 +700,7 @@ static int client_master_key(SSL *s)
 #endif
 		s2n(enc,p);
 		d+=enc;
-		karg=sess->key_arg_length;	
+		karg=sess->key_arg_length;
 		s2n(karg,p); /* key arg size */
 		if (karg > (int)sizeof(sess->key_arg))
 			{
@@ -816,7 +816,7 @@ static int client_certificate(SSL *s)
 		if ((i == 1) && (pkey != NULL) && (x509 != NULL))
 			{
 			s->state=SSL2_ST_SEND_CLIENT_CERTIFICATE_C;
-			if (	!SSL_use_certificate(s,x509) || 
+			if (	!SSL_use_certificate(s,x509) ||
 				!SSL_use_PrivateKey(s,pkey))
 				{
 				i=0;
@@ -903,7 +903,7 @@ static int get_server_verify(SSL *s)
 	if (s->state == SSL2_ST_GET_SERVER_VERIFY_A)
 		{
 		i=ssl2_read(s,(char *)&(p[s->init_num]),1-s->init_num);
-		if (i < (1-s->init_num)) 
+		if (i < (1-s->init_num))
 			return(ssl2_part_read(s,SSL_F_GET_SERVER_VERIFY,i));
 		s->init_num += i;
 
@@ -926,7 +926,7 @@ static int get_server_verify(SSL *s)
 			return(-1);
 			}
 		}
-	
+
 	p=(unsigned char *)s->init_buf->data;
 	len = 1 + s->s2->challenge_length;
 	n =  len - s->init_num;
@@ -1030,7 +1030,7 @@ int ssl2_set_certificate(SSL *s, int type, int len, const unsigned char *data)
 	int i;
 	X509 *x509=NULL;
 	int ret=0;
-	
+
 	x509=d2i_X509(NULL,&data,(long)len);
 	if (x509 == NULL)
 		{
@@ -1045,7 +1045,7 @@ int ssl2_set_certificate(SSL *s, int type, int len, const unsigned char *data)
 		}
 
 	i=ssl_verify_cert_chain(s,sk);
-		
+
 	if ((s->verify_mode != SSL_VERIFY_NONE) && (i <= 0))
 		{
 		SSLerr(SSL_F_SSL2_SET_CERTIFICATE,SSL_R_CERTIFICATE_VERIFY_FAILED);

@@ -511,7 +511,7 @@ mod_rpt(SCR *sp)
 				*p++ = ' ';
 				tlen += 2;
 			}
-			len = snprintf(p, MAXNUM, "%lu ", 
+			len = snprintf(p, MAXNUM, "%lu ",
 				(unsigned long) sp->rptlines[cnt]);
 			p += len;
 			tlen += len;

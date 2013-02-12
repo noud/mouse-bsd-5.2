@@ -417,7 +417,7 @@ off		{ YYD; yylval.num = FALSE; return(SWITCH); }
 			}
 			memcpy(yylval.val->v, yytext, yylval.val->l);
                         return(ADDRRANGE);
-                } 
+                }
 
 	/* upper protocol */
 esp		{ YYD; yylval.num = IPPROTO_ESP; return(UL_PROTO); }
@@ -580,7 +580,7 @@ no		{ YYD; yylval.num = FALSE; return(BOOLEAN); }
 {hexstring}	{
 			char *p;
 
-			YYD; 
+			YYD;
 			yylval.val = vmalloc(yyleng + (yyleng & 1) + 1);
 			if (yylval.val == NULL) {
 				yyerror("vmalloc failed");

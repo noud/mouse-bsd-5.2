@@ -440,7 +440,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libcom_err.la: $(libcom_err_la_OBJECTS) $(libcom_err_la_DEPENDENCIES) 
+libcom_err.la: $(libcom_err_la_OBJECTS) $(libcom_err_la_DEPENDENCIES)
 	$(libcom_err_la_LINK) -rpath $(libdir) $(libcom_err_la_OBJECTS) $(libcom_err_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -475,7 +475,7 @@ parse.h: parse.c
 	  rm -f parse.c; \
 	  $(MAKE) $(AM_MAKEFLAGS) parse.c; \
 	else :; fi
-compile_et$(EXEEXT): $(compile_et_OBJECTS) $(compile_et_DEPENDENCIES) 
+compile_et$(EXEEXT): $(compile_et_OBJECTS) $(compile_et_DEPENDENCIES)
 	@rm -f compile_et$(EXEEXT)
 	$(LINK) $(compile_et_OBJECTS) $(compile_et_LDADD) $(LIBS)
 

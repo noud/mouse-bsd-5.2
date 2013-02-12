@@ -340,7 +340,7 @@ ins_ch:			if (LF_ISSET(TXT_BEAUTIFY) && ISCNTRL(ev.e_c) &&
 
 done:	return (rval);
 
-err:	
+err:
 alloc_err:
 	return (1);
 }

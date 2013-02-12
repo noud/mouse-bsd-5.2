@@ -3,7 +3,7 @@
 	* Makefile.am: Add man_MANS to EXTRA_DIST
 
 	* Makefile.am: split build files into dist_ and noinst_ SOURCES
-	
+
 2005-07-07  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* ktutil.c: rename optind to optidx
@@ -13,7 +13,7 @@
 
 	* get.c: make a copy of realm and admin_server to avoid
 	un-consting avoid shadowing
-	
+
 	* change.c (change_entry): just use global context to avoid
 	shadowing; make a copy of realm and admin_server to avoid
 	un-consting.
@@ -34,9 +34,9 @@
 2005-04-14  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* add.c: add option -H --hex to the add command
-	
+
 	* ktutil-commands.in: add option -H --hex to the add command
-	
+
 	* ktutil.8: document option -H --hex to the add command
 
 2004-09-29  Love Hörnquist Åstrand  <lha@it.su.se>
@@ -50,21 +50,21 @@
 	least a certain age
 
 	* rename.c: convert to slc
-	
+
 	* remove.c: convert to slc
-	
+
 	* get.c: convert to slc; warn if resetting disallow-all-tix
-	
+
 	* copy.c: convert to slc
-	
+
 	* change.c: convert to slc
-	
+
 	* add.c: convert to slc
-	
+
 	* list.c: convert to slc
-	
+
 	* ktutil_locl.h: convert to slc
-	
+
 	* ktutil.c: convert to slc
-	
+
 	* ktutil-commands.in: slc source file

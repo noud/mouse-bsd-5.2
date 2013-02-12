@@ -99,7 +99,7 @@ DNSSRCS =	acache.c acl.c adb.c byaddr.c \
 		version.c view.c xfrin.c zone.c zonekey.c zt.c ${OTHERSRCS}
 SRCS = ${DSTSRCS} ${DNSSRCS}
 
-SUBDIRS =	include 
+SUBDIRS =	include
 TARGETS =	include/dns/enumtype.h include/dns/enumclass.h \
 		include/dns/rdatastruct.h timestamp
 TESTDIRS =	@UNITTESTS@

@@ -544,7 +544,7 @@ fetch_read(conn_t *conn, char *buf, size_t len)
 			rlen = read(conn->sd, buf, len);
 		if (rlen >= 0)
 			break;
-	
+
 		if (errno != EINTR || !fetchRestartCalls)
 			return (-1);
 	}

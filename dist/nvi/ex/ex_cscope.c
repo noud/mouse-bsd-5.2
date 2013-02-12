@@ -278,7 +278,7 @@ cscope_add(SCR *sp, EXCMD *cmdp, const CHAR_T *dname)
 		goto err;
 
 	/*
-	 * Add the cscope connection to the screen's list.  From now on, 
+	 * Add the cscope connection to the screen's list.  From now on,
 	 * on error, we have to call terminate, which expects the csc to
 	 * be on the chain.
 	 */
@@ -472,7 +472,7 @@ cscope_find(SCR *sp, EXCMD *cmdp, const CHAR_T *pattern)
 		/* Initialize and link in its tag structure. */
 		CALLOC_GOTO(sp, rtp, TAG *, 1, sizeof(TAG));
 		CIRCLEQ_INSERT_HEAD(&rtqp->tagq, rtp, q);
-		rtqp->current = rtp; 
+		rtqp->current = rtp;
 	}
 
 	/* Create the cscope command. */

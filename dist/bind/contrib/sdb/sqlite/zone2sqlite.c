@@ -114,22 +114,22 @@ addrdata(dns_name_t *name, dns_ttl_t ttl, dns_rdata_t *rdata)
     char *sql;
     char *errmsg = NULL;
     int res;
-    
+
     isc_buffer_init(&b, namearray, sizeof(namearray) - 1);
     result = dns_name_totext(name, ISC_TRUE, &b);
     check_result(result, "dns_name_totext");
     namearray[isc_buffer_usedlength(&b)] = 0;
-    
+
     isc_buffer_init(&b, typearray, sizeof(typearray) - 1);
     result = dns_rdatatype_totext(rdata->type, &b);
     check_result(result, "dns_rdatatype_totext");
     typearray[isc_buffer_usedlength(&b)] = 0;
-    
+
     isc_buffer_init(&b, dataarray, sizeof(dataarray) - 1);
     result = dns_rdata_totext(rdata, NULL, &b);
     check_result(result, "dns_rdata_totext");
     dataarray[isc_buffer_usedlength(&b)] = 0;
-    
+
     sql = sqlite3_mprintf(
 	"INSERT INTO %q (NAME, TTL, RDTYPE, RDATA)"
 	" VALUES ('%q', %d, '%q', '%q') ",
@@ -221,7 +221,7 @@ main(int argc, char *argv[])
     }
 #endif
 
-#if 0    
+#if 0
     sql = sqlite3_mprintf(sql, "BEGIN TRANSACTION");
     printf("%s\n", sql);
     res = sqlite3_exec(dbi.db, sql, NULL, NULL, &errmsg);
@@ -231,7 +231,7 @@ main(int argc, char *argv[])
 	closeandexit(1);
     }
 #endif
-    
+
     sql = sqlite3_mprintf(
 	"CREATE TABLE %q "
 	"(NAME TEXT, TTL INTEGER, RDTYPE TEXT, RDATA TEXT) ",
@@ -298,7 +298,7 @@ main(int argc, char *argv[])
 	closeandexit(1);
     }
 #endif
-    
+
     dns_dbiterator_destroy(&dbiter);
     dns_db_detach(&db);
     isc_hash_destroy();

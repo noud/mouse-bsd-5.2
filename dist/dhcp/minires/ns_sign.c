@@ -128,7 +128,7 @@ ns_sign(u_char *msg, unsigned *msglen, unsigned msgsize, int error, void *k,
 		return ISC_R_NOSPACE;
 	alg = cp;
 	cp += n;
-	
+
 	/* Time. */
 	BOUNDS_CHECK(cp, INT16SZ + INT32SZ + INT16SZ);
 	PUTSHORT(0, cp);
@@ -311,7 +311,7 @@ ns_sign_tcp(u_char *msg, unsigned *msglen, unsigned msgsize, int error,
 	if (n < 0)
 		return ISC_R_NOSPACE;
 	cp += n;
-	
+
 	/* Time. */
 	BOUNDS_CHECK(cp, INT16SZ + INT32SZ + INT16SZ);
 	PUTSHORT(0, cp);

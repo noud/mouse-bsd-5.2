@@ -1,6 +1,6 @@
 /*	$NetBSD: gmpls.c,v 1.2 2007/07/24 11:53:38 drochner Exp $	*/
 
-/* 
+/*
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that: (1) source code
  * distributions retain the above copyright notice and this paragraph
@@ -140,8 +140,8 @@ struct tok gmpls_payload_values[] = {
     { 0, NULL }
 };
 
-/* 
- * Link Type values used by LMP Service Discovery (specifically, the Client 
+/*
+ * Link Type values used by LMP Service Discovery (specifically, the Client
  * Port Service Attributes Object). See UNI 1.0 section 9.4.2 for details.
  */
 struct tok lmp_sd_service_config_cpsa_link_type_values[] = {
@@ -150,9 +150,9 @@ struct tok lmp_sd_service_config_cpsa_link_type_values[] = {
     { 0, NULL}
 };
 
-/* 
- * Signal Type values for SDH links used by LMP Service Discovery (specifically, 
- * the Client Port Service Attributes Object). See UNI 1.0 section 9.4.2 for 
+/*
+ * Signal Type values for SDH links used by LMP Service Discovery (specifically,
+ * the Client Port Service Attributes Object). See UNI 1.0 section 9.4.2 for
  * details.
  */
 struct tok lmp_sd_service_config_cpsa_signal_type_sdh_values[] = {
@@ -167,9 +167,9 @@ struct tok lmp_sd_service_config_cpsa_signal_type_sdh_values[] = {
     { 0, NULL}
 };
 
-/* 
- * Signal Type values for SONET links used by LMP Service Discovery (specifically, 
- * the Client Port Service Attributes Object). See UNI 1.0 section 9.4.2 for 
+/*
+ * Signal Type values for SONET links used by LMP Service Discovery (specifically,
+ * the Client Port Service Attributes Object). See UNI 1.0 section 9.4.2 for
  * details.
  */
 struct tok lmp_sd_service_config_cpsa_signal_type_sonet_values[] = {
@@ -185,7 +185,7 @@ struct tok lmp_sd_service_config_cpsa_signal_type_sonet_values[] = {
 };
 
 #define DIFFSERV_BC_MODEL_RDM           0   /* draft-ietf-tewg-diff-te-proto-07 */
-#define DIFFSERV_BC_MODEL_MAM           1   /* draft-ietf-tewg-diff-te-proto-07 */ 
+#define DIFFSERV_BC_MODEL_MAM           1   /* draft-ietf-tewg-diff-te-proto-07 */
 #define DIFFSERV_BC_MODEL_EXTD_MAM      254 /* experimental */
 
 struct tok diffserv_te_bc_values[] = {

@@ -40,14 +40,14 @@ that a FFS filesystem on the CompactFlash card will provide the root file
 system.  The minimum size of the CompactFlash card is 64MB with 512MB being
 the recommended minimum size if attempting a full installation.
 .Pp
-The first step to install 
+The first step to install
 .Nx
 is to interrupt normal
 system bootup and drop to the RedBoot prompt by hitting Ctrl-C immediately
 after applying power.  To load both the installation kernel and the generic
 post-installation TS7200 kernel you will need network connectivity from RedBoot which
 you will have to configure using the RedBoot
-.Ic fconfig 
+.Ic fconfig
 command; see the RedBoot documentation for more information.
 .Pp
 A compressed kernel image and loader suitable for placing into

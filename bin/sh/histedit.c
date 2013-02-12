@@ -153,7 +153,7 @@ bad:
 				el_set(el, EL_EDITOR, "vi");
 			else if (Eflag)
 				el_set(el, EL_EDITOR, "emacs");
-			el_set(el, EL_BIND, "^I", 
+			el_set(el, EL_BIND, "^I",
 			    tabcomplete ? "rl-complete" : "ed-insert", NULL);
 			el_source(el, NULL);
 		}

@@ -4,7 +4,7 @@
 ;#
 ;# a client for the xntp mode 6 trap mechanism
 ;#
-;# Copyright (c) 1992 
+;# Copyright (c) 1992
 ;#  Rainer Pruy Friedrich-Alexander Universitaet Erlangen-Nuernberg
 ;#
 ;#
@@ -74,17 +74,17 @@ sub debug
 {
     print DEBUG @_,"\n";
 }
-;# 
+;#
 $proto_udp = (getprotobyname('udp'))[$[+2] ||
 		(warn("$0: Could not get protocoll number for 'udp' using 17"), 17);
 
 $ntp_port = (getservbyname('ntp','udp'))[$[+2] ||
 	      (warn("$0: Could not get port number for service ntp/udp using 123"), 123);
 
-;# 
+;#
 socket(S, &AF_INET, &SOCK_DGRAM, $proto_udp) || die("Cannot open socket: $!\n");
 
-;# 
+;#
 bind(S, pack("S n a4 x8", &AF_INET, $opt_p, &INADDR_ANY)) ||
     die("Cannot bind: $!\n");
 
@@ -127,7 +127,7 @@ sub timeouts			# sort timeout id array
 ;# compute requests for set trap control msgs to each host given
 {
     local($name,$addr);
-    
+
     foreach (@Hosts)
     {
 	if (/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/)
@@ -182,7 +182,7 @@ $timeout = 0;
 $ret="";
 %TIMEOUTS = ();
 %TIMEOUT_PROCS = ();
-@TIMEOUTS = ();		
+@TIMEOUTS = ();
 
 $len = 512;
 $buf = " " x $len;
@@ -279,7 +279,7 @@ while (1)
 	    }
 	}
     }
-    
+
 }
 
 warn("$0: terminating\n");
@@ -292,7 +292,7 @@ exit 0;
 sub set_timeout
 {
     local($id,$time,$proc) = @_;
-    
+
     $TIMEOUTS{$id} = $time;
     $TIMEOUT_PROCS{$id} = $proc;
     @TIMEOUTS = sort timeouts keys(%TIMEOUTS);
@@ -341,7 +341,7 @@ sub retry
 sub process_response
 {
     local($from,$ret,$data,$status,$associd,$op,$seq,$auth_keyid) = @_;
-    
+
     $msg="";
     if ($op == 7)		# trap response
     {

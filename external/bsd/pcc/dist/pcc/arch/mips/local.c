@@ -121,7 +121,7 @@ clocal(NODE *p)
 
 	case FUNARG:
 		/* Args smaller than int are given as int */
-		if (p->n_type != CHAR && p->n_type != UCHAR && 
+		if (p->n_type != CHAR && p->n_type != UCHAR &&
 		    p->n_type != SHORT && p->n_type != USHORT)
 			break;
 		p->n_left = block(SCONV, p->n_left, NIL, INT, 0, MKSUE(INT));
@@ -360,11 +360,11 @@ myp2tree(NODE *p)
 {
 	struct symtab *sp;
 
-	if (p->n_op != FCON) 
+	if (p->n_op != FCON)
 		return;
 
 	/* Write float constants to memory */
- 
+
 	sp = IALLOC(sizeof(struct symtab));
 	sp->sclass = STATIC;
 	sp->ssue = MKSUE(p->n_type);
@@ -587,7 +587,7 @@ noinit()
 }
 
 void
-calldec(NODE *p, NODE *q) 
+calldec(NODE *p, NODE *q)
 {
 }
 
@@ -863,7 +863,7 @@ mips_builtin_va_arg(NODE *f, NODE *a)
 
 	nfree(a->n_right);
 	nfree(a);
-	nfree(f); 
+	nfree(f);
 
 	p = tempnode(tmpnr, INCREF(r->n_type), r->n_df, r->n_sue);
 	p = buildtree(UMUL, p, NIL);
@@ -908,10 +908,10 @@ static int destructor;
 int
 mypragma(char **ary)
 {
-	if (strcmp(ary[1], "tls") == 0) { 
+	if (strcmp(ary[1], "tls") == 0) {
 		uerror("thread-local storage not supported for this target");
 		return 1;
-	} 
+	}
 	if (strcmp(ary[1], "constructor") == 0 || strcmp(ary[1], "init") == 0) {
 		constructor = 1;
 		return 1;

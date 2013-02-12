@@ -119,7 +119,7 @@ _gsskrb5cfx_max_wrap_length_cfx(krb5_context context,
 	wrapped_size = input_length + 1;
 	do {
 	    wrapped_size--;
-	    sz = krb5_get_wrapped_length(context, 
+	    sz = krb5_get_wrapped_length(context,
 					 crypto, wrapped_size);
 	} while (wrapped_size && sz > input_length);
 	if (wrapped_size == 0) {
@@ -176,7 +176,7 @@ OM_uint32 _gssapi_wrap_size_cfx(OM_uint32 *minor_status,
 	return GSS_S_FAILURE;
     }
 
-    ret = _gsskrb5cfx_max_wrap_length_cfx(context, crypto, conf_req_flag, 
+    ret = _gsskrb5cfx_max_wrap_length_cfx(context, crypto, conf_req_flag,
 					  req_output_size, max_input_size);
     if (ret != 0) {
 	*minor_status = ret;
@@ -213,10 +213,10 @@ rrc_rotate(void *data, size_t len, uint16_t rrc, krb5_boolean unrotate)
 	tmp = buf;
     } else {
 	tmp = malloc(rrc);
-	if (tmp == NULL) 
+	if (tmp == NULL)
 	    return ENOMEM;
     }
- 
+
     if (unrotate) {
 	memcpy(tmp, data, rrc);
 	memmove(data, (u_char *)data + rrc, left);
@@ -227,7 +227,7 @@ rrc_rotate(void *data, size_t len, uint16_t rrc, krb5_boolean unrotate)
 	memcpy(data, tmp, rrc);
     }
 
-    if (rrc > sizeof(buf)) 
+    if (rrc > sizeof(buf))
 	free(tmp);
 
     return 0;
@@ -260,7 +260,7 @@ OM_uint32 _gssapi_wrap_cfx(OM_uint32 *minor_status,
     }
 
     ret = _gsskrb5cfx_wrap_length_cfx(context,
-				      crypto, conf_req_flag, 
+				      crypto, conf_req_flag,
 				      input_message_buffer->length,
 				      &wrapped_len, &cksumsize, &padlength);
     if (ret != 0) {
@@ -378,7 +378,7 @@ OM_uint32 _gssapi_wrap_cfx(OM_uint32 *minor_status,
 	    return GSS_S_FAILURE;
 	}
 	assert(sizeof(*token) + cipher.length == wrapped_len);
-	token->RRC[0] = (rrc >> 8) & 0xFF;  
+	token->RRC[0] = (rrc >> 8) & 0xFF;
 	token->RRC[1] = (rrc >> 0) & 0xFF;
 
 	ret = rrc_rotate(cipher.data, cipher.length, rrc, FALSE);
@@ -405,9 +405,9 @@ OM_uint32 _gssapi_wrap_cfx(OM_uint32 *minor_status,
 	memcpy(buf + input_message_buffer->length, token, sizeof(*token));
 
 	ret = krb5_create_checksum(context, crypto,
-				   usage, 0, buf, 
+				   usage, 0, buf,
 				   input_message_buffer->length +
-					sizeof(*token), 
+					sizeof(*token),
 				   &cksum);
 	if (ret != 0) {
 	    *minor_status = ret;
@@ -422,7 +422,7 @@ OM_uint32 _gssapi_wrap_cfx(OM_uint32 *minor_status,
 	assert(cksum.checksum.length == cksumsize);
 	token->EC[0] =  (cksum.checksum.length >> 8) & 0xFF;
 	token->EC[1] =  (cksum.checksum.length >> 0) & 0xFF;
-	token->RRC[0] = (rrc >> 8) & 0xFF;  
+	token->RRC[0] = (rrc >> 8) & 0xFF;
 	token->RRC[1] = (rrc >> 0) & 0xFF;
 
 	p += sizeof(*token);
@@ -627,7 +627,7 @@ OM_uint32 _gssapi_unwrap_cfx(OM_uint32 *minor_status,
 
 	/* Checksum is over (plaintext-data | "header") */
 	memcpy(output_message_buffer->value, p, len);
-	memcpy((u_char *)output_message_buffer->value + len, 
+	memcpy((u_char *)output_message_buffer->value + len,
 	       token, sizeof(*token));
 
 	/* EC is not included in checksum calculation */

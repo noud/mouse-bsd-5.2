@@ -87,7 +87,7 @@ static const char rcsid[] _U_ =
 #ifdef HAVE_SEPTEL_API
 #include "pcap-septel.h"
 #endif /* HAVE_SEPTEL_API */
-	  
+
 #include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -745,7 +745,7 @@ pcap_inject_linux(pcap_t *handle, const void *buf, size_t size)
 		return (-1);
 	}
 	return (ret);
-}                           
+}
 
 /*
  *  Get the statistics for the given packet capture handle.
@@ -793,7 +793,7 @@ pcap_stats_linux(pcap_t *handle, struct pcap_stat *stats)
 		 * "tp_packets" as the count of packets and "tp_drops"
 		 * as the count of drops.
 		 *
-		 * Keep a running total because each call to 
+		 * Keep a running total because each call to
 		 *    getsockopt(handle->fd, SOL_PACKET, PACKET_STATISTICS, ....
 		 * resets the counters to zero.
 		 */

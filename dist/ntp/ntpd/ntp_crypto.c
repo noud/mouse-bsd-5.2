@@ -197,7 +197,7 @@ session_key(
 
 	if (!dstadr)
 		return 0;
-	
+
 	/*
 	 * Generate the session key and key ID. If the lifetime is
 	 * greater than zero, install the key and call it trusted.
@@ -273,7 +273,7 @@ make_keylist(
 
 	if (!dstadr)
 		return XEVNT_OK;
-	
+
 	/*
 	 * Allocate the key list if necessary.
 	 */
@@ -322,7 +322,7 @@ make_keylist(
 	 * Save the last session key ID, sequence number and timestamp,
 	 * then sign these values for later retrieval by the clients. Be
 	 * careful not to use invalid key media. Use the public values
-	 * timestamp as filestamp. 
+	 * timestamp as filestamp.
 	 */
 	vp = &peer->sndval;
 	if (vp->ptr == NULL)
@@ -957,7 +957,7 @@ crypto_recv(
 				printf("crypto_recv: %s\n", statstr);
 #endif
 			break;
-	
+
 		/*
 		 * X509 certificate sign response. Validate the
 		 * certificate signed by the server and install. Later
@@ -1556,7 +1556,7 @@ crypto_verify(
 
 	/*
 	 * Punt if this is a response with no data. Punt if this is a
-	 * request and a previous response is pending. 
+	 * request and a previous response is pending.
 	 */
 	if (opcode & CRYPTO_RESP) {
 		if (vallen == 0)
@@ -1907,7 +1907,7 @@ crypto_update(void)
 	/*
 	 * Sign public key and timestamps. The filestamp is derived from
 	 * the host key file extension from wherever the file was
-	 * generated. 
+	 * generated.
 	 */
 	if (pubkey.vallen != 0) {
 		pubkey.tstamp = hostval.tstamp;
@@ -1959,7 +1959,7 @@ crypto_update(void)
 			tai_leap.siglen = htonl(len);
 	}
 	snprintf(statstr, NTP_MAXSTRLEN,
-	    "update ts %u", ntohl(hostval.tstamp)); 
+	    "update ts %u", ntohl(hostval.tstamp));
 	record_crypto_stats(NULL, statstr);
 #ifdef DEBUG
 	if (debug)
@@ -2103,7 +2103,7 @@ bighash(
  * response message. Besides making the response shorter, the hash makes
  * it effectivey impossible for an intruder to solve for b by observing
  * a number of these messages.
- * 
+ *
  * Alice receives the response and computes g^y v^r mod p. After a bit
  * of algebra, this simplifies to g^k. If the hash of this result
  * matches hash(x), Alice knows that Bob has the group key b. The signed
@@ -2404,7 +2404,7 @@ crypto_iff(
  * message. Besides making the response shorter, the hash makes it
  * effectivey impossible for an intruder to solve for b by observing
  * a number of these messages.
- * 
+ *
  * Alice receives the response and computes y^b v^r mod n. After a bit
  * of algebra, this simplifies to k^b. If the hash of this result
  * matches hash(x), Alice knows that Bob has the group key b. The signed
@@ -2528,7 +2528,7 @@ crypto_bob2(
 
 	/*
 	 * Bob rolls random k (0 < k < n), computes y = k u^r mod n and
-	 * x = k^b mod n, then sends (y, hash(x)) to Alice. 
+	 * x = k^b mod n, then sends (y, hash(x)) to Alice.
 	 */
 	bctx = BN_CTX_new(); k = BN_new(); g = BN_new(); y = BN_new();
 	sdsa = DSA_SIG_new();
@@ -2542,7 +2542,7 @@ crypto_bob2(
 	sdsa->s = BN_dup(g);
 	BN_CTX_free(bctx);
 	BN_free(r); BN_free(k); BN_free(g); BN_free(y);
- 
+
 	/*
 	 * Encode the values in ASN.1 and sign.
 	 */
@@ -2727,7 +2727,7 @@ crypto_gq(
  * the MV request message. Bob rolls new random k (0 < k < q), encrypts
  * y = A^k mod p (a permutation) and sends (hash(y), gbar^k, ghat^k) to
  * Alice.
- * 
+ *
  * Alice receives the response and computes the decryption key (the
  * inverse permutation) from previously obtained (xbar, xhat) and
  * (gbar^k, ghat^k) in the message. She computes the inverse, which is
@@ -3206,7 +3206,7 @@ cert_parse(
  * intermediate servers to the trusted server. Each signature on the
  * trail must be valid at the time of signature, but it could happen
  * that a signer certificate expire before the signed certificate, which
- * remains valid until its expiration. 
+ * remains valid until its expiration.
  *
  * Returns
  * XEVNT_OK	success
@@ -3372,7 +3372,7 @@ cert_valid(
  * Returns
  * XEVNT_OK	success
  * XEVNT_FSP	bad or missing filestamp
- * XEVNT_CRT	bad or missing certificate 
+ * XEVNT_CRT	bad or missing certificate
  */
 int
 cert_install(
@@ -3401,7 +3401,7 @@ cert_install(
 	 * with a long lifetime might be overtaken by a later
 	 * certificate with a short lifetime, thus invalidating the
 	 * earlier signature. However, we gotta find a way to leak old
-	 * stuff from the cache, so we do it anyway. 
+	 * stuff from the cache, so we do it anyway.
 	 */
 	yp = cp;
 	zp = &cinfo;
@@ -3449,7 +3449,7 @@ cert_install(
 			 * The signature Y is valid only if it begins
 			 * during the lifetime of X; however, it is not
 			 * necessarily an error, since some other
-			 * certificate might sign Y. 
+			 * certificate might sign Y.
 			 */
 			if (yp->first < xp->first || yp->first >
 			    xp->last)
@@ -3517,7 +3517,7 @@ cert_install(
  */
 void
 cert_free(
-	struct cert_info *cinf	/* certificate info/value structure */ 
+	struct cert_info *cinf	/* certificate info/value structure */
 	)
 {
 	if (cinf->pkey != NULL)
@@ -3612,7 +3612,7 @@ crypto_key(
 	 * Leave tracks in the cryptostats.
 	 */
 	if ((ptr = strrchr(linkname, '\n')) != NULL)
-		*ptr = '\0'; 
+		*ptr = '\0';
 	snprintf(statstr, NTP_MAXSTRLEN, "%s mod %d", &linkname[2],
 	    EVP_PKEY_size(pkey) * 8);
 	record_crypto_stats(NULL, statstr);
@@ -3721,7 +3721,7 @@ crypto_cert(
 		return (NULL);
 
 	if ((ptr = strrchr(linkname, '\n')) != NULL)
-		*ptr = '\0'; 
+		*ptr = '\0';
 	snprintf(statstr, NTP_MAXSTRLEN,
 	    "%s 0x%x len %lu", &linkname[2], ret->flags, len);
 	record_crypto_stats(NULL, statstr);
@@ -3815,7 +3815,7 @@ crypto_tai(
 		if (sscanf(buf, "%u %d", &leapsec[i], &offset) != 2)
 			continue;
 
-		if (i != offset - TAI_1972) 
+		if (i != offset - TAI_1972)
 			break;
 
 		i++;
@@ -3955,7 +3955,7 @@ crypto_setup(void)
 	}
 	hostval.vallen = htonl(strlen(sys_hostname));
 	hostval.ptr = (u_char *)sys_hostname;
-	
+
 	/*
 	 * Construct public key extension field for agreement scheme.
 	 */

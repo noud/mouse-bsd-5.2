@@ -102,10 +102,10 @@ ntp_print(register const u_char *cp, u_int length)
                     length);
             return;
         }
-        
+
         printf (", length %u\n\t%s",
                 length,
-                tok2str(ntp_mode_values, "Unknown mode", mode));        
+                tok2str(ntp_mode_values, "Unknown mode", mode));
 
 	leapind = bp->status & LEAPMASK;
         printf (", Leap indicator: %s (%u)",

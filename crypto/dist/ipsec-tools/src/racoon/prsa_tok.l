@@ -60,7 +60,7 @@ addr6		(::({word6}|{addr4})?|({word6}:)+:?({word6}|{addr4})?)
 RSA		{ return TAG_RSA; }
 PSK		{ return TAG_PSK; }
 PUB		{ return TAG_PUB; }
-0x[0-9a-fA-F]+	{ 
+0x[0-9a-fA-F]+	{
 			BIGNUM *bn = BN_new();
 			BN_hex2bn(&bn, prsatext+2);
 			prsalval.bn = bn;

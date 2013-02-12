@@ -29,7 +29,7 @@
 #ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
 #endif
- 
+
 #ifdef HAVE_MACHINE_ENDIAN_H
 #include <machine/endian.h>
 #endif

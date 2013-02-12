@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -226,17 +226,17 @@ static int parse_bag(PKCS12_SAFEBAG *bag, const char *pass, int passlen,
 		    }
 		}
 	}
-	
+
 	switch (M_PKCS12_bag_type(bag))
 	{
 	case NID_keyBag:
-		if (!lkey || !pkey) return 1;	
+		if (!lkey || !pkey) return 1;
 		if (!(*pkey = EVP_PKCS82PKEY(bag->value.keybag))) return 0;
 		*keymatch |= MATCH_KEY;
 	break;
 
 	case NID_pkcs8ShroudedKeyBag:
-		if (!lkey || !pkey) return 1;	
+		if (!lkey || !pkey) return 1;
 		if (!(p8 = PKCS12_decrypt_skey(bag, pass, passlen)))
 				return 0;
 		*pkey = EVP_PKCS82PKEY(p8);

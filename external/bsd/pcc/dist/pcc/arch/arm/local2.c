@@ -116,7 +116,7 @@ load_constant_into_reg(int reg, int v)
 				printf("\tmov %s,#%d" COM "load constant %d\n",
 				    rnames[reg], vals[i], v);
 			} else {
-				printf("\torr %s,%s,#%d\n",	
+				printf("\torr %s,%s,#%d\n",
 				    rnames[reg], rnames[reg], vals[i]);
 			}
 		}
@@ -186,7 +186,7 @@ prologue(struct interpass_prolog *ipp)
 	printf("%s:\n", exname(ipp->ipp_name));
 
 	/*
-	 * We here know what register to save and how much to 
+	 * We here know what register to save and how much to
 	 * add to the stack.
 	 */
 	addto = offcalc(ipp);
@@ -349,7 +349,7 @@ twollcomp(NODE *p)
 		cb1 = LT;
 		cb2 = GT;
 		break;
-	
+
 	default:
 		cb1 = cb2 = 0; /* XXX gcc */
 	}
@@ -618,7 +618,7 @@ emul(NODE *p)
 	else if (p->n_op == RS && p->n_type == LONGLONG) ch = "ashrdi3";
 	else if (p->n_op == RS && p->n_type == LONG) ch = "ashrsi3";
 	else if (p->n_op == RS && p->n_type == INT) ch = "ashrsi3";
-	
+
 	else if (p->n_op == DIV && p->n_type == LONGLONG) ch = "divdi3";
 	else if (p->n_op == DIV && p->n_type == LONG) ch = "divsi3";
 	else if (p->n_op == DIV && p->n_type == INT) ch = "divsi3";
@@ -876,7 +876,7 @@ conput(FILE *fp, NODE *p)
 #else
 		s = p->n_name;
 #endif
-			
+
 		if (*s != '\0') {
 			fprintf(fp, "%s", s);
 			if (val > 0)

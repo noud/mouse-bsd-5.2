@@ -10,7 +10,7 @@
 # SHA512 block procedure for ARMv4. September 2007.
 
 # This code is ~4.5 (four and a half) times faster than code generated
-# by gcc 3.4 and it spends ~72 clock cycles per byte. 
+# by gcc 3.4 and it spends ~72 clock cycles per byte.
 
 # Byte order [in]dependence. =========================================
 #

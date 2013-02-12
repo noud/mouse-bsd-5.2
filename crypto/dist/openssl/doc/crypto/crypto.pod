@@ -56,13 +56,13 @@ L<OPENSSL_VERSION_NUMBER(3)|OPENSSL_VERSION_NUMBER(3)>
 
 L<asn1(3)|asn1(3)>, L<openssl_bio(3)|openssl_bio(3)>,
 L<openssl_evp(3)|openssl_evp(3)>, L<openssl_pem(3)|openssl_pem(3)>,
-L<openssl_pkcs7(3)|openssl_pkcs7(3)>, L<openssl_pkcs12(3)|openssl_pkcs12(3)> 
+L<openssl_pkcs7(3)|openssl_pkcs7(3)>, L<openssl_pkcs12(3)|openssl_pkcs12(3)>
 
 =item INTERNAL FUNCTIONS
 
 L<openssl_bn(3)|openssl_bn(3)>, L<openssl_buffer(3)|openssl_buffer(3)>,
 L<openssl_lhash(3)|openssl_lhash(3)>, L<objects(3)|objects(3)>,
-L<stack(3)|stack(3)>, L<txt_db(3)|txt_db(3)> 
+L<stack(3)|stack(3)>, L<txt_db(3)|txt_db(3)>
 
 =back
 

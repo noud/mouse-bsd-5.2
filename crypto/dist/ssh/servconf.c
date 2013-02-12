@@ -285,7 +285,7 @@ fill_default_server_options(ServerOptions *options)
 	if (options->permit_tun == -1)
 		options->permit_tun = SSH_TUNMODE_NO;
 
-	if (options->hpn_disabled == -1) 
+	if (options->hpn_disabled == -1)
 		options->hpn_disabled = 0;
 
 	if (options->hpn_buffer_size == -1) {
@@ -298,13 +298,13 @@ fill_default_server_options(ServerOptions *options)
 			/*create a socket but don't connect it */
 			/* we use that the get the rcv socket size */
 			sock = socket(AF_INET, SOCK_STREAM, 0);
-			getsockopt(sock, SOL_SOCKET, SO_RCVBUF, 
+			getsockopt(sock, SOL_SOCKET, SO_RCVBUF,
 				   &socksize, &socksizelen);
 			close(sock);
 			options->hpn_buffer_size = socksize;
 			debug ("HPN Buffer Size: %d", options->hpn_buffer_size);
-			
-		} 
+
+		}
 	} else {
 		/* we have to do this incase the user sets both values in a contradictory */
 		/* manner. hpn_disabled overrrides hpn_buffer_size*/
@@ -363,7 +363,7 @@ typedef enum {
 	sClientAliveCountMax, sAuthorizedKeysFile, sAuthorizedKeysFile2,
 	sGssAuthentication, sGssCleanupCreds, sAcceptEnv, sPermitTunnel,
 	sMatch, sPermitOpen, sForceCommand, sChrootDirectory,
-	sUsePrivilegeSeparation, sNoneEnabled, sTcpRcvBufPoll, 
+	sUsePrivilegeSeparation, sNoneEnabled, sTcpRcvBufPoll,
 	sHPNDisabled, sHPNBufferSize,
 	sIgnoreRootRhosts, sDeprecated, sUnsupported
 } ServerOpCodes;

@@ -171,7 +171,7 @@ const struct eap_method * eap_peer_get_methods(size_t *count)
 
 	for (m = eap_methods; m; m = m->next)
 		c++;
-	
+
 	*count = c;
 	return eap_methods;
 }

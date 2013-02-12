@@ -25,13 +25,13 @@
  * THIS SOFTWARE IS PROVIDED BY PIERMONT INFORMATION SYSTEMS INC. ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL PIERMONT INFORMATION SYSTEMS INC. BE 
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * ARE DISCLAIMED. IN NO EVENT SHALL PIERMONT INFORMATION SYSTEMS INC. BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
@@ -89,7 +89,7 @@ md_check_mbr(mbr_info_t *mbri)
 			break;
 		}
 	}
-	
+
 	/* we need to either have a pair of prep partitions, or a single
 	 * fat.  if neither, things are broken. */
 	if (!(bootsize >= (MIN_FAT12_BOOT/512) ||
@@ -114,7 +114,7 @@ md_check_mbr(mbr_info_t *mbri)
 			return 0;
 		return 1;
 	}
-	
+
 	/* check the fat12 parititons */
 	if (bootsize > 0 && bootsize < (MIN_FAT12_BOOT/512)) {
 		msg_display(MSG_boottoosmall);
@@ -185,7 +185,7 @@ md_mbr_use_wholedisk(mbr_info_t *mbri)
 	part[3].mbrp_size = PREP_BOOT_SIZE/512;
 	part[3].mbrp_start = bsec + FAT12_BOOT_SIZE/512 + BINFO_BOOT_SIZE/512;
 	part[3].mbrp_flag = 0;
-	
+
 	ptstart = part[1].mbrp_start;
 	ptsize = part[1].mbrp_size;
 	bootstart = part[0].mbrp_start;
@@ -230,11 +230,11 @@ md_post_disklabel(void)
 
 	if (bootstart == 0 || bootsize == 0)
 		return 0;
-	
+
 	snprintf(bootdev, sizeof bootdev, "/dev/r%s%c", diskdev,
 	    'a'+bootpart_fat12);
 	run_program(RUN_DISPLAY, "/sbin/newfs_msdos %s", bootdev);
-	
+
 	return 0;
 }
 
@@ -356,7 +356,7 @@ md_make_bsd_partitions(void)
 			if (PI_ISBSDFS(p))
 				p->pi_flags |= PIF_MOUNT;
 		} else {
-			if (p->pi_offset < ptstart + ptsize &&			
+			if (p->pi_offset < ptstart + ptsize &&
 			    p->pi_offset + p->pi_size > ptstart)
 				/* Not outside area we are allocating */
 				continue;
@@ -486,7 +486,7 @@ md_pre_update(void)
 	case 2: nobootfix=1; break;
 	default: break;
 	}
-	
+
 	return 1;
 }
 
@@ -515,14 +515,14 @@ md_post_extract(void)
 	snprintf(version, sizeof version, "NetBSD/%s %s", MACH, REL);
 	run_program(RUN_DISPLAY, "/usr/mdec/mkbootinfo '%s' %d "
 	    "/tmp/bootinfo.txt", version, bootinfo_mbr);
-	
+
 	if (!nobootfix) {
 		snprintf(bootdev, sizeof bootdev, "/dev/r%s%c", diskdev,
 		    'a'+bootpart_fat12);
 		snprintf(bootbdev, sizeof bootbdev, "/dev/%s%c", diskdev,
 		    'a'+bootpart_fat12);
 
-		if (nonewfsmsdos == 0) 
+		if (nonewfsmsdos == 0)
 			run_program(RUN_DISPLAY, "/sbin/newfs_msdos %s",
 			    bootdev);
 		run_program(RUN_DISPLAY, "/sbin/mount_msdos %s /mnt2",
@@ -547,7 +547,7 @@ md_post_extract(void)
 		    bootdev);
 		run_program(RUN_DISPLAY, "/bin/dd if=/usr/mdec/ofwboot "
 		    "of=%s bs=512", bootbdev);
-		
+
 		snprintf(bootdev, sizeof bootdev, "/dev/r%s%c", diskdev,
 		    'a'+bootpart_binfo);
 		snprintf(bootbdev, sizeof bootbdev, "/dev/%s%c", diskdev,
@@ -557,7 +557,7 @@ md_post_extract(void)
 		run_program(RUN_DISPLAY, "/bin/dd if=/tmp/bootinfo.txt "
 		    "of=%s bs=512", bootbdev);
 	}
-	
+
 	return 0;
 }
 

@@ -436,7 +436,7 @@
 
 	* configure.in: check for uint*_t
 	* include/bits.c: define uint*_t
-	
+
 2000-07-29  Assar Westerlund  <assar@sics.se>
 
 	* kdc/kerberos5.c (check_tgs_flags): set endtime correctly when
@@ -560,9 +560,9 @@
 	* configure.in: update this to newer auto*/libtool
 
 	* appl/Makefile.am: use conditional for dce
-	
+
 	* lib/Makefile.am: use conditional for dce
-	
+
 2000-07-11  Johan Danielsson  <joda@pdc.kth.se>
 
 	* lib/krb5/write_message.c: krb5_write_{priv,save}_message
@@ -612,7 +612,7 @@
 	* kdc/kstash.c: remove writing of old keyfile, and treat
 	--convert-file as just reading and writing the keyfile without
 	asking for a new key
-	
+
 	* lib/hdb/mkey.c (read_master_encryptionkey): handle old keytype
 	based files, and convert the key to cfb64
 
@@ -659,21 +659,21 @@
 
 	* kdc/hprop.c: only get master key if we're actually going to use
 	it; enable reading of MIT krb5 dump files
-	
+
 	* kdc/mit_dump.c: read MIT krb5 dump files
-	
+
 	* lib/hdb/mkey.c (read_master_mit): fix this
-	
+
 	* kdc/kstash.c: make this work with the new mkey code
-	
+
 	* lib/hdb/Makefile.am: add mkey.c, and bump version number
-	
+
 	* lib/hdb/hdb.h: rewrite master key handling
-	
+
 	* lib/hdb/mkey.c: rewrite master key handling
-	
+
 	* lib/krb5/crypto.c: add some more pseudo crypto types
-	
+
 	* lib/krb5/krb5.h: change some funny etypes to use negative
 	numbers, and add some more
 
@@ -766,9 +766,9 @@
 	* kdc/kerberos5.c: pa_* -> KRB5_PADATA_*
 
 	* kdc/hpropd.c: add realm override flag
-	
+
 	* kdc/v4_dump.c: code for reading krb4 dump files
-	
+
 	* kdc/hprop.c: generalize source database handing, add support for
 	non-standard local realms (from by Daniel Kouril
 	<kouril@ics.muni.cz> and Miroslav Ruda <ruda@ics.muni.cz>), and
@@ -776,21 +776,21 @@
 	implemented differently)
 
 	* lib/krb5/get_cred.c: pa_* -> KRB5_PADATA_*
-	
+
 	* lib/krb5/get_in_tkt.c: pa_* -> KRB5_PADATA_*
-	
+
 	* lib/krb5/krb5.h: use some definitions from asn1.h
 
 	* lib/hdb/hdb.asn1: use new import syntax
-	
+
 	* lib/asn1/k5.asn1: use distinguished value integers
-	
+
 	* lib/asn1/gen_length.c: support for distinguished value integers
-	
+
 	* lib/asn1/gen_encode.c: support for distinguished value integers
-	
+
 	* lib/asn1/gen_decode.c: support for distinguished value integers
-	
+
 	* lib/asn1/gen.c: support for distinguished value integers
 
 	* lib/asn1/lex.l: add support for more standards like import
@@ -798,7 +798,7 @@
 
 	* lib/asn1/parse.y: add support for more standards like import
 	statements, and distinguished value integers
-	
+
 2000-06-11  Assar Westerlund  <assar@sics.se>
 
 	* lib/krb5/get_for_creds.c (add_addrs): ignore addresses of
@@ -834,9 +834,9 @@
 	and exit
 
 	* kdc/connect.c: only listen to port 4444 if 524 is enabled
-	
+
 	* kdc/config.c: add options to enable/disable v4 and 524 requests
-	
+
 2000-06-06  Johan Danielsson  <joda@pdc.kth.se>
 
 	* kdc/524.c: handle non-existant server principals (from Daniel
@@ -1011,7 +1011,7 @@
 
 	* lib/krb5/Makefile.am: set version to 10:0:0
 	* lib/45/mk_req.c (krb_mk_req): const-ize the arguments
-	
+
 2000-03-30  Assar Westerlund  <assar@sics.se>
 
 	* lib/krb5/principal.c (krb5_425_conv_principal_ext): add some
@@ -1098,7 +1098,7 @@
 2000-02-22  Assar Westerlund  <assar@sics.se>
 
 	* lib/krb5/Makefile.am: set version to 9:2:0
-	
+
 	* lib/krb5/expand_hostname.c (krb5_expand_hostname_realms): copy
 	the correct hostname
 
@@ -1113,7 +1113,7 @@
 2000-02-19  Assar Westerlund  <assar@sics.se>
 
 	* lib/krb5/Makefile.am: set version to 9:1:0
-	
+
 	* lib/krb5/expand_hostname.c (krb5_expand_hostname): make sure
 	that realms is filled in even when getaddrinfo fails or does not
 	return any canonical name
@@ -1141,7 +1141,7 @@
 
 	* kdc/kerberos4.c (do_version4): if an tgs-req is received with an
 	old kvno, return an error reply and write a message in the log.
-	
+
 2000-02-12  Assar Westerlund  <assar@sics.se>
 
 	* appl/test/gssapi_server.c (proto): with `--fork', create a child

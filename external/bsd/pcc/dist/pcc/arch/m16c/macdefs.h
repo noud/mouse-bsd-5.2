@@ -36,7 +36,7 @@
 
 /*
  * Convert (multi-)character constant to integer.
- * Assume: If only one value; store at left side (char size), otherwise 
+ * Assume: If only one value; store at left side (char size), otherwise
  * treat it as an integer.
  */
 
@@ -179,7 +179,7 @@ typedef long long OFFSZ;
 	{R1, -1},
 
 #define PCLASS(p) (p->n_type <= UCHAR ? SCREG : ISPTR(p->n_type) ? SBREG:SAREG)
-	    
+
 int COLORMAP(int c, int *r);
 #define	GCLASS(x) (x < 4 ? CLASSA : x < 6 ? CLASSB : x < 12 ? CLASSC : CLASSD)
 #define DECRA(x,y)	(((x) >> (y*6)) & 63)	/* decode encoded regs */

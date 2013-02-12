@@ -118,7 +118,7 @@ psc_start(
 	msyslog(LOG_ERR, "psc_start: unit: %d, open failed.  %m", unit);
 	return 0;
     }
-     
+
     /* get the address of the mapped regs	*/
     if (ioctl(fd[unit], PSC_REGS, &regp[unit]) < 0) {
 	msyslog(LOG_ERR, "psc_start: unit: %d, ioctl failed.  %m", unit);
@@ -137,10 +137,10 @@ psc_start(
     peer->precision = PRECISION;
     pp->clockdesc = DESCRIPTION;
     up->unit = unit;
-#ifdef	__hpux     
+#ifdef	__hpux
     rtprio(0,120); 		/* set real time priority	*/
     plock(PROCLOCK); 		/* lock process in memory	*/
-#endif	/* __hpux	*/     
+#endif	/* __hpux	*/
     return 1;
 }
 
@@ -185,7 +185,7 @@ psc_poll(
 
     get_systime(&pp->lastrec);
     pp->polls++;
-     
+
     tlo = SWAP(tlo);			/* little to big endian swap on	*/
     thi = SWAP(thi);			/* copy of data			*/
     /* convert the BCD time to broken down time used by refclockproc	*/
@@ -211,7 +211,7 @@ psc_poll(
     /* simulate the NTP receive and packet procedures	*/
     refclock_receive(peer);
     /* write clock statistics to file	*/
-    record_clock_stats(&peer->srcadr, pp->a_lastcode);	
+    record_clock_stats(&peer->srcadr, pp->a_lastcode);
 
     /* With the first timecode beginning the day, check for a GPS
        leap second notification.      */
@@ -234,7 +234,7 @@ check_leap_sec(struct refclockproc *pp, int unit)
 {
     unsigned char	dhi, dlo;
     int			leap_day;
-     
+
     regp[unit]->dp_ram_addr = DP_LEAPSEC_DAY10DAY1;
     usleep(DELAY);
     dlo = regp[unit]->dp_ram_data;

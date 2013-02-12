@@ -50,7 +50,7 @@ the end of the man page.  See m_sunos4.man for an example.
 A module is concerned with two structures:
 
 The statics struct is filled in by machine_init.  Each item is a
-pointer to a list of character pointers.  The list is terminated 
+pointer to a list of character pointers.  The list is terminated
 with a null pointer.
 
 struct statics
@@ -213,7 +213,7 @@ If the module contains the function "proc_compare", it should be removed.
 There should also be a NULL-terminated array of strings which list the names
 for the sort keys, for example:
 
-char *ordernames[] = 
+char *ordernames[] =
 {"cpu", "size", "res", "time", NULL};
 
 To indicate that this module supports multiple sort keys, add the following

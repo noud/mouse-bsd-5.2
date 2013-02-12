@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2007 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "krb5_locl.h"
@@ -51,8 +51,8 @@ __RCSID("$Heimdal: cache.c 22127 2007-12-04 00:54:37Z lha $"
  */
 
 krb5_error_code KRB5_LIB_FUNCTION
-krb5_cc_register(krb5_context context, 
-		 const krb5_cc_ops *ops, 
+krb5_cc_register(krb5_context context,
+		 const krb5_cc_ops *ops,
 		 krb5_boolean override)
 {
     int i;
@@ -78,7 +78,7 @@ krb5_cc_register(krb5_context context,
 	}
 	context->num_cc_ops++;
 	context->cc_ops = o;
-	memset(context->cc_ops + i, 0, 
+	memset(context->cc_ops + i, 0,
 	       (context->num_cc_ops - i) * sizeof(*context->cc_ops));
     }
     memcpy(&context->cc_ops[i], ops, sizeof(context->cc_ops[i]));
@@ -91,7 +91,7 @@ krb5_cc_register(krb5_context context,
  */
 
 krb5_error_code
-_krb5_cc_allocate(krb5_context context, 
+_krb5_cc_allocate(krb5_context context,
 		  const krb5_cc_ops *ops,
 		  krb5_ccache *id)
 {
@@ -202,7 +202,7 @@ krb5_cc_gen_new(krb5_context context,
  */
 
 krb5_error_code KRB5_LIB_FUNCTION
-krb5_cc_new_unique(krb5_context context, const char *type, 
+krb5_cc_new_unique(krb5_context context, const char *type,
 		   const char *hint, krb5_ccache *id)
 {
     const krb5_cc_ops *ops = KRB5_DEFAULT_CCTYPE;
@@ -280,7 +280,7 @@ krb5_cc_get_full_name(krb5_context context,
 	krb5_set_error_string(context, "cache of type %s have no name", type);
 	return KRB5_CC_BADNAME;
     }
-    
+
     if (asprintf(str, "%s:%s", type, name) == -1) {
 	krb5_set_error_string(context, "malloc - out of memory");
 	*str = NULL;
@@ -338,7 +338,7 @@ _krb5_expand_default_cc_name(krb5_context context, const char *str, char **res)
 	    else {
 		free(*res);
 		*res = NULL;
-		krb5_set_error_string(context, 
+		krb5_set_error_string(context,
 				      "expand default cache unknown "
 				      "variable \"%.*s\"",
 				      (int)(tmp2 - tmp) - 2, tmp + 2);
@@ -355,7 +355,7 @@ _krb5_expand_default_cc_name(krb5_context context, const char *str, char **res)
 	    krb5_set_error_string(context, "malloc - out of memory");
 	    return ENOMEM;
 	}
-	
+
 	tlen = strlen(append);
 	tmp = realloc(*res, len + tlen + 1);
 	if (tmp == NULL) {
@@ -369,7 +369,7 @@ _krb5_expand_default_cc_name(krb5_context context, const char *str, char **res)
 	memcpy(*res + len, append, tlen + 1);
 	len = len + tlen;
 	free(append);
-    }    
+    }
     return 0;
 }
 
@@ -751,7 +751,7 @@ krb5_cc_set_flags(krb5_context context,
 {
     return (*id->ops->set_flags)(context, id, flags);
 }
-		    
+
 /**
  * Copy the contents of `from' to `to'.
  *
@@ -861,7 +861,7 @@ krb5_cc_get_prefix_ops(krb5_context context, const char *prefix)
 {
     char *p, *p1;
     int i;
-    
+
     if (prefix[0] == '/')
 	return &krb5_fcc_ops;
 
@@ -1011,7 +1011,7 @@ krb5_cc_cache_match (krb5_context context,
 	ret = krb5_cc_get_principal(context, cache, &principal);
 	if (ret == 0) {
 	    krb5_boolean match;
-	    
+
 	    match = krb5_principal_compare(context, principal, client);
 	    krb5_free_principal(context, principal);
 	    if (match)
@@ -1042,7 +1042,7 @@ krb5_cc_cache_match (krb5_context context,
 
 /**
  * Move the content from one credential cache to another. The
- * operation is an atomic switch. 
+ * operation is an atomic switch.
  *
  * @param context a Keberos context
  * @param from the credential cache to move the content from

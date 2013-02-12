@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2006 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
+ * (Royal Institute of Technology, Stockholm, Sweden).
  * Portions Copyright (c) 2004 PADL Software Pty Ltd.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "spnego/spnego_locl.h"
@@ -54,7 +54,7 @@ send_reject (OM_uint32 *minor_status,
     nt.u.negTokenResp.supportedMech = NULL;
     nt.u.negTokenResp.responseToken = NULL;
     nt.u.negTokenResp.mechListMIC   = NULL;
-    
+
     ASN1_MALLOC_ENCODE(NegotiationToken,
 		       output_token->value, output_token->length, &nt,
 		       &size, *minor_status);
@@ -77,14 +77,14 @@ acceptor_approved(gss_name_t target_name, gss_OID mech)
 
     gss_create_empty_oid_set(&junk, &oidset);
     gss_add_oid_set_member(&junk, mech, &oidset);
-    
+
     ret = gss_acquire_cred(&junk, target_name, GSS_C_INDEFINITE, oidset,
 			   GSS_C_ACCEPT, &cred, NULL, NULL);
     gss_release_oid_set(&junk, &oidset);
     if (ret != GSS_S_COMPLETE)
 	return ret;
     gss_release_cred(&junk, &cred);
-    
+
     return GSS_S_COMPLETE;
 }
 
@@ -189,7 +189,7 @@ send_supported_mechs (OM_uint32 *minor_status,
     name_buf.value = NULL;
     nt.u.negTokenInit.negHints->hintAddress = NULL;
 
-    ASN1_MALLOC_ENCODE(NegotiationTokenWin, 
+    ASN1_MALLOC_ENCODE(NegotiationTokenWin,
 		       data.value, data.length, &nt, &buf_len, ret);
     free_NegotiationTokenWin(&nt);
     if (ret) {
@@ -308,7 +308,7 @@ send_accept (OM_uint32 *minor_status,
 
     } else
 	nt.u.negTokenResp.mechListMIC = NULL;
- 
+
     ASN1_MALLOC_ENCODE(NegotiationToken,
 		       output_token->value, output_token->length,
 		       &nt, &size, ret);
@@ -472,12 +472,12 @@ acceptor_complete(OM_uint32 * minor_status,
     ret = _gss_spnego_require_mechlist_mic(minor_status, ctx, &require_mic);
     if (ret)
 	return ret;
-    
+
     ctx->require_mic = require_mic;
 
     if (mic != NULL)
 	require_mic = 1;
-    
+
     if (ctx->open && require_mic) {
 	if (mech_input_token == GSS_C_NO_BUFFER) { /* Even/One */
 	    verify_mic = 1;
@@ -489,12 +489,12 @@ acceptor_complete(OM_uint32 * minor_status,
 	    verify_mic = 0;
 	    *get_mic = 1;
 	}
-	
+
 	if (verify_mic || get_mic) {
 	    int eret;
 	    size_t buf_len;
-	    
-	    ASN1_MALLOC_ENCODE(MechTypeList, 
+
+	    ASN1_MALLOC_ENCODE(MechTypeList,
 			       mech_buf->value, mech_buf->length,
 			       &ctx->initiator_mech_types, &buf_len, eret);
 	    if (eret) {
@@ -504,7 +504,7 @@ acceptor_complete(OM_uint32 * minor_status,
 	    if (buf.length != buf_len)
 		abort();
 	}
-	
+
 	if (verify_mic) {
 	    ret = verify_mechlist_mic(minor_status, ctx, mech_buf, mic);
 	    if (ret) {
@@ -521,7 +521,7 @@ acceptor_complete(OM_uint32 * minor_status,
 
     } else
 	*get_mic = verify_mic = 0;
-    
+
     return GSS_S_COMPLETE;
 }
 
@@ -562,7 +562,7 @@ acceptor_start
 
     if (input_token_buffer->length == 0)
 	return send_supported_mechs (minor_status, output_token);
-	
+
     ret = _gss_spnego_alloc_sec_context(minor_status, context_handle);
     if (ret != GSS_S_COMPLETE)
 	return ret;
@@ -611,11 +611,11 @@ acceptor_start
      * First we try the opportunistic token if we have support for it,
      * don't try to verify we have credential for the token,
      * gss_accept_sec_context will (hopefully) tell us that.
-     * If that failes, 
+     * If that failes,
      */
 
     ret = select_mech(minor_status,
-		      &ni->mechTypes.val[0], 
+		      &ni->mechTypes.val[0],
 		      0,
 		      &preferred_mech_type);
 
@@ -632,13 +632,13 @@ acceptor_start
 	    mech_cred = acceptor_cred->negotiated_cred_id;
 	else
 	    mech_cred = GSS_C_NO_CREDENTIAL;
-	
+
 	if (ctx->mech_src_name != GSS_C_NO_NAME)
 	    gss_release_name(&minor, &ctx->mech_src_name);
-	
+
 	if (ctx->delegated_cred_id != GSS_C_NO_CREDENTIAL)
 	    _gss_spnego_release_cred(&minor, &ctx->delegated_cred_id);
-	
+
 	ret = gss_accept_sec_context(&minor,
 				     &ctx->negotiated_ctx_id,
 				     mech_cred,
@@ -715,7 +715,7 @@ acceptor_start
 		       output_token);
     if (ret)
 	goto out;
-    
+
 out:
     if (mech_output_token.value != NULL)
 	gss_release_buffer(&minor, &mech_output_token);
@@ -742,7 +742,7 @@ out:
 	    ctx->delegated_cred_id = GSS_C_NO_CREDENTIAL;
 	}
     }
-    
+
     if (mech_type != NULL)
 	*mech_type = ctx->negotiated_mech_type;
     if (ret_flags != NULL)
@@ -757,7 +757,7 @@ out:
 
     _gss_spnego_internal_delete_sec_context(&minor, context_handle,
 					    GSS_C_NO_BUFFER);
-    
+
     return ret;
 }
 
@@ -797,7 +797,7 @@ acceptor_continue
      * context token (negTokenInit).
      */
 
-    ret = decode_NegotiationToken(input_token_buffer->value, 
+    ret = decode_NegotiationToken(input_token_buffer->value,
 				  input_token_buffer->length,
 				  &nt, &nt_len);
     if (ret) {
@@ -887,7 +887,7 @@ acceptor_continue
 	} else
 	    ret = GSS_S_COMPLETE;
 
-	ret2 = _gss_spnego_require_mechlist_mic(minor_status, 
+	ret2 = _gss_spnego_require_mechlist_mic(minor_status,
 						ctx,
 						&require_mic);
 	if (ret2)
@@ -1012,11 +1012,11 @@ _gss_spnego_accept_sec_context
 	*delegated_cred_handle = GSS_C_NO_CREDENTIAL;
 
 
-    if (*context_handle == GSS_C_NO_CONTEXT) 
+    if (*context_handle == GSS_C_NO_CONTEXT)
 	func = acceptor_start;
     else
 	func = acceptor_continue;
-    
+
 
     return (*func)(minor_status, context_handle, acceptor_cred_handle,
 		   input_token_buffer, input_chan_bindings,

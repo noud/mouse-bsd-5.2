@@ -1,5 +1,5 @@
 2.0.1
-	Add work-arounds for kernel and library bugs under HP-UX.	
+	Add work-arounds for kernel and library bugs under HP-UX.
 	HP has been notified and will repair these soon.
 
 2.0.2

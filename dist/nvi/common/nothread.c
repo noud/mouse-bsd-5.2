@@ -34,7 +34,7 @@ static int vi_nothread_lock __P((WIN *, void **));
  *
  * PUBLIC: void thread_init __P((GS *gp));
  */
-void 
+void
 thread_init(GS *gp)
 {
 	gp->run = vi_nothread_run;
@@ -51,7 +51,7 @@ vi_nothread_run(WIN *wp, void *(*fun)(void*), void *data)
 	return 0;
 }
 
-static int 
+static int
 vi_nothread_lock (WIN * wp, void **lp)
 {
 	return 0;

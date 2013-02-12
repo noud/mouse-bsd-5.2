@@ -41,7 +41,7 @@
 #if defined(LIBC_SCCS) && !defined(lint)
 	RCSID("$NetBSD: strlen.S,v 1.1 2005/12/20 19:28:50 christos Exp $")
 #endif /* LIBC_SCCS and not lint */
-	
+
 /* The algorithm here uses the following techniques:
  *
  * 1) Given a word 'x', we can test to see if it contains any 0 bytes
@@ -73,19 +73,19 @@ ENTRY(strlen)
 	 */
 	sethi	%hi(0xfefefefe), %o3
 	sethi	%hi(0x7f7f7f7f), %o2
-	
+
 	or	%o3, %lo(0xfefefefe), %o3
 	or	%o2, %lo(0x7f7f7f7f), %o2
-	
+
 	sllx	%o3, 32, %o5
 	andcc	%o0, 0x7, %g5	! Hoisted from below to fill a slot
-	
+
 	sllx	%o2, 32, %o4
 	or	%o3, %o5, %o3
-	
+
 	sll	%g5, 3,	%g5	! Convert to bytes. hoisted
 	or	%o2, %o4, %o2
-	
+
 	inc	%o3
 	neg	%g5		! hoisted
 
@@ -95,36 +95,36 @@ ENTRY(strlen)
 	 * if (ptr & 0x7)
 	 *	mask = -1 << (64 - ((ptr & 0x7) << 3));
 	 */
-	
+
 !	andcc	%o0, 0x7, %g5	! Hoisted above
 	bz,pt	%icc, 0f
-	
-	
+
+
 !	 sll	%g5, 3,	%g5	! Convert to bytes. Also hoisted
 
 !	neg	%g5		! Hoisted
-	
+
 	 add	%g5, 64, %g5
 	mov	-1, %o4
-	
+
 	sllx	%o4, %g5, %o4
 
 	or	%o4, %g1, %g1	! Make leading bytes != 0
-	
+
 0:
 	or	%g1, %o2, %o5	! Do step 1 -- use or/andn instead of nor/and
 	add	%g1, %o3, %g5
-	
+
 	inc	8, %o1		! Point to next word
 	andncc	%g5, %o5, %g0
 	bz,a,pt	%xcc, 0b
 	 ldx	[%o1], %g1
-	
+
 	mov	-1, %o4
 	dec	8, %o1
-	
+
 	sllx	%o4, 64-8, %o5
-	
+
 	btst	%g1, %o5	! Check high byte
 	bz	%xcc,0f
 	 srlx	%o5, 8, %o5
@@ -133,7 +133,7 @@ ENTRY(strlen)
 	btst	%g1, %o5	! Check 2nd byte
 	bz	%xcc,0f
 	 srlx	%o5, 8, %o5
-	
+
 	inc	%o1
 	btst	%g1, %o5	! Check 3rd byte
 	bz	%xcc,0f
@@ -143,17 +143,17 @@ ENTRY(strlen)
 	btst	%g1, %o5	! Check 4th byte
 	bz	%xcc,0f
 	 srlx	%o5, 8, %o5
-			
+
 	inc	%o1
 	btst	%g1, %o5	! Check 5th byte
 	bz	%xcc,0f
 	 srlx	%o5, 8, %o5
-			
+
 	inc	%o1
 	btst	%g1, %o5	! Check 6th byte
 	bz	%xcc,0f
 	 srlx	%o5, 8, %o5
-			
+
 	inc	%o1
 	btst	%g1, %o5	! Check 7th byte
 	bz	%xcc,0f

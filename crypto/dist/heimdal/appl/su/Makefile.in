@@ -410,7 +410,7 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-su$(EXEEXT): $(su_OBJECTS) $(su_DEPENDENCIES) 
+su$(EXEEXT): $(su_OBJECTS) $(su_DEPENDENCIES)
 	@rm -f su$(EXEEXT)
 	$(LINK) $(su_OBJECTS) $(su_LDADD) $(LIBS)
 

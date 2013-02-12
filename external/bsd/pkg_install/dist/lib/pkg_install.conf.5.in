@@ -106,7 +106,7 @@ Limit the global connection cache to this value.
 For FTP this is the number of sessions without active command.
 For HTTP this is the number of connections open with keep-alive.
 .It Dv CONFIG_CACHE_CONNECTIONS_HOST
-Like 
+Like
 .Dv CONFIG_CACHE_CONNECTIONS ,
 but limit the number of connections to the host as well.
 See

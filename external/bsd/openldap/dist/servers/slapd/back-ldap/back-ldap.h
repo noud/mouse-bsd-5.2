@@ -359,7 +359,7 @@ typedef struct ldapinfo_t {
 
 	int			li_version;
 
-	/* cached connections; 
+	/* cached connections;
 	 * special conns are in tailq rather than in tree */
 	ldap_avl_info_t		li_conninfo;
 	struct {

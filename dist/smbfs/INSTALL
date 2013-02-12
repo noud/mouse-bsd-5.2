@@ -14,7 +14,7 @@ config file. smbfs can be either compiled in the kernel or loaded as module.
 may consider install ports/converters/iconv package (version 2.0 required).
 
     Type 'make' to compile.
-	
+
     If you're running any previous version of smbfs, unmount all mounted
 shares and unload an old module via 'kldunload smbfs' command.
 
@@ -32,7 +32,7 @@ run 'make makedev' command in order to create /dev/nsmb0 device.
     ==============
 
     KLD module can be loaded either manually:
-    
+
     kldload smbfs.ko
 
  or via loader.conf(5) file:
@@ -58,11 +58,11 @@ name and edit it for your needs.
     If something goes wrong, please try to find a problem and, if it is a bug
  send me detailed description or patch. Before complaining about a bug, please
  check the same operations with smbclient program included in the Samba package.
- 
+
 
 
     5. Deinstalling
     ===============
 
-    All files can be completly removed by typing 'make deinstall' in the 
+    All files can be completly removed by typing 'make deinstall' in the
 working directory.

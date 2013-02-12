@@ -20,7 +20,7 @@ alternate formats of this document.
 This file will also spend a very little time describing the XML and
 SGML headers so you can understand a bit what you may need to do to be
 able to work with this document in any fashion other than simply
-editing it. 
+editing it.
 
 We will spend almost no time on the actual tags and how to write an
 XML DocBook compliant document. If you are at all familiar with SGML
@@ -102,7 +102,7 @@ SYSTEM identifier to the recommended value of:
 
     http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd
 
-NOTE: Under FreeBSD this is the package: 
+NOTE: Under FreeBSD this is the package:
 
     /usr/ports/textproc/docbook-xml
 
@@ -154,7 +154,7 @@ The SGML tools can be found at:
     ftp://ftp.us.sgmltools.org/pub/SGMLtools/v2.0/source/ \
     ftp://ftp.nllgg.nl/pub/SGMLtools/v2.0/source/
 
-FreeBSD package for these is: 
+FreeBSD package for these is:
 
     /usr/ports/textproc/sgmltools
 
@@ -202,7 +202,7 @@ configure from a .in file so that it will contain the correct
 system-dependent path: where on FreeBSD the second line reads:
 
     <!ENTITY dbstyle SYSTEM "/usr/local/share/sgml/docbook/dsssl/modular/html/docbook.dsl" CDATA DSSSL>
-  
+
 On NetBSD it needs to read:
 
     <!ENTITY dbstyle SYSTEM "/usr/pkg/share/sgml/docbook/dsssl/modular/html/docbook.dsl" CDATA DSSSL>
@@ -316,11 +316,11 @@ o add "hugelatex," Enlarge pool sizes, install the jadetex TeX driver
     current version than what is packaged with openjade or jade.
 
     Checkout http://www.tug.org/applications/jadetex/
-    
-    Unzip the file you get from there (should be jadetex-2.20 or
-    newer.) 
 
-    In the directory you unzip: 
+    Unzip the file you get from there (should be jadetex-2.20 or
+    newer.)
+
+    In the directory you unzip:
 
       sudo make install
       sudo texhash

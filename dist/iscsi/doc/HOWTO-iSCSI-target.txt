@@ -2,7 +2,7 @@ The NetBSD iSCSI HOWTO
 ======================
 
 This document is intended to tell you how to set up an iSCSI target on
-a NetBSD host, so that block storage can be presented to the network. 
+a NetBSD host, so that block storage can be presented to the network.
 It then goes on to show how to connect to that storage using the
 Microsoft iSCSI initiator (version 1.06, running on Windows XP).
 

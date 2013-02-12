@@ -117,8 +117,8 @@ int ldap_int_sasl_init( void )
 	sasl_set_mutex(
 		ldap_pvt_sasl_mutex_new,
 		ldap_pvt_sasl_mutex_lock,
-		ldap_pvt_sasl_mutex_unlock,    
-		ldap_pvt_sasl_mutex_dispose );    
+		ldap_pvt_sasl_mutex_unlock,
+		ldap_pvt_sasl_mutex_dispose );
 #endif
 
 	if ( sasl_client_init( NULL ) == SASL_OK ) {
@@ -166,7 +166,7 @@ sb_sasl_setup( Sockbuf_IO_Desc *sbiod, void *arg )
 	}
 	sasl_getprop( p->sasl_context, SASL_MAXOUTBUF,
 		(SASL_CONST void **)(char *) &p->sasl_maxbuf );
-	    
+
 	sbiod->sbiod_pvt = p;
 
 	return 0;
@@ -178,7 +178,7 @@ sb_sasl_remove( Sockbuf_IO_Desc *sbiod )
 	struct sb_sasl_data	*p;
 
 	assert( sbiod != NULL );
-	
+
 	p = (struct sb_sasl_data *)sbiod->sbiod_pvt;
 #if SASL_VERSION_MAJOR >= 2
 	/*
@@ -212,7 +212,7 @@ sb_sasl_pkt_length( const unsigned char *buf, int debuglevel )
 		/* somebody is trying to mess me up. */
 		ber_log_printf( LDAP_DEBUG_ANY, debuglevel,
 			"sb_sasl_pkt_length: received illegal packet length "
-			"of %lu bytes\n", (unsigned long)size );      
+			"of %lu bytes\n", (unsigned long)size );
 		size = 16; /* this should lead to an error. */
 	}
 
@@ -229,7 +229,7 @@ sb_sasl_drop_packet ( Sockbuf_Buf *sec_buf_in, int debuglevel )
 	if ( len > 0 )
 		AC_MEMCPY( sec_buf_in->buf_base, sec_buf_in->buf_base +
 			sec_buf_in->buf_end, len );
-   
+
 	if ( len >= 4 ) {
 		sec_buf_in->buf_end = sb_sasl_pkt_length(
 			(unsigned char *) sec_buf_in->buf_base, debuglevel);
@@ -245,7 +245,7 @@ sb_sasl_read( Sockbuf_IO_Desc *sbiod, void *buf, ber_len_t len)
 {
 	struct sb_sasl_data	*p;
 	ber_slen_t		ret, bufptr;
-   
+
 	assert( sbiod != NULL );
 	assert( SOCKBUF_VALID( sbiod->sbiod_sb ) );
 
@@ -285,7 +285,7 @@ sb_sasl_read( Sockbuf_IO_Desc *sbiod, void *buf, ber_len_t len)
 		sbiod->sbiod_sb->sb_debug );
 
 	/* Grow the packet buffer if neccessary */
-	if ( ( p->sec_buf_in.buf_size < (ber_len_t) ret ) && 
+	if ( ( p->sec_buf_in.buf_size < (ber_len_t) ret ) &&
 		ber_pvt_sb_grow_buffer( &p->sec_buf_in, ret ) < 0 )
 	{
 		sock_errset(ENOMEM);
@@ -330,7 +330,7 @@ sb_sasl_read( Sockbuf_IO_Desc *sbiod, void *buf, ber_len_t len)
 		sock_errset(EIO);
 		return -1;
 	}
-	
+
 	p->buf_in.buf_size = p->buf_in.buf_end;
 
 	bufptr += ber_pvt_sb_copy_out( &p->buf_in, (char*) buf + bufptr, len );
@@ -406,7 +406,7 @@ sb_sasl_ctrl( Sockbuf_IO_Desc *sbiod, int opt, void *arg )
 	if ( opt == LBER_SB_OPT_DATA_READY ) {
 		if ( p->buf_in.buf_ptr != p->buf_in.buf_end ) return 1;
 	}
-	
+
 	return LBER_SBIOD_CTRL_NEXT( sbiod, opt, arg );
 }
 
@@ -512,7 +512,7 @@ sasl_err2ldap( int saslerr )
 
 int
 ldap_int_sasl_open(
-	LDAP *ld, 
+	LDAP *ld,
 	LDAPConn *lc,
 	const char * host )
 {
@@ -622,7 +622,7 @@ ldap_int_sasl_bind(
 				rc = ld->ld_errno;
 			}
 		}
-	}   
+	}
 #ifdef LDAP_R_COMPILE
 	ldap_pvt_thread_mutex_unlock( &ld->ld_req_mutex );
 #endif
@@ -908,7 +908,7 @@ ldap_int_sasl_external(
 	if ( ctx == NULL ) {
 		return LDAP_LOCAL_ERROR;
 	}
-   
+
 #if SASL_VERSION_MAJOR >= 2
 	sc = sasl_setprop( ctx, SASL_SSF_EXTERNAL, &sasl_ssf );
 	if ( sc == SASL_OK )

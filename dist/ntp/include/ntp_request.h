@@ -666,7 +666,7 @@ struct conf_restrict {
 /*
  * Structure used for returning monitor data
  */
-struct info_monitor_1 {	
+struct info_monitor_1 {
 	u_int32 lasttime;	/* last packet from this host */
 	u_int32 firsttime;	/* first time we received a packet */
 	u_int32 lastdrop;        /* last time we rejected a packet due to client limitation policy */
@@ -687,7 +687,7 @@ struct info_monitor_1 {
 /*
  * Structure used for returning monitor data
  */
-struct info_monitor {	
+struct info_monitor {
 	u_int32 lasttime;	/* last packet from this host */
 	u_int32 firsttime;	/* first time we received a packet */
 	u_int32 lastdrop;       /* last time we rejected a packet due to client limitation policy */
@@ -704,7 +704,7 @@ struct info_monitor {
 /*
  * Structure used for returning monitor data (old format
  */
-struct old_info_monitor {	
+struct old_info_monitor {
 	u_int32 lasttime;	/* last packet from this host */
 	u_int32 firsttime;	/* first time we received a packet */
 	u_int32 count;		/* count of packets received */

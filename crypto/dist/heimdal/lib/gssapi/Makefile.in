@@ -711,7 +711,7 @@ CLEANFILES = $(BUILT_SOURCES) \
 	$(gssapi_files) gssapi_asn1.h gssapi_asn1_files \
 	gss-commands.h gss-commands.c
 
-# test_sequence 
+# test_sequence
 test_cfx_SOURCES = krb5/test_cfx.c
 test_context_SOURCES = test_context.c test_common.c test_common.h
 test_ntlm_SOURCES = test_ntlm.c test_common.c test_common.h
@@ -952,7 +952,7 @@ spnego/context_stubs.lo: spnego/$(am__dirstamp)
 spnego/cred_stubs.lo: spnego/$(am__dirstamp)
 spnego/external.lo: spnego/$(am__dirstamp)
 spnego/init_sec_context.lo: spnego/$(am__dirstamp)
-libgssapi.la: $(libgssapi_la_OBJECTS) $(libgssapi_la_DEPENDENCIES) 
+libgssapi.la: $(libgssapi_la_OBJECTS) $(libgssapi_la_DEPENDENCIES)
 	$(libgssapi_la_LINK) -rpath $(libdir) $(libgssapi_la_OBJECTS) $(libgssapi_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -996,32 +996,32 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-gss$(EXEEXT): $(gss_OBJECTS) $(gss_DEPENDENCIES) 
+gss$(EXEEXT): $(gss_OBJECTS) $(gss_DEPENDENCIES)
 	@rm -f gss$(EXEEXT)
 	$(LINK) $(gss_OBJECTS) $(gss_LDADD) $(LIBS)
-test_acquire_cred$(EXEEXT): $(test_acquire_cred_OBJECTS) $(test_acquire_cred_DEPENDENCIES) 
+test_acquire_cred$(EXEEXT): $(test_acquire_cred_OBJECTS) $(test_acquire_cred_DEPENDENCIES)
 	@rm -f test_acquire_cred$(EXEEXT)
 	$(LINK) $(test_acquire_cred_OBJECTS) $(test_acquire_cred_LDADD) $(LIBS)
 krb5/test_cfx.$(OBJEXT): krb5/$(am__dirstamp)
-test_cfx$(EXEEXT): $(test_cfx_OBJECTS) $(test_cfx_DEPENDENCIES) 
+test_cfx$(EXEEXT): $(test_cfx_OBJECTS) $(test_cfx_DEPENDENCIES)
 	@rm -f test_cfx$(EXEEXT)
 	$(LINK) $(test_cfx_OBJECTS) $(test_cfx_LDADD) $(LIBS)
-test_context$(EXEEXT): $(test_context_OBJECTS) $(test_context_DEPENDENCIES) 
+test_context$(EXEEXT): $(test_context_OBJECTS) $(test_context_DEPENDENCIES)
 	@rm -f test_context$(EXEEXT)
 	$(LINK) $(test_context_OBJECTS) $(test_context_LDADD) $(LIBS)
-test_cred$(EXEEXT): $(test_cred_OBJECTS) $(test_cred_DEPENDENCIES) 
+test_cred$(EXEEXT): $(test_cred_OBJECTS) $(test_cred_DEPENDENCIES)
 	@rm -f test_cred$(EXEEXT)
 	$(LINK) $(test_cred_OBJECTS) $(test_cred_LDADD) $(LIBS)
-test_kcred$(EXEEXT): $(test_kcred_OBJECTS) $(test_kcred_DEPENDENCIES) 
+test_kcred$(EXEEXT): $(test_kcred_OBJECTS) $(test_kcred_DEPENDENCIES)
 	@rm -f test_kcred$(EXEEXT)
 	$(LINK) $(test_kcred_OBJECTS) $(test_kcred_LDADD) $(LIBS)
-test_names$(EXEEXT): $(test_names_OBJECTS) $(test_names_DEPENDENCIES) 
+test_names$(EXEEXT): $(test_names_OBJECTS) $(test_names_DEPENDENCIES)
 	@rm -f test_names$(EXEEXT)
 	$(LINK) $(test_names_OBJECTS) $(test_names_LDADD) $(LIBS)
-test_ntlm$(EXEEXT): $(test_ntlm_OBJECTS) $(test_ntlm_DEPENDENCIES) 
+test_ntlm$(EXEEXT): $(test_ntlm_OBJECTS) $(test_ntlm_DEPENDENCIES)
 	@rm -f test_ntlm$(EXEEXT)
 	$(LINK) $(test_ntlm_OBJECTS) $(test_ntlm_LDADD) $(LIBS)
-test_oid$(EXEEXT): $(test_oid_OBJECTS) $(test_oid_DEPENDENCIES) 
+test_oid$(EXEEXT): $(test_oid_OBJECTS) $(test_oid_DEPENDENCIES)
 	@rm -f test_oid$(EXEEXT)
 	$(LINK) $(test_oid_OBJECTS) $(test_oid_LDADD) $(LIBS)
 

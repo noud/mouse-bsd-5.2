@@ -49,11 +49,11 @@ __RCSID("$NetBSD: cp.c,v 1.51 2008/07/20 00:52:39 lukem Exp $");
 
 /*
  * Cp copies source files to target files.
- * 
+ *
  * The global PATH_T structure "to" always contains the path to the
  * current target file.  Since fts(3) does not change directories,
  * this path can be either absolute or dot-relative.
- * 
+ *
  * The basic algorithm is to initialize "to" and use fts(3) to traverse
  * the file hierarchy rooted in the argument list.  A trivial case is the
  * case of 'cp file1 file2'.  The more interesting case is the case of
@@ -106,7 +106,7 @@ main(int argc, char *argv[])
 	(void)setlocale(LC_ALL, "");
 
 	Hflag = Lflag = Pflag = Rflag = 0;
-	while ((ch = getopt(argc, argv, "HLNPRfiprv")) != -1) 
+	while ((ch = getopt(argc, argv, "HLNPRfiprv")) != -1)
 		switch (ch) {
 		case 'H':
 			Hflag = 1;
@@ -199,8 +199,8 @@ main(int argc, char *argv[])
 	to.target_end = to.p_end;
 
 	/* Set end of argument list for fts(3). */
-	argv[argc] = NULL;     
-	
+	argv[argc] = NULL;
+
 	/*
 	 * Cp has two distinct cases:
 	 *
@@ -226,7 +226,7 @@ main(int argc, char *argv[])
 	if (r == -1 || !S_ISDIR(to_stat.st_mode)) {
 		/*
 		 * Case (1).  Target is not a directory.
-		 */ 
+		 */
 		if (argc > 1)
 			usage();
 		/*
@@ -245,7 +245,7 @@ main(int argc, char *argv[])
 				err(EXIT_FAILURE, "%s", *argv);
 				/* NOTREACHED */
 			}
-			
+
 			if (S_ISDIR(tmp_stat.st_mode) && (Rflag || rflag))
 				type = DIR_TO_DNE;
 			else
@@ -315,8 +315,8 @@ copy(char *argv[], enum op type, int fts_options)
 		}
 
 		/*
-		 * If we are in case (2) or (3) above, we need to append the 
-                 * source name to the target name.  
+		 * If we are in case (2) or (3) above, we need to append the
+                 * source name to the target name.
                  */
 		if (type != FILE_TO_FILE) {
 			if ((curr->fts_namelen +
@@ -349,10 +349,10 @@ copy(char *argv[], enum op type, int fts_options)
 			if (curr->fts_level == FTS_ROOTLEVEL) {
 				if (type != DIR_TO_DNE) {
 					p = strrchr(curr->fts_path, '/');
-					base = (p == NULL) ? 0 : 
+					base = (p == NULL) ? 0 :
 					    (int)(p - curr->fts_path + 1);
 
-					if (!strcmp(&curr->fts_path[base], 
+					if (!strcmp(&curr->fts_path[base],
 					    ".."))
 						base += 1;
 				} else
@@ -410,7 +410,7 @@ copy(char *argv[], enum op type, int fts_options)
 			   ((fts_options & FTS_COMFOLLOW) && curr->fts_level == 0)) {
 				if (copy_file(curr, dne))
 					this_failed = any_failed = 1;
-			} else {	
+			} else {
 				if (copy_link(curr, !dne))
 					this_failed = any_failed = 1;
 			}
@@ -441,7 +441,7 @@ copy(char *argv[], enum op type, int fts_options)
 				 * umask blocks owner writes, we fail..
 				 */
 				if (dne) {
-					if (mkdir(to.p_path, 
+					if (mkdir(to.p_path,
 					    curr->fts_statp->st_mode | S_IRWXU) < 0)
 						err(EXIT_FAILURE, "%s",
 						    to.p_path);
@@ -457,14 +457,14 @@ copy(char *argv[], enum op type, int fts_options)
 			{
 	                        /*
 				 * If not -p and directory didn't exist, set it to be
-				 * the same as the from directory, umodified by the 
-                        	 * umask; arguably wrong, but it's been that way 
+				 * the same as the from directory, umodified by the
+                        	 * umask; arguably wrong, but it's been that way
                         	 * forever.
 				 */
 				if (pflag && setfile(curr->fts_statp, 0))
 					this_failed = any_failed = 1;
 				else if (dne)
-					(void)chmod(to.p_path, 
+					(void)chmod(to.p_path,
 					    curr->fts_statp->st_mode);
 
 				/*
@@ -496,7 +496,7 @@ copy(char *argv[], enum op type, int fts_options)
 			if (Rflag) {
 				if (copy_fifo(curr->fts_statp, !dne))
 					this_failed = any_failed = 1;
-			} else 
+			} else
 				if (copy_file(curr, dne))
 					this_failed = any_failed = 1;
 			break;

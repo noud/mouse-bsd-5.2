@@ -36,7 +36,7 @@ isc_region_compare(isc_region_t *r1, isc_region_t *r2) {
 
 	REQUIRE(r1 != NULL);
 	REQUIRE(r2 != NULL);
-	       
+
 	l = (r1->length < r2->length) ? r1->length : r2->length;
 
 	if ((result = memcmp(r1->base, r2->base, l)) != 0)

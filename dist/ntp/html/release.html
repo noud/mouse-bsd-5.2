@@ -24,7 +24,7 @@
 		<ol>
 			<li>Support for the IPv6 addressing family is included in this distribution. If the Basic Socket Interface Extensions for IPv6 (RFC-2553) is detected, support for the IPv6 address family is generated in addition to the default support for the IPv4 address family. Combination IPv6 and IPv4 configurations have been successfully tested in all protocol modes supported by NTP and using both symmetric and public key (Autokey) cryptography. However, users should note that IPv6 support is new and we have not had a lot of experience with it in various operational scenarios and local infrastructure environments. As always, feedback is welcome.
 			<li>Most calculations are now done using 64-bit floating double format, rather than 64-bit fixed point format. The motivation for this is to reduce size, improve speed and avoid messy bounds checking. Workstations of today are much faster than when the original NTP version was designed in the early 1980s, and it is rare to find a processor architecture that does not support floating double. The fixed point format is still used with raw timestamps, in order to retain the full precision of about 212 picoseconds. However, the algorithms which process raw timestamps all produce fixed point differences before converting to floating double. The differences are ordinarily quite small so can be expressed without loss of accuracy in this format.
-			
+
 			<li>The clock discipline algorithm has been redesigned to improve accuracy, reduce the impact of network jitter and allow increased in poll intervals to well over one day with only moderate sacrifice in accuracy.
 		</ol>
 		<ul>

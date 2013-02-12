@@ -136,7 +136,7 @@ prologue(struct interpass_prolog *ipp)
 	ftype = ipp->ipp_type;
 
 	/*
-	 * We here know what registers to save and how much to 
+	 * We here know what registers to save and how much to
 	 * add to the stack.
 	 */
 	addto = offcalc(ipp);
@@ -343,7 +343,7 @@ twollcomp(NODE *p)
 		cb1 = LT;
 		cb2 = GT;
 		break;
-	
+
 	default:
 		cb1 = cb2 = 0; /* XXX gcc */
 	}
@@ -586,7 +586,7 @@ int
 countargs(NODE *p, int *n)
 {
 	int sz;
-	
+
 	if (p->n_op == CM) {
 		countargs(p->n_left, n);
 		countargs(p->n_right, n);

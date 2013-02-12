@@ -886,7 +886,7 @@ c_typeset(wp)
 	}
 	return 0;
 }
-	
+
 int
 c_alias(wp)
 	char **wp;
@@ -951,7 +951,7 @@ c_alias(wp)
 		return c_unalias((char **)__UNCONST(args));
 	}
 
-	
+
 	if (*wp == NULL) {
 		struct tbl *ap, **p;
 

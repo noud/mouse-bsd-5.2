@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -63,7 +63,7 @@
 
 TS_VERIFY_CTX *TS_VERIFY_CTX_new(void)
 	{
-	TS_VERIFY_CTX *ctx = 
+	TS_VERIFY_CTX *ctx =
 		(TS_VERIFY_CTX *) OPENSSL_malloc(sizeof(TS_VERIFY_CTX));
 	if (ctx)
 		memset(ctx, 0, sizeof(TS_VERIFY_CTX));
@@ -97,7 +97,7 @@ void TS_VERIFY_CTX_cleanup(TS_VERIFY_CTX *ctx)
 
 	X509_ALGOR_free(ctx->md_alg);
 	OPENSSL_free(ctx->imprint);
-	
+
 	BIO_free_all(ctx->data);
 
 	ASN1_INTEGER_free(ctx->nonce);

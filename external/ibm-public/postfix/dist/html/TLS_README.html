@@ -123,7 +123,7 @@ align="center" bgcolor="#f0f0ff"> smtp<br> session<br> key cache
 <h2><a name="build_tls">Building Postfix with TLS support</a></h2>
 
 <p> These instructions assume that you build Postfix from source
-code as described in the <a href="INSTALL.html">INSTALL</a> document. Some modification may   
+code as described in the <a href="INSTALL.html">INSTALL</a> document. Some modification may
 be required if you build Postfix from a vendor-specific source
 package.  </p>
 
@@ -312,7 +312,7 @@ $<a href="postconf.5.html#smtpd_tls_CAfile">smtpd_tls_CAfile</a> or install it i
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
     <a href="postconf.5.html#smtpd_tls_dcert_file">smtpd_tls_dcert_file</a> = /etc/postfix/server-dsa.pem
     <a href="postconf.5.html#smtpd_tls_dkey_file">smtpd_tls_dkey_file</a> = $<a href="postconf.5.html#smtpd_tls_dcert_file">smtpd_tls_dcert_file</a>
-</pre>  
+</pre>
 </blockquote>
 
 <p> Their ECDSA counterparts (Postfix &ge; 2.6 + OpenSSL &ge; 0.9.9): </p>
@@ -325,7 +325,7 @@ $<a href="postconf.5.html#smtpd_tls_CAfile">smtpd_tls_CAfile</a> or install it i
     #
     <a href="postconf.5.html#smtpd_tls_eccert_file">smtpd_tls_eccert_file</a> = /etc/postfix/server-ecdsa.pem
     <a href="postconf.5.html#smtpd_tls_eckey_file">smtpd_tls_eckey_file</a> = $<a href="postconf.5.html#smtpd_tls_eccert_file">smtpd_tls_eccert_file</a>
-</pre>  
+</pre>
 </blockquote>
 
 <p> TLS without certificates for servers serving exclusively
@@ -335,7 +335,7 @@ anonymous-cipher capable clients: </p>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
     <a href="postconf.5.html#smtpd_tls_cert_file">smtpd_tls_cert_file</a> = none
-</pre>  
+</pre>
 </blockquote>
 
 <p> To verify a remote SMTP client certificate, the Postfix SMTP
@@ -437,7 +437,7 @@ Only information recorded at the final destination is reliable,
 since the headers may be changed by intermediate servers. </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -454,7 +454,7 @@ later) or "<a href="postconf.5.html#smtpd_use_tls">smtpd_use_tls</a> = yes" (obs
 supported). </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -484,7 +484,7 @@ of a publicly-referenced Postfix SMTP server.  This option is off
 by default and should only seldom be used. </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -511,7 +511,7 @@ once chosen for this feature.
 </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="master.5.html">master.cf</a>:
@@ -540,7 +540,7 @@ when the Postfix SMTP server is configured to ask for client
 certificates. </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -587,7 +587,7 @@ root CA or a direct intermediary CA (so long as the client is correctly
 configured to supply its intermediate CA certificate). </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -611,7 +611,7 @@ In order to change this behavior, set
 "<a href="postconf.5.html#smtpd_tls_auth_only">smtpd_tls_auth_only</a> = yes". </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -635,7 +635,7 @@ concurrent access. Session caching is highly recommended, because
 the cost of repeatedly negotiating TLS session keys is high.</p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -643,7 +643,7 @@ the cost of repeatedly negotiating TLS session keys is high.</p>
 </pre>
 </blockquote>
 
-<p> Note: as of version 2.5, Postfix no longer uses root privileges     
+<p> Note: as of version 2.5, Postfix no longer uses root privileges
 when opening this file. The file should now be stored under the
 Postfix-owned <a href="postconf.5.html#data_directory">data_directory</a>. As a migration aid, an attempt to
 open the file under a non-Postfix directory is redirected to the
@@ -655,7 +655,7 @@ default of 300s, but a longer time of 3600sec (=1 hour). <a href="http://tools.i
 recommends a maximum of 24 hours.  </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -726,13 +726,13 @@ feature and list all certificates via $<a href="postconf.5.html#relay_clientcert
 certificate must no longer be used (e.g. an employee leaving). </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
-    <a href="postconf.5.html#smtpd_recipient_restrictions">smtpd_recipient_restrictions</a> = 
-        ... 
-        <a href="postconf.5.html#permit_tls_clientcerts">permit_tls_clientcerts</a> 
+    <a href="postconf.5.html#smtpd_recipient_restrictions">smtpd_recipient_restrictions</a> =
+        ...
+        <a href="postconf.5.html#permit_tls_clientcerts">permit_tls_clientcerts</a>
         <a href="postconf.5.html#reject_unauth_destination">reject_unauth_destination</a>
         ...
 </pre>
@@ -841,7 +841,7 @@ substantially more CPU intensive, and "strong" is sufficiently
 secure for most situations. </p>
 
 <p> Examples: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -859,7 +859,7 @@ SMTP server write and read operations during TLS startup and shutdown
 handshake procedures.  </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -1000,7 +1000,7 @@ certificates issued by these CAs, append the root certificate to
 $<a href="postconf.5.html#smtp_tls_CAfile">smtp_tls_CAfile</a> or install it in the $<a href="postconf.5.html#smtp_tls_CApath">smtp_tls_CApath</a> directory. </p>
 
 <p> RSA key and certificate examples: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -1016,7 +1016,7 @@ $<a href="postconf.5.html#smtp_tls_CAfile">smtp_tls_CAfile</a> or install it in 
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
     <a href="postconf.5.html#smtp_tls_dcert_file">smtp_tls_dcert_file</a> = /etc/postfix/client-dsa.pem
     <a href="postconf.5.html#smtp_tls_dkey_file">smtp_tls_dkey_file</a> = $<a href="postconf.5.html#smtp_tls_dcert_file">smtp_tls_dcert_file</a>
-</pre>  
+</pre>
 </blockquote>
 
 <p> Their ECDSA counterparts (Postfix &ge; 2.6 + OpenSSL &ge; 0.9.9): </p>
@@ -1026,7 +1026,7 @@ $<a href="postconf.5.html#smtp_tls_CAfile">smtp_tls_CAfile</a> or install it in 
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
     <a href="postconf.5.html#smtp_tls_eccert_file">smtp_tls_eccert_file</a> = /etc/postfix/client-ecdsa.pem
     <a href="postconf.5.html#smtp_tls_eckey_file">smtp_tls_eckey_file</a> = $<a href="postconf.5.html#smtp_tls_eccert_file">smtp_tls_eccert_file</a>
-</pre>  
+</pre>
 </blockquote>
 
 <p> To verify a remote SMTP server certificate, the Postfix SMTP
@@ -1059,7 +1059,7 @@ preloading them all into memory may not pay off in reduced access time
 when the certificate is needed.  </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -1098,7 +1098,7 @@ transmission after STARTTLS </td> </tr>
 </blockquote>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -1125,7 +1125,7 @@ is allowed to negotiate per unit time.</p>
 
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -1133,7 +1133,7 @@ is allowed to negotiate per unit time.</p>
 </pre>
 </blockquote>
 
-<p> Note: as of version 2.5, Postfix no longer uses root privileges     
+<p> Note: as of version 2.5, Postfix no longer uses root privileges
 when opening this file. The file should now be stored under the
 Postfix-owned <a href="postconf.5.html#data_directory">data_directory</a>. As a migration aid, an attempt to
 open the file under a non-Postfix directory is redirected to the
@@ -1145,7 +1145,7 @@ default of 300s, but a longer time of 3600s (=1 hour). <a href="http://tools.iet
 recommends a maximum of 24 hours.  </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -1928,7 +1928,7 @@ separated by colons.  </p>
 <li> <p> The "exclude" attribute (Postfix &ge; 2.6) is used to disable
 ciphers that cause handshake failures with a specific mandatory TLS
 destination, without disabling the ciphers for all mandatory destinations.
-Alternatively, you can exclude ciphers that cause issues with multiple 
+Alternatively, you can exclude ciphers that cause issues with multiple
 remote servers in <a href="postconf.5.html">main.cf</a>, and selectively enable them on a per-destination
 basis in the policy table by setting a shorter or empty exclusion list. The
 per-destination "exclude" list preempts both the opportunistic and
@@ -1954,7 +1954,7 @@ Example:
     example.edu             none
     example.mil             may
     example.gov             encrypt protocols=SSLv3:TLSv1 ciphers=high
-    example.com             verify     
+    example.com             verify
             match=hostname:dot-nexthop protocols=SSLv3:TLSv1 ciphers=high
     example.net             secure
     .example.net            secure match=.example.net:example.net
@@ -1974,7 +1974,7 @@ table can render the "secure" level vulnerable to DNS forgery. Do not use
 the "hostname" strategy for <a href="#client_tls_secure">secure-channel</a>
 configurations in environments where DNS security is not assured. </p>
 
-<h3> <a name="client_tls_obs"> Obsolete per-site TLS policy support 
+<h3> <a name="client_tls_obs"> Obsolete per-site TLS policy support
 </a> </h3>
 
 <p> This section describes an obsolete per-site TLS policy mechanism.
@@ -2105,7 +2105,7 @@ parameter.  </p>
 
 </ul>
 
-<h3> <a name="client_tls_harden"> Closing a DNS loophole with 
+<h3> <a name="client_tls_harden"> Closing a DNS loophole with
 obsolete per-site TLS policies </a> </h3>
 
 <p> For a general discussion of TLS security for SMTP see <a
@@ -2220,7 +2220,7 @@ by a trusted CA, and all trusted intermediary CAs need to be configured
 explicitly. With a verify depth of 2 you can verify servers signed by a
 root CA or a direct intermediary CA (so long as the server is correctly
 configured to supply its intermediate CA certificate). </p>
- 
+
 <p> Example: </p>
 
 <blockquote>
@@ -2265,7 +2265,7 @@ is optional. The mandatory TLS protocol list is specified via the
 the SSL/TLS protocols used with opportunistic TLS. </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -2364,7 +2364,7 @@ tries the next network address on the mail exchanger list, and
 defers delivery if no alternative server is available. </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -2384,7 +2384,7 @@ bits. This is more than sufficient to generate a 128bit (or 168bit)
 session key.  </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -2403,7 +2403,7 @@ regular file, you must prepend the source type to the source name:
 compatible socket interface.  </p>
 
 <p> Examples (specify only one in <a href="postconf.5.html">main.cf</a>): </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -2420,7 +2420,7 @@ read at each step to 255 bytes. If you specify a regular file as
 entropy source, a larger amount of data can be read.  </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -2435,7 +2435,7 @@ between 0 and the maximal time specified with <a href="postconf.5.html#tls_rando
 The default maximal time interval is 1 hour. </p>
 
 <p> Example: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -2449,7 +2449,7 @@ that it can recover the PRNG state the next time it starts up.
 This file is created when it does not exist. </p>
 
 <p> Examples: </p>
- 
+
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
@@ -2491,7 +2491,7 @@ font, and a "<tt>#</tt>" prompt indicates a super-user shell. </p>
 <li> <p> Become your own Certificate Authority, so that you can
 sign your own public keys. This example uses the CA.pl script that
 ships with OpenSSL.  By default, OpenSSL installs this as
-<tt>/usr/local/ssl/misc/CA.pl</tt>, but your mileage may vary. 
+<tt>/usr/local/ssl/misc/CA.pl</tt>, but your mileage may vary.
 The script creates a private key in <tt>./demoCA/private/cakey.pem</tt>
 and a public key in <tt>./demoCA/cacert.pem</tt>.</p>
 

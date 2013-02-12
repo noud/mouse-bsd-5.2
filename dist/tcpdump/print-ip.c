@@ -408,7 +408,7 @@ again:
 		ipds->nh = enh & 0xff;
 		goto again;
 	}
-	
+
 	case IPPROTO_IPCOMP:
 	{
 		int enh;
@@ -428,25 +428,25 @@ again:
 	case IPPROTO_DCCP:
 		dccp_print(ipds->cp, (const u_char *)ipds->ip, ipds->len);
 		break;
-		
+
 	case IPPROTO_TCP:
 		/* pass on the MF bit plus the offset to detect fragments */
 		tcp_print(ipds->cp, ipds->len, (const u_char *)ipds->ip,
 			  ipds->off & (IP_MF|IP_OFFMASK));
 		break;
-		
+
 	case IPPROTO_UDP:
 		/* pass on the MF bit plus the offset to detect fragments */
 		udp_print(ipds->cp, ipds->len, (const u_char *)ipds->ip,
 			  ipds->off & (IP_MF|IP_OFFMASK));
 		break;
-		
+
 	case IPPROTO_ICMP:
 		/* pass on the MF bit plus the offset to detect fragments */
 		icmp_print(ipds->cp, ipds->len, (const u_char *)ipds->ip,
 			   ipds->off & (IP_MF|IP_OFFMASK));
 		break;
-		
+
 	case IPPROTO_PIGP:
 		/*
 		 * XXX - the current IANA protocol number assignments
@@ -463,11 +463,11 @@ again:
 		 */
 		igrp_print(ipds->cp, ipds->len, (const u_char *)ipds->ip);
 		break;
-		
+
 	case IPPROTO_EIGRP:
 		eigrp_print(ipds->cp, ipds->len);
 		break;
-		
+
 	case IPPROTO_ND:
 		ND_PRINT((ndo, " nd %d", ipds->len));
 		break;
@@ -492,7 +492,7 @@ again:
 			return;
 		}
 		break;
-		
+
 #ifdef INET6
 	case IPPROTO_IPV6:
 		/* ip6-in-ip encapsulation */
@@ -534,7 +534,7 @@ again:
 		break;
 	}
 }
-	       
+
 void
 ip_print_inner(netdissect_options *ndo,
 	       const u_char *bp,
@@ -640,7 +640,7 @@ ip_print(netdissect_options *ndo,
             }
 
             if (ipds->ip->ip_ttl >= 1)
-                (void)printf(", ttl %u", ipds->ip->ip_ttl);    
+                (void)printf(", ttl %u", ipds->ip->ip_ttl);
 
 	    /*
 	     * for the firewall guys, print id, offset.
@@ -706,7 +706,7 @@ ip_print(netdissect_options *ndo,
 		    (void)printf(" %s", proto->p_name);
 		else
 		    (void)printf(" ip-proto-%d", ipds->ip->ip_p);
-	    } 
+	    }
 	}
 }
 

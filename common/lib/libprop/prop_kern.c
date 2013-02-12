@@ -85,7 +85,7 @@ _prop_object_send_ioctl(prop_object_t obj, int fd, unsigned long cmd)
 		error = errno;
 	else
 		error = 0;
-	
+
 	free(buf);
 
 	return (error);
@@ -163,7 +163,7 @@ prop_array_recv_ioctl(int fd, unsigned long cmd, prop_array_t *arrayp)
 
 	if (ioctl(fd, cmd, &pref) == -1)
 		return (errno);
-	
+
 	return (_prop_object_unpack_pref(&pref, PROP_TYPE_ARRAY,
 					 (prop_object_t *)arrayp));
 }
@@ -205,7 +205,7 @@ prop_dictionary_sendrecv_ioctl(prop_dictionary_t dict, int fd,
 		error = errno;
 	else
 		error = 0;
-	
+
 	free(buf);
 
 	if (error)
@@ -345,7 +345,7 @@ _prop_object_copyout_ioctl(struct plistref *pref, const u_long cmd,
 			 MAP_PRIVATE|MAP_ANON,
 			 NULL, 0,
 			 p->p_rlimit[RLIMIT_MEMLOCK].rlim_cur);
-	
+
 	if (error == 0) {
 		error = copyout(buf, (char *)uaddr, len);
 		if (error == 0) {

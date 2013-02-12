@@ -89,7 +89,7 @@ clocal(NODE *p)
 		if( p->n_right->n_op != ICON ) cerror( "bad conversion", 0);
 		nfree(p);
 		return(buildtree(o==PMCONV?MUL:DIV, p->n_left, p->n_right));
-	
+
 	case PCONV:
 		ml = p->n_left->n_type;
 		l = p->n_left;
@@ -150,7 +150,7 @@ clocal(NODE *p)
 			return l;
 		}
 		break;
-		
+
 
 	}
 
@@ -481,10 +481,10 @@ myp2tree(NODE *p)
 		setloc1(RDATA);
 		defalign(p->n_type == FLOAT ? ALFLOAT : p->n_type == DOUBLE ?
 		    ALDOUBLE : ALLDOUBLE );
-		deflab1(i = getlab()); 
+		deflab1(i = getlab());
 		ninval(0, btdims[p->n_type].suesize, p);
 		p->n_op = NAME;
-		p->n_lval = 0;	
+		p->n_lval = 0;
 		p->n_sp = tmpalloc(sizeof(struct symtab_hdr));
 		p->n_sp->sclass = ILABEL;
 		p->n_sp->soffset = i;

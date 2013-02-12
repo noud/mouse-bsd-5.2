@@ -231,7 +231,7 @@ make_dist(const char *pkg, const char *suffix, const package_t *plist)
 	struct archive_entry *entry, *sparse_entry;
 	struct archive_entry_linkresolver *resolver;
 	char *initial_cwd;
-	
+
 	archive = archive_write_new();
 	archive_write_set_format_pax_restricted(archive);
 	if ((resolver = archive_entry_linkresolver_new()) == NULL)

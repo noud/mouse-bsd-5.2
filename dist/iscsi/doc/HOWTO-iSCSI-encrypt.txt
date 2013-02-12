@@ -234,7 +234,7 @@ wasn't using dk devices, then I'd use the cgd device.
 =============
 
 An iSCSI disk can be in a location over which complete control
-cannot be assured. In order to ensure privacy, the cgd device 
+cannot be assured. In order to ensure privacy, the cgd device
 can be used to encrypt the data on the iSCSI device.
 
 This document has shown how to set up a cgd device on top of the

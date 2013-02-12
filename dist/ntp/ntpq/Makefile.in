@@ -295,7 +295,7 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-ntpq$(EXEEXT): $(ntpq_OBJECTS) $(ntpq_DEPENDENCIES) 
+ntpq$(EXEEXT): $(ntpq_OBJECTS) $(ntpq_DEPENDENCIES)
 	@rm -f ntpq$(EXEEXT)
 	$(LINK) $(ntpq_LDFLAGS) $(ntpq_OBJECTS) $(ntpq_LDADD) $(LIBS)
 

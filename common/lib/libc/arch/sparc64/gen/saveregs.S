@@ -51,7 +51,7 @@
  * We assume the caller has executed a `save' instruction.
  */
 #define	REGOFF	(BIAS - CC64FSZ)
-	
+
 ENTRY(__builtin_saveregs)
 	stx	%i0, [%fp + REGOFF + 0x00]	! fr->fr_argd[0]
 	stx	%i1, [%fp + REGOFF + 0x08]	! fr->fr_argd[1]

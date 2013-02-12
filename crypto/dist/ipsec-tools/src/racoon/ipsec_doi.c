@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -190,7 +190,7 @@ ipsecdoi_checkph1proposal(sa, iph1)
 
 	/* check and get one SA for use */
 	newsa = get_ph1approval(iph1, pair);
-	
+
 	free_proppair(pair);
 
 	if (newsa == NULL)
@@ -225,13 +225,13 @@ get_ph1approval(iph1, pair)
 		if (pair[i] == NULL)
 			continue;
 		for (s = pair[i]; s; s = s->next) {
-			prophlen = 
+			prophlen =
 			    sizeof(struct isakmp_pl_p) + s->prop->spi_size;
 
 			/* compare proposal and select one */
 			for (p = s; p; p = p->tnext) {
-				if ((sa = get_ph1approvalx(p, 
-				    iph1->rmconf->proposal, &tsa, 
+				if ((sa = get_ph1approvalx(p,
+				    iph1->rmconf->proposal, &tsa,
 				    iph1->rmconf->pcheck_level)) != NULL)
 					goto found;
 			}
@@ -430,7 +430,7 @@ get_ph1approvalx(p, proposal, sap, check_level)
 				break;
 
 			default:
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "Unexpected proposal_check value\n");
 				continue;
 				break;
@@ -770,7 +770,7 @@ t2isakmpsa(trns, sa)
 				plog(LLV_DEBUG, LOCATION, NULL,
 				    "received old-style gss "
 				    "id '%.*s' (len %zu)\n",
-				    (int)sa->gssid->l, sa->gssid->v, 
+				    (int)sa->gssid->l, sa->gssid->v,
 				    sa->gssid->l);
 				error = 0;
 				goto out;
@@ -805,7 +805,7 @@ t2isakmpsa(trns, sa)
 			dst = sa->gssid->v;
 			dstleft = len / 2;
 
-			rv = iconv(cd, (__iconv_const char **)&src, &srcleft, 
+			rv = iconv(cd, (__iconv_const char **)&src, &srcleft,
 				   &dst, &dstleft);
 			if (rv != 0) {
 				if (rv == -1) {
@@ -972,7 +972,7 @@ ipsecdoi_checkph2proposal(iph2)
 		plog(LLV_WARNING, LOCATION, NULL,
 			"invalid proposal number:%d received.\n", i);
 	}
-	
+
 
 	if (rpair[n]->tnext != NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
@@ -2351,7 +2351,7 @@ ahmismatch:
  				if (proto_id == IPSECDOI_PROTO_IPSEC_AH) {
  					if (trns->t_id != IPSECDOI_AH_SHA256)
  						goto ahmismatch;
- 				}	
+ 				}
  				break;
  			case IPSECDOI_ATTR_AUTH_HMAC_SHA2_384:
  				if (proto_id == IPSECDOI_PROTO_IPSEC_AH) {
@@ -2767,7 +2767,7 @@ setph1attr(sa, buf)
 						OAKLEY_ATTR_SA_LD_TYPE_SEC);
 			if (sa->lifetime > 0xffff) {
 				p = isakmp_set_attr_v(p, OAKLEY_ATTR_SA_LD,
-						(caddr_t)&lifetime, 
+						(caddr_t)&lifetime,
 						sizeof(lifetime));
 			} else {
 				p = isakmp_set_attr_l(p, OAKLEY_ATTR_SA_LD,
@@ -2778,7 +2778,7 @@ setph1attr(sa, buf)
 
 	if (sa->lifebyte) {
 		u_int32_t lifebyte = htonl((u_int32_t)sa->lifebyte);
-		
+
 		attrlen += sizeof(struct isakmp_data)
 			+ sizeof(struct isakmp_data);
 		if (sa->lifebyte > 0xffff)
@@ -2896,7 +2896,7 @@ setph1attr(sa, buf)
 					goto gssid_done;
 				}
 				odst = dst;
-				rv = iconv(cd, (__iconv_const char **)&src, 
+				rv = iconv(cd, (__iconv_const char **)&src,
 				    &srcleft, &dst, &dstleft);
 				if (rv != 0) {
 					if (rv == -1) {
@@ -2989,7 +2989,7 @@ setph2proposal0(iph2, pp, pr)
 	np_t = NULL;
 
 	for (tr = pr->head; tr; tr = tr->next) {
-	
+
 		switch (pr->proto_id) {
 		case IPSECDOI_PROTO_IPSEC_ESP:
 			/*
@@ -3920,9 +3920,9 @@ set_identifier_qual(vpp, type, value, qual)
 		memcpy(new->v, value->v, new->l);
 		break;
 	case IDTYPE_KEYID:
-		/* 
+		/*
 		 * If no qualifier is specified: IDQUAL_UNSPEC. It means
-		 * to use a file for backward compatibility sake. 
+		 * to use a file for backward compatibility sake.
 		 */
 		switch(qual) {
 		case IDQUAL_FILE:
@@ -3966,7 +3966,7 @@ set_identifier_qual(vpp, type, value, qual)
 			return -1;
 		}
 		break;
-	
+
 	case IDTYPE_ADDRESS: {
 		struct sockaddr *sa;
 
@@ -4010,7 +4010,7 @@ set_identifier_qual(vpp, type, value, qual)
 
 			xn = d2i_X509_NAME(NULL, (void *)&ptr, new->l);
 			bio = BIO_new(BIO_s_mem());
-			
+
 			X509_NAME_print_ex(bio, xn, 0, 0);
 			len = BIO_get_mem_data(bio, &ptr);
 			save = ptr[len];
@@ -4158,7 +4158,7 @@ ipsecdoi_sockaddr2id(saddr, prefixlen, ul_proto)
 
 	/* set prefix */
 	if (len2) {
-		u_char *p = (unsigned char *) new->v + 
+		u_char *p = (unsigned char *) new->v +
 			sizeof(struct ipsecdoi_id_b) + len1;
 		u_int bits = prefixlen;
 
@@ -4229,10 +4229,10 @@ ipsecdoi_sockrange2id(laddr, haddr, ul_proto)
 	port = ((struct sockaddr_in *)(laddr))->sin_port;
 	((struct ipsecdoi_id_b *)new->v)->port =
 		port == IPSEC_PORT_ANY ? 0 : port;
-	memcpy(new->v + sizeof(struct ipsecdoi_id_b), 
-	       (caddr_t)&((struct sockaddr_in *)(laddr))->sin_addr, 
+	memcpy(new->v + sizeof(struct ipsecdoi_id_b),
+	       (caddr_t)&((struct sockaddr_in *)(laddr))->sin_addr,
 	       len1);
-	memcpy(new->v + sizeof(struct ipsecdoi_id_b) + len1, 
+	memcpy(new->v + sizeof(struct ipsecdoi_id_b) + len1,
 	       (caddr_t)&((struct sockaddr_in *)haddr)->sin_addr,
 	       len2);
 	return new;
@@ -4396,7 +4396,7 @@ ipsecdoi_id2str(id)
 	saddr_in  = (struct sockaddr_in *)&saddr_storage;
 	saddr_in6 = (struct sockaddr_in6 *)&saddr_storage;
 
-	
+
 	switch (id_b->type) {
 	case IPSECDOI_ID_IPV4_ADDR:
 	case IPSECDOI_ID_IPV4_ADDR_SUBNET:
@@ -4855,7 +4855,7 @@ static int rm_idtype2doi[] = {
 	IPSECDOI_ID_FQDN,		/* IDTYPE_FQDN, 1 */
 	IPSECDOI_ID_USER_FQDN,		/* IDTYPE_USERFQDN, 2 */
 	IPSECDOI_ID_KEY_ID,		/* IDTYPE_KEYID, 3 */
-	255,    /*			   IDTYPE_ADDRESS, 4 
+	255,    /*			   IDTYPE_ADDRESS, 4
 		 * it expands into 4 types by another function. */
 	IPSECDOI_ID_DER_ASN1_DN,	/* IDTYPE_ASN1DN, 5 */
 };

@@ -46,7 +46,7 @@ atoint(
 
 	if (isneg)
 	    *ival = -u;
-	else 
+	else
 	    *ival = u;
 	return 1;
 }

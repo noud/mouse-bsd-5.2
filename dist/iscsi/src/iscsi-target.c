@@ -34,11 +34,11 @@
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
 #endif
- 
+
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-    
+
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
@@ -156,7 +156,7 @@ main(int argc, char **argv)
 
 	/* write pid to a file */
 	write_pid_file(_PATH_ISCSI_PID_FILE);
-	
+
 	/* Wait for connections */
 	if (target_listen(&g) != 0) {
 		iscsi_trace_error(__FILE__, __LINE__, "target_listen() failed\n");

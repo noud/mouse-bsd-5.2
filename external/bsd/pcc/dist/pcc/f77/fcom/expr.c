@@ -29,7 +29,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <string.h>
@@ -649,7 +649,7 @@ if(p0)
 		p->chain.datap = mkaddr(q->b_prim.namep);
 	else if(qtag==TPRIM && q->b_prim.argsp==0 && q->b_prim.namep->b_name.vdim!=NULL)
 		p->chain.datap = mkscalar(q->b_prim.namep);
-	else if(qtag==TPRIM && q->b_prim.argsp==0 && q->b_prim.namep->b_name.vdovar && 
+	else if(qtag==TPRIM && q->b_prim.argsp==0 && q->b_prim.namep->b_name.vdovar &&
 		(t = memversion(q->b_prim.namep)) )
 			p->chain.datap = fixtype(t);
 	else	p->chain.datap = fixtype(q);
@@ -1076,7 +1076,7 @@ subcheck(struct bigblock *np, bigptr p)
 	putif(mkexpr(OPGE, cpexpr(t), MKICON(0)), l1);
 	putgoto(l2);
 	putlabel(l1);
-	
+
 	badcall = call4(t->vtype, "s_rnge", mkstrcon(VL, np->b_name.varname),
 		mkconv(TYLONG,  cpexpr(t)),
 		mkstrcon(XL, procname), MKICON(lineno));
@@ -1287,7 +1287,7 @@ return(c - 'a');
 #define COMMUTE	{ e = lp;  lp = rp;  rp = e; }
 
 
-struct bigblock * 
+struct bigblock *
 mkexpr(opcode, lp, rp)
 int opcode;
 register bigptr lp, rp;
@@ -1836,7 +1836,7 @@ ftnint n;
 register int type;
 union constant x;
 
-switch(type = ap->vtype)	/* pow = 1 */ 
+switch(type = ap->vtype)	/* pow = 1 */
 	{
 	case TYSHORT:
 	case TYLONG:

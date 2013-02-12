@@ -20,12 +20,12 @@
 2006-01-12  Johan Danielsson  <joda@pdc.kth.se>
 
 	* su.c: fix reversed logic when deciding to print tty or not
-	
+
 2005-10-22  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* su.c: Check return value from asprintf instead of string != NULL
 	since it undefined behavior on Linux. From Björn Sandell
-	
+
 2005-05-10  Dave Love  <fx@gnu.org>
 
 	* su.c: Include <crypt.h>.
@@ -33,7 +33,7 @@
 2003-09-03  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* su.c: s/des_read_pw_string/UI_UTIL_read_pw_string/
-	
+
 2003-05-06  Johan Danielsson  <joda@pdc.kth.se>
 
 	* su.c: remove accidentally committed code that prints the command
@@ -49,7 +49,7 @@
 	* su.c: make this build without krb5
 
 2002-01-09  Jacques Vidrine <n@nectar.cc>
-	
+
 	* su.c: Don't use getlogin() to determine whether we are root.
 	Patch by joda.
 

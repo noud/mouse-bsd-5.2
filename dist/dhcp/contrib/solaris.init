@@ -1,11 +1,11 @@
 #!/bin/sh
 # Contributed by Brian Murrell
- 
+
 state=$1
- 
+
 set `who -r`
 case $state in
- 
+
 'start')
 	if [ $9 = "2" -o $9 = "3" ]
 	then

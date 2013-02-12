@@ -244,7 +244,7 @@ main(int argc, char **argv)
 
 	/* Set some reasonable defaults */
 	if (!Flags)
-		Flags = SHOW_COMMENT | SHOW_DESC | SHOW_REQBY 
+		Flags = SHOW_COMMENT | SHOW_DESC | SHOW_REQBY
 			| SHOW_DEPENDS | SHOW_DISPLAY;
 
 	/* -Fe /filename -> change CheckPkg to real packagename */

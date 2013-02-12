@@ -53,7 +53,7 @@ or change file ownership before running
 .BR slapd (8).
 .SH OPTIONS
 .TP
-.BI \-b " suffix" 
+.BI \-b " suffix"
 Use the specified \fIsuffix\fR to determine which database to
 add entries to.  The \-b cannot be used in conjunction
 with the
@@ -152,10 +152,10 @@ will be updated with the greatest CSN in the database.
 .SH LIMITATIONS
 Your
 .BR slapd (8)
-should not be running 
+should not be running
 when you do this to ensure consistency of the database.
 .LP
-.B slapadd 
+.B slapadd
 may not provide naming or schema checks.  It is advisable to
 use
 .BR ldapadd (1)

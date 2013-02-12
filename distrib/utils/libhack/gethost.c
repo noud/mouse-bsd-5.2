@@ -29,14 +29,14 @@
  * SUCH DAMAGE.
  * -
  * Portions Copyright (c) 1993 by Digital Equipment Corporation.
- * 
+ *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies, and that
  * the name of Digital Equipment Corporation not be used in advertising or
  * publicity pertaining to distribution of the document or software without
  * specific, written prior permission.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND DIGITAL EQUIPMENT CORP. DISCLAIMS ALL
  * WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS.   IN NO EVENT SHALL DIGITAL EQUIPMENT
@@ -139,7 +139,7 @@ gethostbyname(name)
 				host.h_addr_list = h_addr_ptrs;
 				return (&host);
 			}
-			if (!isdigit(*cp) && *cp != '.') 
+			if (!isdigit(*cp) && *cp != '.')
 				break;
 		}
 
@@ -220,7 +220,7 @@ again:
 	host.h_name = cp;
 	q = host.h_aliases = host_aliases;
 	cp = strpbrk(cp, " \t");
-	if (cp != NULL) 
+	if (cp != NULL)
 		*cp++ = '\0';
 	while (cp && *cp) {
 		if (*cp == ' ' || *cp == '\t') {
@@ -243,7 +243,7 @@ _gethtbyname(name)
 {
 	register struct hostent *p;
 	register char **cp;
-	
+
 	_sethtent(0);
 	while ((p = _gethtent()) != NULL) {
 		if (strcasecmp(p->h_name, name) == 0)

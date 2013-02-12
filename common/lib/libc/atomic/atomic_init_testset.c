@@ -112,7 +112,7 @@ __libc_atomic_init(void)
 	_atomic_cas_fn = _atomic_cas_mp;
 
 	mib[0] = CTL_HW;
-	mib[1] = HW_NCPU; 
+	mib[1] = HW_NCPU;
 	len = sizeof(ncpu);
 	if (sysctl(mib, 2, &ncpu, &len, NULL, 0) == -1)
 		return;

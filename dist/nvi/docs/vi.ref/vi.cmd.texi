@@ -3,11 +3,11 @@
 @comment 	The Regents of the University of California.  All rights reserved.
 @comment  Copyright (c) 1994, 1995, 1996
 @comment 	Keith Bostic.  All rights reserved.
-@comment 
+@comment
 @comment  See the LICENSE file for redistribution information.
-@comment 
+@comment
 @comment 	Id: vi.cmd.texi,v 8.1 2001/08/18 20:43:49 skimo Exp (Berkeley) Date: 2001/08/18 20:43:49
-@comment 
+@comment
 @chapter Vi Description
 
 @CO{Vi} takes up the entire screen to display the edited file,
@@ -170,7 +170,7 @@ commands.
 
 The position of the cursor before the command which caused the
 last absolute movement was executed.
-Each 
+Each
 @CO{vi}
 command described in the next section that is considered an
 absolute movement is so noted.
@@ -1411,7 +1411,7 @@ If either the
 @CO{N}
 or
 @CO{n}
-commands are used as motion components for the 
+commands are used as motion components for the
 @CO{!}
 command, you will not be prompted for the text of the bang command,
 instead the previous bang command will be executed.
@@ -2779,7 +2779,7 @@ Place the line
 @LI{count1}at the bottom of the screen.
 @item ^
 If
-@LI{count1}is specified, place the line that is at the top of the screen 
+@LI{count1}is specified, place the line that is at the top of the screen
 when
 @LI{count1}is at the bottom of the screen, at the bottom of the screen,
 i.e. display the screen before the screen before

@@ -73,7 +73,7 @@ message set_kernel_1
 {Kernel (ADI_BRH)}
 message set_kernel_2
 {Kernel (INTERGRATOR)}
-message set_kernel_3 
+message set_kernel_3
 {Kernel (IQ80310)}
 message set_kernel_4
 {Kernel (IQ80321)}

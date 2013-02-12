@@ -10,7 +10,7 @@ Package: heimdal-docs
 Section: doc
 Priority: extra
 Architecture: all
-Depends: 
+Depends:
 Replaces: heimdal-lib (<< 0.3c-5), libkrb5-15-heimdal, heimdal-servers (<< 0.6.3-3)
 Conflicts: heimdal-lib (<< 0.3c-5)
 Suggests: heimdal-clients, heimdal-clients-x, heimdal-servers, heimdal-servers-x

@@ -65,7 +65,7 @@ MKISOFS_FLAGS+= -J -l -hide-joliet-trans-tbl -r -T \
 .if ${MKISOFS_FLAGS:N-v}
 MKISOFS_FLAGS+=	-quiet
 .endif
- 
+
 
 # MD Makefile.inc may append MD targets to BIN[123].  Make sure all
 # are empty, to preserve the old semantics of setting them below with "+=".

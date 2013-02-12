@@ -9,11 +9,11 @@ noinst_SCRIPTS = have-db
 
 check_SCRIPTS = loaddump-db add-modify-delete check-dbinfo
 
-TESTS = $(check_SCRIPTS) 
+TESTS = $(check_SCRIPTS)
 
 do_subst = sed -e 's,[@]srcdir[@],$(srcdir),g' \
 	-e 's,[@]objdir[@],$(top_builddir)/tests/db,g' \
-	-e 's,[@]EGREP[@],$(EGREP),g' 
+	-e 's,[@]EGREP[@],$(EGREP),g'
 
 loaddump-db: loaddump-db.in Makefile
 	$(do_subst) < $(srcdir)/loaddump-db.in > loaddump-db.tmp

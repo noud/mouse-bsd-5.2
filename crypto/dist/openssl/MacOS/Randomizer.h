@@ -9,7 +9,7 @@ class CRandomizer
 public:
 	CRandomizer (void);
 	void PeriodicAction (void);
-	
+
 private:
 
 	// Private calls
@@ -23,19 +23,19 @@ private:
 	void		AddCurrentMouse (void);
 	void		AddNow (double millisecondUncertainty);
 	void		AddBytes (void *data, long size, double entropy);
-	
+
 	void		GetTimeBaseResolution (void);
 	unsigned long	SysTimer (void);
 
-	// System Info	
+	// System Info
 	bool		mSupportsLargeVolumes;
 	bool		mIsPowerPC;
 	bool		mIs601;
-	
+
 	// Time info
 	double		mTimebaseTicksPerMillisec;
 	unsigned long	mLastPeriodicTicks;
-	
+
 	// Mouse info
 	long		mSamplePeriod;
 	Point		mLastMouse;

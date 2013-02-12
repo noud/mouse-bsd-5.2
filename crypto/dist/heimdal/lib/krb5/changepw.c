@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2005 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include <krb5_locl.h>
@@ -58,7 +58,7 @@ str2data (krb5_data *d,
 /*
  * Change password protocol defined by
  * draft-ietf-cat-kerb-chg-password-02.txt
- * 
+ *
  * Share the response part of the protocol with MS set password
  * (RFC3244)
  */
@@ -197,7 +197,7 @@ setpw_send_request (krb5_context context,
 	chpw.targname = NULL;
 	chpw.targrealm = NULL;
     }
-	
+
     ASN1_MALLOC_ENCODE(ChangePasswdDataMS, pwd_data.data, pwd_data.length,
 		       &chpw, &len, ret);
     if (ret) {
@@ -283,7 +283,7 @@ process_reply (krb5_context context,
 	while (len < sizeof(reply)) {
 	    unsigned long size;
 
-	    ret = recvfrom (sock, reply + len, sizeof(reply) - len, 
+	    ret = recvfrom (sock, reply + len, sizeof(reply) - len,
 			    0, NULL, NULL);
 	    if (ret < 0) {
 		save_errno = errno;
@@ -300,7 +300,7 @@ process_reply (krb5_context context,
 	    _krb5_get_int(reply, &size, 4);
 	    if (size + 4 < len)
 		continue;
-	    memmove(reply, reply + 4, size);		
+	    memmove(reply, reply + 4, size);
 	    len = size;
 	    break;
 	}
@@ -353,7 +353,7 @@ process_reply (krb5_context context,
 	*result_code = (p[0] << 8) | p[1];
 	if (error.e_data->length == 2)
 	    str2data(result_string, "server only sent error code");
-	else 
+	else
 	    krb5_data_copy (result_string,
 			    p + 2,
 			    error.e_data->length - 2);
@@ -375,7 +375,7 @@ process_reply (krb5_context context,
 
     ap_rep_data.data = reply + 6;
     ap_rep_data.length  = (reply[4] << 8) | (reply[5]);
-  
+
     if (reply + len < (u_char *)ap_rep_data.data + ap_rep_data.length) {
 	str2data (result_string, "client: wrong AP len in reply");
 	*result_code = KRB5_KPASSWD_MALFORMED;
@@ -417,7 +417,7 @@ process_reply (krb5_context context,
 	}
 
         p = result_code_string->data;
-      
+
         *result_code = (p[0] << 8) | p[1];
         krb5_data_copy (result_string,
                         (unsigned char*)result_code_string->data + 2,
@@ -427,7 +427,7 @@ process_reply (krb5_context context,
 	KRB_ERROR error;
 	size_t size;
 	u_char *p;
-      
+
 	ret = decode_KRB_ERROR(reply + 6, len - 6, &error, &size);
 	if (ret) {
 	    return ret;
@@ -479,9 +479,9 @@ static struct kpwd_proc {
     kpwd_process_reply process_rep;
 } procs[] = {
     {
-	"MS set password", 
+	"MS set password",
 	SUPPORT_TCP|SUPPORT_UDP,
-	setpw_send_request, 
+	setpw_send_request,
 	process_reply
     },
     {
@@ -592,7 +592,7 @@ change_password_loop (krb5_context	context,
 
 		if (!replied) {
 		    replied = 0;
-		    
+
 		    ret = (*proc->send_req) (context,
 					     &auth_context,
 					     creds,
@@ -606,7 +606,7 @@ change_password_loop (krb5_context	context,
 			goto out;
 		    }
 		}
-	    
+
 		if (sock >= FD_SETSIZE) {
 		    krb5_set_error_string(context, "fd %d too large", sock);
 		    ret = ERANGE;
@@ -685,8 +685,8 @@ krb5_change_password (krb5_context	context,
     if (p == NULL)
 	return KRB5_KPASSWD_MALFORMED;
 
-    return change_password_loop(context, creds, NULL, newpw, 
-				result_code, result_code_string, 
+    return change_password_loop(context, creds, NULL, newpw,
+				result_code, result_code_string,
 				result_string, p);
 }
 
@@ -720,9 +720,9 @@ krb5_set_password(krb5_context context,
 
     for (i = 0; procs[i].name != NULL; i++) {
 	*result_code = 0;
-	ret = change_password_loop(context, creds, principal, newpw, 
-				   result_code, result_code_string, 
-				   result_string, 
+	ret = change_password_loop(context, creds, principal, newpw,
+				   result_code, result_code_string,
+				   result_string,
 				   &procs[i]);
 	if (ret == 0 && *result_code == 0)
 	    break;
@@ -763,7 +763,7 @@ krb5_set_password_using_ccache(krb5_context context,
     } else
 	principal = targprinc;
 
-    ret = krb5_make_principal(context, &creds.server, 
+    ret = krb5_make_principal(context, &creds.server,
 			      krb5_principal_get_realm(context, principal),
 			      "kadmin", "changepw", NULL);
     if (ret)
@@ -789,7 +789,7 @@ krb5_set_password_using_ccache(krb5_context context,
 			    result_code_string,
 			    result_string);
 
-    krb5_free_creds(context, credsp); 
+    krb5_free_creds(context, credsp);
 
     return ret;
  out:

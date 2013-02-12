@@ -45,7 +45,7 @@
 #include <netinet/in.h>
 #endif
 
-static int 
+static int
 extract_attribute(uint32_t page, uint32_t n, uint16_t len,
 		  uint8_t * data, unsigned length, void *val)
 {
@@ -76,7 +76,7 @@ extract_attribute(uint32_t page, uint32_t n, uint16_t len,
 }
 
 
-int 
+int
 osd_create_group(void *dev,
 	  int (*osd_exec) (void *dev, osd_args_t * args, OSD_OPS_MEM * mem),
 		 uint32_t * GroupID)
@@ -126,7 +126,7 @@ osd_create_group(void *dev,
 	return 0;
 }
 
-int 
+int
 osd_create(void *dev, uint32_t GroupID,
 	   int (*osd_exec) (void *dev, osd_args_t * args, OSD_OPS_MEM * mem),
 	   uint64_t * UserID)
@@ -177,7 +177,7 @@ osd_create(void *dev, uint32_t GroupID,
 	return 0;
 }
 
-int 
+int
 osd_remove_group(void *dev, uint32_t GroupID,
 	  int (*osd_exec) (void *dev, osd_args_t * args, OSD_OPS_MEM * mem))
 {
@@ -204,7 +204,7 @@ osd_remove_group(void *dev, uint32_t GroupID,
 	return 0;
 }
 
-int 
+int
 osd_remove(void *dev, uint32_t GroupID, uint64_t UserID,
 	   int (*osd_exec) (void *dev, osd_args_t * args, OSD_OPS_MEM * mem))
 {
@@ -232,7 +232,7 @@ osd_remove(void *dev, uint32_t GroupID, uint64_t UserID,
 	return 0;
 }
 
-int 
+int
 osd_write(void *dev,
 	  uint32_t GroupID, uint64_t UserID, uint64_t offset, uint64_t len, const void *send_data, int sg_len,
 	  int (*osd_exec) (void *dev, osd_args_t * args, OSD_OPS_MEM * mem))
@@ -261,7 +261,7 @@ osd_write(void *dev,
 	return 0;
 }
 
-int 
+int
 osd_read(void *dev,
 	 uint32_t GroupID, uint64_t UserID, uint64_t offset, uint64_t len, void *recv_data, int sg_len,
 	 int (*osd_exec) (void *dev, osd_args_t * args, OSD_OPS_MEM * mem))
@@ -290,7 +290,7 @@ osd_read(void *dev,
 	return 0;
 }
 
-int 
+int
 osd_set_one_attr(void *dev,
 		 uint32_t GroupID, uint64_t UserID, uint32_t page, uint32_t n, uint32_t len, void *value,
 	  int (*osd_exec) (void *dev, osd_args_t * args, OSD_OPS_MEM * mem))
@@ -349,7 +349,7 @@ osd_set_one_attr(void *dev,
 	return 0;
 }
 
-int 
+int
 osd_get_one_attr(void *dev,
 		 uint32_t GroupID, uint64_t UserID, uint32_t page, uint32_t n, uint32_t alloc_len,
 	  int (*osd_exec) (void *dev, osd_args_t * args, OSD_OPS_MEM * mem),

@@ -1,18 +1,18 @@
 /*
  * Copyright (c) 2003 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
  * 3. Neither the name of KTH nor the names of its contributors may be
  *    used to endorse or promote products derived from this software without
@@ -63,16 +63,16 @@ struct {
     char *pbkdf2;
     char *key;
 } keys[] = {
-    { 
+    {
 	"password", "ATHENA.MIT.EDUraeburn", -1,
-	1, 
+	1,
 	ETYPE_AES128_CTS_HMAC_SHA1_96, 16,
 	"\xcd\xed\xb5\x28\x1b\xb2\xf8\x01\x56\x5a\x11\x22\xb2\x56\x35\x15",
 	"\x42\x26\x3c\x6e\x89\xf4\xfc\x28\xb8\xdf\x68\xee\x09\x79\x9f\x15"
     },
     {
 	"password", "ATHENA.MIT.EDUraeburn", -1,
-	1, 
+	1,
 	ETYPE_AES256_CTS_HMAC_SHA1_96, 32,
 	"\xcd\xed\xb5\x28\x1b\xb2\xf8\x01\x56\x5a\x11\x22\xb2\x56\x35\x15"
 	"\x0a\xd1\xf7\xa0\x4b\xb9\xf3\xa3\x33\xec\xc0\xe2\xe1\xf7\x08\x37",
@@ -88,7 +88,7 @@ struct {
     },
     {
 	"password", "ATHENA.MIT.EDUraeburn", -1,
-	2, 
+	2,
 	ETYPE_AES256_CTS_HMAC_SHA1_96, 32,
 	"\x01\xdb\xee\x7f\x4a\x9e\x24\x3e\x98\x8b\x62\xc7\x3c\xda\x93\x5d"
 	"\xa0\x53\x78\xb9\x32\x44\xec\x8f\x48\xa9\x9e\x61\xad\x79\x9d\x86",
@@ -97,14 +97,14 @@ struct {
     },
     {
 	"password", "ATHENA.MIT.EDUraeburn", -1,
-	1200, 
+	1200,
 	ETYPE_AES128_CTS_HMAC_SHA1_96, 16,
 	"\x5c\x08\xeb\x61\xfd\xf7\x1e\x4e\x4e\xc3\xcf\x6b\xa1\xf5\x51\x2b",
 	"\x4c\x01\xcd\x46\xd6\x32\xd0\x1e\x6d\xbe\x23\x0a\x01\xed\x64\x2a"
     },
     {
 	"password", "ATHENA.MIT.EDUraeburn", -1,
-	1200, 
+	1200,
 	ETYPE_AES256_CTS_HMAC_SHA1_96, 32,
 	"\x5c\x08\xeb\x61\xfd\xf7\x1e\x4e\x4e\xc3\xcf\x6b\xa1\xf5\x51\x2b"
 	"\xa7\xe5\x2d\xdb\xc5\xe5\x14\x2f\x70\x8a\x31\xe2\xe6\x2b\x1e\x13",
@@ -181,14 +181,14 @@ struct {
 	"\x57\x18\x48\xb7\x84\xa3\xd6\xbd\xc3\x46\x58\x9a\x3e\x39\x3f\x9e"
     },
     {
-	"foo", "", -1, 
+	"foo", "", -1,
 	0,
 	ETYPE_ARCFOUR_HMAC_MD5, 16,
 	NULL,
 	"\xac\x8e\x65\x7f\x83\xdf\x82\xbe\xea\x5d\x43\xbd\xaf\x78\x00\xcc"
     },
     {
-	"test", "", -1, 
+	"test", "", -1,
 	0,
 	ETYPE_ARCFOUR_HMAC_MD5, 16,
 	NULL,
@@ -216,11 +216,11 @@ string_to_key_test(krb5_context context)
 	    salt.saltvalue.length = strlen(salt.saltvalue.data);
 	else
 	    salt.saltvalue.length = keys[i].saltlen;
-    
+
 	opaque.data = iter;
 	opaque.length = sizeof(iter);
 	_krb5_put_int(iter, keys[i].iterations, 4);
-	
+
 	if (keys[i].pbkdf2) {
 	    unsigned char keyout[32];
 
@@ -229,15 +229,15 @@ string_to_key_test(krb5_context context)
 
 	    PKCS5_PBKDF2_HMAC_SHA1(password.data, password.length,
 				   salt.saltvalue.data, salt.saltvalue.length,
-				   keys[i].iterations, 
+				   keys[i].iterations,
 				   keys[i].keylen, keyout);
-	    
+
 	    if (memcmp(keyout, keys[i].pbkdf2, keys[i].keylen) != 0) {
 		krb5_warnx(context, "%d: pbkdf2", i);
 		val = 1;
 		continue;
 	    }
-	    
+
 	    if (verbose) {
 		printf("PBKDF2:\n");
 		hex_dump_data(keyout, keys[i].keylen);
@@ -249,31 +249,31 @@ string_to_key_test(krb5_context context)
 
 	    ret = krb5_string_to_key_data_salt_opaque (context,
 						       keys[i].enctype,
-						       password, 
-						       salt, 
-						       opaque, 
+						       password,
+						       salt,
+						       opaque,
 						       &key);
 	    if (ret) {
-		krb5_warn(context, ret, "%d: string_to_key_data_salt_opaque", 
+		krb5_warn(context, ret, "%d: string_to_key_data_salt_opaque",
 			  i);
 		val = 1;
 		continue;
 	    }
-	    
+
 	    if (key.keyvalue.length != keys[i].keylen) {
 		krb5_warnx(context, "%d: key wrong length (%lu/%lu)",
-			   i, (unsigned long)key.keyvalue.length, 
+			   i, (unsigned long)key.keyvalue.length,
 			   (unsigned long)keys[i].keylen);
 		val = 1;
 		continue;
 	    }
-	    
+
 	    if (memcmp(key.keyvalue.data, keys[i].key, keys[i].keylen) != 0) {
 		krb5_warnx(context, "%d: key wrong", i);
 		val = 1;
 		continue;
 	    }
-	    
+
 	    if (verbose) {
 		printf("key:\n");
 		hex_dump_data(key.keyvalue.data, key.keyvalue.length);
@@ -349,7 +349,7 @@ struct enc_test encs1[] = {
 	"\x48\x07\xef\xe8\x36\xee\x89\xa5\x26\x73\x0d\xbc\x2f\x7b\xc8\x40"
     }
 };
-	
+
 
 struct enc_test encs2[] = {
     {
@@ -464,7 +464,7 @@ struct enc_test encs2[] = {
 
 
 
-char *aes_key1 = 
+char *aes_key1 =
 	"\x63\x68\x69\x63\x6b\x65\x6e\x20\x74\x65\x72\x69\x79\x61\x6b\x69";
 
 char *aes_key2 =
@@ -534,7 +534,7 @@ encryption_test(krb5_context context, const void *key, size_t keylen,
 	    val = 1;
 	}
 
-	if (enc[i].nextiv && !samep(i, "iv", iv, enc[i].nextiv, 16)){ /*XXX*/ 
+	if (enc[i].nextiv && !samep(i, "iv", iv, enc[i].nextiv, 16)){ /*XXX*/
 	    krb5_warnx(context, "%d: iv", i);
 	    val = 1;
 	}
@@ -552,7 +552,7 @@ encryption_test(krb5_context context, const void *key, size_t keylen,
 	if (!samep(i, "clear", p, enc[i].input, enc[i].len))
 	    val = 1;
 
-	if (enc[i].nextiv && !samep(i, "iv", iv, enc[i].nextiv, 16)){ /*XXX*/ 
+	if (enc[i].nextiv && !samep(i, "iv", iv, enc[i].nextiv, 16)){ /*XXX*/
 	    krb5_warnx(context, "%d: iv", i);
 	    val = 1;
 	}
@@ -570,9 +570,9 @@ encryption_test(krb5_context context, const void *key, size_t keylen,
 
 static int
 krb_enc(krb5_context context,
-	krb5_crypto crypto, 
+	krb5_crypto crypto,
 	unsigned usage,
-	krb5_data *cipher, 
+	krb5_data *cipher,
 	krb5_data *clear)
 {
     krb5_data decrypt;
@@ -608,7 +608,7 @@ krb_enc_mit(krb5_context context,
 	    krb5_enctype enctype,
 	    krb5_keyblock *key,
 	    unsigned usage,
-	    krb5_data *cipher, 
+	    krb5_data *cipher,
 	    krb5_data *clear)
 {
     krb5_error_code ret;
@@ -656,10 +656,10 @@ struct {
     size_t plen;
     void *pdata;
 } krbencs[] =  {
-    { 
+    {
 	ETYPE_AES256_CTS_HMAC_SHA1_96,
 	7,
-	32,   
+	32,
 	"\x47\x75\x69\x64\x65\x6c\x69\x6e\x65\x73\x20\x74\x6f\x20\x41\x75"
 	"\x74\x68\x6f\x72\x73\x20\x6f\x66\x20\x49\x6e\x74\x65\x72\x6e\x65",
 	44,
@@ -693,16 +693,16 @@ krb_enc_test(krb5_context context)
 	cipher.data = krbencs[i].edata;
 	plain.length = krbencs[i].plen;
 	plain.data = krbencs[i].pdata;
-	
+
 	ret = krb_enc(context, crypto, krbencs[i].usage, &cipher, &plain);
-		       
+
 	if (ret) {
 	    failed = 1;
 	    printf("krb_enc failed with %d\n", ret);
 	}
 	krb5_crypto_destroy(context, crypto);
 
-	ret = krb_enc_mit(context, krbencs[i].enctype, &kb, 
+	ret = krb_enc_mit(context, krbencs[i].enctype, &kb,
 			  krbencs[i].usage, &cipher, &plain);
 	if (ret) {
 	    failed = 1;
@@ -754,7 +754,7 @@ main(int argc, char **argv)
     krb5_error_code ret;
     krb5_context context;
     int val = 0;
-    
+
     ret = krb5_init_context (&context);
     if (ret)
 	errx (1, "krb5_init_context failed: %d", ret);
@@ -763,7 +763,7 @@ main(int argc, char **argv)
 
     val |= encryption_test(context, aes_key1, 128,
 			   encs1, sizeof(encs1)/sizeof(encs1[0]));
-    val |= encryption_test(context, aes_key2, 256, 
+    val |= encryption_test(context, aes_key2, 256,
 			   encs2, sizeof(encs2)/sizeof(encs2[0]));
     val |= krb_enc_test(context);
     val |= random_to_key(context);

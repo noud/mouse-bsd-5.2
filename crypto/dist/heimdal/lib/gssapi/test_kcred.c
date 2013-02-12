@@ -1,18 +1,18 @@
 /*
  * Copyright (c) 2003-2004 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
  * 3. Neither the name of KTH nor the names of its contributors may be
  *    used to endorse or promote products derived from this software without
@@ -102,7 +102,7 @@ copy_import(void)
 	errx(1, "gss_compare_name");
     if (!equal)
 	errx(1, "names not equal");
-	
+
     if (lifetime1 != lifetime2)
 	errx(1, "lifetime not equal %lu != %lu",
 	     (unsigned long)lifetime1, (unsigned long)lifetime2);
@@ -126,7 +126,7 @@ copy_import(void)
 	errx(1, "gss_compare_name");
     if (!equal)
 	errx(1, "names not equal");
-	
+
     if (lifetime1 != lifetime2)
 	errx(1, "lifetime not equal %lu != %lu",
 	     (unsigned long)lifetime1, (unsigned long)lifetime2);
@@ -169,7 +169,7 @@ main(int argc, char **argv)
     setprogname(argv[0]);
     if(getarg(args, sizeof(args) / sizeof(args[0]), argc, argv, &optidx))
 	usage(1);
-    
+
     if (help_flag)
 	usage (0);
 

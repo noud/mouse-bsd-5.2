@@ -5,7 +5,7 @@ include $(top_srcdir)/Makefile.am.common
 
 noinst_DATA = krb5.conf
 
-check_SCRIPTS = $(SCRIPT_TESTS) 
+check_SCRIPTS = $(SCRIPT_TESTS)
 
 SCRIPT_TESTS = check-kinit
 

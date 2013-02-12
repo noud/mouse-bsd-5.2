@@ -176,7 +176,7 @@ fatal()
 	exit (1);
 }
 
-static 
+static
 int channel(int rpipe[2], int wpipe[2])
 {
 	if (0) {

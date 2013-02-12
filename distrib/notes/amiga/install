@@ -164,16 +164,16 @@ The drive with the lowest SCSI-ID will be called
 the next one
 .Li sd1 ,
 etc.
-Also, any ATAPI disk drives (e.g. ZIP) 
+Also, any ATAPI disk drives (e.g. ZIP)
 will be configured as
 .Dq SCSI
 drives, too, and will be configured
 before any
 .Sq real
 SCSI drives if connected to the Amiga internal port on A4000/A1200
-(if any are present). Real IDE drives will be configured as 
+(if any are present). Real IDE drives will be configured as
 .Li wd0 ,
-.Li wd1 , 
+.Li wd1 ,
 etc.
 .Pp
 The installer will offer you to look at the

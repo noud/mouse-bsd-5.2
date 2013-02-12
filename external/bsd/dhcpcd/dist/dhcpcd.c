@@ -1,4 +1,4 @@
-/* 
+/*
  * dhcpcd - DHCP client daemon
  * Copyright (c) 2006-2009 Roy Marples <roy@marples.name>
  * All rights reserved
@@ -69,7 +69,7 @@ const char copyright[] = "Copyright (c) 2006-2009 Roy Marples";
 #include "net.h"
 #include "signals.h"
 
-/* We should define a maximum for the NAK exponential backoff */ 
+/* We should define a maximum for the NAK exponential backoff */
 #define NAKOFF_MAX              60
 
 int options = 0;
@@ -235,7 +235,7 @@ struct interface *
 find_interface(const char *ifname)
 {
 	struct interface *ifp;
-	
+
 	for (ifp = ifaces; ifp; ifp = ifp->next)
 		if (strcmp(ifp->name, ifname) == 0)
 			return ifp;
@@ -431,7 +431,7 @@ static int
 blacklisted_ip(const struct if_options *ifo, in_addr_t addr)
 {
 	size_t i;
-	
+
 	for (i = 0; i < ifo->blacklist_len; i += 2)
 		if (ifo->blacklist[i] == (addr & ifo->blacklist[i + 1]))
 			return 1;
@@ -466,7 +466,7 @@ handle_dhcp(struct interface *iface, struct dhcp_message **dhcpp)
 	state->interval = 0;
 
 	/* We may have found a BOOTP server */
-	if (get_option_uint8(&type, dhcp, DHO_MESSAGETYPE) == -1) 
+	if (get_option_uint8(&type, dhcp, DHO_MESSAGETYPE) == -1)
 		type = 0;
 
 	if (type == DHCP_NAK) {
@@ -508,7 +508,7 @@ handle_dhcp(struct interface *iface, struct dhcp_message **dhcpp)
 			log_dhcp(LOG_WARNING, "reject DHCP", iface, dhcp);
 			return;
 		}
-	}		
+	}
 
 	/* No NAK, so reset the backoff */
 	state->nakoff = 1;
@@ -738,7 +738,7 @@ configure_interface1(struct interface *iface)
 		ifo->options &= ~(DHCPCD_ARP | DHCPCD_IPV4LL);
 	if (ifo->options & DHCPCD_LINK && carrier_status(iface) == -1)
 		ifo->options &= ~DHCPCD_LINK;
-	
+
 	if (ifo->metric != -1)
 		iface->metric = ifo->metric;
 
@@ -962,7 +962,7 @@ handle_3rdparty(struct interface *iface)
 {
 	struct if_options *ifo;
 	struct in_addr addr, net, dst;
-	
+
 	ifo = iface->state->options;
 	if (ifo->req_addr.s_addr != INADDR_ANY)
 		return 0;
@@ -1197,7 +1197,7 @@ void
 handle_interface(int action, const char *ifname)
 {
 	struct interface *ifs, *ifp, *ifn, *ifl = NULL;
-	const char * const argv[] = { ifname }; 
+	const char * const argv[] = { ifname };
 	int i;
 
 	if (action == -1) {
@@ -1265,7 +1265,7 @@ handle_ifa(int type, const char *ifname,
 	if ((ifo->options & (DHCPCD_INFORM | DHCPCD_STATIC)) == 0 ||
 	    ifo->req_addr.s_addr != INADDR_ANY)
 		return;
-	
+
 	switch (type) {
 	case RTM_DELADDR:
 		if (ifp->state->new &&
@@ -1378,7 +1378,7 @@ reconf_reboot(struct interface *iface, int argc, char **argv)
 {
 	const struct if_options *ifo;
 	int opt;
-	
+
 	ifo = iface->state->options;
 	opt = ifo->options;
 	configure_interface(iface, argc, argv);
@@ -1622,7 +1622,7 @@ main(int argc, char **argv)
 		options |= DHCPCD_TEST | DHCPCD_PERSISTENT;
 		options &= ~DHCPCD_DAEMONISE;
 	}
-	
+
 #ifdef THERE_IS_NO_FORK
 	options &= ~DHCPCD_DAEMONISE;
 #endif

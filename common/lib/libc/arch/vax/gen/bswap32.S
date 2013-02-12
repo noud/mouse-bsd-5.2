@@ -40,7 +40,7 @@ ALTENTRY(_C_LABEL(htonl))
 #endif
 ENTRY(_C_LABEL(__bswap32), 0)
 #endif
-	rotl    $-8, 4(%ap), %r0  
+	rotl    $-8, 4(%ap), %r0
 	insv    %r0, $16, $8, %r0
 	rotl    $8, 4(%ap), %r1
 	movb    %r1, %r0

@@ -63,14 +63,14 @@
 #include "initiator.h"
 #include "tests.h"
 
-int 
+int
 mycallback(void *arg)
 {
 	(*((int *) arg))++;
 	return 0;
 }
 
-int 
+int
 main(int argc, char *argv[])
 {
 	struct sigaction	act;

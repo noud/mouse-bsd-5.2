@@ -1,4 +1,4 @@
-/* 
+/*
  * dhcpcd - DHCP client daemon
  * Copyright (c) 2006-2008 Roy Marples <roy@marples.name>
  * All rights reserved
@@ -156,7 +156,7 @@ add_timeout_tv(const struct timeval *when, void (*callback)(void *), void *arg)
 		t->next = timeouts;
 		timeouts = t;
 		return;
-	} 
+	}
 	for (tt = timeouts; tt->next; tt = tt->next)
 		if (timercmp(&t->when, &tt->next->when, <)) {
 			t->next = tt->next;

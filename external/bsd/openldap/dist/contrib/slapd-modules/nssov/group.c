@@ -193,7 +193,7 @@ static int write_group(nssov_group_cbp *cbp,Entry *entry)
 			i += b->a_numvals;
 		if ( i )
 			members = cbp->op->o_tmpalloc( (i+1) * sizeof(struct berval), cbp->op->o_tmpmemctx );
-			
+
 		if ( a ) {
 			for (i=0; i<a->a_numvals; i++) {
 				if (isvalidusername(&a->a_vals[i])) {

@@ -1,8 +1,8 @@
 /*	$NetBSD: ntp-keygen-opts.h,v 1.1.1.3.4.1 2009/01/16 02:48:56 snj Exp $	*/
 
-/*  
+/*
  *  EDIT THIS FILE WITH CAUTION  (ntp-keygen-opts.h)
- *  
+ *
  *  It has been AutoGen-ed  Thursday January  8, 2009 at 06:19:35 AM EST
  *  From the definitions    ntp-keygen-opts.def
  *  and the template file   options

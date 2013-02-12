@@ -87,7 +87,7 @@ mix_b64_pubkey(RSA *key)
 	char *binbuf;
 	long binlen, ret;
 	vchar_t *res;
-	
+
 	binlen = 1 + BN_num_bytes(key->e) + BN_num_bytes(key->n);
 	binbuf = malloc(binlen);
 	memset(binbuf, 0, binlen);
@@ -126,13 +126,13 @@ gen_rsa_key(FILE *fp, size_t bits, unsigned long exp)
 		fprintf(stderr, "RSA_generate_key(): %s\n", eay_strerror());
 		return -1;
 	}
-	
+
 	pubkey64 = mix_b64_pubkey(key);
 	if (!pubkey64) {
 		fprintf(stderr, "mix_b64_pubkey(): %s\n", eay_strerror());
 		return -1;
 	}
-	
+
 	fprintf(fp, "# : PUB 0s%s\n", pubkey64->v);
 	fprintf(fp, ": RSA\t{\n");
 	fprintf(fp, "\t# RSA %zu bits\n", bits);

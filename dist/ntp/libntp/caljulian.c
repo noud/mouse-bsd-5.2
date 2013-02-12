@@ -123,7 +123,7 @@ caljulian(
 
    Uses common code with the *prettydate functions to convert an ntp
    seconds count into a calendar date.
-   Will handle ntp epoch wraparound as long as the underlying os/library 
+   Will handle ntp epoch wraparound as long as the underlying os/library
    does so for the unix epoch, i.e. works after 2038.
 */
 

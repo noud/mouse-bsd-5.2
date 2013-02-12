@@ -3,7 +3,7 @@
 # Print out the files in some or all lists.
 # Usage: makeplist [options] setname pkgname
 # options:
-# 	-a arch		set arch (e.g, m68k, mips, powerpc)	
+# 	-a arch		set arch (e.g, m68k, mips, powerpc)
 # 	-m machine	set machine (e.g, amiga, i386, macppc)
 # 	-s setsdir	directory to find sets
 # 	-p prefix	prefix for package creation
@@ -107,7 +107,7 @@ cd "${prefix}"
 #
 xargs echo ${SELECTDIRS} < "${filename}" | \
 while read ignore ignore ignore args; do
-	[ -z "${args}" ] && break 
+	[ -z "${args}" ] && break
 	${FIND} ${args} ${SELECTDIRS}
 done | ${AWK} '{ print "@dirrm " $1; }' > "${dfilename}"
 
@@ -119,7 +119,7 @@ done | ${AWK} '{ print "@dirrm " $1; }' > "${dfilename}"
 xargs echo ${SELECTNONDIRS} < "${filename}" | \
 while read ignore ignore ignore ignore ignore ignore ignore ignore ignore \
     ignore args; do
-	[ -z "${args}" ] && break 
+	[ -z "${args}" ] && break
 	${FIND} ${args} ${SELECTNONDIRS}
 done > "${ffilename}"
 

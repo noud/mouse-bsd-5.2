@@ -7,7 +7,7 @@ LIBS= -L../.. ../../libssl.a ../../libcrypto.a
 #EXAMPLES=base64 conn loadrsa
 EXAMPLES=base64 loadrsa
 
-all: $(EXAMPLES) 
+all: $(EXAMPLES)
 
 base64: base64.o
 	$(CC) -o base64 base64.o $(LIBS)
@@ -19,6 +19,6 @@ base64: base64.o
 loadrsa: loadrsa.o
 	$(CC) -o loadrsa loadrsa.o $(LIBS)
 
-clean:	
+clean:
 	rm -f $(EXAMPLES) *.o
 

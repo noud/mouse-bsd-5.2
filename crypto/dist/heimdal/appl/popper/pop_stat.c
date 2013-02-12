@@ -8,7 +8,7 @@
 __RCSID("$Heimdal: pop_stat.c 1707 1997-05-11 11:04:38Z assar $"
         "$NetBSD: pop_stat.c,v 1.2 2008/03/22 08:36:55 mlelstv Exp $");
 
-/* 
+/*
  *  stat:   Display the status of a POP maildrop to its client
  */
 

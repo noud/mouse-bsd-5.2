@@ -65,7 +65,7 @@ struct Authctxt {
 #endif
 #ifdef KRB4
 	char		*krb4_ticket_file;
-#endif 
+#endif
 #ifdef KRB5
 	krb5_context	 krb5_ctx;
 	krb5_auth_context krb5_auth_ctx;

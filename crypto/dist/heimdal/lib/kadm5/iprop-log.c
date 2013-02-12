@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2005 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "iprop.h"
@@ -76,7 +76,7 @@ get_kadmin_context(const char *config_file, char *realm)
 					KADM5_ADMIN_SERVICE,
 					NULL,
 					KADM5_ADMIN_SERVICE,
-					&conf, 0, 0, 
+					&conf, 0, 0,
 					&kadm_handle);
     if (ret)
 	krb5_err (context, 1, ret, "kadm5_init_with_password_ctx");
@@ -120,7 +120,7 @@ print_entry(kadm5_server_context *server_context,
     krb5_context scontext = server_context->context;
 
     off_t end = krb5_storage_seek(sp, 0, SEEK_CUR) + len;
-    
+
     krb5_error_code ret;
 
     strftime(t, sizeof(t), "%Y-%m-%d %H:%M:%S", localtime(&timestamp));
@@ -185,7 +185,7 @@ print_entry(kadm5_server_context *server_context,
 	    if(ent.valid_end == NULL) {
 		strlcpy(t, "never", sizeof(t));
 	    } else {
-		strftime(t, sizeof(t), "%Y-%m-%d %H:%M:%S", 
+		strftime(t, sizeof(t), "%Y-%m-%d %H:%M:%S",
 			 localtime(ent.valid_end));
 	    }
 	    printf("    expires = %s\n", t);
@@ -194,7 +194,7 @@ print_entry(kadm5_server_context *server_context,
 	    if(ent.pw_end == NULL) {
 		strlcpy(t, "never", sizeof(t));
 	    } else {
-		strftime(t, sizeof(t), "%Y-%m-%d %H:%M:%S", 
+		strftime(t, sizeof(t), "%Y-%m-%d %H:%M:%S",
 			 localtime(ent.pw_end));
 	    }
 	    printf("    password exp = %s\n", t);
@@ -202,7 +202,7 @@ print_entry(kadm5_server_context *server_context,
 	if(mask & KADM5_LAST_PWD_CHANGE) {
 	}
 	if(mask & KADM5_ATTRIBUTES) {
-	    unparse_flags(HDBFlags2int(ent.flags), 
+	    unparse_flags(HDBFlags2int(ent.flags),
 			  asn1_HDBFlags_units(), t, sizeof(t));
 	    printf("    attributes = %s\n", t);
 	}
@@ -272,7 +272,7 @@ iprop_dump(struct dump_options *opt, int argc, char **argv)
     kadm5_server_context *server_context;
     krb5_error_code ret;
 
-    server_context = get_kadmin_context(opt->config_file_string, 
+    server_context = get_kadmin_context(opt->config_file_string,
 					opt->realm_string);
 
     ret = kadm5_log_init (server_context);
@@ -295,7 +295,7 @@ iprop_truncate(struct truncate_options *opt, int argc, char **argv)
     kadm5_server_context *server_context;
     krb5_error_code ret;
 
-    server_context = get_kadmin_context(opt->config_file_string, 
+    server_context = get_kadmin_context(opt->config_file_string,
 					opt->realm_string);
 
     ret = kadm5_log_truncate (server_context);
@@ -312,7 +312,7 @@ last_version(struct last_version_options *opt, int argc, char **argv)
     krb5_error_code ret;
     uint32_t version;
 
-    server_context = get_kadmin_context(opt->config_file_string, 
+    server_context = get_kadmin_context(opt->config_file_string,
 					opt->realm_string);
 
     ret = kadm5_log_init (server_context);
@@ -345,7 +345,7 @@ apply_entry(kadm5_server_context *server_context,
 	    time_t timestamp,
 	    enum kadm_ops op,
 	    uint32_t len,
-	    krb5_storage *sp, 
+	    krb5_storage *sp,
 	    void *ctx)
 {
     struct replay_options *opt = ctx;
@@ -364,7 +364,7 @@ apply_entry(kadm5_server_context *server_context,
 			    op, ver, len, sp);
     if (ret)
 	krb5_warn (server_context->context, ret, "kadm5_log_replay");
-    
+
     printf ("done\n");
 }
 
@@ -374,7 +374,7 @@ iprop_replay(struct replay_options *opt, int argc, char **argv)
     kadm5_server_context *server_context;
     krb5_error_code ret;
 
-    server_context = get_kadmin_context(opt->config_file_string, 
+    server_context = get_kadmin_context(opt->config_file_string,
 					opt->realm_string);
 
     ret = server_context->db->hdb_open(context,
@@ -405,9 +405,9 @@ static int version_flag;
 
 static struct getargs args[] = {
     { "version", 	0,	arg_flag, 	&version_flag,
-      NULL,		NULL 
-    }, 
-    { "help", 	'h', 	arg_flag, 	&help_flag, 
+      NULL,		NULL
+    },
+    { "help", 	'h', 	arg_flag, 	&help_flag,
       NULL, NULL
     }
 };

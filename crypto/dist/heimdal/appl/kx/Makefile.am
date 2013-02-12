@@ -15,9 +15,9 @@ libexec_PROGRAMS = kxd
 
 else
 
-bin_PROGRAMS = 
-bin_SCRIPTS = 
-libexec_PROGRAMS = 
+bin_PROGRAMS =
+bin_SCRIPTS =
+libexec_PROGRAMS =
 
 endif
 

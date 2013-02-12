@@ -179,7 +179,7 @@ meta_back_bind( Operation *op, SlapReply *rs )
 				continue;
 			}
 
-			
+
 			(void)meta_back_proxy_authz_bind( mc, i, op, rs, LDAP_BACK_DONTSEND );
 			lerr = rs->sr_err;
 
@@ -277,13 +277,13 @@ meta_back_bind( Operation *op, SlapReply *rs )
 	 * if at least (and at most?) one bind succeeds, fine.
 	 */
 	if ( rc != LDAP_SUCCESS ) {
-		
+
 		/*
 		 * deal with bind failure ...
 		 */
 
 		/*
-		 * no target was found within the naming context, 
+		 * no target was found within the naming context,
 		 * so bind must fail with invalid credentials
 		 */
 		if ( rs->sr_err == LDAP_SUCCESS && gotit == 0 ) {
@@ -371,7 +371,7 @@ retry:;
 		rc = ldap_result( msc->msc_ld, msgid, LDAP_MSG_ALL, &tv, &res );
 		switch ( rc ) {
 		case 0:
-			if ( nretries != META_RETRY_NEVER 
+			if ( nretries != META_RETRY_NEVER
 				|| ( timeout && slap_get_time() <= stoptime ) )
 			{
 				ldap_pvt_thread_yield();
@@ -458,7 +458,7 @@ meta_back_single_bind(
 	struct berval		save_o_dn;
 	int			save_o_do_not_cache;
 	LDAPControl		**ctrls = NULL;
-	
+
 	if ( !BER_BVISNULL( &msc->msc_bound_ndn ) ) {
 		ch_free( msc->msc_bound_ndn.bv_val );
 		BER_BVZERO( &msc->msc_bound_ndn );
@@ -725,7 +725,7 @@ retry_binding:;
 			char		buf[ SLAP_TEXT_BUFLEN ];
 
 			if ( mc == NULL ) {
-				/* meta_back_single_dobind() already sent 
+				/* meta_back_single_dobind() already sent
 				 * response and released connection */
 				goto send_err;
 			}
@@ -823,7 +823,7 @@ send_err:;
  * This is a callback used for chasing referrals using the same
  * credentials as the original user on this session.
  */
-int 
+int
 meta_back_default_rebind(
 	LDAP			*ld,
 	LDAP_CONST char		*url,
@@ -843,7 +843,7 @@ meta_back_default_rebind(
  *
  * This is a callback used for mucking with the urllist
  */
-int 
+int
 meta_back_default_urllist(
 	LDAP		*ld,
 	LDAPURLDesc	**urllist,
@@ -1023,7 +1023,7 @@ retry:;
 
 			/* otherwise get the result; if it is not
 			 * LDAP_SUCCESS, record it in the reply
-			 * structure (this includes 
+			 * structure (this includes
 			 * LDAP_COMPARE_{TRUE|FALSE}) */
 			default:
 				/* only touch when activity actually took place... */
@@ -1054,7 +1054,7 @@ retry:;
 
 					} else {
 						int	i;
-	
+
 						for ( i = 0; refs[ i ] != NULL; i++ )
 							/* count */ ;
 						rs->sr_ref = op->o_tmpalloc( sizeof( struct berval ) * ( i + 1 ),
@@ -1085,12 +1085,12 @@ retry:;
 		}
 
 		/* if the error in the reply structure is not
-		 * LDAP_SUCCESS, try to map it from client 
+		 * LDAP_SUCCESS, try to map it from client
 		 * to server error */
 		if ( !ERR_OK( rs->sr_err ) ) {
 			rs->sr_err = slap_map_api2result( rs );
 
-			/* internal ops ( op->o_conn == NULL ) 
+			/* internal ops ( op->o_conn == NULL )
 			 * must not reply to client */
 			if ( op->o_conn && !op->o_do_not_cache && matched ) {
 
@@ -1138,13 +1138,13 @@ retry:;
 				}
 
 				rs->sr_err = slap_map_api2result( rs );
-	
+
 				if ( LogTest( LDAP_DEBUG_ANY ) ) {
 					char	buf[ SLAP_TEXT_BUFLEN ];
 
 					snprintf( buf, sizeof( buf ),
 						"meta_back_op_result[%d] "
-						"err=%d text=\"%s\" matched=\"%s\"", 
+						"err=%d text=\"%s\" matched=\"%s\"",
 						i, rs->sr_err,
 						( xtext ? xtext : "" ),
 						( xmatched ? xmatched : "" ) );
@@ -1178,7 +1178,7 @@ retry:;
 				if ( xtext ) {
 					ldap_memfree( xtext );
 				}
-	
+
 				if ( xmatched ) {
 					ldap_memfree( xmatched );
 				}
@@ -1207,7 +1207,7 @@ retry:;
 	}
 
 	if ( op->o_conn &&
-		( ( sendok & LDAP_BACK_SENDOK ) 
+		( ( sendok & LDAP_BACK_SENDOK )
 			|| ( ( sendok & LDAP_BACK_SENDERR ) && rs->sr_err != LDAP_SUCCESS ) ) )
 	{
 		send_ldap_result( op, rs );
@@ -1305,9 +1305,9 @@ meta_back_proxy_authz_cred(
 	 */
 	/*
 	 * if no bind took place yet, but the connection is bound
-	 * and the "proxyauthzdn" is set, then bind as 
-	 * "proxyauthzdn" and explicitly add the proxyAuthz 
-	 * control to every operation with the dn bound 
+	 * and the "proxyauthzdn" is set, then bind as
+	 * "proxyauthzdn" and explicitly add the proxyAuthz
+	 * control to every operation with the dn bound
 	 * to the connection as control value.
 	 */
 
@@ -1355,7 +1355,7 @@ meta_back_proxy_authz_cred(
 
 			} else {
 				authcDN = ndn;
-			}	
+			}
 			rs->sr_err = slap_sasl_matches( op, mt->mt_idassert_authz,
 					&authcDN, &authcDN );
 			if ( rs->sr_err != LDAP_SUCCESS ) {
@@ -1685,7 +1685,7 @@ done:;
 	}
 
 	*pctrls = ctrls;
-	
+
 	return rs->sr_err;
 }
 

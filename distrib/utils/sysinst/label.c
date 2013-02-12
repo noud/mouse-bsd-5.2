@@ -23,13 +23,13 @@
  * THIS SOFTWARE IS PROVIDED BY JONATHAN STONE ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL PIERMONT INFORMATION SYSTEMS INC. BE 
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * ARE DISCLAIMED. IN NO EVENT SHALL PIERMONT INFORMATION SYSTEMS INC. BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
@@ -260,7 +260,7 @@ edit_fs_isize(menudesc *m, void *arg)
 		answer, answer, sizeof answer);
 	p->pi_isize = atol(answer);
 	return 0;
-}       
+}
 
 
 static int
@@ -586,8 +586,8 @@ set_label_texts(menudesc *menu, void *arg)
 	}
 
 	m = &menu->opts[ptn];
-	m->opt_menu = MENU_sizechoice; 
-	m->opt_flags = OPT_SUB; 
+	m->opt_menu = MENU_sizechoice;
+	m->opt_flags = OPT_SUB;
 	m->opt_action = NULL;
 	m->opt_name = MSG_askunits;
 
@@ -637,7 +637,7 @@ edit_and_check_label(partinfo *lp, int nparts, int rawpart, int bsdpart)
 		/* check we have a single root fs */
 		if (check_one_root(lp, nparts) == 0)
 			msg_display(MSG_must_be_one_root);
-		else 
+		else
 			/* Check for overlaps */
 			if (checklabel(lp, nparts, rawpart, bsdpart, &i, &j))
 				/* partitions overlap */

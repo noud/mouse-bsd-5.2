@@ -231,13 +231,13 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-main$(EXEEXT): $(main_OBJECTS) $(main_DEPENDENCIES) 
+main$(EXEEXT): $(main_OBJECTS) $(main_DEPENDENCIES)
 	@rm -f main$(EXEEXT)
 	$(CXXLINK) $(main_OBJECTS) $(main_LDADD) $(LIBS)
-readSchema$(EXEEXT): $(readSchema_OBJECTS) $(readSchema_DEPENDENCIES) 
+readSchema$(EXEEXT): $(readSchema_OBJECTS) $(readSchema_DEPENDENCIES)
 	@rm -f readSchema$(EXEEXT)
 	$(CXXLINK) $(readSchema_OBJECTS) $(readSchema_LDADD) $(LIBS)
-urlTest$(EXEEXT): $(urlTest_OBJECTS) $(urlTest_DEPENDENCIES) 
+urlTest$(EXEEXT): $(urlTest_OBJECTS) $(urlTest_DEPENDENCIES)
 	@rm -f urlTest$(EXEEXT)
 	$(CXXLINK) $(urlTest_OBJECTS) $(urlTest_LDADD) $(LIBS)
 

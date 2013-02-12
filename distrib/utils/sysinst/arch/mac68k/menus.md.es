@@ -25,13 +25,13 @@
  * THIS SOFTWARE IS PROVIDED BY PIERMONT INFORMATION SYSTEMS INC. ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL PIERMONT INFORMATION SYSTEMS INC. BE 
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * ARE DISCLAIMED. IN NO EVENT SHALL PIERMONT INFORMATION SYSTEMS INC. BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
@@ -104,7 +104,7 @@ menu editparttable, title  "Escoja su particion", exit, y=14;
 			strcpy (map.blk[k].pmPartType, "Apple_Free");
 			map.blk[k].pmPyPartStart += size;
 			if ((map.blk[k].pmPyPartStart + free_size) > dlsize)
-			    map.blk[k].pmPartBlkCnt = 
+			    map.blk[k].pmPartBlkCnt =
 				dlsize - map.blk[k].pmPyPartStart;
 			else
 			    map.blk[k].pmPartBlkCnt = free_size;
@@ -184,7 +184,7 @@ menu chooseid, title  "¿Tipo de particion?";
 		    if (whichType(&map.blk[j]) == ROOT_PART) {
 			bzb = (EBZB *)&map.blk[j].pmBootArgs[0];
 			if (bzb->type == APPLE_BZB_TYPEFS && bzb->flags.root) {
-			   if (map.root_cnt++ == 0) 
+			   if (map.root_cnt++ == 0)
 				strcpy (bzb->mount_point, "/");
 			   else
 				strcpy (bzb->mount_point, "/altroot");

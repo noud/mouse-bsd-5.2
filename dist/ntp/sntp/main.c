@@ -175,7 +175,7 @@ assumptions. */
 
 
 /* Local definitions and global variables (mostly options).  These are all of
-the quantities that control the main actions of the program.  The first three 
+the quantities that control the main actions of the program.  The first three
 are the only ones that are exported to other modules. */
 
 const char *argv0 = NULL;              /* For diagnostics only - not NULL */
@@ -696,7 +696,7 @@ might not always be the right thing to do. */
         now, e, w, x, y, z;
     int total = *a_total, index = *a_index, wait = *a_wait, i;
     char text[50];
- 
+
 /* Correct the previous data and store a new entry in the circular buffer. */
 
     for (i = 0; i < total; ++i) {
@@ -1311,7 +1311,7 @@ handling is rather nasty to avoid replicating code. */
                 fprintf(stderr,"Offset=%.6f+/-%.6f @ %.6f disp=%.6f\n",
                     offset,error,when,dispersion);
         }
-   
+
 /* Calculate the statistics, and display the results or make the initial
 correction.  Note that estimate_stats() will return zero if a timestamp
 indicates synchronisation loss (usually due to down time or a change of server,
@@ -1699,7 +1699,7 @@ that stuck states terminate, and do not affect the result. */
     if ((daemon || action == action_query) && savename == NULL)
         savename = SAVENAME;
 
-/* Diagnose where we are, if requested, and separate out the classes of 
+/* Diagnose where we are, if requested, and separate out the classes of
 operation.  The calls do not return. */
 
     if (help) syntax(args == 1);

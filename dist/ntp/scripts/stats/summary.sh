@@ -3,7 +3,7 @@
 # Script to summarize ipeerstats, loopstats and clockstats files
 #
 # This script can be run from a cron job once per day, week or month. It
-# runs the file-specific summary script and appends the summary data to 
+# runs the file-specific summary script and appends the summary data to
 # designated files.
 #
 DATE=`date +20%y%m%d`

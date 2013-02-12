@@ -87,7 +87,7 @@ verify_signature_pkcs7(const char *input)
 		begin_pkgvul = input;
 		if ((begin_sig = strstr(begin_pkgvul, pkcs7_begin)) == NULL)
 			errx(EXIT_FAILURE, "No PKCS7 signature");
-		end_pkgvul = begin_sig;		
+		end_pkgvul = begin_sig;
 	}
 	if ((end_sig = strstr(begin_sig, pkcs7_end)) == NULL)
 		errx(EXIT_FAILURE, "Invalid PKCS7 signature");
@@ -223,7 +223,7 @@ verify_hash(const char *input, const char *hash_line)
 				break;
 		}
 		warnx("Unsupported hash algorithm: %.*s",
-		    (int)(end_name - hash_line), hash_line); 
+		    (int)(end_name - hash_line), hash_line);
 		return;
 	}
 
@@ -267,7 +267,7 @@ verify_hash(const char *input, const char *hash_line)
 
 	while (isspace((unsigned char)*hash_line) && *hash_line != '\n')
 		++hash_line;
-	
+
 	if (!isspace((unsigned char)*hash_line))
 		errx(EXIT_FAILURE, "Invalid #CHECKSUM");
 }

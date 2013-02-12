@@ -39,7 +39,7 @@
  * refclock_palisade - clock driver for the Trimble Palisade GPS
  * timing receiver
  *
- * For detailed information on this program, please refer to the html 
+ * For detailed information on this program, please refer to the html
  * Refclock 29 page accompanying the NTP distribution.
  *
  * for questions / bugs / comments, contact:
@@ -72,7 +72,7 @@ const int days_of_year [12] = {
 };
 
 #ifdef DEBUG
-const char * Tracking_Status[15][15] = { 
+const char * Tracking_Status[15][15] = {
         	{ "Doing Fixes\0" }, { "Good 1SV\0" }, { "Approx. 1SV\0" },
         	{"Need Time\0" }, { "Need INIT\0" }, { "PDOP too High\0" },
         	{ "Bad 1SV\0" }, { "0SV Usable\0" }, { "1SV Usable\0" },
@@ -129,11 +129,11 @@ palisade_start (
 	struct termios tio;
 #ifdef SYS_WINNT
 	(void) sprintf(gpsdev, "COM%d:", unit);
-#else	
+#else
 	(void) sprintf(gpsdev, DEVICE, unit);
 #endif
 	/*
-	 * Open serial port. 
+	 * Open serial port.
 	 */
 #if defined PALISADE
 	 fd = open(gpsdev, O_RDWR
@@ -154,7 +154,7 @@ palisade_start (
 	msyslog(LOG_NOTICE, "Palisade(%d) fd: %d dev: %s", unit, fd,
 		gpsdev);
 
-#if defined PALISADE 
+#if defined PALISADE
         tio.c_cflag = (CS8|CLOCAL|CREAD|PARENB|PARODD);
         tio.c_iflag = (IGNBRK);
         tio.c_oflag = (0);
@@ -176,7 +176,7 @@ palisade_start (
         }
 #else /* NTP 4.x */
         if (tcgetattr(fd, &tio) < 0) {
-                msyslog(LOG_ERR, 
+                msyslog(LOG_ERR,
 			"Palisade(%d) tcgetattr(fd, &tio): %m",unit);
 #ifdef DEBUG
                 printf("Palisade(%d) tcgetattr(fd, &tio)\n",unit);
@@ -200,7 +200,7 @@ palisade_start (
 	 * Allocate and initialize unit structure
 	 */
 	up = (struct palisade_unit *) emalloc(sizeof(struct palisade_unit));
-	      
+
 	if (!(up)) {
                 msyslog(LOG_ERR, "Palisade(%d) emalloc: %m",unit);
 #ifdef DEBUG
@@ -250,7 +250,7 @@ palisade_start (
 	peer->minpoll = TRMB_MINPOLL;
 	peer->maxpoll = TRMB_MAXPOLL;
 	memcpy((char *)&pp->refid, REFID, 4);
-	
+
 	up->leap_status = 0;
 	up->unit = (short) unit;
 	up->rpt_status = TSIP_PARSED_EMPTY;
@@ -286,7 +286,7 @@ palisade_shutdown (
 
 
 
-/* 
+/*
  * unpack_date - get day and year from date
  */
 int
@@ -304,13 +304,13 @@ day_of_year (
 
 	mon = dt[1];
        /* Check month is inside array bounds */
-       if ((mon < 1) || (mon > 12)) 
+       if ((mon < 1) || (mon > 12))
 		return -1;
 
 	day = dt[0] + days_of_year[mon - 1];
-	year = getint((u_char *) (dt + 2)); 
+	year = getint((u_char *) (dt + 2));
 
-	if ( !(year % 4) && ((year % 100) || 
+	if ( !(year % 4) && ((year % 100) ||
 		(!(year % 100) && !(year%400)))
 			&&(mon > 2))
 			day ++; /* leap year and March or later */
@@ -319,8 +319,8 @@ day_of_year (
 }
 
 
-/* 
- * TSIP_decode - decode the TSIP data packets 
+/*
+ * TSIP_decode - decode the TSIP data packets
  */
 int
 TSIP_decode (
@@ -346,7 +346,7 @@ TSIP_decode (
 	up = (struct palisade_unit *)pp->unitptr;
 
 	/*
-	 * Check the time packet, decode its contents. 
+	 * Check the time packet, decode its contents.
 	 * If the timecode has invalid length or is not in
 	 * proper format, declare bad format and exit.
 	 */
@@ -362,31 +362,31 @@ TSIP_decode (
 			printf("Palisade Port B packets detected. Connect to Port A\n");
 #endif
 
-		return 0;	
+		return 0;
 	}
 
 	/*
 	 * We cast both to u_char to as 0x8f uses the sign bit on a char
 	 */
 	if ((u_char) up->rpt_buf[0] == (u_char) 0x8f) {
-	/* 
+	/*
 	 * Superpackets
 	 */
 	   event = (unsigned short) (getint((u_char *) &mb(1)) & 0xffff);
-	   if (!((pp->sloppyclockflag & CLK_FLAG2) || event)) 
+	   if (!((pp->sloppyclockflag & CLK_FLAG2) || event))
 		/* Ignore Packet */
-			return 0;	   
-	
+			return 0;
+
 	   switch (mb(0) & 0xff) {
 	     int GPS_UTC_Offset;
-	     case PACKET_8F0B: 
+	     case PACKET_8F0B:
 
 		if (up->polled <= 0)
 			return 0;
 
 		if (up->rpt_cnt != LENCODE_8F0B)  /* check length */
 			break;
-		
+
 #ifdef DEBUG
 if (debug > 1) {
 		int ts;
@@ -402,12 +402,12 @@ if (debug > 1) {
 			if (mb(st) > 0) ts++;
 			printf(" %02d", mb(st));
 		}
-		printf(" : Tracking %d\n", ts); 
+		printf(" : Tracking %d\n", ts);
 	}
 #endif
 
-		GPS_UTC_Offset = getint((u_char *) &mb(16));  
-		if (GPS_UTC_Offset == 0) { /* Check UTC offset */ 
+		GPS_UTC_Offset = getint((u_char *) &mb(16));
+		if (GPS_UTC_Offset == 0) { /* Check UTC offset */
 #ifdef DEBUG
 			 printf("TSIP_decode: UTC Offset Unknown\n");
 #endif
@@ -418,7 +418,7 @@ if (debug > 1) {
 		secint = (long) secs;
 		secfrac = secs - secint; /* 0.0 <= secfrac < 1.0 */
 
-		pp->nsec = (long) (secfrac * 1000000000); 
+		pp->nsec = (long) (secfrac * 1000000000);
 
 		secint %= 86400;    /* Only care about today */
 		pp->hour = secint / 3600;
@@ -426,15 +426,15 @@ if (debug > 1) {
 		pp->minute = secint / 60;
 		secint %= 60;
 		pp->second = secint % 60;
-		
+
 		if ((pp->day = day_of_year(&mb(11))) < 0) break;
 
-		pp->year = getint((u_char *) &mb(13)); 
+		pp->year = getint((u_char *) &mb(13));
 
 #ifdef DEBUG
 	if (debug > 1)
 		printf("TSIP_decode: unit %d: %02X #%d %02d:%02d:%02d.%06ld %02d/%02d/%04d UTC %02d\n",
- 			up->unit, mb(0) & 0xff, event, pp->hour, pp->minute, 
+ 			up->unit, mb(0) & 0xff, event, pp->hour, pp->minute,
 			pp->second, pp->nsec, mb(12), mb(11), pp->year, GPS_UTC_Offset);
 #endif
 		/* Only use this packet when no
@@ -454,12 +454,12 @@ if (debug > 1) {
 
 		if (up->rpt_cnt != LENCODE_NTP) /* check length */
 			break;
-	
+
 		up->leap_status = mb(19);
 
-		if (up->polled  <= 0) 
+		if (up->polled  <= 0)
 			return 0;
-				
+
 		/* Check Tracking Status */
 		st = mb(18);
 		if (st < 0 || st > 14) st = 14;
@@ -475,21 +475,21 @@ if (debug > 1) {
 		}
 
 		if (up->leap_status & PALISADE_LEAP_PENDING) {
-			if (up->leap_status & PALISADE_UTC_TIME)  
+			if (up->leap_status & PALISADE_UTC_TIME)
 				pp->leap = LEAP_ADDSECOND;
 			else
 				pp->leap = LEAP_DELSECOND;
 		}
 		else if (up->leap_status)
 			pp->leap = LEAP_NOWARNING;
-		
+
 		else {  /* UTC flag is not set:
 			 * Receiver may have been reset, and lost
 			 * its UTC almanac data */
 			pp->leap = LEAP_NOTINSYNC;
 #ifdef DEBUG
 			 printf("TSIP_decode: UTC Almanac unavailable: %d\n",
-				mb(19));	
+				mb(19));
 #endif
 			refclock_report(peer, CEVNT_BADTIME);
 			up->polled = -1;
@@ -498,9 +498,9 @@ if (debug > 1) {
 
 		pp->nsec = (long) (getdbl((u_char *) &mb(3)) * 1000000000);
 
-		if ((pp->day = day_of_year(&mb(14))) < 0) 
+		if ((pp->day = day_of_year(&mb(14))) < 0)
 			break;
-		pp->year = getint((u_char *) &mb(16)); 
+		pp->year = getint((u_char *) &mb(16));
 		pp->hour = mb(11);
 		pp->minute = mb(12);
 		pp->second = mb(13);
@@ -508,24 +508,24 @@ if (debug > 1) {
 #ifdef DEBUG
 	if (debug > 1)
 printf("TSIP_decode: unit %d: %02X #%d %02d:%02d:%02d.%06ld %02d/%02d/%04d UTC %02x %s\n",
- 			up->unit, mb(0) & 0xff, event, pp->hour, pp->minute, 
+ 			up->unit, mb(0) & 0xff, event, pp->hour, pp->minute,
 			pp->second, pp->nsec, mb(15), mb(14), pp->year,
 			mb(19), *Tracking_Status[st]);
 #endif
 		return 1;
 		break;
 
-	  default: 	
+	  default:
 		/* Ignore Packet */
 		return 0;
 	  } /* switch */
-	}/* if 8F packets */	
+	}/* if 8F packets */
 
 	refclock_report(peer, CEVNT_BADREPLY);
 	up->polled = -1;
 #ifdef DEBUG
-	printf("TSIP_decode: unit %d: bad packet %02x-%02x event %d len %d\n", 
-		   up->unit, up->rpt_buf[0] & 0xff, mb(0) & 0xff, 
+	printf("TSIP_decode: unit %d: bad packet %02x-%02x event %d len %d\n",
+		   up->unit, up->rpt_buf[0] & 0xff, mb(0) & 0xff,
 			event, up->rpt_cnt);
 #endif
 	return 0;
@@ -554,30 +554,30 @@ palisade_receive (
 	 */
 	pp = peer->procptr;
 	up = (struct palisade_unit *)pp->unitptr;
-		
+
 	if (! TSIP_decode(peer)) return;
-	
-	if (up->polled <= 0) 
+
+	if (up->polled <= 0)
 	    return;   /* no poll pending, already received or timeout */
 
 	up->polled = 0;  /* Poll reply received */
 	pp->lencode = 0; /* clear time code */
 #ifdef DEBUG
-	if (debug) 
+	if (debug)
 		printf(
 	"palisade_receive: unit %d: %4d %03d %02d:%02d:%02d.%06ld\n",
-			up->unit, pp->year, pp->day, pp->hour, pp->minute, 
+			up->unit, pp->year, pp->day, pp->hour, pp->minute,
 			pp->second, pp->nsec);
 #endif
 
 	/*
 	 * Process the sample
-	 * Generate timecode: YYYY DoY HH:MM:SS.microsec 
-	 * report and process 
+	 * Generate timecode: YYYY DoY HH:MM:SS.microsec
+	 * report and process
 	 */
 
 	(void) sprintf(pp->a_lastcode,"%4d %03d %02d:%02d:%02d.%06ld",
-		   pp->year,pp->day,pp->hour,pp->minute, pp->second,pp->nsec); 
+		   pp->year,pp->day,pp->hour,pp->minute, pp->second,pp->nsec);
 	pp->lencode = 24;
 
 #ifdef PALISADE
@@ -597,7 +597,7 @@ palisade_receive (
 		return;
 	}
 
-	record_clock_stats(&peer->srcadr, pp->a_lastcode); 
+	record_clock_stats(&peer->srcadr, pp->a_lastcode);
 
 #ifdef DEBUG
 	if (debug)
@@ -608,8 +608,8 @@ palisade_receive (
 	refclock_receive(peer
 #ifdef PALISADE
 		, &pp->offset, 0, pp->dispersion,
-              &pp->lastrec, &pp->lastrec, pp->leap		
-#endif		
+              &pp->lastrec, &pp->lastrec, pp->leap
+#endif
 		);
 }
 
@@ -633,24 +633,24 @@ palisade_poll (
 {
 	struct palisade_unit *up;
 	struct refclockproc *pp;
-	
+
 	pp = peer->procptr;
 	up = (struct palisade_unit *)pp->unitptr;
 
 	pp->polls++;
-	if (up->polled > 0) /* last reply never arrived or error */ 
+	if (up->polled > 0) /* last reply never arrived or error */
 	    refclock_report(peer, CEVNT_TIMEOUT);
 
 	up->polled = 2; /* synchronous packet + 1 event */
-	
+
 #ifdef DEBUG
 	if (debug)
 	    printf("palisade_poll: unit %d: polling %s\n", unit,
-		   (pp->sloppyclockflag & CLK_FLAG2) ? 
+		   (pp->sloppyclockflag & CLK_FLAG2) ?
 			"synchronous packet" : "event");
-#endif 
+#endif
 
-	if (pp->sloppyclockflag & CLK_FLAG2) 
+	if (pp->sloppyclockflag & CLK_FLAG2)
 	    return;  /* using synchronous packet input */
 
 	if(up->type == CLK_PRAECIS) {
@@ -662,8 +662,8 @@ palisade_poll (
 		}
 	}
 
-	if (HW_poll(pp) < 0) 
-	    refclock_report(peer, CEVNT_FAULT); 
+	if (HW_poll(pp) < 0)
+	    refclock_report(peer, CEVNT_FAULT);
 }
 
 static void
@@ -724,7 +724,7 @@ palisade_io (
 
 	c = (char *) &rbufp->recv_space;
 	d = c + rbufp->recv_length;
-		
+
 	while (c != d) {
 
 		/* Build time packet */
@@ -750,17 +750,17 @@ palisade_io (
 		    case TSIP_PARSED_DATA:
 			if (*c == DLE)
 			    up->rpt_status = TSIP_PARSED_DLE_2;
-			else 
+			else
 			    mb(up->rpt_cnt++) = *c;
 			break;
 
 		    case TSIP_PARSED_DLE_2:
 			if (*c == DLE) {
 				up->rpt_status = TSIP_PARSED_DATA;
-				mb(up->rpt_cnt++) = 
+				mb(up->rpt_cnt++) =
 						*c;
-			}       
-			else if (*c == ETX) 
+			}
+			else if (*c == ETX)
 				    up->rpt_status = TSIP_PARSED_FULL;
 			else 	{
                         	/* error: start new report packet */
@@ -774,26 +774,26 @@ palisade_io (
 		    default:
 		        if ( *c != DLE)
                           up->rpt_status = TSIP_PARSED_EMPTY;
-                else 
+                else
                           up->rpt_status = TSIP_PARSED_DLE_1;
                         break;
 		}
-		
+
 		c++;
 
 		if (up->rpt_status == TSIP_PARSED_DLE_1) {
 		    up->rpt_cnt = 0;
-			if (pp->sloppyclockflag & CLK_FLAG2) 
+			if (pp->sloppyclockflag & CLK_FLAG2)
                 		/* stamp it */
                        	get_systime(&pp->lastrec);
 		}
 		else if (up->rpt_status == TSIP_PARSED_EMPTY)
 		    	up->rpt_cnt = 0;
 
-		else if (up->rpt_cnt > BMAX) 
+		else if (up->rpt_cnt > BMAX)
 			up->rpt_status =TSIP_PARSED_EMPTY;
 
-		if (up->rpt_status == TSIP_PARSED_FULL) 
+		if (up->rpt_status == TSIP_PARSED_FULL)
 			palisade_receive(peer);
 
 	} /* while chars in buffer */
@@ -816,7 +816,7 @@ HW_poll (
 	struct refclockproc * pp 	/* pointer to unit structure */
 	)
 #endif
-{	
+{
 	int x;	/* state before & after RTS set */
 	struct palisade_unit *up;
 
@@ -828,27 +828,27 @@ HW_poll (
 	if (debug)
 	    printf("Palisade HW_poll: unit %d: GET %s\n", up->unit, strerror(errno));
 #endif
-		msyslog(LOG_ERR, "Palisade(%d) HW_poll: ioctl(fd,GET): %m", 
+		msyslog(LOG_ERR, "Palisade(%d) HW_poll: ioctl(fd,GET): %m",
 			up->unit);
 		return -1;
 	}
-  
+
 	x |= TIOCM_RTS;        /* turn on RTS  */
 
 	/* Edge trigger */
-	if (ioctl(pp->io.fd, TIOCMSET, &x) < 0) { 
+	if (ioctl(pp->io.fd, TIOCMSET, &x) < 0) {
 #ifdef DEBUG
 	if (debug)
 	    printf("Palisade HW_poll: unit %d: SET \n", up->unit);
 #endif
 		msyslog(LOG_ERR,
-			"Palisade(%d) HW_poll: ioctl(fd, SET, RTS_on): %m", 
+			"Palisade(%d) HW_poll: ioctl(fd, SET, RTS_on): %m",
 			up->unit);
 		return -1;
 	}
 
 	x &= ~TIOCM_RTS;        /* turn off RTS  */
-	
+
 	/* poll timestamp */
 	get_systime(&pp->lastrec);
 
@@ -858,7 +858,7 @@ HW_poll (
 	    printf("Palisade HW_poll: unit %d: UNSET \n", up->unit);
 #endif
 		msyslog(LOG_ERR,
-			"Palisade(%d) HW_poll: ioctl(fd, UNSET, RTS_off): %m", 
+			"Palisade(%d) HW_poll: ioctl(fd, UNSET, RTS_off): %m",
 			up->unit);
 		return -1;
 	}
@@ -882,7 +882,7 @@ getfloat (
 #endif
 {
 	float sval;
-#ifdef WORDS_BIGENDIAN 
+#ifdef WORDS_BIGENDIAN
 	((char *) &sval)[0] = *bp++;
 	((char *) &sval)[1] = *bp++;
 	((char *) &sval)[2] = *bp++;
@@ -892,7 +892,7 @@ getfloat (
 	((char *) &sval)[2] = *bp++;
 	((char *) &sval)[1] = *bp++;
 	((char *) &sval)[0] = *bp;
-#endif  /* ! XNTP_BIG_ENDIAN */ 
+#endif  /* ! XNTP_BIG_ENDIAN */
 	return sval;
 }
 #endif
@@ -912,7 +912,7 @@ getdbl (
 #endif
 {
 	double dval;
-#ifdef WORDS_BIGENDIAN 
+#ifdef WORDS_BIGENDIAN
 	((char *) &dval)[0] = *bp++;
 	((char *) &dval)[1] = *bp++;
 	((char *) &dval)[2] = *bp++;
@@ -930,7 +930,7 @@ getdbl (
 	((char *) &dval)[2] = *bp++;
 	((char *) &dval)[1] = *bp++;
 	((char *) &dval)[0] = *bp;
-#endif  /* ! XNTP_BIG_ENDIAN */ 
+#endif  /* ! XNTP_BIG_ENDIAN */
 	return dval;
 }
 

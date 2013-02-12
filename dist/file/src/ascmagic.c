@@ -4,7 +4,7 @@
  * Copyright (c) Ian F. Darwin 1986-1995.
  * Software written by Ian F. Darwin and others;
  * maintained 1995-present by Christos Zoulas and others.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -14,7 +14,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- *  
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -78,7 +78,7 @@ file_ascmagic(struct magic_set *ms, const unsigned char *buf, size_t nbytes)
 {
 	size_t i;
 	unsigned char *nbuf = NULL, *utf8_buf = NULL, *utf8_end;
-	unichar *ubuf = NULL;	
+	unichar *ubuf = NULL;
 	size_t ulen, mlen;
 	const struct names *p;
 	int rv = -1;
@@ -145,7 +145,7 @@ file_ascmagic(struct magic_set *ms, const unsigned char *buf, size_t nbytes)
 	} else if (looks_latin1(buf, nbytes, ubuf, &ulen)) {
 		code = "ISO-8859";
 		type = "text";
-		code_mime = "iso-8859-1"; 
+		code_mime = "iso-8859-1";
 	} else if (looks_extended(buf, nbytes, ubuf, &ulen)) {
 		code = "Non-ISO extended-ASCII";
 		type = "text";

@@ -2,7 +2,7 @@
 .\" $Id: ucdata.man,v 1.1.1.1 2001/01/15 08:30:46 lukem Exp $
 .\"
 .TH ucdata 3 "03 January 2001"
-.SH NAME 
+.SH NAME
 ucdata \- package for providing Unicode/ISO10646 character information
 
 .SH SYNOPSIS

@@ -26,7 +26,7 @@ ASN1_UTCTIME *get_signed_time(PKCS7_SIGNER_INFO *si)
 	    return so->value.utctime;
 	return NULL;
 	}
-	
+
 static int signed_string_nid= -1;
 
 void add_signed_string(PKCS7_SIGNER_INFO *si, char *str)
@@ -135,12 +135,12 @@ int get_signed_seq2string(PKCS7_SIGNER_INFO *si, char **str1, char **str2)
 		/* Length is the length of the seqence */
 
 		c.q=c.p;
-		if ((os1=d2i_ASN1_OCTET_STRING(NULL,&c.p,c.slen)) == NULL) 
+		if ((os1=d2i_ASN1_OCTET_STRING(NULL,&c.p,c.slen)) == NULL)
 			goto err;
 		c.slen-=(c.p-c.q);
 
 		c.q=c.p;
-		if ((os2=d2i_ASN1_OCTET_STRING(NULL,&c.p,c.slen)) == NULL) 
+		if ((os2=d2i_ASN1_OCTET_STRING(NULL,&c.p,c.slen)) == NULL)
 			goto err;
 		c.slen-=(c.p-c.q);
 
@@ -188,7 +188,7 @@ ASN1_UTCTIME *sk_get_time(STACK_OF(X509_ATTRIBUTE) *sk)
 	    return so->value.utctime;
 	return NULL;
 	}
-	
+
 X509_ATTRIBUTE *create_string(char *str)
 	{
 	ASN1_OCTET_STRING *os;
@@ -302,12 +302,12 @@ int sk_get_seq2string(STACK_OF(X509_ATTRIBUTE) *sk, char **str1, char **str2)
 		/* Length is the length of the seqence */
 
 		c.q=c.p;
-		if ((os1=d2i_ASN1_OCTET_STRING(NULL,&c.p,c.slen)) == NULL) 
+		if ((os1=d2i_ASN1_OCTET_STRING(NULL,&c.p,c.slen)) == NULL)
 			goto err;
 		c.slen-=(c.p-c.q);
 
 		c.q=c.p;
-		if ((os2=d2i_ASN1_OCTET_STRING(NULL,&c.p,c.slen)) == NULL) 
+		if ((os2=d2i_ASN1_OCTET_STRING(NULL,&c.p,c.slen)) == NULL)
 			goto err;
 		c.slen-=(c.p-c.q);
 

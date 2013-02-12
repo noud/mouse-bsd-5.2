@@ -6,7 +6,7 @@ dnl
 AC_DEFUN([rk_AIX],[
 
 aix=no
-case "$host" in 
+case "$host" in
 *-*-aix3*)
 	aix=3
 	;;

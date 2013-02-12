@@ -347,7 +347,7 @@ ssh_userauth2(const char *local_user, const char *server_user, char *host,
 	/* post authentication and only if the right conditions are met */
 	/* both of the NONE commands must be true and there must be no */
 	/* tty allocated */
-	if ((options.none_switch == 1) && (options.none_enabled == 1)) 
+	if ((options.none_switch == 1) && (options.none_enabled == 1))
 	{
 		if (!tty_flag) /* no null on tty sessions */
 		{
@@ -551,7 +551,7 @@ userauth_gssapi(Authctxt *authctxt)
 	while (mech < gss_supported->count && !ok) {
 		/* My DER encoding requires length<128 */
 		if (gss_supported->elements[mech].length < 128 &&
-		    ssh_gssapi_check_mechanism(&gssctxt, 
+		    ssh_gssapi_check_mechanism(&gssctxt,
 		    &gss_supported->elements[mech], authctxt->host)) {
 			ok = 1; /* Mechanism works */
 		} else {
@@ -1378,7 +1378,7 @@ userauth_hostbased(Authctxt *authctxt)
 		p = get_local_name(packet_get_connection_in());
 	if (p == NULL) {
 		if (gethostname(myname, sizeof(myname)) == -1) {
-			verbose("userauth_hostbased: gethostname: %s", 
+			verbose("userauth_hostbased: gethostname: %s",
 			    strerror(errno));
 		} else
 			p = xstrdup(myname);

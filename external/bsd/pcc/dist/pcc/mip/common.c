@@ -56,7 +56,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -246,7 +246,7 @@ nfree(NODE *p)
 
 	if (p == NULL)
 		cerror("freeing blank node!");
-		
+
 	l = p->n_left;
 	if (p->n_op == FREE)
 		cerror("freeing FREE node", p);
@@ -464,7 +464,7 @@ int crslab = 10;
 /*
  * Return a number for internal labels.
  */
-int 
+int
 getlab()
 {
 	return crslab++;

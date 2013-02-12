@@ -199,7 +199,7 @@ findexistingpeer(
 		peer = peer_hash[NTP_HASH_ADDR(addr)];
 	else
 		peer = start_peer->next;
-	
+
 	while (peer != 0) {
 		if (SOCKCMP(addr, &peer->srcadr)
 		    && NSRCPORT(addr) == NSRCPORT(&peer->srcadr)) {
@@ -376,7 +376,7 @@ unpeer(
 		peer = peer_hash[hash];
 		while (peer != 0 && peer->next != peer_to_remove)
 		    peer = peer->next;
-		
+
 		if (peer == 0) {
 			peer_hash_count[hash]++;
 			msyslog(LOG_ERR, "peer struct for %s not in table!",
@@ -399,7 +399,7 @@ unpeer(
 		peer = assoc_hash[hash];
 		while (peer != 0 && peer->ass_next != peer_to_remove)
 		    peer = peer->ass_next;
-		
+
 		if (peer == 0) {
 			assoc_hash_count[hash]++;
 			msyslog(LOG_ERR,
@@ -589,7 +589,7 @@ peer_refresh_interface(struct peer *peer)
 			peer->hmode, peer->version, peer->minpoll,
 			peer->maxpoll, peer->flags, peer->cast_flags,
 			peer->ttl, peer->keyid);
-		if (niface != NULL) 
+		if (niface != NULL)
 		{
 			printf("fd=%d, bfd=%d, name=%.16s, flags=0x%x, scope=%d, ",
 			       niface->fd,
@@ -662,7 +662,7 @@ refresh_all_peerinterfaces(void)
 	}
 }
 
-	
+
 /*
  * find an interface suitable for the src address
  */
@@ -670,7 +670,7 @@ static struct interface *
 select_peerinterface(struct peer *peer, struct sockaddr_storage *srcadr, struct interface *dstadr, u_char cast_flags)
 {
 	struct interface *interface;
-  
+
 	/*
 	 * Initialize the peer structure and dance the interface jig.
 	 * Reference clocks step the loopback waltz, the others
@@ -707,13 +707,13 @@ select_peerinterface(struct peer *peer, struct sockaddr_storage *srcadr, struct 
 			interface = findinterface(srcadr);
 
 	/*
-	 * we do not bind to the wildcard interfaces for output 
+	 * we do not bind to the wildcard interfaces for output
 	 * as our (network) source address would be undefined and
 	 * crypto will not work without knowing the own transmit address
 	 */
 	if (interface != NULL && interface->flags & INT_WILDCARD)
 #ifdef SYS_WINNT
-		if ( !accept_wildcard_if_for_winnt )  
+		if ( !accept_wildcard_if_for_winnt )
 #endif
 			interface = NULL;
 
@@ -841,7 +841,7 @@ newpeer(
 			 * Dump it, something screwed up
 			 */
 			set_peerdstadr(peer, NULL);
-	
+
 			peer->next = peer_free;
 			peer_free = peer;
 			peer_free_count++;
@@ -1006,7 +1006,7 @@ expire_all(void)
 				peer->crypto &= ~(CRYPTO_FLAG_AUTO |
 				    CRYPTO_FLAG_AGREE);
 			}
-				
+
 		}
 	}
 	RAND_bytes((u_char *)&sys_private, 4);

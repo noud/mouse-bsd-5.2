@@ -386,11 +386,11 @@ static struct foo {
 	char *str;
 } *foopole;
 
-void    
+void
 cprint(int p2, char *fmt, ...)
 {
 	extern int inftn;
-	va_list ap;  
+	va_list ap;
 	char *str;
 
 	if (isinlining)
@@ -407,7 +407,7 @@ cprint(int p2, char *fmt, ...)
 			foopole = w;
 		} else {
 			while (foopole)
-				send_passt(IP_ASM, foopole->str), 
+				send_passt(IP_ASM, foopole->str),
 				    foopole = foopole->next;
 			send_passt(IP_ASM, str);
 		}

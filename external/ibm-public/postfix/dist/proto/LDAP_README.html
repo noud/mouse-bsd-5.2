@@ -56,7 +56,7 @@ it to each. </p>
 <h2><a name="build">Building Postfix with LDAP support</a></h2>
 
 <p> These instructions assume that you build Postfix from source
-code as described in the INSTALL document. Some modification may   
+code as described in the INSTALL document. Some modification may
 be required if you build Postfix from a vendor-specific source
 package.  </p>
 
@@ -149,20 +149,20 @@ page. </p>
 <p> Here's a basic example for using LDAP to look up local(8)
 aliases. Assume that in main.cf, you have: </p>
 
-<blockquote> 
+<blockquote>
 <pre>
 alias_maps = hash:/etc/aliases, ldap:/etc/postfix/ldap-aliases.cf
 </pre>
-</blockquote> 
+</blockquote>
 
 <p> and in ldap:/etc/postfix/ldap-aliases.cf you have: </p>
 
-<blockquote> 
+<blockquote>
 <pre>
 server_host = ldap.example.com
 search_base = dc=example, dc=com
 </pre>
-</blockquote> 
+</blockquote>
 
 <p> Upon receiving mail for a local address "ldapuser" that isn't
 found in the /etc/aliases database, Postfix will search the LDAP
@@ -190,7 +190,7 @@ mail to unknown users in the domain will simply bounce. </p>
 <p> In summary, you might have a catchall user for a virtual domain
 that looks like this: </p>
 
-<blockquote> 
+<blockquote>
 <pre>
      dn: cn=defaultrecipient, dc=fake, dc=dom
      objectclass: top
@@ -199,9 +199,9 @@ that looks like this: </p>
      owner: uid=root, dc=someserver, dc=isp, dc=dom
 1 -&gt; mailacceptinggeneralid: fake.dom
 2 -&gt; mailacceptinggeneralid: @fake.dom
-3 -&gt; maildrop: realuser@real.dom         
+3 -&gt; maildrop: realuser@real.dom
 </pre>
-</blockquote> 
+</blockquote>
 
 <dl compact>
 
@@ -254,7 +254,7 @@ The same is true of "bgroup" and "cuser"/"duser" (6)/(7)/(8)/(9), but
 "bgroup" also has a "maildrop" attribute of "bgroup@mlm.example.com"
 (5): </p>
 
-<blockquote> 
+<blockquote>
 <pre>
      dn: cn=agroup, dc=example, dc=com
      objectclass: top
@@ -320,7 +320,7 @@ The same is true of "bgroup" and "cuser"/"duser" (6)/(7)/(8)/(9), but
 </pre>
 <br>
 
-</blockquote> 
+</blockquote>
 
 <p> Our first use case ignores the "memberdn" attributes, and assumes
 that groups hold only direct "memberaddr" strings as in (3), (4), (8) and
@@ -329,7 +329,7 @@ that groups hold only direct "memberaddr" strings as in (3), (4), (8) and
 related settings (hosts, ports, bind settings, timeouts, ...) we have:
 </p>
 
-<blockquote> 
+<blockquote>
 <pre>
     simple.cf:
         ...
@@ -339,7 +339,7 @@ related settings (hosts, ports, bind settings, timeouts, ...) we have:
     $ postmap -q agroup@example.com ldap:simple.cf
     auser@example.org,buser@example.org
 </pre>
-</blockquote> 
+</blockquote>
 
 <p> We search "dc=example, dc=com". The "mail" attribute is used in the
 query_filter to locate the right group, the "result_attribute" setting
@@ -361,7 +361,7 @@ assume for the moment that groups never have a "maildrop" (the "bgroup"
 "maildrop" attribute is for a different use case). The returned data for
 "auser" and "buser" is from items (11) and (13) in the example data. </p>
 
-<blockquote> 
+<blockquote>
 <pre>
     special.cf:
         ...
@@ -372,7 +372,7 @@ assume for the moment that groups never have a "maildrop" (the "bgroup"
     $ postmap -q agroup@example.com ldap:special.cf
     auser@mailhub.example.com,buser@mailhub.example.com
 </pre>
-</blockquote> 
+</blockquote>
 
 <p> Note: if the desired member object result attribute is always also
 present in the group, you get surprising results: the expansion also
@@ -387,7 +387,7 @@ and forwarded groups and a second for groups that can be expanded
 immediately. It is assumed that groups that require forwarding are
 never nested members of groups that are directly expanded. </p>
 
-<blockquote> 
+<blockquote>
 <pre>
     no_expand.cf:
         ...
@@ -407,7 +407,7 @@ never nested members of groups that are directly expanded. </p>
     $ postmap -q bgroup@example.com ldap:no_expand.cf ldap:expand.cf
     bgroup@mlm.example.com
 </pre>
-</blockquote> 
+</blockquote>
 
 <p> Non-group objects and groups with delayed expansion (those that have a
 maildrop attribute) are rewritten to a single maildrop value. Groups that
@@ -419,7 +419,7 @@ features in Postfix 2.4. We now are able to use just one LDAP table and
 no longer need to assume that forwarded groups are never nested inside
 expanded groups. </p>
 
-<blockquote> 
+<blockquote>
 <pre>
     fancy.cf:
         ...
@@ -438,7 +438,7 @@ expanded groups. </p>
     $ postmap -q bgroup@example.com ldap:fancy.cf
     bgroup@mlm.example.com
 </pre>
-</blockquote> 
+</blockquote>
 
 <p> Above, delayed expansion is enabled via "terminal_result_attribute",
 which, if present, is used as the sole result and all other expansion is
@@ -549,7 +549,7 @@ contents, please include the applicable bits of some directory entries. </p>
 
 <li>John Hensley: Multiple LDAP sources with more configurable attributes.
 
-<li>Carsten Hoeger: Search scope handling. 
+<li>Carsten Hoeger: Search scope handling.
 
 <li>LaMont Jones: Domain restriction, URL and DN searches, multiple result
               attributes.
@@ -579,7 +579,7 @@ contents, please include the applicable bits of some directory entries. </p>
 
 <li>Liviu Daia revised the configuration interface and added the main.cf
     configuration feature.</li>
-    
+
 <li>Liviu Daia with further refinements from Jose Luis Tallon and
 Victor Duchovni developed the common query, result_format, domain and
 expansion_limit interface for LDAP, MySQL and PosgreSQL.</li>

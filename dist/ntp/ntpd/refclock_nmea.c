@@ -50,7 +50,7 @@
  * GPS sentences other than RMC (the default) may be enabled by setting
  * the relevent bits of 'mode' in the server configuration line
  * server 127.127.20.x mode X
- * 
+ *
  * bit 0 - enables RMC (1)
  * bit 1 - enables GGA (2)
  * bit 2 - enables GLL (4)
@@ -176,7 +176,7 @@ nmea_start(
 
           if ((nmea_host = strtok(buffer,":")) == NULL)
             return(0);
-         
+
           nmea_port = atoi(strtok(NULL,":"));
 
           if ((he = gethostbyname(nmea_host)) == NULL)
@@ -368,7 +368,7 @@ nmea_pps(
 
 	/*
 	 * Convert the timespec nanoseconds field to ntp l_fp units.
-	 */ 
+	 */
 	if (up->handle == 0)
 		return (0);
 	timeout.tv_sec = 0;
@@ -562,7 +562,7 @@ nmea_receive(
 		    !isdigit((int)dp[2]) ||
 		    !isdigit((int)dp[3]) ||
 		    !isdigit((int)dp[4]) ||
-		    !isdigit((int)dp[5])	
+		    !isdigit((int)dp[5])
 		    ) {
 			refclock_report(peer, CEVNT_BADREPLY);
 			return;
@@ -578,7 +578,7 @@ nmea_receive(
 	/* Default to 0 milliseconds, if decimal convert milliseconds in
 	   one, two or three digits
 	*/
-	pp->nsec = 0; 
+	pp->nsec = 0;
 	if (dp[6] == '.') {
 		if (isdigit((int)dp[7])) {
 			pp->nsec = (dp[7] - '0') * 100000000;

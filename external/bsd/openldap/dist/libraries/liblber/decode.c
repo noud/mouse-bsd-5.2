@@ -298,7 +298,7 @@ ber_get_int(
 	if ( ber_getnint( ber, num, len ) != len ) {
 		return LBER_DEFAULT;
 	}
-	
+
 	return tag;
 }
 
@@ -426,7 +426,7 @@ ber_get_stringbvl( bgbvr *b, ber_len_t *rlen )
 	b->ber->ber_ptr = orig;
 	b->ber->ber_tag = tag;
 	ber_skip_tag( b->ber, &len );
-	
+
 	for (n=0; n<i; n++)
 	{
 		tag = ber_next_element( b->ber, &len, last );

@@ -7,7 +7,7 @@ AM_CPPFLAGS += -I$(srcdir)/.. $(INCLUDE_krb4) $(INCLUDE_hcrypto)
 
 bin_PROGRAMS = telnet
 
-CHECK_LOCAL = 
+CHECK_LOCAL =
 
 telnet_SOURCES  = authenc.c commands.c main.c network.c ring.c \
 		  sys_bsd.c telnet.c terminal.c \

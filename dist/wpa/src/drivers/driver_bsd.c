@@ -172,7 +172,7 @@ wpa_driver_bsd_set_bssid(void *priv, const char *bssid)
 	struct wpa_driver_bsd_data *drv = priv;
 #ifdef SIOCS80211BSSID
 	struct ieee80211_bssid bs;
- 
+
 	strlcpy(bs.i_name, drv->ifname, sizeof(bs.i_name);
 	os_memcpy(bs.i_bssid, bssid, sizeof(bs.i_bssid));
 	return ioctl(drv->sock, SIOCS80211BSSID, &bs);
@@ -190,7 +190,7 @@ wpa_driver_bsd_get_ssid(void *priv, u8 *ssid)
 #ifdef SIOCG80211NWID
 	struct ieee80211_nwid nwid;
 	struct ifreq ifr;
- 
+
 	os_memset(&ifr, 0, sizeof(ifr));
 	strlcpy(ifr.ifr_name, drv->ifname, sizeof(ifr.ifr_name));
 	ifr.ifr_data = (void *)&nwid;
@@ -213,7 +213,7 @@ wpa_driver_bsd_set_ssid(void *priv, const char *ssid,
 #ifdef SIOCS80211NWID
 	struct ieee80211_nwid nwid;
 	struct ifreq ifr;
- 
+
 	os_memcpy(nwid.i_nwid, ssid, ssid_len);
 	nwid.i_len = ssid_len;
 	os_memset(&ifr, 0, sizeof(ifr));
@@ -674,7 +674,7 @@ getmaxrate(uint8_t rates[15], uint8_t nrates)
 	return maxrate;
 }
 
-/* unalligned little endian access */     
+/* unalligned little endian access */
 #define LE_READ_4(p)					\
 	((u_int32_t)					\
 	 ((((const u_int8_t *)(p))[0]      ) |		\

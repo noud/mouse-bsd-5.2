@@ -353,7 +353,7 @@ LIB_kafs = $(top_builddir)/lib/kafs/libkafs.la $(AIX_EXTRA_KAFS)
 @KRB5_TRUE@LIB_gssapi = $(top_builddir)/lib/gssapi/libgssapi.la
 @KRB5_TRUE@LIB_tsasl = $(top_builddir)/lib/tsasl/libtsasl.la
 @DCE_TRUE@LIB_kdfs = $(top_builddir)/lib/kdfs/libkdfs.la
-CHECK_LOCAL = 
+CHECK_LOCAL =
 @KRB4_TRUE@krb4_sources = krb4.c
 @KRB5_TRUE@krb5_sources = gssapi.c gss_userok.c
 ftpd_SOURCES = \
@@ -445,7 +445,7 @@ clean-libexecPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-ftpd$(EXEEXT): $(ftpd_OBJECTS) $(ftpd_DEPENDENCIES) 
+ftpd$(EXEEXT): $(ftpd_OBJECTS) $(ftpd_DEPENDENCIES)
 	@rm -f ftpd$(EXEEXT)
 	$(LINK) $(ftpd_OBJECTS) $(ftpd_LDADD) $(LIBS)
 

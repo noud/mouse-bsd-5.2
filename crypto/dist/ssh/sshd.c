@@ -974,7 +974,7 @@ server_listen(void)
 
 		debug("Bind to port %s on %s.", strport, ntop);
 
-		getsockopt(listen_sock, SOL_SOCKET, SO_RCVBUF, 
+		getsockopt(listen_sock, SOL_SOCKET, SO_RCVBUF,
 				   &socksize, &socksizelen);
 		debug("Server TCP RWIN socket size: %d", socksize);
 		debug("HPN Buffer Size: %d", options.hpn_buffer_size);

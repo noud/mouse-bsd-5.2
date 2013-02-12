@@ -257,7 +257,7 @@ static void lpf_tr_filter_setup (info)
         /* Patch the server port into the LPF  program...
 	   XXX changes to filter program may require changes
 	   XXX to the insn number(s) used below!
-	   XXX Token ring filter is null - when/if we have a filter 
+	   XXX Token ring filter is null - when/if we have a filter
 	   XXX that's not, we'll need this code.
 	   XXX dhcp_bpf_filter [?].k = ntohs (local_port); */
 

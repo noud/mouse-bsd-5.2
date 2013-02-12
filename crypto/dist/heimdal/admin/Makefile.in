@@ -429,7 +429,7 @@ clean-sbinPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-ktutil$(EXEEXT): $(ktutil_OBJECTS) $(ktutil_DEPENDENCIES) 
+ktutil$(EXEEXT): $(ktutil_OBJECTS) $(ktutil_DEPENDENCIES)
 	@rm -f ktutil$(EXEEXT)
 	$(LINK) $(ktutil_OBJECTS) $(ktutil_LDADD) $(LIBS)
 

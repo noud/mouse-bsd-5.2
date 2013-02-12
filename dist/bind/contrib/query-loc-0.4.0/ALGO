@@ -9,17 +9,17 @@ Important points:
 - we can have two (or more) RRs for one address, one more specific than the other
 
 main
- if (host is a name) 
+ if (host is a name)
 	getLOCbyname
- else # host is an IP address	
+ else # host is an IP address
 	gethostbyaddr
-	if (name) 
+	if (name)
 		getLOCbyname
 		# If there is none, do not search. We assume the above was sufficient	       # (But check 5.2.2)
 	else
 		getLOCbyaddress
 
-getLOCbyname (host) 
+getLOCbyname (host)
 	get LOC for host
 	if (it exists)
 		OK
@@ -27,7 +27,7 @@ getLOCbyname (host)
 		get all A records of the name
 		foreach A record
 			getLOCbyaddress
-			OK at the first one found 
+			OK at the first one found
 				# we assume they are consistent
 		END
 
@@ -45,4 +45,4 @@ getLOCbynetwork
 		getLOCbynetwork
 	else
 		END
-	
+

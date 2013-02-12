@@ -2649,7 +2649,7 @@ allow-update { key host1-host2. ;};
           <command>managed-keys</command> statement in
           <filename>named.conf</filename>.
         </para>
-	  
+
 	<para>
 	  <command>trusted-keys</command> are copies of DNSKEY RRs
 	  for zones that are used to form the first link in the
@@ -2818,7 +2818,7 @@ options {
         the traditional "nibble" format used in the
         <emphasis>ip6.arpa</emphasis> domain, as well as the older, deprecated
         <emphasis>ip6.int</emphasis> domain.
-        Older versions of <acronym>BIND</acronym> 9 
+        Older versions of <acronym>BIND</acronym> 9
         supported the "binary label" (also known as "bitstring") format,
         but support of binary labels has been completely removed per
         RFC 3363.
@@ -5046,7 +5046,7 @@ badresp:1,adberr:0,findfail:0,valfail:0]
     <optional> forwarders { <optional> <replaceable>ip_addr</replaceable> <optional>port <replaceable>ip_port</replaceable></optional> ; ... </optional> }; </optional>
     <optional> dual-stack-servers <optional>port <replaceable>ip_port</replaceable></optional> {
         ( <replaceable>domain_name</replaceable> <optional>port <replaceable>ip_port</replaceable></optional> |
-          <replaceable>ip_addr</replaceable> <optional>port <replaceable>ip_port</replaceable></optional> ) ; 
+          <replaceable>ip_addr</replaceable> <optional>port <replaceable>ip_port</replaceable></optional> ) ;
         ... }; </optional>
     <optional> check-names ( <replaceable>master</replaceable> | <replaceable>slave</replaceable> | <replaceable>response</replaceable> )
         ( <replaceable>warn</replaceable> | <replaceable>fail</replaceable> | <replaceable>ignore</replaceable> ); </optional>
@@ -7315,7 +7315,7 @@ avoid-v6-udp-ports {};
 
 	  <para>
 	    Note: BIND 9.5.0 introduced
-	    the <command>use-queryport-pool</command> 
+	    the <command>use-queryport-pool</command>
 	    option to support a pool of such random ports, but this
 	    option is now obsolete because reusing the same ports in
 	    the pool may not be sufficiently secure.
@@ -7353,7 +7353,7 @@ avoid-v6-udp-ports {};
 		</para>
 	      </listitem>
 	    </varlistentry>
-	    
+
           </variablelist>
           <note>
             <para>
@@ -8818,7 +8818,7 @@ avoid-v6-udp-ports { 40000; range 50000 60000; };
 	        </para>
 	       </listitem>
 	    </varlistentry>
-	      
+
 	    <varlistentry>
 	      <term><command>empty-contact</command></term>
 	      <listitem>
@@ -8829,7 +8829,7 @@ avoid-v6-udp-ports { 40000; range 50000 60000; };
 	        </para>
 	      </listitem>
 	    </varlistentry>
-  
+
 	    <varlistentry>
 	      <term><command>empty-zones-enable</command></term>
 	      <listitem>
@@ -8839,7 +8839,7 @@ avoid-v6-udp-ports { 40000; range 50000 60000; };
 	        </para>
 	      </listitem>
 	    </varlistentry>
-  
+
 	    <varlistentry>
 	    <term><command>disable-empty-zone</command></term>
 	      <listitem>
@@ -10728,7 +10728,7 @@ zone <replaceable>zone_name</replaceable> <optional><replaceable>class</replacea
                   </para>
                 </listitem>
               </varlistentry>
-	
+
 	      <varlistentry>
 		<term><command>masterfile-format</command></term>
 		<listitem>

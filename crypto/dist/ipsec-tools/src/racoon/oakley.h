@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -47,7 +47,7 @@
 #define   OAKLEY_ATTR_ENC_ALG_3DES		5
 #define   OAKLEY_ATTR_ENC_ALG_CAST		6
 #define   OAKLEY_ATTR_ENC_ALG_AES		7
-#define   OAKLEY_ATTR_ENC_ALG_CAMELLIA		8	
+#define   OAKLEY_ATTR_ENC_ALG_CAMELLIA		8
 					/*	65001 - 65535 Private Use */
 #define OAKLEY_ATTR_HASH_ALG		2 /* B */
 #define   OAKLEY_ATTR_HASH_ALG_MD5		1
@@ -68,7 +68,7 @@
 #define   OAKLEY_ATTR_AUTH_METHOD_EGENC		6
 #define   OAKLEY_ATTR_AUTH_METHOD_EGREV		7
 	/* Hybrid Auth */
-#ifdef ENABLE_HYBRID    
+#ifdef ENABLE_HYBRID
 #define   OAKLEY_ATTR_AUTH_METHOD_HYBRID_RSA_I	64221
 #define	  OAKLEY_ATTR_AUTH_METHOD_HYBRID_RSA_R	64222
 #define   OAKLEY_ATTR_AUTH_METHOD_HYBRID_DSS_I	64223
@@ -90,7 +90,7 @@
 #endif
 
 					/*	65500 -> still private
-					 * to avoid clash with GSSAPI_KRB below 
+					 * to avoid clash with GSSAPI_KRB below
 					 */
 #define FICTIVE_AUTH_METHOD_XAUTH_PSKEY_I	65500
 

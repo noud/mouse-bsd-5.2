@@ -7,7 +7,7 @@ AM_CPPFLAGS += -I$(srcdir)/../common $(INCLUDE_readline) $(INCLUDE_krb4) $(INCLU
 
 bin_PROGRAMS = ftp
 
-CHECK_LOCAL = 
+CHECK_LOCAL =
 
 if KRB4
 krb4_sources = krb4.c

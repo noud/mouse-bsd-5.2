@@ -48,7 +48,7 @@ static int hostapd_ioctl_prism54(struct wpa_driver_prism54_data *drv,
 
 	if (ioctl(drv->sock, PRISM54_HOSTAPD, &iwr) < 0) {
 		int ret = errno;
-		if (show_err) 
+		if (show_err)
 			perror("ioctl[PRISM54_HOSTAPD]");
 		return ret;
 	}
@@ -70,7 +70,7 @@ static int wpa_driver_prism54_set_wpa_ie(struct wpa_driver_prism54_data *drv,
 	param = os_zalloc(blen);
 	if (param == NULL)
 		return -1;
-	
+
 	param->cmd = PRISM2_HOSTAPD_SET_GENERIC_ELEMENT;
 	param->u.generic_elem.len = wpa_ie_len;
 	os_memcpy(param->u.generic_elem.data, wpa_ie, wpa_ie_len);

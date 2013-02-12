@@ -59,7 +59,7 @@ struct wpa_driver_broadcom_data {
 /* wireless authentication bit vector */
 #define WPA_ENABLED 1
 #define PSK_ENABLED 2
-                                                                                
+
 #define WAUTH_WPA_ENABLED(wauth)  ((wauth) & WPA_ENABLED)
 #define WAUTH_PSK_ENABLED(wauth)  ((wauth) & PSK_ENABLED)
 #define WAUTH_ENABLED(wauth)    ((wauth) & (WPA_ENABLED | PSK_ENABLED))
@@ -110,7 +110,7 @@ static int wpa_driver_broadcom_get_bssid(void *priv, u8 *bssid)
 	struct wpa_driver_broadcom_data *drv = priv;
 	if (broadcom_ioctl(drv, WLC_GET_BSSID, bssid, ETH_ALEN) == 0)
 		return 0;
-	
+
 	os_memset(bssid, 0, ETH_ALEN);
 	return -1;
 }
@@ -119,7 +119,7 @@ static int wpa_driver_broadcom_get_ssid(void *priv, u8 *ssid)
 {
 	struct wpa_driver_broadcom_data *drv = priv;
 	wlc_ssid_t s;
-	
+
 	if (broadcom_ioctl(drv, WLC_GET_SSID, &s, sizeof(s)) == -1)
 		return -1;
 
@@ -228,7 +228,7 @@ static void wpa_driver_broadcom_event_receive(int sock, void *ctx,
 	int left;
 	wl_wpa_header_t *wwh;
 	union wpa_event_data data;
-	
+
 	if ((left = recv(sock, buf, sizeof buf, 0)) < 0)
 		return;
 
@@ -288,7 +288,7 @@ static void wpa_driver_broadcom_event_receive(int sock, void *ctx,
 		break;
 	}
 	os_free(data.assoc_info.resp_ies);
-}	
+}
 
 static void * wpa_driver_broadcom_init(void *ctx, const char *ifname)
 {
@@ -376,8 +376,8 @@ static int wpa_driver_broadcom_set_drop_unencrypted(void *priv, int enabled)
 	struct wpa_driver_broadcom_data *drv = priv;
 	/* SET_EAP_RESTRICT, SET_WEP_RESTRICT */
 	int restrict = (enabled ? 1 : 0);
-	
-	if (broadcom_ioctl(drv, WLC_SET_WEP_RESTRICT, 
+
+	if (broadcom_ioctl(drv, WLC_SET_WEP_RESTRICT,
 			   &restrict, sizeof(restrict)) < 0 ||
 	    broadcom_ioctl(drv, WLC_SET_EAP_RESTRICT,
 			   &restrict, sizeof(restrict)) < 0)
@@ -403,7 +403,7 @@ static int wpa_driver_broadcom_scan(void *priv, const u8 *ssid,
 		wst.SSID_len = ssid_len;
 		os_memcpy(wst.SSID, ssid, ssid_len);
 	}
-	
+
 	if (broadcom_ioctl(drv, WLC_SCAN, &wst, sizeof(wst)) < 0)
 		return -1;
 
@@ -414,9 +414,9 @@ static int wpa_driver_broadcom_scan(void *priv, const u8 *ssid,
 }
 
 
-static const int frequency_list[] = { 
+static const int frequency_list[] = {
 	2412, 2417, 2422, 2427, 2432, 2437, 2442,
-	2447, 2452, 2457, 2462, 2467, 2472, 2484 
+	2447, 2452, 2457, 2462, 2467, 2472, 2484
 };
 
 struct bss_ie_hdr {
@@ -458,7 +458,7 @@ wpa_driver_broadcom_get_scan_results(void *priv,
 	for (ap_num = 0, wbi = wsr->bss_info; ap_num < wsr->count; ++ap_num) {
 		int left;
 		struct bss_ie_hdr *ie;
-		
+
 		os_memcpy(results[ap_num].bssid, &wbi->BSSID, ETH_ALEN);
 		os_memcpy(results[ap_num].ssid, wbi->SSID, wbi->SSID_len);
 		results[ap_num].ssid_len = wbi->SSID_len;
@@ -472,7 +472,7 @@ wpa_driver_broadcom_get_scan_results(void *priv,
 			     ((u8 *) ie + 2 + ie->len)) {
 			wpa_printf(MSG_MSGDUMP, "BROADCOM: IE: id:%x, len:%d",
 				   ie->elem_id, ie->len);
-			if (ie->len >= 3) 
+			if (ie->len >= 3)
 				wpa_printf(MSG_MSGDUMP,
 					   "BROADCOM: oui:%02x%02x%02x",
 					   ie->oui[0], ie->oui[1], ie->oui[2]);
@@ -490,7 +490,7 @@ wpa_driver_broadcom_get_scan_results(void *priv,
 
 	wpa_printf(MSG_MSGDUMP, "Received %d bytes of scan results (%d BSSes)",
 		   wsr->buflen, ap_num);
-	
+
 	os_free(buf);
 	return ap_num;
 }
@@ -525,7 +525,7 @@ wpa_driver_broadcom_associate(void *priv,
 	int wsec = 4;
 	int dummy;
 	int wpa_auth;
-	
+
 	s.SSID_len = params->ssid_len;
 	os_memcpy(s.SSID, params->ssid, params->ssid_len);
 

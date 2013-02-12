@@ -92,7 +92,7 @@ close IN;
 while (($hdr, $lib) = each %libinc)
 {
 	next if($hdr eq "NONE");
-	print STDERR "Scanning header file $hdr\n" if $debug; 
+	print STDERR "Scanning header file $hdr\n" if $debug;
 	my $line = "", $def= "", $linenr = 0, $gotfile = 0;
 	if (open(IN, "<$hdr")) {
 	    $gotfile = 1;
@@ -114,7 +114,7 @@ while (($hdr, $lib) = each %libinc)
 		if(/\/\*/) {
 		    if (not /\*\//) {		# multiline comment...
 			$line = $_;		# ... just accumulate
-			next; 
+			next;
 		    } else {
 			s/\/\*.*?\*\///gs;	# wipe it
 		    }
@@ -280,7 +280,7 @@ foreach $file (@source) {
 				$rcodes{$1} = "X";
 				$rnew{$2}++;
 			}
-		} 
+		}
 	}
 	close IN;
 }
@@ -513,7 +513,7 @@ EOF
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in

@@ -919,7 +919,7 @@ client_process_control(fd_set *readset)
 
 	set_nonblock(client_fd);
 
-	if (options.hpn_disabled) 
+	if (options.hpn_disabled)
 	window = CHAN_SES_WINDOW_DEFAULT;
 	else
 	  window = options.hpn_buffer_size;
@@ -1034,7 +1034,7 @@ process_cmdline(void)
 		if (local) {
 			if (channel_setup_local_fwd_listener(fwd.listen_host,
 			    fwd.listen_port, fwd.connect_host,
-			    fwd.connect_port, options.gateway_ports, 
+			    fwd.connect_port, options.gateway_ports,
 			    options.hpn_disabled, options.hpn_buffer_size) < 0) {
 				logit("Port forwarding failed.");
 				goto out;
@@ -1738,7 +1738,7 @@ client_request_forwarded_tcpip(const char *request_type, int rchan)
 		xfree(listen_address);
 		return NULL;
 	}
-	if (options.hpn_disabled) 
+	if (options.hpn_disabled)
 	c = channel_new("forwarded-tcpip",
 	    SSH_CHANNEL_CONNECTING, sock, sock, -1,
 		    CHAN_TCP_WINDOW_DEFAULT, CHAN_TCP_WINDOW_DEFAULT, 0,
@@ -1782,11 +1782,11 @@ client_request_x11(const char *request_type, int rchan)
 	if (sock < 0)
 		return NULL;
 	/* again is this really necessary for X11? */
-	if (options.hpn_disabled) 
+	if (options.hpn_disabled)
 	c = channel_new("x11",
 	    SSH_CHANNEL_X11_OPEN, sock, sock, -1,
 	    CHAN_TCP_WINDOW_DEFAULT, CHAN_X11_PACKET_DEFAULT, 0, "x11", 1);
-	else 
+	else
 		c = channel_new("x11",
 		    SSH_CHANNEL_X11_OPEN, sock, sock, -1,
 		    options.hpn_buffer_size, CHAN_X11_PACKET_DEFAULT, 0, "x11", 1);
@@ -1808,7 +1808,7 @@ client_request_agent(const char *request_type, int rchan)
 	sock = ssh_get_authentication_socket();
 	if (sock < 0)
 		return NULL;
-	if (options.hpn_disabled) 
+	if (options.hpn_disabled)
 		c = channel_new("authentication agent connection",
 		    SSH_CHANNEL_OPEN, sock, sock, -1,
 		    CHAN_X11_WINDOW_DEFAULT, CHAN_TCP_WINDOW_DEFAULT, 0,

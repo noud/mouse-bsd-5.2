@@ -135,7 +135,7 @@
     <para>
       The IN and CH class names overlap with the IN and CH top level
       domains names.  Either use the <option>-t</option> and
-      <option>-c</option> options to specify the type and class, 
+      <option>-c</option> options to specify the type and class,
       use the <option>-q</option> the specify the domain name, or
       use "IN." and "CH." when looking up these top level domains.
     </para>
@@ -271,7 +271,7 @@
     </para>
 
     <para>
-      The <option>-q</option> option sets the query name to 
+      The <option>-q</option> option sets the query name to
       <parameter>name</parameter>.  This useful do distinguish the
       <parameter>name</parameter> from other arguments.
     </para>
@@ -736,7 +736,7 @@
               Set the UDP message buffer size advertised using EDNS0 to
               <parameter>B</parameter> bytes.  The maximum and minimum sizes
 	      of this buffer are 65535 and 0 respectively.  Values outside
-	      this range are rounded up or down appropriately.  
+	      this range are rounded up or down appropriately.
 	      Values other than zero will cause a EDNS query to be sent.
             </para>
           </listitem>
@@ -914,7 +914,7 @@ dig +qr www.isc.org any -x 127.0.0.1 isc.org ns +noqr
       reply from the server.
       If you'd like to turn off the IDN support for some reason, defines
       the <envar>IDN_DISABLE</envar> environment variable.
-      The IDN support is disabled if the variable is set when 
+      The IDN support is disabled if the variable is set when
       <command>dig</command> runs.
     </para>
   </refsect1>

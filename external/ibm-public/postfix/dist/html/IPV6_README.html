@@ -175,7 +175,7 @@ setting looks like: </p>
 <blockquote>
 <pre>
 % postconf <a href="postconf.5.html#mynetworks">mynetworks</a>
-<a href="postconf.5.html#mynetworks">mynetworks</a> = 127.0.0.0/8 168.100.189.0/28 [::1]/128 [fe80::]/10 [2001:240:587::]/64 
+<a href="postconf.5.html#mynetworks">mynetworks</a> = 127.0.0.0/8 168.100.189.0/28 [::1]/128 [fe80::]/10 [2001:240:587::]/64
 </pre>
 </blockquote>
 
@@ -297,7 +297,7 @@ platform-specific section in src/util/sys_defs.h: </p>
 # define HAS_IPV6
 # define HAS_SIOCGLIF
 #endif
-</pre> 
+</pre>
 </blockquote>
 
 <p> Otherwise, Postfix will have to use the old SIOCGIF commands
@@ -311,7 +311,7 @@ src/util/sys_defs.h: </p>
 #ifndef NO_IPV6
 # define HAS_IPV6
 #endif
-</pre> 
+</pre>
 </blockquote>
 
 <li> <p> Test if Postfix can figure out its interface information. </p>

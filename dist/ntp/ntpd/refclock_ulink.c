@@ -47,9 +47,9 @@
  *
  * revision history:
  *		99/9/09 j.c.lang	original edit's
- *		99/9/11 j.c.lang	changed timecode parse to 
+ *		99/9/11 j.c.lang	changed timecode parse to
  *                                      match what the radio actually
- *                                      sends. 
+ *                                      sends.
  *              99/10/11 j.c.lang       added support for continous
  *                                      time code mode (dipsw2)
  *		99/11/26 j.c.lang	added support for 320 decoder
@@ -76,7 +76,7 @@
  *
  *
  * on the Ultralink model 33X decoder Dip switch 2 controls
- * polled or continous timecode 
+ * polled or continous timecode
  * set fudge flag1 if using polled (needed for model 320 and 325)
  * dont set fudge flag1 if dip switch 2 is set on model 33x decoder
 */
@@ -230,7 +230,7 @@ ulink_receive(
 
 	/*
 	 * Note we get a buffer and timestamp for both a <cr> and <lf>,
-	 * but only the <cr> timestamp is retained. 
+	 * but only the <cr> timestamp is retained.
 	 */
 	if (temp == 0) {
 		if (up->tcswitch == 0) {
@@ -281,8 +281,8 @@ ulink_receive(
 		    *   5      R1 is unreadable, R5 is best
 		    *   space  a space (0x20)
 		    *   1      Data bit 0, 1, M (pos mark), or ? (unknown).
-		    *   C      Reception from either (C)olorado or (H)awaii 
-		    *   00     Hours since last good WWVB frame sync. Will 
+		    *   C      Reception from either (C)olorado or (H)awaii
+		    *   00     Hours since last good WWVB frame sync. Will
 		    *          be 00-99
 		    *   space  Space char (0x20) or (0xa5) if locked to wwvb
 		    *   YYYY   Current year, 2000-2099
@@ -297,7 +297,7 @@ ulink_receive(
 		    *             I - during DST to STD day 0000-2400
 		    *   space  Space character (0x20)
 		    *   HH     Hours 00-23
-		    *   :      This is the REAL in sync indicator (: = insync)	
+		    *   :      This is the REAL in sync indicator (: = insync)
 		    *   MM     Minutes 00-59
 		    *   :      : = in sync ? = NOT in sync
 		    *   SS     Seconds 00-59
@@ -307,12 +307,12 @@ ulink_receive(
 		    *   +5     UT1 correction (sign + digit ))
 		    */
 
-   		       if (sscanf(pp->a_lastcode, 
+   		       if (sscanf(pp->a_lastcode,
                           "%*2c %*2c%2c%*c%4d%*c%3d%*4c %2d%c%2d:%2d%c%*2c",
-   		          char_quality, &pp->year, &pp->day, 
-                          &pp->hour, &syncchar, &pp->minute, &pp->second, 
-                          &leapchar) == 8) { 
-   		
+   		          char_quality, &pp->year, &pp->day,
+                          &pp->hour, &syncchar, &pp->minute, &pp->second,
+                          &leapchar) == 8) {
+
    			  if (char_quality[0] == '0') {
    				quality = 0;
    			  } else if (char_quality[0] == '0') {
@@ -327,7 +327,7 @@ ulink_receive(
 		          /*
 		          #ifdef DEBUG
 		          if (debug) {
-		             printf("ulink: char_quality %c %c\n", 
+		             printf("ulink: char_quality %c %c\n",
                                     char_quality[0], char_quality[1]);
 			     printf("ulink: quality %d\n", quality);
 			     printf("ulink: syncchar %x\n", syncchar);
@@ -337,10 +337,10 @@ ulink_receive(
                           */
 
                        }
-		
-                    } 
+
+                    }
                     if(siglchar == SIGLCHAR33x) {
-                
+
 		   /*
 		    * We got a Model 33X decoder.
 		    * Timecode format from January 29, 2001 datasheet is:
@@ -353,9 +353,9 @@ ulink_receive(
 		    *   D      Data bit 0, 1, 2 (position mark), or
 		    *          3 (unknown).
 		    *   space  Space character (0x20)
-		    *   00     Hours since last good WWVB frame sync. Will 
+		    *   00     Hours since last good WWVB frame sync. Will
 		    *          be 00-23 hrs, or '1d' to '7d'. Will be 'Lk'
-                    *          if currently in sync. 
+                    *          if currently in sync.
 		    *   space  Space character (0x20)
 		    *   YYYY   Current year, 1990-2089
 		    *   +      Leap year indicator. '+' if a leap year,
@@ -369,7 +369,7 @@ ulink_receive(
 		    *             I - during DST to STD day 0000-2400
 		    *   space  Space character (0x20)
 		    *   HH     Hours 00-23
-		    *   :      This is the REAL in sync indicator (: = insync)	
+		    *   :      This is the REAL in sync indicator (: = insync)
 		    *   MM     Minutes 00-59
 		    *   :      : = in sync ? = NOT in sync
 		    *   SS     Seconds 00-59
@@ -379,12 +379,12 @@ ulink_receive(
 		    *   +5     UT1 correction (sign + digit ))
 		    */
 
-		       if (sscanf(pp->a_lastcode, 
+		       if (sscanf(pp->a_lastcode,
                            "%*4c %2c %4d%*c%3d%*4c %2d%c%2d:%2d%c%*2c",
-		           char_quality, &pp->year, &pp->day, 
-                           &pp->hour, &syncchar, &pp->minute, &pp->second, 
-                           &leapchar) == 8) { 
-		
+		           char_quality, &pp->year, &pp->day,
+                           &pp->hour, &syncchar, &pp->minute, &pp->second,
+                           &leapchar) == 8) {
+
 			   if (char_quality[0] == 'L') {
 				quality = 0;
 			   } else if (char_quality[0] == '0') {
@@ -392,11 +392,11 @@ ulink_receive(
 			   } else  {
 				quality = 99;
 		           }
-	
+
                            /*
                            #ifdef DEBUG
          		   if (debug) {
-         			printf("ulink: char_quality %c %c\n", 
+         			printf("ulink: char_quality %c %c\n",
                                         char_quality[0], char_quality[1]);
          			printf("ulink: quality %d\n", quality);
          			printf("ulink: syncchar %x\n", syncchar);
@@ -459,25 +459,25 @@ ulink_receive(
 
 	/*
 	 * Decode quality indicator
-	 * For the 325 & 33x series, the lower the number the "better" 
-	 * the time is. I used the dispersion as the measure of time 
-	 * quality. The quality indicator in the 320 is the number of 
+	 * For the 325 & 33x series, the lower the number the "better"
+	 * the time is. I used the dispersion as the measure of time
+	 * quality. The quality indicator in the 320 is the number of
 	 * correlating time frames (the more the better)
 	 */
 
-	/* 
+	/*
 	 * The spec sheet for the 325 & 33x series states the clock will
-	 * maintain +/-0.002 seconds accuracy when locked to WWVB. This 
-	 * is indicated by 'Lk' in the quality portion of the incoming 
-	 * string. When not in lock, a drift of +/-0.015 seconds should 
+	 * maintain +/-0.002 seconds accuracy when locked to WWVB. This
+	 * is indicated by 'Lk' in the quality portion of the incoming
+	 * string. When not in lock, a drift of +/-0.015 seconds should
 	 * be allowed for.
-	 * With the quality indicator decoding scheme above, the 'Lk' 
-	 * condition will produce a quality value of 0. If the quality 
-	 * indicator starts with '0' then the second character is the 
-	 * number of hours since we were last locked. If the first 
-	 * character is anything other than 'L' or '0' then we have been 
-	 * out of lock for more than 9 hours so we assume the worst and 
-	 * force a quality value that selects the 'default' maximum 
+	 * With the quality indicator decoding scheme above, the 'Lk'
+	 * condition will produce a quality value of 0. If the quality
+	 * indicator starts with '0' then the second character is the
+	 * number of hours since we were last locked. If the first
+	 * character is anything other than 'L' or '0' then we have been
+	 * out of lock for more than 9 hours so we assume the worst and
+	 * force a quality value that selects the 'default' maximum
 	 * dispersion. The dispersion values below are what came with the
 	 * driver. They're not unreasonable so they've not been changed.
 	 */

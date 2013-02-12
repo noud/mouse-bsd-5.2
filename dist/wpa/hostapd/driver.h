@@ -160,7 +160,7 @@ struct wpa_driver_ops {
 	int (*send_ether)(void *priv, const u8 *dst, const u8 *src, u16 proto,
 			  const u8 *data, size_t data_len);
 
-	int (*set_radius_acl_auth)(void *priv, const u8 *mac, int accepted, 
+	int (*set_radius_acl_auth)(void *priv, const u8 *mac, int accepted,
 				   u32 session_timeout);
 	int (*set_radius_acl_expire)(void *priv, const u8 *mac);
 };

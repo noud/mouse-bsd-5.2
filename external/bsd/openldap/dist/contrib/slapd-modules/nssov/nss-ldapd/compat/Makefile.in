@@ -236,7 +236,7 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-libcompat.a: $(libcompat_a_OBJECTS) $(libcompat_a_DEPENDENCIES) 
+libcompat.a: $(libcompat_a_OBJECTS) $(libcompat_a_DEPENDENCIES)
 	-rm -f libcompat.a
 	$(libcompat_a_AR) libcompat.a $(libcompat_a_OBJECTS) $(libcompat_a_LIBADD)
 	$(RANLIB) libcompat.a

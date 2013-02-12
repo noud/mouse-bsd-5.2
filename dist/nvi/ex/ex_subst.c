@@ -160,7 +160,7 @@ subagain:	return (ex_subagain(sp, cmdp));
 		if (re_compile(sp, ptrn, t - ptrn, &sp->subre,
 		    &sp->subre_len, &sp->subre_c, SEARCH_CSUBST | SEARCH_MSG))
 			return (1);
-		
+
 		flags = SUB_FIRST;
 		sp->searchdir = FORWARD;
 	}
@@ -297,7 +297,7 @@ ex_subtilde(SCR *sp, EXCMD *cmdp)
  * Do the substitution.  This stuff is *really* tricky.  There are lots of
  * special cases, and general nastiness.  Don't mess with it unless you're
  * pretty confident.
- * 
+ *
  * The nasty part of the substitution is what happens when the replacement
  * string contains newlines.  It's a bit tricky -- consider the information
  * that has to be retained for "s/f\(o\)o/^M\1^M\1/".  The solution here is
@@ -965,7 +965,7 @@ iclower:	for (p = ptrn, len = plen; len > 0; ++p, --len)
 		 *
 		 * XXX
 		 * Regcomp isn't 8-bit clean, so the pattern is nul-terminated
-		 * for now.  There's just no other solution.  
+		 * for now.  There's just no other solution.
 		 */
 		MALLOC(sp, *ptrnp, CHAR_T *, (plen + 1) * sizeof(CHAR_T));
 		if (*ptrnp != NULL) {
@@ -990,7 +990,7 @@ iclower:	for (p = ptrn, len = plen; len > 0; ++p, --len)
 	 */
 	if ((rval = regcomp(rep, ptrn, /* plen, */ reflags)) != 0) {
 		if (LF_ISSET(SEARCH_MSG))
-			re_error(sp, rval, rep); 
+			re_error(sp, rval, rep);
 		return (1);
 	}
 
@@ -1317,11 +1317,11 @@ re_error(SCR *sp, int errcode, regex_t *preg)
  */
 static int
 re_sub(SCR *sp, CHAR_T *ip, CHAR_T **lbp, size_t *lbclenp, size_t *lblenp, regmatch_t *match)
-	        
+
 	           			/* Input line. */
-	             
-	                         
-	                     
+
+
+
 {
 	enum { C_NOT_SET, C_LOWER, C_ONE_LOWER, C_ONE_UPPER, C_UPPER } conv;
 	size_t lbclen, lblen;		/* Local copies. */

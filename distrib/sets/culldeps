@@ -61,7 +61,7 @@ while [ "$(${WC} -l "${LASTJOIN}" | ${AWK} '{ print $1; }')" -ne 0 ]; do
 		${SORT} -u > "${NEXTLEFTOVERS}"
 
 	#
-	# Swap output files before repeating. 
+	# Swap output files before repeating.
 	#
 	LASTJOIN="${NEXTJOIN}"
 	if [ "$(basename "${NEXTJOIN}")" = join0 ]; then

@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -64,7 +64,7 @@
 #include "evt.h"
 #include "isakmp.h"
 #ifdef ENABLE_HYBRID
-#include "isakmp_xauth.h"  
+#include "isakmp_xauth.h"
 #include "isakmp_cfg.h"
 #endif
 #include "isakmp_inf.h"
@@ -415,7 +415,7 @@ flushph1()
 		next = LIST_NEXT(p, chain);
 
 		/* send delete information */
-		if (p->status == PHASE1ST_ESTABLISHED) 
+		if (p->status == PHASE1ST_ESTABLISHED)
 			isakmp_info_send_d1(p);
 
 		remph1(p);
@@ -1043,7 +1043,7 @@ init_recvdpkt()
 }
 
 #ifdef ENABLE_HYBRID
-/* 
+/*
  * Retruns 0 if the address was obtained by ISAKMP mode config, 1 otherwise
  * This should be in isakmp_cfg.c but ph1tree being private, it must be there
  */
@@ -1070,7 +1070,7 @@ exclude_cfg_addr(addr)
 
 
 
-/* 
+/*
  * Reload conf code
  */
 static int revalidate_ph2(struct ph2handle *iph2){
@@ -1080,11 +1080,11 @@ static int revalidate_ph2(struct ph2handle *iph2){
 	struct saprop *approval;
 	struct ph1handle *iph1;
 
-	/* 
+	/*
 	 * Get the new sainfo using values of the old one
 	 */
 	if (iph2->sainfo != NULL) {
-		iph2->sainfo = getsainfo(iph2->sainfo->idsrc, 
+		iph2->sainfo = getsainfo(iph2->sainfo->idsrc,
 					  iph2->sainfo->iddst, iph2->sainfo->id_i,
 					  iph2->sainfo->remoteid);
 	}
@@ -1092,7 +1092,7 @@ static int revalidate_ph2(struct ph2handle *iph2){
 	sainfo = iph2->sainfo;
 
 	if (sainfo == NULL) {
-		/* 
+		/*
 		 * Sainfo has been removed
 		 */
 		plog(LLV_DEBUG, LOCATION, NULL,
@@ -1107,7 +1107,7 @@ static int revalidate_ph2(struct ph2handle *iph2){
 		plog(LLV_DEBUG, LOCATION, NULL,
 			 "No approval found !\n");
 		return 0;
-	}	
+	}
 
 	/*
 	 * Don't care about proposals, should we do something ?
@@ -1206,7 +1206,7 @@ static int revalidate_ph2(struct ph2handle *iph2){
 	}
 
 	found = 0;
-	for (alg = sainfo->algs[algclass_ipsec_enc]; 
+	for (alg = sainfo->algs[algclass_ipsec_enc];
 	    (found == 0 && alg != NULL); alg = alg->next) {
 		plog(LLV_DEBUG, LOCATION, NULL,
 			 "Reload: next ph2 enc alg...\n");
@@ -1239,7 +1239,7 @@ static int revalidate_ph2(struct ph2handle *iph2){
 			break;
 
 		default:
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "unexpected check_level\n");
 			continue;
 			break;
@@ -1263,7 +1263,7 @@ static int revalidate_ph2(struct ph2handle *iph2){
 }
 
 
-static void 
+static void
 remove_ph2(struct ph2handle *iph2)
 {
 	u_int32_t spis[2];
@@ -1456,7 +1456,7 @@ static int revalidate_ph1(struct ph1handle *iph1){
 			break;
 
 		default:
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "unexpected check_level\n");
 			continue;
 			break;
@@ -1519,7 +1519,7 @@ static int revalidate_ph2tree(void){
 	return 1;
 }
 
-int 
+int
 revalidate_ph12(void)
 {
 

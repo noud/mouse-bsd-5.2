@@ -130,7 +130,7 @@ lutil_getpass( const char *prompt )
 	}
 
 	/* fetch the password */
-	fprintf(stdout, "%s", prompt); 
+	fprintf(stdout, "%s", prompt);
 	fflush(stdout);
 	for (p=pbuf; (c = getc(fi))!='\n' && c!=EOF;) {
 		if (c == '\r')
@@ -154,7 +154,7 @@ lutil_getpass( const char *prompt )
 		fflush(stdin);
 		printf("\n"); fflush(stdout);
 	}
-	fprintf(stdout, "\n"); 
+	fprintf(stdout, "\n");
 	fflush(stdout);
 
 	/* tidy up */

@@ -41,7 +41,7 @@ Two lines of continuity are kept if possible (2.1, 6.1, 7.2).
 .iP "^C" 15
 Unused.
 .iP "^D" 15
-As a command, scrolls down a half-window of text.  
+As a command, scrolls down a half-window of text.
 A count gives the number of (logical) lines to scroll, and is remembered
 for future \fB^D\fR and \fB^U\fR commands (2.1, 7.2).
 During an insert, backtabs over \fIautoindent\fR white space at the beginning
@@ -215,7 +215,7 @@ place text (4.3, 6.3)
 .iP "#" 15
 The macro character which, when followed by a number, will substitute
 for a function key on terminals without function keys (6.9).
-In input mode, 
+In input mode,
 if this is your erase character, it will delete the last character
 you typed in input mode, and must be preceded with a \fB\e\fR to insert
 it, since it normally backs over the last input character you gave.
@@ -435,7 +435,7 @@ Deletes the character before the cursor.  A count repeats the effect,
 but only characters on the current line are deleted.
 .iP "Y" 15
 Yanks a copy of the current line into the unnamed buffer, to be put back
-by a later \fBp\fR or \fBP\fR; a very useful synonym for \fByy\fR. 
+by a later \fBp\fR or \fBP\fR; a very useful synonym for \fByy\fR.
 A count yanks that many lines.  May be preceded by a buffer name to put
 lines in that buffer (7.4).
 .iP "ZZ" 15

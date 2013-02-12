@@ -1,10 +1,10 @@
-/* 
+/*
  * Support for VIA PadLock Advanced Cryptography Engine (ACE)
  * Written by Michal Ludvig <michal@logix.cz>
  *            http://www.logix.cz/michal
  *
- * Big thanks to Andy Polyakov for a help with optimization, 
- * assembler fixes, port to MS Windows and a lot of other 
+ * Big thanks to Andy Polyakov for a help with optimization,
+ * assembler fixes, port to MS Windows and a lot of other
  * valuable work on this engine!
  */
 
@@ -96,7 +96,7 @@
 /* VIA PadLock AES is available *ONLY* on some x86 CPUs.
    Not only that it doesn't exist elsewhere, but it
    even can't be compiled on other platforms!
- 
+
    In addition, because of the heavy use of inline assembler,
    compiler choice is limited to GCC and Microsoft C. */
 #undef COMPILE_HW_PADLOCK
@@ -173,11 +173,11 @@ padlock_bind_helper(ENGINE *e)
 
 	/* Generate a nice engine name with available features */
 	BIO_snprintf(padlock_name, sizeof(padlock_name),
-		"VIA PadLock (%s, %s)", 
+		"VIA PadLock (%s, %s)",
 		 padlock_use_rng ? "RNG" : "no-RNG",
 		 padlock_use_ace ? "ACE" : "no-ACE");
 
-	/* Register everything or return with an error */ 
+	/* Register everything or return with an error */
 	if (!ENGINE_set_id(e, padlock_id) ||
 	    !ENGINE_set_name(e, padlock_name) ||
 
@@ -249,7 +249,7 @@ IMPLEMENT_DYNAMIC_BIND_FN (padlock_bind_fn)
 #define AES_KEY_SIZE_192	24
 #define AES_KEY_SIZE_256	32
 
-/* Here we store the status information relevant to the 
+/* Here we store the status information relevant to the
    current context. */
 /* BIG FAT WARNING:
  * 	Inline assembler in PADLOCK_XCRYPT_ASM()
@@ -308,7 +308,7 @@ padlock_insn_cpuid_available(void)
 {
 	int result = -1;
 
-	/* We're checking if the bit #21 of EFLAGS 
+	/* We're checking if the bit #21 of EFLAGS
 	   can be toggled. If yes = CPUID is available. */
 	asm volatile (
 		"pushf\n"
@@ -324,7 +324,7 @@ padlock_insn_cpuid_available(void)
 		"xorl %%eax, %%ecx\n"
 		"movl %%ecx, %0\n"
 		: "=r" (result) : : "eax", "ecx");
-	
+
 	return (result == 0);
 }
 
@@ -389,7 +389,7 @@ padlock_bswapl(AES_KEY *ks)
 #endif
 
 /* Force key reload from memory to the CPU microcode.
-   Loading EFLAGS from the stack clears EFLAGS[30] 
+   Loading EFLAGS from the stack clears EFLAGS[30]
    which does the trick. */
 static inline void
 padlock_reload_key(void)
@@ -425,7 +425,7 @@ padlock_verify_context(struct padlock_cipher_data *cdata)
 }
 
 /* Template for padlock_xcrypt_* modes */
-/* BIG FAT WARNING: 
+/* BIG FAT WARNING:
  * 	The offsets used with 'leal' instructions
  * 	describe items of the 'padlock_cipher_data'
  * 	structure.
@@ -477,7 +477,7 @@ padlock_xstore(void *addr, unsigned int edx_in)
  * In case you wonder 'rep xcrypt*' instructions above are *not*
  * affected by the Direction Flag and pointers advance toward
  * larger addresses unconditionally.
- */ 
+ */
 static inline unsigned char *
 padlock_memcpy(void *dst,const void *src,size_t n)
 {
@@ -503,7 +503,7 @@ padlock_memcpy(void *dst,const void *src,size_t n)
 	_asm _emit 0x0f _asm _emit 0xa7	\
 	_asm _emit code
 
-/* BIG FAT WARNING: 
+/* BIG FAT WARNING:
  * 	The offsets used with 'lea' instructions
  * 	describe items of the 'padlock_cipher_data'
  * 	structure.
@@ -842,7 +842,7 @@ padlock_aes_init_key (EVP_CIPHER_CTX *ctx, const unsigned char *key,
 	return 1;
 }
 
-/* 
+/*
  * Simplified version of padlock_aes_cipher() used when
  * 1) both input and output buffers are at aligned addresses.
  * or when
@@ -897,7 +897,7 @@ padlock_aes_cipher_omnivorous(EVP_CIPHER_CTX *ctx, unsigned char *out_arg,
 # error "insane PADLOCK_CHUNK..."
 #endif
 
-/* Re-align the arguments to 16-Bytes boundaries and run the 
+/* Re-align the arguments to 16-Bytes boundaries and run the
    encryption function itself. This function is not AES-specific. */
 static int
 padlock_aes_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out_arg,
@@ -1166,7 +1166,7 @@ padlock_aes_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out_arg,
  * (posted at http://www.via.com.tw/en/viac3/c3.jsp) nor does it
  * provide meaningful error control...
  */
-/* Wrapper that provides an interface between the API and 
+/* Wrapper that provides an interface between the API and
    the raw PadLock RNG */
 static int
 padlock_rand_bytes(unsigned char *output, int count)

@@ -21,11 +21,11 @@ BIND9 にパッチを当ててインストールしたい場合は、次の項も参照して下さい。
     + パッチの当て方
 
 0. 前準備
-  
+
 もしあなたがコード変換機能をサポートした通常の idnkit ライブラリをインス
-トールするつもりであり、またあなたが使用しているシステムのライブラリに 
+トールするつもりであり、またあなたが使用しているシステムのライブラリに
 iconv() がない場合、あるいはあっても UTF-8 を扱うことができない場合には
-あらかじめ iconv() をインストールしておいてください。iconv() は、例えば 
+あらかじめ iconv() をインストールしておいてください。iconv() は、例えば
 GNU libiconv と呼ばれるフリー (LGPL) の実装が
 
 	ftp://ftp.gnu.org/gnu/libiconv/
@@ -35,7 +35,7 @@ GNU libiconv と呼ばれるフリー (LGPL) の実装が
 
 ただし、コード変換を必要とせず、lite バージョンのライブラリのみをインス
 トールするのであれば、iconv() を含むライブラリは必要ありません。その場合、
-configure スクリプトの実行時に `--enable-liteonly' オプションの値を 
+configure スクリプトの実行時に `--enable-liteonly' オプションの値を
 "yes" にセットしてください。
 
 
@@ -83,7 +83,7 @@ configure スクリプトには、数多くのオプションが用意されています。そのう
     --with-iconv-include=ICONV_INCDIR
 	C コンパイラが通常では検索しないディレクトリに "iconv.h" が置
 	かれている場合、次のようにしてそのディレクトリを指定します。
-	
+
 	    --with-iconv-include=/usr/local/include
 
 	このオプションは --enable-liteonly を "yes" にした場合は指定する
@@ -162,7 +162,7 @@ configure スクリプトには、数多くのオプションが用意されています。そのう
 
     --datadir=DATADIR
 	異なるマシンで共有可能なファイルをインストールするディレクトリ
-	を指定します。デフォルトは PREFIX/share です。DATADIR/idnkit 
+	を指定します。デフォルトは PREFIX/share です。DATADIR/idnkit
 	の下に、idnkit で使用する幾つかのデータファイルがインストール
 	されます。
 

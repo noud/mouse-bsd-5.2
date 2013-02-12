@@ -9,7 +9,7 @@ INSTKERNOBJ!=	cd ${.CURDIR}/../ramdisk-kernel && ${PRINTOBJDIR}
 
 IMAGE=		boot.fs
 IMAGESIZE=	1200k
-XXBOOT=		${DESTDIR}/usr/mdec/xxboot_ustarfs 
+XXBOOT=		${DESTDIR}/usr/mdec/xxboot_ustarfs
 
 IMAGEDEPENDS=	${XXBOOT} boot.vax netbsd.gz
 CLEANFILES+=	netbsd.gz boot.vax ${IMAGE}.tmp

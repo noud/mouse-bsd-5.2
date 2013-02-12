@@ -22,7 +22,7 @@ address class names, and URLs.  Therefore you should not hyperlink
 those elements yourself.
 
 - URLs (such as "http://www.example.com") cannot contain quote, comma,
-or space characters. 
+or space characters.
 
 - An URL that appears at the end of a line must be followed by one
 other character.

@@ -100,7 +100,7 @@ csearch(char ***argvp, struct info *ip)
 	struct cchar *cp, tmp;
 	long val;
 	char *arg, *ep, *name;
-		
+
 	name = **argvp;
 
 	tmp.name = name;

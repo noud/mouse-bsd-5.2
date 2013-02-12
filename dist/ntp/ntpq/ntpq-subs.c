@@ -1382,7 +1382,7 @@ doprintpeers(
 
 	memset((char *)havevar, 0, sizeof(havevar));
 	get_systime(&ts);
-	
+
 	memset((char *)&srcadr, 0, sizeof(struct sockaddr_storage));
 	memset((char *)&dstadr, 0, sizeof(struct sockaddr_storage));
 
@@ -1516,7 +1516,7 @@ doprintpeers(
 		(void) fprintf(fp, "%-*s ", maxhostlen, currenthost);
 	if (af == 0 || srcadr.ss_family == af){
 		strcpy(clock_name, nntohost(&srcadr));
-		
+
 		(void) fprintf(fp,
 			"%c%-15.15s %-15.15s %2ld %c %4.4s %4.4s  %3lo  %7.7s %8.7s %7.7s\n",
 			c, clock_name, dstadr_refid, stratum, type,

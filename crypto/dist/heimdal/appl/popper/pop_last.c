@@ -8,7 +8,7 @@
 __RCSID("$Heimdal: pop_last.c 909 1996-10-28 16:25:42Z assar $"
         "$NetBSD: pop_last.c,v 1.2 2008/03/22 08:36:55 mlelstv Exp $");
 
-/* 
+/*
  *  last:   Display the last message touched in a POP session
  */
 

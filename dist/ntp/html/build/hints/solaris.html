@@ -119,7 +119,7 @@ The first tickadj turns of the time of day clock and sets the tick
 adjust value to 1 millisecond.  This will insure that an adjtime value
 of at most 2 seconds will complete in 20 seconds.
 <P>
-The first ntpdate will set the time to within two seconds 
+The first ntpdate will set the time to within two seconds
 using settimeofday or it will adjust time using adjtime.
 <P>
 The first sleep insures the adjtime has completed for the first ntpdate.
@@ -129,11 +129,11 @@ clock should be within 2 seconds of the correct time.
 <P>
 The second tickadj set the tick adjust system value to 5 microseconds.
 <P>
-The second sleeps insure that adjtime will complete before starting 
+The second sleeps insure that adjtime will complete before starting
 the next xntpd.
 <P>
 I tried running with a tickadj of 5 microseconds with out much success.
-200 microseconds seems to work well.  
+200 microseconds seems to work well.
 <P>
 <HR>
 Prior versions of this file had major text contributed by:

@@ -7,33 +7,33 @@
 /*
  * Copyright (c) 2000,2002 Japan Network Information Center.
  * All rights reserved.
- *  
+ *
  * By using this file, you agree to the terms and conditions set forth bellow.
- * 
- * 			LICENSE TERMS AND CONDITIONS 
- * 
+ *
+ * 			LICENSE TERMS AND CONDITIONS
+ *
  * The following License Terms and Conditions apply, unless a different
  * license is obtained from Japan Network Information Center ("JPNIC"),
  * a Japanese association, Kokusai-Kougyou-Kanda Bldg 6F, 2-3-4 Uchi-Kanda,
  * Chiyoda-ku, Tokyo 101-0047, Japan.
- * 
+ *
  * 1. Use, Modification and Redistribution (including distribution of any
  *    modified or derived work) in source and/or binary forms is permitted
  *    under this License Terms and Conditions.
- * 
+ *
  * 2. Redistribution of source code must retain the copyright notices as they
  *    appear in each source code file, this License Terms and Conditions.
- * 
+ *
  * 3. Redistribution in binary form must reproduce the Copyright Notice,
  *    this License Terms and Conditions, in the documentation and/or other
  *    materials provided with the distribution.  For the purposes of binary
  *    distribution the "Copyright Notice" refers to the following language:
  *    "Copyright (c) 2000-2002 Japan Network Information Center.  All rights reserved."
- * 
+ *
  * 4. The name of JPNIC may not be used to endorse or promote products
  *    derived from this Software without specific prior written approval of
  *    JPNIC.
- * 
+ *
  * 5. Disclaimer/Limitation of Liability: THIS SOFTWARE IS PROVIDED BY JPNIC
  *    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  *    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -104,7 +104,7 @@ static void	free_copied_addrinfo(struct my_addrinfo *aip);
 WRAPPER_EXPORT int WSAAPI
 gethostname(char FAR * name, int namelen) {
 	int ret;
-    
+
 	TRACE("ENTER gethostname\n");
 	ret = _org_gethostname(name, namelen);
 	TRACE("LEAVE gethostname %d <%-.100s>\n", ret, name);
@@ -119,10 +119,10 @@ gethostbyname(const char FAR * name) {
 	char    hbuff[256];
 	BOOL    stat;
 	idn_resconf_t	encodeCtx;
-    
+
 	TRACE("ENTER gethostbyname <%-.100s>\n",
 	      (name != NULL ? name : "NULL"));
-    
+
 	encodeCtx = idnGetContext();
 
 	if (encodeCtx == NULL || name == NULL) {
@@ -170,7 +170,7 @@ gethostbyaddr(const char FAR * addr, int len, int type) {
 	char    hbuff[256];
 	BOOL    stat;
 	idn_resconf_t	encodeCtx;
-    
+
 	TRACE("ENTER gethostbyaddr <%s>\n",
 	      dumpAddr(addr, len, abuff, sizeof(abuff)));
 
@@ -191,25 +191,25 @@ gethostbyaddr(const char FAR * addr, int len, int type) {
 			strcpy(ret->h_name, nbuff);
 		}
 	}
-    
+
 	if (ret == NULL) {
 		TRACE("LEAVE gethostbyaddr NULL\n");
 	} else {
 		TRACE("LEAVE gethostbyaddr <%s>\n",
 		      dumpHost(ret, hbuff, sizeof(hbuff)));
-	}    
+	}
 	return (ret);
 }
 
 WRAPPER_EXPORT HANDLE WSAAPI
-WSAAsyncGetHostByName(HWND hWnd, u_int wMsg, 
+WSAAsyncGetHostByName(HWND hWnd, u_int wMsg,
 		      const char FAR * name, char FAR * buf, int buflen)
 {
 	HANDLE  ret;
 	char    nbuff[256];
 	char    hbuff[256];
 	idn_resconf_t	encodeCtx;
-    
+
 	TRACE("ENTER WSAAsyncGetHostByName <%-.100s>\n", name);
 
 	encodeCtx = idnGetContext();
@@ -227,7 +227,7 @@ WSAAsyncGetHostByName(HWND hWnd, u_int wMsg,
 	}
 
 	TRACE("LEAVE WSAAsyncGetHostByName HANDLE %08x\n", ret);
-    
+
 	return (ret);
 }
 
@@ -238,13 +238,13 @@ WSAAsyncGetHostByAddr(HWND hWnd, u_int wMsg, const char FAR * addr,
 	HANDLE  ret;
 	char    abuff[256];
 	idn_resconf_t	encodeCtx;
-    
+
 	encodeCtx = idnGetContext();
 
 	if (encodeCtx != NULL) {
 		idnHook(hWnd, wMsg, buf, encodeCtx);
 	}
-    
+
 	TRACE("ENTER WSAAsyncGetHostByAddr <%s>\n",
 	      dumpAddr(addr, len, abuff, sizeof(abuff)));
 	ret = _org_WSAAsyncGetHostByAddr(hWnd, wMsg, addr, len, type,
@@ -255,7 +255,7 @@ WSAAsyncGetHostByAddr(HWND hWnd, u_int wMsg, const char FAR * addr,
 }
 
 WRAPPER_EXPORT INT WSAAPI
-WSALookupServiceBeginA(LPWSAQUERYSETA lpqsRestrictions, 
+WSALookupServiceBeginA(LPWSAQUERYSETA lpqsRestrictions,
 		       DWORD dwControlFlags, LPHANDLE lphLookup)
 {
 	INT     ret;
@@ -264,7 +264,7 @@ WSALookupServiceBeginA(LPWSAQUERYSETA lpqsRestrictions,
 	LPSTR   name = lpqsRestrictions->lpszServiceInstanceName;
 	LPGUID  class = lpqsRestrictions->lpServiceClassId;
 	idn_resconf_t	encodeCtx;
-    
+
 	TRACE("ENTER WSALookupServiceBeginA <%-.100s>\n",
 	      name == NULL ? "<NULL>" : name);
 
@@ -285,7 +285,7 @@ WSALookupServiceBeginA(LPWSAQUERYSETA lpqsRestrictions,
 }
 
 WRAPPER_EXPORT INT WSAAPI
-WSALookupServiceNextA(HANDLE hLookup, DWORD dwControlFlags, 
+WSALookupServiceNextA(HANDLE hLookup, DWORD dwControlFlags,
 		      LPDWORD lpdwBufferLength, LPWSAQUERYSETA lpqsResults)
 {
 	INT     ret;
@@ -293,7 +293,7 @@ WSALookupServiceNextA(HANDLE hLookup, DWORD dwControlFlags,
 	char    hbuff[256];
 	LPGUID  class;
 	idn_resconf_t	encodeCtx;
-    
+
 	TRACE("ENTER WSALookupServiceNextA\n");
 
 	encodeCtx = idnGetContext();
@@ -309,7 +309,7 @@ WSALookupServiceNextA(HANDLE hLookup, DWORD dwControlFlags,
 		TRACE("Resulting Name <%s>\n",
 		      dumpName(lpqsResults->lpszServiceInstanceName,
 			       hbuff, sizeof(hbuff)));
-		if (idnConvRsp(encodeCtx, 
+		if (idnConvRsp(encodeCtx,
 			       lpqsResults->lpszServiceInstanceName,
 			       nbuff, sizeof(nbuff)) == FALSE) {
 			TRACE("Decoding failed - return the name verbatim\n");
@@ -322,14 +322,14 @@ WSALookupServiceNextA(HANDLE hLookup, DWORD dwControlFlags,
 	TRACE("LEAVE WSALookupServiceNextA %d <%s>\n", ret, nbuff);
 
 	return (ret);
-}         
+}
 
 WRAPPER_EXPORT INT WSAAPI
 WSALookupServiceBeginW(LPWSAQUERYSETW lpqsRestrictions,
 		       DWORD dwControlFlags, LPHANDLE lphLookup)
 {
 	INT     ret;
-    
+
 	TRACE("ENTER WSALookupServiceBeginW\n");
 	ret = _org_WSALookupServiceBeginW(lpqsRestrictions,
 					  dwControlFlags,lphLookup);
@@ -343,19 +343,19 @@ WSALookupServiceNextW(HANDLE hLookup, DWORD dwControlFlags,
 		      LPDWORD lpdwBufferLength, LPWSAQUERYSETW lpqsResults)
 {
 	INT     ret;
-    
+
 	TRACE("ENTER WSALookupServiceNextW\n");
 	ret = _org_WSALookupServiceNextW(hLookup, dwControlFlags,
 					 lpdwBufferLength, lpqsResults);
 	TRACE("LEAVE WSALookupServiceNextW %d\n", ret);
 
 	return (ret);
-}         
+}
 
 WRAPPER_EXPORT INT WSAAPI
 WSALookupServiceEnd(HANDLE  hLookup) {
 	INT     ret;
-    
+
 	TRACE("ENTER WSALookupServiceEnd\n");
 	ret = _org_WSALookupServiceEnd(hLookup);
 	TRACE("LEAVE WSALookupServiceEnd %d\n", ret);
@@ -453,7 +453,7 @@ decode_name_dynamic(const char *name, idn_resconf_t idnctx) {
 	else
 		return (strcpy(s, name));
 }
-		
+
 static struct my_addrinfo *
 copy_decode_addrinfo_dynamic(struct my_addrinfo *aip, idn_resconf_t idnctx)
 {
@@ -520,7 +520,7 @@ getaddrinfo(const char *nodename, const char *servname,
 			*res = copy_decode_addrinfo_dynamic(aip, encodeCtx);
 			if (*res == NULL)
 				err = EAI_FAIL;
-			else 
+			else
 				obj_lock(*res);
 			if (aip != NULL)
 				_org_freeaddrinfo(aip);

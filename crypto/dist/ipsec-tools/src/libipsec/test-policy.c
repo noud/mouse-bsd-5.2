@@ -255,7 +255,7 @@ test2()
 		errx(1, "ERROR: %s", ipsec_strerror());
 	m = pfkey_recv(so);
 	free(m);
-	
+
 	printf("spdupdate()\n");
 	if (pfkey_send_spdupdate(so, (struct sockaddr *)addr, 128,
 				(struct sockaddr *)addr, 128,

@@ -224,7 +224,7 @@ slap_tool_init(
 	int use_glue = 1;
 
 #ifdef LDAP_DEBUG
-	/* tools default to "none", so that at least LDAP_DEBUG_ANY 
+	/* tools default to "none", so that at least LDAP_DEBUG_ANY
 	 * messages show up; use -d 0 to reset */
 	slap_debug = LDAP_DEBUG_NONE;
 #endif
@@ -662,7 +662,7 @@ slap_tool_init(
 
 			/* db #0 is cn=config, don't select it as a default */
 			if ( dbnum < 1 ) continue;
-		
+
 		 	if ( SLAP_MONITOR(be))
 				continue;
 
@@ -681,7 +681,7 @@ slap_tool_init(
 					"do not allow %s\n", progname );
 			exit( EXIT_FAILURE );
 		}
-		
+
 		if ( nosubordinates == 0 && dbnum > 1 ) {
 			Debug( LDAP_DEBUG_ANY,
 				"The first database does not allow %s;"

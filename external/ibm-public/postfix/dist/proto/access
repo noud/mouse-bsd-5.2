@@ -310,7 +310,7 @@
 #
 #	Mail that is placed on hold can be examined with the
 #	\fBpostcat\fR(1) command, and can be destroyed or released with
-#	the \fBpostsuper\fR(1) command. 
+#	the \fBpostsuper\fR(1) command.
 # .sp
 #	Note: use "\fBpostsuper -r\fR" to release mail that was kept on
 #	hold for a significant fraction of \fB$maximal_queue_lifetime\fR
@@ -419,7 +419,7 @@
 # .nf
 # .na
 #	/etc/postfix/main.cf:
-#	    smtpd_client_restrictions = 
+#	    smtpd_client_restrictions =
 #	        check_client_access hash:/etc/postfix/access
 #
 #	/etc/postfix/access:

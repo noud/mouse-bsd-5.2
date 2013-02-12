@@ -25,13 +25,13 @@
  * THIS SOFTWARE IS PROVIDED BY PIERMONT INFORMATION SYSTEMS INC. ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL PIERMONT INFORMATION SYSTEMS INC. BE 
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * ARE DISCLAIMED. IN NO EVENT SHALL PIERMONT INFORMATION SYSTEMS INC. BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
@@ -113,7 +113,7 @@ int
 md_post_disklabel(void)
 {
 	set_swap(diskdev, bsdlabel);
-        if (strstr(instsys.version, "(INSTALL32_IP3x)"))   
+        if (strstr(instsys.version, "(INSTALL32_IP3x)"))
 		return run_program(RUN_DISPLAY,
 		    "%s %s", "/usr/mdec/sgivol -f -w boot /usr/mdec/ip3xboot",
 		    diskdev);
@@ -149,10 +149,10 @@ md_make_bsd_partitions(void)
 	return make_bsd_partitions();
 }
 
-/*    
+/*
  * any additional partition validation
- */   
-int     
+ */
+int
 md_check_partitions(void)
 {
 	return 1;
@@ -160,7 +160,7 @@ md_check_partitions(void)
 
 
 /* update support */
-int 
+int
 md_update(void)
 {
 	/* endwin(); */
@@ -178,7 +178,7 @@ md_cleanup_install(void)
 {
 
 	enable_rc_conf();
-	
+
 	if (strstr(instsys.version, "(GENERIC32_IP12)"))
 		run_program(0, "/usr/mdec/sgivol -f -w netbsd %s %s",
 			    target_expand("/netbsd.ecoff"), diskdev);

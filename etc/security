@@ -104,7 +104,7 @@ migrate_file()
 
 # backup_and_diff file printdiff
 #	Determine if file needs backing up, and if so, do it.
-#	If printdiff is yes, display the diffs, otherwise 
+#	If printdiff is yes, display the diffs, otherwise
 #	just print a message saying "[changes omitted]".
 #
 backup_and_diff()
@@ -941,7 +941,7 @@ if checkyesno check_changelist ; then
 				#
 			ls -1d $(echo $backup_dir/${file}.current) 2>/dev/null \
 			    | sed "s,^$backup_dir/,, ; s,\.current$,,"
-				
+
 				# ... expand possible files
 				#
 			ls -1d $(echo $file) 2>/dev/null

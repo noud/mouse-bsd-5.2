@@ -107,7 +107,7 @@ struct isc_interfaceiter {
 #ifdef __linux
 #ifndef IF_NAMESIZE
 # ifdef IFNAMSIZ
-#  define IF_NAMESIZE  IFNAMSIZ  
+#  define IF_NAMESIZE  IFNAMSIZ
 # else
 #  define IF_NAMESIZE 16
 # endif
@@ -395,7 +395,7 @@ isc_interfaceiter_create(isc_mem_t *mctx, isc_interfaceiter_t **iterp) {
 		(void) close(iter->socket6);
   socket6_failure:
 #endif
- 
+
 	isc_mem_put(mctx, iter, sizeof(*iter));
 	return (result);
 }
@@ -507,7 +507,7 @@ linux_if_inet6_current(isc_interfaceiter_t *iter) {
 	if ((ifreq.ifr_flags & IFF_UP) != 0)
 		iter->current.flags |= INTERFACE_F_UP;
 #ifdef IFF_POINTOPOINT
-	if ((ifreq.ifr_flags & IFF_POINTOPOINT) != 0) 
+	if ((ifreq.ifr_flags & IFF_POINTOPOINT) != 0)
 		iter->current.flags |= INTERFACE_F_POINTTOPOINT;
 #endif
 	if ((ifreq.ifr_flags & IFF_LOOPBACK) != 0)
@@ -1030,7 +1030,7 @@ internal_next4(isc_interfaceiter_t *iter) {
 static isc_result_t
 internal_next6(isc_interfaceiter_t *iter) {
 	struct LIFREQ *ifrp;
-	
+
 	if (iter->result6 != ISC_R_SUCCESS && iter->result6 != ISC_R_IGNORE)
 		return (iter->result6);
 

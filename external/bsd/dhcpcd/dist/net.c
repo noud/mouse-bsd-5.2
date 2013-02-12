@@ -1,4 +1,4 @@
-/* 
+/*
  * dhcpcd - DHCP client daemon
  * Copyright (c) 2006-2009 Roy Marples <roy@marples.name>
  * All rights reserved
@@ -100,7 +100,7 @@ inet_cidrtoaddr(int cidr, struct in_addr *addr)
 	addr->s_addr = 0;
 	if (ocets > 0) {
 		memset(&addr->s_addr, 255, (size_t)ocets - 1);
-	
+
 		memset((unsigned char *)&addr->s_addr + (ocets - 1),
 		    (256 - (1 << (32 - cidr) % 8)), 1);
 	}
@@ -440,7 +440,7 @@ discover_interfaces(int argc, char * const *argv)
 				    "%s: unknown hardware family", p);
 		}
 		if (ifl)
-			ifl->next = ifp; 
+			ifl->next = ifp;
 		else
 			ifs = ifp;
 		ifl = ifp;

@@ -101,7 +101,7 @@ return_results:;
 		}
 		break;
 	}
-		
+
 	send_ldap_result( op, rs );
 	rs->sr_err = rc;
 

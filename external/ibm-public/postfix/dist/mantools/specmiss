@@ -2,7 +2,7 @@
 
 # Get all the postconf parameter names from the postconf.proto file.
 
-die "Usage: $0 protofile [filename...]\n" 
+die "Usage: $0 protofile [filename...]\n"
         unless $protofile = shift(@ARGV);
 
 # Read the whole file even if we want to print only one parameter.

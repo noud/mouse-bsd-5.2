@@ -67,13 +67,13 @@ parameters.
 
 <dl>
 
-<dt> default_verp_delimiters (default value:  +=) 
+<dt> default_verp_delimiters (default value:  +=)
 
     <dd> <p> What VERP delimiter characters Postfix uses when VERP
     style delivery is requested but no explicit delimiters are
     specified. </p>
 
-<dt> verp_delimiter_filter (default: -+=) 
+<dt> verp_delimiter_filter (default: -+=)
 
     <dd> <p> What characters Postfix accepts as VERP delimiter
     characters on the sendmail command line and in SMTP commands.
@@ -85,7 +85,7 @@ parameters.
     knows, some characters may tickle bugs in vulnerable software,
     and we would not want that to happen.  </p> </dd>
 
-<dt> smtpd_authorized_verp_clients (default value: none) 
+<dt> smtpd_authorized_verp_clients (default value: none)
 
     <dd> <p> What SMTP clients are allowed to request VERP style
     delivery.  The Postfix QMQP server uses its own access control
@@ -96,7 +96,7 @@ parameters.
     <p> With Postfix versions 1.1 and 2.0, this parameter is called
     authorized_verp_clients (default: $mynetworks). </p> </dd>
 
-<dt> disable_verp_bounces (default: no) 
+<dt> disable_verp_bounces (default: no)
 
     <dd> <p> if Postfix sends one bounce report for multi-recipient
     VERP mail, or one bounce report per recipient. The default,

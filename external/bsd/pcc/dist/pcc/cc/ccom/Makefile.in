@@ -14,7 +14,7 @@ CC_FOR_BUILD = @CC_FOR_BUILD@
 _CFLAGS = @CFLAGS@
 CFLAGS = $(_CFLAGS) @ADD_CFLAGS@
 CPPFLAGS = @CPPFLAGS@ ${XFL} -Dos_${TARGOS} -I${srcdir} -I${builddir} -I${top_builddir} \
-	-I${MIPDIR} -I${MDIR} -Dmach_${TARGMACH} -I${top_srcdir}/os/${TARGOS} 
+	-I${MIPDIR} -I${MDIR} -Dmach_${TARGMACH} -I${top_srcdir}/os/${TARGOS}
 LIBS = @LIBS@
 LDFLAGS = @LDFLAGS@
 LEX = @LEX@
@@ -116,7 +116,7 @@ install:
 		strip ${DESTDIR}${libexecdir}/${DEST} ;		\
 		echo strip ${DESTDIR}${libexecdir}/${DEST} ;	\
 	fi
-	test -z "${DESTDIR}$(mandir)/man1" || mkdir -p "${DESTDIR}$(mandir)/man1"       
+	test -z "${DESTDIR}$(mandir)/man1" || mkdir -p "${DESTDIR}$(mandir)/man1"
 	${INSTALL} $(srcdir)/ccom.1 ${DESTDIR}${mandir}/man1/$(DEST).1
 
 clean:

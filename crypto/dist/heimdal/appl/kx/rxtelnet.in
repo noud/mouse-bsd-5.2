@@ -41,7 +41,7 @@ export PATH
 set -- `kx $kx_args $host`
 if test $# -ne 3; then
   echo "Warning: Cound not setup X forwarding"
-  pid=NO  
+  pid=NO
   disp=""
   auth=""
 else

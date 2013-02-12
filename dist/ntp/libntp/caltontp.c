@@ -18,7 +18,7 @@ caltontp(
     u_long ntp_days;
     int    prior_years;
     u_long ntp_time;
-    
+
     /*
      * First convert today's date to absolute days past 12/1/1 BC
      */
@@ -37,7 +37,7 @@ caltontp(
     /*
      * Do the obvious:
      */
-    ntp_time = 
+    ntp_time =
 	ntp_days*SECSPERDAY+SECSPERMIN*(MINSPERHR*jt->hour + jt->minute);
 
     return ntp_time;

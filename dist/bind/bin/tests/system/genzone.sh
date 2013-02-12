@@ -102,7 +102,7 @@ hinfo02			HINFO	PC NetBSD
 
 ; type 14
 minfo01			MINFO	rmailbx emailbx
-minfo02			MINFO	. . 
+minfo02			MINFO	. .
 
 ; type 15
 mx01			MX	10 mail
@@ -124,7 +124,7 @@ txt12			TXT	\"foo\"
 
 ; type 17
 rp01			RP	mbox-dname txt-dname
-rp02			RP	. . 
+rp02			RP	. .
 
 ; type 18
 afsdb01			AFSDB	0 hostname
@@ -157,7 +157,7 @@ nsap-ptr01		NSAP-PTR .
 
 ; type 24
 ;sig01			SIG	NXT 1 3 ( 3600 20000102030405
-;				19961211100908 2143 foo.nil. 
+;				19961211100908 2143 foo.nil.
 ;				MxFcby9k/yvedMfQgKzhH5er0Mu/vILz45I
 ;				kskceFGgiWCn/GxHhai6VAuHAoNUz4YoU1t
 ;				VfSCSqQYn6//11U6Nld80jEeC8aTrO+KKmCaY= )
@@ -201,7 +201,7 @@ kx01			KX	10 kdc
 kx02			KX	10 .
 
 ; type 37
-cert01			CERT	65534 65535 254 ( 
+cert01			CERT	65534 65535 254 (
 				MxFcby9k/yvedMfQgKzhH5er0Mu/vILz45I
 				kskceFGgiWCn/GxHhai6VAuHAoNUz4YoU1t
 				VfSCSqQYn6//11U6Nld80jEeC8aTrO+KKmCaY= )
@@ -221,7 +221,7 @@ dname03			DNAME	.
 
 ; type 46
 rrsig01			RRSIG	NSEC 1 3 ( 3600 20000102030405
-				19961211100908 2143 foo.nil. 
+				19961211100908 2143 foo.nil.
 				MxFcby9k/yvedMfQgKzhH5er0Mu/vILz45I
 				kskceFGgiWCn/GxHhai6VAuHAoNUz4YoU1t
 				VfSCSqQYn6//11U6Nld80jEeC8aTrO+KKmCaY= )

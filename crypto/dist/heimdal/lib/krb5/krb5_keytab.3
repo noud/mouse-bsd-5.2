@@ -393,7 +393,7 @@ reads the key identified by
 .Fa enctype )
 from the keytab in
 .Fa keyprocarg
-(the system default keytab if 
+(the system default keytab if
 .Dv NULL
 is used) into
 .Fa *key .
@@ -421,7 +421,7 @@ function
 .Fn krb5_kt_compare
 is use, so the wildcard rules applies to the argument of
 .Fn krb5_kt_remove_entry .
-Returns 0, 
+Returns 0,
 .Dv KRB5_KT_NOTFOUND
 if not entry matched or another error.
 .Pp

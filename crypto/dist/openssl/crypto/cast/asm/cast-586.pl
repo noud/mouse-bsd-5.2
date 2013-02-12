@@ -142,7 +142,7 @@ sub E_CAST {
     if ($ppro) {
 	&mov(	$tmp2,		$tmp4);		# B
 	&xor(	$tmp1,		$tmp1);
-	
+
 	&movb(	&LB($tmp1),	&HB($tmp4));	# A
 	&and(	$tmp2,		0xff);
 
@@ -151,7 +151,7 @@ sub E_CAST {
     } else {
 	&mov(	$tmp2,		$tmp4);		# B
 	&movb(	&LB($tmp1),	&HB($tmp4));	# A	# BAD BAD BAD
-	
+
 	&shr(	$tmp4,		16); 		#
 	&and(	$tmp2,		0xff);
     }

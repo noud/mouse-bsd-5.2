@@ -440,7 +440,7 @@ command mode.
 \fIEdit\fP is designed to
 prevent accidental use of
 the open command.
-T}	
+T}
 .SP
 \fBpreserve	pre	T{
 Saves a copy of the current buffer contents as though the system had
@@ -626,7 +626,7 @@ or, if \fIcount\fR is specified,
 prints that number of lines.
 Variants of the \fIz\fR command
 are described in the manual.
-T}	
+T}
 .SP
 \fB!\fIcommand		T{
 .fi
@@ -694,7 +694,7 @@ T}
 \fB?\fIpattern\fB?		T{
 Searches in the reverse direction
 for \fIpattern\fP.
-T}	
+T}
 .SP
 \fB??		T{
 Repeats the most recent search,

@@ -22,19 +22,19 @@
  *
  * Revision 1.5  90/02/07  15:34:18  15:34:18  src (Source Hacker)
  * CHANGED KEY !!!
- * 
+ *
  * Revision 1.4  89/02/09  12:26:35  12:26:35  tai (Tai Jin (Guest))
  * *** empty log message ***
- * 
+ *
  * Revision 1.4  89/02/09  12:26:35  12:26:35  tai (Tai Jin)
  * added comment
- * 
+ *
  * Revision 1.3  88/08/30  01:08:29  01:08:29  tai (Tai Jin)
  * fix copyright notice again
- * 
+ *
  * Revision 1.2  88/08/30  00:51:55  00:51:55  tai (Tai Jin)
  * fix copyright notice
- * 
+ *
  * Revision 1.1  88/04/02  14:56:54  14:56:54  tai (Tai Jin)
  * Initial revision
  *  */

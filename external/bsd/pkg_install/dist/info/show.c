@@ -144,7 +144,7 @@ show_index(const char *buf, const char *title)
 	if (len == 0 || buf[len - 1] != '\n')
 		puts(buf);
 	else
-		fputs(buf, stdout);	
+		fputs(buf, stdout);
 }
 
 /*
@@ -338,7 +338,7 @@ show_summary(struct pkg_meta *meta, package_t *plist, const char *binpkgfile)
 		"SUPERSEDES",
 		NULL
 	};
-	
+
 	plist_t *p;
 	struct stat st;
 

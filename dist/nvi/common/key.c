@@ -346,7 +346,7 @@ v_key_val(SCR *sp, ARG_CHAR_T ch)
  */
 int
 v_event_push(SCR *sp, EVENT *p_evp, const CHAR_T *p_s, size_t nitems, u_int flags)
-	        
+
 	             			/* Push event. */
 	            			/* Push characters. */
 	              			/* Number of items to push. */
@@ -603,10 +603,10 @@ append:			if (v_event_append(sp, argp))
 	 */
 	if (LF_ISSET(EC_INTERRUPT | EC_TIMEOUT))
 		return (0);
-	 
+
 newmap:	evp = &wp->i_event[wp->i_next];
 
-	/* 
+	/*
 	 * If the next event in the queue isn't a character event, return
 	 * it, we're done.
 	 */
@@ -615,7 +615,7 @@ newmap:	evp = &wp->i_event[wp->i_next];
 		QREM(1);
 		return (0);
 	}
-	
+
 	/*
 	 * If the key isn't mappable because:
 	 *
@@ -749,9 +749,9 @@ v_sync(SCR *sp, int flags)
 	WIN *wp;
 
 	gp = sp->gp;
-	for (wp = gp->dq.cqh_first; wp != (void *)&gp->dq; 
+	for (wp = gp->dq.cqh_first; wp != (void *)&gp->dq;
 	    wp = wp->q.cqe_next)
-		for (sp = wp->scrq.cqh_first; sp != (void *)&wp->scrq; 
+		for (sp = wp->scrq.cqh_first; sp != (void *)&wp->scrq;
 		    sp = sp->q.cqe_next)
 		rcv_sync(sp, flags);
 	for (sp = gp->hq.cqh_first; sp != (void *)&gp->hq; sp = sp->q.cqe_next)

@@ -39,7 +39,7 @@ __RCSID("$Heimdal: cms.c 22327 2007-12-15 04:49:37Z lha $"
  * @page page_cms CMS/PKCS7 message functions.
  *
  * CMS is defined in RFC 3369 and is an continuation of the RSA Labs
- * standard PKCS7. The basic messages in CMS is 
+ * standard PKCS7. The basic messages in CMS is
  *
  * - SignedData
  *   Data signed with private key (RSA, DSA, ECDSA) or secret
@@ -69,7 +69,7 @@ __RCSID("$Heimdal: cms.c 22327 2007-12-15 04:49:37Z lha $"
  * der_free_octet_string().
  *
  * @return Returns an hx509 error code.
- * 
+ *
  * @ingroup hx509_cms
  */
 
@@ -123,7 +123,7 @@ hx509_cms_wrap_ContentInfo(const heim_oid *oid,
  * diffrence between no data and the zero length data.
  *
  * @return Returns an hx509 error code.
- * 
+ *
  * @ingroup hx509_cms
  */
 
@@ -467,7 +467,7 @@ hx509_cms_unenvelope(hx509_context context,
 	ret = hx509_crypto_init(context, NULL, &ai->algorithm, &crypto);
 	if (ret)
 	    goto out;
-	
+
 	if (params) {
 	    ret = hx509_crypto_set_params(context, crypto, params, &ivec);
 	    if (ret) {
@@ -484,7 +484,7 @@ hx509_cms_unenvelope(hx509_context context,
 				   "of EnvelopedData");
 	    goto out;
 	}
-	
+
 	ret = hx509_crypto_decrypt(crypto,
 				   enccontent->data,
 				   enccontent->length,
@@ -603,7 +603,7 @@ hx509_cms_envelope_1(hx509_context context,
 				   "Failed to set crypto oid "
 				   "for EnvelopedData");
 	    goto out;
-	}	
+	}
 	ALLOC(enc_alg->parameters, 1);
 	if (enc_alg->parameters == NULL) {
 	    ret = ENOMEM;
@@ -703,8 +703,8 @@ any_to_certs(hx509_context context, const SignedData *sd, hx509_certs certs)
     for (i = 0; i < sd->certificates->len; i++) {
 	hx509_cert c;
 
-	ret = hx509_cert_init_data(context, 
-				   sd->certificates->val[i].data, 
+	ret = hx509_cert_init_data(context,
+				   sd->certificates->val[i].data,
 				   sd->certificates->val[i].length,
 				   &c);
 	if (ret)
@@ -839,7 +839,7 @@ hx509_cms_verify_signed(hx509_context context,
 
 	if (signer_info->signedAttrs) {
 	    const Attribute *attr;
-	
+
 	    CMSAttributes sa;
 	    heim_octet_string os;
 
@@ -863,7 +863,7 @@ hx509_cms_verify_signed(hx509_context context,
 				       "messageDigest (signature)");
 		goto next_sigature;
 	    }
-	
+
 	    ret = decode_MessageDigest(attr->value.val[0].data,
 				       attr->value.val[0].length,
 				       &os,
@@ -923,7 +923,7 @@ hx509_cms_verify_signed(hx509_context context,
 		hx509_clear_error_string(context);
 		goto next_sigature;
 	    }
-	
+
 	    ASN1_MALLOC_ENCODE(CMSAttributes,
 			       signed_data->data,
 			       signed_data->length,
@@ -1054,7 +1054,7 @@ add_one_attribute(Attribute **attr,
 
     return 0;
 }
-	
+
 /**
  * Decode SignedData and verify that the signature is correct.
  *
@@ -1143,7 +1143,7 @@ hx509_cms_create_signed_1(hx509_context context,
 	    ret = ENOMEM;
 	    goto out;
 	}
-	
+
 	sd.encapContentInfo.eContent->data = malloc(length);
 	if (sd.encapContentInfo.eContent->data == NULL) {
 	    hx509_clear_error_string(context);
@@ -1169,7 +1169,7 @@ hx509_cms_create_signed_1(hx509_context context,
     if (ret) {
 	hx509_clear_error_string(context);
 	goto out;
-    }			
+    }
 
     signer_info->signedAttrs = NULL;
     signer_info->unsignedAttrs = NULL;
@@ -1186,7 +1186,7 @@ hx509_cms_create_signed_1(hx509_context context,
      */
 
     if (der_heim_oid_cmp(eContentType, oid_id_pkcs7_data()) != 0) {
-	CMSAttributes sa;	
+	CMSAttributes sa;
 	heim_octet_string sig;
 
 	ALLOC(signer_info->signedAttrs, 1);
@@ -1250,7 +1250,7 @@ hx509_cms_create_signed_1(hx509_context context,
 
 	sa.val = signer_info->signedAttrs->val;
 	sa.len = signer_info->signedAttrs->len;
-	
+
 	ASN1_MALLOC_ENCODE(CMSAttributes,
 			   sigdata.data,
 			   sigdata.length,
@@ -1307,7 +1307,7 @@ hx509_cms_create_signed_1(hx509_context context,
      */
     if (pool) {
 	_hx509_calculate_path(context,
-			      HX509_CALCULATE_PATH_NO_ANCHOR,			      
+			      HX509_CALCULATE_PATH_NO_ANCHOR,
 			      time(NULL),
 			      anchors,
 			      0,

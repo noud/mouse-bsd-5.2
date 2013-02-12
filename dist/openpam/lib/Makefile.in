@@ -219,7 +219,7 @@ target_alias = @target_alias@
 target_cpu = @target_cpu@
 target_os = @target_os@
 target_vendor = @target_vendor@
-NULL = 
+NULL =
 INCLUDES = -I$(top_srcdir)/include
 lib_LTLIBRARIES = libpam.la
 noinst_HEADERS = openpam_impl.h
@@ -348,7 +348,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libpam.la: $(libpam_la_OBJECTS) $(libpam_la_DEPENDENCIES) 
+libpam.la: $(libpam_la_OBJECTS) $(libpam_la_DEPENDENCIES)
 	$(LINK) -rpath $(libdir) $(libpam_la_LDFLAGS) $(libpam_la_OBJECTS) $(libpam_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:

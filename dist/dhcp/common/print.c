@@ -129,7 +129,7 @@ char *print_base64 (const unsigned char *buf, unsigned len,
 	b = dmalloc (bl + 1, file, line);
 	if (!b)
 		return (char *)0;
-	
+
 	i = 0;
 	s = b;
 	while (i != len) {
@@ -196,15 +196,15 @@ void print_lease (lease)
 
 	log_debug ("  Lease %s",
 	       piaddr (lease -> ip_addr));
-	
+
 	t = gmtime (&lease -> starts);
 	strftime (tbuf, sizeof tbuf, "%Y/%m/%d %H:%M:%S", t);
 	log_debug ("  start %s", tbuf);
-	
+
 	t = gmtime (&lease -> ends);
 	strftime (tbuf, sizeof tbuf, "%Y/%m/%d %H:%M:%S", t);
 	log_debug ("  end %s", tbuf);
-	
+
 	if (lease -> hardware_addr.hlen)
 		log_debug ("    hardware addr = %s",
 			   print_hw_addr (lease -> hardware_addr.hbuf [0],
@@ -212,7 +212,7 @@ void print_lease (lease)
 					  &lease -> hardware_addr.hbuf [1]));
 	log_debug ("  host %s  ",
 	       lease -> host ? lease -> host -> name : "<none>");
-}	
+}
 
 #if defined (DEBUG_PACKET)
 void dump_packet_option (struct option_cache *oc,
@@ -298,7 +298,7 @@ void dump_raw (buf, len)
 /*
           1         2         3         4         5         6         7
 01234567890123456789012345678901234567890123456789012345678901234567890123
-280: 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00   .................  
+280: 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00   .................
 */
 
 	memset(lbuf, ' ', 79);
@@ -411,7 +411,7 @@ char *print_dotted_quads (len, data)
 
 	s = &dq_buf [0];
 	last = s;
-	
+
 	i = 0;
 
 	/* %Audit% Loop bounds checks to 21 bytes. %2004.06.17,Safe%
@@ -459,7 +459,7 @@ static unsigned print_subexpression (expr, buf, len)
 {
 	unsigned rv, left;
 	const char *s;
-	
+
 	switch (expr -> op) {
 	      case expr_none:
 		if (len > 3) {
@@ -467,7 +467,7 @@ static unsigned print_subexpression (expr, buf, len)
 			return 3;
 		}
 		break;
-		  
+
 	      case expr_match:
 		if (len > 7) {
 			strcpy (buf, "(match)");
@@ -646,7 +646,7 @@ static unsigned print_subexpression (expr, buf, len)
 	      case expr_binary_xor:
 		s = "^";
 		goto binop;
-		
+
 	      case expr_not:
 		if (len > 6) {
 			rv = 5;
@@ -1039,7 +1039,7 @@ void print_expression (name, expr)
 }
 
 int token_print_indent_concat (FILE *file, int col,  int indent,
-			       const char *prefix, 
+			       const char *prefix,
 			       const char *suffix, ...)
 {
 	va_list list;
@@ -1068,7 +1068,7 @@ int token_print_indent_concat (FILE *file, int col,  int indent,
 		u += len;
 	}
 	va_end (list);
-	
+
 	len = token_print_indent (file, col, indent,
 				  prefix, suffix, t);
 	dfree (t, MDL);
@@ -1296,7 +1296,7 @@ void print_dns_status (int status, ns_updque *uq)
 			  strcat(s, "<keydata>");
 			  s+=strlen("<keydata>");
 			}
-			else {  
+			else {
 			  if (s + u -> r_size < end) {
 			    memcpy (s, u -> r_data, u -> r_size);
 			    s += u -> r_size;

@@ -28,8 +28,8 @@
 The following steps describe how to set up a CompactFlash card for
 the TS-7200.  The TS-7200 can use the interactive
 installation program
-.Ic sysinst 
-to perform an internet installation from ftp.netbsd.org on the CompactFlash.  
+.Ic sysinst
+to perform an internet installation from ftp.netbsd.org on the CompactFlash.
 .Pp
 .(enum
 Place the netbsd-TS7200_INSTALL.bin kernel into the TFTP server's download
@@ -54,7 +54,7 @@ RedBoot\*[Gt] go
 The kernel will display boot messages, probe for devices, and invoke the
 interactive sysinst installation tool.  Once sysinst has completed installation, the
 system will reboot back into RedBoot.  If the preparation instructions above have
-been followed, the post-installation NetBSD kernel will be in the FIS ready to be 
+been followed, the post-installation NetBSD kernel will be in the FIS ready to be
 jumped into.  You can have RedBoot automatically start NetBSD by putting the
 command
 .Ic go 0x60660000

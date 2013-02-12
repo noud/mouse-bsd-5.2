@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 1984 through 2008, William LeFebvre
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  *     * Redistributions in binary form must reproduce the above
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- * 
+ *
  *     * Neither the name of William LeFebvre nor the names of other
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -490,7 +490,7 @@ check_nlist (register struct nlist *nlst)
 	    {
 		/* check to see if /stats file system exists. If so, 	*/
 		/* ignore error. 					*/
-		if ( !((stat("/stats/sysinfo", &stat_buf) == 0) && 
+		if ( !((stat("/stats/sysinfo", &stat_buf) == 0) &&
 		  (stat_buf.st_mode & S_IFREG)) )
 		  {
 		    (void) fprintf (stderr, "kernel: no symbol named `%s'\n", nlst->n_name);
@@ -499,7 +499,7 @@ check_nlist (register struct nlist *nlst)
 		    use_stats = 1;
 		  }
 	    } else {
-			
+
 	      /* this one wasn't found */
 	      (void) fprintf (stderr, "kernel: no symbol named `%s'\n", nlst->n_name);
 	      i = 1;
@@ -711,7 +711,7 @@ read_sysinfos(num_cpus, buf)
 	int		read_sz;
 
 	/* Open /stats/sysinfo one time only and leave it open */
-	if (fd1==0) { 
+	if (fd1==0) {
 		if ((fd1 = open("/stats/sysinfo", O_RDONLY)) == -1)
 			(void) fprintf (stderr, "%s: Open of /stats/sysinfo failed\n", myname);
 	}
@@ -722,7 +722,7 @@ read_sysinfos(num_cpus, buf)
 	if (read(fd1, buf, read_sz) != read_sz)
 		(void) fprintf (stderr, "%s: Read of /stats/sysinfo failed\n", myname);
 }
-		
+
 /****************************************************************
  * sysinfo_data() -						*
  *	Add up all of the CPU specific sysinfo sturctures to	*

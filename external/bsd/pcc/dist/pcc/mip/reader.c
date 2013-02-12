@@ -56,12 +56,12 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
 /*
- * Everything is entered via pass2_compile().  Three functions are 
+ * Everything is entered via pass2_compile().  Three functions are
  * allowed to recurse into pass2_compile(), so be careful:
  * - deluseless()
  * - myreader()
@@ -829,7 +829,7 @@ e2print(NODE *p, int down, int *a, int *b)
 
 	prtreg(prfil, p);
 	fprintf(prfil, ", SU= %d(%cREG,%s,%s,%s,%s)\n",
-	    TBLIDX(p->n_su), 
+	    TBLIDX(p->n_su),
 	    TCLASS(p->n_su)+'@',
 #ifdef PRTABLE
 	    TBLIDX(p->n_su) >= 0 && TBLIDX(p->n_su) <= tablesize ?
@@ -893,7 +893,7 @@ ffld(NODE *p, int down, int *down1, int *down2 )
 			p->n_left->n_type = INT; /* Ok? */
 			p->n_op = RS;
 			p->n_right = mklnode(ICON, SZINT-s, 0, INT);
-			p->n_left = mkbinode(LS, p->n_left, 
+			p->n_left = mkbinode(LS, p->n_left,
 			    mklnode(ICON, SZINT-s-o, 0, INT), INT);
 		}
 	}
@@ -941,8 +941,8 @@ deltemp(NODE *p)
  * for pointer/integer arithmetic, set pointer at left node
  */
 static void
-setleft(NODE *p)          
-{        
+setleft(NODE *p)
+{
 	NODE *q;
 
 	/* only additions for now */
@@ -1019,7 +1019,7 @@ oregok(NODE *p, int sharp)
 #endif
 	if ((q->n_op==PLUS || q->n_op==MINUS) && qr->n_op == ICON &&
 	    (ql->n_op==REG || (ql->n_op==TEMP && !sharp))) {
-	    
+
 		temp = qr->n_lval;
 		if( q->n_op == MINUS ) temp = -temp;
 		r = ql->n_rval;
@@ -1214,7 +1214,7 @@ rspecial(struct optab *q, int what)
 #endif
 
 /*
- * change numeric argument redirections to the correct node type after 
+ * change numeric argument redirections to the correct node type after
  * cleaning up the other nodes.
  * be careful about input operands that may have different value than output.
  */
@@ -1316,7 +1316,7 @@ again:
 				cvtemps(ip, q->n_rval, ooff);
 			} else if (q->n_op == REG)
 				comperr("xasm m and reg");
-		} else if (q->n_op == UMUL && 
+		} else if (q->n_op == UMUL &&
 		    (q->n_left->n_op != TEMP && q->n_left->n_op != REG)) {
 			t = q->n_left->n_type;
 			ooff = epp->ip_tmpnum++;

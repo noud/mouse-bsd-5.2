@@ -6,33 +6,33 @@
 #############################################################################
 #  Copyright (c) 2000,2002 Japan Network Information Center.
 #  All rights reserved.
-#   
+#
 #  By using this file, you agree to the terms and conditions set forth bellow.
-#  
-#  			LICENSE TERMS AND CONDITIONS 
-#  
+#
+#  			LICENSE TERMS AND CONDITIONS
+#
 #  The following License Terms and Conditions apply, unless a different
 #  license is obtained from Japan Network Information Center ("JPNIC"),
 #  a Japanese association, Kokusai-Kougyou-Kanda Bldg 6F, 2-3-4 Uchi-Kanda,
 #  Chiyoda-ku, Tokyo 101-0047, Japan.
-#  
+#
 #  1. Use, Modification and Redistribution (including distribution of any
 #     modified or derived work) in source and/or binary forms is permitted
 #     under this License Terms and Conditions.
-#  
+#
 #  2. Redistribution of source code must retain the copyright notices as they
 #     appear in each source code file, this License Terms and Conditions.
-#  
+#
 #  3. Redistribution in binary form must reproduce the Copyright Notice,
 #     this License Terms and Conditions, in the documentation and/or other
 #     materials provided with the distribution.  For the purposes of binary
 #     distribution the "Copyright Notice" refers to the following language:
 #     "Copyright (c) 2000-2002 Japan Network Information Center.  All rights reserved."
-#  
+#
 #  4. The name of JPNIC may not be used to endorse or promote products
 #     derived from this Software without specific prior written approval of
 #     JPNIC.
-#  
+#
 #  5. Disclaimer/Limitation of Liability: THIS SOFTWARE IS PROVIDED BY JPNIC
 #     "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 #     LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -242,7 +242,7 @@ proc getList { lb } {
 proc checkList { lb prg } {
     set cnt 0
     set lst [getList $lb]
-    
+
     foreach n $lst {
         if { [string compare $prg $n] == 0 } {
 	    incr cnt
@@ -287,7 +287,7 @@ proc regGetEncode { prg } {
         return $perprogDef
     }
     package require registry 1.0
-    
+
     set name [getExeName $prg]
     set key $perprogKey$name
 
@@ -391,7 +391,7 @@ proc regGetValue {key name default} {
         return $default
     }
     package require registry 1.0
-    
+
     if {[catch {registry get $key $name} value]} {
         return $default
     }
@@ -410,7 +410,7 @@ proc regSetValue {key name value {type sz}} {
     package require registry 1.0
 
     if {[catch {registry set $key $name $value $type}]} {
-        return 2 
+        return 2
     }
     return 0
 }
@@ -424,7 +424,7 @@ proc fileInstall { prg } {
 
     global env
     global filesCpy11 filesCpy20
-    
+
     if {![isWindows]} {
         return 1
     }
@@ -453,9 +453,9 @@ proc fileInstall { prg } {
 }
 
 proc fileRemove { prg } {
-    
+
     global filesDel11 filesDel20
-    
+
     if {![isWindows]} {
         return 1
     }
@@ -545,7 +545,7 @@ proc execWrap { pw lb dlg prg enc } {
 proc execUnwrap { pw lb dlg prg } {
 
     set prgName [$prg get]
-    
+
     if {[support_dll_redirection] && [file exists $prgName.local]} {
 	set ans [tk_messageBox -icon question -type yesno \
 			-title "Confirmation" \
@@ -563,7 +563,7 @@ proc execUnwrap { pw lb dlg prg } {
     saveList [getList $lb]
     destroy $dlg
 }
- 
+
 proc create_dot_local {path {parent .}} {
     set dotlocal $path.local
     if {[file exists $dotlocal]} {
@@ -603,7 +603,7 @@ proc syncEncode { v i op } {
 
 proc confBrowse { p ePrg eEnc } {
 
-    set types { 
+    set types {
         { "Executable" .exe }
     }
 
@@ -639,7 +639,7 @@ proc confWrap { pw lb } {
     pack $top.f1 -side top -fill x -expand on
     pack $top.f2 -side top -fill x -expand on
 
-    frame $top.f1.f 
+    frame $top.f1.f
     pack $top.f1.f -fill both -expand on -padx 4 -pady 4
 
     set w $top.f1.f
@@ -663,7 +663,7 @@ proc confWrap { pw lb } {
     grid $w.prgtitle -row 0 -column 0 -sticky e
     grid $w.enctitle -row 1 -column 0 -sticky e
     grid $w.prgname  -row 0 -column 1 -sticky we -pady 4 -padx 2 -columnspan 2
-    grid $w.browse   -row 0 -column 3 -sticky w  -pady 4 -padx 4 
+    grid $w.browse   -row 0 -column 3 -sticky w  -pady 4 -padx 4
     grid $w.encname  -row 1 -column 1 -sticky we -pady 4 -padx 2
     grid $w.rbf      -row 1 -column 2 -sticky w -padx 2
     if {[support_dll_redirection]} {
@@ -710,7 +710,7 @@ proc confUnwrap { pw lb } {
 		      -parent $pw
 	return 0
     }
-    
+
     set top .unwrap
     toplevel $top
     grab     $top
@@ -886,7 +886,7 @@ proc selectLog {top e} {
 	$e insert insert $file
     }
 }
-    
+
 proc showLog {top} {
     global _logFile
     if {[catch {exec notepad.exe $_logFile &} r]} {
@@ -970,7 +970,7 @@ proc advancedConf {pw} {
 	frame $top.$f -bd 1 -relief raised
 	pack $top.$f -side top -fill x
     }
-    
+
     set f $top.f1
     label $f.lbl -text {IDN Wrapping Mode}
     set w $f.f

@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -71,8 +71,8 @@
 #include "isakmp.h"
 #ifdef ENABLE_HYBRID
 #include "isakmp_xauth.h"
-#include "isakmp_cfg.h" 
-#endif                
+#include "isakmp_cfg.h"
+#endif
 #include "oakley.h"
 #include "admin.h"
 #include "privsep.h"
@@ -482,7 +482,7 @@ oakley_compute_keymat_x(iph2, side, sa_dir)
 	int encklen, authklen, l;
 
 	pfs = ((iph2->approval->pfs_group && iph2->dhgxy) ? 1 : 0);
-	
+
 	len = pfs ? iph2->dhgxy->l : 0;
 	len += (1
 		+ sizeof(u_int32_t)	/* XXX SPI size */
@@ -1427,8 +1427,8 @@ oakley_validate_auth(iph1)
 				char *ca;
 
 				if (iph1->rmconf->cacertfile != NULL) {
-					getpathname(path, sizeof(path), 
-					    LC_PATHTYPE_CERT, 
+					getpathname(path, sizeof(path),
+					    LC_PATHTYPE_CERT,
 					    iph1->rmconf->cacertfile);
 					ca = path;
 				} else {
@@ -1436,11 +1436,11 @@ oakley_validate_auth(iph1)
 				}
 
 				error = eay_check_x509cert(&iph1->cert_p->cert,
-					lcconf->pathinfo[LC_PATHTYPE_CERT], 
+					lcconf->pathinfo[LC_PATHTYPE_CERT],
 					ca, 0);
 				break;
 			}
-			
+
 			default:
 				plog(LLV_ERROR, LOCATION, NULL,
 					"no supported certtype %d\n", certtype);
@@ -1452,7 +1452,7 @@ oakley_validate_auth(iph1)
 				return ISAKMP_NTYPE_INVALID_CERT_AUTHORITY;
 			}
 		}
-	
+
 		/* Generate a warning if verify_cert == 0
 		 */
 		if (iph1->rmconf->verify_cert){
@@ -1745,12 +1745,12 @@ get_plainrsa_fromlocal(iph1, my)
 	int error = -1;
 
 	iph1->rsa_candidates = rsa_lookup_keys(iph1, my);
-	if (!iph1->rsa_candidates || 
+	if (!iph1->rsa_candidates ||
 	    rsa_list_count(iph1->rsa_candidates) == 0) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"%s RSA key not found for %s\n",
 			my ? "Private" : "Public",
-			saddr2str_fromto("%s <-> %s", 
+			saddr2str_fromto("%s <-> %s",
 			iph1->local, iph1->remote));
 		goto end;
 	}
@@ -1760,7 +1760,7 @@ get_plainrsa_fromlocal(iph1, my)
 			"More than one (=%lu) private "
 			"PlainRSA key found for %s\n",
 			rsa_list_count(iph1->rsa_candidates),
-			saddr2str_fromto("%s <-> %s", 
+			saddr2str_fromto("%s <-> %s",
 			iph1->local, iph1->remote));
 		plog(LLV_WARNING, LOCATION, NULL,
 			"This may have unpredictable results, "
@@ -2098,7 +2098,7 @@ oakley_savecert(iph1, gen)
 		return -1;
 	}
 
-	/* XXX choice the 1th cert, ignore after the cert. */ 
+	/* XXX choice the 1th cert, ignore after the cert. */
 	/* XXX should be processed. */
 	if (*c) {
 		plog(LLV_WARNING, LOCATION, NULL,
@@ -2112,11 +2112,11 @@ oakley_savecert(iph1, gen)
 
 		/* Skip the header */
 		bp = (u_char *)(gen + 1);
-		/* And the first byte is the certificate type, 
+		/* And the first byte is the certificate type,
 		 * we know that already
 		 */
 		bp++;
-		p7 = d2i_PKCS7(NULL, (void *)&bp, 
+		p7 = d2i_PKCS7(NULL, (void *)&bp,
 		    ntohs(gen->len) - sizeof(*gen) - 1);
 
 		if (!p7) {
@@ -2129,7 +2129,7 @@ oakley_savecert(iph1, gen)
 		 * there"s little by way of documentation for any of
 		 * it. I can only presume it"s correct.
 		 */
-		
+
 		i = OBJ_obj2nid(p7->type);
 		switch (i) {
 		case NID_pkcs7_signed:
@@ -2154,7 +2154,7 @@ oakley_savecert(iph1, gen)
 			u_char *bp;
 			X509 *cert = sk_X509_value(certs,i);
 
-			plog(LLV_DEBUG, LOCATION, NULL, 
+			plog(LLV_DEBUG, LOCATION, NULL,
 			     "Trying PKCS#7 cert %d.\n", i);
 
 			/* We'll just try each cert in turn */
@@ -2183,7 +2183,7 @@ oakley_savecert(iph1, gen)
 				char *p = eay_get_x509text(&(*c)->cert);
 				plog(LLV_DEBUG, LOCATION, NULL, "CERT saved:\n");
 				plogdump(LLV_DEBUG, (*c)->cert.v, (*c)->cert.l);
-				plog(LLV_DEBUG, LOCATION, NULL, "%s", 
+				plog(LLV_DEBUG, LOCATION, NULL, "%s",
 				     p ? p : "\n");
 				racoon_free(p);
 			}
@@ -2244,7 +2244,7 @@ oakley_savecert(iph1, gen)
 			return 0;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -2465,7 +2465,7 @@ oakley_skeyid(iph1)
 	char *p;
 	int len;
 	int error = -1;
-	
+
 	/* SKEYID */
 	switch (AUTHMETHOD(iph1)) {
 	case OAKLEY_ATTR_AUTH_METHOD_PSKEY:

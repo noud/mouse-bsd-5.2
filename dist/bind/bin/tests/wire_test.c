@@ -168,7 +168,7 @@ main(int argc, char *argv[]) {
 		unsigned char *p = b;
 		while (p < bp) {
 			unsigned int len;
-			
+
 			if (p + 2 > bp) {
 				printf("premature end of packet\n");
 				exit(1);

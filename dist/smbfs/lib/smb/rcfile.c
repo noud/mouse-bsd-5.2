@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: rcfile.c,v 1.5 2001/04/16 12:46:46 bp Exp 
+ * from: Id: rcfile.c,v 1.5 2001/04/16 12:46:46 bp Exp
  */
 
 #include <sys/cdefs.h>
@@ -70,7 +70,7 @@ rc_open(const char *filename, const char *mode, struct rcfile **rcfile)
 {
 	struct rcfile *rcp;
 	FILE *f;
-	
+
 	rcp = rc_cachelookup(filename);
 	if (rcp) {
 		*rcfile = rcp;
@@ -98,7 +98,7 @@ rc_merge(const char *filename, struct rcfile **rcfile)
 {
 	struct rcfile *rcp = *rcfile;
 	FILE *f, *t;
-	
+
 	if (rcp == NULL) {
 		return rc_open(filename, "r", rcfile);
 	}
@@ -234,7 +234,7 @@ rc_key_free(struct rckey *p)
 enum { stNewLine, stHeader, stSkipToEOL, stGetKey, stGetValue};
 
 static void
-rc_parse(struct rcfile *rcp) 
+rc_parse(struct rcfile *rcp)
 {
 	FILE *f = rcp->rf_f;
 	int state = stNewLine, c;
@@ -327,7 +327,7 @@ rc_getstringptr(struct rcfile *rcp, const char *section, const char *key,
 {
 	struct rcsection *rsp;
 	struct rckey *rkp;
-	
+
 	*dest = NULL;
 	rsp = rc_findsect(rcp, section);
 	if (!rsp) return ENOENT;
@@ -360,7 +360,7 @@ rc_getint(struct rcfile *rcp, const char *section, const char *key, int *value)
 {
 	struct rcsection *rsp;
 	struct rckey *rkp;
-	
+
 	rsp = rc_findsect(rcp, section);
 	if (!rsp)
 		return ENOENT;
@@ -386,7 +386,7 @@ rc_getbool(struct rcfile *rcp, const char *section, const char *key, int *value)
 	struct rcsection *rsp;
 	struct rckey *rkp;
 	char *p;
-	
+
 	rsp = rc_findsect(rcp, section);
 	if (!rsp) return ENOENT;
 	rkp = rc_sect_findkey(rsp,key);
@@ -437,7 +437,7 @@ opt_args_parse(struct rcfile *rcp, struct opt_args *ap, const char *sect,
 		    case OPTARG_INT:
 			if (rc_getint(rcp, sect, ap->name, &ap->ival) != 0)
 				break;
-			if (((ap->flag & OPTFL_HAVEMIN) && ap->ival < ap->min) || 
+			if (((ap->flag & OPTFL_HAVEMIN) && ap->ival < ap->min) ||
 			    ((ap->flag & OPTFL_HAVEMAX) && ap->ival > ap->max)) {
 				warnx("rc: argument for option '%c' (%s) should be in [%d-%d] range\n",
 				    ap->opt, ap->name, ap->min, ap->max);
@@ -484,9 +484,9 @@ opt_args_parseopt(struct opt_args *ap, int opt, char *arg,
 				warnx("opt: Invalid integer value for option '%c' (%s).\n",ap->opt,ap->name);
 				return EINVAL;
 			}
-			if (((ap->flag & OPTFL_HAVEMIN) && 
-			     (ap->ival < ap->min)) || 
-			    ((ap->flag & OPTFL_HAVEMAX) && 
+			if (((ap->flag & OPTFL_HAVEMIN) &&
+			     (ap->ival < ap->min)) ||
+			    ((ap->flag & OPTFL_HAVEMAX) &&
 			     (ap->ival > ap->max))) {
 				warnx("opt: Argument for option '%c' (%s) should be in [%d-%d] range\n",ap->opt,ap->name,ap->min,ap->max);
 				return EINVAL;

@@ -249,7 +249,7 @@ do_random( char *uri, char *manager, struct berval *passwd,
 		exit( EXIT_FAILURE );
 	}
 
-	(void) ldap_set_option( ld, LDAP_OPT_PROTOCOL_VERSION, &version ); 
+	(void) ldap_set_option( ld, LDAP_OPT_PROTOCOL_VERSION, &version );
 	(void) ldap_set_option( ld, LDAP_OPT_REFERRALS,
 		chaserefs ? LDAP_OPT_ON : LDAP_OPT_OFF );
 
@@ -344,7 +344,7 @@ retry:;
 			exit( EXIT_FAILURE );
 		}
 
-		(void) ldap_set_option( ld, LDAP_OPT_PROTOCOL_VERSION, &version ); 
+		(void) ldap_set_option( ld, LDAP_OPT_PROTOCOL_VERSION, &version );
 		(void) ldap_set_option( ld, LDAP_OPT_REFERRALS,
 			chaserefs ? LDAP_OPT_ON : LDAP_OPT_OFF );
 

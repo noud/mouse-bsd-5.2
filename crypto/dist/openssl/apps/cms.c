@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -193,21 +193,21 @@ int MAIN(int argc, char **argv)
 		else if (!strcmp (*args, "-EncryptedData_encrypt"))
 			operation = SMIME_ENCRYPTED_ENCRYPT;
 #ifndef OPENSSL_NO_DES
-		else if (!strcmp (*args, "-des3")) 
+		else if (!strcmp (*args, "-des3"))
 				cipher = EVP_des_ede3_cbc();
-		else if (!strcmp (*args, "-des")) 
+		else if (!strcmp (*args, "-des"))
 				cipher = EVP_des_cbc();
 #endif
 #ifndef OPENSSL_NO_SEED
-		else if (!strcmp (*args, "-seed")) 
+		else if (!strcmp (*args, "-seed"))
 				cipher = EVP_seed_cbc();
 #endif
 #ifndef OPENSSL_NO_RC2
-		else if (!strcmp (*args, "-rc2-40")) 
+		else if (!strcmp (*args, "-rc2-40"))
 				cipher = EVP_rc2_40_cbc();
-		else if (!strcmp (*args, "-rc2-128")) 
+		else if (!strcmp (*args, "-rc2-128"))
 				cipher = EVP_rc2_cbc();
-		else if (!strcmp (*args, "-rc2-64")) 
+		else if (!strcmp (*args, "-rc2-64"))
 				cipher = EVP_rc2_64_cbc();
 #endif
 #ifndef OPENSSL_NO_AES
@@ -226,18 +226,18 @@ int MAIN(int argc, char **argv)
 		else if (!strcmp(*args,"-camellia256"))
 				cipher = EVP_camellia_256_cbc();
 #endif
-		else if (!strcmp (*args, "-text")) 
+		else if (!strcmp (*args, "-text"))
 				flags |= CMS_TEXT;
-		else if (!strcmp (*args, "-nointern")) 
+		else if (!strcmp (*args, "-nointern"))
 				flags |= CMS_NOINTERN;
-		else if (!strcmp (*args, "-noverify") 
-			|| !strcmp (*args, "-no_signer_cert_verify")) 
+		else if (!strcmp (*args, "-noverify")
+			|| !strcmp (*args, "-no_signer_cert_verify"))
 				flags |= CMS_NO_SIGNER_CERT_VERIFY;
-		else if (!strcmp (*args, "-nocerts")) 
+		else if (!strcmp (*args, "-nocerts"))
 				flags |= CMS_NOCERTS;
-		else if (!strcmp (*args, "-noattr")) 
+		else if (!strcmp (*args, "-noattr"))
 				flags |= CMS_NOATTR;
-		else if (!strcmp (*args, "-nodetach")) 
+		else if (!strcmp (*args, "-nodetach"))
 				flags &= ~CMS_DETACHED;
 		else if (!strcmp (*args, "-nosmimecap"))
 				flags |= CMS_NOSMIMECAP;
@@ -418,7 +418,7 @@ int MAIN(int argc, char **argv)
 			}
 		else if (!strcmp (*args, "-inkey"))
 			{
-			if (!args[1])	
+			if (!args[1])
 				goto argerr;
 			/* If previous -inkey arument add signer to list */
 			if (keyfile)
@@ -688,7 +688,7 @@ int MAIN(int argc, char **argv)
 		{
 		if (!cipher)
 			{
-#ifndef OPENSSL_NO_DES			
+#ifndef OPENSSL_NO_DES
 			cipher = EVP_des_ede3_cbc();
 #else
 			BIO_printf(bio_err, "No cipher selected\n");
@@ -779,11 +779,11 @@ int MAIN(int argc, char **argv)
 
 	if (operation & SMIME_IP)
 		{
-		if (informat == FORMAT_SMIME) 
+		if (informat == FORMAT_SMIME)
 			cms = SMIME_read_CMS(in, &indata);
-		else if (informat == FORMAT_PEM) 
+		else if (informat == FORMAT_PEM)
 			cms = PEM_read_bio_CMS(in, NULL, NULL, NULL);
-		else if (informat == FORMAT_ASN1) 
+		else if (informat == FORMAT_ASN1)
 			cms = d2i_CMS_bio(in, NULL);
 		else
 			{
@@ -830,12 +830,12 @@ int MAIN(int argc, char **argv)
 				 "Can't open receipt file %s\n", rctfile);
 			goto end;
 			}
-		
-		if (rctformat == FORMAT_SMIME) 
+
+		if (rctformat == FORMAT_SMIME)
 			rcms = SMIME_read_CMS(rctin, NULL);
-		else if (rctformat == FORMAT_PEM) 
+		else if (rctformat == FORMAT_PEM)
 			rcms = PEM_read_bio_CMS(rctin, NULL, NULL, NULL);
-		else if (rctformat == FORMAT_ASN1) 
+		else if (rctformat == FORMAT_ASN1)
 			rcms = d2i_CMS_bio(rctin, NULL);
 		else
 			{
@@ -902,7 +902,7 @@ int MAIN(int argc, char **argv)
 			goto end;
 		if (secret_key)
 			{
-			if (!CMS_add0_recipient_key(cms, NID_undef, 
+			if (!CMS_add0_recipient_key(cms, NID_undef,
 						secret_key, secret_keylen,
 						secret_keyid, secret_keyidlen,
 						NULL, NULL, NULL))
@@ -947,7 +947,7 @@ int MAIN(int argc, char **argv)
 		 */
 		if (operation == SMIME_SIGN)
 			{
-				
+
 			if (flags & CMS_DETACHED)
 				{
 				if (outformat == FORMAT_SMIME)
@@ -1094,7 +1094,7 @@ int MAIN(int argc, char **argv)
 			}
 		if (rr_print)
 			receipt_request_print(bio_err, cms);
-					
+
 		}
 	else if (operation == SMIME_VERIFY_RECEIPT)
 		{
@@ -1126,9 +1126,9 @@ int MAIN(int argc, char **argv)
 			else
 				ret = SMIME_write_CMS(out, cms, in, flags);
 			}
-		else if (outformat == FORMAT_PEM) 
+		else if (outformat == FORMAT_PEM)
 			ret = PEM_write_bio_CMS_stream(out, cms, in, flags);
-		else if (outformat == FORMAT_ASN1) 
+		else if (outformat == FORMAT_ASN1)
 			ret = i2d_CMS_bio_stream(out,cms, in, flags);
 		else
 			{
@@ -1195,7 +1195,7 @@ static int save_certs(char *signerfile, STACK_OF(X509) *signers)
 	BIO_free(tmp);
 	return 1;
 	}
-	
+
 
 /* Minimal callback just to output policy info (if any) */
 

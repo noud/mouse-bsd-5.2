@@ -2,7 +2,7 @@
 
 /*
  * Not all machines define FD_SET in sys/types.h
- */ 
+ */
 #ifndef _ntp_select_h
 #define _ntp_select_h
 

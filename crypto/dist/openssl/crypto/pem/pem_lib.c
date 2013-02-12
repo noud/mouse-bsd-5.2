@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -136,7 +136,7 @@ void PEM_proc_type(char *buf, int type)
 		str="MIC-ONLY";
 	else
 		str="BAD-TYPE";
-		
+
 	BUF_strlcat(buf,"Proc-Type: 4,",PEM_BUFSIZE);
 	BUF_strlcat(buf,str,PEM_BUFSIZE);
 	BUF_strlcat(buf,"\n",PEM_BUFSIZE);
@@ -197,7 +197,7 @@ static int check_pem(const char *nm, const char *name)
 			return 1;
 		if(!strcmp(nm,PEM_STRING_PKCS8INF))
 			return 1;
-		slen = pem_check_suffix(nm, "PRIVATE KEY"); 
+		slen = pem_check_suffix(nm, "PRIVATE KEY");
 		if (slen > 0)
 			{
 			/* NB: ENGINE implementations wont contain
@@ -215,7 +215,7 @@ static int check_pem(const char *nm, const char *name)
 		{
 		int slen;
 		const EVP_PKEY_ASN1_METHOD *ameth;
-		slen = pem_check_suffix(nm, "PARAMETERS"); 
+		slen = pem_check_suffix(nm, "PARAMETERS");
 		if (slen > 0)
 			{
 			ENGINE *e;
@@ -338,7 +338,7 @@ int PEM_ASN1_write_bio(i2d_of_void *i2d, const char *name, BIO *bp,
 	char buf[PEM_BUFSIZE];
 	unsigned char key[EVP_MAX_KEY_LENGTH];
 	unsigned char iv[EVP_MAX_IV_LENGTH];
-	
+
 	if (enc != NULL)
 		{
 		objstr=OBJ_nid2sn(EVP_CIPHER_nid(enc));
@@ -590,7 +590,7 @@ int PEM_write_bio(BIO *bp, const char *name, char *header, unsigned char *data,
 	unsigned char *buf = NULL;
 	EVP_ENCODE_CTX ctx;
 	int reason=ERR_R_BUF_LIB;
-	
+
 	EVP_EncodeInit(&ctx);
 	nlen=strlen(name);
 
@@ -598,7 +598,7 @@ int PEM_write_bio(BIO *bp, const char *name, char *header, unsigned char *data,
 		(BIO_write(bp,name,nlen) != nlen) ||
 		(BIO_write(bp,"-----\n",6) != 6))
 		goto err;
-		
+
 	i=strlen(header);
 	if (i > 0)
 		{
@@ -672,7 +672,7 @@ int PEM_read_bio(BIO *bp, char **name, char **header, unsigned char **data,
 	BUF_MEM *nameB;
 	BUF_MEM *headerB;
 	BUF_MEM *dataB,*tmpB;
-	
+
 	nameB=BUF_MEM_new();
 	headerB=BUF_MEM_new();
 	dataB=BUF_MEM_new();

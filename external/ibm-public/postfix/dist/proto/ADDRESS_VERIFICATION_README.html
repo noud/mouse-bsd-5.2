@@ -272,7 +272,7 @@ the same address repeatedly.  </p>
 <blockquote>
 <pre>
 /etc/postfix/main.cf:
-    smtpd_recipient_restrictions = 
+    smtpd_recipient_restrictions =
         permit_mynetworks
         reject_unauth_destination
         ...
@@ -331,7 +331,7 @@ in forged email.  </p>
     # Note 1: Be sure to read the "<a href="#caching">Caching</a>" section below!
     # Note 2: Avoid hash files here. Use btree instead.
     address_verify_map = btree:/var/db/postfix/verify
- 
+
 /etc/postfix/sender_access:
     # Don't do this when you handle lots of email.
     aol.com     reject_unverified_sender
@@ -364,12 +364,12 @@ you can see what mail would be blocked: </p>
 <blockquote>
 <pre>
 /etc/postfix/main.cf:
-    smtpd_sender_restrictions = 
+    smtpd_sender_restrictions =
         permit_mynetworks
-        ... 
+        ...
         check_sender_access hash:/etc/postfix/sender_access
         reject_unknown_sender_domain
-        warn_if_reject reject_unverified_sender 
+        warn_if_reject reject_unverified_sender
         ...
     # Postfix 2.6 and later.
     # unverified_sender_reject_reason = Address verification failed
@@ -523,7 +523,7 @@ parameters when it delivers an address verification probe message.
 
 <p> First, the address_verify_relayhost parameter allows you to
 override the relayhost setting, and the address_verify_transport_maps
-parameter allows you to override the transport_maps setting. 
+parameter allows you to override the transport_maps setting.
 The address_verify_sender_dependent_relayhost_maps parameter
 does the same for sender-dependent relayhost selection. </p>
 

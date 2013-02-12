@@ -903,7 +903,7 @@ Beaulieu, Pereira                                                   15
               draft-grant-tacacs-01.txt
 
 
-12. 
+12.
     Acknowledgments
 
    The authors would like to thank Tamir Zegmen, Moshe Litvin, Dan

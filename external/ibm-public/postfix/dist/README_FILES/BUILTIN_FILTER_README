@@ -84,7 +84,7 @@ filtered mail again, and it would be undesirable to block postmaster
 notifications. The table below summarizes what mail is and is not subject to
 header/body checks.
 
-     _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+     _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     |MMeessssaaggee ttyyppee      |SSoouurrccee   |HHeeaaddeerr//bbooddyy cchheecckkss??|
     |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|_ _ _ _ _ _ _ _ _ _|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |
     |Undeliverable mail|bounce(8)|No                 |

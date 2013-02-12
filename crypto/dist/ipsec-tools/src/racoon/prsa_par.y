@@ -125,7 +125,7 @@ int
 prsawrap()
 {
 	return 1;
-} 
+}
 %}
 %union {
 	BIGNUM *bn;
@@ -138,7 +138,7 @@ prsawrap()
 %token COLON HEX
 %token OBRACE EBRACE COLON HEX
 %token TAG_RSA TAG_PUB TAG_PSK
-%token MODULUS PUBLIC_EXPONENT PRIVATE_EXPONENT 
+%token MODULUS PUBLIC_EXPONENT PRIVATE_EXPONENT
 %token PRIME1 PRIME2 EXPONENT1 EXPONENT2 COEFFICIENT
 %token ADDR4 ADDR6 ADDRANY SLASH NUMBER BASE64
 
@@ -161,11 +161,11 @@ statement:
 	{
 		rsa_key_insert(prsa_cur_list, $1, $2, $4);
 	}
-	| addr COLON rsa_statement 
+	| addr COLON rsa_statement
 	{
 		rsa_key_insert(prsa_cur_list, NULL, $1, $3);
 	}
-	| COLON rsa_statement 
+	| COLON rsa_statement
 	{
 		rsa_key_insert(prsa_cur_list, NULL, NULL, $2);
 	}
@@ -236,7 +236,7 @@ addr4:
 	{
 		int err;
 		struct sockaddr_in *sap;
-		
+
 		if ($2 == -1) $2 = 32;
 		if ($2 < 0 || $2 > 32) {
 			prsaerror ("Invalid IPv4 prefix\n");
@@ -259,7 +259,7 @@ addr6:
 	{
 		int err;
 		struct sockaddr_in6 *sap;
-		
+
 		if ($2 == -1) $2 = 128;
 		if ($2 < 0 || $2 > 128) {
 			prsaerror ("Invalid IPv6 prefix\n");
@@ -287,21 +287,21 @@ params:
 	;
 
 param:
-	MODULUS COLON HEX 
+	MODULUS COLON HEX
 	{ if (!rsa_cur->n) rsa_cur->n = $3; else { prsaerror ("Modulus already defined\n"); YYABORT; } }
-	| PUBLIC_EXPONENT COLON HEX 
+	| PUBLIC_EXPONENT COLON HEX
 	{ if (!rsa_cur->e) rsa_cur->e = $3; else { prsaerror ("PublicExponent already defined\n"); YYABORT; } }
-	| PRIVATE_EXPONENT COLON HEX 
+	| PRIVATE_EXPONENT COLON HEX
 	{ if (!rsa_cur->d) rsa_cur->d = $3; else { prsaerror ("PrivateExponent already defined\n"); YYABORT; } }
-	| PRIME1 COLON HEX 
+	| PRIME1 COLON HEX
 	{ if (!rsa_cur->p) rsa_cur->p = $3; else { prsaerror ("Prime1 already defined\n"); YYABORT; } }
-	| PRIME2 COLON HEX 
+	| PRIME2 COLON HEX
 	{ if (!rsa_cur->q) rsa_cur->q = $3; else { prsaerror ("Prime2 already defined\n"); YYABORT; } }
-	| EXPONENT1 COLON HEX 
+	| EXPONENT1 COLON HEX
 	{ if (!rsa_cur->dmp1) rsa_cur->dmp1 = $3; else { prsaerror ("Exponent1 already defined\n"); YYABORT; } }
-	| EXPONENT2 COLON HEX 
+	| EXPONENT2 COLON HEX
 	{ if (!rsa_cur->dmq1) rsa_cur->dmq1 = $3; else { prsaerror ("Exponent2 already defined\n"); YYABORT; } }
-	| COEFFICIENT COLON HEX 
+	| COEFFICIENT COLON HEX
 	{ if (!rsa_cur->iqmp) rsa_cur->iqmp = $3; else { prsaerror ("Coefficient already defined\n"); YYABORT; } }
 	;
 %%
@@ -313,7 +313,7 @@ prsa_parse_file(struct genlist *list, char *fname, enum rsa_key_type type)
 {
 	FILE *fp = NULL;
 	int ret;
-	
+
 	if (!fname)
 		return -1;
 	if (type == RSA_TYPE_PRIVATE) {
@@ -322,7 +322,7 @@ prsa_parse_file(struct genlist *list, char *fname, enum rsa_key_type type)
 			return -1;
 		if (st.st_mode & (S_IRWXG | S_IRWXO)) {
 			plog(LLV_ERROR, LOCATION, NULL,
-				"Too slack permissions on private key '%s'\n", 
+				"Too slack permissions on private key '%s'\n",
 				fname);
 			plog(LLV_ERROR, LOCATION, NULL,
 				"Should be at most 0600, now is 0%o\n",

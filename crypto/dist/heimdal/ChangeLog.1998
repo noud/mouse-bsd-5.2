@@ -123,7 +123,7 @@ Sun Nov 15 17:28:19 1998  Johan Danielsson  <joda@hella.pdc.kth.se>
 Fri Nov 13 05:35:48 1998  Assar Westerlund  <assar@sics.se>
 
 	* lib/krb5/krb5.h (KRB5_TGS_NAME, KRB5_TGS_NAME_SIZE): added
-	
+
 Sat Nov  7 19:56:31 1998  Assar Westerlund  <assar@sics.se>
 
 	* lib/krb5/get_cred.c (add_cred): add termination NULL pointer
@@ -571,7 +571,7 @@ Mon Mar 23 23:43:59 1998  Johan Danielsson  <joda@emma.pdc.kth.se>
 
 	* lib/gssapi/{un,}wrap.c: Add support for just integrity
  	protecting data.
- 	
+
 	* lib/gssapi/accept_sec_context.c: Use
  	`gssapi_krb5_verify_8003_checksum'.
 
@@ -649,7 +649,7 @@ Fri Mar  6 00:41:30 1998  Johan Danielsson  <joda@emma.pdc.kth.se>
 
 	* lib/gssapi/{accept_sec_context,release_cred}.c: Use
 	krb5_kt_close/krb5_kt_resolve.
-	
+
 	* lib/krb5/principal.c (krb5_425_conv_principal_ext): Use resolver
  	to lookup hosts, so CNAMEs can be ignored.
 
@@ -685,7 +685,7 @@ Sun Mar  1 03:28:42 1998  Assar Westerlund  <assar@sics.se>
 Sun Mar  1 03:04:12 1998  Assar Westerlund  <assar@sics.se>
 
 	* configure.in: add X-tests, and {bin,...}dir appl/{kx,kauth}
-	
+
 	* lib/krb5/build_auth.c,mk_priv.c,rd_safe.c,mk_safe.c,mk_rep.c:
  	remove arbitrary limit
 
@@ -998,12 +998,12 @@ Sun Dec 21 09:44:05 1997  Assar Westerlund  <assar@sics.se>
 
 	* kadmin/util.c (str2deltat, str2attr, get_deltat): return value
  	as pointer and have return value indicate success.
-	
+
 	(get_response): check NULL from fgets
-	
+
 	(edit_time, edit_attributes): new functions for reading values and
 	offering list of answers on '?'
-	
+
 	(edit_entry): use edit_time and edit_attributes
 
 	* kadmin/ank.c (add_new_key): test the return value of
@@ -1435,7 +1435,7 @@ Mon Sep 29 15:58:43 1997  Assar Westerlund  <assar@sics.se>
 	* appl/telnet/telnet/commands.c: INET6_ADDRSTRLEN kludge
 
 	* configure.in: check for <netinet6/in6.h>. check for -linet6
-	
+
 Tue Sep 23 03:00:53 1997  Assar Westerlund  <assar@sics.se>
 
 	* lib/krb5/encrypt.c: fix checksumtype for des3-cbc-sha1
@@ -1475,9 +1475,9 @@ Mon Sep 22 11:44:27 1997  Johan Danielsson  <joda@blubb.pdc.kth.se>
 	* lib/krb5/str2key.c: Add des3 string-to-key. Add ktype argument
  	to krb5_string_to_key().
 
-	* lib/krb5/checksum.c: Some cleanup, and added: 
-	  - rsa-md5-des3 
-	  - hmac-sha1-des3 
+	* lib/krb5/checksum.c: Some cleanup, and added:
+	  - rsa-md5-des3
+	  - hmac-sha1-des3
 	  - keyed and collision proof flags to each checksum method
 	  - checksum<->string functions.
 
@@ -1520,7 +1520,7 @@ Sat Sep 13 23:04:23 1997  Johan Danielsson  <joda@emma.pdc.kth.se>
 Sat Sep 13 00:59:36 1997  Assar Westerlund  <assar@sics.se>
 
 	* Release 0.0h
-	
+
 	* appl/telnet/telnet/commands.c: AF_INET6 support
 
 	* admin/misc.c: new file
@@ -1553,7 +1553,7 @@ Wed Sep 10 21:20:17 1997  Johan Danielsson  <joda@emma.pdc.kth.se>
 	    "local realm")
 	  - if server isn't found and it is a request for a krbtgt, try to
  	    find a realm on the way to the requested realm
-	  - update the transited encoding iff 
+	  - update the transited encoding iff
 	    client-realm != server-realm != tgt-realm
 
 	* lib/krb5/get_cred.c: Several fixes for cross-realm.
@@ -1690,11 +1690,11 @@ Tue Sep  2 02:00:03 1997  Assar Westerlund  <assar@sics.se>
 	* include/bits.c: Don't generate ifndef's in bits.h.  Instead, use
  	them when building the program.  This makes it possible to include
  	bits.h without having defined all HAVE_INT17_T symbols.
-	
+
 	* configure.in: test for sigaction
 
 	* doc: updated documentation.
-	
+
 Tue Sep  2 00:20:31 1997  Johan Danielsson  <joda@emma.pdc.kth.se>
 
 	* Release 0.0g
@@ -1731,7 +1731,7 @@ Sat Aug 30 18:48:19 1997  Johan Danielsson  <joda@emma.pdc.kth.se>
  	functions.
 
 	* lib/hdb/hdb.h: Add `replace' parameter to store.
-	
+
 	* kdc/connect.c: Set filedecriptor to -1 on allocated decriptor
  	entries.
 
@@ -2030,7 +2030,7 @@ Tue Aug 12 01:29:46 1997  Assar Westerlund  <assar@sics.se>
 
 	* lib/krb5/sock_principal.c: new function
 	`krb5_sock_to_principal'
-	
+
 	* lib/krb5/time.c: new file with `krb5_timeofday' and
  	`krb5_us_timeofday'.  Use these functions.
 
@@ -2038,7 +2038,7 @@ Tue Aug 12 01:29:46 1997  Assar Westerlund  <assar@sics.se>
 
 	* lib/krb5/get_in_tkt.c: implement KDC time offset and use it if
  	[libdefaults]kdc_timesync is set.
-	
+
 	* lib/krb5/fcache.c: Implement version 4 of the ccache format.
 
 Mon Aug 11 05:34:43 1997  Assar Westerlund  <assar@sics.se>
@@ -2167,7 +2167,7 @@ Thu Aug  7 22:17:09 1997  Assar Westerlund  <assar@sics.se>
  	krb5_config_vget
 
 	* lib/krb5/cache.c: cleanup added mcache
-	
+
 	* kdc/kerberos5.c: include last-req's of type 6 and 7, if
  	applicable
 
@@ -2210,7 +2210,7 @@ Fri Aug  1 17:23:56 1997  Assar Westerlund  <assar@sics.se>
 	Check the require_preauth flag.
   	Send an lr_type == 6 with pw_end.
 	Set key.expiration to min(valid_end, pw_end)
-	
+
 	* lib/hdb/hdb.asn1: new flags `require_preauth' and `change_pw'
 
 	* admin/util.c, admin/load.c: handle the new flags.
@@ -2266,7 +2266,7 @@ Thu Jul 24 01:54:43 1997  Assar Westerlund  <assar@sics.se>
 
 	* kpasswd/kpasswdd.c: fix freeing bug use sequence numbers set
  	addresses in auth_context bind one socket per interface.
-	
+
 	* kpasswd/kpasswd.c: use sequence numbers
 
 	* lib/krb5/rd_req.c (krb5_verify_ap_req): do abs when verifying
@@ -2587,7 +2587,7 @@ Sat Jul 12 16:45:58 1997  Johan Danielsson  <joda@emma.pdc.kth.se>
 Sat Jul 12 16:38:34 1997  Assar Westerlund  <assar@sics.se>
 
 	* appl/test: new programs
-	
+
 	* lib/krb5/rd_req.c: add address compare
 
 	* lib/krb5/mk_req_ext.c: allow no checksum
@@ -2624,7 +2624,7 @@ Sat Jul 12 00:57:01 1997  Johan Danielsson  <joda@blubb.pdc.kth.se>
 Fri Jul 11 15:04:22 1997  Assar Westerlund  <assar@sics.se>
 
 	* appl/telnet: telnet & telnetd seems to be working.
-	
+
 	* lib/krb5/config_file.c: Added krb5_config_v?get_list Fixed
  	krb5_config_vget_next
 
@@ -2674,7 +2674,7 @@ Wed Jul  9 06:06:06 1997  Johan Danielsson  <joda@blubb.pdc.kth.se>
 
 	* kdc/kerberos5.c: Check authenticator. Use more general etype
  	functions.
-	
+
 Wed Jul  9 03:51:12 1997  Assar Westerlund  <assar@sics.se>
 
 	* lib/asn1/k5.asn1: Made all `s_address' OPTIONAL according to
@@ -2682,7 +2682,7 @@ Wed Jul  9 03:51:12 1997  Assar Westerlund  <assar@sics.se>
 
 	* lib/krb5/principal.c (krb5_parse_name): default to local realm
  	if none given
-	
+
 	* kuser/kinit.c: New option `-p' and prompt
 
 Wed Jul  9 02:30:06 1997  Johan Danielsson  <joda@blubb.pdc.kth.se>
@@ -2816,7 +2816,7 @@ Sun Jun  8 03:51:55 1997  Assar Westerlund  <assar@sics.se>
 	* kdc/kerberos5.c: Fix PA-ENC-TS-ENC
 
  	* kdc/connect.c(process_request): Set `new'
-	
+
 	* lib/krb5/get_in_tkt.c: Do PA-ENC-TS-ENC the correct way.
 
 	* lib: Added editline,sl,roken.
@@ -2881,7 +2881,7 @@ Mon Apr 14 00:09:03 1997  Assar Westerlund  <assar@sics.se>
 
 	* lib/gssapi: Enough of a gssapi-over-krb5 implementation to be
 	able to (mostly) run gss-client and gss-server.
-	
+
 	* lib/krb5/keytab.c: implemented krb5_kt_add_entry,
  	krb5_kt_store_principal, krb5_kt_store_keyblock
 
@@ -2914,7 +2914,7 @@ Mon Mar 17 11:34:05 1997  Johan Danielsson  <joda@blubb.pdc.kth.se>
 	* lib/asn1/der_{get,length,put}.c: Fix include files.
 
 	* lib/asn1/der_free.c: Remove unused functions.
-	
+
 	* lib/asn1/gen.c: Split into gen_encode, gen_decode, gen_free,
  	gen_length, and gen_copy.
 
@@ -2929,7 +2929,7 @@ Sun Mar 16 18:13:52 1997  Assar Westerlund  <assar@sics.se>
 
 	* lib/krb5/principal.c (krb5_free_principal): added `context'
  	argument.  Changed all callers.
-	
+
 	(krb5_sname_to_principal): new function
 
 	* lib/krb5/auth_context.c (krb5_free_authenticator): add `context'
@@ -3097,7 +3097,7 @@ Sat Mar  8 06:58:09 1997  Johan Danielsson  <joda@blubb.pdc.kth.se>
 	* lib/krb5/get_in_tkt.c: Moved some functions to asn1_glue.c.
 
 	* lib/krb5/asn1_glue.c: Moved some asn1-stuff here.
-	
+
 	* lib/krb5/{cache,keytab}.c: Use new storage functions.
 
 	* lib/krb5/krb5.h: Protypes for new storage functions.
@@ -3166,7 +3166,7 @@ Sun Jan 19 06:17:39 1997  Assar Westerlund  <assar@pdc.kth.se>
 
 	* configure.in: Search for awk
 	create lib/krb/error/compile_et
-	
+
 Tue Jan 14 03:46:26 1997  Assar Westerlund  <assar@pdc.kth.se>
 
 	* lib/krb5/Makefile.am: replaced mit-crc.c by crc.c

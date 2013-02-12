@@ -12,7 +12,7 @@ cat << __EOF
 
 /* Define name of host machine's cpu (eg. sparc) */
 #define HOST_CPU MACHINE_ARCH
- 
+
 /* Define the header version of (linux) hosts (eg. 2.2.10) */
 #define HOST_HEADER_VERSION "$1"
 

@@ -1,7 +1,7 @@
 # $OpenLDAP: pkg/openldap-guide/admin/preface.sdf,v 1.25.2.6 2008/05/27 21:56:55 kurt Exp $
 # Copyright 1999-2008 The OpenLDAP Foundation, All Rights Reserved.
 # COPYING RESTRICTIONS APPLY, see COPYRIGHT.
-# 
+#
 
 P1: Preface
 
@@ -47,7 +47,7 @@ Manual Pages|http://www.OpenLDAP.org/software/man.cgi
 Software Pages|http://www.OpenLDAP.org/software/
 Support Pages|http://www.OpenLDAP.org/support/
 !endblock
- 
+
 
 P2[notoc] Acknowledgments
 

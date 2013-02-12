@@ -366,7 +366,7 @@ step_systime(
  * Clock routines for the simulator - Harish Nair, with help
  */
 /*
- * get_systime - return the system time in NTP timestamp format 
+ * get_systime - return the system time in NTP timestamp format
  */
 void
 get_systime(
@@ -385,8 +385,8 @@ get_systime(
 	ntp_node.last_time = ntp_node.ntp_time;
 	DTOLFP(ntp_node.ntp_time, now);
 }
- 
- 
+
+
 /*
  * adj_systime - advance or retard the system clock exactly like the
  * real thng.
@@ -432,8 +432,8 @@ adj_systime(
 	ntp_node.adj = now;
 	return (1);
 }
- 
- 
+
+
 /*
  * step_systime - step the system clock. We are religious here.
  */
@@ -495,7 +495,7 @@ node_clock(
         return (0);
 }
 
- 
+
 /*
  * gauss() - returns samples from a gaussion distribution
  */
@@ -519,7 +519,7 @@ gauss(
         return (m + s * sqrt(-2. * log(q1)) * cos(2. * PI * q2));
 }
 
- 
+
 /*
  * poisson() - returns samples from a network delay distribution
  */

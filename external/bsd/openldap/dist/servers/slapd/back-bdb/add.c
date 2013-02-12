@@ -145,7 +145,7 @@ retry:	/* transaction retry */
 	}
 
 	/* begin transaction */
-	rs->sr_err = TXN_BEGIN( bdb->bi_dbenv, NULL, &ltid, 
+	rs->sr_err = TXN_BEGIN( bdb->bi_dbenv, NULL, &ltid,
 		bdb->bi_db_opflags );
 	rs->sr_text = NULL;
 	if( rs->sr_err != 0 ) {
@@ -316,7 +316,7 @@ retry:	/* transaction retry */
 	}
 
 	/* nested transaction */
-	rs->sr_err = TXN_BEGIN( bdb->bi_dbenv, ltid, &lt2, 
+	rs->sr_err = TXN_BEGIN( bdb->bi_dbenv, ltid, &lt2,
 		bdb->bi_db_opflags );
 	rs->sr_text = NULL;
 	if( rs->sr_err != 0 ) {

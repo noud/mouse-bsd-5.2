@@ -403,7 +403,7 @@ at_check_dup(
 			if ( sat->sat_names[ i ] == NULL ) {
 				return SLAP_SCHERR_ATTR_INCONSISTENT;
 			}
-			
+
 			if ( strcasecmp( sat->sat_names[ i ],
 					new_sat->sat_names[ i ] ) != 0 )
 			{
@@ -460,7 +460,7 @@ at_insert(
 			if ( old_sat->sat_flags & SLAP_AT_DELETED ) {
 				AttributeType tmp;
 				AttributeDescription *ad;
-				
+
 				/* Keep old oid, free new oid;
 				 * Keep old ads, free new ads;
 				 * Keep old ad_mutex, free new ad_mutex;

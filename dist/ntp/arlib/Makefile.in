@@ -208,14 +208,14 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-libares.a: $(libares_a_OBJECTS) $(libares_a_DEPENDENCIES) 
+libares.a: $(libares_a_OBJECTS) $(libares_a_DEPENDENCIES)
 	-rm -f libares.a
 	$(libares_a_AR) libares.a $(libares_a_OBJECTS) $(libares_a_LIBADD)
 	$(RANLIB) libares.a
 
 clean-noinstPROGRAMS:
 	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
-example$(EXEEXT): $(example_OBJECTS) $(example_DEPENDENCIES) 
+example$(EXEEXT): $(example_OBJECTS) $(example_DEPENDENCIES)
 	@rm -f example$(EXEEXT)
 	$(LINK) $(example_LDFLAGS) $(example_OBJECTS) $(example_LDADD) $(LIBS)
 

@@ -369,7 +369,7 @@ archive_compressor_compress_write(struct archive_write *a, const void *buff,
 			disp = 1;
 		else
 			disp = HSIZE - i;
- probe:		
+ probe:
 		if ((i -= disp) < 0)
 			i += HSIZE;
 
@@ -379,7 +379,7 @@ archive_compressor_compress_write(struct archive_write *a, const void *buff,
 		}
 		if (state->hashtab[i] >= 0)
 			goto probe;
- nomatch:	
+ nomatch:
 		ret = output_code(a, state->cur_code);
 		if (ret != ARCHIVE_OK)
 			return ret;

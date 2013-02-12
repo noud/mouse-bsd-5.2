@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -268,7 +268,7 @@ getlocaladdr(remote)
 			"failed to get address buffer.\n");
 		goto err;
 	}
-	
+
 	/* get real interface received packet */
 	if ((s = socket(remote->sa_family, SOCK_DGRAM, 0)) < 0) {
 		plog(LLV_ERROR, LOCATION, NULL,
@@ -277,7 +277,7 @@ getlocaladdr(remote)
 	}
 
 	setsockopt_bypass(s, remote->sa_family);
-	
+
 	if (connect(s, remote, sysdep_sa_len(remote)) < 0) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"connect (%s)\n", strerror(errno));
@@ -650,7 +650,7 @@ sendfromto(s, buf, buflen, src, dst, cnt)
 #endif
 				       (void *)&yes, sizeof(yes)) < 0) {
 				plog(LLV_ERROR, LOCATION, NULL,
-					"setsockopt SO_REUSEPORT (%s)\n", 
+					"setsockopt SO_REUSEPORT (%s)\n",
 					strerror(errno));
 				close(sendsock);
 				return -1;
@@ -660,7 +660,7 @@ sendfromto(s, buf, buflen, src, dst, cnt)
 			    setsockopt(sendsock, IPPROTO_IPV6, IPV6_USE_MIN_MTU,
 			    (void *)&yes, sizeof(yes)) < 0) {
 				plog(LLV_ERROR, LOCATION, NULL,
-					"setsockopt IPV6_USE_MIN_MTU (%s)\n", 
+					"setsockopt IPV6_USE_MIN_MTU (%s)\n",
 					strerror(errno));
 				close(sendsock);
 				return -1;
@@ -776,7 +776,7 @@ newsaddr(len)
 
 	if ((new = racoon_calloc(1, len)) == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
-			"%s\n", strerror(errno)); 
+			"%s\n", strerror(errno));
 		goto out;
 	}
 
@@ -802,7 +802,7 @@ dupsaddr(src)
 	dst = racoon_calloc(1, sysdep_sa_len(src));
 	if (dst == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
-			"%s\n", strerror(errno)); 
+			"%s\n", strerror(errno));
 		return NULL;
 	}
 
@@ -852,7 +852,7 @@ naddrwop2str(const struct netaddr *naddr)
 {
 	static char buf[NI_MAXHOST + 10];
 	static const struct sockaddr sa_any;	/* this is initialized to all zeros */
-	
+
 	if (naddr == NULL)
 		return NULL;
 
@@ -876,7 +876,7 @@ naddrwop2str_fromto(const char *format, const struct netaddr *saddr,
 	dst = racoon_strdup(naddrwop2str(daddr));
 	STRDUP_FATAL(src);
 	STRDUP_FATAL(dst);
-	/* WARNING: Be careful about the format string! Don't 
+	/* WARNING: Be careful about the format string! Don't
 	   ever pass in something that a user can modify!!! */
 	snprintf (buf, sizeof(buf), format, src, dst);
 	racoon_free (src);
@@ -898,7 +898,7 @@ saddr2str_fromto(format, saddr, daddr)
 	dst = racoon_strdup(saddr2str(daddr));
 	STRDUP_FATAL(src);
 	STRDUP_FATAL(dst);
-	/* WARNING: Be careful about the format string! Don't 
+	/* WARNING: Be careful about the format string! Don't
 	   ever pass in something that a user can modify!!! */
 	snprintf (buf, sizeof(buf), format, src, dst);
 	racoon_free (src);
@@ -1019,7 +1019,7 @@ naddr_score(const struct netaddr *naddr, const struct sockaddr *saddr)
 	/* If families don't match we really can't do much... */
 	if (naddr->sa.sa.sa_family != saddr->sa_family)
 		return -1;
-	
+
 	/* If port check fail don't bother to check addresses. */
 	naddr_port = extract_port(&naddr->sa.sa);
 	saddr_port = extract_port(saddr);
@@ -1058,7 +1058,7 @@ u_int16_t
 extract_port (const struct sockaddr *addr)
 {
   u_int16_t port = 0;
-  
+
   if (!addr)
     return port;
 

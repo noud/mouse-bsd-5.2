@@ -20,13 +20,13 @@ slapacl \- Check access to a list of attributes.
 .LP
 .B Slapacl
 is used to check the behavior of the slapd in verifying access to data
-according to ACLs, as specified in 
+according to ACLs, as specified in
 .BR slapd.access (5).
 It opens the
 .BR slapd.conf (5)
-configuration file, reads in the 
+configuration file, reads in the
 .B access
-directives, and then parses the 
+directives, and then parses the
 .B attr
 list given on the command-line; if none is given, access to the
 .B entry
@@ -35,9 +35,9 @@ pseudo-attribute is tested.
 .SH OPTIONS
 .TP
 .BI \-b " DN"
-specify the 
-.B DN 
-which access is requested to; the corresponding entry is fetched 
+specify the
+.B DN
+which access is requested to; the corresponding entry is fetched
 from the database, and thus it must exist.
 The DN is also used to determine what rules apply; thus, it must be
 in the naming context of a configured database.  See also
@@ -53,7 +53,7 @@ for details.
 .BI \-D " authcDN"
 specify a DN to be used as identity through the test session
 when selecting appropriate
-.B <by> 
+.B <by>
 clauses in access lists.
 .TP
 .BI \-f " slapd.conf"
@@ -117,7 +117,7 @@ In this case, if the entry does not exist, a fake entry with the DN
 given with the
 .B \-b
 option is used, with no attributes.
-As a consequence, those rules that depend on the contents 
+As a consequence, those rules that depend on the contents
 of the target object will not behave as with the real object.
 The DN given with the
 .B \-b
@@ -127,13 +127,13 @@ See also
 .BR \-b .
 .TP
 .BI \-U " authcID"
-specify an ID to be mapped to a 
-.B DN 
-as by means of 
+specify an ID to be mapped to a
+.B DN
+as by means of
 .B authz-regexp
 or
 .B authz-rewrite
-rules (see 
+rules (see
 .BR slapd.conf (5)
 for details); mutually exclusive with
 .BR \-D .
@@ -164,7 +164,7 @@ The command
 .fi
 tests whether the user
 .I bjorn
-can access the attribute 
+can access the attribute
 .I o
 of the entry
 .I o=University of Michigan,c=US

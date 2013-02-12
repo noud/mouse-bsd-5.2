@@ -2,7 +2,7 @@
 
 /*
  * /src/NTP/ntp4-dev/libparse/clk_wharton.c,v 4.2 2004/11/14 15:29:41 kardel RELEASE_20050508_A
- *  
+ *
  * clk_wharton.c,v 4.2 2004/11/14 15:29:41 kardel RELEASE_20050508_A
  *
  * From Philippe De Muyter <phdm@macqel.be>, 1999
@@ -16,11 +16,11 @@
  * Support for WHARTON 400A Series clock + 404.2 serial interface.
  *
  * Copyright (C) 1999, 2000 by Philippe De Muyter <phdm@macqel.be>
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.
- * 
+ *
  */
 
 #include "ntp_fp.h"
@@ -55,7 +55,7 @@ extern void printf P((const char *, ...));
  *	Parity even			12		E
  *
  * WHARTON 400A Series output format 1 is as follows :
- * 
+ *
  * Timestamp	STXssmmhhDDMMYYSETX
  * Pos		0  12345678901234
  *		0  00000000011111
@@ -73,12 +73,12 @@ extern void printf P((const char *, ...));
  *			bit 1	0 = Winter time		1 = Summer time
  *			bit 2	0 = not synchronised	1 = synchronised
  *			bit 3	0 = no early warning	1 = early warning
- * 
+ *
  */
 
 /*
  * cvt_wharton_400a
- * 
+ *
  * convert simple type format
  */
 static          u_long
@@ -135,19 +135,19 @@ inp_wharton_400a(
 	      )
 {
 	unsigned int rtc;
-	
+
 	parseprintf(DD_PARSE, ("inp_wharton_400a(0x%lx, 0x%x, ...)\n", (long)parseio, ch));
-	
+
 	switch (ch)
 	{
 	case STX:
 		parseprintf(DD_PARSE, ("inp_wharton_400a: STX seen\n"));
-		
+
 		parseio->parse_index = 1;
 		parseio->parse_data[0] = ch;
 		parseio->parse_dtime.parse_stime = *tstamp; /* collect timestamp */
 		return PARSE_INP_SKIP;
-	  
+
 	case ETX:
 		parseprintf(DD_PARSE, ("inp_wharton_400a: ETX seen\n"));
 		if ((rtc = parse_addchar(parseio, ch)) == PARSE_INP_SKIP)

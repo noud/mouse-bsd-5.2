@@ -139,7 +139,7 @@ file_creat(ARCHD *arcn, int write_to_hardlink)
 	 */
 	if (write_to_hardlink)
 		return (open(arcn->name, O_TRUNC | O_EXCL | O_RDWR, 0));
-	
+
 	/*
 	 * Create a temporary file name so that the file doesn't have partial
 	 * contents while restoring.
@@ -877,7 +877,7 @@ set_pmode(char *fnm, mode_t mode)
 void
 set_chflags(char *fnm, u_int32_t flags)
 {
-	
+
 #if 0
 	if (chflags(fnm, flags) < 0 && errno != EOPNOTSUPP)
 		syswarn(1, errno, "Cannot set file flags on %s", fnm);

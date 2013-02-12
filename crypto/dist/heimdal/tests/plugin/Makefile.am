@@ -13,7 +13,7 @@ port = 49188
 do_subst = sed -e 's,[@]srcdir[@],$(srcdir),g' \
 	-e 's,[@]port[@],$(port),g' \
 	-e 's,[@]objdir[@],$(top_builddir)/tests/plugin,g' \
-	-e 's,[@]EGREP[@],$(EGREP),g' 
+	-e 's,[@]EGREP[@],$(EGREP),g'
 
 LDADD = ../../lib/krb5/libkrb5.la $(LIB_roken)
 

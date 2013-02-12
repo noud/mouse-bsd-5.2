@@ -164,7 +164,7 @@ BEGIN {
                                 z += $i
                         	tdata_z++
 			}
-		}	
+		}
 		continue
 	}
 	#
@@ -232,7 +232,7 @@ BEGIN {
 		if (id_string != id_temp)
 			printf "config%s\n", id_temp
 		id_string = id_temp
-		continue	
+		continue
 	}
 	#
 	# select Austron POS;PPS;PPSOFF records
@@ -334,7 +334,7 @@ BEGIN {
 #
 	if (ensemble_count > 0) {
 		ensemble_mean /= ensemble_count
-		ensemble_rms = sqrt(ensemble_rms / ensemble_count - ensemble_mean * ensemble_mean) * 1e9 
+		ensemble_rms = sqrt(ensemble_rms / ensemble_count - ensemble_mean * ensemble_mean) * 1e9
 		printf "ensemble %d, badgps %d, badloran %d, rms %.1f, >200 %d, >100 %d\n", ensemble_count, ensemble_badgps, ensemble_badloran, ensemble_rms, ensemble_200, ensemble_100
 	}
 #
@@ -389,7 +389,7 @@ BEGIN {
 # >100		itf error > 100 ns
 # var		Allan variance
 #
-	if (itf_count > 1) { 
+	if (itf_count > 1) {
 		itf_mean /= itf_count
 		itf_rms = sqrt(itf_rms / itf_count - itf_mean * itf_mean) * 1e9
 		itf_var = sqrt(itf_var / (2 * (itf_count - 1)))

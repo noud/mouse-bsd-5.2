@@ -231,13 +231,13 @@ typedef struct parsetime parsetime_t;
 #define PARSE_IO_CSIZE	0x00000003
 #define PARSE_IO_CS5	0x00000000
 #define PARSE_IO_CS6	0x00000001
-#define PARSE_IO_CS7	0x00000002 
-#define PARSE_IO_CS8	0x00000003 
+#define PARSE_IO_CS7	0x00000002
+#define PARSE_IO_CS8	0x00000003
 
 /*
  * ioctl structure
  */
-union parsectl 
+union parsectl
 {
   struct parsegettc
     {
@@ -260,7 +260,7 @@ union parsectl
       u_long         parse_cs;	/* character size (needed for stripping) */
     } parsesetcs;
 };
-  
+
 typedef union parsectl parsectl_t;
 
 /*------ for conversion routines --------*/
@@ -268,7 +268,7 @@ typedef union parsectl parsectl_t;
 struct parse			/* parse module local data */
 {
   int            parse_flags;	/* operation and current status flags */
-  
+
   int		 parse_ioflags;	   /* io handling flags (5-8 Bit control currently) */
 
   /*
@@ -288,7 +288,7 @@ struct parse			/* parse module local data */
   char          *parse_ldata;	/* last data buffer */
   unsigned short parse_ldsize;	/* last data buffer length */
   u_long         parse_badformat;	/* number of unparsable pakets */
-  
+
   timestamp_t    parse_lastchar; /* last time a character was received */
   parsetime_t    parse_dtime;	/* external data prototype */
 };

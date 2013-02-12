@@ -82,7 +82,7 @@ ENTRY(bcmp)
 	 * if the string is too short.
 	 */
 	cmpl	#8,%d1
-	jlt	Lbcbyte			
+	jlt	Lbcbyte
 
 #ifdef	__mc68010__
 	/*
@@ -95,7 +95,7 @@ ENTRY(bcmp)
 	btst	#0,%d0
 	jne	Lbcbyte
 #endif	/* __mc68010__ */
-	
+
 	/* word align */
 	movl	%a0,%d0
 	btst	#0,%d0
@@ -150,7 +150,7 @@ Lbclloop:
 	jne	Lbcnoteq		|	not equal, return non-zero
 	dbf	%d0,Lbclloop		|	till done
 	andl	#3,%d1			|	len %= 4
-	jeq	Lbcdone 
+	jeq	Lbcdone
 
 	subql	#1,%d1			| set up for dbf
 Lbcbloop:

@@ -2,11 +2,11 @@
 
 /*
  * Copyright (C) 2002-2005 by Darren Reed.
- * 
- * See the IPFILTER.LICENCE file for details on licencing.  
- *   
- * Id: getproto.c,v 1.2.2.4 2007/10/27 16:03:38 darrenr Exp 
- */     
+ *
+ * See the IPFILTER.LICENCE file for details on licencing.
+ *
+ * Id: getproto.c,v 1.2.2.4 2007/10/27 16:03:38 darrenr Exp
+ */
 
 #include "ipf.h"
 

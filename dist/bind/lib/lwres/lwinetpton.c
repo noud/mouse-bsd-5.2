@@ -43,7 +43,7 @@ static char rcsid[] = "Id";
 static int inet_pton4(const char *src, unsigned char *dst);
 static int inet_pton6(const char *src, unsigned char *dst);
 
-/*! 
+/*!
  * int
  * lwres_net_pton(af, src, dst)
  *	convert from presentation format (which usually means ASCII printable)

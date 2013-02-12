@@ -159,7 +159,7 @@ fi
 #	Check for bad truncation.
 #
 #
-echo "I:fetching using hmac-md5-80 (BADTRUNC)" 
+echo "I:fetching using hmac-md5-80 (BADTRUNC)"
 ret=0
 $DIG +tcp +nosea +nostat +noquest +nocomm +nocmd example.nil.\
 	-y "hmac-md5-80:md5:$md5" @10.53.0.1 soa -p 5300 > dig.out.md5-80 || ret=1

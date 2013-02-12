@@ -189,12 +189,12 @@ openpam_ttyconv(int n,
         /*
          * read and write to /dev/tty if possible; else read from
          * stdin and write to stderr.
-         */ 
+         */
 	if ((outfp = infp = errfp = fopen(_PATH_TTY, "w+")) == NULL) {
 		errfp = stderr;
 		outfp = stderr;
 		infp = stdin;
-	} 
+	}
 
 	for (i = 0; i < n; ++i) {
 		aresp[i].resp_retcode = 0;

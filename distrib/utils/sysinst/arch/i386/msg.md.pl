@@ -131,21 +131,21 @@ chcesz to zrobic?
 message missing_bootmenu_text	/* XXX translate */
 {You have more than one operating system on this disk, but have not
 specified a 'bootmenu' for either the active partition or the
-NetBSD partition that you are going to install into. 
+NetBSD partition that you are going to install into.
 
 Do you want to re-edit the partition to add a bootmenu entry?}
 
 message no_extended_bootmenu	/* XXX translate */
 {You have requested that an extended partition be included in the bootmenu.
 However your system BIOS doesn't appear to support the read command used
-by that version of the bootmenu code. 
+by that version of the bootmenu code.
 Are you sure you that you want to do this?
 
 (Answering 'no' will take you back to the partition edit menu.)}
 
 message installbootsel	/* XXX translate */
 {Your configuration requires the NetBSD bootselect code to
-select which operating system to use. 
+select which operating system to use.
 
 It is not currently installed, do you want to install it now?}
 

@@ -4,7 +4,7 @@ Some missing tests:
 0) g/./s^@^@	- okay: NULs in commands
 1) g/./s/^@/	- okay: NULs in patterns
 2) a
-   hello^V^Jworld	
+   hello^V^Jworld
    .		- okay: embedded newlines in insert mode
 3) ed ""	- error: invalid filename
 4) red ..	- error: restricted

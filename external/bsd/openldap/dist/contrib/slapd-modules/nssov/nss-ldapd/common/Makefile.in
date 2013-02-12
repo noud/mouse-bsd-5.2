@@ -236,11 +236,11 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-libdict.a: $(libdict_a_OBJECTS) $(libdict_a_DEPENDENCIES) 
+libdict.a: $(libdict_a_OBJECTS) $(libdict_a_DEPENDENCIES)
 	-rm -f libdict.a
 	$(libdict_a_AR) libdict.a $(libdict_a_OBJECTS) $(libdict_a_LIBADD)
 	$(RANLIB) libdict.a
-libtio.a: $(libtio_a_OBJECTS) $(libtio_a_DEPENDENCIES) 
+libtio.a: $(libtio_a_OBJECTS) $(libtio_a_DEPENDENCIES)
 	-rm -f libtio.a
 	$(libtio_a_AR) libtio.a $(libtio_a_OBJECTS) $(libtio_a_LIBADD)
 	$(RANLIB) libtio.a

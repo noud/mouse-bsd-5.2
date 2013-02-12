@@ -65,7 +65,7 @@ slapadd( int argc, char **argv )
 	int lineno, nextline;
 	int lmax;
 	int rc = EXIT_SUCCESS;
-	int manage = 0;	
+	int manage = 0;
 
 	/* default "000" */
 	csnsid = 0;
@@ -432,7 +432,7 @@ slapadd( int argc, char **argv )
 				}
 				entry_free( e );
 			}
-		} 
+		}
 	}
 
 	ch_free( buf );

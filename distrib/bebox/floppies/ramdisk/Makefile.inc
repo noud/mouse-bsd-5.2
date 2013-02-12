@@ -20,7 +20,7 @@ MTREECONF=	${COMMONDIR}/mtree.conf
 
 DISKTYPE=	floppy3
 
-all: ${AUXTARGETS} ${CBIN} 
+all: ${AUXTARGETS} ${CBIN}
 	dd if=/dev/zero of=${IMAGE} count=2880
 	vnconfig -t ${DISKTYPE} -v -c ${VND_CDEV} ${IMAGE}
 	disklabel -rw ${VND_CDEV} ${DISKTYPE}

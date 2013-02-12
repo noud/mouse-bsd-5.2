@@ -364,7 +364,7 @@ LIB_kafs = $(top_builddir)/lib/kafs/libkafs.la $(AIX_EXTRA_KAFS)
 @KRB5_TRUE@LIB_gssapi = $(top_builddir)/lib/gssapi/libgssapi.la
 @KRB5_TRUE@LIB_tsasl = $(top_builddir)/lib/tsasl/libtsasl.la
 @DCE_TRUE@LIB_kdfs = $(top_builddir)/lib/kdfs/libkdfs.la
-@HAVE_X_FALSE@bin_SCRIPTS = 
+@HAVE_X_FALSE@bin_SCRIPTS =
 @HAVE_X_TRUE@bin_SCRIPTS = rxterm rxtelnet tenletxr
 CLEANFILES = rxterm rxtelnet tenletxr
 @NEED_WRITEAUTH_TRUE@XauWriteAuth_c = writeauth.c
@@ -487,10 +487,10 @@ clean-libexecPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-kx$(EXEEXT): $(kx_OBJECTS) $(kx_DEPENDENCIES) 
+kx$(EXEEXT): $(kx_OBJECTS) $(kx_DEPENDENCIES)
 	@rm -f kx$(EXEEXT)
 	$(LINK) $(kx_OBJECTS) $(kx_LDADD) $(LIBS)
-kxd$(EXEEXT): $(kxd_OBJECTS) $(kxd_DEPENDENCIES) 
+kxd$(EXEEXT): $(kxd_OBJECTS) $(kxd_DEPENDENCIES)
 	@rm -f kxd$(EXEEXT)
 	$(LINK) $(kxd_OBJECTS) $(kxd_LDADD) $(LIBS)
 install-binSCRIPTS: $(bin_SCRIPTS)

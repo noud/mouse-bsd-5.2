@@ -2,22 +2,22 @@
  * Copyright (c) 1995, 1996, 1997, 1999 Kungliga Tekniska Högskolan
  * (Royal Institute of Technology, Stockholm, Sweden).
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the Institute nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -145,13 +145,13 @@ md5sumFile (const char *name, int len, int32_t sum[4])
 
 /*
  * Create a sequence of random 64 bit blocks.
- * The sequence is indexed with a long long and 
+ * The sequence is indexed with a long long and
  * based on an initial des key used as a seed.
  */
 static DES_key_schedule sequence_seed;
 static uint32_t sequence_index[2];
 
-/* 
+/*
  * Random number generator based on ideas from truerand in cryptolib
  * as described on page 424 in Applied Cryptography 2 ed. by Bruce
  * Schneier.
@@ -222,7 +222,7 @@ pacemaker(struct timeval *tv)
 
 #ifdef HAVE_SIGACTION
 /* XXX ugly hack, should perhaps use function from roken */
-static RETSIGTYPE 
+static RETSIGTYPE
 (*fake_signal(int sig, RETSIGTYPE (*f)(int)))(int)
 {
     struct sigaction sa, osa;
@@ -247,7 +247,7 @@ DES_rand_data(void *outdata, int size)
     struct itimerval tv, otv;
     RETSIGTYPE (*osa)(int);
     int i, j;
-#ifndef HAVE_SETITIMER 
+#ifndef HAVE_SETITIMER
     RETSIGTYPE (*ochld)(int);
     pid_t pid;
 #endif
@@ -260,7 +260,7 @@ DES_rand_data(void *outdata, int size)
 
     for(p = rnd_devices; *p; p++) {
       int fd = open(*p, O_RDONLY | O_NDELAY);
-      
+
       if(fd >= 0 && read(fd, data, size) == size) {
 	close(fd);
 	return;
@@ -277,7 +277,7 @@ DES_rand_data(void *outdata, int size)
     igdata = 0;
 
     osa = signal(SIGALRM, sigALRM);
-  
+
     /* Start timer */
     tv.it_value.tv_sec = 0;
     tv.it_value.tv_usec = 10 * 1000; /* 10 ms */
@@ -442,7 +442,7 @@ DES_new_random_key(DES_cblock *key)
  * kept.
  *
  */
-void 
+void
 DES_init_random_number_generator(DES_cblock *seed)
 {
     struct timeval now;

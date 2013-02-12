@@ -103,7 +103,7 @@ glob_match(const char *pattern, const char *pkg)
 }
 
 /*
- * Perform simple match on "pkg" against "pattern". 
+ * Perform simple match on "pkg" against "pattern".
  * Return 1 on match, 0 otherwise
  */
 static int

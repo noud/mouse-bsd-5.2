@@ -1,8 +1,8 @@
 /*	$NetBSD: ntpq-opts.c,v 1.1.1.3.4.1 2009/01/16 02:48:56 snj Exp $	*/
 
-/*  
+/*
  *  EDIT THIS FILE WITH CAUTION  (ntpq-opts.c)
- *  
+ *
  *  It has been AutoGen-ed  Thursday January  8, 2009 at 06:18:56 AM EST
  *  From the definitions    ntpq-opts.def
  *  and the template file   options
@@ -38,7 +38,7 @@ extern "C" {
 tSCC zCopyright[] =
        "ntpq copyright (c) 1970-2008 David L. Mills and/or others, all rights reserved";
 tSCC zCopyrightNotice[] =
-       
+
 /* extracted from ../include/copyright.def near line 8 */
 "see html/copyright.html";
 extern tUsageProc optionUsage;

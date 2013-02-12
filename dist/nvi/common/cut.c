@@ -177,7 +177,7 @@ copyloop:
 	}
 	return (0);
 
-cut_line_err:	
+cut_line_err:
 	text_lfree(&cbp->textq);
 	cbp->len = 0;
 	cbp->flags = 0;

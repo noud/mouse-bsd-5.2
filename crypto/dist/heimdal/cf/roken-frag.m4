@@ -97,7 +97,7 @@ AC_CHECK_HEADERS(vis.h, , , [
 #ifndef VIS_SP
 #error invis
 #endif])
-	
+
 AC_CHECK_HEADERS(netdb.h, , , [AC_INCLUDES_DEFAULT
 #ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
@@ -406,7 +406,7 @@ AC_BROKEN2(inet_pton,
 [0,0,0])
 
 dnl
-dnl Check for sa_len in struct sockaddr, 
+dnl Check for sa_len in struct sockaddr,
 dnl needs to come before the getnameinfo test
 dnl
 AC_HAVE_STRUCT_FIELD(struct sockaddr, sa_len, [#include <sys/types.h>
@@ -558,7 +558,7 @@ crypt)
 
 dnl variables
 
-rk_CHECK_VAR(h_errno, 
+rk_CHECK_VAR(h_errno,
 [#ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
 #endif
@@ -566,17 +566,17 @@ rk_CHECK_VAR(h_errno,
 #include <netdb.h>
 #endif])
 
-rk_CHECK_VAR(h_errlist, 
+rk_CHECK_VAR(h_errlist,
 [#ifdef HAVE_NETDB_H
 #include <netdb.h>
 #endif])
 
-rk_CHECK_VAR(h_nerr, 
+rk_CHECK_VAR(h_nerr,
 [#ifdef HAVE_NETDB_H
 #include <netdb.h>
 #endif])
 
-rk_CHECK_VAR([__progname], 
+rk_CHECK_VAR([__progname],
 [#ifdef HAVE_ERR_H
 #include <err.h>
 #endif])

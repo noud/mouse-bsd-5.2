@@ -3,9 +3,9 @@
 /*	$KAME$ */
 
 /*
- * Copyright (C) 2004 Emmanuel Dreyfus 
+ * Copyright (C) 2004 Emmanuel Dreyfus
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -52,15 +52,15 @@
  * Unity adress/mask lists
  * XXX : the padding is probably there for something !
  */
-        
+
 struct unity_network {
 	struct in_addr addr4;
 	struct in_addr mask4;
 	char padding[6];
 } __attribute__((__packed__));
-        
+
 struct unity_netentry {
-	struct unity_network    network;       
+	struct unity_network    network;
 	struct unity_netentry   *next;
 };
 

@@ -383,7 +383,7 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libvers.la: $(libvers_la_OBJECTS) $(libvers_la_DEPENDENCIES) 
+libvers.la: $(libvers_la_OBJECTS) $(libvers_la_DEPENDENCIES)
 	$(LINK)  $(libvers_la_OBJECTS) $(libvers_la_LIBADD) $(LIBS)
 
 clean-noinstPROGRAMS:
@@ -392,7 +392,7 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-make-print-version$(EXEEXT): $(make_print_version_OBJECTS) $(make_print_version_DEPENDENCIES) 
+make-print-version$(EXEEXT): $(make_print_version_OBJECTS) $(make_print_version_DEPENDENCIES)
 	@rm -f make-print-version$(EXEEXT)
 	$(LINK) $(make_print_version_OBJECTS) $(make_print_version_LDADD) $(LIBS)
 

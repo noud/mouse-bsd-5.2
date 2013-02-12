@@ -11,9 +11,9 @@ struct _conv_win {
     size_t   blen1;
 };
 
-typedef int (*char2wchar_t) 
+typedef int (*char2wchar_t)
     (SCR *, const char *, ssize_t, struct _conv_win *, size_t *, const CHAR_T **);
-typedef int (*wchar2char_t) 
+typedef int (*wchar2char_t)
     (SCR *, const CHAR_T *, ssize_t, struct _conv_win *, size_t *, const char **);
 
 struct _conv {

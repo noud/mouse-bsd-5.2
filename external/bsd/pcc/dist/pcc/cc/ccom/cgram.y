@@ -57,7 +57,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -104,7 +104,7 @@
 %token	C_SWITCH
 %token	C_BREAK
 %token	C_CONTINUE
-%token	C_WHILE	
+%token	C_WHILE
 %token	C_DO
 %token	C_FOR
 %token	C_DEFAULT
@@ -267,7 +267,7 @@ function_specifiers:
 		;
 
 type_specifier:	   C_TYPE { $$ = $1; }
-		|  C_TYPENAME { 
+		|  C_TYPENAME {
 			struct symtab *sp = lookup($1, 0);
 			$$ = mkty(sp->stype, sp->sdf, sp->ssue);
 			$$->n_sp = sp;
@@ -319,7 +319,7 @@ type_qualifier_list:
  */
 direct_declarator: C_NAME { $$ = bdty(NAME, $1); }
 		|  '(' declarator ')' { $$ = $2; }
-		|  direct_declarator '[' nocon_e ']' { 
+		|  direct_declarator '[' nocon_e ']' {
 			$3 = optim($3);
 			if ((blevel == 0 || rpole != NULL) && !nncon($3))
 				uerror("array size not constant");
@@ -349,7 +349,7 @@ direct_declarator: C_NAME { $$ = bdty(NAME, $1); }
 		|  direct_declarator '(' parameter_type_list ')' {
 			$$ = bdty(CALL, $1, $3);
 		}
-		|  direct_declarator '(' identifier_list ')' { 
+		|  direct_declarator '(' identifier_list ')' {
 			$$ = bdty(CALL, $1, $3);
 			if (blevel != 0)
 				uerror("function declaration in bad context");
@@ -395,9 +395,9 @@ parameter_declaration:
 				uerror("illegal parameter class");
 			$$ = tymerge($1, $2);
 			nfree($1);
-		
+
 		}
-		|  declaration_specifiers abstract_declarator { 
+		|  declaration_specifiers abstract_declarator {
 			$$ = tymerge($1, $2);
 			nfree($1);
 		}
@@ -410,7 +410,7 @@ parameter_declaration:
 abstract_declarator:
 		   pointer { $$ = $1; $1->n_right->n_left = bdty(NAME, NULL); }
 		|  direct_abstract_declarator { $$ = $1; }
-		|  pointer direct_abstract_declarator { 
+		|  pointer direct_abstract_declarator {
 			$$ = $1; $1->n_right->n_left = $2;
 		}
 		;
@@ -509,14 +509,14 @@ moe:		   C_NAME {  moedef($1); }
 		;
 
 struct_dcl:	   str_head '{' struct_dcl_list '}' empty {
-			$$ = dclstruct($1); 
+			$$ = dclstruct($1);
 		}
 		|  C_STRUCT C_NAME {  $$ = rstruct($2,$1); }
 		|  str_head '{' '}' {
 #ifndef GCC_COMPAT
 			werror("gcc extension");
 #endif
-			$$ = dclstruct($1); 
+			$$ = dclstruct($1);
 		}
 		;
 
@@ -550,7 +550,7 @@ merge_specifiers:  type_specifier merge_specifiers { $1->n_left = $2;$$ = $1; }
 
 struct_declarator_list:
 		   struct_declarator { }
-		|  struct_declarator_list ',' { $<nodep>$=$<nodep>0; } 
+		|  struct_declarator_list ',' { $<nodep>$=$<nodep>0; }
 			struct_declarator { }
 		;
 
@@ -739,7 +739,7 @@ statement:	   e ';' { ecomp( $1 ); symclear(blevel); }
 		}
 		|  C_RETURN  ';' {
 			branch(retlab);
-			if (cftnsp->stype != VOID && 
+			if (cftnsp->stype != VOID &&
 			    (cftnsp->sflags & NORETYP) == 0 &&
 			    cftnsp->stype != VOID+FTN)
 				uerror("return value required");
@@ -1045,7 +1045,7 @@ funct_idn:	   C_NAME  '(' {
 				inline_ref(s);
 			$$ = nametree(s);
 		}
-		|  term  '(' 
+		|  term  '('
 		;
 %%
 
@@ -1472,7 +1472,7 @@ mkpstr(char *str)
 }
 
 /*
- * Estimate the max length a string will have in its internal 
+ * Estimate the max length a string will have in its internal
  * representation based on number of \ characters.
  */
 static int
@@ -1496,7 +1496,7 @@ voct(char *d, unsigned int v)
 	*d++ = v + '0';
 	return d;
 }
-	
+
 
 /*
  * Convert a string to internal format.  The resulting string may be no

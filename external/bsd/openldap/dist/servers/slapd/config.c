@@ -97,10 +97,10 @@ new_config_args( BackendDB *be, const char *fname, int lineno, int argc, char **
 	ConfigArgs *c;
 	c = ch_calloc( 1, sizeof( ConfigArgs ) );
 	if ( c == NULL ) return(NULL);
-	c->be     = be; 
+	c->be     = be;
 	c->fname  = fname;
 	c->argc   = argc;
-	c->argv   = argv; 
+	c->argv   = argv;
 	c->lineno = lineno;
 	snprintf( c->log, sizeof( c->log ), "%s: line %d", fname, lineno );
 	return(c);
@@ -128,7 +128,7 @@ int config_check_vals(ConfigTable *Conf, ConfigArgs *c, int check_only ) {
 	unsigned uiarg;
 	long larg;
 	ber_len_t barg;
-	
+
 	if(Conf->arg_type == ARG_IGNORED) {
 		Debug(LDAP_DEBUG_CONFIG, "%s: keyword <%s> ignored\n",
 			c->log, Conf->name, 0);
@@ -429,7 +429,7 @@ config_get_vals(ConfigTable *cf, ConfigArgs *c)
 		} else {
 			ptr = cf->arg_item;
 		}
-		
+
 		switch(cf->arg_type & ARGS_TYPES) {
 		case ARG_ON_OFF:
 		case ARG_INT:	c->value_int = *(int *)ptr; break;
@@ -747,7 +747,7 @@ read_config_file(const char *fname, int depth, ConfigArgs *cf, ConfigTable *cft)
 				rc = 1;
 				goto done;
 			}
-			
+
 		} else if ( c->bi && !c->be ) {
 			rc = SLAP_CONF_UNKNOWN;
 			if ( c->bi->bi_cf_ocs ) {
@@ -788,7 +788,7 @@ read_config_file(const char *fname, int depth, ConfigArgs *cf, ConfigTable *cft)
 			}
 			if ( rc == SLAP_CONF_UNKNOWN && SLAP_ISGLOBALOVERLAY( frontendDB ) )
 			{
-				/* global overlays may need 
+				/* global overlays may need
 				 * definitions inside other databases...
 				 */
 				rc = (*frontendDB->be_config)( frontendDB,
@@ -803,7 +803,7 @@ read_config_file(const char *fname, int depth, ConfigArgs *cf, ConfigTable *cft)
 				Debug( LDAP_DEBUG_ANY, "%s: unknown directive "
 					"<%s> inside backend database definition.\n",
 					c->log, *c->argv, 0);
-				
+
 			default:
 				rc = 1;
 				goto done;
@@ -824,7 +824,7 @@ read_config_file(const char *fname, int depth, ConfigArgs *cf, ConfigTable *cft)
 					goto done;
 				}
 			}
-			
+
 		} else {
 			Debug( LDAP_DEBUG_ANY, "%s: unknown directive "
 				"<%s> outside backend info and database definitions.\n",
@@ -917,7 +917,7 @@ slap_verbmasks_init( slap_verbmasks **vp, slap_verbmasks *v )
 
 	BER_BVZERO( &(*vp)[ i ].word );
 
-	return 0;		
+	return 0;
 }
 
 int
@@ -1299,7 +1299,7 @@ slap_cf_aux_table_parse( const char *word, void *dst, slap_cf_aux_table *tab0, L
 				Debug( LDAP_DEBUG_ANY, "invalid %s value %s\n",
 					tabmsg, word, 0 );
 			}
-			
+
 			return rc;
 		}
 	}
@@ -1630,7 +1630,7 @@ int bindconf_tls_set( slap_bindconf *bc, LDAP *ld )
 		else
 			ldap_get_option( ld, LDAP_OPT_X_TLS_CTX, &bc->sb_tls_ctx );
 	}
-	
+
 	return res;
 }
 #endif
@@ -1914,7 +1914,7 @@ fp_getline( FILE *fp, ConfigArgs *c )
 		{
 			p[0] = '\0';
 			lcur--;
-			
+
 		} else {
 			if ( !isspace( (unsigned char)buf[0] ) ) {
 				return(1);

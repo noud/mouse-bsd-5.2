@@ -128,7 +128,7 @@ static int wpa_driver_wired_multi(const char *ifname, const u8 *addr, int add)
 		dlp->sdl_nlen = 0;
 		dlp->sdl_alen = ETH_ALEN;
 		dlp->sdl_slen = 0;
-		os_memcpy(LLADDR(dlp), addr, ETH_ALEN); 
+		os_memcpy(LLADDR(dlp), addr, ETH_ALEN);
 	}
 #endif /* __FreeBSD__ */
 
@@ -186,9 +186,9 @@ static void * wpa_driver_wired_init(void *ctx, const char *ifname)
 	if (drv->pf_sock < 0)
 		perror("socket(PF_PACKET)");
 #else /* __linux__ */
-	drv->pf_sock = -1;       
+	drv->pf_sock = -1;
 #endif /* __linux__ */
-	
+
 	if (wpa_driver_wired_get_ifflags(ifname, &flags) == 0 &&
 	    !(flags & IFF_UP) &&
 	    wpa_driver_wired_set_ifflags(ifname, flags | IFF_UP) == 0) {
@@ -262,7 +262,7 @@ static void wpa_driver_wired_deinit(void *priv)
 
 	if (drv->pf_sock != -1)
 		close(drv->pf_sock);
-	
+
 	os_free(drv);
 }
 

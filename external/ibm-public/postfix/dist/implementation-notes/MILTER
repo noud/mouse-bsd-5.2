@@ -65,7 +65,7 @@ also be able to make that macro available at all later Milter
 protocol stages, even when some of those stages are handled by a
 different Postfix process.
 
-Thus, when adding Milter support for a specific Sendmail-like macro    
+Thus, when adding Milter support for a specific Sendmail-like macro
 to the SMTP server:
 
 - We may have to update the XCLIENT protocol, so that Milter
@@ -247,7 +247,7 @@ or backward compatibility.
 
 It does mean, however, that a pointer record can easily exceed the
 length of a header record. This is why we go through the trouble
-of record relocation and dummy records. 
+of record relocation and dummy records.
 
 In Postfix 2.4 we fixed this by adding padding to short message
 header records so that we can always write a pointer record over a

@@ -37,7 +37,7 @@ __RCSID("$Heimdal: cache.c 14566 2005-02-06 01:22:49Z lukeh $"
 
 static HEIMDAL_MUTEX ccache_mutex = HEIMDAL_MUTEX_INITIALIZER;
 static kcm_ccache_data *ccache_head = NULL;
-static unsigned int ccache_nextid = 0; 
+static unsigned int ccache_nextid = 0;
 
 char *kcm_ccache_nextid(pid_t pid, uid_t uid, gid_t gid)
 {
@@ -109,7 +109,7 @@ krb5_error_code kcm_debug_ccache(krb5_context context)
 	    krb5_unparse_name(context, p->client, &cpn);
 	if (p->server != NULL)
 	    krb5_unparse_name(context, p->server, &spn);
-	
+
 	kcm_log(7, "cache %08x: name %s refcnt %d flags %04x mode %04o "
 		"uid %d gid %d client %s server %s ncreds %d",
 		p, p->name, p->refcnt, p->flags, p->mode, p->uid, p->gid,
@@ -472,7 +472,7 @@ kcm_ccache_destroy_if_empty(krb5_context context,
     krb5_error_code ret;
 
     KCM_ASSERT_VALID(ccache);
-    
+
     if (ccache->creds == NULL) {
 	ret = kcm_ccache_destroy_internal(context, ccache->name);
     } else
@@ -491,7 +491,7 @@ kcm_ccache_store_cred(krb5_context context,
     krb5_creds *tmp;
 
     KCM_ASSERT_VALID(ccache);
-    
+
     HEIMDAL_MUTEX_lock(&ccache->mutex);
     ret = kcm_ccache_store_cred_internal(context, ccache, creds, copy, &tmp);
     HEIMDAL_MUTEX_unlock(&ccache->mutex);
@@ -627,7 +627,7 @@ kcm_ccache_retrieve_cred(krb5_context context,
     krb5_error_code ret;
 
     KCM_ASSERT_VALID(ccache);
-    
+
     HEIMDAL_MUTEX_lock(&ccache->mutex);
     ret = kcm_ccache_retrieve_cred_internal(context, ccache,
 					    whichfields, mcreds, credp);

@@ -80,7 +80,7 @@ is_automatic_installed(const char *pkg)
 	    ret = TRUE;
 	else
 	    ret = FALSE;
-	
+
 	free(value);
 	free(filename);
 

@@ -174,7 +174,7 @@ mkdir_p(const char *path)
 	}
 
 	free(p);
-	return 0;	
+	return 0;
 }
 
 /*
@@ -420,7 +420,7 @@ check_other_installed(struct pkg_task *pkg)
 	if (f == NULL) {
 		if (errno == ENOENT) {
 			/* No packages depend on this, so everything is well. */
-			return 0; 
+			return 0;
 		}
 		warnx("Can't open +REQUIRED_BY of %s", pkg->other_version);
 		return -1;
@@ -462,7 +462,7 @@ check_other_installed(struct pkg_task *pkg)
 				status = -1;
 			break;
 		}
-		free_plist(&plist);		
+		free_plist(&plist);
 	}
 
 	fclose(f);
@@ -1164,7 +1164,7 @@ preserve_meta_data_file(struct pkg_task *pkg, const char *name)
 	rv = 0;
 	if (rename(old_file, new_file) == -1 && errno != ENOENT) {
 		warn("Can't move %s from %s to %s", name, old_file, new_file);
-		rv = -1;			
+		rv = -1;
 	}
 	free(old_file);
 	free(new_file);
@@ -1308,7 +1308,7 @@ check_license(struct pkg_task *pkg)
 
 	if ((pkg->buildinfo[BI_LICENSE] == NULL ||
 	     *pkg->buildinfo[BI_LICENSE] == '\0')) {
-	
+
 		if (LicenseCheck == 1)
 			return 0;
 		warnx("No LICENSE set for package `%s'", pkg->pkgname);
@@ -1420,7 +1420,7 @@ pkg_do(const char *pkgpath, int mark_automatic, int top_level)
 		goto clean_memory;
 
 	if (check_other_installed(pkg))
-		goto clean_memory; 
+		goto clean_memory;
 
 	if (check_explicit_conflict(pkg))
 		goto clean_memory;
@@ -1454,7 +1454,7 @@ pkg_do(const char *pkgpath, int mark_automatic, int top_level)
 		 * Normal installation.
 		 * Install/update dependencies first and
 		 * write the current package to disk afterwards.
-		 */ 
+		 */
 		if (check_dependencies(pkg))
 			goto clean_memory;
 

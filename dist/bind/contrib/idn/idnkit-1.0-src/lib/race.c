@@ -7,33 +7,33 @@ static char *rcsid = "Id: race.c,v 1.1 2003/06/04 00:26:07 marka Exp";
 /*
  * Copyright (c) 2000,2001,2002 Japan Network Information Center.
  * All rights reserved.
- *  
+ *
  * By using this file, you agree to the terms and conditions set forth bellow.
- * 
- * 			LICENSE TERMS AND CONDITIONS 
- * 
+ *
+ * 			LICENSE TERMS AND CONDITIONS
+ *
  * The following License Terms and Conditions apply, unless a different
  * license is obtained from Japan Network Information Center ("JPNIC"),
  * a Japanese association, Kokusai-Kougyou-Kanda Bldg 6F, 2-3-4 Uchi-Kanda,
  * Chiyoda-ku, Tokyo 101-0047, Japan.
- * 
+ *
  * 1. Use, Modification and Redistribution (including distribution of any
  *    modified or derived work) in source and/or binary forms is permitted
  *    under this License Terms and Conditions.
- * 
+ *
  * 2. Redistribution of source code must retain the copyright notices as they
  *    appear in each source code file, this License Terms and Conditions.
- * 
+ *
  * 3. Redistribution in binary form must reproduce the Copyright Notice,
  *    this License Terms and Conditions, in the documentation and/or other
  *    materials provided with the distribution.  For the purposes of binary
  *    distribution the "Copyright Notice" refers to the following language:
  *    "Copyright (c) 2000-2002 Japan Network Information Center.  All rights reserved."
- * 
+ *
  * 4. The name of JPNIC may not be used to endorse or promote products
  *    derived from this Software without specific prior written approval of
  *    JPNIC.
- * 
+ *
  * 5. Disclaimer/Limitation of Liability: THIS SOFTWARE IS PROVIDED BY JPNIC
  *    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  *    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -102,7 +102,7 @@ static idn_result_t	race_compress_encode(const unsigned short *p,
 static int		get_compress_mode(unsigned short *p);
 
 idn_result_t
-idn__race_decode(idn_converter_t ctx, void *privdata, 
+idn__race_decode(idn_converter_t ctx, void *privdata,
 		 const char *from, unsigned long *to, size_t tolen) {
 	unsigned short *buf = NULL;
 	size_t prefixlen = strlen(IDN_RACE_PREFIX);
@@ -228,7 +228,7 @@ race_decode_decompress(const char *from, unsigned short *buf, size_t buflen)
 				 * The RACE specification says this is error.
 				 */
 				return (idn_invalid_encoding);
-				 
+
 			} else {
 				buf[j] = c | buf[i++];
 			}
@@ -241,7 +241,7 @@ race_decode_decompress(const char *from, unsigned short *buf, size_t buflen)
 }
 
 idn_result_t
-idn__race_encode(idn_converter_t ctx, void *privdata, 
+idn__race_encode(idn_converter_t ctx, void *privdata,
 		 const unsigned long *from, char *to, size_t tolen) {
 	char *to_org = to;
 	unsigned short *p, *buf = NULL;
@@ -304,7 +304,7 @@ idn__race_encode(idn_converter_t ctx, void *privdata,
 	 */
 
 	/*
-	 * Check U+0099. 
+	 * Check U+0099.
 	 * RACE doesn't permit U+0099 in an input string.
 	 */
 	for (p = buf + 1; *p != '\0'; p++) {

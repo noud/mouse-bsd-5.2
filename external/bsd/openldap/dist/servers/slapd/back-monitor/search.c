@@ -60,7 +60,7 @@ monitor_send_children(
 		if ( e == NULL ) {
 			return LDAP_SUCCESS;
 		}
-	
+
 	/* volatile entries */
 	} else {
 		/* if no persistent, return only volatile */
@@ -73,7 +73,7 @@ monitor_send_children(
 			do {
 				mp = ( monitor_entry_t * )e_tmp->e_private;
 				e_tmp = mp->mp_next;
-	
+
 				if ( e_tmp == NULL ) {
 					mp->mp_next = e;
 					break;
@@ -107,7 +107,7 @@ monitor_send_children(
 
 			return SLAPD_ABANDON;
 		}
-		
+
 		rc = test_filter( op, e, op->oq_search.rs_filter );
 		if ( rc == LDAP_COMPARE_TRUE ) {
 			rs->sr_entry = e;
@@ -129,7 +129,7 @@ monitor_send_children(
 						e = e_tmp;
 						e_tmp = mp->mp_next;
 						monitor_cache_release( mi, e );
-	
+
 						if ( e_tmp == e_nonvolatile ) {
 							break;
 						}
@@ -154,7 +154,7 @@ monitor_send_children(
 			nonvolatile = 1;
 		}
 	}
-	
+
 	return LDAP_SUCCESS;
 }
 

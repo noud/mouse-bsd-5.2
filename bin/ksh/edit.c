@@ -113,7 +113,7 @@ check_sigwinch ARGS((void))
 			if (ws.ws_col) {
 				x_cols = ws.ws_col < MIN_COLS ? MIN_COLS
 						: ws.ws_col;
-				
+
 				if ((vp = typeset("COLUMNS", 0, 0, 0, 0)))
 					setint(vp, (long) ws.ws_col);
 			}
@@ -216,7 +216,7 @@ x_mode(onoff)
 	if (onoff) {
 		TTY_state	cb;
 		X_chars		oldchars;
-		
+
 		oldchars = edchars;
 		cb = tty_state;
 

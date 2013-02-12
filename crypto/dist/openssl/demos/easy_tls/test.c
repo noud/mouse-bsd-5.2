@@ -58,31 +58,31 @@ main(int argc, char *argv[])
 	    client_p = 1;
 	}
     }
-    
+
     fputs(client_p ? "Client\n" : "Server\n", stderr);
-    
+
     {
 	struct tls_create_ctx_args a = tls_create_ctx_defaultargs();
 	a.client_p = client_p;
 	a.certificate_file = "cert.pem";
 	a.key_file = "cert.pem";
 	a.ca_file = "cacerts.pem";
-	
+
 	ctx = tls_create_ctx(a, NULL);
 	if (ctx == NULL)
 	    exit(1);
     }
-    
+
     s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (s == -1) {
 	perror("socket");
 	exit(1);
     }
-    
+
     if (client_p) {
 	struct sockaddr_in addr;
 	size_t addr_len = sizeof addr;
-	    
+
 	addr.sin_family = AF_INET;
 	assert(argc > 1);
 	if (argc > 2)
@@ -91,7 +91,7 @@ main(int argc, char *argv[])
 	    port = C_PORT;
 	addr.sin_port = htons(port);
 	addr.sin_addr.s_addr = inet_addr(argv[1]);
-	    
+
 	r = connect(s, &addr, addr_len);
 	if (r != 0) {
 	    perror("connect");
@@ -110,11 +110,11 @@ main(int argc, char *argv[])
 		exit(1);
 	    }
 	}
-	
+
 	{
 	    struct sockaddr_in addr;
 	    size_t addr_len = sizeof addr;
-	    
+
 	    if (argc > 1)
 		sscanf(argv[1], "%d", &port);
 	    else
@@ -122,14 +122,14 @@ main(int argc, char *argv[])
 	    addr.sin_family = AF_INET;
 	    addr.sin_port = htons(port);
 	    addr.sin_addr.s_addr = INADDR_ANY;
-	    
+
 	    r = bind(s, &addr, addr_len);
 	    if (r != 0) {
 		perror("bind");
 		exit(1);
 	    }
 	}
-    
+
 	r = listen(s, 1);
 	if (r == -1) {
 	    perror("listen");
@@ -137,13 +137,13 @@ main(int argc, char *argv[])
 	}
 
 	fprintf(stderr, "Listening at port %i.\n", port);
-	
+
 	fd = accept(s, NULL, 0);
 	if (fd == -1) {
 	    perror("accept");
 	    exit(1);
 	}
-	
+
 	fprintf(stderr, "Accept (fd = %d).\n", fd);
     }
 
@@ -160,7 +160,7 @@ main(int argc, char *argv[])
 
     setvbuf(conn_in, NULL, _IOLBF, 256);
     setvbuf(conn_out, NULL, _IOLBF, 256);
-	
+
     while (fgets(buf, sizeof buf, stdin) != NULL) {
 	if (buf[0] == 'W') {
 	    fprintf(conn_out, "%.*s\r\n", (int)(strlen(buf + 1) - 1), buf + 1);
@@ -220,12 +220,12 @@ main(int argc, char *argv[])
 		    fputc('\n', stderr);
 		exit(1);
 	    }
-	    
+
 	    r = read(infofd, infobuf, sizeof infobuf - 1);
 	    if (r > 0) {
 		const char *info = infobuf;
 		const char *eol;
-		
+
 		infobuf[r] = '\0';
 		while ((eol = strchr(info, '\n')) != NULL) {
 		    fprintf(stderr, "+++ `%.*s'\n", eol - info, info);

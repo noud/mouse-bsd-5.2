@@ -331,7 +331,7 @@ clocal(NODE *p)
 			p->n_rval = q->soffset;
 			break;
 
-		case EXTERN: 
+		case EXTERN:
 		case EXTDEF:
 			if (kflag == 0)
 				break;
@@ -378,7 +378,7 @@ clocal(NODE *p)
 		ecomp(r);
 #endif
                 break;
-		
+
 	case CBRANCH:
 		l = p->n_left;
 
@@ -435,7 +435,7 @@ clocal(NODE *p)
 		nfree(p);
 		p = l;
 		break;
-		
+
 	case SCONV:
 		l = p->n_left;
 
@@ -574,7 +574,7 @@ clocal(NODE *p)
 
 	case PMCONV:
 	case PVCONV:
-                
+
                 nfree(p);
                 return(buildtree(o==PMCONV?MUL:DIV, p->n_left, p->n_right));
 
@@ -593,7 +593,7 @@ clocal(NODE *p)
 		p->n_op = ASSIGN;
 		p->n_right = p->n_left;
 		p->n_left = block(REG, NIL, NIL, p->n_type, 0, MKSUE(INT));
-		p->n_left->n_rval = p->n_left->n_type == BOOL ? 
+		p->n_left->n_rval = p->n_left->n_type == BOOL ?
 		    RETREG(BOOL_TYPE) : RETREG(p->n_type);
 		break;
 
@@ -680,7 +680,7 @@ fixnames(NODE *p)
 			*c = 0;
 			addstub(&stublist, sp->soname+1);
 			strcpy(c, "$stub");
-		} else 
+		} else
 			*c = 0;
 
 		nfree(q->n_left);
@@ -703,12 +703,12 @@ myp2tree(NODE *p)
 
 	if (kflag)
 		walkf(p, fixnames);
-	if (o != FCON) 
+	if (o != FCON)
 		return;
 
 	/* Write float constants to memory */
 	/* Should be voluntary per architecture */
- 
+
 	sp = IALLOC(sizeof(struct symtab));
 	sp->sclass = STATIC;
 	sp->ssue = MKSUE(p->n_type);
@@ -722,7 +722,7 @@ myp2tree(NODE *p)
 	ninval(0, sp->ssue->suesize, p);
 
 	p->n_op = NAME;
-	p->n_lval = 0;	
+	p->n_lval = 0;
 	p->n_sp = sp;
 }
 
@@ -1164,7 +1164,7 @@ ctype(TWORD type)
 }
 
 void
-calldec(NODE *p, NODE *q) 
+calldec(NODE *p, NODE *q)
 {
 #ifdef PCC_DEBUG
 	if (xdebug)
@@ -1443,7 +1443,7 @@ powerpc_builtin_va_end(NODE *f, NODE *a)
 {
         tfree(f);
         tfree(a);
- 
+
         return bcon(0);
 }
 

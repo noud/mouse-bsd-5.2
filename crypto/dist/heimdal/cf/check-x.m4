@@ -1,4 +1,4 @@
-dnl 
+dnl
 dnl See if there is any X11 present
 dnl
 dnl $Heimdal: check-x.m4 15435 2005-06-16 19:45:52Z lha $

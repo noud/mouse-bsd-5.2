@@ -46,7 +46,7 @@ __RCSID("$Heimdal: getcap.c 22071 2007-11-14 20:04:50Z lha $"
 #elif defined(HAVE_DB_H)
 #include <db.h>
 #endif
-#include <errno.h>	
+#include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
 #include <stdio.h>
@@ -234,14 +234,14 @@ cgetent(char **buf, char **db_array, const char *name)
  *	  MAX_RECURSION.
  */
 static int
-getent(char **cap, size_t *len, char **db_array, int fd, 
+getent(char **cap, size_t *len, char **db_array, int fd,
        const char *name, int depth, char *nfield)
 {
     char *r_end, *rp = NULL, **db_p;	/* pacify gcc */
     int myfd = 0, eof, foundit;
     char *record;
     int tc_not_resolved;
-	
+
     /*
      * Return with ``loop detected'' error if we've recursed more than
      * MAX_RECURSION times.
@@ -359,7 +359,7 @@ getent(char **cap, size_t *len, char **db_array, int fd,
 		for (;;) {
 		    if (bp >= b_end) {
 			int n;
-		
+
 			n = read(fd, buf, sizeof(buf));
 			if (n <= 0) {
 			    if (myfd)
@@ -376,7 +376,7 @@ getent(char **cap, size_t *len, char **db_array, int fd,
 			b_end = buf+n;
 			bp = buf;
 		    }
-	
+
 		    c = *bp++;
 		    if (c == '\n') {
 			if (slash) {
@@ -413,7 +413,7 @@ getent(char **cap, size_t *len, char **db_array, int fd,
 		    *rp++ = c;
 
 				/*
-				 * Enforce loop invariant: if no room 
+				 * Enforce loop invariant: if no room
 				 * left in record buffer, try to get
 				 * some more.
 				 */
@@ -445,13 +445,13 @@ getent(char **cap, size_t *len, char **db_array, int fd,
 		 */
 		if (eof)
 		    break;
-				
+
 		/*
 		 * Toss blank lines and comments.
 		 */
 		if (*record == '\0' || *record == '#')
 		    continue;
-	
+
 		/*
 		 * See if this is the record we want ...
 		 */
@@ -511,7 +511,7 @@ getent(char **cap, size_t *len, char **db_array, int fd,
 	    tclen = s - tcstart;
 	    tcend = s;
 
-	    iret = getent(&icap, &ilen, db_p, fd, tc, depth+1, 
+	    iret = getent(&icap, &ilen, db_p, fd, tc, depth+1,
 			  NULL);
 	    newicap = icap;		/* Put into a register. */
 	    newilen = ilen;
@@ -527,11 +527,11 @@ getent(char **cap, size_t *len, char **db_array, int fd,
 		    tc_not_resolved = 1;
 				/* couldn't resolve tc */
 		if (iret == -1) {
-		    *(s - 1) = ':';			
+		    *(s - 1) = ':';
 		    scan = s - 1;
 		    tc_not_resolved = 1;
 		    continue;
-					
+
 		}
 	    }
 	    /* not interested in name field of tc'ed record */
@@ -594,7 +594,7 @@ getent(char **cap, size_t *len, char **db_array, int fd,
 	     */
 	    scan = s-1;
 	}
-	
+
     }
     /*
      * Close file (if we opened it), give back any extra memory, and
@@ -604,17 +604,17 @@ getent(char **cap, size_t *len, char **db_array, int fd,
 	(void)close(fd);
     *len = rp - record - 1;	/* don't count NUL */
     if (r_end > rp)
-	if ((record = 
+	if ((record =
 	     realloc(record, (size_t)(rp - record))) == NULL) {
 	    errno = ENOMEM;
 	    return (-2);
 	}
-		
+
     *cap = record;
     if (tc_not_resolved)
 	return (1);
     return (0);
-}	
+}
 
 #ifdef USE_DB
 static int
@@ -643,7 +643,7 @@ cdbget(DB *capdbp, char **bp, const char *name)
 		key.data = (char *)data.data + 1;
 		key.size = data.size - 1;
 	}
-	
+
 	*bp = (char *)data.data + 1;
 	return (((char *)(data.data))[0] == TCERR ? 1 : 0);
 }
@@ -718,7 +718,7 @@ cgetclose(void)
 
 #if 0
 /*
- * Cgetnext() gets either the first or next entry in the logical database 
+ * Cgetnext() gets either the first or next entry in the logical database
  * specified by db_array.  It returns 0 upon completion of the database, 1
  * upon returning an entry with more remaining, and -1 if an error occurs.
  */
@@ -778,10 +778,10 @@ cgetnext(char **bp, char **db_array)
 		slash = 1;
 	    else
 		slash = 0;
-	}			
+	}
 
 
-	/* 
+	/*
 	 * Line points to a name line.
 	 */
 	done = 0;
@@ -823,12 +823,12 @@ cgetnext(char **bp, char **db_array)
 		*rp++ = *cp;
 
 	*rp = '\0';
-	/* 
-	 * XXX 
+	/*
+	 * XXX
 	 * Last argument of getent here should be nbuf if we want true
-	 * sequential access in the case of duplicates.  
+	 * sequential access in the case of duplicates.
 	 * With NULL, getent will return the first entry found
-	 * rather than the duplicate entry record.  This is a 
+	 * rather than the duplicate entry record.  This is a
 	 * matter of semantics that should be resolved.
 	 */
 	status = getent(bp, &dummy, db_array, -1, buf, 0, NULL);
@@ -968,10 +968,10 @@ cgetstr(char *buf, const char *cap, char **str)
  * Cgetustr retrieves the value of the string capability cap from the
  * capability record pointed to by buf.  The difference between cgetustr()
  * and cgetstr() is that cgetustr does not decode escapes but rather treats
- * all characters literally.  A pointer to a  NUL terminated malloc'd 
- * copy of the string is returned in the char pointed to by str.  The 
+ * all characters literally.  A pointer to a  NUL terminated malloc'd
+ * copy of the string is returned in the char pointed to by str.  The
  * length of the string not including the trailing NUL is returned on success,
- * -1 if the requested string capability couldn't be found, -2 if a system 
+ * -1 if the requested string capability couldn't be found, -2 if a system
  * error was encountered (storage allocation failure).
  */
 int ROKEN_LIB_FUNCTION
@@ -1110,10 +1110,10 @@ nfcmp(char *nf, char *rec)
 {
     char *cp, tmp;
     int ret;
-	
+
     for (cp = rec; *cp != ':'; cp++)
 	;
-	
+
     tmp = *(cp + 1);
     *(cp + 1) = '\0';
     ret = strcmp(nf, rec);

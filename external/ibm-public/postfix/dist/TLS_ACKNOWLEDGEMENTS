@@ -10,7 +10,7 @@
 - Cerebus <cerebus@sackheads.org>
   * Missing variable initialization in client mode enable STARTTLS
     negotiation even when not wanted.
-    -> fixed in pfixtls-0.2.8 
+    -> fixed in pfixtls-0.2.8
 
 - Bodo Moeller <bode@openssl.org>
   * The SSL connection was not shut down at the end of the session, because

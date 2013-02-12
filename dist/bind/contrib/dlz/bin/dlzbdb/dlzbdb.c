@@ -2,12 +2,12 @@
 
 /*
  * Copyright (C) 2002 Stichting NLnet, Netherlands, stichting@nlnet.nl.
- * 
+ *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the
  * above copyright notice and this permission notice appear in all
  * copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND STICHTING NLNET
  * DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL
@@ -16,15 +16,15 @@
  * OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
  * OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE
  * USE OR PERFORMANCE OF THIS SOFTWARE.
- * 
+ *
  * The development of Dynamically Loadable Zones (DLZ) for Bind 9 was
  * conceived and contributed by Rob Butler.
- * 
+ *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the
  * above copyright notice and this permission notice appear in all
  * copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND ROB BUTLER
  * DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL
@@ -124,9 +124,9 @@ operation_bulk(void);
 void
 operation_listOrDelete(isc_boolean_t dlt);
 
-                                             
+
 /*%
- * Maximum length of a single data line that 
+ * Maximum length of a single data line that
  * may be inserted into database by this program.
  * If you need to insert a line of data that is more
  * than 10,000 characters change this definition.
@@ -136,7 +136,7 @@ operation_listOrDelete(isc_boolean_t dlt);
 
 /*%
  * BDB database names.  If you want to use different
- * database names change them here. 
+ * database names change them here.
  */
 
 #define dlz_data "dns_data"
@@ -229,7 +229,7 @@ isc_boolean_t create_allowed = isc_boolean_false;
 char *key = NULL;		/*%< key to use in list & del operations */
 
 /*% dump DB in DLZBDB bulk format */
-isc_boolean_t list_everything = isc_boolean_false;	
+isc_boolean_t list_everything = isc_boolean_false;
 unsigned int key_val; /*%< key as unsigned int used in list & del operations */
 char *zone = NULL;		/*%< zone to use in list operations */
 char *host = NULL;		/*%< host to use in list operations */
@@ -244,7 +244,7 @@ isc_lex_t *lexer = NULL; /*%< lexer for use to use in parsing input */
 isc_mem_t *lex_mctx = NULL;	/*%< memory context for lexer */
 char lex_data_buf[max_data_len]; /*%< data array to use for lex_buffer below */
 isc_buffer_t lex_buffer;   /*%< buffer for lexer during add operation */
- 
+
 
 /*%
  * Displays usage message
@@ -312,7 +312,7 @@ getzone(DB *dbp, const DBT *pkey, const DBT *pdata, DBT *skey) {
 	if (right == NULL) {
 		result = BDBparseErr;
 		goto getzone_cleanup;
-	}		
+	}
 
 	/* copy data string into newly allocated memory */
 	strncpy(right, pdata->data, pdata->size);
@@ -336,7 +336,7 @@ getzone(DB *dbp, const DBT *pkey, const DBT *pdata, DBT *skey) {
 	/* cleanup memory */
 	if (tmp != NULL)
 		free(tmp);
-	
+
 	return result;
 }
 
@@ -361,7 +361,7 @@ gethost(DB *dbp, const DBT *pkey, const DBT *pdata, DBT *skey) {
 	if (tmp == NULL) {
 		result = BDBparseErr;
 		goto gethost_cleanup;
-	}		
+	}
 
 	/* copy data string into newly allocated memory */
 	strncpy(right, pdata->data, pdata->size);
@@ -394,7 +394,7 @@ gethost(DB *dbp, const DBT *pkey, const DBT *pdata, DBT *skey) {
 	/* cleanup memory */
 	if (tmp != NULL)
 		free(tmp);
-	
+
 	return result;
 }
 
@@ -555,8 +555,8 @@ insert_data(void) {
 	isc_buffer_init(&buf2, &data_arr2, max_data_len);
 
 	while (loop) {
-		result = isc_lex_gettoken(lexer, opt, &token); 
-		if (result != ISC_R_SUCCESS) 
+		result = isc_lex_gettoken(lexer, opt, &token);
+		if (result != ISC_R_SUCCESS)
 			goto data_cleanup;
 
 		switch(token.type) {
@@ -594,7 +594,7 @@ insert_data(void) {
 			break;
 		case isc_tokentype_eol:
 		case isc_tokentype_eof:
-			
+
 			if ((data_type != 'u' && isc_buffer_usedlength(&buf) > 0) || data_type == 'b') {
 				/* perform insert operation */
 				if (data_type == 'd' || data_type == 'D') {
@@ -602,7 +602,7 @@ insert_data(void) {
 					isc_buffer_putmem(&buf, "\0", 1);
 					put_data(isc_boolean_true, NULL, (char *) &data_arr);
 				} else if (data_type == 'c' || data_type == 'C') {
-					put_data(isc_boolean_false, (char *) &data_arr, 
+					put_data(isc_boolean_false, (char *) &data_arr,
 						 (char *) &data_arr2);
 				} else if (data_type == 'b') {
 					fprintf(stderr, "Bad / unknown token encountered on line %lu."\
@@ -615,7 +615,7 @@ insert_data(void) {
 
 			if (token.type == isc_tokentype_eof) {
 				loop = isc_boolean_false;
-			}	
+			}
 
 			/* reset buffer for next insert */
 			isc_buffer_clear(&buf);
@@ -634,7 +634,7 @@ insert_data(void) {
  data_cleanup:
 	/* let user know we had problems */
 	fprintf(stderr, "Unknown error processing tokens during \"add\" or " \
-		"\"bulk\" operation.\nStoped processing on line %lu.", 
+		"\"bulk\" operation.\nStoped processing on line %lu.",
 		isc_lex_getsourceline(lexer));
 }
 
@@ -649,7 +649,7 @@ openBDB(void) {
 	/* Basically BDB allocates and assigns memory to db->dbenv */
 	bdbres = db_env_create(&db.dbenv, 0);
 	if (bdbres != 0) {
-		fprintf(stderr, "BDB environment could not be created. BDB error: %s", 
+		fprintf(stderr, "BDB environment could not be created. BDB error: %s",
 			db_strerror(bdbres));
 		result = ISC_R_FAILURE;
 		goto openBDB_cleanup;
@@ -658,10 +658,10 @@ openBDB(void) {
 	/* open BDB environment */
 	if (create_allowed == isc_boolean_true) {
 		/* allowed to create new files */
-		bdbres = db.dbenv->open(db.dbenv, db_envdir, 
+		bdbres = db.dbenv->open(db.dbenv, db_envdir,
 					DB_INIT_CDB | DB_INIT_MPOOL | DB_CREATE, 0);
 	} else {	/* not allowed to create new files. */
-		bdbres = db.dbenv->open(db.dbenv, db_envdir, 
+		bdbres = db.dbenv->open(db.dbenv, db_envdir,
 					DB_INIT_CDB | DB_INIT_MPOOL, 0);
 	}
 	if (bdbres != 0) {
@@ -676,7 +676,7 @@ openBDB(void) {
 	result = bdb_opendb(DB_RECNO, &db.data, dlz_data, 0);
 	if (result != ISC_R_SUCCESS)
 		goto openBDB_cleanup;
-	
+
 	/* open dlz_host database */
 	result = bdb_opendb(DB_BTREE, &db.host, dlz_host, DB_DUP | DB_DUPSORT);
 	if (result != ISC_R_SUCCESS)
@@ -754,7 +754,7 @@ open_lexer(void) {
 
 void
 close_lexer(void) {
-		
+
 	/* If lexer is still open, close it & destroy it. */
 	if (lexer != NULL) {
 		isc_lex_close(lexer);
@@ -783,10 +783,10 @@ operation_add(void) {
 	if (open_lexer() != ISC_R_SUCCESS) {
 		quit(4);
 	}
-	
+
 	/* copy input data to buffer */
 	isc_buffer_putstr(&lex_buffer, a_data);
-		
+
 	/* tell lexer to use buffer as input  */
 	if (isc_lex_openbuffer(lexer, &lex_buffer) != ISC_R_SUCCESS) {
 		fprintf(stderr, "unexpected error opening lexer buffer");
@@ -818,7 +818,7 @@ operation_bulk(void) {
 	if (bulk_file == NULL) {
 		if (isc_lex_openstream(lexer, stdin) != ISC_R_SUCCESS) {
 			fprintf(stderr, "unexpected error opening stdin by lexer.");
-			quit(4);				
+			quit(4);
 		}
 	} else if (isc_lex_openfile(lexer, bulk_file) != ISC_R_SUCCESS) {
 		fprintf(stderr, "unexpected error opening %s by lexer.", bulk_file);
@@ -826,7 +826,7 @@ operation_bulk(void) {
 	}
 
 	/* common logic for "add" & "bulk" operations are handled by insert_data */
-	insert_data();	
+	insert_data();
 }
 
 isc_result_t
@@ -840,7 +840,7 @@ bulk_write(char type, DB *database, DBC *dbcursor, DBT *bdbkey, DBT *bdbdata) {
 
 	/* use a 5MB buffer for the bulk dump */
 	int buffer_size = 5 * 1024 * 1024;
-         
+
 	/* try to allocate a 5 MB buffer, if we fail write err msg, die. */
 	bdbdata->data = malloc(buffer_size);
 	if (bdbdata->data == NULL) {
@@ -863,7 +863,7 @@ bulk_write(char type, DB *database, DBC *dbcursor, DBT *bdbkey, DBT *bdbdata) {
 	for (;;) {
 
 		/* loop through data until DB_NOTFOUND is returned */
-		bdbres = dbcursor->c_get(dbcursor, bdbkey, bdbdata, 
+		bdbres = dbcursor->c_get(dbcursor, bdbkey, bdbdata,
 					 DB_MULTIPLE_KEY | DB_NEXT);
 		/* if not successful did we encounter DB_NOTFOUND, or */
 		/* have  a different problem. */
@@ -889,7 +889,7 @@ bulk_write(char type, DB *database, DBC *dbcursor, DBT *bdbkey, DBT *bdbdata) {
 			if (type == 'c')
 				printf("c %.*s %.*s\n",(int)retklen, retkey,(int)retdlen, retdata);
 			else
-				printf("d %.*s\n", (int)retdlen, retdata); 
+				printf("d %.*s\n", (int)retdlen, retdata);
 		} /* end of for (DB_MULTIPLE_INIT....) */
 
 	} /* end of for (;;) */
@@ -1056,7 +1056,7 @@ operation_listOrDelete(isc_boolean_t dlt) {
 		/* print a header to explain the output */
 		printf("KEY | DATA\n");
 		/* loop and list all results. */
-		while (bdbres == 0) {	
+		while (bdbres == 0) {
 			/* get data */
 			bdbres = db.cursor4->c_get(db.cursor4, &bdbkey, &bdbdata, 0);
 			/* verify call had no errors */
@@ -1069,7 +1069,7 @@ operation_listOrDelete(isc_boolean_t dlt) {
 	}
 
 	if (c_ip != NULL && c_zone == NULL) {
-		fprintf(stderr, "i may only be specified when c is also specified\n");			
+		fprintf(stderr, "i may only be specified when c is also specified\n");
 		quit(2);
 	}
 	/* if client_zone was passed */
@@ -1121,7 +1121,7 @@ operation_listOrDelete(isc_boolean_t dlt) {
 			if (c_ip != NULL) {
 				break;
 			}
-			bdbres = db.cursor->c_get(db.cursor, &bdbkey, &bdbdata, DB_NEXT_DUP);			
+			bdbres = db.cursor->c_get(db.cursor, &bdbkey, &bdbdata, DB_NEXT_DUP);
 			if (bdbres != 0) {
 				break;
 			}
@@ -1170,7 +1170,7 @@ main(int argc, char **argv) {
 		case 'a':
 			checkOp(operation);
 			operation = add;
-			a_data = isc_commandline_argument; 
+			a_data = isc_commandline_argument;
 			break;
 		case 'f':
 			checkOp(operation);

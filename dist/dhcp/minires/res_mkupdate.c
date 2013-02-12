@@ -367,7 +367,7 @@ res_nmkupdate(res_state statp,
 				return (-1);
 			ShrinkBuffer(1);
 			*cp++ = i & 0xff;
-			 
+
 			for (i = 0; i < MAXPORT/8 ; i++)
 				bm[i] = 0;
 
@@ -662,7 +662,7 @@ res_nmkupdate(res_state statp,
 		n = (u_int16_t)((cp - sp2) - INT16SZ);
 		PUTSHORT(n, sp2);
 	} /*for*/
-		
+
 	hp->qdcount = htons(counts[0]);
 	hp->ancount = htons(counts[1]);
 	hp->nscount = htons(counts[2]);
@@ -680,7 +680,7 @@ static int
 getword_str(char *buf, int size, const u_char **startpp, const u_char *endp) {
         char *cp;
         int c;
- 
+
         for (cp = buf; *startpp <= endp; ) {
                 c = **startpp;
                 if (isspace(c) || c == '\0') {
@@ -709,7 +709,7 @@ static int
 getphrase_str(char *buf, int size, const u_char **startpp, const u_char *endp) {
         char *cp;
         int c;
- 
+
         for (cp = buf; *startpp <= endp; ) {
                 c = **startpp;
                 if (isspace(c) && cp == buf ) {
@@ -743,7 +743,7 @@ getstr_str(char *buf, int size, const u_char **startpp, const u_char *endp) {
 	int seen_quote = 0;
 	int escape = 0;
 	int dig = 0;
- 
+
 	for (cp = buf; *startpp <= endp; ) {
                 if ((c = **startpp) == '\0')
 			break;
@@ -761,7 +761,7 @@ getstr_str(char *buf, int size, const u_char **startpp, const u_char *endp) {
 				c1 = 0;
 				(*startpp)++;
 				continue;
-			} 
+			}
 			goto do_escape;
 		case '"':
 			if (!escape) {
@@ -785,7 +785,7 @@ getstr_str(char *buf, int size, const u_char **startpp, const u_char *endp) {
 				case '7':
 				case '8':
 				case '9':
-					c1 = c1 * 10 + 
+					c1 = c1 * 10 +
 						(strchr(digits, c) - digits);
 
 					if (++dig == 3) {
@@ -846,7 +846,7 @@ gethexnum_str(const u_char **startpp, const u_char *endp) {
                                 break;
                         }
 			return (-1);
-                }        
+                }
                 (*startpp)++;
 		if (isdigit(c))
 	                n = n * 16 + (c - '0');
@@ -891,7 +891,7 @@ getnum_str(const u_char **startpp, const u_char *endp) {
                                 break;
                         }
 			return (-1);
-                }        
+                }
                 (*startpp)++;
                 n = n * 10 + (c - '0');
                 seendigit = 1;

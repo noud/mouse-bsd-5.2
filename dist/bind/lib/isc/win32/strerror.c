@@ -91,9 +91,9 @@ isc__strerror(int num, char *buf, size_t size) {
 char *
 FormatError(int error) {
 	LPVOID lpMsgBuf = NULL;
-	FormatMessage( 
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-		FORMAT_MESSAGE_FROM_SYSTEM | 
+	FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
 		FORMAT_MESSAGE_IGNORE_INSERTS,
 		NULL,
 		error,
@@ -101,7 +101,7 @@ FormatError(int error) {
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		(LPTSTR) &lpMsgBuf,
 		0,
-		NULL); 
+		NULL);
 
 	return (lpMsgBuf);
 }
@@ -115,8 +115,8 @@ char *
 NTstrerror(int err, BOOL *bfreebuf) {
 	char *retmsg = NULL;
 
-	/* Copy the error value first in case of other errors */	
-	DWORD errval = err; 
+	/* Copy the error value first in case of other errors */
+	DWORD errval = err;
 
 	*bfreebuf = FALSE;
 
@@ -144,7 +144,7 @@ NTstrerror(int err, BOOL *bfreebuf) {
 void __cdecl
 NTperror(char *errmsg) {
 	/* Copy the error value first in case of other errors */
-	int errval = errno; 
+	int errval = errno;
 	BOOL bfreebuf = FALSE;
 	char *msg;
 

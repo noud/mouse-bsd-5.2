@@ -7,7 +7,7 @@ if KCM
 kcm_dir = kcm
 endif
 
-SUBDIRS=  include lib kuser kdc admin kadmin kpasswd 
+SUBDIRS=  include lib kuser kdc admin kadmin kpasswd
 SUBDIRS+= $(kcm_dir) appl doc tools tests packages etc
 
 ## ACLOCAL = @ACLOCAL@ -I cf

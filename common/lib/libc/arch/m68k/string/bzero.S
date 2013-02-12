@@ -79,7 +79,7 @@ ENTRY(bzero)
 
 	movql	#0,%d2
 
-	/* 
+	/*
 	 * It isn't worth the overhead of aligning to {long}word boundries
 	 * if the string is too short.
 	 */
@@ -89,7 +89,7 @@ ENTRY(bzero)
 	/* word align */
 	movl	%a0,%d0
 	btst	#0,%d0			| if (dst & 1)
-	jeq	Lbzalgndw		| 
+	jeq	Lbzalgndw		|
 	movb	%d2,%a0@+		| 	*(char *)dst++ = 0
 	subql	#1,%d1			|	len--
 Lbzalgndw:

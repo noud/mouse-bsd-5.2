@@ -72,7 +72,7 @@ isc_result_t omapi_auth_key_destroy (omapi_object_t *h,
 		dfree (a -> algorithm, MDL);
 	if (a -> key)
 		omapi_data_string_dereference (&a -> key, MDL);
-	
+
 	return ISC_R_SUCCESS;
 }
 
@@ -102,7 +102,7 @@ isc_result_t omapi_auth_key_enter (omapi_auth_key_t *a)
 	}
 	omapi_auth_key_hash_add (auth_key_hash, a -> name, 0, a, MDL);
 	return ISC_R_SUCCESS;
-	
+
 }
 
 isc_result_t omapi_auth_key_lookup_name (omapi_auth_key_t **a,

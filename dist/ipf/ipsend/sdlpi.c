@@ -138,7 +138,7 @@ int	tout;
 int	sendip(fd, pkt, len)
 int	fd, len;
 char	*pkt;
-{			
+{
 	struct strbuf dbuf, *dp = &dbuf, *cp = NULL;
 	int pri = 0;
 #ifdef DL_HP_RAWDLS

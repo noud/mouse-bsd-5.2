@@ -6,20 +6,20 @@ PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
 
 1.  DEFINITIONS
 
-"Contribution" means:  
-    a) in the case of International Business Machines Corporation ("IBM"), 
-       the Original Program, and 
-    b) in the case of each Contributor, 
+"Contribution" means:
+    a) in the case of International Business Machines Corporation ("IBM"),
+       the Original Program, and
+    b) in the case of each Contributor,
        i)  changes to the Program, and
        ii) additions to the Program;
            where such changes and/or additions to the Program originate
-           from and are distributed by that particular Contributor.  
-           A Contribution 'originates' from a Contributor if it was added 
-           to the Program by such Contributor itself or anyone acting on 
-           such Contributor's behalf.  
+           from and are distributed by that particular Contributor.
+           A Contribution 'originates' from a Contributor if it was added
+           to the Program by such Contributor itself or anyone acting on
+           such Contributor's behalf.
     Contributions do not include additions to the Program which:
-       (i)  are separate modules of software distributed in conjunction 
-            with the Program under their own license agreement, and 
+       (i)  are separate modules of software distributed in conjunction
+            with the Program under their own license agreement, and
        (ii) are not derivative works of the Program.
 
 "Contributor" means IBM and any other entity that distributes the Program.
@@ -34,7 +34,7 @@ and documentation, if any.
 
 "Program" means the Original Program and Contributions.
 
-"Recipient" means anyone who receives the Program under this Agreement, 
+"Recipient" means anyone who receives the Program under this Agreement,
 including all Contributors.
 
 2.  GRANT OF RIGHTS
@@ -78,7 +78,7 @@ including all Contributors.
 
 3.  REQUIREMENTS
 
-A Contributor may choose to distribute the Program in object code form 
+A Contributor may choose to distribute the Program in object code form
 under its own license agreement, provided that:
     a) it complies with the terms and conditions of this Agreement; and
     b) its license agreement:
@@ -87,31 +87,31 @@ under its own license agreement, provided that:
             warranties or conditions of title and non-infringement, and
             implied warranties or conditions of merchantability and fitness
             for a particular purpose;
-       ii)  effectively excludes on behalf of all Contributors all 
-            liability for damages, including direct, indirect, special, 
-            incidental and consequential damages, such as lost profits; 
-       iii) states that any provisions which differ from this Agreement 
-            are offered by that Contributor alone and not by any other 
+       ii)  effectively excludes on behalf of all Contributors all
+            liability for damages, including direct, indirect, special,
+            incidental and consequential damages, such as lost profits;
+       iii) states that any provisions which differ from this Agreement
+            are offered by that Contributor alone and not by any other
             party; and
-       iv)  states that source code for the Program is available from 
-            such Contributor, and informs licensees how to obtain it in a 
-            reasonable manner on or through a medium customarily used for 
-            software exchange. 
+       iv)  states that source code for the Program is available from
+            such Contributor, and informs licensees how to obtain it in a
+            reasonable manner on or through a medium customarily used for
+            software exchange.
 
 When the Program is made available in source code form:
-    a) it must be made available under this Agreement; and 
-    b) a copy of this Agreement must be included with each copy of the 
-       Program.  
+    a) it must be made available under this Agreement; and
+    b) a copy of this Agreement must be included with each copy of the
+       Program.
 
-Each Contributor must include the following in a conspicuous location 
-in the Program: 
+Each Contributor must include the following in a conspicuous location
+in the Program:
 
     Copyright (c) 1997,1998,1999, International Business Machines
     Corporation and others. All Rights Reserved.
 
 In addition, each Contributor must identify itself as the originator of
 its Contribution, if any, in a manner that reasonably allows subsequent
-Recipients to identify the originator of the Contribution. 
+Recipients to identify the originator of the Contribution.
 
 4.  COMMERCIAL DISTRIBUTION
 
@@ -132,10 +132,10 @@ product offering.  The obligations in this section do not apply to any
 claims or Losses relating to any actual or alleged intellectual property
 infringement.  In order to qualify, an Indemnified Contributor must:
     a) promptly notify the Commercial Contributor in writing of such claim,
-and 
+and
     b) allow the Commercial Contributor to control, and cooperate with
-       the Commercial Contributor in, the defense and any related 
-       settlement negotiations.  The Indemnified Contributor may 
+       the Commercial Contributor in, the defense and any related
+       settlement negotiations.  The Indemnified Contributor may
        participate in any such claim at its own expense.
 
 For example, a Contributor might include the Program in a commercial
@@ -160,7 +160,7 @@ the appropriateness of using and distributing the Program and assumes
 all risks associated with its exercise of rights under this Agreement,
 including but not limited to the risks and costs of program errors,
 compliance with applicable laws, damage to or loss of data, programs or
-equipment, and unavailability or interruption of operations. 
+equipment, and unavailability or interruption of operations.
 
 6.  DISCLAIMER OF LIABILITY
 
@@ -199,7 +199,7 @@ becoming aware of such noncompliance.  If all Recipient's rights under
 this Agreement terminate, Recipient agrees to cease use and distribution
 of the Program as soon as reasonably practicable.  However, Recipient's
 obligations under this Agreement and any licenses granted by Recipient
-relating to the Program shall continue and survive. 
+relating to the Program shall continue and survive.
 
 IBM may publish new versions (including revisions) of this Agreement
 from time to time.  Each new version of the Agreement will be given a
@@ -218,4 +218,4 @@ This Agreement is governed by the laws of the State of New York and the
 intellectual property laws of the United States of America. No party to
 this Agreement will bring a legal action under this Agreement more than
 one year after the cause of action arose.  Each party waives its rights
-to a jury trial in any resulting litigation. 
+to a jury trial in any resulting litigation.

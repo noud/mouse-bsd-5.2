@@ -743,7 +743,7 @@ static void eap_peap_process_phase2_tlv(struct eap_sm *sm,
 				eap_peap_state(data, SUCCESS);
 			else
 				eap_peap_state(data, FAILURE);
-			
+
 		} else if (status == EAP_TLV_RESULT_FAILURE) {
 			wpa_printf(MSG_INFO, "EAP-PEAP: TLV Result - Failure "
 				   "- requested %s", requested);

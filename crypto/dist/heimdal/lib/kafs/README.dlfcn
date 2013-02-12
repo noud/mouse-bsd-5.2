@@ -226,7 +226,7 @@ added path to dlopen error message to make clear where there error occured.
 D 1.4 93/01/03 19:13:56 jum 4 3	00061/00005/00403
 MRs:
 COMMENTS:
-to allow calling symbols in the main module call load with L_NOAUTODEFER and 
+to allow calling symbols in the main module call load with L_NOAUTODEFER and
 do a loadbind later with the main module.
 
 D 1.3 92/12/27 20:59:55 jum 3 2	00066/00008/00342

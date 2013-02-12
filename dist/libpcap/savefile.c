@@ -420,7 +420,7 @@ static const char rcsid[] _U_ =
 
 /*
  * Juniper-private data link type, as per request from
- * Hannes Gredler <hannes@juniper.net>. 
+ * Hannes Gredler <hannes@juniper.net>.
  * The Link Types are used for prepending meta-information
  * like interface index, interface name
  * before standard Ethernet, PPP, Frelay & C-HDLC Frames
@@ -1247,7 +1247,7 @@ pcap_dump_open(pcap_t *p, const char *fname)
  */
 pcap_dumper_t *
 pcap_dump_fopen(pcap_t *p, FILE *f)
-{	
+{
 	int linktype;
 
 	linktype = dlt_to_linktype(p->linktype);

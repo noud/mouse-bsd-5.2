@@ -45,7 +45,7 @@
  * connection to the database per zone, which is inefficient.  It also may
  * not handle quoting correctly.
  *
- * The table must contain the fields "name", "rdtype", and "rdata", and 
+ * The table must contain the fields "name", "rdtype", and "rdata", and
  * is expected to contain a properly constructed zone.  The program "zonetodb"
  * creates such a table.
  */

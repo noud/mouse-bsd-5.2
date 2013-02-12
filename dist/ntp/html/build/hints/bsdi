@@ -41,11 +41,11 @@ To install the software:
 
 	Craft a config file and a key file, and put them in the right places.
 	There is information on how to do this elsewhere in the documentation,
-	the only thing I'll mention is that I put the drift file in 
-	/var/log/ntp.drift, and the authdelay on my 486DX/50 system is 
+	the only thing I'll mention is that I put the drift file in
+	/var/log/ntp.drift, and the authdelay on my 486DX/50 system is
 	0.000064.  Your mileage will vary, learn to use the authspeed tools
 	if you're going to authenticate.
-	
+
 	In the file /etc/rc.local, make sure that the invocation of ntpd is
 	commented out, and add an invocation of xntpd.  Here's what I'm using:
 
@@ -60,6 +60,6 @@ To install the software:
 At this point, you should be good to go.  Try running /usr/local/etc/xntpd and
 using ntpq or xntpdc to see if things are working, then pay attention the next
 time you reboot to make sure that xntpd is being invoked, and use ntpq or
-xntpdc again to make sure all is well.  
+xntpdc again to make sure all is well.
 
 Enjoy!

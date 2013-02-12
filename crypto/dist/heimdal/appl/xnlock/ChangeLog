@@ -6,19 +6,19 @@
 
 	* xnlock.c: Don't include <X11/Xos.h>, its x11's "roken.h" and we
 	do that just fine ourself thanks.
-	
+
 2006-05-13  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* xnlock.c (main): argc_in_out argument to XtVaAppInitialize
 	should be an 'int *' accoring to manpage and headerfile, so remove
 	the cast added in 1996
 	(rev 1.54)
-	
+
 2005-10-22  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* xnlock.c: Check return value from asprintf instead of string !=
 	NULL since it undefined behavior on Linux. From Björn Sandell
-	
+
 2005-04-06  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* xnlock.c: use NULL as last argument to execl, not 0
@@ -36,7 +36,7 @@
 2004-03-22  Johan Danielsson  <joda@pdc.kth.se>
 
 	* xnlock.c: protect the world from des_encrypt in crypt.h
-	
+
 2004-03-01  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* xnlock.c: include <crypt.h>, From: Fredrik Ljungberg
@@ -45,11 +45,11 @@
 2003-09-30  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* xnlock.c (verify_krb5): set mcred.client too
-	
+
 2003-08-25  Johan Danielsson  <joda@pdc.kth.se>
 
 	* Makefile.am: fix automake conditional foo
-	
+
 2003-08-16  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* Makefile.am: Don't do local checks on xnlock, it only passes if
@@ -59,7 +59,7 @@
 2003-07-07  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* xnlock.c (verify_krb5): use krb5_cc_clear_mcred
-	
+
 2003-05-06  Johan Danielsson  <joda@pdc.kth.se>
 
 	* no checks here
@@ -67,16 +67,16 @@
 2003-04-29  Love Hörnquist Åstrand <lha@it.su.se>
 
 	* xnlock.c: include kafs.h in the krb5 case
-	
+
 2003-04-14  Love Hörnquist Åstrand <lha@it.su.se>
 
 	* xnlock.c (GetPasswd): cast argument to isprint to unsigned char,
 	From Christian Biere <christianbiere@gmx.de> via NetBSD
-	
+
 2003-03-18  Love Hörnquist Åstrand <lha@it.su.se>
 
 	* xnlock.c: do krb5_afslog when compling with afs support
-	
+
 2003-02-10  Assar Westerlund  <assar@kth.se>
 
 	* xnlock.c (verify): move ret to where it's used

@@ -6,18 +6,18 @@
 2006-10-07  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* Makefile.am: Add man_MANS to EXTRA_DIST
-	
+
 2006-05-05  Love Hörnquist Åstrand  <lha@it.su.se>
-	
+
 	* Rename u_intXX_t to uintXX_t
-	
+
 2005-07-09  Love Hörquist Åstrand  <lha@it.su.se>
-	
+
 	* kxd.c (doit): only cleaup for active sockets, passive does it
 	own cleaning up
 
 	* fix unconst and shadow warnings
-	
+
 2005-07-07  Assar Westerlund  <assar@kth.se>
 
 	* krb4.c: Do not assume that des_key_schedule is an
@@ -30,26 +30,26 @@
 2005-04-30  Love Hörquist Åstrand  <lha@it.su.se>
 
 	* kx.c (connect_host): make sure s is initialized
-	
+
 2005-04-20  Love Hörquist Åstrand  <lha@it.su.se>
 
 	* krb5.c: cast size_t to unsigned long
-	
+
 2004-03-15  Love Hörquist Åstrand  <lha@it.su.se>
 
 	* krb5.c (krb5_destroy): free allocated memory, not something else
-	
+
 2004-03-07  Love Hörquist Åstrand  <lha@it.su.se>
 
 	* rxtelnet.1: document new behavior
-	
+
 	* rxtelnet.in: even if kx failes, start anyway From: Harald Barth
 	<haba@pdc.kth.se>
-	
+
 2004-02-18  Love Hörquist Åstrand  <lha@it.su.se>
 
 	* krb4.c: remove dup on
-	
+
 2004-01-08  Love Hörquist Åstrand  <lha@it.su.se>
 
 	* krb5.c: clean up krb5 support, log to syslog instead of stdout
@@ -84,11 +84,11 @@
 	* rxtelnet.1: spelling, from jmc <jmc@prioris.mini.pw.edu.pl>
 	* kxd.8: spelling, from jmc <jmc@prioris.mini.pw.edu.pl>
 	* kx.1: spelling, from jmc <jmc@prioris.mini.pw.edu.pl>
-	
+
 2003-02-25  Love Hörquist Åstrand  <lha@it.su.se>
 
 	* krb4.c: remove \n from warnx, from NetBSD
-	
+
 2002-12-11  Johan Danielsson  <joda@pdc.kth.se>
 
 	* kx.c (connect_host): pass size of thisaddr_ss to getsockname
@@ -126,7 +126,7 @@
 
 	* rxterm.in: add -K (send arguments to kx)
 	* rxtelnet.in: add -K (send arguments to kx)
-	
+
 2001-06-21  Assar Westerlund  <assar@sics.se>
 
 	* rxterm.in: add -b for pointing to the rsh program.  from
@@ -219,11 +219,11 @@
 
 	* krb4.c (krb4_authenticate): obtain the `local' address when
 	doing NAT.  also turn on passive mode.  From <thn@stacken.kth.se>
-	
+
 1999-11-18  Assar Westerlund  <assar@sics.se>
 
 	* krb5.c (krb5_destroy): free the correct part of the context
-	
+
 1999-11-02  Assar Westerlund  <assar@sics.se>
 
 	* kx.c (main): redo the v4/v5 selection for consistency.  -4 ->
@@ -298,14 +298,14 @@
 1999-05-10  Assar Westerlund  <assar@sics.se>
 
 	* Makefile.in (SOURCES*): update sources list
-	
+
 	* kx.c (main): forgot to conditionalize some KRB5 code
-	
+
 	* kxd.c (main): use getarg
 	(*): handle v4 and/or v5
 
 	* kx.h: update
-	
+
 	* kx.c (main): use getarg.
 	(*): handle v4 and/or v5
 
@@ -313,7 +313,7 @@
 	net_{read,write} instead of krb_net_{read,write}
 	(krb_get_int, krb_put_int): include fallback of these for when we
 	compile without krb4
-	
+
 	* Makefile.am (*_SOURCES): remove encdata, add krb[45].c,
 	context.c
 	(LDADD): add krb5
@@ -338,7 +338,7 @@
 	patch from Ake Sandgren <ake@@cs.umu.se>
 
 Wed Apr  7 23:39:23 1999  Assar Westerlund  <assar@sics.se>
-	
+
 	* common.c (get_xsockets): init local variable to get rid of a gcc
  	warning
 

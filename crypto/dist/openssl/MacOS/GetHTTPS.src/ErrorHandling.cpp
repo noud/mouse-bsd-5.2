@@ -6,7 +6,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -51,9 +51,9 @@
  * Hudson (tjh@cryptsoft.com).
  *
  */
- 
- 
- 
+
+
+
  #include "ErrorHandling.hpp"
 #include "CPStringUtils.hpp"
 
@@ -132,7 +132,7 @@ OSErr		errCode;
 
 
 	errCode = CopyCStrToNewHandle(gErrorMessage,inoutHandle);
-	
+
 	return(errCode);
 }
 
@@ -143,7 +143,7 @@ OSErr		errCode;
 
 
 	errCode = CopyCStrToExistingHandle(gErrorMessage,inoutHandle);
-	
+
 	return(errCode);
 }
 
@@ -155,7 +155,7 @@ OSErr		errCode;
 
 
 	errCode = AppendCStrToHandle(gErrorMessage,inoutHandle,nil);
-	
+
 	return(errCode);
 }
 

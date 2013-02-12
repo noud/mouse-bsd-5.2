@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 2004-2005 Emmanuel Dreyfus
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -105,7 +105,7 @@ struct rad_handle *radius_acct_state = NULL;
 
 static char *PAM_usr = NULL;
 static char *PAM_pwd = NULL;
-static int PAM_conv(int, const struct pam_message **, 
+static int PAM_conv(int, const struct pam_message **,
     struct pam_response **, void *);
 static struct pam_conv PAM_chat = { &PAM_conv, NULL };
 #endif
@@ -116,7 +116,7 @@ static struct pam_conv PAM_chat = { &PAM_conv, NULL };
 struct xauth_ldap_config xauth_ldap_config;
 #endif
 
-void 
+void
 xauth_sendreq(iph1)
 	struct ph1handle *iph1;
 {
@@ -130,13 +130,13 @@ xauth_sendreq(iph1)
 
 	/* Status checks */
 	if (iph1->status != PHASE1ST_ESTABLISHED) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Xauth request while phase 1 is not completed\n");
 		return;
 	}
 
 	if (xst->status != XAUTHST_NOTYET) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Xauth request whith Xauth state %d\n", xst->status);
 		return;
 	}
@@ -147,12 +147,12 @@ xauth_sendreq(iph1)
 	       + sizeof(*typeattr) +
 	       + sizeof(*usrattr) +
 	       + sizeof(*pwdattr);
-	
+
 	if ((buffer = vmalloc(tlen)) == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL, "Cannot allocate buffer\n");
 		return;
 	}
-	
+
 	attr = (struct isakmp_pl_attr *)buffer->v;
 	memset(attr, 0, tlen);
 
@@ -172,9 +172,9 @@ xauth_sendreq(iph1)
 	pwdattr->type = htons(XAUTH_USER_PASSWORD | ISAKMP_GEN_TLV);
 	pwdattr->lorv = htons(0);
 
-	isakmp_cfg_send(iph1, buffer, 
+	isakmp_cfg_send(iph1, buffer,
 	    ISAKMP_NPTYPE_ATTR, ISAKMP_FLAG_E, 1);
-	
+
 	vfree(buffer);
 
 	xst->status = XAUTHST_REQSENT;
@@ -194,14 +194,14 @@ xauth_attr_reply(iph1, attr, id)
 	struct xauth_state *xst = &iph1->mode_cfg->xauth;
 
 	if ((iph1->mode_cfg->flags & ISAKMP_CFG_VENDORID_XAUTH) == 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Xauth reply but peer did not declare "
 		    "itself as Xauth capable\n");
 		return -1;
 	}
 
 	if (xst->status != XAUTHST_REQSENT) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Xauth reply while Xauth state is %d\n", xst->status);
 		return -1;
 	}
@@ -214,8 +214,8 @@ xauth_attr_reply(iph1, attr, id)
 			xst->authtype = XAUTH_TYPE_GENERIC;
 			break;
 		default:
-			plog(LLV_WARNING, LOCATION, NULL, 
-			    "Unexpected authentication type %d\n", 
+			plog(LLV_WARNING, LOCATION, NULL,
+			    "Unexpected authentication type %d\n",
 			    ntohs(type));
 			return -1;
 		}
@@ -226,11 +226,11 @@ xauth_attr_reply(iph1, attr, id)
 		break;
 
 	case XAUTH_USER_PASSWORD:
-		outlet = &xst->authdata.generic.pwd; 
+		outlet = &xst->authdata.generic.pwd;
 		break;
 
 	default:
-		plog(LLV_WARNING, LOCATION, NULL, 
+		plog(LLV_WARNING, LOCATION, NULL,
 		    "ignored Xauth attribute %d\n", type);
 		break;
 	}
@@ -239,7 +239,7 @@ xauth_attr_reply(iph1, attr, id)
 		alen = ntohs(attr->lorv);
 
 		if ((*outlet = racoon_malloc(alen + 1)) == NULL) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot allocate memory for Xauth Data\n");
 			return -1;
 		}
@@ -249,7 +249,7 @@ xauth_attr_reply(iph1, attr, id)
 		outlet = NULL;
 	}
 
-	
+
 	if ((xst->authdata.generic.usr != NULL) &&
 	   (xst->authdata.generic.pwd != NULL)) {
 		int port;
@@ -259,7 +259,7 @@ xauth_attr_reply(iph1, attr, id)
 		time_t throttle_delay = 0;
 
 #if 0	/* Real debug, don't do that at home */
-		plog(LLV_DEBUG, LOCATION, NULL, 
+		plog(LLV_DEBUG, LOCATION, NULL,
 		    "Got username \"%s\", password \"%s\"\n", usr, pwd);
 #endif
 		strncpy(iph1->mode_cfg->login, usr, LOGINLEN);
@@ -267,10 +267,10 @@ xauth_attr_reply(iph1, attr, id)
 
 		res = -1;
 		if ((port = isakmp_cfg_getport(iph1)) == -1) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Port pool depleted\n");
 			goto skip_auth;
-		}	
+		}
 
 		switch (isakmp_cfg_config.authsource) {
 		case ISAKMP_CFG_AUTH_SYSTEM:
@@ -283,7 +283,7 @@ xauth_attr_reply(iph1, attr, id)
 #endif
 #ifdef HAVE_LIBPAM
 		case ISAKMP_CFG_AUTH_PAM:
-			res = privsep_xauth_login_pam(iph1->mode_cfg->port, 
+			res = privsep_xauth_login_pam(iph1->mode_cfg->port,
 			    iph1->remote, usr, pwd);
 			break;
 #endif
@@ -293,7 +293,7 @@ xauth_attr_reply(iph1, attr, id)
 			break;
 #endif
 		default:
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Unexpected authentication source\n");
 			res = -1;
 			break;
@@ -317,7 +317,7 @@ xauth_attr_reply(iph1, attr, id)
 
 			str = saddrwop2str(iph1->remote);
 
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Throttling in action for %s: delay %lds\n",
 			    str, (unsigned long)throttle_delay);
 			res = -1;
@@ -330,7 +330,7 @@ skip_auth:
 			struct xauth_reply_arg *xra;
 
 			if ((xra = racoon_malloc(sizeof(*xra))) == NULL) {
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "malloc failed, bypass throttling\n");
 				return xauth_reply(iph1, port, id, res);
 			}
@@ -353,7 +353,7 @@ skip_auth:
 	return 0;
 }
 
-void 
+void
 xauth_reply_stub(args)
 	void *args;
 {
@@ -363,8 +363,8 @@ xauth_reply_stub(args)
 	if ((iph1 = getph1byindex(&xra->index)) != NULL)
 		(void)xauth_reply(iph1, xra->port, xra->id, xra->res);
 	else
-		plog(LLV_ERROR, LOCATION, NULL, 
-		    "Delayed Xauth reply: phase 1 no longer exists.\n"); 
+		plog(LLV_ERROR, LOCATION, NULL,
+		    "Delayed Xauth reply: phase 1 no longer exists.\n");
 
 	racoon_free(xra);
 	return;
@@ -383,9 +383,9 @@ xauth_reply(iph1, port, id, res)
 		if (port != -1)
 			isakmp_cfg_putport(iph1, port);
 
-		plog(LLV_INFO, LOCATION, NULL, 
+		plog(LLV_INFO, LOCATION, NULL,
 		    "login failed for user \"%s\"\n", usr);
-		
+
 		xauth_sendstatus(iph1, XAUTH_STATUS_FAIL, id);
 		xst->status = XAUTHST_NOTYET;
 
@@ -399,7 +399,7 @@ xauth_reply(iph1, port, id, res)
 	}
 
 	xst->status = XAUTHST_OK;
-	plog(LLV_INFO, LOCATION, NULL, 
+	plog(LLV_INFO, LOCATION, NULL,
 	    "login succeeded for user \"%s\"\n", usr);
 
 	xauth_sendstatus(iph1, XAUTH_STATUS_OK, id);
@@ -419,13 +419,13 @@ xauth_sendstatus(iph1, status, id)
 	size_t tlen;
 
 	tlen = sizeof(*attr) +
-	       + sizeof(*stattr); 
-	
+	       + sizeof(*stattr);
+
 	if ((buffer = vmalloc(tlen)) == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL, "Cannot allocate buffer\n");
 		return;
 	}
-	
+
 	attr = (struct isakmp_pl_attr *)buffer->v;
 	memset(attr, 0, tlen);
 
@@ -437,12 +437,12 @@ xauth_sendstatus(iph1, status, id)
 	stattr->type = htons(XAUTH_STATUS | ISAKMP_GEN_TV);
 	stattr->lorv = htons(status);
 
-	isakmp_cfg_send(iph1, buffer, 
+	isakmp_cfg_send(iph1, buffer,
 	    ISAKMP_NPTYPE_ATTR, ISAKMP_FLAG_E, 1);
-	
+
 	vfree(buffer);
 
-	return;	
+	return;
 }
 
 #ifdef HAVE_LIBRADIUS
@@ -453,14 +453,14 @@ xauth_radius_init(void)
 	if ((isakmp_cfg_config.authsource == ISAKMP_CFG_AUTH_RADIUS) &&
 	    (radius_auth_state == NULL)) {
 		if ((radius_auth_state = rad_auth_open()) == NULL) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot init libradius\n");
 			return -1;
 		}
 
 		if (rad_config(radius_auth_state, NULL) != 0) {
-			plog(LLV_ERROR, LOCATION, NULL, 
-			    "Cannot open librarius config file: %s\n", 
+			plog(LLV_ERROR, LOCATION, NULL,
+			    "Cannot open librarius config file: %s\n",
 			    rad_strerror(radius_auth_state));
 			rad_close(radius_auth_state);
 			radius_auth_state = NULL;
@@ -471,14 +471,14 @@ xauth_radius_init(void)
 	if ((isakmp_cfg_config.accounting == ISAKMP_CFG_ACCT_RADIUS) &&
 	    (radius_acct_state == NULL)) {
 		if ((radius_acct_state = rad_acct_open()) == NULL) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot init libradius\n");
 			return -1;
 		}
 
 		if (rad_config(radius_acct_state, NULL) != 0) {
-			plog(LLV_ERROR, LOCATION, NULL, 
-			    "Cannot open librarius config file: %s\n", 
+			plog(LLV_ERROR, LOCATION, NULL,
+			    "Cannot open librarius config file: %s\n",
 			    rad_strerror(radius_acct_state));
 			rad_close(radius_acct_state);
 			radius_acct_state = NULL;
@@ -501,22 +501,22 @@ xauth_login_radius(iph1, usr, pwd)
 	int type;
 
 	if (rad_create_request(radius_auth_state, RAD_ACCESS_REQUEST) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
-		    "rad_create_request failed: %s\n", 
+		plog(LLV_ERROR, LOCATION, NULL,
+		    "rad_create_request failed: %s\n",
 		    rad_strerror(radius_auth_state));
 		return -1;
 	}
-	
+
 	if (rad_put_string(radius_auth_state, RAD_USER_NAME, usr) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
-		    "rad_put_string failed: %s\n", 
+		plog(LLV_ERROR, LOCATION, NULL,
+		    "rad_put_string failed: %s\n",
 		    rad_strerror(radius_auth_state));
 		return -1;
 	}
 
 	if (rad_put_string(radius_auth_state, RAD_USER_PASSWORD, pwd) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
-		    "rad_put_string failed: %s\n", 
+		plog(LLV_ERROR, LOCATION, NULL,
+		    "rad_put_string failed: %s\n",
 		    rad_strerror(radius_auth_state));
 		return -1;
 	}
@@ -530,13 +530,13 @@ xauth_login_radius(iph1, usr, pwd)
 			switch (type) {
 			case RAD_FRAMED_IP_ADDRESS:
 				iph1->mode_cfg->addr4 = rad_cvt_addr(data);
-				iph1->mode_cfg->flags 
+				iph1->mode_cfg->flags
 				    |= ISAKMP_CFG_ADDR4_EXTERN;
 				break;
 
 			case RAD_FRAMED_IP_NETMASK:
 				iph1->mode_cfg->mask4 = rad_cvt_addr(data);
-				iph1->mode_cfg->flags 
+				iph1->mode_cfg->flags
 				    |= ISAKMP_CFG_MASK4_EXTERN;
 				break;
 
@@ -555,13 +555,13 @@ xauth_login_radius(iph1, usr, pwd)
 		break;
 
 	case -1:
-		plog(LLV_ERROR, LOCATION, NULL, 
-		    "rad_send_request failed: %s\n", 
+		plog(LLV_ERROR, LOCATION, NULL,
+		    "rad_send_request failed: %s\n",
 		    rad_strerror(radius_auth_state));
 		return -1;
 		break;
 	default:
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "rad_send_request returned %d\n", res);
 		return -1;
 		break;
@@ -572,7 +572,7 @@ xauth_login_radius(iph1, usr, pwd)
 #endif
 
 #ifdef HAVE_LIBPAM
-static int 
+static int
 PAM_conv(msg_count, msg, rsp, dontcare)
 	int msg_count;
 	const struct pam_message **msg;
@@ -583,7 +583,7 @@ PAM_conv(msg_count, msg, rsp, dontcare)
 	int replies = 0;
 	struct pam_response *reply = NULL;
 
-	if ((reply = racoon_malloc(sizeof(*reply) * msg_count)) == NULL) 
+	if ((reply = racoon_malloc(sizeof(*reply) * msg_count)) == NULL)
 		return PAM_CONV_ERR;
 	bzero(reply, sizeof(*reply) * msg_count);
 
@@ -593,7 +593,7 @@ PAM_conv(msg_count, msg, rsp, dontcare)
 			/* Send the username, libpam frees resp */
 			reply[i].resp_retcode = PAM_SUCCESS;
 			if ((reply[i].resp = strdup(PAM_usr)) == NULL) {
-				plog(LLV_ERROR, LOCATION, 
+				plog(LLV_ERROR, LOCATION,
 				    NULL, "strdup failed\n");
 				exit(1);
 			}
@@ -603,7 +603,7 @@ PAM_conv(msg_count, msg, rsp, dontcare)
 			/* Send the password, libpam frees resp */
 			reply[i].resp_retcode = PAM_SUCCESS;
 			if ((reply[i].resp = strdup(PAM_pwd)) == NULL) {
-				plog(LLV_ERROR, LOCATION, 
+				plog(LLV_ERROR, LOCATION,
 				    NULL, "strdup failed\n");
 				exit(1);
 			}
@@ -650,14 +650,14 @@ xauth_login_pam(port, raddr, usr, pwd)
 		return -1;
 	}
 
-	if ((error = pam_start("racoon", usr, 
+	if ((error = pam_start("racoon", usr,
 	    &PAM_chat, &isakmp_cfg_config.port_pool[port].pam)) != 0) {
 		if (isakmp_cfg_config.port_pool[port].pam == NULL) {
 			plog(LLV_ERROR, LOCATION, NULL, "pam_start failed\n");
 			return -1;
 		} else {
-			plog(LLV_ERROR, LOCATION, NULL, 
-			    "pam_start failed: %s\n", 
+			plog(LLV_ERROR, LOCATION, NULL,
+			    "pam_start failed: %s\n",
 			    pam_strerror(isakmp_cfg_config.port_pool[port].pam,
 			    error));
 			goto out;
@@ -667,13 +667,13 @@ xauth_login_pam(port, raddr, usr, pwd)
 
 	if ((remote = strdup(saddrwop2str(raddr))) == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
-		    "cannot allocate memory: %s\n", strerror(errno)); 
+		    "cannot allocate memory: %s\n", strerror(errno));
 		goto out;
 	}
-	
+
 	if ((error = pam_set_item(pam, PAM_RHOST, remote)) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
-		    "pam_set_item failed: %s\n", 
+		plog(LLV_ERROR, LOCATION, NULL,
+		    "pam_set_item failed: %s\n",
 		    pam_strerror(pam, error));
 		goto out;
 	}
@@ -684,22 +684,22 @@ xauth_login_pam(port, raddr, usr, pwd)
 	PAM_usr = NULL;
 	PAM_pwd = NULL;
 	if (error != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
-		    "pam_authenticate failed: %s\n", 
+		plog(LLV_ERROR, LOCATION, NULL,
+		    "pam_authenticate failed: %s\n",
 		    pam_strerror(pam, error));
 		goto out;
 	}
 
 	if ((error = pam_acct_mgmt(pam, 0)) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
-		    "pam_acct_mgmt failed: %s\n", 
+		plog(LLV_ERROR, LOCATION, NULL,
+		    "pam_acct_mgmt failed: %s\n",
 		    pam_strerror(pam, error));
 		goto out;
 	}
 
 	if ((error = pam_setcred(pam, 0)) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
-		    "pam_setcred failed: %s\n", 
+		plog(LLV_ERROR, LOCATION, NULL,
+		    "pam_setcred failed: %s\n",
 		    pam_strerror(pam, error));
 		goto out;
 	}
@@ -719,7 +719,7 @@ out:
 #endif
 
 #ifdef HAVE_LIBLDAP
-int 
+int
 xauth_ldap_init(void)
 {
 	int tmplen;
@@ -750,7 +750,7 @@ xauth_ldap_init(void)
 	tmplen = strlen(LDAP_DFLT_USER);
 	xauth_ldap_config.attr_user = vmalloc(tmplen);
 	if (xauth_ldap_config.attr_user == NULL)
-		goto out;	
+		goto out;
 	memcpy(xauth_ldap_config.attr_user->v, LDAP_DFLT_USER, tmplen);
 
 	/* set default address attribute */
@@ -863,7 +863,7 @@ xauth_login_ldap(iph1, usr, pwd)
 			NULL, NULL, NULL,
 			NULL, NULL, NULL);
 	}
-	
+
 	if (res!=LDAP_SUCCESS) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"ldap_sasl_bind_s (search) failed: %s\n",
@@ -918,14 +918,14 @@ xauth_login_ldap(iph1, usr, pwd)
 	/* check the number of ldap entries returned */
 	ecount = ldap_count_entries(ld, lr);
 	if (ecount < 1) {
-		plog(LLV_WARNING, LOCATION, NULL, 
-			"no ldap results for filter \'%s\'\n", 
+		plog(LLV_WARNING, LOCATION, NULL,
+			"no ldap results for filter \'%s\'\n",
 			 filter);
 		goto ldap_end;
 	}
 	if (ecount > 1) {
-		plog(LLV_WARNING, LOCATION, NULL, 
-			"multiple (%i) ldap results for filter \'%s\'\n", 
+		plog(LLV_WARNING, LOCATION, NULL,
+			"multiple (%i) ldap results for filter \'%s\'\n",
 			ecount, filter);
 	}
 
@@ -1135,8 +1135,8 @@ xauth_group_ldap(udn, grp)
 	/* check the number of ldap entries returned */
 	ecount = ldap_count_entries(ld, lr);
 	if (ecount < 1) {
-		plog(LLV_WARNING, LOCATION, NULL, 
-			"no ldap results for filter \'%s\'\n", 
+		plog(LLV_WARNING, LOCATION, NULL,
+			"no ldap results for filter \'%s\'\n",
 			 filter);
 		goto ldap_group_end;
 	}
@@ -1244,14 +1244,14 @@ xauth_group_system(usr, grp)
 	return -1;
 }
 
-int 
+int
 xauth_check(iph1)
 	struct ph1handle *iph1;
 {
 	struct xauth_state *xst = &iph1->mode_cfg->xauth;
 
-	/* 
- 	 * Only the server side (edge device) really check for Xauth 
+	/*
+ 	 * Only the server side (edge device) really check for Xauth
 	 * status. It does it if the chose authmethod is using Xauth.
 	 * On the client side (roadwarrior), we don't check anything.
 	 */
@@ -1381,7 +1381,7 @@ isakmp_xauth_req(iph1, attr)
 	int freepwd = 0;
 
 	if ((iph1->mode_cfg->flags & ISAKMP_CFG_VENDORID_XAUTH) == 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Xauth mode config request but peer "
 		    "did not declare itself as Xauth capable\n");
 		return NULL;
@@ -1393,13 +1393,13 @@ isakmp_xauth_req(iph1, attr)
 	switch(type) {
 	case XAUTH_TYPE:
 		if ((ntohs(attr->type) & ISAKMP_GEN_TV) == 0) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Unexpected long XAUTH_TYPE attribute\n");
 			return NULL;
 		}
 		if (ntohs(attr->lorv) != XAUTH_TYPE_GENERIC) {
-			plog(LLV_ERROR, LOCATION, NULL, 
-			    "Unsupported Xauth authentication %d\n", 
+			plog(LLV_ERROR, LOCATION, NULL,
+			    "Unsupported Xauth authentication %d\n",
 			    ntohs(attr->lorv));
 			return NULL;
 		}
@@ -1426,13 +1426,13 @@ isakmp_xauth_req(iph1, attr)
 		skip = sizeof(struct ipsecdoi_id_b);
 		usr = vmalloc(iph1->rmconf->xauth->login->l - 1 + skip);
 		if (usr == NULL) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot allocate memory\n");
 			return NULL;
 		}
 		memset(usr->v, 0, skip);
-		memcpy(usr->v + skip, 
-		    iph1->rmconf->xauth->login->v, 
+		memcpy(usr->v + skip,
+		    iph1->rmconf->xauth->login->v,
 		    iph1->rmconf->xauth->login->l - 1);
 
 		if (iph1->rmconf->xauth->pass) {
@@ -1440,8 +1440,8 @@ isakmp_xauth_req(iph1, attr)
 			pwd = iph1->rmconf->xauth->pass;
 		} else {
 			if ((pwd = getpskbyname(usr)) == NULL) {
-				plog(LLV_ERROR, LOCATION, NULL, 
-				    "No password was found for login %s\n", 
+				plog(LLV_ERROR, LOCATION, NULL,
+				    "No password was found for login %s\n",
 				    iph1->rmconf->xauth->login->v);
 				vfree(usr);
 				return NULL;
@@ -1499,9 +1499,9 @@ isakmp_xauth_req(iph1, attr)
 
 	switch(type) {
 	case XAUTH_USER_NAME:
-		/* 
-		 * iph1->rmconf->xauth->login->v is valid, 
-		 * we just checked it in the previous switch case 
+		/*
+		 * iph1->rmconf->xauth->login->v is valid,
+		 * we just checked it in the previous switch case
 		 */
 		memcpy(data, iph1->rmconf->xauth->login->v, dlen);
 		break;
@@ -1533,7 +1533,7 @@ isakmp_xauth_set(iph1, attr)
 	vchar_t *mdata = NULL;
 
 	if ((iph1->mode_cfg->flags & ISAKMP_CFG_VENDORID_XAUTH) == 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Xauth mode config set but peer "
 		    "did not declare itself as Xauth capable\n");
 		return NULL;
@@ -1543,7 +1543,7 @@ isakmp_xauth_set(iph1, attr)
 
 	switch(type) {
 	case XAUTH_STATUS:
-		/* 
+		/*
 		 * We should only receive ISAKMP mode_cfg SET XAUTH_STATUS
 		 * when running as a client (initiator).
 		 */
@@ -1559,7 +1559,7 @@ isakmp_xauth_set(iph1, attr)
 		case OAKLEY_ATTR_AUTH_METHOD_XAUTH_RSAREV_I:
 			break;
 		default:
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Unexpected XAUTH_STATUS_OK\n");
 			return NULL;
 			break;
@@ -1567,15 +1567,15 @@ isakmp_xauth_set(iph1, attr)
 
 		/* If we got a failure, delete iph1 */
 		if (ntohs(attr->lorv) != XAUTH_STATUS_OK) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Xauth authentication failed\n");
 
-			EVT_PUSH(iph1->local, iph1->remote, 
+			EVT_PUSH(iph1->local, iph1->remote,
 			    EVTT_XAUTH_FAILED, NULL);
 
 			iph1->mode_cfg->flags |= ISAKMP_CFG_DELETE_PH1;
 		} else {
-			EVT_PUSH(iph1->local, iph1->remote, 
+			EVT_PUSH(iph1->local, iph1->remote,
 			    EVTT_XAUTH_SUCCESS, NULL);
 		}
 
@@ -1621,7 +1621,7 @@ isakmp_xauth_set(iph1, attr)
 }
 
 
-void 
+void
 xauth_rmstate(xst)
 	struct xauth_state *xst;
 {
@@ -1638,12 +1638,12 @@ xauth_rmstate(xst)
 	case XAUTH_TYPE_CHAP:
 	case XAUTH_TYPE_OTP:
 	case XAUTH_TYPE_SKEY:
-		plog(LLV_WARNING, LOCATION, NULL, 
+		plog(LLV_WARNING, LOCATION, NULL,
 		    "Unsupported authtype %d\n", xst->authtype);
 		break;
 
 	default:
-		plog(LLV_WARNING, LOCATION, NULL, 
+		plog(LLV_WARNING, LOCATION, NULL,
 		    "Unexpected authtype %d\n", xst->authtype);
 		break;
 	}
@@ -1662,7 +1662,7 @@ xauth_rmconf_used(xauth_rmconf)
 	if (*xauth_rmconf == NULL) {
 		*xauth_rmconf = racoon_malloc(sizeof(**xauth_rmconf));
 		if (*xauth_rmconf == NULL) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "xauth_rmconf_used: malloc failed\n");
 			return -1;
 		}
@@ -1675,11 +1675,11 @@ xauth_rmconf_used(xauth_rmconf)
 	return 0;
 }
 
-void 
+void
 xauth_rmconf_delete(xauth_rmconf)
 	struct xauth_rmconf **xauth_rmconf;
 {
-	if (*xauth_rmconf != NULL) { 
+	if (*xauth_rmconf != NULL) {
 		if ((*xauth_rmconf)->login != NULL)
 			vfree((*xauth_rmconf)->login);
 		if ((*xauth_rmconf)->pass != NULL)

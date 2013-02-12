@@ -11,27 +11,27 @@ with 32 MB of RAM - slow.
 Note that until you have at least 64 MB of RAM, getting more RAM is more
 important than getting a faster CPU.
 .Pp
-Not all of the machines listed here have been tested.  Often Sun will use 
-the same motherboard design in multiple models.  For example, they'll 
-release a Blade ("workstation") model, Enterprise or Fire ("server") 
-model, and Netra or ft ("telco") model with essentially the same devices, 
+Not all of the machines listed here have been tested.  Often Sun will use
+the same motherboard design in multiple models.  For example, they'll
+release a Blade ("workstation") model, Enterprise or Fire ("server")
+model, and Netra or ft ("telco") model with essentially the same devices,
 as far as
 .Nx
-is concerned.  If one model in this scheme works, it is highly likely 
-another will work.  
+is concerned.  If one model in this scheme works, it is highly likely
+another will work.
 .Pp
-Sun has also released a few models with names that 
+Sun has also released a few models with names that
 might imply the systems are UltraSPARC-based but actually have an
 i386 class CPU.  These systems might be supported by the i386 port of
 .Nx .
-See the following site for more info on what system boards are in which 
+See the following site for more info on what system boards are in which
 models.
 .Lk http://sunsolve.sun.com/handbook_pub/Devices/System_Board/SYSBD_TOC.html
 (requires a SunSolve login with a valid Sun Service Plan)
 .(bullet -offset indent
-Sbus-based UltraSPARC I or II systems 
+Sbus-based UltraSPARC I or II systems
 .(bullet -compact
-Ultra 1 family (Ultra 1, Ultra 1 Creator, Ultra 1 Creator 3D, 
+Ultra 1 family (Ultra 1, Ultra 1 Creator, Ultra 1 Creator 3D,
 Netra i 150, Netra nfs 150, Enterprise 1, Enterprise 150)
 .It
 Ultra 2 family (Ultra 2, Ultra 2 Creator, Ultra 2 Creator 3D, Enterprise 2)
@@ -56,10 +56,10 @@ Ultra 450 family (Ultra 450, Enterprise 450, Netra ft 1800)
 .It
 Blade 100 and 150
 .It
-SPARCengine CP1400 or SPARCengine CP1500 system boards (Netra T1 
+SPARCengine CP1400 or SPARCengine CP1500 system boards (Netra T1
 (models 100 and 105), CT400, CT800, CT1600)
 .It
-SPARCengine Ultra AXi family (Netra X1, Fire v100, Fire v120, Netra 120, 
+SPARCengine Ultra AXi family (Netra X1, Fire v100, Fire v120, Netra 120,
 Netra AC 200, Netra DC 200)
 .It
 SPARCengine Ultra AXe system board
@@ -79,7 +79,7 @@ SPARCengine Ultra AXe system board
 .Ss2 Unsupported machines
 .(bullet -offset indent
 Systems with an UltraSPARC III CPU
-.\" Blade 1000 and 2000 
+.\" Blade 1000 and 2000
 .\" Fire 280R and Netra 20 (T4)
 .\" Fire v480 and Fire v880
 .\" Netra T12 (Fire v1280 and Netra 1280)

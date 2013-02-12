@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 2006 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "ntlm/ntlm.h"
@@ -86,7 +86,7 @@ _gss_ntlm_accept_sec_context
 
     if (context_handle == NULL)
 	return GSS_S_FAILURE;
-	
+
     if (input_token_buffer == GSS_C_NO_BUFFER)
 	return GSS_S_FAILURE;
 
@@ -111,7 +111,7 @@ _gss_ntlm_accept_sec_context
 	if (major_status)
 	    return major_status;
 	*context_handle = (gss_ctx_id_t)ctx;
-	
+
 	/* check if the mechs is allowed by remote service */
 	major_status = (*ctx->server->nsi_probe)(minor_status, ctx->ictx, NULL);
 	if (major_status) {
@@ -121,7 +121,7 @@ _gss_ntlm_accept_sec_context
 
 	data.data = input_token_buffer->value;
 	data.length = input_token_buffer->length;
-	
+
 	ret = heim_ntlm_decode_type1(&data, &type1);
 	if (ret) {
 	    _gss_ntlm_delete_sec_context(minor_status, context_handle, NULL);
@@ -203,26 +203,26 @@ _gss_ntlm_accept_sec_context
 	    }
 	    if (n == NULL || n->user == NULL || n->domain == NULL) {
 		heim_ntlm_free_type3(&type3);
-		_gss_ntlm_delete_sec_context(minor_status, 
+		_gss_ntlm_delete_sec_context(minor_status,
 					     context_handle, NULL);
 		return maj_stat;
 	    }
 	    *src_name = (gss_name_t)n;
-	}	    
+	}
 
 	heim_ntlm_free_type3(&type3);
 
-	ret = krb5_data_copy(&ctx->sessionkey, 
+	ret = krb5_data_copy(&ctx->sessionkey,
 			     session.data, session.length);
-	if (ret) {	
+	if (ret) {
 	    _gss_ntlm_delete_sec_context(minor_status, context_handle, NULL);
 	    *minor_status = ret;
 	    return GSS_S_FAILURE;
 	}
-	
+
 	if (session.length != 0) {
 
-	    ctx->status |= STATUS_SESSIONKEY; 
+	    ctx->status |= STATUS_SESSIONKEY;
 
 	    if (ctx->flags & NTLM_NEG_NTLM2_SESSION) {
 		_gss_ntlm_set_key(&ctx->u.v2.send, 1,
@@ -234,10 +234,10 @@ _gss_ntlm_accept_sec_context
 				  ctx->sessionkey.data,
 				  ctx->sessionkey.length);
 	    } else {
-		RC4_set_key(&ctx->u.v1.crypto_send.key, 
+		RC4_set_key(&ctx->u.v1.crypto_send.key,
 			    ctx->sessionkey.length,
 			    ctx->sessionkey.data);
-		RC4_set_key(&ctx->u.v1.crypto_recv.key, 
+		RC4_set_key(&ctx->u.v1.crypto_recv.key,
 			    ctx->sessionkey.length,
 			    ctx->sessionkey.data);
 	    }

@@ -7,33 +7,33 @@ static char *rcsid = "Id: unicode.c,v 1.1 2003/06/04 00:26:16 marka Exp";
 /*
  * Copyright (c) 2000,2001,2002 Japan Network Information Center.
  * All rights reserved.
- *  
+ *
  * By using this file, you agree to the terms and conditions set forth bellow.
- * 
- * 			LICENSE TERMS AND CONDITIONS 
- * 
+ *
+ * 			LICENSE TERMS AND CONDITIONS
+ *
  * The following License Terms and Conditions apply, unless a different
  * license is obtained from Japan Network Information Center ("JPNIC"),
  * a Japanese association, Kokusai-Kougyou-Kanda Bldg 6F, 2-3-4 Uchi-Kanda,
  * Chiyoda-ku, Tokyo 101-0047, Japan.
- * 
+ *
  * 1. Use, Modification and Redistribution (including distribution of any
  *    modified or derived work) in source and/or binary forms is permitted
  *    under this License Terms and Conditions.
- * 
+ *
  * 2. Redistribution of source code must retain the copyright notices as they
  *    appear in each source code file, this License Terms and Conditions.
- * 
+ *
  * 3. Redistribution in binary form must reproduce the Copyright Notice,
  *    this License Terms and Conditions, in the documentation and/or other
  *    materials provided with the distribution.  For the purposes of binary
  *    distribution the "Copyright Notice" refers to the following language:
  *    "Copyright (c) 2000-2002 Japan Network Information Center.  All rights reserved."
- * 
+ *
  * 4. The name of JPNIC may not be used to endorse or promote products
  *    derived from this Software without specific prior written approval of
  *    JPNIC.
- * 
+ *
  * 5. Disclaimer/Limitation of Liability: THIS SOFTWARE IS PROVIDED BY JPNIC
  *    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  *    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -112,7 +112,7 @@ static struct idn__unicode_ops {
 	{ NULL },
 #undef MAKE_UNICODE_HANDLE
 };
-	
+
 idn_result_t
 idn__unicode_create(const char *version,
 		    idn__unicode_version_t *versionp) {
@@ -191,7 +191,7 @@ idn__unicode_decompose(idn__unicode_version_t version,
 	seqidx = (*version->decompose_proc)(c, &seq);
 	if (seqidx == 0 || (compat == 0 && (seqidx & DECOMP_COMPAT) != 0))
 		return (idn_notfound);
-	
+
 	/*
 	 * Copy the decomposed sequence.  The end of the sequence are
 	 * marked with END_BIT.
@@ -218,7 +218,7 @@ idn__unicode_decompose(idn__unicode_version_t version,
 		}
 
 	} while ((*seq++ & END_BIT) == 0);
-	
+
 	*decomp_lenp = v - vorg;
 
 	return (idn_success);

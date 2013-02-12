@@ -158,7 +158,7 @@ void l2_packet_deinit(struct l2_packet_data *l2)
 		eloop_unregister_read_sock(l2->fd);
 		close(l2->fd);
 	}
-		
+
 	os_free(l2);
 }
 

@@ -199,7 +199,7 @@ vi_ipc_SOURCES = \
 	$(visrcdir)/ip/ip_screen.c \
 	$(visrcdir)/ipc/ip_send.c \
 	$(visrcdir)/ipc/ip.h \
-	$(visrcdir)/ip/ip_term.c 
+	$(visrcdir)/ip/ip_term.c
 vi_ipc_LDADD = libvi.la @perllibs@ @IPCOBJS@
 vi_ipc_LDFLAGS = @perlldflags@
 vi_ipc_DEPENDENCIES = @IPCOBJS@

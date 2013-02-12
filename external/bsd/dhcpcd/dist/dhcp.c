@@ -1,4 +1,4 @@
-/* 
+/*
  * dhcpcd - DHCP client daemon
  * Copyright (c) 2006-2009 Roy Marples <roy@marples.name>
  * All rights reserved
@@ -317,7 +317,7 @@ get_option(const struct dhcp_message *dhcp, uint8_t opt, int *len, int *type)
 					atexit(free_option_buffer);
 #endif
 				}
-				if (!bp) 
+				if (!bp)
 					bp = opt_buffer;
 				memcpy(bp, op, ol);
 				bp += ol;
@@ -421,7 +421,7 @@ get_option_uint8(uint8_t *i, const struct dhcp_message *dhcp, uint8_t option)
 }
 
 /* Decode an RFC3397 DNS search order option into a space
- * seperated string. Returns length of string (including 
+ * seperated string. Returns length of string (including
  * terminating zero) or zero on error. out may be NULL
  * to just determine output length. */
 static ssize_t
@@ -480,7 +480,7 @@ decode_rfc3397(char *out, ssize_t len, int pl, const uint8_t *p)
 	if (out)
 		*(out - 1) = 0;
 
-	return count;  
+	return count;
 }
 
 static ssize_t
@@ -881,7 +881,7 @@ make_message(struct dhcp_message **message,
 	dhcp->xid = iface->state->xid;
 	dhcp->cookie = htonl(MAGIC_COOKIE);
 
-	*p++ = DHO_MESSAGETYPE; 
+	*p++ = DHO_MESSAGETYPE;
 	*p++ = 1;
 	*p++ = type;
 
@@ -1004,7 +1004,7 @@ make_message(struct dhcp_message **message,
 		n_params = p;
 		*p++ = 0;
 		for (opt = dhcp_opts; opt->option; opt++) {
-			if (!(opt->type & REQUEST || 
+			if (!(opt->type & REQUEST ||
 				has_option_mask(ifo->requestmask, opt->option)))
 				continue;
 			if (type == DHCP_INFORM &&

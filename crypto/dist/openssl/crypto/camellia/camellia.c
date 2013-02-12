@@ -1,6 +1,6 @@
 /* crypto/camellia/camellia.c -*- mode:C; c-file-style: "eay" -*- */
 /* ====================================================================
- * Copyright 2006 NTT (Nippon Telegraph and Telephone Corporation) . 
+ * Copyright 2006 NTT (Nippon Telegraph and Telephone Corporation) .
  * ALL RIGHTS RESERVED.
  *
  * Intellectual Property information for Camellia:
@@ -24,7 +24,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -65,7 +65,7 @@
  * ====================================================================
  */
 
-/* Algorithm Specification 
+/* Algorithm Specification
    http://info.isl.ntt.co.jp/crypt/eng/camellia/specifications.html
 */
 
@@ -1187,7 +1187,7 @@ void camellia_setup256(const u8 *key, u32 *subkey)
 	CamelliaSubkeyR(31) = CamelliaSubkeyL(31) ^ dw,
 		CamelliaSubkeyL(31) = dw;
 
-    
+
 	return;
 	}
 
@@ -1515,7 +1515,7 @@ void camellia_decrypt256(const u32 *subkey, u32 *io)
 	/* pre whitening but absorb kw2*/
 	io[0] ^= CamelliaSubkeyL(32);
 	io[1] ^= CamelliaSubkeyR(32);
-	
+
 	/* main iteration */
 	CAMELLIA_ROUNDSM(io[0],io[1],
 		CamelliaSubkeyL(31),CamelliaSubkeyR(31),

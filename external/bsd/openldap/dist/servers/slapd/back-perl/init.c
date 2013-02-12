@@ -74,7 +74,7 @@ perl_back_initialize(
 			0, 0, 0 );
 		return 1;
 	}
-	
+
 	ldap_pvt_thread_mutex_init( &perl_interpreter_mutex );
 
 	PERL_INTERPRETER = perl_alloc();

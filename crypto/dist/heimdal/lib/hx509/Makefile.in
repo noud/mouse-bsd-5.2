@@ -450,7 +450,7 @@ gen_files_crmf = \
 	asn1_POPOSigningKey.x		\
 	asn1_POPOSigningKeyInput.x	\
 	asn1_ProofOfPossession.x	\
-	asn1_SubsequentMessage.x	
+	asn1_SubsequentMessage.x
 
 dist_libhx509_la_SOURCES = \
 	ca.c \
@@ -729,7 +729,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libhx509.la: $(libhx509_la_OBJECTS) $(libhx509_la_DEPENDENCIES) 
+libhx509.la: $(libhx509_la_OBJECTS) $(libhx509_la_DEPENDENCIES)
 	$(libhx509_la_LINK) -rpath $(libdir) $(libhx509_la_OBJECTS) $(libhx509_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -766,13 +766,13 @@ clean-checkPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-hxtool$(EXEEXT): $(hxtool_OBJECTS) $(hxtool_DEPENDENCIES) 
+hxtool$(EXEEXT): $(hxtool_OBJECTS) $(hxtool_DEPENDENCIES)
 	@rm -f hxtool$(EXEEXT)
 	$(LINK) $(hxtool_OBJECTS) $(hxtool_LDADD) $(LIBS)
-test_name$(EXEEXT): $(test_name_OBJECTS) $(test_name_DEPENDENCIES) 
+test_name$(EXEEXT): $(test_name_OBJECTS) $(test_name_DEPENDENCIES)
 	@rm -f test_name$(EXEEXT)
 	$(LINK) $(test_name_OBJECTS) $(test_name_LDADD) $(LIBS)
-test_soft_pkcs11$(EXEEXT): $(test_soft_pkcs11_OBJECTS) $(test_soft_pkcs11_DEPENDENCIES) 
+test_soft_pkcs11$(EXEEXT): $(test_soft_pkcs11_OBJECTS) $(test_soft_pkcs11_DEPENDENCIES)
 	@rm -f test_soft_pkcs11$(EXEEXT)
 	$(LINK) $(test_soft_pkcs11_OBJECTS) $(test_soft_pkcs11_LDADD) $(LIBS)
 

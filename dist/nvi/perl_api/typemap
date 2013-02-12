@@ -12,7 +12,7 @@ AVREF	T_AVREFREF
 
 INPUT
 T_AVREFREF
-	if (SvROK($arg) && SvTYPE(SvRV($arg)) == SVt_PVAV) 
+	if (SvROK($arg) && SvTYPE(SvRV($arg)) == SVt_PVAV)
 	    $var = (AV *)SvRV($arg);
 	else
 	    croak(\"$var is not a reference to an array\")

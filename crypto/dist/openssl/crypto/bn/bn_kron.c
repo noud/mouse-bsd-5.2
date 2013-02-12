@@ -7,7 +7,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -81,7 +81,7 @@ int BN_kronecker(const BIGNUM *a, const BIGNUM *b, BN_CTX *ctx)
 	A = BN_CTX_get(ctx);
 	B = BN_CTX_get(ctx);
 	if (B == NULL) goto end;
-	
+
 	err = !BN_copy(A, a);
 	if (err) goto end;
 	err = !BN_copy(B, b);
@@ -100,7 +100,7 @@ int BN_kronecker(const BIGNUM *a, const BIGNUM *b, BN_CTX *ctx)
 		ret = BN_abs_is_word(A, 1);
 		goto end;
  		}
-	
+
 	/* Cohen's step 2: */
 
 	if (!BN_is_odd(A) && !BN_is_odd(B))
@@ -128,7 +128,7 @@ int BN_kronecker(const BIGNUM *a, const BIGNUM *b, BN_CTX *ctx)
 		/* i is even */
 		ret = 1;
 		}
-	
+
 	if (B->neg)
 		{
 		B->neg = 0;
@@ -163,12 +163,12 @@ int BN_kronecker(const BIGNUM *a, const BIGNUM *b, BN_CTX *ctx)
 			/* multiply 'ret' by  $(-1)^{(B^2-1)/8}$ */
 			ret = ret * tab[BN_lsw(B) & 7];
 			}
-	
+
 		/* Cohen's step 4: */
 		/* multiply 'ret' by  $(-1)^{(A-1)(B-1)/4}$ */
 		if ((A->neg ? ~BN_lsw(A) : BN_lsw(A)) & BN_lsw(B) & 2)
 			ret = -ret;
-		
+
 		/* (A, B) := (B mod |A|, |A|) */
 		err = !BN_nnmod(B, B, A, ctx);
 		if (err) goto end;

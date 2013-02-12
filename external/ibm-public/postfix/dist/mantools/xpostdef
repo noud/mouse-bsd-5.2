@@ -22,7 +22,7 @@ while(<POSTCONF>) {
 	die "unexpected $POSTCONF output: $_\n";
     }
 }
-close(POSTCONF) || die "$POSTCONF failed: $!\n"; 
+close(POSTCONF) || die "$POSTCONF failed: $!\n";
 
 # Censor out default values that are system or version dependent, or
 # that don't display well.

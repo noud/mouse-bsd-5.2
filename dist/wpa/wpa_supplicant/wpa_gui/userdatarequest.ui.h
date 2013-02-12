@@ -32,7 +32,7 @@ int UserDataRequest::setParams(WpaGui *_wpagui, const char *reqMsg)
 	return -1;
     }
     *pos2++ = '\0';
-    
+
     networkid = atoi(pos);
     queryInfo->setText(pos2);
     if (strcmp(tmp, "PASSWORD") == 0) {
@@ -49,7 +49,7 @@ int UserDataRequest::setParams(WpaGui *_wpagui, const char *reqMsg)
     } else
 	queryField->setText(field + ":");
     free(tmp);
-    
+
     return 0;
 }
 
@@ -58,12 +58,12 @@ void UserDataRequest::sendReply()
 {
     char reply[10];
     size_t reply_len = sizeof(reply);
-    
+
     if (wpagui == NULL) {
 	reject();
 	return;
     }
-    
+
     QString cmd = QString(WPA_CTRL_RSP) + field + '-' +
 		  QString::number(networkid) + ':' +
 		  queryEdit->text();

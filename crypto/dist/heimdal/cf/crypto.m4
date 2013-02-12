@@ -101,7 +101,7 @@ if test "$crypto_lib" = "unknown" -a "$with_krb4" != "no"; then
 			done
 		done
 	done
-		
+
 	CFLAGS="$save_CFLAGS"
 	LIBS="$save_LIBS"
 	if test "$ires" -a "$lres"; then
@@ -160,7 +160,7 @@ fi
 
 if test "$with_krb4" != no -a "$crypto_lib" != krb4; then
 	AC_MSG_ERROR([the crypto library used by krb4 lacks features
-required by Kerberos 5; to continue, you need to install a newer 
+required by Kerberos 5; to continue, you need to install a newer
 Kerberos 4 or configure --without-krb4])
 fi
 

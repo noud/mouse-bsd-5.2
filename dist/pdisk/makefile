@@ -113,7 +113,7 @@ UNIX_BINARIES= \
 	cvt_pt
 
 #
-# these names have '__' in place of ' ' to avoid quoting nightmares 
+# these names have '__' in place of ' ' to avoid quoting nightmares
 #
 MAC_PROJECT= \
 	pdisk.mac.bin \

@@ -446,7 +446,7 @@ display:
 					*cbp++ = L(' ');
 				*cbp++ = ch;
 			} else
-				for (kp = KEY_NAME(sp, ch) + offset_in_char; 
+				for (kp = KEY_NAME(sp, ch) + offset_in_char;
 				     chlen--;)
 					*cbp++ = (u_char)*kp++;
 		}

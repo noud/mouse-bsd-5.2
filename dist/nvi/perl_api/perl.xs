@@ -118,7 +118,7 @@ perl_end(gp)
  *	Evaluate a string
  * 	We don't use mortal SVs because no one will clean up after us
  */
-static void 
+static void
 perl_eval(string)
 	char *string;
 {
@@ -261,7 +261,7 @@ newVIrv(rv, screen)
 	if (!screen->perl_private) {
 		screen->perl_private = newSV(0);
 		sv_setiv(screen->perl_private, (IV) screen);
-	} 
+	}
 	else SvREFCNT_inc(screen->perl_private);
 	SvRV(rv) = screen->perl_private;
 	SvROK_on(rv);
@@ -289,13 +289,13 @@ perl_setenv(SCR* scrp, const char *name, const char *value)
 }
 
 
-/* 
+/*
  * perl_ex_perl -- :[line [,line]] perl [command]
  *	Run a command through the perl interpreter.
  *
  * PUBLIC: int perl_ex_perl __P((SCR*, CHAR_T *, size_t, db_recno_t, db_recno_t));
  */
-int 
+int
 perl_ex_perl(scrp, cmdp, cmdlen, f_lno, t_lno)
 	SCR *scrp;
 	CHAR_T *cmdp;
@@ -352,7 +352,7 @@ perl_ex_perl(scrp, cmdp, cmdlen, f_lno, t_lno)
  *	if $_ is undef, the line is deleted
  *	returns possibly adjusted linenumber
  */
-static int 
+static int
 replace_line(scrp, line, t_lno, defsv)
 	SCR *scrp;
 	db_recno_t line, *t_lno;
@@ -371,7 +371,7 @@ replace_line(scrp, line, t_lno, defsv)
 		while (next++) {
 			len -= next - str;
 			next = memchr(str = next, '\n', len);
-			CHAR2INTP(scrp, str, next ? (next - str) : len, 
+			CHAR2INTP(scrp, str, next ? (next - str) : len,
 				    wp, wlen);
 			api_iline(scrp, ++line, wp, wlen);
 			(*t_lno)++;
@@ -383,13 +383,13 @@ replace_line(scrp, line, t_lno, defsv)
 	return line;
 }
 
-/* 
+/*
  * perl_ex_perldo -- :[line [,line]] perl [command]
  *	Run a set of lines through the perl interpreter.
  *
  * PUBLIC: int perl_ex_perldo __P((SCR*, CHAR_T *, size_t, db_recno_t, db_recno_t));
  */
-int 
+int
 perl_ex_perldo(scrp, cmdp, cmdlen, f_lno, t_lno)
 	SCR *scrp;
 	CHAR_T *cmdp;
@@ -446,7 +446,7 @@ perl_ex_perldo(scrp, cmdp, cmdlen, f_lno, t_lno)
 		estr = SvPV(ERRSV, length);
 		if (length) break;
 		SPAGAIN;
-		if(SvTRUEx(POPs)) 
+		if(SvTRUEx(POPs))
 			i = replace_line(scrp, i, &t_lno, DEFSV);
 		PUTBACK;
 	}
@@ -520,7 +520,7 @@ void
 Msg(screen, text)
 	VI          screen
 	char *      text
- 
+
 	ALIAS:
 	PRINT = 1
 
@@ -572,7 +572,7 @@ Edit(screen, ...)
 	INITMESSAGE(screen);
 	rval = api_edit(screen, file, &nsp, ix);
 	ENDMESSAGE(screen);
-	
+
 	RETVAL = ix ? nsp : screen;
 
 	OUTPUT:
@@ -639,7 +639,7 @@ AppendLine(screen, linenumber, text)
 # Perl Command: VI::DelLine
 # Usage: VI::DelLine screenId lineNum
 
-void 
+void
 DelLine(screen, linenumber)
 	VI screen
 	int linenumber
@@ -737,7 +737,7 @@ InsertLine(screen, linenumber, text)
 # Perl Command: VI::LastLine
 # Usage: VI::LastLine screenId
 
-int 
+int
 LastLine(screen)
 	VI screen
 
@@ -944,7 +944,7 @@ SetOpt(screen, setting)
 
 # XS_VI_opts_get --
 #	Return the value of an option.
-#	
+#
 # Perl Command: VI::GetOpt
 # Usage: VI::GetOpt screenId option
 
@@ -990,7 +990,7 @@ Run(screen, command)
 	rval = api_run_str(screen, command);
 	ENDMESSAGE(screen);
 
-void 
+void
 DESTROY(screensv)
 	SV* screensv
 
@@ -1088,7 +1088,7 @@ err:
 
 MODULE = VI	PACKAGE = VI::OPT
 
-void 
+void
 DESTROY(screen)
 	VI::OPT screen
 
@@ -1137,13 +1137,13 @@ STORE(screen, key, value)
 	CODE:
 	INITMESSAGE(screen);
 	CHAR2INTP(screen, key, strlen(key)+1, wp, wlen);
-	rval = api_opts_set(screen, wp, SvPV(value, PL_na), SvIV(value), 
+	rval = api_opts_set(screen, wp, SvPV(value, PL_na), SvIV(value),
                                          SvTRUEx(value));
 	ENDMESSAGE(screen);
 
 MODULE = VI	PACKAGE = VI::MAP
 
-void 
+void
 DESTROY(screen)
 	VI::MAP screen
 
@@ -1185,7 +1185,7 @@ DELETE(screen, key)
 
 MODULE = VI	PACKAGE = VI::MARK
 
-void 
+void
 DESTROY(screen)
 	VI::MARK screen
 
@@ -1246,7 +1246,7 @@ STORE(screen, mark, pos)
 	int rval;
 
 	CODE:
-	if (av_len(pos) < 1) 
+	if (av_len(pos) < 1)
 	    croak("cursor position needs 2 elements");
 	INITMESSAGE(screen);
 	cursor.lno = SvIV(*av_fetch(pos, 0, 0));
@@ -1260,7 +1260,7 @@ FIRSTKEY(screen, ...)
 
 	ALIAS:
 	NEXTKEY = 1
-	
+
 	PROTOTYPE: $;$
 
 	PREINIT:
@@ -1279,7 +1279,7 @@ FIRSTKEY(screen, ...)
 
 MODULE = VI	PACKAGE = VI::LINE
 
-void 
+void
 DESTROY(screen)
 	VI::LINE screen
 
@@ -1317,7 +1317,7 @@ STORE(screen, linenumber, text)
 	}
 	ENDMESSAGE(screen);
 
-# similar to GetLine 
+# similar to GetLine
 
 char *
 FETCH(screen, linenumber)
@@ -1340,7 +1340,7 @@ FETCH(screen, linenumber)
 	EXTEND(sp,1);
 	PUSHs(sv_2mortal(newSVpv(len ? (char*)p : "", len)));
 
-# similar to LastLine 
+# similar to LastLine
 
 int
 FETCHSIZE(screen)
@@ -1525,7 +1525,7 @@ SPLICE(screen, ...)
 		length = last - offset;
 	db_offset = offset + 1; /* 1 based */
 	EXTEND(sp,length);
-	for (common = MIN(length, items - 3), i = 3; common > 0; 
+	for (common = MIN(length, items - 3), i = 3; common > 0;
 	    --common, ++db_offset, --length, ++i) {
 		rval |= api_gline(screen, db_offset, &line, &len);
 		INT2CHAR(screen, line, len, np, nlen);
@@ -1580,8 +1580,8 @@ Push(tagq)
 
 void
 DESTROY(tagq)
-	# Can already be invalidated by push 
-	VI::TAGQ2    tagq; 
+	# Can already be invalidated by push
+	VI::TAGQ2    tagq;
 
 	PREINIT:
 	SCR *sp;

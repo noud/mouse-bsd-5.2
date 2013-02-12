@@ -434,7 +434,7 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-login$(EXEEXT): $(login_OBJECTS) $(login_DEPENDENCIES) 
+login$(EXEEXT): $(login_OBJECTS) $(login_DEPENDENCIES)
 	@rm -f login$(EXEEXT)
 	$(LINK) $(login_OBJECTS) $(login_LDADD) $(LIBS)
 

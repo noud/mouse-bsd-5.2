@@ -21,7 +21,7 @@ the
 installer does not currently support this.  The limitation is that the
 .Nx
 .Xr disklabel 8
-writes partition info that 
+writes partition info that
 .Tn Solaris
 is not familiar with.  Therefore, if you are sharing a disk with
 .Tn Solaris ,
@@ -39,12 +39,12 @@ partition is about 200 MB.
 A full binary installation including X takes over 600 MB in
 .Pa /usr .
 Since the pkgsrc binaries are typically installed in
-.Pa /usr/pkg 
-you may want a significantly larger 
+.Pa /usr/pkg
+you may want a significantly larger
 .Pa /usr
 partition.
 A good initial size for the swap partition is the amount of physical
-memory in your machine if you've got more than 128 MB RAM.  If you've got 
+memory in your machine if you've got more than 128 MB RAM.  If you've got
 less RAM, you may want swap to be at least 128 MB.
 .Pp
 Note that the OBP on Ultra 1 and Ultra 2 machines can only boot from the first
@@ -59,7 +59,7 @@ key (sometimes called the
 .Key L1
 key, found on the left side of your keyboard) and the
 .Key a
-key will halt your system and give you the 
+key will halt your system and give you the
 .Dq Li ok
 prompt. If you are using a serial console, send a
 .Dq BREAK
@@ -86,8 +86,8 @@ You cannot use the security modes of the SPARC OpenFirmware.
 .Pp
 If you are using a serial console, the
 .Nx*M
-installer defaults to using 9600 bps, 8N1 settings.  You may want to 
-configure your system and serial terminal like this prior to booting the 
+installer defaults to using 9600 bps, 8N1 settings.  You may want to
+configure your system and serial terminal like this prior to booting the
 installer.  A new installation of
 .Nx*M
 will default to these settings as well.
@@ -119,7 +119,7 @@ on the fourth partition (
 .Sq Li d ,
 often the
 .Pa /usr
-partition) on an external SCSI hard drive (target 2, partition 3), one 
+partition) on an external SCSI hard drive (target 2, partition 3), one
 would use:
 .Pp
 .(disp
@@ -137,15 +137,15 @@ OpenBoot PROM version and moon phase.
 .
 .Ss2 Determining how to boot from an SBUS or PCI card
 .
-Some SBUS and PCI cards have firmware that lets you use them as boot 
+Some SBUS and PCI cards have firmware that lets you use them as boot
 devices.  These cards do not automatically create
 .Ic devalias
 entries, so you must traverse the device tree to figure out what
 Open Firmware calls your card.  You will be using Open Firmware commands
-at the 
+at the
 .Sq Li ok
 prompt. First `cd' to the top of the device tree and list the
-nodes there.  The following is the procedure to boot from an IDE card in 
+nodes there.  The following is the procedure to boot from an IDE card in
 an UltraSPARC 30.
 .(disp
 .No ok Ic "cd /"
@@ -193,14 +193,14 @@ block-size    dma-free      dma-alloc     spin-down     spin-up
 .disp)
 Great!
 Also, in case you're interested in further details about your
-hardware, you can use the 
+hardware, you can use the
 .Ic .properties
 command.
 .Pp
-So, when it's time to type in a boot command, use the shortened version of 
+So, when it's time to type in a boot command, use the shortened version of
 the
 .Ic pwd
-command.  You need to be more specific if there are two devices with the 
+command.  You need to be more specific if there are two devices with the
 same name (in this case, two /pci entries).  In this example, you'd type:
 .(disp
 .No ok Ic "boot /pci@1f,4000/ide/disk@0,0"

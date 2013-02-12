@@ -240,7 +240,7 @@ fetchListFile(struct url_list *ue, struct url *u, const char *pattern, const cha
 		fetch_syserr();
 		return -1;
 	}
-		
+
 	dir = opendir(path);
 	free(path);
 

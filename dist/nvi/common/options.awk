@@ -1,5 +1,5 @@
 #	Id: options.awk,v 10.1 1995/06/08 19:00:01 bostic Exp (Berkeley) Date: 1995/06/08 19:00:01
- 
+
 /^\/\* O_[0-9A-Z_]*/ {
 	opt = $2
 	printf("#define %s %d\n", opt, cnt++)

@@ -57,7 +57,7 @@ MODE="upgrade"
 #	md_upgrade_prep_needed	- variable: set if you md_prepare_upgrade()
 #	md_prepare_upgrade	- any machine dependent preparations
 #	md_view_labels_possible	- variable: md_view_labels defined
-#	md_view_labels		- peek at preexisting disk labels, to 
+#	md_view_labels		- peek at preexisting disk labels, to
 #				  better identify disks
 
 # we need to make sure .'s below work if this directory is not in $PATH

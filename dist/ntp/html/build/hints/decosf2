@@ -10,15 +10,15 @@ cowbird:/usr/include/sys# diff -c wait.h.orig wait.h
 ***************
 *** 298,304 ****
   #else
-  
+
   _BEGIN_CPLUSPLUS
 ! extern int waitid(idtype_t, id_t, siginfo_t *, int);
   _END_CPLUSPLUS
   #endif /* _NO_PROTO */
-  
+
 --- 298,304 ----
   #else
-  
+
   _BEGIN_CPLUSPLUS
 ! extern int waitid(idtype_t, pid_t, siginfo_t *, int);
   _END_CPLUSPLUS
@@ -30,21 +30,21 @@ cowbird:/usr/include/sys# diff -c procset.h.orig procset.h
 ***************
 *** 86,95 ****
                                  */
-  
+
         idtype_t p_lidtype;     /* The id type for the left set. */
 !       id_t p_lid;             /* The id for the left set. */
-  
+
         idtype_t p_ridtype;     /* The id type of for right set. */
 !       id_t p_rid;             /* The id of the right set. */
   } procset_t;
-  
-  
+
+
 --- 86,95 ----
                                  */
-  
+
         idtype_t p_lidtype;     /* The id type for the left set. */
 !       pid_t p_lid;            /* The id for the left set. */
-  
+
         idtype_t p_ridtype;     /* The id type of for right set. */
 !       pid_t p_rid;            /* The id of the right set. */
   } procset_t;

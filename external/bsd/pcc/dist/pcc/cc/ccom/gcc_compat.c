@@ -41,7 +41,7 @@ static struct kw {
 	int rv;
 } kw[] = {
 /*
- * Do NOT change the order of these entries unless you know 
+ * Do NOT change the order of these entries unless you know
  * what you're doing!
  */
 /* 0 */	{ "__asm", NULL, C_ASM },

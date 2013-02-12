@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -115,7 +115,7 @@ int MAIN(int argc, char **argv)
 	ERR_load_crypto_strings();
 	OpenSSL_add_all_algorithms();
 	pad = RSA_PKCS1_PADDING;
-	
+
 	while(argc >= 1)
 	{
 		if (!strcmp(*argv,"-in")) {
@@ -154,7 +154,7 @@ int MAIN(int argc, char **argv)
 			key_type = KEY_PUBKEY;
 		} else if(!strcmp(*argv, "-certin")) {
 			key_type = KEY_CERT;
-		} 
+		}
 		else if(!strcmp(*argv, "-asn1parse")) asn1parse = 1;
 		else if(!strcmp(*argv, "-hexdump")) hexdump = 1;
 		else if(!strcmp(*argv, "-raw")) pad = RSA_NO_PADDING;
@@ -195,7 +195,7 @@ int MAIN(int argc, char **argv)
 
 /* FIXME: seed PRNG only if needed */
 	app_RAND_load_file(NULL, bio_err, 0);
-	
+
 	switch(key_type) {
 		case KEY_PRIVKEY:
 		pkey = load_key(bio_err, keyfile, keyform, 0,
@@ -234,7 +234,7 @@ int MAIN(int argc, char **argv)
 	if(infile) {
 		if(!(in = BIO_new_file(infile, "rb"))) {
 			BIO_printf(bio_err, "Error Reading Input File\n");
-			ERR_print_errors(bio_err);	
+			ERR_print_errors(bio_err);
 			goto end;
 		}
 	} else in = BIO_new_fp(stdin, BIO_NOCLOSE);
@@ -242,7 +242,7 @@ int MAIN(int argc, char **argv)
 	if(outfile) {
 		if(!(out = BIO_new_file(outfile, "wb"))) {
 			BIO_printf(bio_err, "Error Reading Output File\n");
-			ERR_print_errors(bio_err);	
+			ERR_print_errors(bio_err);
 			goto end;
 		}
 	} else {

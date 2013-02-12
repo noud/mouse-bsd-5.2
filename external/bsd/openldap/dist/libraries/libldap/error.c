@@ -131,7 +131,7 @@ static struct ldaperror ldap_builtin_errlist[] = {
 	{0, NULL}
 };
 
-static struct ldaperror *ldap_errlist = ldap_builtin_errlist; 
+static struct ldaperror *ldap_errlist = ldap_builtin_errlist;
 
 void ldap_int_error_init( void ) {
 }
@@ -155,7 +155,7 @@ char *
 ldap_err2string( int err )
 {
 	const struct ldaperror *e;
-	
+
 	Debug( LDAP_DEBUG_TRACE, "ldap_err2string\n", 0, 0, 0 );
 
 	e = ldap_int_error( err );

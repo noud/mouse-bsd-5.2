@@ -146,7 +146,7 @@ int main (argc, argv, envp)
 
 #if !(defined (DEBUG) || defined (SYSLOG_4_2) || defined (__CYGWIN32__))
 	setlogmask (LOG_UPTO (LOG_INFO));
-#endif	
+#endif
 
 	/* Set up the OMAPI. */
 	status = omapi_init ();
@@ -548,7 +548,7 @@ int find_subnet (struct subnet **sp,
 }
 
 /* Individual States:
- * 
+ *
  * Each routine is called from the dhclient_state_machine() in one of
  * these conditions:
  * -> entering INIT state
@@ -710,7 +710,7 @@ void state_selecting (cpp)
 
 	/* Add an immediate timeout to send the first DHCPREQUEST packet. */
 	send_request (client);
-}  
+}
 
 /* state_requesting is called when we receive a DHCPACK message after
    having sent out one or more DHCPREQUEST packets. */
@@ -723,7 +723,7 @@ void dhcpack (packet)
 	struct client_lease *lease;
 	struct option_cache *oc;
 	struct data_string ds;
-	
+
 	/* If we're not receptive to an offer right now, or if the offer
 	   has an unrecognizable transaction id, then just drop it. */
 	for (client = ip -> client; client; client = client -> next) {
@@ -783,7 +783,7 @@ void dhcpack (packet)
 	if (!client -> new -> expiry) {
 		log_error ("no expiry time on offered lease.");
 		/* XXX this is going to be bad - if this _does_
-		   XXX happen, we should probably dynamically 
+		   XXX happen, we should probably dynamically
 		   XXX disqualify the DHCP server that gave us the
 		   XXX bad packet from future selections and
 		   XXX then go back into the init state. */
@@ -934,7 +934,7 @@ void bind_lease (client)
 		add_timeout (cur_time + 1, client_dns_update_timeout,
 			     client, 0, 0);
 	}
-}  
+}
 
 /* state_bound is called when we've successfully bound to a particular
    lease, but the renewal time on that lease has expired.   We are
@@ -978,7 +978,7 @@ void state_bound (cpp)
 
 	/* Send the first packet immediately. */
 	send_request (client);
-}  
+}
 
 /* state_stop is called when we've been told to shut down.   We unconfigure
    the interfaces, and then stop operating until told otherwise. */
@@ -1003,7 +1003,7 @@ void state_stop (cpp)
 					     client -> alias);
 		script_go (client);
 	}
-}  
+}
 
 int commit_leases ()
 {
@@ -1045,7 +1045,7 @@ void bootp (packet)
 			return;
 		}
 	}
-	
+
 	dhcpoffer (packet);
 
 }
@@ -1100,10 +1100,10 @@ void dhcpoffer (packet)
 	int stop_selecting;
 	const char *name = packet -> packet_type ? "DHCPOFFER" : "BOOTREPLY";
 	char obuf [1024];
-	
+
 #ifdef DEBUG_PACKET
 	dump_packet (packet);
-#endif	
+#endif
 
 	/* Find a client state that matches the xid... */
 	for (client = ip -> client; client; client = client -> next)
@@ -1319,7 +1319,7 @@ struct client_lease *packet_to_lease (packet, client)
 				     (struct group *)0);
 
 	return lease;
-}	
+}
 
 void dhcpnak (packet)
 	struct packet *packet;
@@ -1419,7 +1419,7 @@ void send_discover (cpp)
 		if (client -> medium) {
 			client -> medium = client -> medium -> next;
 			increase = 0;
-		} 
+		}
 		if (!client -> medium) {
 			if (fail)
 				log_fatal ("No valid media types for %s!",
@@ -1428,7 +1428,7 @@ void send_discover (cpp)
 				client -> config -> media;
 			increase = 1;
 		}
-			
+
 		log_info ("Trying medium \"%s\" %d",
 			  client -> medium -> string, increase);
 		script_init (client, "MEDIUM", client -> medium);
@@ -1455,7 +1455,7 @@ void send_discover (cpp)
 		limit_interval (client);
 	} else if (!client -> interval)
 		client -> interval = client -> config -> initial_interval;
-		
+
 	/* If the backoff would take us to the panic timeout, just use that
 	   as the interval. */
 	if (cur_time + client -> interval >
@@ -1675,7 +1675,7 @@ void send_request (cpp)
 		client -> interval += ((random () >> 2) %
 				       (2 * client -> interval));
 	}
-	
+
 	/* Don't backoff past cutoff. */
 	limit_interval (client);
 
@@ -1994,7 +1994,7 @@ void make_request (client, lease)
 			      (struct lease *)0, client,
 			      /* maximum packet size */1500,
 			      (struct option_state *)0,
-			      client -> sent_options, 
+			      client -> sent_options,
 			      /* scope */ &global_scope,
 			      /* overload */ 0,
 			      /* terminate */0,
@@ -2440,7 +2440,7 @@ void script_init (client, reason, medium)
 		}
 		client -> env = (struct string_list *)0;
 		client -> envc = 0;
-		
+
 		if (client -> interface) {
 			client_envadd (client, "", "interface", "%s",
 				       client -> interface -> name);
@@ -2725,7 +2725,7 @@ int dhcp_option_ev_name (buf, buflen, option)
 	if (option -> universe != &dhcp_universe) {
 		s = option -> universe -> name;
 		i = 0;
-	} else { 
+	} else {
 		s = option -> name;
 		i = 1;
 	}
@@ -2853,7 +2853,7 @@ void client_location_changed ()
 	}
 }
 
-void do_release(client) 
+void do_release(client)
 	struct client_state *client;
 {
 	struct data_string ds;
@@ -2890,10 +2890,10 @@ void do_release(client)
 			client -> destination = iaddr_broadcast;
 		client -> first_sending = cur_time;
 		client -> interval = client -> config -> initial_interval;
-	
+
 		/* Zap the medium list... */
 		client -> medium = (struct string_list *)0;
-	
+
 		/* Send out the first and only DHCPRELEASE packet. */
 		send_release (client);
 
@@ -2998,7 +2998,7 @@ isc_result_t dhclient_interface_startup_hook (struct interface_info *interface)
 					     ip -> client -> alias);
 		script_go (ip -> client);
 	}
-	
+
 	discover_interfaces (interfaces_requested
 			     ? DISCOVER_REQUESTED
 			     : DISCOVER_RUNNING);
@@ -3106,7 +3106,7 @@ void client_dns_update_timeout (void *cp)
 		}
 	}
 }
-			
+
 /* See if we should do a DNS update, and if so, do it. */
 
 isc_result_t client_dns_update (struct client_state *client, int addp, int ttl)
@@ -3138,7 +3138,7 @@ isc_result_t client_dns_update (struct client_state *client, int addp, int ttl)
 					   (struct option_state *)0,
 					   &global_scope, oc, MDL))
 		return ISC_R_SUCCESS;
-	
+
 	/* If we set the "server, please update" flag, or didn't set it
 	   to false, don't do the update. */
 	if (!(oc = lookup_option (&fqdn_universe, client -> sent_options,
@@ -3149,12 +3149,12 @@ isc_result_t client_dns_update (struct client_state *client, int addp, int ttl)
 					   (struct option_state *)0,
 					   &global_scope, oc, MDL))
 		return ISC_R_SUCCESS;
-	
+
 	/* If no FQDN option was supplied, don't do the update. */
 	memset (&ddns_fwd_name, 0, sizeof ddns_fwd_name);
 	if (!(oc = lookup_option (&fqdn_universe, client -> sent_options,
 				  FQDN_FQDN)) ||
-	    !evaluate_option_cache (&ddns_fwd_name, (struct packet *)0, 
+	    !evaluate_option_cache (&ddns_fwd_name, (struct packet *)0,
 				    (struct lease *)0, client,
 				    client -> sent_options,
 				    (struct option_state *)0,
@@ -3170,7 +3170,7 @@ isc_result_t client_dns_update (struct client_state *client, int addp, int ttl)
 	memset (&client_identifier, 0, sizeof client_identifier);
 	if ((oc = lookup_option (&dhcp_universe, client -> sent_options,
 				 DHO_DHCP_CLIENT_IDENTIFIER)) &&
-	    evaluate_option_cache (&client_identifier, (struct packet *)0, 
+	    evaluate_option_cache (&client_identifier, (struct packet *)0,
 				   (struct lease *)0, client,
 				   client -> sent_options,
 				   (struct option_state *)0,
@@ -3212,7 +3212,7 @@ isc_result_t client_dns_update (struct client_state *client, int addp, int ttl)
 					       &ddns_dhcid);
 	} else
 		rcode = ISC_R_FAILURE;
-	
+
 	data_string_forget (&ddns_fwd_name, MDL);
 	data_string_forget (&ddns_dhcid, MDL);
 #endif

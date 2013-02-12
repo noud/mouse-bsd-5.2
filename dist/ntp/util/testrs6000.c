@@ -48,7 +48,7 @@ timeout(
 	)
 {
 	signal (SIGALRM, timeout);
-	if (adjtime(&adjustment, &result)) 
+	if (adjtime(&adjustment, &result))
 	    printf("adjtime call failed\n");
 	if (result.tv_sec != 0 || result.tv_usec != 0) {
 		printf("result.u = %d.%06.6d  ", (int) result.tv_sec,

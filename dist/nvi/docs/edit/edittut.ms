@@ -141,7 +141,7 @@ The text editor you will learn here is named
 .I edit.
 Creating text using edit is as easy as typing it
 on an electric typewriter.
-Modifying text involves telling the text editor 
+Modifying text involves telling the text editor
 what you want to add, change, or delete.
 You can review your text
 by typing a command
@@ -264,7 +264,7 @@ Dial-up terminals
 .PP
 If your terminal connects with the computer over a telephone line,
 turn on the terminal, dial the system access number,
-and, when you hear a high-pitched tone, place the 
+and, when you hear a high-pitched tone, place the
 telephone handset in the acoustic coupler, if you are using one.
 You are now ready to login.
 .SH
@@ -395,7 +395,7 @@ This is done by \fIappending\fP (or adding) text to whatever
 is currently in the buffer.
 Since there is nothing in the buffer at the moment,
 you are appending text to nothing;
-in effect, 
+in effect,
 since you are adding text to nothing
 you are creating text.
 Most edit commands have two equivalent forms:
@@ -486,14 +486,14 @@ If you type a period as the first character and
 type any other character on the same line,
 edit will believe you want to remain in append mode
 and will not let you out.
-As this can be very frustrating, 
+As this can be very frustrating,
 be sure to type
 .B only
 the period and the \s-2RETURN\s0 key.
 .PP
 This is a good place to learn an important
 lesson about computers and text:  a blank space is
-a character as far as a computer is concerned.  
+a character as far as a computer is concerned.
 If you so much as type a period followed by a blank
 (that is, type a period and then the space bar on the keyboard),
 you will remain in append mode with the last line of text
@@ -505,7 +505,7 @@ being:
 .ps -2
 .R
 .DE
-Let's say that you enter the lines 
+Let's say that you enter the lines
 (try to type
 .B exactly
 what you see, including ``thiss''):
@@ -518,7 +518,7 @@ Text editing is strange, but nice.
 .R
 .DE
 The last line is the period followed by a \s-2RETURN\s0
-that gets you out of append mode.  
+that gets you out of append mode.
 .SH
 Making corrections
 .PP
@@ -529,7 +529,7 @@ This is done by typing the designated erase character
 as many times as there are characters
 you want to erase.
 .PP
-The usual erase character varies from place to place and 
+The usual erase character varies from place to place and
 user to user.  Often it
 is the backspace (control-H),
 so you can correct typing errors
@@ -560,7 +560,7 @@ the entire line typed so far
 and are given a fresh line to type on.
 You may immediately begin to retype the line.
 This, unfortunately, does not work after you type the
-line and press \s-2RETURN\s+2.  
+line and press \s-2RETURN\s+2.
 To make corrections in lines that have been completed,
 it is necessary to use the editing commands
 covered in the next sessions.
@@ -637,7 +637,7 @@ This will end your session with \s-2UNIX\s0, and will ready the
 terminal for the next user.
 It is always important to type \fBlogout\fR at the end of a session
 to make absolutely sure no one
-could accidentally stumble into your abandoned 
+could accidentally stumble into your abandoned
 session and thus gain access to your files,
 tempting even the most honest of souls.
 .sp 1
@@ -655,7 +655,7 @@ Password:       \fI(give password and carriage return)\fR
 .if t .sp .2v
 .if n .sp 1
 \&... A Message of General Interest ...
-% 
+%
 .DE
 When you indicate you want to edit,
 you can specify the name of the file you worked on last time.
@@ -911,7 +911,7 @@ corresponding line numbers.
 .SH
 Substitute command (s)
 .PP
-Now that you have found the misspelled word, 
+Now that you have found the misspelled word,
 you can change it from ``thiss'' to ``this''.
 As far as edit is concerned,
 changing things is a matter of
@@ -985,7 +985,7 @@ let us choose the line:
 Text editing is strange, but nice.
 .DE
 You can make this line a bit more positive
-by taking out the characters ``strange, but\ '' so the line 
+by taking out the characters ``strange, but\ '' so the line
 reads:
 .DS I 1i
 Text editing is nice.
@@ -1017,19 +1017,19 @@ l l.
 .TE
 .in -1i
 .PP
-You should note the space after ``but'' in ``/strange, but /''. 
+You should note the space after ``but'' in ``/strange, but /''.
 If you do not indicate that the space is to be taken out,
 your line will read:
 .DS I 1i
 .if t Text editing is   nice.
 .if n Text editing is  nice.
 .DE
-which looks a little funny   
+which looks a little funny
 because of the extra space between ``is'' and ``nice''.
 Again, we realize from this that a blank space
 is a real character to a computer, and in editing text
 we need to be aware of spaces
-within a line just as we would be aware of an ``a'' or 
+within a line just as we would be aware of an ``a'' or
 a ``4''.
 .SH
 Another way to list what's in the buffer (z)
@@ -1117,7 +1117,7 @@ Session 3
 .SH
 Bringing text into the buffer (e)
 .PP
-Login to \s-2UNIX\s0 and make contact with edit.  
+Login to \s-2UNIX\s0 and make contact with edit.
 You should try to login without
 looking at the notes, but if you must
 then by all means do.
@@ -1134,7 +1134,7 @@ or simply
 .DE
 Both ways get you in contact with edit, but the first way
 will bring a copy of the file named ``text'' into
-the buffer.  
+the buffer.
 If you did forget to tell edit the name of your file,
 you can get it into the buffer by
 typing:
@@ -1147,7 +1147,7 @@ The command
 .B edit,
 which may be abbreviated \fBe\fR,
 tells edit that you want
-to erase anything that might already be in 
+to erase anything that might already be in
 the buffer and bring a copy of the file ``text'' into the buffer
 for editing.
 You may also use the edit (e) command to change files in
@@ -1175,7 +1175,7 @@ The command
 .R
 .DE
 directs edit to move lines 2, 3, and 4
-to the end of the buffer ($).  
+to the end of the buffer ($).
 The format for the move command is that you specify
 the first line to be moved, the last line to be moved,
 the move command ``m'', and the line after which
@@ -1185,10 +1185,10 @@ So,
 :\|\fB1,3m6
 .R
 .DE
-would instruct edit to move lines 1 through 3 (inclusive) 
+would instruct edit to move lines 1 through 3 (inclusive)
 to a location after line 6 in the buffer.
 To move only one line, say, line 4,
-to a location in the buffer after line 5, 
+to a location in the buffer after line 5,
 the command would be ``4m5''.
 .PP
 Let's move some text using the command:
@@ -1225,7 +1225,7 @@ or, combining context searching and the move command:
 .DE
 (Do not type both examples here!)
 The problem with combining context searching
-with the move command 
+with the move command
 is that your chance of making a typing error
 in such a long command is greater than
 if you type line numbers.
@@ -1253,7 +1253,7 @@ not the letter ``c'', which has another meaning).
 .SH
 Deleting lines (d)
 .PP
-Suppose you want to delete 
+Suppose you want to delete
 the line
 .DS I 1i
 This is text added in Session 2.
@@ -1599,8 +1599,8 @@ Making commands global (g)
 .PP
 One disadvantage to the commands we have used for
 searching or substituting is that if you
-have a number of instances of a word to change 
-it appears that you have to type the command 
+have a number of instances of a word to change
+it appears that you have to type the command
 repeatedly, once for
 each time the change needs to be made.
 Edit, however, provides a way to make commands
@@ -2020,7 +2020,7 @@ File preserved.
 If you do not receive this reply,
 seek help immediately.
 Do not simply leave the editor.
-If you do, the buffer will be lost, 
+If you do, the buffer will be lost,
 and you may not be able to save your file.
 If the reply is ``File preserved.''
 you can leave the editor
@@ -2074,23 +2074,23 @@ Using
 .PP
 As you become more experienced with using the editor,
 you may still find that edit continues to meet your needs.
-However, should you become interested in using 
+However, should you become interested in using
 .I ex,
 it is easy to switch.
-To begin an editing session with 
+To begin an editing session with
 .I ex,
 use the name
 .B ex
 in your command instead of
 .B edit.
 .PP
-Edit commands also work in 
+Edit commands also work in
 .I ex,
 but the editing environment is somewhat different.
 You should be aware of a few differences
-between 
+between
 .I ex
-and 
+and
 .I edit.
 In edit, only the characters ``^'', ``$'', and ``\\'' have
 special meanings in searching the buffer

@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -229,7 +229,7 @@ int X509_PURPOSE_add(int id, int trust, int flags,
 static void xptable_free(X509_PURPOSE *p)
 	{
 	if(!p) return;
-	if (p->flags & X509_PURPOSE_DYNAMIC) 
+	if (p->flags & X509_PURPOSE_DYNAMIC)
 		{
 		if (p->flags & X509_PURPOSE_DYNAMIC_NAME) {
 			OPENSSL_free(p->name);
@@ -300,7 +300,7 @@ int X509_supported_extension(X509_EXTENSION *ex)
 
 	ex_nid = OBJ_obj2nid(X509_EXTENSION_get_object(ex));
 
-	if (ex_nid == NID_undef) 
+	if (ex_nid == NID_undef)
 		return 0;
 
 	if (OBJ_bsearch((char *)&ex_nid, (char *)supported_nids,
@@ -309,7 +309,7 @@ int X509_supported_extension(X509_EXTENSION *ex)
 		return 1;
 	return 0;
 	}
- 
+
 
 static void x509v3_cache_extensions(X509 *x)
 {
@@ -319,7 +319,7 @@ static void x509v3_cache_extensions(X509 *x)
 	ASN1_BIT_STRING *ns;
 	EXTENDED_KEY_USAGE *extusage;
 	X509_EXTENSION *ex;
-	
+
 	int i;
 	if(x->ex_flags & EXFLAG_SET) return;
 #ifndef OPENSSL_NO_SHA
@@ -361,7 +361,7 @@ static void x509v3_cache_extensions(X509 *x)
 	if((usage=X509_get_ext_d2i(x, NID_key_usage, NULL, NULL))) {
 		if(usage->length > 0) {
 			x->ex_kusage = usage->data[0];
-			if(usage->length > 1) 
+			if(usage->length > 1)
 				x->ex_kusage |= usage->data[1] << 8;
 		} else x->ex_kusage = 0;
 		x->ex_flags |= EXFLAG_KUSAGE;
@@ -504,7 +504,7 @@ static int check_purpose_ssl_client(const X509_PURPOSE *xp, const X509 *x, int c
 	if(ca) return check_ssl_ca(x);
 	/* We need to do digital signatures with it */
 	if(ku_reject(x,KU_DIGITAL_SIGNATURE)) return 0;
-	/* nsCertType if present should allow SSL client use */	
+	/* nsCertType if present should allow SSL client use */
 	if(ns_reject(x, NS_SSL_CLIENT)) return 0;
 	return 1;
 }
@@ -517,7 +517,7 @@ static int check_purpose_ssl_server(const X509_PURPOSE *xp, const X509 *x, int c
 	if(ns_reject(x, NS_SSL_SERVER)) return 0;
 	/* Now as for keyUsage: we'll at least need to sign OR encipher */
 	if(ku_reject(x, KU_DIGITAL_SIGNATURE|KU_KEY_ENCIPHERMENT)) return 0;
-	
+
 	return 1;
 
 }
@@ -603,9 +603,9 @@ static int check_purpose_timestamp_sign(const X509_PURPOSE *xp, const X509 *x,
 	/* If ca is true we must return if this is a valid CA certificate. */
 	if (ca) return check_ca(x);
 
-	/* 
+	/*
 	 * Check the optional key usage field:
-	 * if Key Usage is present, it must be one of digitalSignature 
+	 * if Key Usage is present, it must be one of digitalSignature
 	 * and/or nonRepudiation (other values are not consistent and shall
 	 * be rejected).
 	 */

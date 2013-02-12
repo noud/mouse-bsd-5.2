@@ -3,7 +3,7 @@
 /*
  * Electric Fence - Red-Zone memory allocator.
  * Bruce Perens, 1988, 1993
- * 
+ *
  * This is a special version of malloc() and company for debugging software
  * that is suspected of overrunning or underrunning the boundaries of a
  * malloc buffer, or touching free memory.
@@ -351,11 +351,11 @@ allocateMoreSlots(void)
  * functions on Sun systems, which do word references to the string memory
  * and may refer to memory up to three bytes beyond the end of the string.
  * For this reason, I take the alignment requests to memalign() and valloc()
- * seriously, and 
- * 
+ * seriously, and
+ *
  * Electric Fence wastes lots of memory. I do a best-fit allocator here
  * so that it won't waste even more. It's slow, but thrashing because your
- * working set is too big for a system's RAM is even slower. 
+ * working set is too big for a system's RAM is even slower.
  */
 extern C_LINKAGE void *
 memalign(size_t alignment, size_t userSize)
@@ -416,7 +416,7 @@ memalign(size_t alignment, size_t userSize)
 	if ( !internalUse && unUsedSlots < 7 ) {
 		allocateMoreSlots();
 	}
-	
+
 	/*
 	 * Iterate through all of the slot structures. Attempt to find a slot
 	 * containing free memory of the exact right size. Accept a slot with
@@ -426,7 +426,7 @@ memalign(size_t alignment, size_t userSize)
 	 * we have to create new memory and mark it as free.
 	 *
 	 */
-	
+
 	for ( slot = allocationList, count = slotCount ; count > 0; count-- ) {
 		if ( slot->mode == FREE
 		 && slot->internalSize >= internalSize ) {
@@ -517,7 +517,7 @@ memalign(size_t alignment, size_t userSize)
 				Page_AllowAccess(
 				 fullSlot->internalAddress
 				,internalSize - bytesPerPage);
-			
+
 		address += internalSize - bytesPerPage;
 
 		/* Set up the "dead" page. */
@@ -542,7 +542,7 @@ memalign(size_t alignment, size_t userSize)
 			Page_Delete(address, bytesPerPage);
 		else
 			Page_DenyAccess(address, bytesPerPage);
-			
+
 		address += bytesPerPage;
 
 		/* Set up the "live" page. */
@@ -571,7 +571,7 @@ slotForUserAddress(void * address)
 {
 	register Slot *	slot = allocationList;
 	register size_t	count = slotCount;
-	
+
 	for ( ; count > 0; count-- ) {
 		if ( slot->userAddress == address )
 			return slot;
@@ -589,7 +589,7 @@ slotForInternalAddress(void * address)
 {
 	register Slot *	slot = allocationList;
 	register size_t	count = slotCount;
-	
+
 	for ( ; count > 0; count-- ) {
 		if ( slot->internalAddress == address )
 			return slot;
@@ -608,7 +608,7 @@ slotForInternalAddressPreviousTo(void * address)
 {
 	register Slot *	slot = allocationList;
 	register size_t	count = slotCount;
-	
+
 	for ( ; count > 0; count-- ) {
 		if ( ((char *)slot->internalAddress)
 		 + slot->internalSize == address )
@@ -687,7 +687,7 @@ free(void * address)
 	/*
 	 * Free memory is _always_ set to deny access. When EF_PROTECT_FREE
 	 * is true, free memory is never reallocated, so it remains access
-	 * denied for the life of the process. When EF_PROTECT_FREE is false, 
+	 * denied for the life of the process. When EF_PROTECT_FREE is false,
 	 * the memory may be re-allocated, at which time access to it will be
 	 * allowed again.
 	 *
@@ -718,7 +718,7 @@ realloc(void * oldBuffer, size_t newSize)
 
 		Page_AllowAccess(allocationList, allocationListSize);
 		noAllocationListProtection = 1;
-		
+
 		slot = slotForUserAddress(oldBuffer);
 
 		if ( slot == 0 )
@@ -739,7 +739,7 @@ realloc(void * oldBuffer, size_t newSize)
 
 		if ( size < newSize )
 			memset(&(((char *)newBuffer)[size]), 0, newSize - size);
-		
+
 		/* Internal memory was re-protected in free() */
 	}
 

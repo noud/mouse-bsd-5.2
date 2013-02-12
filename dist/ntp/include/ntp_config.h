@@ -163,7 +163,7 @@
 /*
  * "crypto" modifier keywords
  */
-#define	CONF_CRYPTO_RSA		1	
+#define	CONF_CRYPTO_RSA		1
 #define	CONF_CRYPTO_SIGN	2
 #define CONF_CRYPTO_LEAP	3
 #define CONF_CRYPTO_CERT	4

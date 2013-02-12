@@ -6,22 +6,22 @@
 
 # initialize
 
-IFS=" 	
+IFS=" 	""
 "
 
 : ${HOME?} ${SHELL=/bin/sh} make sure these are set
 
 # sanity checks...
 
-test $# = 1 || { 
+test $# = 1 || {
     echo "Usage: ${0} project" 1>&2; exit 1
 }
 
-test -r ${HOME}/.${1} || { 
+test -r ${HOME}/.${1} || {
     echo "${0}: can't read environment file: '${HOME}/.${1}'" 1>&2; exit 1
 }
 
-test -x ${SHELL} || { 
+test -x ${SHELL} || {
     echo "${0}: can't execute command shell: '${SHELL}'" 1>&2; exit 1
 }
 
@@ -29,7 +29,7 @@ test -x ${SHELL} || {
 
 export PS1; PS1="$1%${PS1- }"
 
-# load environment 
+# load environment
 
 . ${HOME}/.${1}
 
@@ -41,7 +41,7 @@ _PNAME_=`echo ${1} | case \`echo -n\` in		# assume $1 lower case
 		     esac`
 eval ${1}=\${${_PNAME_}=\${${1}}}
 
-eval test "X\${${1}}" != X || { 
+eval test "X\${${1}}" != X || {
     echo "${0}: ${HOME}/.${1} should set '${1}' or '${_PNAME_}'" 1>&2; exit 1
 }
 
@@ -51,7 +51,7 @@ export ${1} MANPATH PATH ${_PNAME_}
 
 echo "Entering project '${1}' - leave with 'exit' or 'control-d'" 1>&2
 
-exec ${SHELL} 
+exec ${SHELL}
 
 echo "project ${1} NOT entered" 1>&2; exit 1;
 
@@ -70,29 +70,29 @@ echo "project ${1} NOT entered" 1>&2; exit 1;
 #	it easy to access \fIproject\fR-specific programs and files.
 #
 #	\fIenter\fP consults a file with environment information
-#	($HOME/.\fIproject\fR, Bourne-shell syntax) and invokes 
+#	($HOME/.\fIproject\fR, Bourne-shell syntax) and invokes
 #	a new command shell of the same type as the login shell.
-#	Typically, project environment files are maintained and 
+#	Typically, project environment files are maintained and
 #	given out by the project administrator.
 #
-#	In order to leave the project environment use the \fIexit\fP 
+#	In order to leave the project environment use the \fIexit\fP
 #	command or type a control-d;
 #	the details may depend on the type of login shell involved.
 #
 #	As a minimum, the environment file should set an environment
-#	variable with the same name as the \fIproject\fP. The variable 
+#	variable with the same name as the \fIproject\fP. The variable
 #	name can be either be identical to \fIproject\fP or in upper case.
 #	For consistency, \fIenter\fP will set both variables to the same value.
 # EXAMPLE
 # .fi
 # .ad
-#	In this example, 
+#	In this example,
 #	all files pertaining to a project \fIfoobar\fR are located under the
 #	directory \fI/usr/foo/bar/foobar\fR. For example, there
 #	are subdirectories
-#	\fI/usr/foo/bar/foobar/man\fR with manual pages, 
-#	\fI/usr/foo/bar/foobar/bin\fR with executable 
-#	programs, other directories for object libraries and include files, 
+#	\fI/usr/foo/bar/foobar/man\fR with manual pages,
+#	\fI/usr/foo/bar/foobar/bin\fR with executable
+#	programs, other directories for object libraries and include files,
 #	and so on.
 #
 #	In order to enter a project \fIfoobar\fR, the command
@@ -100,9 +100,9 @@ echo "project ${1} NOT entered" 1>&2; exit 1;
 # .ti +5
 # .ft C
 #	enter foobar
-# .ft 
+# .ft
 # .PP
-#	consults a file \fI.foobar\fR (in the user\'s home directory) 
+#	consults a file \fI.foobar\fR (in the user\'s home directory)
 #	with contents:
 # .PP
 # .ft C
@@ -111,12 +111,12 @@ echo "project ${1} NOT entered" 1>&2; exit 1;
 #	export FOOBAR;	FOOBAR=/usr/foo/bar/foobar
 #	export PATH;	PATH=$PATH:$FOOBAR/bin
 #	export MANPATH;	MANPATH=$MANPATH:$FOOBAR/man
-# .ft 
+# .ft
 # .fi
 # .PP
-#	The second line automatically makes all project-specific 
-#	executable programs accessible. The third line makes it possible 
-#	to use the standard UNIX \fIman\fR command for retrieval of 
+#	The second line automatically makes all project-specific
+#	executable programs accessible. The third line makes it possible
+#	to use the standard UNIX \fIman\fR command for retrieval of
 #	project-specific manual pages. The \fIenter\fR command
 #	makes sure that both the \fIfoobar\fR and \fIFOOBAR\fR
 #	environment variables are set to the same value.

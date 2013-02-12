@@ -143,7 +143,7 @@ main(int argc, char **argv)
 	}
 	if (argc > 0) {
 	    char *xargv[5];
-	    
+
 	    if (setjmp(toplevel))
 		exit(0);
 	    signal(SIGINT, intr);
@@ -218,7 +218,7 @@ tail(filename)
 	char *filename;
 {
 	char *s;
-	
+
 	while (*filename) {
 		s = strrchr(filename, '/');
 		if (s == NULL)

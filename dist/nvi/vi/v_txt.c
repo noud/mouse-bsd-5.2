@@ -224,7 +224,7 @@ txt_map_end(SCR *sp)
 #define	UNMAP_TST							\
 	FL_ISSET(ec_flags, EC_MAPINPUT) && LF_ISSET(TXT_INFOLINE)
 
-/* 
+/*
  * Internally, we maintain tp->lno and tp->cno, externally, everyone uses
  * sp->lno and sp->cno.  Make them consistent as necessary.
  */
@@ -242,8 +242,8 @@ txt_map_end(SCR *sp)
  */
 int
 v_txt(SCR *sp, VICMD *vp, MARK *tm, const CHAR_T *lp, size_t len, ARG_CHAR_T prompt, db_recno_t ai_line, u_long rcount, u_int32_t flags)
-	        
-	          
+
+
 	         		/* To MARK. */
 	                 	/* Input line. */
 	           		/* Input line length. */
@@ -2163,7 +2163,7 @@ txt_fc_col(SCR *sp, int argc, ARGS **argv)
 		prefix = (pp - np) + 1;
 		for (ac = argc - 1, av = argv + 1; ac > 0; --ac, ++av)
 			if (av[0]->len < prefix ||
-			    MEMCMP(av[0]->bp, argv[0]->bp, 
+			    MEMCMP(av[0]->bp, argv[0]->bp,
 				   prefix)) {
 				prefix = 0;
 				break;
@@ -2225,7 +2225,7 @@ txt_fc_col(SCR *sp, int argc, ARGS **argv)
 		/* Display the files in sorted order. */
 		for (row = 0; row < numrows; ++row) {
 			for (base = row, col = 0; col < numcols; ++col) {
-				INT2CHAR(sp, argv[base]->bp+prefix, 
+				INT2CHAR(sp, argv[base]->bp+prefix,
 					argv[base]->len+1-prefix, np, nlen);
 				pp = msg_print(sp, np, &nf);
 				cnt = ex_printf(sp, "%s", pp);
@@ -2392,13 +2392,13 @@ nothex:		tp->lb[tp->cno] = savec;
 
 	/* Copy down any overwrite characters. */
 	if (tp->owrite)
-		MEMMOVEW(tp->lb + tp->cno, tp->lb + tp->cno + len, 
+		MEMMOVEW(tp->lb + tp->cno, tp->lb + tp->cno + len,
 		    tp->owrite);
 
 	/* Copy down any insert characters. */
 	if (tp->insert)
 		MEMMOVEW(tp->lb + tp->cno + tp->owrite,
-		    tp->lb + tp->cno + tp->owrite + len, 
+		    tp->lb + tp->cno + tp->owrite + len,
 		    tp->insert);
 
 	return (0);
@@ -2484,7 +2484,7 @@ txt_insch(SCR *sp, TEXT *tp, CHAR_T *chp, u_int flags)
 				    tp->lb, tp->lb_len, tp->len + olen);
 				chlen = olen - nlen;
 				MEMMOVEW(tp->lb + cno + 1 + chlen,
-				    tp->lb + cno + 1, 
+				    tp->lb + cno + 1,
 				    tp->owrite + tp->insert);
 
 				tp->len += chlen;
@@ -2588,7 +2588,7 @@ txt_isrch(SCR *sp, VICMD *vp, TEXT *tp, u_int8_t *is_flagsp)
 		FL_CLR(*is_flagsp, IS_RUNNING);
 		return (0);
 	}
-		
+
 	/*
 	 * Remember the input line and discard the special input map,
 	 * but don't overwrite the input line on the screen.
@@ -2602,7 +2602,7 @@ txt_isrch(SCR *sp, VICMD *vp, TEXT *tp, u_int8_t *is_flagsp)
 	/*
 	 * Specify a starting point and search.  If we find a match, move to
 	 * it and refresh the screen.  If we didn't find the match, then we
-	 * beep the screen.  When searching from the original cursor position, 
+	 * beep the screen.  When searching from the original cursor position,
 	 * we have to move the cursor, otherwise, we don't want to move the
 	 * cursor in case the text at the current position continues to match.
 	 */
@@ -2635,7 +2635,7 @@ txt_isrch(SCR *sp, VICMD *vp, TEXT *tp, u_int8_t *is_flagsp)
 	F_SET(sp, SC_TINPUT | SC_TINPUT_INFO);
 
 	/* Reset the line number of the input line. */
-	tp->lno = TMAP[0].lno; 
+	tp->lno = TMAP[0].lno;
 
 	/*
 	 * If the colon command-line moved, i.e. the screen scrolled,

@@ -549,7 +549,7 @@ madwifi_get_seqnum(const char *ifname, void *priv, const u8 *addr, int idx,
 }
 
 
-static int 
+static int
 madwifi_flush(void *priv)
 {
 #ifdef MADWIFI_BSD

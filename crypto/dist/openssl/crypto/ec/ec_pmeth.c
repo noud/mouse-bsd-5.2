@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -193,7 +193,7 @@ static int pkey_ec_derive(EVP_PKEY_CTX *ctx, unsigned char *key, size_t *keylen)
 	 */
 
 	outlen = *keylen;
-		
+
 	ret = ECDH_compute_key(key, outlen, pubkey, ctx->pkey->pkey.ec, 0);
 	if (ret < 0)
 		return ret;
@@ -244,7 +244,7 @@ static int pkey_ec_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
 
 		}
 	}
-			
+
 static int pkey_ec_ctrl_str(EVP_PKEY_CTX *ctx,
 			const char *type, const char *value)
 	{
@@ -303,7 +303,7 @@ static int pkey_ec_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY *pkey)
 	return EC_KEY_generate_key(pkey->pkey.ec);
 	}
 
-const EVP_PKEY_METHOD ec_pkey_meth = 
+const EVP_PKEY_METHOD ec_pkey_meth =
 	{
 	EVP_PKEY_EC,
 	0,

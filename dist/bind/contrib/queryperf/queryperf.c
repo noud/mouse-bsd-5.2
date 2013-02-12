@@ -1367,7 +1367,7 @@ parse_query(char *input, char *qname, int qnlen, int *qtype) {
 
 /*
  * dispatch_query:
- *   Send the query packet for the entry 
+ *   Send the query packet for the entry
  *
  *   Return -1 on failure
  *   Return a non-negative integer otherwise
@@ -1400,7 +1400,7 @@ dispatch_query(unsigned short int id, char *dom, int qt) {
 		*p++ = 0;	/* root name */
 		*p++ = 0;
 		*p++ = 41;	/* OPT */
-		*p++ = 16;	
+		*p++ = 16;
 		*p++ = 0;	/* UDP payload size (4K) */
 		*p++ = 0;	/* extended rcode */
 		*p++ = 0;	/* version */
@@ -1845,7 +1845,7 @@ print_statistics(int intermediate, unsigned int sent, unsigned int timed_out,
 		 unsigned int roverflows, unsigned int *rarray)
 {
 	unsigned int num_queries_completed;
-	double per_lost, per_completed, per_lost2, per_completed2; 
+	double per_lost, per_completed, per_lost2, per_completed2;
 	double run_time, queries_per_sec, queries_per_sec2;
 	double queries_per_sec_total;
 	double rtt_average, rtt_stddev;
@@ -1985,7 +1985,7 @@ print_statistics(int intermediate, unsigned int sent, unsigned int timed_out,
 	}
 	if (target_qps > 0) {
 		printf("  Total QPS/target:     %.6lf/%d qps\n",
-		       queries_per_sec_total, target_qps);		
+		       queries_per_sec_total, target_qps);
 	}
 
 	printf("\n");

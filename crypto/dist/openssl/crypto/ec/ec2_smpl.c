@@ -21,7 +21,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -203,12 +203,12 @@ int ec_GF2m_simple_group_set_curve(EC_GROUP *group,
 	if (!BN_GF2m_mod_arr(&group->a, a, group->poly)) goto err;
 	bn_wexpand(&group->a, (int)(group->poly[0] + BN_BITS2 - 1) / BN_BITS2);
 	for (i = group->a.top; i < group->a.dmax; i++) group->a.d[i] = 0;
-	
+
 	/* group->b */
 	if (!BN_GF2m_mod_arr(&group->b, b, group->poly)) goto err;
 	bn_wexpand(&group->b, (int)(group->poly[0] + BN_BITS2 - 1) / BN_BITS2);
 	for (i = group->b.top; i < group->b.dmax; i++) group->b.d[i] = 0;
-		
+
 	ret = 1;
   err:
 	return ret;
@@ -221,7 +221,7 @@ int ec_GF2m_simple_group_set_curve(EC_GROUP *group,
 int ec_GF2m_simple_group_get_curve(const EC_GROUP *group, BIGNUM *p, BIGNUM *a, BIGNUM *b, BN_CTX *ctx)
 	{
 	int ret = 0;
-	
+
 	if (p != NULL)
 		{
 		if (!BN_copy(p, &group->field)) return 0;
@@ -236,9 +236,9 @@ int ec_GF2m_simple_group_get_curve(const EC_GROUP *group, BIGNUM *p, BIGNUM *a, 
 		{
 		if (!BN_copy(b, &group->b)) goto err;
 		}
-	
+
 	ret = 1;
-	
+
   err:
 	return ret;
 	}
@@ -252,7 +252,7 @@ int ec_GF2m_simple_group_get_degree(const EC_GROUP *group)
 
 
 /* Checks the discriminant of the curve.
- * y^2 + x*y = x^3 + a*x^2 + b is an elliptic curve <=> b != 0 (mod p) 
+ * y^2 + x*y = x^3 + a*x^2 + b is an elliptic curve <=> b != 0 (mod p)
  */
 int ec_GF2m_simple_group_check_discriminant(const EC_GROUP *group, BN_CTX *ctx)
 	{
@@ -274,9 +274,9 @@ int ec_GF2m_simple_group_check_discriminant(const EC_GROUP *group, BN_CTX *ctx)
 	if (b == NULL) goto err;
 
 	if (!BN_GF2m_mod_arr(b, &group->b, group->poly)) goto err;
-	
+
 	/* check the discriminant:
-	 * y^2 + x*y = x^3 + a*x^2 + b is an elliptic curve <=> b != 0 (mod p) 
+	 * y^2 + x*y = x^3 + a*x^2 + b is an elliptic curve <=> b != 0 (mod p)
 	 */
 	if (BN_is_zero(b)) goto err;
 
@@ -332,7 +332,7 @@ int ec_GF2m_simple_point_copy(EC_POINT *dest, const EC_POINT *src)
 	}
 
 
-/* Set an EC_POINT to the point at infinity.  
+/* Set an EC_POINT to the point at infinity.
  * A point at infinity is represented by having Z=0.
  */
 int ec_GF2m_simple_point_set_to_infinity(const EC_GROUP *group, EC_POINT *point)
@@ -343,13 +343,13 @@ int ec_GF2m_simple_point_set_to_infinity(const EC_GROUP *group, EC_POINT *point)
 	}
 
 
-/* Set the coordinates of an EC_POINT using affine coordinates. 
+/* Set the coordinates of an EC_POINT using affine coordinates.
  * Note that the simple implementation only uses affine coordinates.
  */
 int ec_GF2m_simple_point_set_affine_coordinates(const EC_GROUP *group, EC_POINT *point,
 	const BIGNUM *x, const BIGNUM *y, BN_CTX *ctx)
 	{
-	int ret = 0;	
+	int ret = 0;
 	if (x == NULL || y == NULL)
 		{
 		ECerr(EC_F_EC_GF2M_SIMPLE_POINT_SET_AFFINE_COORDINATES, ERR_R_PASSED_NULL_PARAMETER);
@@ -370,7 +370,7 @@ int ec_GF2m_simple_point_set_affine_coordinates(const EC_GROUP *group, EC_POINT 
 	}
 
 
-/* Gets the affine coordinates of an EC_POINT. 
+/* Gets the affine coordinates of an EC_POINT.
  * Note that the simple implementation only uses affine coordinates.
  */
 int ec_GF2m_simple_point_get_affine_coordinates(const EC_GROUP *group, const EC_POINT *point,
@@ -384,7 +384,7 @@ int ec_GF2m_simple_point_get_affine_coordinates(const EC_GROUP *group, const EC_
 		return 0;
 		}
 
-	if (BN_cmp(&point->Z, BN_value_one())) 
+	if (BN_cmp(&point->Z, BN_value_one()))
 		{
 		ECerr(EC_F_EC_GF2M_SIMPLE_POINT_GET_AFFINE_COORDINATES, ERR_R_SHOULD_NOT_HAVE_BEEN_CALLED);
 		return 0;
@@ -400,18 +400,18 @@ int ec_GF2m_simple_point_get_affine_coordinates(const EC_GROUP *group, const EC_
 		BN_set_negative(y, 0);
 		}
 	ret = 1;
-		
+
  err:
 	return ret;
 	}
 
 
 /* Calculates and sets the affine coordinates of an EC_POINT from the given
- * compressed coordinates.  Uses algorithm 2.3.4 of SEC 1. 
+ * compressed coordinates.  Uses algorithm 2.3.4 of SEC 1.
  * Note that the simple implementation only uses affine coordinates.
  *
  * The method is from the following publication:
- * 
+ *
  *     Harper, Menezes, Vanstone:
  *     "Public-Key Cryptosystems with Very Small Key Lengths",
  *     EUROCRYPT '92, Springer-Verlag LNCS 658,
@@ -461,7 +461,7 @@ int ec_GF2m_simple_set_compressed_coordinates(const EC_GROUP *group, EC_POINT *p
 		if (!BN_GF2m_mod_solve_quad_arr(z, tmp, group->poly, ctx))
 			{
 			unsigned long err = ERR_peek_last_error();
-			
+
 			if (ERR_GET_LIB(err) == ERR_LIB_BN && ERR_GET_REASON(err) == BN_R_NO_SOLUTION)
 				{
 				ERR_clear_error();
@@ -491,7 +491,7 @@ int ec_GF2m_simple_set_compressed_coordinates(const EC_GROUP *group, EC_POINT *p
 	}
 
 
-/* Converts an EC_POINT to an octet string.  
+/* Converts an EC_POINT to an octet string.
  * If buf is NULL, the encoded length will be returned.
  * If the length len of buf is smaller than required an error will be returned.
  */
@@ -565,7 +565,7 @@ size_t ec_GF2m_simple_point2oct(const EC_GROUP *group, const EC_POINT *point, po
 			}
 
 		i = 1;
-		
+
 		skip = field_len - BN_num_bytes(x);
 		if (skip > field_len)
 			{
@@ -608,7 +608,7 @@ size_t ec_GF2m_simple_point2oct(const EC_GROUP *group, const EC_POINT *point, po
 			goto err;
 			}
 		}
-	
+
 	if (used_ctx)
 		BN_CTX_end(ctx);
 	if (new_ctx != NULL)
@@ -624,7 +624,7 @@ size_t ec_GF2m_simple_point2oct(const EC_GROUP *group, const EC_POINT *point, po
 	}
 
 
-/* Converts an octet string representation to an EC_POINT. 
+/* Converts an octet string representation to an EC_POINT.
  * Note that the simple implementation only uses affine coordinates.
  */
 int ec_GF2m_simple_oct2point(const EC_GROUP *group, EC_POINT *point,
@@ -668,7 +668,7 @@ int ec_GF2m_simple_oct2point(const EC_GROUP *group, EC_POINT *point,
 
 		return EC_POINT_set_to_infinity(group, point);
 		}
-	
+
 	field_len = (EC_GROUP_get_degree(group) + 7) / 8;
 	enc_len = (form == POINT_CONVERSION_COMPRESSED) ? 1 + field_len : 1 + 2*field_len;
 
@@ -722,7 +722,7 @@ int ec_GF2m_simple_oct2point(const EC_GROUP *group, EC_POINT *point,
 
 		if (!EC_POINT_set_affine_coordinates_GF2m(group, point, x, y, ctx)) goto err;
 		}
-	
+
 	if (!EC_POINT_is_on_curve(group, point, ctx)) /* test required by X9.62 */
 		{
 		ECerr(EC_F_EC_GF2M_SIMPLE_OCT2POINT, EC_R_POINT_IS_NOT_ON_CURVE);
@@ -730,7 +730,7 @@ int ec_GF2m_simple_oct2point(const EC_GROUP *group, EC_POINT *point,
 		}
 
 	ret = 1;
-	
+
  err:
 	BN_CTX_end(ctx);
 	if (new_ctx != NULL)
@@ -747,7 +747,7 @@ int ec_GF2m_simple_add(const EC_GROUP *group, EC_POINT *r, const EC_POINT *a, co
 	BN_CTX *new_ctx = NULL;
 	BIGNUM *x0, *y0, *x1, *y1, *x2, *y2, *s, *t;
 	int ret = 0;
-	
+
 	if (EC_POINT_is_at_infinity(group, a))
 		{
 		if (!EC_POINT_copy(r, b)) return 0;
@@ -778,7 +778,7 @@ int ec_GF2m_simple_add(const EC_GROUP *group, EC_POINT *r, const EC_POINT *a, co
 	t = BN_CTX_get(ctx);
 	if (t == NULL) goto err;
 
-	if (a->Z_is_one) 
+	if (a->Z_is_one)
 		{
 		if (!BN_copy(x0, &a->X)) goto err;
 		if (!BN_copy(y0, &a->Y)) goto err;
@@ -787,7 +787,7 @@ int ec_GF2m_simple_add(const EC_GROUP *group, EC_POINT *r, const EC_POINT *a, co
 		{
 		if (!EC_POINT_get_affine_coordinates_GF2m(group, a, x0, y0, ctx)) goto err;
 		}
-	if (b->Z_is_one) 
+	if (b->Z_is_one)
 		{
 		if (!BN_copy(x1, &b->X)) goto err;
 		if (!BN_copy(y1, &b->Y)) goto err;
@@ -818,7 +818,7 @@ int ec_GF2m_simple_add(const EC_GROUP *group, EC_POINT *r, const EC_POINT *a, co
 			}
 		if (!group->meth->field_div(group, s, y1, x1, ctx)) goto err;
 		if (!BN_GF2m_add(s, s, x1)) goto err;
-		
+
 		if (!group->meth->field_sqr(group, x2, s, ctx)) goto err;
 		if (!BN_GF2m_add(x2, x2, s)) goto err;
 		if (!BN_GF2m_add(x2, x2, &group->a)) goto err;
@@ -855,7 +855,7 @@ int ec_GF2m_simple_invert(const EC_GROUP *group, EC_POINT *point, BN_CTX *ctx)
 	if (EC_POINT_is_at_infinity(group, point) || BN_is_zero(&point->Y))
 		/* point is its own inverse */
 		return 1;
-	
+
 	if (!EC_POINT_make_affine(group, point, ctx)) return 0;
 	return BN_GF2m_add(&point->Y, &point->X, &point->Y);
 	}
@@ -884,7 +884,7 @@ int ec_GF2m_simple_is_on_curve(const EC_GROUP *group, const EC_POINT *point, BN_
 		return 1;
 
 	field_mul = group->meth->field_mul;
-	field_sqr = group->meth->field_sqr;	
+	field_sqr = group->meth->field_sqr;
 
 	/* only support affine coordinates */
 	if (!point->Z_is_one) goto err;
@@ -937,7 +937,7 @@ int ec_GF2m_simple_cmp(const EC_GROUP *group, const EC_POINT *a, const EC_POINT 
 		{
 		return EC_POINT_is_at_infinity(group, b) ? 0 : 1;
 		}
-	
+
 	if (a->Z_is_one && b->Z_is_one)
 		{
 		return ((BN_cmp(&a->X, &b->X) == 0) && BN_cmp(&a->Y, &b->Y) == 0) ? 0 : 1;
@@ -961,7 +961,7 @@ int ec_GF2m_simple_cmp(const EC_GROUP *group, const EC_POINT *a, const EC_POINT 
 	if (!EC_POINT_get_affine_coordinates_GF2m(group, b, bX, bY, ctx)) goto err;
 	ret = ((BN_cmp(aX, bX) == 0) && BN_cmp(aY, bY) == 0) ? 0 : 1;
 
-  err:	
+  err:
 	if (ctx) BN_CTX_end(ctx);
 	if (new_ctx) BN_CTX_free(new_ctx);
 	return ret;
@@ -977,7 +977,7 @@ int ec_GF2m_simple_make_affine(const EC_GROUP *group, EC_POINT *point, BN_CTX *c
 
 	if (point->Z_is_one || EC_POINT_is_at_infinity(group, point))
 		return 1;
-	
+
 	if (ctx == NULL)
 		{
 		ctx = new_ctx = BN_CTX_new();
@@ -989,13 +989,13 @@ int ec_GF2m_simple_make_affine(const EC_GROUP *group, EC_POINT *point, BN_CTX *c
 	x = BN_CTX_get(ctx);
 	y = BN_CTX_get(ctx);
 	if (y == NULL) goto err;
-	
+
 	if (!EC_POINT_get_affine_coordinates_GF2m(group, point, x, y, ctx)) goto err;
 	if (!BN_copy(&point->X, x)) goto err;
 	if (!BN_copy(&point->Y, y)) goto err;
 	if (!BN_one(&point->Z)) goto err;
-	
-	ret = 1;		
+
+	ret = 1;
 
   err:
 	if (ctx) BN_CTX_end(ctx);

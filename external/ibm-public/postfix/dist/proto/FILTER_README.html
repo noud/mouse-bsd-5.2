@@ -250,34 +250,34 @@ document for an introduction to the Postfix architecture. </p>
 <blockquote>
 <pre>
  1 #!/bin/sh
- 2 
+ 2
  3 # Simple shell-based filter. It is meant to be invoked as follows:
  4 #       /path/to/script -f sender recipients...
- 5 
+ 5
  6 # Localize these. The -G option does nothing before Postfix 2.3.
  7 INSPECT_DIR=/var/spool/filter
  8 SENDMAIL="/usr/sbin/sendmail -G -i" # NEVER NEVER NEVER use "-t" here.
- 9 
+ 9
 10 # Exit codes from &lt;sysexits.h&gt;
 11 EX_TEMPFAIL=75
 12 EX_UNAVAILABLE=69
-13 
+13
 14 # Clean up when done or when aborting.
 15 trap "rm -f in.$$" 0 1 2 3 15
-16 
+16
 17 # Start processing.
 18 cd $INSPECT_DIR || {
 19     echo $INSPECT_DIR does not exist; exit $EX_TEMPFAIL; }
-20 
-21 cat &gt;in.$$ || { 
+20
+21 cat &gt;in.$$ || {
 22     echo Cannot save mail to file; exit $EX_TEMPFAIL; }
-23 
+23
 24 # Specify your content filter here.
 25 # filter &lt;in.$$ || {
 26 #   echo Message content rejected; exit $EX_UNAVAILABLE; }
-27 
+27
 28 $SENDMAIL "$@" &lt;in.$$
-29 
+29
 30 exit $?
 </pre>
 </blockquote>
@@ -590,7 +590,7 @@ that the content filter creates no temporary files. Each temporary
 file created by the content filter adds another factor to the
 performance loss. </p>
 
-<h3>Advanced content filter: requesting that all mail is filtered</h3>  
+<h3>Advanced content filter: requesting that all mail is filtered</h3>
 
 <p> To enable the advanced content filter method for all mail,
 specify in main.cf:  </p>
@@ -672,7 +672,7 @@ gobble up a lot of system resources, so you don't want to have too
 much of it running at the same time. </p>
 
 <li> <p> With "-o smtp_send_xforward_command=yes", the scan transport
-will try to forward the original client name and IP address 
+will try to forward the original client name and IP address
 through the content filter to the
 after-filter smtpd process, so that filtered mail is logged with
 the real client name IP address. See smtp(8) and XFORWARD_README
@@ -745,7 +745,7 @@ that injects mail back into Postfix. </p>
     #                     (yes)   (yes)   (yes)   (never) (100)
     # ===================================================================
     localhost:10026 inet  n       -       n       -       10      smtpd
-        -o content_filter= 
+        -o content_filter=
         -o receive_override_options=no_unknown_recipient_checks,no_header_body_checks,no_milters
         -o smtpd_helo_restrictions=
         -o smtpd_client_restrictions=
@@ -878,7 +878,7 @@ content filtering turned on. </p>
     #                   (yes)   (yes)   (yes)   (never) (100)
     # =================================================================
     1.2.3.5:smtp  inet  n       -       n       -       -       smtpd
-        -o content_filter=filter-service:filter-destination 
+        -o content_filter=filter-service:filter-destination
         -o receive_override_options=no_address_mappings
 </pre>
 
@@ -906,7 +906,7 @@ address provides a different content filter service. </p>
     # =================================================================
     # SMTP service for domains that are filtered with service1:dest1
     1.2.3.4:smtp  inet  n       -       n       -       -       smtpd
-        -o content_filter=service1:dest1 
+        -o content_filter=service1:dest1
         -o receive_override_options=no_address_mappings
 
     # SMTP service for domains that are filtered with service2:dest2

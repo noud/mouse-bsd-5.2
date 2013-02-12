@@ -109,7 +109,7 @@ ldap_sasl_bind(
 			id, LDAP_REQ_BIND,
 			ld->ld_version, dn, LDAP_AUTH_SIMPLE,
 			cred );
-		
+
 	} else if ( cred == NULL || cred->bv_val == NULL ) {
 		/* SASL bind w/o credentials */
 		rc = ber_printf( ber, "{it{ist{sN}N}" /*}*/,
@@ -367,7 +367,7 @@ ldap_pvt_sasl_getmechs ( LDAP *ld, char **pmechlist )
 	if ( rc != LDAP_SUCCESS ) {
 		return ld->ld_errno;
 	}
-		
+
 	e = ldap_first_entry( ld, res );
 	if ( e == NULL ) {
 		ldap_msgfree( res );
@@ -390,7 +390,7 @@ ldap_pvt_sasl_getmechs ( LDAP *ld, char **pmechlist )
 		ldap_msgfree( res );
 		ld->ld_errno = LDAP_NO_MEMORY;
 		return ld->ld_errno;
-	} 
+	}
 
 	LDAP_VFREE( values );
 	ldap_msgfree( res );
@@ -442,7 +442,7 @@ ldap_sasl_interactive_bind_s(
 		mechs = ld->ld_options.ldo_def_sasl_mech;
 	}
 #endif
-		
+
 	if( mechs == NULL || *mechs == '\0' ) {
 		rc = ldap_pvt_sasl_getmechs( ld, &smechs );
 		if( rc != LDAP_SUCCESS ) {

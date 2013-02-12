@@ -71,7 +71,7 @@ defloc(struct symtab *sp)
 		printf("\t.type\t%s, @%s\n\t.label %s\n",
 		    sp->soname, ISFTN(t)? "function" : "object", sp->soname);
 	else
-		printf("\t.type\t" LABFMT ", @%s\n\t.label\t" LABFMT "\n", 
+		printf("\t.type\t" LABFMT ", @%s\n\t.label\t" LABFMT "\n",
 		    sp->soffset, ISFTN(t)? "function" : "object", sp->soffset);
 }
 

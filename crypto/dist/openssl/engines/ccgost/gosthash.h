@@ -26,7 +26,7 @@ typedef struct gost_hash_ctx {
 		byte H[32];
 		byte S[32];
 		byte remainder[32];
-} gost_hash_ctx;		
+} gost_hash_ctx;
 
 
 /* Initalizes gost hash ctx, including creation of gost cipher ctx */
@@ -45,4 +45,4 @@ int hash_block(gost_hash_ctx *ctx, const byte *block, size_t length);
  * least 32 bytes long) with value of computed hash. */
 int finish_hash(gost_hash_ctx *ctx, byte *hashval);
 
-#endif	
+#endif

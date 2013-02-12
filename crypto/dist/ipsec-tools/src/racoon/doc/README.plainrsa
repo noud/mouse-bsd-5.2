@@ -73,7 +73,7 @@ process.  So, write the directive like the following:
 	path certificate "/etc/racoon";
 
 Next, you need to specify the host's own private key and the public
-keys of all the remote peers involved. For your local private key and 
+keys of all the remote peers involved. For your local private key and
 remote public key(s), you should use the following directives:
 
 	certificate_type plain_rsa "/etc/racoon/boston.priv";

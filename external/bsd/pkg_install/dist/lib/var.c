@@ -117,7 +117,7 @@ var_get(const char *fname, const char *variable)
 
 	value = NULL;
 	valuelen = 0;
-	
+
 	while ((line = fgetln(fp, &len)) != (char *) NULL) {
 		if (line[len - 1] == '\n')
 			--len;
@@ -314,7 +314,7 @@ var_cmp(const char *line, size_t linelen, const char *var, size_t varlen)
 		return NULL;
 	if (strncmp(var, line, varlen) != 0)
 		return NULL;
-	
+
 	line += varlen;
 	if (*line != '=')
 		return NULL;

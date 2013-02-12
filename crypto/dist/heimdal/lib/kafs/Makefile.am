@@ -10,16 +10,16 @@ DEPLIB_krb4 = $(LIB_krb4) $(LIB_hcrypto)
 krb4_am_workaround = $(INCLUDE_krb4)
 else
 DEPLIB_krb4  =
-krb4_am_workaround = 
+krb4_am_workaround =
 endif # KRB4
 AM_CPPFLAGS += $(krb4_am_workaround)
 
 if KRB5
-DEPLIB_krb5 = ../krb5/libkrb5.la 
+DEPLIB_krb5 = ../krb5/libkrb5.la
 krb5_am_workaround = $(INCLUDE_hcrypto) -I$(top_srcdir)/lib/krb5
 else
 DEPLIB_krb5  =
-krb5_am_workaround = 
+krb5_am_workaround =
 endif # KRB5
 AM_CPPFLAGS += $(krb5_am_workaround)
 
@@ -35,7 +35,7 @@ endif
 
 if AIX_DYNAMIC_AFS
 if HAVE_DLOPEN
-AIX_SRC = 
+AIX_SRC =
 else
 AIX_SRC = dlfcn.c
 endif
@@ -43,7 +43,7 @@ AFS_EXTRA_LIBS = afslib.so
 AFS_EXTRA_DEFS =
 else
 AIX_SRC = afslib.c
-AFS_EXTRA_LIBS = 
+AFS_EXTRA_LIBS =
 AFS_EXTRA_DEFS = -DSTATIC_AFS
 endif
 

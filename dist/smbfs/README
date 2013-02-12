@@ -2,7 +2,7 @@
 
     SMB/CIFS protocol and SMB/CIFS file system implementation
 		for FreeBSD, version 1.4.
-    
+
     This is native SMB/CIFS filesystem (smbfs for short) for FreeBSD.
 It is a complete, kernel side implementation of SMB requester and filesystem.
 
@@ -29,9 +29,9 @@ It is a complete, kernel side implementation of SMB requester and filesystem.
 
     Perfomance
     ==========
-    
+
     There is some perfomance benchmarks over 10Mbit network:
-    
+
     Win95 machine as server:
 IOZONE: auto-test mode
 	MB      reclen  bytes/sec written   bytes/sec read

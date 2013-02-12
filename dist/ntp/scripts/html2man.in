@@ -16,7 +16,7 @@ require HTML::TokeParser;
 
 $MANDIR = "./man";
 
-# HTML files to convert.  Also include per-file info here: 
+# HTML files to convert.  Also include per-file info here:
 #   name of man page, man section, 'see also' section
 %manfiles = (
 	     'ntpd' => ['ntpd', 8, 'ntp.conf(5), ntpq(8), ntpdc(8)'],

@@ -8,7 +8,7 @@
 __RCSID("$Heimdal: pop_user.c 15289 2005-05-29 21:44:30Z lha $"
         "$NetBSD: pop_user.c,v 1.2 2008/03/22 08:36:55 mlelstv Exp $");
 
-/* 
+/*
  *  user:   Prompt for the user name at the start of a POP session
  */
 

@@ -170,7 +170,7 @@ file_init(SCR *sp, FREF *frp, char *rcv_name, int flags)
 		for (exfp = sp->gp->exfq.cqh_first;
 		    exfp != (EXF *)&sp->gp->exfq; exfp = exfp->q.cqe_next) {
 			if (exfp->mdev == sb.st_dev &&
-			    exfp->minode == sb.st_ino && 
+			    exfp->minode == sb.st_ino &&
 			    (exfp != sp->ep || exfp->refcnt > 1)) {
 				ep = exfp;
 				goto postinit;
@@ -212,7 +212,7 @@ file_init(SCR *sp, FREF *frp, char *rcv_name, int flags)
 		if (frp->name == NULL)
 			F_SET(frp, FR_TMPFILE);
 		if ((frp->tname = strdup(tname)) == NULL ||
-		    (frp->name == NULL && 
+		    (frp->name == NULL &&
 		     (frp->name = strdup(tname)) == NULL)) {
 			if (frp->tname != NULL) {
 				free(frp->tname);
@@ -279,7 +279,7 @@ file_init(SCR *sp, FREF *frp, char *rcv_name, int flags)
 	if (rcv_name == NULL)
 		ep->db->set_re_source(ep->db, oname);
 
-/* 
+/*
  * Don't let db use mmap when using fcntl for locking
  */
 #ifdef HAVE_LOCK_FCNTL
@@ -301,10 +301,10 @@ file_init(SCR *sp, FREF *frp, char *rcv_name, int flags)
 		 * be read.  This isn't useful for single files from a command
 		 * line, but it's quite useful for "vi *.c", since you can skip
 		 * past files that you can't read.
-		 */ 
+		 */
 		ep->db = NULL; /* Don't close it; it wasn't opened */
 
-		if (LF_ISSET(FS_OPENERR)) 
+		if (LF_ISSET(FS_OPENERR))
 		    goto err;
 
 		open_err = 1;
@@ -312,7 +312,7 @@ file_init(SCR *sp, FREF *frp, char *rcv_name, int flags)
 	}
 
 	/* re_source is loaded into the database.
-	 * Close it and reopen it in the environment. 
+	 * Close it and reopen it in the environment.
 	 */
 	if ((sp->db_error = ep->db->close(ep->db, 0))) {
 		msgq(sp, M_DBERR, "close");
@@ -752,7 +752,7 @@ file_end(SCR *sp, EXF *ep, int force)
 	 * Close the db structure.
 	 */
 	if (ep->db->close != NULL) {
-		if ((sp->db_error = ep->db->close(ep->db, DB_NOSYNC)) != 0 && 
+		if ((sp->db_error = ep->db->close(ep->db, DB_NOSYNC)) != 0 &&
 		    !force) {
 			msgq_str(sp, M_DBERR, frp->name, "241|%s: close");
 			CIRCLEQ_INSERT_HEAD(&ep->scrq, sp, eq);
@@ -1161,7 +1161,7 @@ file_backup(SCR *sp, const char *name, const char *bname)
 	if (version) {
 		GET_SPACE_GOTOC(sp, bp, blen, cmd.argv[0]->len * 2 + 50);
 		INT2SYS(sp, cmd.argv[0]->bp, cmd.argv[0]->len + 1,
-			 p, nlen); 
+			 p, nlen);
 		d = strdup(p);
 		p = d;
 		for (t = bp, slash = NULL;
@@ -1204,7 +1204,7 @@ file_backup(SCR *sp, const char *name, const char *bname)
 		INT2SYS(sp, cmd.argv[0]->bp, cmd.argv[0]->len + 1,
 			wfname, nlen);
 	}
-	
+
 	/* Open the backup file, avoiding lurkers. */
 	if (stat(wfname, &sb) == 0) {
 		if (!S_ISREG(sb.st_mode)) {
@@ -1519,7 +1519,7 @@ file_lock(SCR *sp, char *name, int *fdp, int fd, int iswrite)
 
 	if (!O_ISSET(sp, O_LOCKFILES))
 		return (LOCK_SUCCESS);
-	
+
 #ifdef HAVE_LOCK_FLOCK			/* Hurrah!  We've got flock(2). */
 	/*
 	 * !!!
@@ -1626,8 +1626,8 @@ db_setup(SCR *sp, EXF *ep)
 		goto err;
 	}
 #endif
-	if ((sp->db_error = db_env_open(env, path, 
-	    DB_PRIVATE | DB_CREATE | DB_INIT_MPOOL | VI_DB_THREAD 
+	if ((sp->db_error = db_env_open(env, path,
+	    DB_PRIVATE | DB_CREATE | DB_INIT_MPOOL | VI_DB_THREAD
 	    | VI_DB_INIT_LOG, 0)) != 0) {
 		msgq(sp, M_DBERR, "env->open");
 		goto err;

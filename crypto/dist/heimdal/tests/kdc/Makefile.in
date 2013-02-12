@@ -334,7 +334,7 @@ noinst_DATA = \
 	krb5-pkinit-win.conf \
 	krb5-slave.conf
 
-check_SCRIPTS = $(SCRIPT_TESTS) 
+check_SCRIPTS = $(SCRIPT_TESTS)
 SCRIPT_TESTS = \
 	check-digest \
 	check-kadmin \
@@ -355,7 +355,7 @@ do_subst = sed $(do_dlopen) \
 	-e 's,[@]port[@],$(port),g' \
 	-e 's,[@]admport[@],$(admport),g' \
 	-e 's,[@]objdir[@],$(top_builddir)/tests/kdc,g' \
-	-e 's,[@]EGREP[@],$(EGREP),g' 
+	-e 's,[@]EGREP[@],$(EGREP),g'
 
 LDADD = ../../lib/krb5/libkrb5.la $(LIB_roken)
 CLEANFILES = \
@@ -457,7 +457,7 @@ clean-checkPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-ap-req$(EXEEXT): $(ap_req_OBJECTS) $(ap_req_DEPENDENCIES) 
+ap-req$(EXEEXT): $(ap_req_OBJECTS) $(ap_req_DEPENDENCIES)
 	@rm -f ap-req$(EXEEXT)
 	$(LINK) $(ap_req_OBJECTS) $(ap_req_LDADD) $(LIBS)
 

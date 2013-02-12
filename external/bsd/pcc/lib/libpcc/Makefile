@@ -17,7 +17,7 @@ LIB=	pcc
 SRCS=	cmpdi2.c divdi3.c fixdfdi.c fixsfdi.c fixunsdfdi.c \
 	fixunssfdi.c floatdidf.c floatdisf.c floatunsdidf.c \
 	moddi3.c muldi3.c negdi2.c qdivrem.c \
-	ucmpdi2.c udivdi3.c umoddi3.c 
+	ucmpdi2.c udivdi3.c umoddi3.c
 SRCS+=	ashldi3.c ashrdi3.c lshrdi3.c
 SRCS+=	_alloca.c
 SRCS+=	ssp.c

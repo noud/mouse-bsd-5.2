@@ -288,7 +288,7 @@ dns_dbiterator_setcleanmode(dns_dbiterator_t *iterator, isc_boolean_t mode);
  * Indicate that the given iterator is/is not cleaning the DB.
  *
  * Notes:
- *\li	When 'mode' is ISC_TRUE, 
+ *\li	When 'mode' is ISC_TRUE,
  *
  * Requires:
  *\li	'iterator' is a valid iterator.

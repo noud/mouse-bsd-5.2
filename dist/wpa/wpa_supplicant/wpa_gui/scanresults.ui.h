@@ -26,7 +26,7 @@ void ScanResults::setWpaGui(WpaGui *_wpagui)
 {
     wpagui = _wpagui;
     updateResults();
-    
+
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), SLOT(getResults()));
     timer->start(10000, FALSE);
@@ -37,7 +37,7 @@ void ScanResults::updateResults()
 {
     char reply[8192];
     size_t reply_len;
-    
+
     if (wpagui == NULL)
 	return;
 
@@ -47,7 +47,7 @@ void ScanResults::updateResults()
     reply[reply_len] = '\0';
 
     scanResultsView->clear();
-    
+
     QString res(reply);
     QStringList lines = QStringList::split(QChar('\n'), res);
     bool first = true;
@@ -56,7 +56,7 @@ void ScanResults::updateResults()
 	    first = false;
 	    continue;
 	}
-	
+
 	QStringList cols = QStringList::split(QChar('\t'), *it, true);
 	QString ssid, bssid, freq, signal, flags;
 	bssid = cols.count() > 0 ? cols[0] : "";
@@ -73,10 +73,10 @@ void ScanResults::scanRequest()
 {
     char reply[10];
     size_t reply_len = sizeof(reply);
-    
+
     if (wpagui == NULL)
 	return;
-    
+
     wpagui->ctrlRequest("SCAN", reply, &reply_len);
 }
 

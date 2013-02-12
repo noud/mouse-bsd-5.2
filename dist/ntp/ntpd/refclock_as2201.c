@@ -58,7 +58,7 @@
  * improves the accuracy to the order of a few tens of microseconds. In
  * addition, the serial output and 1-pps signal can be bussed to more
  * than one hosts, but only one of them should be connected to the
- * radio input data line. 
+ * radio input data line.
  */
 
 /*

@@ -12,7 +12,7 @@ slappasswd \- OpenLDAP password utility
 .B [\-h hash]
 .B [\-c salt-format]
 .B [\-n]
-.B 
+.B
 .LP
 .SH DESCRIPTION
 .LP
@@ -88,7 +88,7 @@ be specified:
 .IR {SMD5} ,
 .IR {SSHA} ", and"
 .IR {SHA} .
-The default is 
+The default is
 .IR {SSHA} .
 
 Note that scheme names may need to be protected, due to
@@ -122,7 +122,7 @@ is used, this flag is incompatible with
 .BI \-c " crypt-salt-format"
 Specify the format of the salt passed to
 .BR crypt (3)
-when generating {CRYPT} passwords.  
+when generating {CRYPT} passwords.
 This string needs to be in
 .BR sprintf (3)
 format and may include one (and only one) %s conversion.

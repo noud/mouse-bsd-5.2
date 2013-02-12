@@ -556,7 +556,7 @@ static struct wpabuf * eap_sim_process_challenge(struct eap_sm *sm,
 
 	os_memcpy(data->rand, attr->rand, attr->num_chal * GSM_RAND_LEN);
 	data->num_chal = attr->num_chal;
-		
+
 	if (eap_sim_gsm_auth(sm, data)) {
 		wpa_printf(MSG_WARNING, "EAP-SIM: GSM authentication failed");
 		return eap_sim_client_error(data, id,

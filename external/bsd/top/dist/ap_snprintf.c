@@ -119,7 +119,7 @@ static char *ap_cvt(double arg, int ndigits, int *decpt, int *sign, int eflag, c
     register int r2;
     double fi, fj;
     register char *p, *p1;
-    
+
     if (ndigits >= NDIG - 1)
 	ndigits = NDIG - 2;
     r2 = 0;
@@ -364,7 +364,7 @@ static char *conv_10(register wide_int num, register bool_int is_unsigned,
 	*is_negative = (num < 0);
 
 	/*
-	 * On a 2's complement machine, negating the most negative integer 
+	 * On a 2's complement machine, negating the most negative integer
 	 * results in a number that cannot be represented as a signed integer.
 	 * Here is what we do to obtain the number's magnitude:
 	 *      a. add 1 to the number
@@ -382,7 +382,7 @@ static char *conv_10(register wide_int num, register bool_int is_unsigned,
     }
 
     /*
-     * We use a do-while loop so that we write at least 1 digit 
+     * We use a do-while loop so that we write at least 1 digit
      */
     do {
 	register u_wide_int new_magnitude = magnitude / 10;
@@ -420,7 +420,7 @@ static char *conv_10_quad(widest_int num, register bool_int is_unsigned,
 	*is_negative = (num < 0);
 
 	/*
-	 * On a 2's complement machine, negating the most negative integer 
+	 * On a 2's complement machine, negating the most negative integer
 	 * results in a number that cannot be represented as a signed integer.
 	 * Here is what we do to obtain the number's magnitude:
 	 *      a. add 1 to the number
@@ -438,7 +438,7 @@ static char *conv_10_quad(widest_int num, register bool_int is_unsigned,
     }
 
     /*
-     * We use a do-while loop so that we write at least 1 digit 
+     * We use a do-while loop so that we write at least 1 digit
      */
     do {
 	u_widest_int new_magnitude = magnitude / 10;
@@ -1128,7 +1128,7 @@ API_EXPORT(int) ap_vformatter(int (*flush_func)(ap_vformatter_buff *),
 	    }
 
 	    /*
-	     * Print the string s. 
+	     * Print the string s.
 	     */
 	    for (i = s_len; i != 0; i--) {
 		INS_CHAR(*s, sp, bep, cc);

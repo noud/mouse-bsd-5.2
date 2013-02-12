@@ -398,7 +398,7 @@ tar_id(char *blk, int size)
 			    "Busted tar archive: has both ustar and old tar "
 			    "records");
 	} else
-		is_ustar = 0; 
+		is_ustar = 0;
 	return check_sum(hd->chksum, sizeof(hd->chksum), blk, BLKMULT, 1);
 }
 
@@ -1372,7 +1372,7 @@ tar_gnutar_minus_minus_exclude(path)
 
 	if (len > MAXPATHLEN)
 		tty_warn(0, "pathname too long: %s", path);
-	
+
 	return (tar_gnutar_exclude_one(path, len));
 }
 

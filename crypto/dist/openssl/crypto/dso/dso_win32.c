@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -642,8 +642,8 @@ static char *win32_name_converter(DSO *dso, const char *filename)
 	if(translated == NULL)
 		{
 		DSOerr(DSO_F_WIN32_NAME_CONVERTER,
-				DSO_R_NAME_TRANSLATION_FAILED); 
-		return(NULL);   
+				DSO_R_NAME_TRANSLATION_FAILED);
+		return(NULL);
 		}
 	if(transform)
 		sprintf(translated, "%s.dll", filename);
@@ -681,13 +681,13 @@ typedef BOOL (WINAPI *MODULE32)(HANDLE, MODULEENTRY32 *);
 static int win32_pathbyaddr(void *addr,char *path,int sz)
 	{
 	HMODULE dll;
-	HANDLE hModuleSnap = INVALID_HANDLE_VALUE; 
-	MODULEENTRY32 me32; 
+	HANDLE hModuleSnap = INVALID_HANDLE_VALUE;
+	MODULEENTRY32 me32;
 	CREATETOOLHELP32SNAPSHOT create_snap;
 	CLOSETOOLHELP32SNAPSHOT  close_snap;
 	MODULE32 module_first, module_next;
 	int len;
- 
+
 	if (addr == NULL)
 		{
 		union	{ int(*f)(void*,char*,int); void *p; } t =
@@ -720,25 +720,25 @@ static int win32_pathbyaddr(void *addr,char *path,int sz)
 	module_first = (MODULE32)GetProcAddress(dll,"Module32First");
 	module_next  = (MODULE32)GetProcAddress(dll,"Module32Next");
 
-	hModuleSnap = (*create_snap)(TH32CS_SNAPMODULE,0); 
-	if( hModuleSnap == INVALID_HANDLE_VALUE ) 
-		{ 
+	hModuleSnap = (*create_snap)(TH32CS_SNAPMODULE,0);
+	if( hModuleSnap == INVALID_HANDLE_VALUE )
+		{
 		FreeLibrary(dll);
 		DSOerr(DSO_F_WIN32_PATHBYADDR,DSO_R_UNSUPPORTED);
 		return -1;
-		} 
- 
-	me32.dwSize = sizeof(me32); 
- 
-	if(!(*module_first)(hModuleSnap,&me32)) 
-		{ 
+		}
+
+	me32.dwSize = sizeof(me32);
+
+	if(!(*module_first)(hModuleSnap,&me32))
+		{
 		(*close_snap)(hModuleSnap);
 		FreeLibrary(dll);
 		DSOerr(DSO_F_WIN32_PATHBYADDR,DSO_R_FAILURE);
 		return -1;
 		}
- 
-	do	{ 
+
+	do	{
 		if ((BYTE *)addr >= me32.modBaseAddr &&
 		    (BYTE *)addr <  me32.modBaseAddr+me32.modBaseSize)
 			{
@@ -765,10 +765,10 @@ static int win32_pathbyaddr(void *addr,char *path,int sz)
 			path[len++] = 0;
 			return len;
 #endif
-			} 
-		} while((*module_next)(hModuleSnap, &me32)); 
- 
-	(*close_snap)(hModuleSnap); 
+			}
+		} while((*module_next)(hModuleSnap, &me32));
+
+	(*close_snap)(hModuleSnap);
 	FreeLibrary(dll);
 	return 0;
 	}
@@ -834,7 +834,7 @@ static void *win32_globallookup(const char *name)
 			}
 		} while((*module_next)(hModuleSnap,&me32));
 
-	(*close_snap)(hModuleSnap); 
+	(*close_snap)(hModuleSnap);
 	FreeLibrary(dll);
 	return NULL;
 	}

@@ -63,7 +63,7 @@ Nigel's notes:
 
 Christopher's notes:
 
-MAJOR CHANGES SINCE V1.2 
+MAJOR CHANGES SINCE V1.2
 ========================
  1) Applied patch by Andrey Bray <abuse@madhouse.demon.co.uk>
     2001-02-17 comp.protocols.time.ntp
@@ -77,14 +77,14 @@ MAJOR CHANGES SINCE V1.2
 
  5) Added average signal quality poll
 
- 6) Fixed a badformat error when no code is available due to stripping 
-    \n & \r's 
+ 6) Fixed a badformat error when no code is available due to stripping
+    \n & \r's
 
  7) Fixed a badformat error when clearing lencode & memset a_lastcode in poll
     routine
 
- 8) Lots of code cleanup, including standardized DEBUG macros and removal 
-    of unused code 
+ 8) Lots of code cleanup, including standardized DEBUG macros and removal
+    of unused code
 
 -------------------------------------------------------------------------------
 
@@ -1060,10 +1060,10 @@ arc_receive(
 			if (up->quality_stamp < current_time) {
 				struct calendar cal;
 				l_fp new_stamp;
-			
+
 				get_systime (&new_stamp);
 				caljulian (new_stamp.l_ui, &cal);
-				up->quality_stamp = 
+				up->quality_stamp =
 					current_time + 60 - cal.second + 5;
 				quality_sum = 0;
 				quality_polls = 0;
@@ -1146,7 +1146,7 @@ arc_receive(
 #else
 	/* We don't use the nano-second part... */
 	pp->nsec = 0;
-#endif	
+#endif
 	/* Validate format and numbers. */
 	if (pp->a_lastcode[0] != 'o'
 		|| !get2(pp->a_lastcode + 1, &pp->hour)
@@ -1281,7 +1281,7 @@ arc_receive(
 			 * This means we have to do Y2K conversion on the
 			 * 2-digit year; otherwise, we get the time wrong.
 	        	 */
-	   
+
 			local.tm_year  = pp->year-1900;
 	     	  	local.tm_mon   = month-1;
 	      	  	local.tm_mday  = pp->day;
@@ -1297,36 +1297,36 @@ arc_receive(
 				break;
 			    case 3:
 				switch (flags & 3) {
-				    case 0: /* It is unclear exactly when the 
-				    	       Arcron changes from DST->ST and 
+				    case 0: /* It is unclear exactly when the
+				    	       Arcron changes from DST->ST and
 					       ST->DST. Testing has shown this
-					       to be irregular. For the time 
+					       to be irregular. For the time
 					       being, let the OS decide. */
 				        local.tm_isdst = 0;
 #ifdef DEBUG
 					if (debug)
-					    printf ("arc: DST = 00 (0)\n"); 
+					    printf ("arc: DST = 00 (0)\n");
 #endif
 					break;
 				    case 1: /* dst->st time */
 				        local.tm_isdst = -1;
 #ifdef DEBUG
-					if (debug) 
-					    printf ("arc: DST = 01 (1)\n"); 
+					if (debug)
+					    printf ("arc: DST = 01 (1)\n");
 #endif
 					break;
 				    case 2: /* st->dst time */
 				        local.tm_isdst = -1;
 #ifdef DEBUG
-					if (debug) 
-					    printf ("arc: DST = 10 (2)\n"); 
+					if (debug)
+					    printf ("arc: DST = 10 (2)\n");
 #endif
 					break;
 				    case 3: /* dst time */
 				        local.tm_isdst = 1;
 #ifdef DEBUG
-					if (debug) 
-					    printf ("arc: DST = 11 (3)\n"); 
+					if (debug)
+					    printf ("arc: DST = 11 (3)\n");
 #endif
 					break;
 				}
@@ -1359,7 +1359,7 @@ arc_receive(
 					pp->second);
 			}
 #endif
-		} else 
+		} else
 		{
 		    	/*
 		     	* For more rational sites distributing UTC
@@ -1369,10 +1369,10 @@ arc_receive(
 	}
 
 	if (peer->MODE == 0) { /* compatiblity to original version */
-				/* If clock signal quality is 
+				/* If clock signal quality is
 				 * unknown, revert to default PRECISION...*/
-		if(up->quality == QUALITY_UNKNOWN) { 
-			peer->precision = PRECISION; 
+		if(up->quality == QUALITY_UNKNOWN) {
+			peer->precision = PRECISION;
 		} else { /* ...else improve precision if flag3 is set... */
 			peer->precision = ((pp->sloppyclockflag & CLK_FLAG3) ?
 					   HIGHPRECISION : PRECISION);

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 1985, 1989, 1993
  *    The Regents of the University of California.  All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -13,7 +13,7 @@
  * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -29,14 +29,14 @@
 
 /*
  * Portions Copyright (c) 1993 by Digital Equipment Corporation.
- * 
+ *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies, and that
  * the name of Digital Equipment Corporation not be used in advertising or
  * publicity pertaining to distribution of the document or software without
  * specific, written prior permission.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND DIGITAL EQUIPMENT CORP. DISCLAIMS ALL
  * WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS.   IN NO EVENT SHALL DIGITAL EQUIPMENT
@@ -99,14 +99,14 @@ static const char rcsid[] = "$Id: res_send.c,v 1.5 2007/05/27 16:27:57 tls Exp $
 /* Rename the I/O functions in case we're tracing. */
 #define send		trace_mr_send
 #define recvfrom	trace_mr_recvfrom
- 
+
 #ifdef _FORTIFY_SOURCE
 #undef read		/* FORTIFY_SOURCE gets this at trace_mr_read anyway */
 #endif
- 
+
 #define read		trace_mr_read
-#define connect		trace_mr_connect 
-#define socket		trace_mr_socket 
+#define connect		trace_mr_connect
+#define socket		trace_mr_socket
 #define bind		trace_mr_bind
 #define close		trace_mr_close
 #define select		trace_mr_select
@@ -117,7 +117,7 @@ static const char rcsid[] = "$Id: res_send.c,v 1.5 2007/05/27 16:27:57 tls Exp $
 #include "arpa/nameser.h"
 
 #define	CHECK_SRVR_ADDR
-		
+
 static int cmpsock(struct sockaddr_in *a1, struct sockaddr_in *a2);
 void res_pquery(const res_state, const u_char *, int, FILE *);
 

@@ -16,10 +16,10 @@
 echo "running defines.sh"
 . $SRCDIR/scripts/defines.sh
 
-if test $MEMBEROF = memberofno; then 
+if test $MEMBEROF = memberofno; then
 	echo "Memberof overlay not available, test skipped"
 	exit 0
-fi 
+fi
 
 mkdir -p $TESTDIR $DBDIR1 $TESTDIR/confdir
 

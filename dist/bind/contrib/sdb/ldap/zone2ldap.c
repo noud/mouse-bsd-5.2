@@ -6,7 +6,7 @@
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * Change Log
  *
  * Tue May  1 19:19:54 EDT 2001 - Jeff McNeil
@@ -45,7 +45,7 @@
 
 #define VERSION    "0.4-ALPHA"
 
-#define NO_SPEC 0 
+#define NO_SPEC 0
 #define WI_SPEC  1
 
 /* Global Zone Pointer */
@@ -414,7 +414,7 @@ locate_by_dn (char *dn)
  * calloc a LDAPMod array, fill in the default "everyone needs this" information,
  * including object classes and dc's. If it locate_by_dn does return, then we'll
  * realloc for more LDAPMod structs, and appened the new data.  If an LDAPMod exists
- * for the parameter we're adding, then we'll realloc the mod_values array, and 
+ * for the parameter we're adding, then we'll realloc the mod_values array, and
  * add the new value to the existing LDAPMod. Finnaly, it assures linkage exists
  * within the Run queue linked ilst*/
 
@@ -634,7 +634,7 @@ hostname_to_dn_list (char *hostname, char *zone, unsigned int flags)
 
 
 /* build an sdb compatible LDAP DN from a "dc_list" (char **).
- * will append dNSTTL information to each RR Record, with the 
+ * will append dNSTTL information to each RR Record, with the
  * exception of "@"/SOA. */
 
 char *

@@ -123,7 +123,7 @@ static int get_dev_ino (HANDLE hFile, dev_t *dev, ino_t *ino)
 	ino_t resino;
 	dev_t resdev;
 	DWORD VolumeSerialNumber;
-	
+
 	*ino = 0;
 	*dev = 0;
 	if (hFile == INVALID_HANDLE_VALUE) /* file cannot be opened */

@@ -1,4 +1,4 @@
-/* 
+/*
  * dhcpcd - DHCP client daemon
  * Copyright (c) 2006-2009 Roy Marples <roy@marples.name>
  * All rights reserved
@@ -118,7 +118,7 @@ atoint(const char *s)
 	return (int)n;
 }
 
-static char * 
+static char *
 add_environ(struct if_options *ifo, const char *value, int uniq)
 {
 	char **newlist;
@@ -279,7 +279,7 @@ splitv(int *argc, char **argv, const char *arg)
 		v[(*argc) - 1] = xstrdup(t);
 	}
 	free(o);
-	return v;	
+	return v;
 }
 
 static int
@@ -304,7 +304,7 @@ parse_addr(struct in_addr *addr, struct in_addr *net, const char *arg)
 			syslog(LOG_ERR, "`%s' is not a valid CIDR", p);
 			return -1;
 		}
-	} 
+	}
 
 	if (addr != NULL && inet_aton(arg, addr) == 0) {
 		syslog(LOG_ERR, "`%s' is not a valid IP address", arg);

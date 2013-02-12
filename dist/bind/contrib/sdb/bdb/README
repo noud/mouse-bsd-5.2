@@ -16,7 +16,7 @@ Errors-To: bind-workers-bounce@isc.org
 X-original-sender: nmr@co.sapo.pt
 Precedence: bulk
 X-list:  bind-workers
-Status:  
+Status:
 
 
 
@@ -29,7 +29,7 @@ You can get it at http://www.dhis.org/~nmr/bind9_berkeleydb_sdb-1.0.tar
 Thanks,
 
 
--- 
+--
 Nuno M. Rodrigues <nmr@co.sapo.pt>
 
 

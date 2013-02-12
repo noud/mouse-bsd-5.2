@@ -22,7 +22,7 @@
 
 /* Id: nsap-ptr_23.h,v 1.19 2007/06/19 23:47:17 tbox Exp */
 
-/*! 
+/*!
  *  \brief Per RFC1348.  Obsoleted in RFC 1706 - use PTR instead. */
 
 typedef struct dns_rdata_in_nsap_ptr {

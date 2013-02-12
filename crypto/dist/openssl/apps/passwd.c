@@ -166,7 +166,7 @@ int MAIN(int argc, char **argv)
 	if (use1 || useapr1) badopt = 1;
 #endif
 
-	if (badopt) 
+	if (badopt)
 		{
 		BIO_printf(bio_err, "Usage: passwd [options] [passwords]\n");
 		BIO_printf(bio_err, "where options are\n");
@@ -184,7 +184,7 @@ int MAIN(int argc, char **argv)
 		BIO_printf(bio_err, "-quiet             no warnings\n");
 		BIO_printf(bio_err, "-table             format output as table\n");
 		BIO_printf(bio_err, "-reverse           switch table columns\n");
-		
+
 		goto err;
 		}
 
@@ -205,7 +205,7 @@ int MAIN(int argc, char **argv)
 			BIO_set_fp(in, stdin, BIO_NOCLOSE);
 			}
 		}
-	
+
 	if (usecrypt)
 		pw_maxlen = 8;
 	else if (use1 || useapr1)
@@ -226,7 +226,7 @@ int MAIN(int argc, char **argv)
 		{
 		/* build a null-terminated list */
 		static char *passwds_static[2] = {NULL, NULL};
-		
+
 		passwds = passwds_static;
 		if (in == NULL)
 			if (EVP_read_pw_string(passwd_malloc, passwd_malloc_size, "Password: ", !(passed_salt || in_noverify)) != 0)
@@ -238,7 +238,7 @@ int MAIN(int argc, char **argv)
 		{
 		assert(passwds != NULL);
 		assert(*passwds != NULL);
-		
+
 		do /* loop over list of passwords */
 			{
 			passwd = *passwds++;
@@ -270,7 +270,7 @@ int MAIN(int argc, char **argv)
 						r = BIO_gets(in, trash, sizeof trash);
 					while ((r > 0) && (!strchr(trash, '\n')));
 					}
-				
+
 				if (!do_passwd(passed_salt, &salt, &salt_malloc, passwd, out,
 					quiet, table, reverse, pw_maxlen, usecrypt, use1, useapr1))
 					goto err;
@@ -328,7 +328,7 @@ static char *md5crypt(const char *passwd, const char *magic, const char *salt)
 	salt_out = out_buf + 2 + strlen(magic);
 	salt_len = strlen(salt_out);
 	assert(salt_len <= 8);
-	
+
 	EVP_MD_CTX_init(&md);
 	EVP_DigestInit_ex(&md,EVP_md5(), NULL);
 	EVP_DigestUpdate(&md, passwd, passwd_len);
@@ -336,7 +336,7 @@ static char *md5crypt(const char *passwd, const char *magic, const char *salt)
 	EVP_DigestUpdate(&md, magic, strlen(magic));
 	EVP_DigestUpdate(&md, "$", 1);
 	EVP_DigestUpdate(&md, salt_out, salt_len);
-	
+
 	EVP_MD_CTX_init(&md2);
 	EVP_DigestInit_ex(&md2,EVP_md5(), NULL);
 	EVP_DigestUpdate(&md2, passwd, passwd_len);
@@ -347,7 +347,7 @@ static char *md5crypt(const char *passwd, const char *magic, const char *salt)
 	for (i = passwd_len; i > sizeof buf; i -= sizeof buf)
 		EVP_DigestUpdate(&md, buf, sizeof buf);
 	EVP_DigestUpdate(&md, buf, i);
-	
+
 	n = passwd_len;
 	while (n)
 		{
@@ -370,10 +370,10 @@ static char *md5crypt(const char *passwd, const char *magic, const char *salt)
 		EVP_DigestFinal_ex(&md2, buf, NULL);
 		}
 	EVP_MD_CTX_cleanup(&md2);
-	
+
 	 {
 		/* transform buf into output string */
-	
+
 		unsigned char buf_perm[sizeof buf];
 		int dest, source;
 		char *output;
@@ -386,10 +386,10 @@ static char *md5crypt(const char *passwd, const char *magic, const char *salt)
 #ifndef PEDANTIC /* Unfortunately, this generates a "no effect" warning */
 		assert(16 == sizeof buf_perm);
 #endif
-		
+
 		output = salt_out + salt_len;
 		assert(output == out_buf + strlen(out_buf));
-		
+
 		*output++ = '$';
 
 		for (i = 0; i < 15; i += 3)
@@ -451,7 +451,7 @@ static int do_passwd(int passed_salt, char **salt_p, char **salt_malloc_p,
 		if (use1 || useapr1)
 			{
 			int i;
-			
+
 			if (*salt_malloc_p == NULL)
 				{
 				*salt_p = *salt_malloc_p = OPENSSL_malloc(9);
@@ -460,16 +460,16 @@ static int do_passwd(int passed_salt, char **salt_p, char **salt_malloc_p,
 				}
 			if (RAND_pseudo_bytes((unsigned char *)*salt_p, 8) < 0)
 				goto err;
-			
+
 			for (i = 0; i < 8; i++)
 				(*salt_p)[i] = cov_2char[(*salt_p)[i] & 0x3f]; /* 6 bits */
 			(*salt_p)[8] = 0;
 			}
 #endif /* !NO_MD5CRYPT_1 */
 		}
-	
+
 	assert(*salt_p != NULL);
-	
+
 	/* truncate password if necessary */
 	if ((strlen(passwd) > pw_maxlen))
 		{
@@ -479,7 +479,7 @@ static int do_passwd(int passed_salt, char **salt_p, char **salt_malloc_p,
 		passwd[pw_maxlen] = 0;
 		}
 	assert(strlen(passwd) <= pw_maxlen);
-	
+
 	/* now compute password hash */
 #ifndef OPENSSL_NO_DES
 	if (usecrypt)
@@ -498,7 +498,7 @@ static int do_passwd(int passed_salt, char **salt_p, char **salt_malloc_p,
 	else
 		BIO_printf(out, "%s\n", hash);
 	return 1;
-	
+
 err:
 	return 0;
 	}

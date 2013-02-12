@@ -114,7 +114,7 @@ sigset_t s_mask;		/* signal mask for cleanup critical sect */
 FILE	*listf;			/* file pointer to print file list to */
 char	*tempfile;		/* tempfile to use for mkstemp(3) */
 char	*tempbase;		/* basename of tempfile to use for mkstemp(3) */
-int	forcelocal;		/* force local operation even if the name 
+int	forcelocal;		/* force local operation even if the name
 				 * contains a :
 				 */
 int	secure = 1;		/* don't extract names that contain .. */
@@ -308,7 +308,7 @@ main(int argc, char **argv)
 		if (gzip_program != NULL)
 			err(1, "cannot gzip while appending");
 		rval = append();
-		/* 
+		/*
 		 * Check if we tried to append on an empty file and
 		 * turned into ARCHIVE mode.
 		 */

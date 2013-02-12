@@ -425,7 +425,7 @@ static void eap_ttls_reset(struct eap_sm *sm, void *priv)
 
 static struct wpabuf * eap_ttls_build_start(struct eap_sm *sm,
 					    struct eap_ttls_data *data, u8 id)
-{	
+{
 	struct wpabuf *req;
 
 	req = eap_msg_alloc(EAP_VENDOR_IETF, EAP_TYPE_TTLS, 1,

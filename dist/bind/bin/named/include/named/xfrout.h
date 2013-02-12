@@ -26,7 +26,7 @@
  ***** Module Info
  *****/
 
-/*! \file 
+/*! \file
  * \brief
  * Outgoing zone transfers (AXFR + IXFR).
  */

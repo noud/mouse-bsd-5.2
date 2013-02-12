@@ -31,7 +31,7 @@ done
 
 echo linking $slib.so
 cc -G -o $sh_slib -h $sh_slib $OBJS -L. -lcrypto
-	
+
 rm -f $slib.so
 ln -s $sh_slib $slib.so
 
@@ -39,4 +39,4 @@ rm -f allobjs
 
 mv libRSAglue.a libRSAglue.a.orig
 mv libcrypto.a  libcrypto.a.orig
-mv libssl.a     libssl.a.orig 
+mv libssl.a     libssl.a.orig

@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 2006 - 2007 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "kdc_locl.h"
@@ -64,7 +64,7 @@ get_digest_key(krb5_context context,
     krb5_error_code ret;
     krb5_enctype enctype;
     Key *key;
-    
+
     ret = _kdc_get_preferred_key(context,
 				 config,
 				 server,
@@ -116,8 +116,8 @@ fill_targetinfo(krb5_context context,
     ti.domainname = targetname;
     p = client->entry.principal;
     str = krb5_principal_get_comp_string(context, p, 0);
-    if (str != NULL && 
-	(strcmp("host", str) == 0 || 
+    if (str != NULL &&
+	(strcmp("host", str) == 0 ||
 	 strcmp("ftp", str) == 0 ||
 	 strcmp("imap", str) == 0 ||
 	 strcmp("pop", str) == 0 ||
@@ -126,7 +126,7 @@ fill_targetinfo(krb5_context context,
 	str = krb5_principal_get_comp_string(context, p, 1);
 	ti.dnsservername = rk_UNCONST(str);
     }
-    
+
     ret = heim_ntlm_encode_targetinfo(&ti, 1, &d);
     if (ret)
 	return ret;
@@ -200,7 +200,7 @@ get_password_entry(krb5_context context,
  */
 
 krb5_error_code
-_kdc_do_digest(krb5_context context, 
+_kdc_do_digest(krb5_context context,
 	       krb5_kdc_configuration *config,
 	       const DigestREQ *req, krb5_data *reply,
 	       const char *from, struct sockaddr *addr)
@@ -224,7 +224,7 @@ _kdc_do_digest(krb5_context context,
     krb5_data serverNonce;
 
     if(!config->enable_digest) {
-	kdc_log(context, config, 0, 
+	kdc_log(context, config, 0,
 		"Rejected digest request (disabled) from %s", from);
 	return KRB5KDC_ERR_POLICY;
     }
@@ -244,7 +244,7 @@ _kdc_do_digest(krb5_context context,
 	goto out;
     }
 
-    ret = krb5_rd_req(context, 
+    ret = krb5_rd_req(context,
 		      &ac,
 		      &req->apReq,
 		      NULL,
@@ -320,11 +320,11 @@ _kdc_do_digest(krb5_context context,
 	    goto out;
 
 	if (client->entry.flags.allow_digest == 0) {
-	    kdc_log(context, config, 0, 
+	    kdc_log(context, config, 0,
 		    "Client %s tried to use digest "
-		    "but is not allowed to", 
+		    "but is not allowed to",
 		    client_name);
-	    krb5_set_error_string(context, 
+	    krb5_set_error_string(context,
 				  "Client is not permitted to use digest");
 	    ret = KRB5KDC_ERR_POLICY;
 	    goto out;
@@ -356,7 +356,7 @@ _kdc_do_digest(krb5_context context,
     crypto = NULL;
     if (ret)
 	goto out;
-	   
+
     ret = decode_DigestReqInner(buf.data, buf.length, &ireq, NULL);
     krb5_data_free(&buf);
     if (ret) {
@@ -364,7 +364,7 @@ _kdc_do_digest(krb5_context context,
 	goto out;
     }
 
-    kdc_log(context, config, 0, "Valid digest request from %s (%s)", 
+    kdc_log(context, config, 0, "Valid digest request from %s (%s)",
 	    client_name, from);
 
     /*
@@ -419,7 +419,7 @@ _kdc_do_digest(krb5_context context,
 	    free(r.u.initReply.nonce);
 	    r.u.initReply.nonce = s;
 	}
-	
+
 	ret = krb5_store_stringz(sp, r.u.initReply.nonce);
 	if (ret) {
 	    krb5_clear_error_string(context);
@@ -427,7 +427,7 @@ _kdc_do_digest(krb5_context context,
 	}
 
 	if (strcasecmp(ireq.u.init.type, "CHAP") == 0) {
-	    r.u.initReply.identifier = 
+	    r.u.initReply.identifier =
 		malloc(sizeof(*r.u.initReply.identifier));
 	    if (r.u.initReply.identifier == NULL) {
 		krb5_set_error_string(context, "out of memory");
@@ -475,7 +475,7 @@ _kdc_do_digest(krb5_context context,
 	krb5_data_free(&buf);
 	if (ret)
 	    goto out;
-	
+
 	ASN1_MALLOC_ENCODE(Checksum, buf.data, buf.length, &res, &size, ret);
 	free_Checksum(&res);
 	if (ret) {
@@ -545,7 +545,7 @@ _kdc_do_digest(krb5_context context,
 	    krb5_set_error_string(context, "Failed to decode digest Checksum");
 	    goto out;
 	}
-	
+
 	ret = krb5_storage_to_data(sp, &buf);
 	if (ret) {
 	    krb5_clear_error_string(context);
@@ -559,15 +559,15 @@ _kdc_do_digest(krb5_context context,
 	    ret = ENOMEM;
 	    goto out;
 	}
-	    
+
 	/*
 	 * CHAP does the checksum of the raw nonce, but do it for all
 	 * types, since we need to check the timestamp.
 	 */
 	{
 	    ssize_t ssize;
-	    
-	    ssize = hex_decode(ireq.u.digestRequest.serverNonce, 
+
+	    ssize = hex_decode(ireq.u.digestRequest.serverNonce,
 			       serverNonce.data, serverNonce.length);
 	    if (ssize <= 0) {
 		krb5_set_error_string(context, "Failed to decode serverNonce");
@@ -581,7 +581,7 @@ _kdc_do_digest(krb5_context context,
 	if (ret)
 	    goto out;
 
-	ret = krb5_verify_checksum(context, crypto, 
+	ret = krb5_verify_checksum(context, crypto,
 				   KRB5_KU_DIGEST_OPAQUE,
 				   buf.data, buf.length, &res);
 	krb5_crypto_destroy(context, crypto);
@@ -593,7 +593,7 @@ _kdc_do_digest(krb5_context context,
 	{
 	    unsigned char *p = serverNonce.data;
 	    uint32_t t;
-	    
+
 	    if (serverNonce.length < 4) {
 		krb5_set_error_string(context, "server nonce too short");
 		ret = EINVAL;
@@ -625,14 +625,14 @@ _kdc_do_digest(krb5_context context,
 		ret = EINVAL;
 		goto out;
 	    }
-	    
+
 	    if (hex_decode(*ireq.u.digestRequest.identifier, &id, 1) != 1) {
 		krb5_set_error_string(context, "failed to decode identifier");
 		ret = EINVAL;
 		goto out;
 	    }
-	    
-	    ret = get_password_entry(context, config, 
+
+	    ret = get_password_entry(context, config,
 				     ireq.u.digestRequest.username,
 				     &password);
 	    if (ret)
@@ -658,7 +658,7 @@ _kdc_do_digest(krb5_context context,
 	    if (ret == 0) {
 		r.u.response.success = TRUE;
 	    } else {
-		kdc_log(context, config, 0, 
+		kdc_log(context, config, 0,
 			"CHAP reply mismatch for %s",
 			ireq.u.digestRequest.username);
 		r.u.response.success = FALSE;
@@ -675,16 +675,16 @@ _kdc_do_digest(krb5_context context,
 		goto out;
 	    }
 
-	    if (ireq.u.digestRequest.nonceCount == NULL) 
+	    if (ireq.u.digestRequest.nonceCount == NULL)
 		goto out;
-	    if (ireq.u.digestRequest.clientNonce == NULL) 
+	    if (ireq.u.digestRequest.clientNonce == NULL)
 		goto out;
-	    if (ireq.u.digestRequest.qop == NULL) 
+	    if (ireq.u.digestRequest.qop == NULL)
 		goto out;
-	    if (ireq.u.digestRequest.realm == NULL) 
+	    if (ireq.u.digestRequest.realm == NULL)
 		goto out;
-	    
-	    ret = get_password_entry(context, config, 
+
+	    ret = get_password_entry(context, config,
 				     ireq.u.digestRequest.username,
 				     &password);
 	    if (ret)
@@ -699,7 +699,7 @@ _kdc_do_digest(krb5_context context,
 	    MD5_Update(&ctx, ":", 1);
 	    MD5_Update(&ctx, password, strlen(password));
 	    MD5_Final(md, &ctx);
-	    
+
 	    MD5_Init(&ctx);
 	    MD5_Update(&ctx, md, sizeof(md));
 	    MD5_Update(&ctx, ":", 1);
@@ -720,18 +720,18 @@ _kdc_do_digest(krb5_context context,
 		ret = ENOMEM;
 		goto failed;
 	    }
-	    
+
 	    MD5_Init(&ctx);
 	    MD5_Update(&ctx, "AUTHENTICATE:", sizeof("AUTHENTICATE:") - 1);
 	    MD5_Update(&ctx, *ireq.u.digestRequest.uri,
 		       strlen(*ireq.u.digestRequest.uri));
-	
+
 	    /* conf|int */
 	    if (strcmp(ireq.u.digestRequest.digest, "clear") != 0) {
 		static char conf_zeros[] = ":00000000000000000000000000000000";
 		MD5_Update(&ctx, conf_zeros, sizeof(conf_zeros) - 1);
 	    }
-	    
+
 	    MD5_Final(md, &ctx);
 	    hex_encode(md, sizeof(md), &A2);
 	    if (A2 == NULL) {
@@ -776,7 +776,7 @@ _kdc_do_digest(krb5_context context,
 	    if (ret == 0) {
 		r.u.response.success = TRUE;
 	    } else {
-		kdc_log(context, config, 0, 
+		kdc_log(context, config, 0,
 			"DIGEST-MD5 reply mismatch for %s",
 			ireq.u.digestRequest.username);
 		r.u.response.success = FALSE;
@@ -797,13 +797,13 @@ _kdc_do_digest(krb5_context context,
 	    }
 
 	    if (ireq.u.digestRequest.clientNonce == NULL)  {
-		krb5_set_error_string(context, 
+		krb5_set_error_string(context,
 				      "MS-CHAP-V2 clientNonce missing");
 		ret = EINVAL;
 		goto failed;
-	    }	    
+	    }
 	    if (serverNonce.length != 16) {
-		krb5_set_error_string(context, 
+		krb5_set_error_string(context,
 				      "MS-CHAP-V2 serverNonce wrong length");
 		ret = EINVAL;
 		goto failed;
@@ -821,7 +821,7 @@ _kdc_do_digest(krb5_context context,
 	    {
 		ssize_t ssize;
 		krb5_data clientNonce;
-		
+
 		clientNonce.length = strlen(*ireq.u.digestRequest.clientNonce);
 		clientNonce.data = malloc(clientNonce.length);
 		if (clientNonce.data == NULL) {
@@ -830,10 +830,10 @@ _kdc_do_digest(krb5_context context,
 		    goto out;
 		}
 
-		ssize = hex_decode(*ireq.u.digestRequest.clientNonce, 
+		ssize = hex_decode(*ireq.u.digestRequest.clientNonce,
 				   clientNonce.data, clientNonce.length);
 		if (ssize != 16) {
-		    krb5_set_error_string(context, 
+		    krb5_set_error_string(context,
 					  "Failed to decode clientNonce");
 		    ret = ENOMEM;
 		    goto out;
@@ -849,21 +849,21 @@ _kdc_do_digest(krb5_context context,
 	    ret = krb5_parse_name(context, username, &clientprincipal);
 	    if (ret)
 		goto failed;
-	    
+
 	    ret = _kdc_db_fetch(context, config, clientprincipal,
 				HDB_F_GET_CLIENT, NULL, &user);
 	    krb5_free_principal(context, clientprincipal);
 	    if (ret) {
-		krb5_set_error_string(context, 
+		krb5_set_error_string(context,
 				      "MS-CHAP-V2 user %s not in database",
 				      username);
 		goto failed;
 	    }
 
-	    ret = hdb_enctype2key(context, &user->entry, 
+	    ret = hdb_enctype2key(context, &user->entry,
 				  ETYPE_ARCFOUR_HMAC_MD5, &key);
 	    if (ret) {
-		krb5_set_error_string(context, 
+		krb5_set_error_string(context,
 				      "MS-CHAP-V2 missing arcfour key %s",
 				      username);
 		goto failed;
@@ -877,7 +877,7 @@ _kdc_do_digest(krb5_context context,
 		krb5_set_error_string(context, "NTLM missing arcfour key");
 		goto failed;
 	    }
-	    
+
 	    hex_encode(answer.data, answer.length, &mdx);
 	    if (mdx == NULL) {
 		free(answer.data);
@@ -891,7 +891,7 @@ _kdc_do_digest(krb5_context context,
 	    if (ret == 0) {
 		r.u.response.success = TRUE;
 	    } else {
-		kdc_log(context, config, 0, 
+		kdc_log(context, config, 0,
 			"MS-CHAP-V2 hash mismatch for %s",
 			ireq.u.digestRequest.username);
 		r.u.response.success = FALSE;
@@ -906,7 +906,7 @@ _kdc_do_digest(krb5_context context,
 		    MD4_CTX hctx;
 
 		    MD4_Init(&hctx);
-		    MD4_Update(&hctx, key->key.keyvalue.data, 
+		    MD4_Update(&hctx, key->key.keyvalue.data,
 			       key->key.keyvalue.length);
 		    MD4_Final(hashhash, &hctx);
 		}
@@ -949,7 +949,7 @@ _kdc_do_digest(krb5_context context,
 
 		free(answer.data);
 
-		r.u.response.session_key = 
+		r.u.response.session_key =
 		    calloc(1, sizeof(*r.u.response.session_key));
 		if (r.u.response.session_key == NULL) {
 		    krb5_clear_error_string(context);
@@ -966,7 +966,7 @@ _kdc_do_digest(krb5_context context,
 
 	} else {
 	    r.element = choice_DigestRepInner_error;
-	    asprintf(&r.u.error.reason, "Unsupported digest type %s", 
+	    asprintf(&r.u.error.reason, "Unsupported digest type %s",
 		     ireq.u.digestRequest.type);
 	    if (r.u.error.reason == NULL) {
 		krb5_set_error_string(context, "out of memory");
@@ -1004,7 +1004,7 @@ _kdc_do_digest(krb5_context context,
 	    goto failed;
 	}
 
-	r.u.ntlmInitReply.flags |= 
+	r.u.ntlmInitReply.flags |=
 	    NTLM_NEG_TARGET |
 	    NTLM_TARGET_DOMAIN |
 	    NTLM_ENC_128;
@@ -1020,7 +1020,7 @@ _kdc_do_digest(krb5_context context,
 
 #undef ALL
 
-	r.u.ntlmInitReply.targetname = 
+	r.u.ntlmInitReply.targetname =
 	    get_ntlm_targetname(context, client);
 	if (r.u.ntlmInitReply.targetname == NULL) {
 	    krb5_set_error_string(context, "out of memory");
@@ -1035,7 +1035,7 @@ _kdc_do_digest(krb5_context context,
 	}
 	r.u.ntlmInitReply.challange.length = 8;
 	if (RAND_bytes(r.u.ntlmInitReply.challange.data,
-		       r.u.ntlmInitReply.challange.length) != 1) 
+		       r.u.ntlmInitReply.challange.length) != 1)
 	{
 	    krb5_set_error_string(context, "out of random error");
 	    ret = ENOMEM;
@@ -1059,7 +1059,7 @@ _kdc_do_digest(krb5_context context,
 	    goto out;
 	}
 
-	/* 
+	/*
 	 * Save data encryted in opaque for the second part of the
 	 * ntlm authentication
 	 */
@@ -1069,7 +1069,7 @@ _kdc_do_digest(krb5_context context,
 	    krb5_set_error_string(context, "out of memory");
 	    goto out;
 	}
-	
+
 	ret = krb5_storage_write(sp, r.u.ntlmInitReply.challange.data, 8);
 	if (ret != 8) {
 	    ret = ENOMEM;
@@ -1111,7 +1111,7 @@ _kdc_do_digest(krb5_context context,
 	uint32_t flags;
 	Key *key = NULL;
 	int version;
-	    
+
 	r.element = choice_DigestRepInner_ntlmResponse;
 	r.u.ntlmResponse.success = 0;
 	r.u.ntlmResponse.flags = 0;
@@ -1144,7 +1144,7 @@ _kdc_do_digest(krb5_context context,
 	krb5_crypto_destroy(context, crypto);
 	crypto = NULL;
 	if (ret) {
-	    kdc_log(context, config, 0, 
+	    kdc_log(context, config, 0,
 		    "Failed to decrypt nonce from %s", from);
 	    goto failed;
 	}
@@ -1155,7 +1155,7 @@ _kdc_do_digest(krb5_context context,
 	    krb5_set_error_string(context, "out of memory");
 	    goto out;
 	}
-	
+
 	ret = krb5_storage_read(sp, challange, sizeof(challange));
 	if (ret != sizeof(challange)) {
 	    krb5_set_error_string(context, "NTLM storage read challange");
@@ -1175,7 +1175,7 @@ _kdc_do_digest(krb5_context context,
 	    goto out;
 	}
 
-	ret = hdb_enctype2key(context, &user->entry, 
+	ret = hdb_enctype2key(context, &user->entry,
 			      ETYPE_ARCFOUR_HMAC_MD5, &key);
 	if (ret) {
 	    krb5_set_error_string(context, "NTLM missing arcfour key");
@@ -1232,7 +1232,7 @@ _kdc_do_digest(krb5_context context,
 	    if (flags & NTLM_NEG_NTLM2_SESSION) {
 		unsigned char sessionhash[MD5_DIGEST_LENGTH];
 		MD5_CTX md5ctx;
-		
+
 		if ((config->digests_allowed & NTLM_V1_SESSION) == 0) {
 		    kdc_log(context, config, 0, "NTLM v1-session not allowed");
 		    ret = EINVAL;
@@ -1245,7 +1245,7 @@ _kdc_do_digest(krb5_context context,
 		    ret = EINVAL;
 		    goto failed;
 		}
-		
+
 		MD5_Init(&md5ctx);
 		MD5_Update(&md5ctx, challange, sizeof(challange));
 		MD5_Update(&md5ctx, ireq.u.ntlmRequest.lm.data, 8);
@@ -1257,7 +1257,7 @@ _kdc_do_digest(krb5_context context,
 		    goto failed;
 		}
 	    }
-	    
+
 	    ret = heim_ntlm_calculate_ntlm1(key->key.keyvalue.data,
 					    key->key.keyvalue.length,
 					    challange, &answer);
@@ -1265,7 +1265,7 @@ _kdc_do_digest(krb5_context context,
 		krb5_set_error_string(context, "NTLM missing arcfour key");
 		goto failed;
 	    }
-	    
+
 	    if (ireq.u.ntlmRequest.ntlm.length != answer.length ||
 		memcmp(ireq.u.ntlmRequest.ntlm.data, answer.data, answer.length) != 0)
 	    {
@@ -1280,7 +1280,7 @@ _kdc_do_digest(krb5_context context,
 		MD4_CTX ctx;
 
 		MD4_Init(&ctx);
-		MD4_Update(&ctx, 
+		MD4_Update(&ctx,
 			   key->key.keyvalue.data, key->key.keyvalue.length);
 		MD4_Final(sessionkey, &ctx);
 	    }
@@ -1290,7 +1290,7 @@ _kdc_do_digest(krb5_context context,
 	    unsigned char masterkey[MD4_DIGEST_LENGTH];
 	    RC4_KEY rc4;
 	    size_t len;
-	    
+
 	    if ((flags & NTLM_NEG_KEYEX) == 0) {
 		krb5_set_error_string(context,
 				      "NTLM client failed to neg key "
@@ -1298,7 +1298,7 @@ _kdc_do_digest(krb5_context context,
 		ret = EINVAL;
 		goto failed;
 	    }
-	    
+
 	    len = ireq.u.ntlmRequest.sessionkey->length;
 	    if (len != sizeof(masterkey)){
 		krb5_set_error_string(context,
@@ -1306,21 +1306,21 @@ _kdc_do_digest(krb5_context context,
 				      (unsigned long)len);
 		goto failed;
 	    }
-	    
+
 	    RC4_set_key(&rc4, sizeof(sessionkey), sessionkey);
-	    
+
 	    RC4(&rc4, sizeof(masterkey),
-		ireq.u.ntlmRequest.sessionkey->data, 
+		ireq.u.ntlmRequest.sessionkey->data,
 		masterkey);
 	    memset(&rc4, 0, sizeof(rc4));
-	    
-	    r.u.ntlmResponse.sessionkey = 
+
+	    r.u.ntlmResponse.sessionkey =
 		malloc(sizeof(*r.u.ntlmResponse.sessionkey));
 	    if (r.u.ntlmResponse.sessionkey == NULL) {
 		krb5_set_error_string(context, "out of memory");
 		goto out;
 	    }
-	    
+
 	    ret = krb5_data_copy(r.u.ntlmResponse.sessionkey,
 				 masterkey, sizeof(masterkey));
 	    if (ret) {
@@ -1367,7 +1367,7 @@ _kdc_do_digest(krb5_context context,
 	    krb5_clear_error_string(context);
 	    goto out;
 	}
-	
+
 	kdc_log(context, config, 0, "Digest failed with: %s", s);
 
 	r.element = choice_DigestRepInner_error;
@@ -1410,10 +1410,10 @@ _kdc_do_digest(krb5_context context,
 	    goto out;
     }
 
-    ret = krb5_encrypt_EncryptedData(context, crypto, KRB5_KU_DIGEST_ENCRYPT, 
+    ret = krb5_encrypt_EncryptedData(context, crypto, KRB5_KU_DIGEST_ENCRYPT,
 				     buf.data, buf.length, 0,
 				     &rep.innerRep);
-    
+
     ASN1_MALLOC_ENCODE(DigestREP, reply->data, reply->length, &rep, &size, ret);
     if (ret) {
 	krb5_set_error_string(context, "Failed to encode digest reply");
@@ -1422,7 +1422,7 @@ _kdc_do_digest(krb5_context context,
     if (size != reply->length)
 	krb5_abortx(context, "ASN1 internal error");
 
-    
+
 out:
     if (ac)
 	krb5_auth_con_free(context, ac);

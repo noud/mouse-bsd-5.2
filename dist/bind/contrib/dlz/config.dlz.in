@@ -298,7 +298,7 @@ case "$use_dlz_bdb" in
 			dlz_bdb_inc="yes"
 			dlz_bdb_libs="yes"
 		done
-		
+
 		# Done searching, now make sure we got everything.
 
 		if test "$dlz_bdb_inc" = "yes"

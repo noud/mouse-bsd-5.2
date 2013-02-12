@@ -587,7 +587,7 @@ static	Widget	create_options_dialog( parent, title )
 		       NULL
 		       );
 
-    form = XtVaCreateWidget( "options", 
+    form = XtVaCreateWidget( "options",
 			     xmFormWidgetClass,
 			     box,
 			     0

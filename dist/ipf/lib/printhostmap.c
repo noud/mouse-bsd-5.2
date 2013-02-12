@@ -2,11 +2,11 @@
 
 /*
  * Copyright (C) 2002-2005 by Darren Reed.
- * 
- * See the IPFILTER.LICENCE file for details on licencing.  
- *   
- * Id: printhostmap.c,v 1.3.2.3 2006/09/30 21:42:07 darrenr Exp 
- */     
+ *
+ * See the IPFILTER.LICENCE file for details on licencing.
+ *
+ * Id: printhostmap.c,v 1.3.2.3 2006/09/30 21:42:07 darrenr Exp
+ */
 
 #include "ipf.h"
 

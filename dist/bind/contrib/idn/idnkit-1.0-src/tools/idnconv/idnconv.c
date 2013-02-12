@@ -7,33 +7,33 @@ static char *rcsid = "Id: idnconv.c,v 1.1 2003/06/04 00:27:07 marka Exp";
 /*
  * Copyright (c) 2000,2001,2002 Japan Network Information Center.
  * All rights reserved.
- *  
+ *
  * By using this file, you agree to the terms and conditions set forth bellow.
- * 
- * 			LICENSE TERMS AND CONDITIONS 
- * 
+ *
+ * 			LICENSE TERMS AND CONDITIONS
+ *
  * The following License Terms and Conditions apply, unless a different
  * license is obtained from Japan Network Information Center ("JPNIC"),
  * a Japanese association, Kokusai-Kougyou-Kanda Bldg 6F, 2-3-4 Uchi-Kanda,
  * Chiyoda-ku, Tokyo 101-0047, Japan.
- * 
+ *
  * 1. Use, Modification and Redistribution (including distribution of any
  *    modified or derived work) in source and/or binary forms is permitted
  *    under this License Terms and Conditions.
- * 
+ *
  * 2. Redistribution of source code must retain the copyright notices as they
  *    appear in each source code file, this License Terms and Conditions.
- * 
+ *
  * 3. Redistribution in binary form must reproduce the Copyright Notice,
  *    this License Terms and Conditions, in the documentation and/or other
  *    materials provided with the distribution.  For the purposes of binary
  *    distribution the "Copyright Notice" refers to the following language:
  *    "Copyright (c) 2000-2002 Japan Network Information Center.  All rights reserved."
- * 
+ *
  * 4. The name of JPNIC may not be used to endorse or promote products
  *    derived from this Software without specific prior written approval of
  *    JPNIC.
- * 
+ *
  * 5. Disclaimer/Limitation of Liability: THIS SOFTWARE IS PROVIDED BY JPNIC
  *    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  *    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -103,9 +103,9 @@ static char *rcsid = "Id: idnconv.c,v 1.1 2003/06/04 00:27:07 marka Exp";
 int		line_number;		/* current input file line number */
 static int	flush_every_line = 0;	/* pretty obvious */
 
-static int		encode_file(idn_resconf_t conf1, idn_resconf_t conf2, 
+static int		encode_file(idn_resconf_t conf1, idn_resconf_t conf2,
 				    FILE *fp, int flags);
-static int		decode_file(idn_resconf_t conf1, idn_resconf_t conf2, 
+static int		decode_file(idn_resconf_t conf1, idn_resconf_t conf2,
 				    FILE *fp, int flags);
 static int		trim_newline(idnconv_strbuf_t *buf);
 static idn_result_t	convert_line(idnconv_strbuf_t *from,
@@ -451,7 +451,7 @@ encode_file(idn_resconf_t conf1, idn_resconf_t conf2, FILE *fp, int flags) {
 		else
 			r = convert_line(&buf1, &buf2, conf1, actions1,
 					 0);
-				 
+
 		if (r != idn_success) {
 			errormsg("conversion failed at line %d: %s\n",
 				 line_number,
@@ -470,7 +470,7 @@ encode_file(idn_resconf_t conf1, idn_resconf_t conf2, FILE *fp, int flags) {
 		 */
 		r = convert_line(&buf2, &buf1, conf1, actions2,
 				 flags & FLAG_SELECTIVE);
-				 
+
 		if (r != idn_success) {
 			errormsg("error in nameprep or output conversion "
 				 "at line %d: %s\n",

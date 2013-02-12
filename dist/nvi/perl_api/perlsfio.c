@@ -57,7 +57,7 @@ sfnviwrite(f, buf, n, disc)
 Sfio_t* f;      /* stream involved */
 char*           buf;    /* buffer to read into */
 int             n;      /* number of bytes to read */
-Sfdisc_t*       disc;   /* discipline */        
+Sfdisc_t*       disc;   /* discipline */
 {
 	SCR *scrp;
 

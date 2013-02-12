@@ -6,9 +6,9 @@
 # If you change the list of distributed kernels, don't forget
 # to update the release documentation in distrib/notes/common/contents
 
-KERNEL_SETS=			
+KERNEL_SETS=
 
-EXTRA_KERNELS=	
+EXTRA_KERNELS=
 
 INSTALLATION_DIRS+=	installation/miniroot	\
 			installation/misc

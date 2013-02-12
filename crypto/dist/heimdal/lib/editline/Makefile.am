@@ -37,7 +37,7 @@ libeditline_la_SOURCES = \
 	unix.h \
 	$(EXTRA_SOURCE)
 
-EXTRA_SOURCE = $(ES) 
+EXTRA_SOURCE = $(ES)
 
 libel_compat_la_SOURCES = edit_compat.c edit_compat.h
 

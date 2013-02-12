@@ -8,7 +8,7 @@ BIND 9 is striving for strict compliance with IETF standards.  We
 believe this release of BIND 9 complies with the following RFCs, with
 the caveats and exceptions listed in the numbered notes below.  Note
 that a number of these RFCs do not have the status of Internet
-standards but are proposed or draft standards, experimental RFCs, 
+standards but are proposed or draft standards, experimental RFCs,
 or Best Current Practice (BCP) documents.
 
   RFC1034

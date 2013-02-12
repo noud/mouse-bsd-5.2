@@ -63,7 +63,7 @@ vs_change(SCR *sp, db_recno_t lno, lnop_t op)
 	 *
 	 * Check for line #2 before going to the end of the file.
 	 */
-	if (((op == LINE_APPEND && lno == 0) || 
+	if (((op == LINE_APPEND && lno == 0) ||
 	    (op == LINE_INSERT && lno == 1)) &&
 	    !db_exist(sp, 2)) {
 		lno = 1;
@@ -693,7 +693,7 @@ vs_sm_up(SCR *sp, MARK *rp, db_recno_t count, scroll_t scmd, SMAP *smp)
 		if (echanged) {
 			rp->lno = smp->lno;
 			rp->cno = vs_colpos(sp, smp->lno,
-			    (O_ISSET(sp, O_LEFTRIGHT) ? 
+			    (O_ISSET(sp, O_LEFTRIGHT) ?
 			    smp->coff : (smp->soff - 1) * sp->cols) +
 			    sp->rcm % sp->cols);
 		}
@@ -781,7 +781,7 @@ vs_deleteln(SCR *sp, int cnt)
 		F_SET(sp, SC_SCR_REDRAW);
 		return (0);
 	}
-		
+
 	if (IS_ONELINE(sp))
 		(void)gp->scr_clrtoeol(sp);
 	else {
@@ -928,7 +928,7 @@ vs_sm_down(SCR *sp, MARK *rp, db_recno_t count, scroll_t scmd, SMAP *smp)
 		if (ychanged) {
 			rp->lno = smp->lno;
 			rp->cno = vs_colpos(sp, smp->lno,
-			    (O_ISSET(sp, O_LEFTRIGHT) ? 
+			    (O_ISSET(sp, O_LEFTRIGHT) ?
 			    smp->coff : (smp->soff - 1) * sp->cols) +
 			    sp->rcm % sp->cols);
 		}
@@ -1014,7 +1014,7 @@ vs_insertln(SCR *sp, int cnt)
 		F_SET(sp, SC_SCR_REDRAW);
 		return (0);
 	}
-		
+
 	if (IS_ONELINE(sp)) {
 		(void)gp->scr_move(sp, LASTLINE(sp), 0);
 		(void)gp->scr_clrtoeol(sp);

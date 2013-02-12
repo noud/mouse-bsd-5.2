@@ -9,7 +9,7 @@ AC_ARG_ENABLE(pthread-support,
 			[if you want thread safe libraries]),
 	[],[enable_pthread_support=maybe])
 
-case "$host" in 
+case "$host" in
 *-*-solaris2*)
 	native_pthread_support=yes
 	if test "$GCC" = yes; then
@@ -57,7 +57,7 @@ esac
 if test "$enable_pthread_support" = maybe ; then
 	enable_pthread_support="$native_pthread_support"
 fi
-	
+
 if test "$enable_pthread_support" != no; then
     AC_DEFINE(ENABLE_PTHREAD_SUPPORT, 1,
 	[Define if you want have a thread safe libraries])

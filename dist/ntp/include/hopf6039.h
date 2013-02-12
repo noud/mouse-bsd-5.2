@@ -1,7 +1,7 @@
 /*	$NetBSD: hopf6039.h,v 1.2 2003/12/04 16:23:36 drochner Exp $	*/
 
 /****************************************************************************/
-/*      hopf6039.h                                                          */     
+/*      hopf6039.h                                                          */
 /*      hopf Elektronik 6039 PCI radio clock header                         */
 /*      (c) 1999, 2000 Bernd Altmeier    <altmeier@ATLSoft.de>              */
 /*      Rev. 1.00 Date 25.03.2000                                           */
@@ -30,7 +30,7 @@ typedef unsigned short      WORD;
 
 #define HOPF_CLOCK_CMD_MASK 0xff000
 
-#define HOPF_CLOCK_GET_LOCAL		0x10000 
+#define HOPF_CLOCK_GET_LOCAL		0x10000
 #define HOPF_CLOCK_GET_UTC		0x20000
 #define HOPF_CLOCK_GET_ANTENNA		0x30000
 #define HOPF_CLOCK_GET_DIFFERENCE	0x40000
@@ -56,8 +56,8 @@ typedef unsigned short      WORD;
 
 /* sat-information */
 
-typedef struct SatStat{    
-	BYTE wVisible;    
+typedef struct SatStat{
+	BYTE wVisible;
 	BYTE wMode;
 	BYTE wSat0;
 	BYTE wRat0;
@@ -80,38 +80,38 @@ typedef struct SatStat{
 /* GPS position */
 
 typedef struct GPSPos {  /* Position */
-	long wAltitude;   
-	long wLongitude;   
-	long wLatitude;    
+	long wAltitude;
+	long wLongitude;
+	long wLatitude;
 } GPSPos;
 
 /* clock hardware version */
 
-typedef struct ClockVersion {    
+typedef struct ClockVersion {
 	char cVersion[255];  /* Hardware Version like " DCF-RECEIVER,   VERSION 01.01, DAT: 23.NOV.1999" */
 	char dVersion[255];  /* Driver Version */
 } ClockVersion;
 
 /* hopftime what you think */
 
-typedef struct HOPFTIME { 
-    unsigned int wYear; 
-    unsigned int wMonth; 
-    unsigned int wDayOfWeek; 
-    unsigned int wDay; 
-    unsigned int wHour; 
-    unsigned int wMinute; 
-    unsigned int wSecond; 
-    unsigned int wMilliseconds; 
-    unsigned int wStatus; 
-} HOPFTIME; 
+typedef struct HOPFTIME {
+    unsigned int wYear;
+    unsigned int wMonth;
+    unsigned int wDayOfWeek;
+    unsigned int wDay;
+    unsigned int wHour;
+    unsigned int wMinute;
+    unsigned int wSecond;
+    unsigned int wMilliseconds;
+    unsigned int wStatus;
+} HOPFTIME;
 
 /* DCF77 antenna alignment */
 
-typedef struct DcfAntenne {    
-	BYTE bStatus;    
-	BYTE bStatus1;    
-	WORD wAntValue;    
+typedef struct DcfAntenne {
+	BYTE bStatus;
+	BYTE bStatus1;
+	WORD wAntValue;
 } DcfAntenne;
 
 /* hopf PCI clock */

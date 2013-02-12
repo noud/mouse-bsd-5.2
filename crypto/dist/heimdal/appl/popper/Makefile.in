@@ -463,10 +463,10 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-pop_debug$(EXEEXT): $(pop_debug_OBJECTS) $(pop_debug_DEPENDENCIES) 
+pop_debug$(EXEEXT): $(pop_debug_OBJECTS) $(pop_debug_DEPENDENCIES)
 	@rm -f pop_debug$(EXEEXT)
 	$(LINK) $(pop_debug_OBJECTS) $(pop_debug_LDADD) $(LIBS)
-popper$(EXEEXT): $(popper_OBJECTS) $(popper_DEPENDENCIES) 
+popper$(EXEEXT): $(popper_OBJECTS) $(popper_DEPENDENCIES)
 	@rm -f popper$(EXEEXT)
 	$(LINK) $(popper_OBJECTS) $(popper_LDADD) $(LIBS)
 

@@ -156,7 +156,7 @@ execute(t, flags)
 				goto Break;
 			}
 		}
-	
+
 	switch(t->type) {
 	  case TCOM:
 		rv = comexec(t, tp, ap, flags);

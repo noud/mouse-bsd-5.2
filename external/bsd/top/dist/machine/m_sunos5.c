@@ -211,7 +211,7 @@ struct handle
 
 /*
  * Structure for keeping track processes between updates.
- * We keep these things in a hash table, which is updated at every cycle.  
+ * We keep these things in a hash table, which is updated at every cycle.
  */
 struct oldproc
 {
@@ -309,7 +309,7 @@ char *kernelnames[] =
 #define KERNEL_PGOUT 7
 
 /* these are names given to allowed sorting orders -- first is default */
-char *ordernames[] = 
+char *ordernames[] =
 {"cpu", "size", "res", "time", "pid", NULL};
 
 /* forward definitions for comparison functions */
@@ -756,7 +756,7 @@ kstat_safe_retrieve(kstat_t **ksp,
 
 	/* attempt to read it */
 	new_kcid = kstat_read(kc, ks, buf);
-	/* chance for an infinite loop here if kstat_read keeps 
+	/* chance for an infinite loop here if kstat_read keeps
 	   returning -1 */
 
 	/* if the chain changed, update it */
@@ -1320,7 +1320,7 @@ machine_init (struct statics *statics)
     /* remember that log base 2 of 1024 is 10 (i.e.: 2^10 = 1024) */
     pageshift -= 10;
 
-    /* now determine which pageshift function is appropriate for the 
+    /* now determine which pageshift function is appropriate for the
        result (have to because x << y is undefined for y < 0) */
     if (pageshift > 0)
     {
@@ -1678,7 +1678,7 @@ format_next_process(caddr_t handle, char *(*get_userid)(int))
     hp = (struct handle *)handle;
     pp = *(hp->next_proc++);
     hp->remaining--;
-    
+
     /* grab format descriptor */
     fi = display_fields;
 
@@ -1987,7 +1987,7 @@ getptable (struct prpsinfo *baseptr)
 	    (void) close (fd);
 	    op->fd_psinfo = -1;
 	    continue;
-	}       
+	}
 #else
 	if (ioctl(fd, PIOCPSINFO, currproc) < 0)
 	{

@@ -313,7 +313,7 @@ isccc_sexpr_tostring(isccc_sexpr_t *sexpr)
 	REQUIRE(sexpr != NULL &&
 		(sexpr->type == ISCCC_SEXPRTYPE_STRING ||
 		 sexpr->type == ISCCC_SEXPRTYPE_BINARY));
-	
+
 	if (sexpr->type == ISCCC_SEXPRTYPE_BINARY)
 		return ((char *)sexpr->value.as_region.rstart);
 	return (sexpr->value.as_string);

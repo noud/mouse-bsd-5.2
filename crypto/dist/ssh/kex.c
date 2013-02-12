@@ -403,13 +403,13 @@ kex_choose_conf(Kex *kex)
 		choose_comp(&newkeys->comp, cprop[ncomp], sprop[ncomp]);
 		debug("REQUESTED ENC.NAME is '%s'", newkeys->enc.name);
 		if (strcmp(newkeys->enc.name, "none") == 0) {
-				debug("Requesting NONE. Authflag is %d", auth_flag);			
+				debug("Requesting NONE. Authflag is %d", auth_flag);
 			if (auth_flag == 1) {
 				debug("None requested post authentication.");
 			} else {
 				fatal("Pre-authentication none cipher requests are not allowed.");
 			}
-		} 
+		}
 		debug("kex: %s %s %s %s",
 		    ctos ? "client->server" : "server->client",
 		    newkeys->enc.name,

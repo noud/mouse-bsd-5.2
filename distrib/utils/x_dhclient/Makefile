@@ -21,7 +21,7 @@ CPPFLAGS+=	-fno-strict-aliasing
 .PATH:	${RSRCDIR}/common
 SRCS+=	alloc.c bpf.c comapi.c conflex.c discover.c dispatch.c dns.c \
 	ethernet.c execute.c fddi.c inet.c memory.c options.c packet.c \
-	parse.c print.c socket.c tables.c tree.c 
+	parse.c print.c socket.c tables.c tree.c
 
 #	omapip source
 #

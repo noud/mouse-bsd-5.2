@@ -99,7 +99,7 @@ _prop_string_externalize(struct _prop_object_externalize_context *ctx,
 	    					ps->ps_immutable) == false ||
 	    _prop_object_externalize_end_tag(ctx, "string") == false)
 		return (false);
-	
+
 	return (true);
 }
 
@@ -185,7 +185,7 @@ prop_string_t
 prop_string_create_cstring_nocopy(const char *str)
 {
 	prop_string_t ps;
-	
+
 	ps = _prop_string_alloc();
 	if (ps != NULL) {
 		ps->ps_immutable = str;
@@ -298,7 +298,7 @@ prop_string_cstring(prop_string_t ps)
 	cp = _PROP_MALLOC(ps->ps_size + 1, M_TEMP);
 	if (cp != NULL)
 		strcpy(cp, prop_string_contents(ps));
-	
+
 	return (cp);
 }
 
@@ -346,7 +346,7 @@ prop_string_append(prop_string_t dst, prop_string_t src)
 	dst->ps_size = len;
 	if (ocp != NULL)
 		_PROP_FREE(ocp, M_PROP_STRING);
-	
+
 	return (true);
 }
 
@@ -368,7 +368,7 @@ prop_string_append_cstring(prop_string_t dst, const char *src)
 
 	if (dst->ps_flags & PS_F_NOCOPY)
 		return (false);
-	
+
 	len = dst->ps_size + strlen(src);
 	cp = _PROP_MALLOC(len + 1, M_PROP_STRING);
 	if (cp == NULL)
@@ -379,7 +379,7 @@ prop_string_append_cstring(prop_string_t dst, const char *src)
 	dst->ps_size = len;
 	if (ocp != NULL)
 		_PROP_FREE(ocp, M_PROP_STRING);
-	
+
 	return (true);
 }
 
@@ -429,7 +429,7 @@ _prop_string_internalize(prop_stack_t stack, prop_object_t *obj,
 		*obj = prop_string_create();
 		return (true);
 	}
-	
+
 	/* No attributes recognized here. */
 	if (ctx->poic_tagattr != NULL)
 		return (true);
@@ -438,11 +438,11 @@ _prop_string_internalize(prop_stack_t stack, prop_object_t *obj,
 	if (_prop_object_internalize_decode_string(ctx, NULL, 0, &len,
 						   NULL) == false)
 		return (true);
-	
+
 	str = _PROP_MALLOC(len + 1, M_PROP_STRING);
 	if (str == NULL)
 		return (true);
-	
+
 	if (_prop_object_internalize_decode_string(ctx, str, len, &alen,
 						   &ctx->poic_cp) == false ||
 	    alen != len) {

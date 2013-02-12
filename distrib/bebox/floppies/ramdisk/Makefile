@@ -35,7 +35,7 @@ upgrade.sh: upgrade.tmpl
 start.sh: start.tmpl
 	${TOOL_SED} "s/@@VERSION@@/${DISTRIBVER}/" < ${.ALLSRC} > ${.TARGET}
 
-all: ${AUXTARGETS} ${CBIN} 
+all: ${AUXTARGETS} ${CBIN}
 	dd if=/dev/zero of=${IMAGE} count=3074
 	vnconfig -t ${DISKTYPE} -v -c ${VND_CDEV} ${IMAGE}
 	disklabel -rw ${VND_CDEV} ${DISKTYPE}

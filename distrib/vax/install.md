@@ -175,7 +175,7 @@ __md_prep_disklabel_1
 	echo -n "Press [Enter] to continue "
 	getresp ""
 	disklabel -W ${_disk}
-	if [ -f /usr/bin/vi ]; then 
+	if [ -f /usr/bin/vi ]; then
 		disklabel -e ${_disk}
 	else
 		disklabel -i ${_disk}

@@ -12,9 +12,9 @@ create the file /grub/menu.lst with the global options like:
 .	(tag
 .It Pa
 default 0
-.br 
+.br
 timeout 5
-.br 
+.br
 root (hd0,3,a)
 .	tag)
 .It

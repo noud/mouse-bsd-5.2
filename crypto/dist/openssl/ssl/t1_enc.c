@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -63,7 +63,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -161,7 +161,7 @@ static void tls1_P_hash(const EVP_MD *md, const unsigned char *sec,
 	HMAC_CTX ctx_tmp;
 	unsigned char A1[EVP_MAX_MD_SIZE];
 	unsigned int A1_len;
-	
+
 	chunk=EVP_MD_size(md);
 
 	HMAC_CTX_init(&ctx);
@@ -227,7 +227,7 @@ static void tls1_PRF(long digest_mask,
 	count=0;
 	for (idx=0;ssl_get_handshake_digest(idx,&m,&md);idx++) {
 		if ((m<<TLS1_PRF_DGST_SHIFT) & digest_mask) count++;
-	}	
+	}
 	len=slen/count;
 	S1=sec;
 	memset(out1,0,olen);
@@ -236,7 +236,7 @@ static void tls1_PRF(long digest_mask,
 			if (!md) {
 				SSLerr(SSL_F_TLS1_PRF,
 				SSL_R_UNSUPPORTED_DIGEST_TYPE);
-				return;				
+				return;
 			}
 			tls1_P_hash(md ,S1,len+(slen&1),
 			            seed1,seed1_len,seed2,seed2_len,seed3,seed3_len,seed4,seed4_len,seed5,seed5_len,
@@ -580,14 +580,14 @@ printf("\nkey block\n");
 			{
 			if (s->session->cipher->algorithm_enc == SSL_eNULL)
 				s->s3->need_empty_fragments = 0;
-			
+
 #ifndef OPENSSL_NO_RC4
 			if (s->session->cipher->algorithm_enc == SSL_RC4)
 				s->s3->need_empty_fragments = 0;
 #endif
 			}
 		}
-		
+
 	return(1);
 err:
 	SSLerr(SSL_F_TLS1_SETUP_KEY_BLOCK,ERR_R_MALLOC_FAILURE);
@@ -686,7 +686,7 @@ int tls1_enc(SSL *s, int send)
 				return 0;
 				}
 			}
-		
+
 		EVP_Cipher(ds,rec->data,rec->input,l);
 
 #ifdef KSSL_DEBUG
@@ -706,7 +706,7 @@ int tls1_enc(SSL *s, int send)
 			 * may not be of even length so the padding bug check
 			 * cannot be performed. This bug workaround has been
 			 * around since SSLeay so hopefully it is either fixed
-			 * now or no buggy implementation supports compression 
+			 * now or no buggy implementation supports compression
 			 * [steve]
 			 */
 			if ( (s->options&SSL_OP_TLS_BLOCK_PADDING_BUG)
@@ -748,12 +748,12 @@ int tls1_cert_verify_mac(SSL *s, int md_nid, unsigned char *out)
 	EVP_MD_CTX ctx, *d=NULL;
 	int i;
 
-	if (s->s3->handshake_buffer) 
+	if (s->s3->handshake_buffer)
 		ssl3_digest_cached_records(s);
 	if (s->s3->handshake_dgst) {
-		for (i=0;i<SSL_MAX_DIGEST;i++) 
+		for (i=0;i<SSL_MAX_DIGEST;i++)
 			{
-			  if (s->s3->handshake_dgst[i]&&EVP_MD_CTX_type(s->s3->handshake_dgst[i])==md_nid) 
+			  if (s->s3->handshake_dgst[i]&&EVP_MD_CTX_type(s->s3->handshake_dgst[i])==md_nid)
 				{
 				d=s->s3->handshake_dgst[i];
 				break;
@@ -763,7 +763,7 @@ int tls1_cert_verify_mac(SSL *s, int md_nid, unsigned char *out)
 	if (!d) {
 		SSLerr(SSL_F_TLS1_CERT_VERIFY_MAC,SSL_R_NO_REQUIRED_DIGEST);
 		return 0;
-	}	
+	}
 
 	EVP_MD_CTX_init(&ctx);
 	EVP_MD_CTX_copy_ex(&ctx,d);
@@ -782,13 +782,13 @@ int tls1_final_finish_mac(SSL *s,
 	int idx;
 	long mask;
 	int err=0;
-	const EVP_MD *md; 
+	const EVP_MD *md;
 
 	q=buf;
 
 	EVP_MD_CTX_init(&ctx);
 
-	if (s->s3->handshake_buffer) 
+	if (s->s3->handshake_buffer)
 		ssl3_digest_cached_records(s);
 
 	for (idx=0;ssl_get_handshake_digest(idx,&mask,&md);idx++)
@@ -812,7 +812,7 @@ int tls1_final_finish_mac(SSL *s,
 				}
 			}
 		}
-		
+
 	tls1_PRF(s->s3->tmp.new_cipher->algorithm2,
 		 str,slen, buf,(int)(q-buf), NULL,0, NULL,0, NULL,0,
 		 s->session->master_key,s->session->master_key_length,
@@ -833,7 +833,7 @@ int tls1_mac(SSL *ssl, unsigned char *md, int send)
 	size_t md_size;
 	int i;
 	EVP_MD_CTX hmac, *mac_ctx;
-	unsigned char buf[5]; 
+	unsigned char buf[5];
 	int stream_mac = (send?(ssl->mac_flags & SSL_MAC_FLAG_WRITE_MAC_STREAM):(ssl->mac_flags&SSL_MAC_FLAG_READ_MAC_STREAM));
 
 	if (send)
@@ -860,7 +860,7 @@ int tls1_mac(SSL *ssl, unsigned char *md, int send)
 	buf[4]=rec->length&0xff;
 
 	/* I should fix this up TLS TLS TLS TLS TLS XXXXXXXX */
-	if (stream_mac) 
+	if (stream_mac)
 		{
 			mac_ctx = hash;
 		}
@@ -902,7 +902,7 @@ printf("rec=");
 		for (i=7; i>=0; i--)
 			{
 			++seq[i];
-			if (seq[i] != 0) break; 
+			if (seq[i] != 0) break;
 			}
 		}
 
@@ -985,7 +985,7 @@ int tls1_alert_code(int code)
 	case SSL_AD_BAD_CERTIFICATE_HASH_VALUE: return(TLS1_AD_BAD_CERTIFICATE_HASH_VALUE);
 	case SSL_AD_UNKNOWN_PSK_IDENTITY:return(TLS1_AD_UNKNOWN_PSK_IDENTITY);
 #if 0 /* not appropriate for TLS, not used for DTLS */
-	case DTLS1_AD_MISSING_HANDSHAKE_MESSAGE: return 
+	case DTLS1_AD_MISSING_HANDSHAKE_MESSAGE: return
 					  (DTLS1_AD_MISSING_HANDSHAKE_MESSAGE);
 #endif
 	default:			return(-1);

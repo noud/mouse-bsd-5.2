@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -83,9 +83,9 @@ static CONF *load_config_file(const char *configfile);
 
 /* Query related functions. */
 static int query_command(const char *data, char *digest,
-			 const EVP_MD *md, const char *policy, int no_nonce, 
+			 const EVP_MD *md, const char *policy, int no_nonce,
 			 int cert, const char *in, const char *out, int text);
-static BIO *BIO_open_with_default(const char *file, const char *mode, 
+static BIO *BIO_open_with_default(const char *file, const char *mode,
 				  FILE *default_fp);
 static TS_REQ *create_query(BIO *data_bio, char *digest, const EVP_MD *md,
 			    const char *policy, int no_nonce, int cert);
@@ -94,9 +94,9 @@ static int create_digest(BIO *input, char *digest,
 static ASN1_INTEGER *create_nonce(int bits);
 
 /* Reply related functions. */
-static int reply_command(CONF *conf, char *section, char *engine, 
-			 char *queryfile, char *passin, char *inkey, 
-			 char *signer, char *chain, const char *policy, 
+static int reply_command(CONF *conf, char *section, char *engine,
+			 char *queryfile, char *passin, char *inkey,
+			 char *signer, char *chain, const char *policy,
 			 char *in, int token_in, char *out, int token_out,
 			 int text);
 static TS_RESP *read_PKCS7(BIO *in_bio);
@@ -111,8 +111,8 @@ static int save_ts_serial(const char *serialfile, ASN1_INTEGER *serial);
 static int verify_command(char *data, char *digest, char *queryfile,
 			  char *in, int token_in,
 			  char *ca_path, char *ca_file, char *untrusted);
-static TS_VERIFY_CTX *create_verify_ctx(char *data, char *digest, 
-					char *queryfile, 
+static TS_VERIFY_CTX *create_verify_ctx(char *data, char *digest,
+					char *queryfile,
 					char *ca_path, char *ca_file,
 					char *untrusted);
 static X509_STORE *create_cert_store(char *ca_path, char *ca_file);
@@ -128,7 +128,7 @@ int MAIN(int argc, char **argv)
 	char *section = NULL;
 	CONF *conf = NULL;
 	enum mode {
-	CMD_NONE, CMD_QUERY, CMD_REPLY, CMD_VERIFY 
+	CMD_NONE, CMD_QUERY, CMD_REPLY, CMD_VERIFY
 	} mode = CMD_NONE;
 	char *data = NULL;
 	char *digest = NULL;
@@ -151,7 +151,7 @@ int MAIN(int argc, char **argv)
 	char *untrusted = NULL;
 	char *engine = NULL;
 	/* Input is ContentInfo instead of TimeStampResp. */
-	int token_in = 0;	
+	int token_in = 0;
 	/* Output is ContentInfo instead of TimeStampResp. */
 	int token_out = 0;
 	int free_bio_err = 0;
@@ -294,7 +294,7 @@ int MAIN(int argc, char **argv)
 		else
 			goto usage;
 		}
-	
+
 	/* Seed the random number generator if it is going to be used. */
 	if (mode == CMD_QUERY && !no_nonce)
 		{
@@ -314,7 +314,7 @@ int MAIN(int argc, char **argv)
 		goto cleanup;
 		}
 
-	/* Check consistency of parameters and execute 
+	/* Check consistency of parameters and execute
 	   the appropriate function. */
 	switch (mode)
 		{
@@ -344,8 +344,8 @@ int MAIN(int argc, char **argv)
 			if (ret) goto usage;
 			}
 
-		ret = !reply_command(conf, section, engine, queryfile, 
-				     password, inkey, signer, chain, policy, 
+		ret = !reply_command(conf, section, engine, queryfile,
+				     password, inkey, signer, chain, policy,
 				     in, token_in, out, token_out, text);
 		break;
 	case CMD_VERIFY:
@@ -440,7 +440,7 @@ static CONF *load_config_file(const char *configfile)
 		if (p != NULL)
 			{
 			BIO *oid_bio = BIO_new_file(p, "r");
-			if (!oid_bio) 
+			if (!oid_bio)
 				ERR_print_errors(bio_err);
 			else
 				{
@@ -450,7 +450,7 @@ static CONF *load_config_file(const char *configfile)
 			}
 		else
 			ERR_clear_error();
-		if(!add_oid_section(bio_err, conf)) 
+		if(!add_oid_section(bio_err, conf))
 			ERR_print_errors(bio_err);
 		}
 	return conf;
@@ -461,7 +461,7 @@ static CONF *load_config_file(const char *configfile)
  */
 
 static int query_command(const char *data, char *digest, const EVP_MD *md,
-			 const char *policy, int no_nonce, 
+			 const char *policy, int no_nonce,
 			 int cert, const char *in, const char *out, int text)
 	{
 	int ret = 0;
@@ -479,7 +479,7 @@ static int query_command(const char *data, char *digest, const EVP_MD *md,
 	else
 		{
 		/* Open the file if no explicit digest bytes were specified. */
-		if (!digest 
+		if (!digest
 		    && !(data_bio = BIO_open_with_default(data, "rb", stdin)))
 			goto end;
 		/* Creating the query object. */
@@ -519,11 +519,11 @@ static int query_command(const char *data, char *digest, const EVP_MD *md,
 	return ret;
 	}
 
-static BIO *BIO_open_with_default(const char *file, const char *mode, 
+static BIO *BIO_open_with_default(const char *file, const char *mode,
 				  FILE *default_fp)
 	{
-	return file == NULL ? 
-		BIO_new_fp(default_fp, BIO_NOCLOSE) 
+	return file == NULL ?
+		BIO_new_fp(default_fp, BIO_NOCLOSE)
 		: BIO_new_file(file, mode);
 	}
 
@@ -564,7 +564,7 @@ static TS_REQ *create_query(BIO *data_bio, char *digest, const EVP_MD *md,
 	if (!TS_MSG_IMPRINT_set_msg(msg_imprint, data, len)) goto err;
 
 	if (!TS_REQ_set_msg_imprint(ts_req, msg_imprint)) goto err;
-	
+
 	/* Setting policy if requested. */
 	if (policy && !(policy_obj = txt2obj(policy))) goto err;
 	if (policy_obj && !TS_REQ_set_policy_id(ts_req, policy_obj)) goto err;
@@ -665,9 +665,9 @@ static ASN1_INTEGER *create_nonce(int bits)
  * Reply-related method definitions.
  */
 
-static int reply_command(CONF *conf, char *section, char *engine, 
+static int reply_command(CONF *conf, char *section, char *engine,
 			 char *queryfile, char *passin, char *inkey,
-			 char *signer, char *chain, const char *policy, 
+			 char *signer, char *chain, const char *policy,
 			 char *in, int token_in,
 			 char *out, int token_out, int text)
 	{
@@ -792,7 +792,7 @@ static TS_RESP *read_PKCS7(BIO *in_bio)
 	return resp;
 	}
 
-static TS_RESP *create_response(CONF *conf, const char *section, char *engine, 
+static TS_RESP *create_response(CONF *conf, const char *section, char *engine,
 				char *queryfile, char *passin, char *inkey,
 				char *signer, char *chain, const char *policy)
 	{
@@ -858,7 +858,7 @@ static TS_RESP *create_response(CONF *conf, const char *section, char *engine,
 
 	ret = 1;
  end:
-	if (!ret) 
+	if (!ret)
 		{
 		TS_RESP_free(response);
 		response = NULL;
@@ -897,7 +897,7 @@ static ASN1_INTEGER *next_serial(const char *serialfile)
 
 	if (!(serial = ASN1_INTEGER_new())) goto err;
 
-	if (!(in = BIO_new_file(serialfile, "r"))) 
+	if (!(in = BIO_new_file(serialfile, "r")))
 		{
 		ERR_clear_error();
 		BIO_printf(bio_err, "Warning: could not open file %s for "
@@ -973,7 +973,7 @@ static int verify_command(char *data, char *digest, char *queryfile,
 		if (!(response = d2i_TS_RESP_bio(in_bio, NULL))) goto end;
 		}
 
-	if (!(verify_ctx = create_verify_ctx(data, digest, queryfile, 
+	if (!(verify_ctx = create_verify_ctx(data, digest, queryfile,
 					     ca_path, ca_file, untrusted)))
 		goto end;
 
@@ -992,7 +992,7 @@ static int verify_command(char *data, char *digest, char *queryfile,
 		/* Print errors, if there are any. */
 		ERR_print_errors(bio_err);
 		}
-	
+
 	/* Clean up. */
 	BIO_free_all(in_bio);
 	PKCS7_free(token);
@@ -1001,8 +1001,8 @@ static int verify_command(char *data, char *digest, char *queryfile,
 	return ret;
 	}
 
-static TS_VERIFY_CTX *create_verify_ctx(char *data, char *digest, 
-					char *queryfile, 
+static TS_VERIFY_CTX *create_verify_ctx(char *data, char *digest,
+					char *queryfile,
 					char *ca_path, char *ca_file,
 					char *untrusted)
 	{
@@ -1032,7 +1032,7 @@ static TS_VERIFY_CTX *create_verify_ctx(char *data, char *digest,
 				}
 			ctx->imprint_len = imprint_len;
 			}
-		
+
 		}
 	else if (queryfile != NULL)
 		{
@@ -1052,7 +1052,7 @@ static TS_VERIFY_CTX *create_verify_ctx(char *data, char *digest,
 	if (!(ctx->store = create_cert_store(ca_path, ca_file))) goto err;
 
 	/* Loading untrusted certificates. */
-	if (untrusted && !(ctx->certs = TS_CONF_load_certs(untrusted))) 
+	if (untrusted && !(ctx->certs = TS_CONF_load_certs(untrusted)))
 		goto err;
 
 	ret = 1;

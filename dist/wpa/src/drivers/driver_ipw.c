@@ -105,7 +105,7 @@ static int ipw_ioctl(struct wpa_driver_ipw_data *drv,
 
 	if (ioctl(drv->sock, IPW_IOCTL_WPA_SUPPLICANT, &iwr) < 0) {
 		int ret = errno;
-		if (show_err) 
+		if (show_err)
 			perror("ioctl[IPW_IOCTL_WPA_SUPPLICANT]");
 		return ret;
 	}
@@ -159,7 +159,7 @@ static int ipw_set_wpa_ie(struct wpa_driver_ipw_data *drv,
 	param->cmd = IPW_CMD_SET_WPA_IE;
 	param->u.wpa_ie.len = wpa_ie_len;
 	os_memcpy(param->u.wpa_ie.data, wpa_ie, wpa_ie_len);
-	
+
 	ret = ipw_ioctl(drv, param, blen, 1);
 
 	os_free(param);
@@ -187,7 +187,7 @@ static int ipw_mlme(struct wpa_driver_ipw_data *drv, const u8 *addr,
 	struct ipw_param param;
 
 	os_memset(&param, 0, sizeof(param));
-	os_memcpy(param.sta_addr, addr, ETH_ALEN);	
+	os_memcpy(param.sta_addr, addr, ETH_ALEN);
 	param.cmd = IPW_CMD_MLME;
 	param.u.mlme.command = cmd;
 	param.u.mlme.reason_code = reason;
@@ -331,7 +331,7 @@ wpa_driver_ipw_associate(void *priv, struct wpa_driver_associate_params *params)
 		unencrypted_eapol = 0;
 	else
 		unencrypted_eapol = 1;
-	
+
 	if (ipw_set_wpa_param(drv, IPW_PARAM_IEEE_802_1X,
 			      unencrypted_eapol) < 0) {
 		wpa_printf(MSG_DEBUG, "ipw: Failed to configure "

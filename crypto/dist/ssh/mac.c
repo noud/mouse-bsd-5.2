@@ -168,7 +168,7 @@ mac_clear(Mac *mac)
 	if (mac->type == SSH_UMAC) {
 		if (mac->umac_ctx != NULL)
 			umac_delete(mac->umac_ctx);
-	} else 
+	} else
 #endif
 	if (mac->evp_md != NULL)
 		HMAC_cleanup(&mac->evp_ctx);

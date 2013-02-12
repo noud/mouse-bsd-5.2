@@ -50,7 +50,7 @@ vi_fork(ipvi)
 }
 #endif
 
-/* 
+/*
  * PUBLIC: int gtk_vi_init __P((GtkVi **, int, char*[]));
  */
 int

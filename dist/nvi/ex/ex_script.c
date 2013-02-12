@@ -379,7 +379,7 @@ sscr_check_input(SCR *sp, fd_set *fdset, int maxfd)
 
 loop:	memcpy(&rdfd, fdset, sizeof(fd_set));
 
-	for (tsp = wp->scrq.cqh_first; 
+	for (tsp = wp->scrq.cqh_first;
 	    tsp != (void *)&wp->scrq; tsp = tsp->q.cqe_next)
 		if (F_ISSET(sp, SC_SCRIPT)) {
 			FD_SET(sp->script->sh_master, &rdfd);
@@ -394,7 +394,7 @@ loop:	memcpy(&rdfd, fdset, sizeof(fd_set));
 	default:
 		break;
 	}
-	for (tsp = wp->scrq.cqh_first; 
+	for (tsp = wp->scrq.cqh_first;
 	    tsp != (void *)&wp->scrq; tsp = tsp->q.cqe_next)
 		if (F_ISSET(sp, SC_SCRIPT) &&
 		    FD_ISSET(sp->script->sh_master, &rdfd)) {
@@ -429,7 +429,7 @@ loop:	maxfd = 0;
 	poll.tv_usec = 0;
 
 	/* Set up the input mask. */
-	for (sp = wp->scrq.cqh_first; sp != (void *)&wp->scrq; 
+	for (sp = wp->scrq.cqh_first; sp != (void *)&wp->scrq;
 	    sp = sp->q.cqe_next)
 		if (F_ISSET(sp, SC_SCRIPT)) {
 			FD_SET(sp->script->sh_master, &rdfd);
@@ -449,10 +449,10 @@ loop:	maxfd = 0;
 	}
 
 	/* Read the input. */
-	for (sp = wp->scrq.cqh_first; sp != (void *)&wp->scrq; 
+	for (sp = wp->scrq.cqh_first; sp != (void *)&wp->scrq;
 	    sp = sp->q.cqe_next)
 		if (F_ISSET(sp, SC_SCRIPT) &&
-		    FD_ISSET(sp->script->sh_master, &rdfd) && 
+		    FD_ISSET(sp->script->sh_master, &rdfd) &&
 		    sscr_insert(sp))
 			return (1);
 	goto loop;
@@ -657,7 +657,7 @@ sscr_check(SCR *sp)
 
 	gp = sp->gp;
 	wp = sp->wp;
-	for (sp = wp->scrq.cqh_first; sp != (void *)&wp->scrq; 
+	for (sp = wp->scrq.cqh_first; sp != (void *)&wp->scrq;
 	    sp = sp->q.cqe_next)
 		if (F_ISSET(sp, SC_SCRIPT)) {
 			F_SET(gp, G_SCRWIN);
@@ -815,11 +815,11 @@ sscr_pty(amaster, aslave, name, termp, winp)
 					if (name)
 						strcpy(name, line);
 					if (termp)
-						(void) tcsetattr(slave, 
+						(void) tcsetattr(slave,
 							TCSAFLUSH, termp);
 #ifdef TIOCSWINSZ
 					if (winp)
-						(void) ioctl(slave, TIOCSWINSZ, 
+						(void) ioctl(slave, TIOCSWINSZ,
 							(char *)winp);
 #endif
 					return (0);

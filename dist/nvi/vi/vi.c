@@ -444,10 +444,10 @@ VIKEYS const tmotion = {
  */
 static gcret_t
 v_cmd(SCR *sp, VICMD *dp, VICMD *vp, VICMD *ismotion, int *comcountp, int *mappedp)
-	        
-	               
+
+
 	                	/* Previous key if getting motion component. */
-	                         
+
 {
 	enum { COMMANDMODE, ISPARTIAL, NOTPARTIAL } cpart;
 	CHAR_T key;

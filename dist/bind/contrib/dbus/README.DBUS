@@ -6,37 +6,37 @@ Dynamic Management of the ISC BIND named Forwarding Table with D-BUS
 Overview:
 
   Red Hat has developed an extension to named that is enabled during
-  rpmbuild of the bind SRPM with the option --define 'WITH_DBUS=1', 
+  rpmbuild of the bind SRPM with the option --define 'WITH_DBUS=1',
   and at named runtime with the -D named option.
 
   You can obtain the latest version of the source code for the BIND
   D-BUS extensions from:
-  
+
     http://people.redhat.com/~jvdias/bind-dbus/
 
-  The Red Hat BIND D-BUS extensions allow services such as Red Hat's 
-  NetworkManager and dhcdbd (the DHCP Client controller D-Bus daemon) 
-  to tell named which name servers to forward requests to dynamically, 
-  instead of only with the "forward" and "forwarders" named.conf options. 
- 
+  The Red Hat BIND D-BUS extensions allow services such as Red Hat's
+  NetworkManager and dhcdbd (the DHCP Client controller D-Bus daemon)
+  to tell named which name servers to forward requests to dynamically,
+  instead of only with the "forward" and "forwarders" named.conf options.
+
   Dynamic forwarding table management allows named to be an effective
   and efficient caching nameserver for configurations with multiple
   wireless or VPN IP interfaces that are not always active, and whose
   name service parameters are typically configured with DHCP.
 
-  Problems with trying to configure such systems automatically using 
+  Problems with trying to configure such systems automatically using
   only the libc resolver, causing conflicts over the contents of the
-  /etc/resolv.conf  file, are avoided; the resolv.conf file can contain 
+  /etc/resolv.conf  file, are avoided; the resolv.conf file can contain
   only the users chosen search path and the single "nameserver 127.0.0.1"
   entry.
 
   named also provides a much more efficient, both in terms of caching
-  performance and resolving time, and much more feature rich DNS resolver 
+  performance and resolving time, and much more feature rich DNS resolver
   than does the libc resolver library and nscd, and has the benefit of
   existing improved IPv6 and DNSSEC support over glibc and nscd.
 
 Operation Guide for Developers:
- 
+
   Programs can access named's dynamic forward table management services
   using D-BUS, the "service messagebus" sysv-init service that is started
   by default at boot (see the D-BUS documentation for details).
@@ -45,10 +45,10 @@ Operation Guide for Developers:
   variable in /etc/sysconfig/named), named provides two D-BUS methods:
 
   These D-BUS names are common to all named D-BUS methods:
-  D-BUS Destination 	D-BUS Path		D-BUS interface	
-  ~~~~~~~~~~~~~~~~~     ~~~~~~~~~~      	~~~~~~~~~~~~~~~ 
+  D-BUS Destination 	D-BUS Path		D-BUS interface
+  ~~~~~~~~~~~~~~~~~     ~~~~~~~~~~      	~~~~~~~~~~~~~~~
   com.redhat.named      /com/redhat/named	com.redhat.named
-  
+
   D-BUS Members:
   ~~~~~~~~~~~~~~
 
@@ -57,50 +57,50 @@ Operation Guide for Developers:
 	                | array of 4 bytes :  <nameserver IPv4 address>
 	                | array of 16 bytes :  <nameserver IPv6 address>
                         | string: <nameserver dotted-quad IPv4 or RFC2374 IPv6 address>
-	                )			
-	                [ uint16: <nameserver port>, ] 
+	                )
+	                [ uint16: <nameserver port>, ]
 		        [ uint8:  <forward policy>   ]
-	              ] 
+	              ]
 	            ]
-                  } , ...	          
+                  } , ...
                 )
 
    SetForwarders will create or delete members of the forwarding table.
 
-   It accepts a list of tuples of up to 4 members: only the <domain name> 
+   It accepts a list of tuples of up to 4 members: only the <domain name>
    is required.
-  
-   If ONLY the <domain name> is specified, the forwarding entry for 
+
+   If ONLY the <domain name> is specified, the forwarding entry for
    EXACTLY that domain name is deleted if it exists.
 
    Only a specification of at least one <nameserver IP address> is required to
-   create a forwarding entry. 
- 
-   The IP address can be IPv4: 
+   create a forwarding entry.
+
+   The IP address can be IPv4:
 	( 32-bit integer OR array of 4 bytes OR dotted-quad string )
    Or IPv6:
-        ( array of 16 bytes 
+        ( array of 16 bytes
           OR  RFC 2373/4 ascii string of 8 ':' separate hex quads as supported by inet_pton(3)
-        )   
+        )
 
    32 and 16-bit integer parameters MUST be given in network byte order; ie the IPv4 address
    192.168.2.1 would be specified as uint32:16951488 on an i386 and port 53 would be uint16:13568.
 
    There are an optional <port> 16-bit integer parameter, to specify the name server socket
-   address port associated with the preceding IP address, and a <forward policy> 
+   address port associated with the preceding IP address, and a <forward policy>
    parameter, which sets the forward policy as follows:
      0: "none" : never  forward to this nameserver for this domain.
-     1: "first": forward first to this server, and then search its authoritative data. 
+     1: "first": forward first to this server, and then search its authoritative data.
      2: "only" : always forward to this nameserver for this domain.
- 
-   If not specified, <port> will have the value 53, and <forward policy> will be "2": "only". 
+
+   If not specified, <port> will have the value 53, and <forward policy> will be "2": "only".
    named's default forward policy is "first" .
 
    Creation of forwarding domains is not "exact", as is deletion, but is "inclusive":
    creating forwarding entry for the '.' domain sets the default set of nameservers named
    will query for ALL domains, and creating an entry for "redhat.com" creates a set of
    nameservers to be queried for all names suffixed by "redhat.com." . If both are specified,
-   the "redhat.com" servers will be tried first, followed by the "." servers.   
+   the "redhat.com" servers will be tried first, followed by the "." servers.
 
    Forwarding entries are ONLY created in the first DNS View that matches the "localhost" client
    (127.0.0.1) and destination. The default view, which exists if no views have been specified
@@ -111,25 +111,25 @@ Operation Guide for Developers:
    other, remote clients can be served that will not be subject to dynamic forwarding. So it
    is a fully supported configuration that users can serve authoritative data to external
    clients and still use named's forwarding features for their localhost resolver.
-    
+
    SetForwarders returns uint32:0 on success or a DBUS_ERROR message on failure .
-  
-   
+
+
   GetForwarders ( [ string:<domain name> ] )
   ~~~~~~~~~~~~~
    Using the default "com.redhat.named" interface, returns the EXACT forwarding entry for
-   <domain name> as binary D-BUS types; there is also a com.redhat.named.text interface 
+   <domain name> as binary D-BUS types; there is also a com.redhat.named.text interface
    supported by GetForwarders which returns all values as string: text .
- 
+
    If a <domain name> is not specified, all forwarding table entries are dumped.
 
-   
+
   Examples:
   ~~~~~~~~
-  
+
    Suppose we start out with the named.conf configuration:
 
-    
+
    	options { ...
 		        forwarders { 172.16.80.118;  };
                   ...
@@ -139,14 +139,14 @@ Operation Guide for Developers:
 			forward only;
 			forwarders { 172.16.76.10; 172.16.52.28; };
 	};
-	
+
    Using a "dbus-send" trivially modified to support uint16 parameters (!) :
 
 	$ dbus-send --system --type=method_call --print-reply --reply-timeout=20000 \
 		    --dest=com.redhat.named /com/redhat/named com.redhat.named.GetForwarders
 	method return sender=:1.367 -> dest=:1.368
 	 0 string "redhat.com"
-	 1 byte 2              
+	 1 byte 2
 	 2 uint32 172757164
 	 3 uint16 13568
 	 4 uint32 473174188
@@ -154,13 +154,13 @@ Operation Guide for Developers:
 	 6 string "."
 	 7 byte 1
 	 8 uint32 1984958636
-	 9 uint16 13568  
+	 9 uint16 13568
 
-	ie. GetForwarders always returns a list of tuples of 
+	ie. GetForwarders always returns a list of tuples of
             ( <domain name>, <forward policy>, <ip address>, <port> )
-	
+
   	If the "text" interface was specified:
-	
+
 	$ dbus-send --system --type=method_call --print-reply --reply-timeout=20000 \
 		    --dest=com.redhat.named /com/redhat/named com.redhat.named.text.GetForwarders
 	method return sender=:1.367 -> dest=:1.370
@@ -176,7 +176,7 @@ Operation Guide for Developers:
 	 9 string "53"
 
         So we could set the default nameserver for the root zone as follows:
-   	
+
 	$ dbus-send --system --type=method_call --print-reply --reply-timeout=20000 \
 		--dest=com.redhat.named /com/redhat/named com.redhat.named.SetForwarders \
 		string:'.' string:'192.33.14.30' string:'2001:503:231d::2:30'
@@ -199,7 +199,7 @@ Operation Guide for Developers:
 	 11 string "53"
 
    Using tcpdump one can verify that named will attempt to contact 192.33.14.30, then
-   2001:503:231d::2:30, for all zones not in redhat.com; for redhat.com zones, 172.16.76.10   
+   2001:503:231d::2:30, for all zones not in redhat.com; for redhat.com zones, 172.16.76.10
    and 192.33.14.30 will be tried in that order.
 
    If the D-BUS driver dbus-daemon should shut down, named will emit the syslog message:
@@ -207,18 +207,18 @@ Operation Guide for Developers:
    And will retry connecting to D-BUS every 10 seconds - once it has connected, the message:
 	 "D-BUS service enabled."
    will be logged.
-	
+
    NOTE: there are the "SetForwarders" and "GetForwarders" scripts in the contrib/dbus directory
    of the BIND source code distribution which are wrappers around the dbus-send commands above.
-   Usage: SetForwarders [ -t first | only ] <zone> [ <server> [...<server>] ]  
+   Usage: SetForwarders [ -t first | only ] <zone> [ <server> [...<server>] ]
   	  GetForwarders [ <zone> ]
-         
-	
+
+
   DHCP Integration
   ~~~~~~~~~~~~~~~~
 
    With the -D option, named will try to subscribe to dhcdbd, the DHCP Client D-BUS Daemon, to
-   be notified of DHCP "reason", "domain-name", "domain-name-server", "ip-address", and "subnet-mask" 
+   be notified of DHCP "reason", "domain-name", "domain-name-server", "ip-address", and "subnet-mask"
    DHCP options when the dhclient program has received them from a DHCP server .
 
    If it cannot subscribe to dhcdbd, named will emit the message :
@@ -236,11 +236,11 @@ Operation Guide for Developers:
    For each whitespace separated member of "domain-name-servers", AND for the reverse IPv4 in-addr.arpa
    class C or less domain of the ip-address masked by the subnet-mask, it will create a forwarding entry
    to query each "domain-server" .
-	
+
    To support CIDR-based reverse subnet forwarding, Views would have to be configured dynamically, a
-   possible future direction which is not yet implemented. (It would perhaps be easier to add a 
+   possible future direction which is not yet implemented. (It would perhaps be easier to add a
    "match-queries" ACL to the forwarders table).
-          
+
    When dhclient acquires a lease, named will configure forwarding, and emit the message:
 	  "D-BUS: dhclient for interface eth0 acquired new lease - creating forwarders."
 
@@ -248,12 +248,12 @@ Operation Guide for Developers:
    will revert any forwarding entries from the initial, static configuration that were modified
    by the DHCP subscription to their initial values;  ie. if redhat.com had a forwarder configured
    in named.conf, and then an DHCP session specified forwarders for redhat.com, when the DHCP
-   session ends the forwarders for redhat.com are reverted to their named.conf values; thus 
+   session ends the forwarders for redhat.com are reverted to their named.conf values; thus
    when all DHCP interfaces have released their leases, and if no SetForwarders commands were issued,
    the forwarding configuration will be identical to that at named startup.
 
 
  To Do:
    - Sending signals when any Forwarding entry is changed (easy to implement if it would be desirable).
-   - CIDR based reverse Forwarding 
+   - CIDR based reverse Forwarding
 

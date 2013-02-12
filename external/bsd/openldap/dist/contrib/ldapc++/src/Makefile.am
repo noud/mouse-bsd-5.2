@@ -48,7 +48,7 @@ libldapcpp_la_SOURCES = LDAPAddRequest.cpp \
 			LdifWriter.cpp \
 			SaslInteraction.cpp \
 			SaslInteractionHandler.cpp \
-			StringList.cpp 
+			StringList.cpp
 
 include_HEADERS = LDAPAsynConnection.h \
 			LDAPAttribute.h \
@@ -82,7 +82,7 @@ include_HEADERS = LDAPAsynConnection.h \
 			LdifWriter.h \
 			SaslInteraction.h \
 			SaslInteractionHandler.h \
-			StringList.h 
+			StringList.h
 
 noinst_HEADERS = ac/time.h \
 		debug.h \

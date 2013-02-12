@@ -63,7 +63,7 @@
 #define ALSHORT		16
 #define ALPOINT		32
 #define ALSTRUCT	32
-#define ALSTACK		32 
+#define ALSTACK		32
 
 /*
  * Min/max values.

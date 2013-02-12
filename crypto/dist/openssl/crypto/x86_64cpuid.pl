@@ -16,7 +16,7 @@ OPENSSL_atomic_add	PROC
 lock	cmpxchg	DWORD PTR[rcx],r8d
 	jne	\$Lspin
 	mov	eax,r8d
-	cdqe    
+	cdqe
 	ret
 OPENSSL_atomic_add	ENDP
 

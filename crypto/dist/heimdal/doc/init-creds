@@ -117,7 +117,7 @@ fail.
 	input is expected from the user (for example, "Password has
 	expired and must be changed" or "Enter Activcard response for
 	challenge 012345678"), and should be displayed accordingly.
-	
+
 	The num_prompts argument indicates the number of values which
 	should be prompted for.  If num_prompts == 0, then the banner
 	contains an informational message which should be displayed to
@@ -228,7 +228,7 @@ used for the AP_REQ; otherwise, the default host key
 
 If ap_req_keytab is non-NULL, the service key for the verification
 will be read from that keytab; otherwise, the service key will be read
-from the default keytab. 
+from the default keytab.
 
 If the service of the ticket in creds is the same as the service name
 for the AP_REQ, then this ticket will be used directly.  If the ticket

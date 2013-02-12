@@ -16,7 +16,7 @@ heimdal (0.7.2.dfsg.1-10ubuntu2) gutsy; urgency=low
 
   * debian/control:
     - Actually added openbsd-inetd | inet-superserver to heimdal-servers'
-      dependencies (LP: #123782). 
+      dependencies (LP: #123782).
     - DebainMaintainerField foo
 
  -- Rick Clark <rick.clark@ubuntu.com>  Tue, 03 Jul 2007 19:58:47 -0400
@@ -486,7 +486,7 @@ heimdal (0.6-2.2) unstable; urgency=low
 heimdal (0.6-2.1) unstable; urgency=low
 
   * Use com_err from comerr-dev.
-  
+
   * Removed comerr-dev, ss-dev from Conflicts of heimdal-dev
 
  -- Mikael Andersson <mikan@debian.org>  Mon, 15 Sep 2003 11:36:49 +0200
@@ -731,7 +731,7 @@ heimdal (0.4e-5) unstable; urgency=low
     kerberos4kth-user (closes: #124020). heimdal-clients is supposed to
     have Kerberos4kth support, hence there should be no need to have
     both installed as the same time.
-  * Build problem on hppa was previously fixed (closes: #101064). 
+  * Build problem on hppa was previously fixed (closes: #101064).
   * Fix BSD license (closes: #123822).
 
  -- Brian May <bam@snoopy.apana.org.au>  Fri, 21 Dec 2001 11:46:23 +1100
@@ -961,7 +961,7 @@ heimdal (0.3c-1) unstable; urgency=low
 heimdal (0.3b-2) unstable; urgency=low
 
   * Add debhelper, xlib6g-dev to build dependancies (closes: #70718).
-  
+
   * Change documentation to indicate that kadmind uses kadmind.acl,
     not kadm5.acl, as previously specified. Add warning in default
     kdc.conf file that it needs checking, as it may not be
@@ -973,10 +973,10 @@ heimdal (0.3b-2) unstable; urgency=low
 heimdal (0.3b-1) unstable; urgency=low
 
   * New upstream version.
-  
+
   * Shouldn't conflict with telnet anymore, as both use
     update-alternatives (not tested yet).
-  
+
   * Provides telnet-client instead of telnet, as telnet-client is now
     the accepted virtual package (see closed bug #58759).
 
@@ -994,9 +994,9 @@ heimdal (0.3a-2) unstable; urgency=low
 heimdal (0.3a-1) unstable; urgency=low
 
   * New upstream version.
-  
+
   * -rpath hack no longer required.
-  
+
   * fix bug in postinst script (closes: #67509).
 
   * No longer conflicts with rsh-client (<< 0.16.1-1), as rsh-client
@@ -1015,7 +1015,7 @@ heimdal (0.2t-1) unstable; urgency=low
 heimdal (0.2r-2) unstable; urgency=low
 
   * Add Build-Depends and Build-Conflicts line. It is possible
-  that the Build-Conflicts might be excessive (some libraries  
+  that the Build-Conflicts might be excessive (some libraries
   can be turned of with command line options to Configure),
   however, I think this is safest for now.
 
@@ -1060,7 +1060,7 @@ heimdal (0.2q-1) unstable; urgency=low
   * ftp/ftpd no longer seems to work, fixes welcome.
   * This should really go to frozen, but because of above problem
   will go into unstable only.
-  
+
  -- Brian May <bam@debian.org>  Fri, 25 Feb 2000 15:46:16 +1100
 
 heimdal (0.2l-7) frozen unstable; urgency=low
@@ -1091,7 +1091,7 @@ heimdal (0.2l-5) frozen unstable; urgency=low
     (closes: #55733).
   * Change section to non-US/main (closes: #55546).
   * These changes wont break anything that wasn't already broken ;-).
-  
+
  -- Brian May <bam@debian.org>  Thu, 20 Jan 2000 16:13:21 +1100
 
 heimdal (0.2l-4) frozen unstable; urgency=low

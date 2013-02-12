@@ -176,7 +176,7 @@ fr_hdrlen(const u_char *p, u_int addr_len)
 {
 	if (!p[addr_len + 1] /* pad exist */)
 		return addr_len + 1 /* UI */ + 1 /* pad */ + 1 /* NLPID */;
-	else 
+	else
 		return addr_len + 1 /* UI */ + 1 /* NLPID */;
 }
 
@@ -203,7 +203,7 @@ fr_hdr_print(int length, u_int addr_len, u_int dlci, u_int8_t *flags, u_int16_t 
                          bittok2str(fr_header_flag_values, "none", EXTRACT_32BITS(flags)),
                          tok2str(ethertype_values, "unknown", nlpid),
                          nlpid,
-                         length);        
+                         length);
     }
 }
 
@@ -403,7 +403,7 @@ mfr_print(register const u_char *p, u_int length)
 
 /*
  * FRF.16 Link Integrity Control Frame
- * 
+ *
  *      7    6    5    4    3    2    1    0
  *    +----+----+----+----+----+----+----+----+
  *    | B  | E  | C=1| 0    0    0    0  | EA |
@@ -488,7 +488,7 @@ mfr_print(register const u_char *p, u_int length)
             /* do we want to see a hexdump of the IE ? */
             if (vflag > 1 )
                 print_unknown_data(tptr,"\n\t  ",ie_len);
-            
+
             tlen-=ie_len;
             tptr+=ie_len;
         }
@@ -496,7 +496,7 @@ mfr_print(register const u_char *p, u_int length)
     }
 /*
  * FRF.16 Fragmentation Frame
- * 
+ *
  *      7    6    5    4    3    2    1    0
  *    +----+----+----+----+----+----+----+----+
  *    | B  | E  | C=0|seq. (high 4 bits) | EA  |
@@ -536,7 +536,7 @@ mfr_print(register const u_char *p, u_int length)
 
 /* an NLPID of 0xb1 indicates a 2-byte
  * FRF.15 header
- * 
+ *
  *      7    6    5    4    3    2    1    0
  *    +----+----+----+----+----+----+----+----+
  *    ~              Q.922 header             ~
@@ -553,7 +553,7 @@ mfr_print(register const u_char *p, u_int length)
 
 static void
 frf15_print (const u_char *p, u_int length) {
-    
+
     u_int16_t sequence_num, flags;
 
     flags = p[0]&MFR_BEC_MASK;
@@ -581,13 +581,13 @@ frf15_print (const u_char *p, u_int length) {
  */
 
 /* Q.933 packet format
-                      Format of Other Protocols   
+                      Format of Other Protocols
                           using Q.933 NLPID
-                  +-------------------------------+            
-                  |        Q.922 Address          | 
+                  +-------------------------------+
+                  |        Q.922 Address          |
                   +---------------+---------------+
-                  |Control  0x03  | NLPID   0x08  |        
-                  +---------------+---------------+        
+                  |Control  0x03  | NLPID   0x08  |
+                  +---------------+---------------+
                   |          L2 Protocol ID       |
                   | octet 1       |  octet 2      |
                   +-------------------------------+
@@ -739,7 +739,7 @@ q933_print(const u_char *p, u_int length)
 
 	if (p[2] == MSG_ANSI_LOCKING_SHIFT)
 		is_ansi = 1;
-    
+
         printf("%s", eflag ? "" : "Q.933, ");
 
 	/* printing out header part */
@@ -755,7 +755,7 @@ q933_print(const u_char *p, u_int length)
                    length);
         else
             printf(", %s",
-                   tok2str(fr_q933_msg_values,"unknown message 0x%02x",p[1]));            
+                   tok2str(fr_q933_msg_values,"unknown message 0x%02x",p[1]));
 
         olen = length; /* preserve the original length for non verbose mode */
 
@@ -765,7 +765,7 @@ q933_print(const u_char *p, u_int length)
 	}
 	length -= 2 - is_ansi;
 	ptemp += 2 + is_ansi;
-	
+
 	/* Loop through the rest of IE */
 	while (length > sizeof(struct ie_tlv_header_t )) {
 		ie_p = (struct ie_tlv_header_t  *)ptemp;
@@ -786,14 +786,14 @@ q933_print(const u_char *p, u_int length)
                            tok2str(fr_q933_ie_codesets[codeset],"unknown",ie_p->ie_type),
                            ie_p->ie_type,
                            ie_p->ie_len);
- 
+
                 /* sanity check */
                 if (ie_p->ie_type == 0 || ie_p->ie_len == 0)
                     return;
 
                 if (fr_q933_print_ie_codeset[codeset] != NULL)
                     ie_is_known = fr_q933_print_ie_codeset[codeset](ie_p, ptemp);
-               
+
                 if (vflag >= 1 && !ie_is_known)
                     print_unknown_data(ptemp+2,"\n\t",ie_p->ie_len);
 
@@ -835,7 +835,7 @@ fr_q933_print_ie_codeset5(const struct ie_tlv_header_t  *ie_p, const u_char *p)
         case FR_LMI_CCITT_PVC_STATUS_IE:
             if (!vflag)
                 printf(", ");
-            /* now parse the DLCI information element. */                    
+            /* now parse the DLCI information element. */
             if ((ie_p->ie_len < 3) ||
                 (p[2] & 0x80) ||
                 ((ie_p->ie_len == 3) && !(p[3] & 0x80)) ||
@@ -845,7 +845,7 @@ fr_q933_print_ie_codeset5(const struct ie_tlv_header_t  *ie_p, const u_char *p)
                 (ie_p->ie_len > 5) ||
                 !(p[ie_p->ie_len + 1] & 0x80))
                 printf("Invalid DLCI IE");
-                    
+
             dlci = ((p[2] & 0x3F) << 4) | ((p[3] & 0x78) >> 3);
             if (ie_p->ie_len == 4)
                 dlci = (dlci << 6) | ((p[4] & 0x7E) >> 1);

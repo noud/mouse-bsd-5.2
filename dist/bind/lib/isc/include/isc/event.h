@@ -94,7 +94,7 @@ isc_event_t *
 isc_event_allocate(isc_mem_t *mctx, void *sender, isc_eventtype_t type,
 		   isc_taskaction_t action, const void *arg, size_t size);
 /*%<
- * Allocate an event structure. 
+ * Allocate an event structure.
  *
  * Allocate and initialize in a structure with initial elements
  * defined by:
@@ -105,7 +105,7 @@ isc_event_allocate(isc_mem_t *mctx, void *sender, isc_eventtype_t type,
  *		...
  *	};
  * \endcode
- *	
+ *
  * Requires:
  *\li	'size' >= sizeof(struct isc_event)
  *\li	'action' to be non NULL

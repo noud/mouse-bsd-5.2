@@ -13,7 +13,7 @@ use Getopt::Std;
 
 use vars qw(@ISA @EXPORT $VERSION
 	    @Extensions $Verbose $lib_ext
-	    $opt_o $opt_s 
+	    $opt_o $opt_s
 	    );
 use strict;
 
@@ -24,7 +24,7 @@ $Devel::embed::VERSION = "99.99";
 sub Version { $VERSION; }
 
 @ISA = qw(Exporter);
-@EXPORT = qw(&xsinit &ldopts 
+@EXPORT = qw(&xsinit &ldopts
 	     &ccopts &ccflags &ccdlflags &perl_inc
 	     &xsi_header &xsi_protos &xsi_body);
 
@@ -35,7 +35,7 @@ sub Version { $VERSION; }
 $Verbose = 0;
 $lib_ext = $Config{lib_ext} || '.a';
 
-sub xsinit { 
+sub xsinit {
     my($file, $std, $mods) = @_;
     my($fh,@mods,%seen);
     $file ||= "perlxsi.c";
@@ -62,7 +62,7 @@ sub xsinit {
     @mods = grep(!$seen{$_}++, @mods);
 
     print $fh &xsi_header();
-    print $fh "EXTERN_C void xs_init _((void));\n\n";     
+    print $fh "EXTERN_C void xs_init _((void));\n\n";
     print $fh &xsi_protos(@mods);
 
     print $fh "\nEXTERN_C void\nxs_init()\n{\n";
@@ -92,7 +92,7 @@ extern "C" {
 #endif
 
 EOF
-}    
+}
 
 sub xsi_protos {
     my(@exts) = @_;
@@ -162,7 +162,7 @@ sub ldopts {
 	   /^-std$/  && do { $std = 1; next; };
 	   /^--$/    && do { @link_args = @argv; last; };
 	   /^-I(.*)/ && do { $path = $1 || shift @argv; next; };
-	   push(@mods, $_); 
+	   push(@mods, $_);
        }
     }
     $std = 1 unless scalar @link_args;
@@ -179,19 +179,19 @@ sub ldopts {
 	@ns = split('::', $mod);
 	$sub = $ns[-1];
 	$root = $MM->catdir(@ns);
-	
+
 	print STDERR "searching for '$sub${lib_ext}'\n" if $Verbose;
 	foreach (@path) {
 	    next unless -e ($archive = $MM->catdir($_,"auto",$root,"$sub$lib_ext"));
 	    push @archives, $archive;
 	    if(-e ($extra = $MM->catdir($_,"auto",$root,"extralibs.ld"))) {
-		local(*FH); 
+		local(*FH);
 		if(open(FH, $extra)) {
 		    my($libs) = <FH>; chomp $libs;
 		    push @potential_libs, split /\s+/, $libs;
 		}
-		else {  
-		    warn "Couldn't open '$extra'"; 
+		else {
+		    warn "Couldn't open '$extra'";
 		}
 	    }
 	    last;
@@ -200,8 +200,8 @@ sub ldopts {
     #print STDERR "\@potential_libs = @potential_libs\n";
 
     my($extralibs, $bsloadlibs, $ldloadlibs, $ld_run_path) =
-	$MM->ext(join ' ', 
-		 $MM->catdir("-L$Config{archlib}", "CORE"), " -lperl", 
+	$MM->ext(join ' ',
+		 $MM->catdir("-L$Config{archlib}", "CORE"), " -lperl",
 		 @potential_libs);
 
     my $ld_or_bs = $bsloadlibs || $ldloadlibs;
@@ -252,21 +252,21 @@ ExtUtils::Embed - Utilities for embedding Perl in C/C++ applications
 =head1 SYNOPSIS
 
 
- perl -MExtUtils::Embed -e xsinit 
- perl -MExtUtils::Embed -e ldopts 
+ perl -MExtUtils::Embed -e xsinit
+ perl -MExtUtils::Embed -e ldopts
 
 =head1 DESCRIPTION
 
 ExtUtils::Embed provides utility functions for embedding a Perl interpreter
-and extensions in your C/C++ applications.  
+and extensions in your C/C++ applications.
 Typically, an application B<Makefile> will invoke ExtUtils::Embed
-functions while building your application.  
+functions while building your application.
 
 =head1 @EXPORT
 
 ExtUtils::Embed exports the following functions:
- 
-L<xsinit()>, L<ldopts()>, L<ccopts()>, L<perl_inc()>, L<ccflags()>, 
+
+L<xsinit()>, L<ldopts()>, L<ccopts()>, L<perl_inc()>, L<ccflags()>,
 L<ccdlflags()>, L<xsi_header()>, L<xsi_protos()>, L<xsi_body()>
 
 =head1 FUNCTIONS
@@ -295,17 +295,17 @@ Where,
 
 B<$filename> is equivalent to the B<-o> option.
 
-B<$std> is boolean, equivalent to the B<-std> option.  
+B<$std> is boolean, equivalent to the B<-std> option.
 
 B<[@modules]> is an array ref, same as additional arguments mentioned above.
 
 =item Examples
 
- 
+
  perl -MExtUtils::Embed -e xsinit -- -o xsinit.c Socket
 
 
-This will generate code with an B<xs_init> function that glues the perl B<Socket::bootstrap> function 
+This will generate code with an B<xs_init> function that glues the perl B<Socket::bootstrap> function
 to the C B<boot_Socket> function and writes it to a file named "xsinit.c".
 
 Note that B<DynaLoader> is a special case where it must call B<boot_DynaLoader> directly.
@@ -313,7 +313,7 @@ Note that B<DynaLoader> is a special case where it must call B<boot_DynaLoader> 
  perl -MExtUtils::Embed -e xsinit
 
 
-This will generate code for linking with B<DynaLoader> and 
+This will generate code for linking with B<DynaLoader> and
 each static extension found in B<$Config{static_ext}>.
 The code is written to the default file name B<perlxsi.c>.
 
@@ -324,7 +324,7 @@ The code is written to the default file name B<perlxsi.c>.
 Here, code is written for all the currently linked extensions along with code
 for B<DBI> and B<DBD::Oracle>.
 
-If you have a working B<DynaLoader> then there is rarely any need to statically link in any 
+If you have a working B<DynaLoader> then there is rarely any need to statically link in any
 other extensions.
 
 =item ldopts()
@@ -335,19 +335,19 @@ application.
 When invoked as C<`perl -MExtUtils::Embed -e ldopts --`>
 the following options are recognized:
 
-B<-std> 
+B<-std>
 
 Output arguments for linking the Perl library and any extensions linked
 with the current Perl.
 
 B<-I> <path1:path2>
 
-Search path for ModuleName.a archives.  
+Search path for ModuleName.a archives.
 Default path is B<@INC>.
-Library archives are expected to be found as 
+Library archives are expected to be found as
 B</some/path/auto/ModuleName/ModuleName.a>
-For example, when looking for B<Socket.a> relative to a search path, 
-we should find B<auto/Socket/Socket.a>  
+For example, when looking for B<Socket.a> relative to a search path,
+we should find B<auto/Socket/Socket.a>
 
 When looking for B<DBD::Oracle> relative to a search path,
 we should find B<auto/DBD/Oracle/Oracle.a>
@@ -359,7 +359,7 @@ B<-->  <list of linker args>
 
 Additional linker arguments to be considered.
 
-Any additional arguments found before the B<--> token 
+Any additional arguments found before the B<--> token
 are expected to be names of modules to generate code for.
 
 When invoked with parameters the following are accepted and optional:
@@ -368,7 +368,7 @@ C<ldopts($std,[@modules],[@link_args],$path)>
 
 Where,
 
-B<$std> is boolean, equivalent to the B<-std> option.  
+B<$std> is boolean, equivalent to the B<-std> option.
 
 B<[@modules]> is equivalent to additional arguments found before the B<--> token.
 
@@ -385,17 +385,17 @@ rather than print it to STDOUT.
  perl -MExtUtils::Embed -e ldopts
 
 
-This will print arguments for linking with B<libperl.a>, B<DynaLoader> and 
+This will print arguments for linking with B<libperl.a>, B<DynaLoader> and
 extensions found in B<$Config{static_ext}>.  This includes libraries
 found in B<$Config{libs}> and the first ModuleName.a library
-for each extension that is found by searching B<@INC> or the path 
-specifed by the B<-I> option.  
+for each extension that is found by searching B<@INC> or the path
+specifed by the B<-I> option.
 In addition, when ModuleName.a is found, additional linker arguments
 are picked up from the B<extralibs.ld> file in the same directory.
 
 
  perl -MExtUtils::Embed -e ldopts -- -std Socket
- 
+
 
 This will do the same as the above example, along with printing additional arguments for linking with the B<Socket> extension.
 
@@ -412,14 +412,14 @@ and B<libperl.a>.
 
 Any arguments after the second '--' token are additional linker
 arguments that will be examined for potential conflict.  If there is no
-conflict, the additional arguments will be part of the output.  
+conflict, the additional arguments will be part of the output.
 
 
 =item perl_inc()
 
 For including perl header files this function simply prints:
 
- -I $Config{archlib}/CORE  
+ -I $Config{archlib}/CORE
 
 So, rather than having to say:
 
@@ -440,7 +440,7 @@ This function combines perl_inc(), ccflags() and ccdlflags() into one.
 =item xsi_header()
 
 This function simply returns a string defining the same B<EXTERN_C> macro as
-B<perlmain.c> along with #including B<perl.h> and B<EXTERN.h>.  
+B<perlmain.c> along with #including B<perl.h> and B<EXTERN.h>.
 
 =item xsi_protos(@modules)
 
@@ -457,7 +457,7 @@ B<xsinit()> uses the xsi_* functions to generate most of it's code.
 
 For examples on how to use B<ExtUtils::Embed> for building C/C++ applications
 with embedded perl, see the eg/ directory and the I<perlembed> man page.
- 
+
 =head1 SEE ALSO
 
 the I<perlembed> man page

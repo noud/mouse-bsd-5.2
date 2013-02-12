@@ -249,7 +249,7 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 
 clean-noinstPROGRAMS:
 	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
-nss_ldap.so$(EXEEXT): $(nss_ldap_so_OBJECTS) $(nss_ldap_so_DEPENDENCIES) 
+nss_ldap.so$(EXEEXT): $(nss_ldap_so_OBJECTS) $(nss_ldap_so_DEPENDENCIES)
 	@rm -f nss_ldap.so$(EXEEXT)
 	$(nss_ldap_so_LINK) $(nss_ldap_so_OBJECTS) $(nss_ldap_so_LDADD) $(LIBS)
 

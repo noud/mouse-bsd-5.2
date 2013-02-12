@@ -20,7 +20,7 @@ ContextFlags ::= BIT STRING {
 NegHints ::= SEQUENCE {
     hintName       [0]  GeneralString	OPTIONAL,
     hintAddress    [1]  OCTET STRING	OPTIONAL
-} 
+}
 
 NegTokenInitWin ::= SEQUENCE {
     mechTypes       [0] MechTypeList,

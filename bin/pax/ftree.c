@@ -495,7 +495,7 @@ next_file(ARCHD *arcn)
 		 * override settings with those from specfile
 		 */
 		if (ftnode->flags & F_MODE) {
-			statbuf.st_mode &= ~ALLPERMS; 
+			statbuf.st_mode &= ~ALLPERMS;
 			statbuf.st_mode |= (ftnode->st_mode & ALLPERMS);
 		}
 		if (ftnode->flags & (F_GID | F_GNAME))

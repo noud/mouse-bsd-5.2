@@ -37,7 +37,7 @@ delivery agent into Postfix: </p>
 <p> Postfix can be configured to deliver mail directly to maildrop,
 without using the local(8) delivery agent as an intermediate.  This
 means that you do not get local aliases(5) expansion or $HOME/.forward
-file processing. You would typically do this for hosted domains with 
+file processing. You would typically do this for hosted domains with
 recipients that don't have UNIX home directories. </p>
 
 <p> The following example shows how to use maildrop for some.domain
@@ -53,12 +53,12 @@ and for someother.domain. The example comes in two parts. </p>
  4     virtual_transport = maildrop
  5     virtual_mailbox_maps = hash:/etc/postfix/virtual_mailbox
  6     virtual_alias_maps = hash:/etc/postfix/virtual_alias
- 7 
+ 7
  8 /etc/postfix/virtual_mailbox:
  9     user1@some.domain        <i>...text here does not matter...</i>
 10     user2@some.domain        <i>...text here does not matter...</i>
 11     user3@someother.domain   <i>...text here does not matter...</i>
-12 
+12
 13 /etc/postfix/virtual_alias:
 14     postmaster@some.domain           postmaster
 15     postmaster@someother.domain      postmaster
@@ -137,7 +137,7 @@ needed. </p>
 <p> Postfix can be configured to deliver mail to maildrop via the
 local delivery agent. This is slightly less efficient than the
 "direct" approach discussed above, but gives you the convenience
-of local aliases(5) expansion and $HOME/.forward file processing. 
+of local aliases(5) expansion and $HOME/.forward file processing.
 You would typically use this for domains that are listed in
 mydestination and that have users with a UNIX system account. </p>
 

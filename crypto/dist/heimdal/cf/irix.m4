@@ -7,12 +7,12 @@ AC_DEFUN([rk_IRIX],
 [
 irix=no
 case "$host" in
-*-*-irix4*) 
+*-*-irix4*)
 	AC_DEFINE([IRIX4], 1,
 		[Define if you are running IRIX 4.])
 	irix=yes
 	;;
-*-*-irix*) 
+*-*-irix*)
 	irix=yes
 	;;
 esac

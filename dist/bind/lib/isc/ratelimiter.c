@@ -318,7 +318,7 @@ isc_ratelimiter_release(isc_ratelimiter_t *rl) {
 						 &rl->interval, ISC_FALSE);
 			if (result == ISC_R_SUCCESS)
 				rl->state = isc_ratelimiter_ratelimited;
-		} else 
+		} else
 			rl->state = isc_ratelimiter_idle;
 		break;
 	case isc_ratelimiter_ratelimited:

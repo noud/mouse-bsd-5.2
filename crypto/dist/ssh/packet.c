@@ -202,7 +202,7 @@ packet_stop_discard(void)
 {
 	if (packet_discard_mac) {
 		char buf[1024];
-		
+
 		memset(buf, 'a', sizeof(buf));
 		while (buffer_len(&incoming_packet) < PACKET_MAX_SIZE)
 			buffer_append(&incoming_packet, buf, sizeof(buf));
@@ -1184,7 +1184,7 @@ packet_read_poll2(u_int32_t *seqnr_p)
 			    PACKET_MAX_SIZE - need);
 			return SSH_MSG_NONE;
 		}
-				
+
 		DBG(debug("MAC #%d ok", p_read.seqnr));
 		buffer_consume(&input, mac->mac_len);
 	}

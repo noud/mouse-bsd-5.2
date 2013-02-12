@@ -152,14 +152,14 @@ To boot with ACPI disabled, choose the "no ACPI" option from the boot menu,
 or interrupt the menu and enter the
 .Nx
 boot prompt.
-Type 
+Type
 .Ic boot -2
 to boot with ACPI disabled.
 .\} \" amd64:i386
 .if \n[macppc] \{\
 The files depend on which model you
 are using and how you plan to boot your machine.
-For systems with built-in floppy drives (Open Firmware 1 or 2), 
+For systems with built-in floppy drives (Open Firmware 1 or 2),
 fetch the pair of boot floppy images
 .Pa macppc/installation/floppy/boot1.fs
 and
@@ -218,7 +218,7 @@ as well as
 .\}
 .el \{\
 the following sets:
-.Pa kern-GENERIC.tgz , 
+.Pa kern-GENERIC.tgz ,
 .\}
 .Pa base.tgz
 and
@@ -245,7 +245,7 @@ directory may be of help.
 .\}
 .if \n[macppc] \{\
 .It
-If your \*M has a floppy drive, create the pair of boot floppies using 
+If your \*M has a floppy drive, create the pair of boot floppies using
 .Ic suntar
 (MacOS 9),
 .Ic rawrite
@@ -267,7 +267,7 @@ Otherwise, write the floppy images directly to a pair of floppies
 .\}
 .if \n[sparc64] \{\
 .It
-Burn the CD or put the installation kernel and bootloader 
+Burn the CD or put the installation kernel and bootloader
 at the root level of a bootable
 .Tn Solaris
 or
@@ -356,7 +356,7 @@ You may want to read the section below on
 .\}
 .if \n[sparc]:\n[sparc64] \{\
 .It
-You will need to get to the 
+You will need to get to the
 .if \n[sparc] OpenBoot PROM
 .if \n[sparc64] OpenFirmware
 .Dq Ic "ok"
@@ -390,7 +390,7 @@ The command to boot from CD is:
 .Dq Ic boot cdrom .
 The command to boot the
 .Nx
-kernel from a 
+kernel from a
 .Tn Solaris
 or
 .Nx
@@ -425,7 +425,7 @@ The
 .Nx
 \*V release contains complete binary releases for many different
 system architectures.
-(A few ports are not fully supported at this time 
+(A few ports are not fully supported at this time
 and are thus not part of the binary distribution.
 Please see the
 .Nx
@@ -918,7 +918,7 @@ subdirectory of the distribution tree.
 .Pp
 The source sets are distributed as compressed tar files.
 Except for the
-.Sy pkgsrc 
+.Sy pkgsrc
 set, which is traditionally unpacked into
 .Pa /usr/pkgsrc ,
 all sets may be unpacked into
@@ -1096,7 +1096,7 @@ Running older statically linked pthread applications.
 .Pp
 The 5.x kernel defaults to
 .Dv 0
-for 
+for
 .Dv kern.no_sa_support ,
 which covers the first case.
 However, please note that a full installation of 5.x
@@ -1179,7 +1179,7 @@ and
 .Sq _sdpd
 and the groups
 .Sq _proxy ,
-.Sq _rwhod 
+.Sq _rwhod
 and
 .Sq _sdpd
 need to be created and the user

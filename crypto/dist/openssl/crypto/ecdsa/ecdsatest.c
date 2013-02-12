@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -58,13 +58,13 @@
 /* ====================================================================
  * Copyright 2002 Sun Microsystems, Inc. ALL RIGHTS RESERVED.
  *
- * Portions of the attached software ("Contribution") are developed by 
+ * Portions of the attached software ("Contribution") are developed by
  * SUN MICROSYSTEMS, INC., and are contributed to the OpenSSL project.
  *
  * The Contribution is licensed pursuant to the OpenSSL open source
  * license provided above.
  *
- * The elliptic curve binary polynomial software is originally written by 
+ * The elliptic curve binary polynomial software is originally written by
  * Sheueling Chang Shantz and Douglas Stebila of Sun Microsystems Laboratories.
  *
  */
@@ -168,7 +168,7 @@ int fbytes(unsigned char *buf, int num)
 		return 0;
 		}
 	fbytes_counter ++;
-	ret = BN_bn2bin(tmp, buf);	
+	ret = BN_bn2bin(tmp, buf);
 	if (ret == 0 || ret != num)
 		ret = 0;
 	else
@@ -288,10 +288,10 @@ int test_builtin(BIO *out)
 	EC_KEY		*eckey = NULL, *wrong_eckey = NULL;
 	EC_GROUP	*group;
 	unsigned char	digest[20], wrong_digest[20];
-	unsigned char	*signature = NULL; 
+	unsigned char	*signature = NULL;
 	unsigned int	sig_len;
 	int		nid, ret =  0;
-	
+
 	/* fill digest values with some random data */
 	if (!RAND_pseudo_bytes(digest, 20) ||
 	    !RAND_pseudo_bytes(wrong_digest, 20))
@@ -315,7 +315,7 @@ int test_builtin(BIO *out)
 		BIO_printf(out, "malloc error\n");
 		goto builtin_err;
 		}
-	
+
 	if (!EC_get_builtin_curves(curves, crv_len))
 		{
 		BIO_printf(out, "unable to get internal curves\n");
@@ -340,7 +340,7 @@ int test_builtin(BIO *out)
 			goto builtin_err;
 		EC_GROUP_free(group);
 		if (EC_GROUP_get_degree(EC_KEY_get0_group(eckey)) < 160)
-			/* drop the curve */ 
+			/* drop the curve */
 			{
 			EC_KEY_free(eckey);
 			eckey = NULL;
@@ -398,7 +398,7 @@ int test_builtin(BIO *out)
 		BIO_printf(out, ".");
 		(void)BIO_flush(out);
 		/* verify signature with the wrong key */
-		if (ECDSA_verify(0, digest, 20, signature, sig_len, 
+		if (ECDSA_verify(0, digest, 20, signature, sig_len,
 			wrong_eckey) == 1)
 			{
 			BIO_printf(out, " failed\n");
@@ -418,7 +418,7 @@ int test_builtin(BIO *out)
 		/* modify a single byte of the signature */
 		offset = signature[10] % sig_len;
 		dirt   = signature[11];
-		signature[offset] ^= dirt ? dirt : 1; 
+		signature[offset] ^= dirt ? dirt : 1;
 		if (ECDSA_verify(0, digest, 20, signature, sig_len, eckey) == 1)
 			{
 			BIO_printf(out, " failed\n");
@@ -426,7 +426,7 @@ int test_builtin(BIO *out)
 			}
 		BIO_printf(out, ".");
 		(void)BIO_flush(out);
-		
+
 		BIO_printf(out, " ok\n");
 		/* cleanup */
 		OPENSSL_free(signature);
@@ -437,7 +437,7 @@ int test_builtin(BIO *out)
 		wrong_eckey = NULL;
 		}
 
-	ret = 1;	
+	ret = 1;
 builtin_err:
 	if (eckey)
 		EC_KEY_free(eckey);
@@ -457,9 +457,9 @@ int main(void)
 	BIO	*out;
 
 	out = BIO_new_fp(stdout, BIO_NOCLOSE);
-	
+
 	/* enable memory leak checking unless explicitly disabled */
-	if (!((getenv("OPENSSL_DEBUG_MEMORY") != NULL) && 
+	if (!((getenv("OPENSSL_DEBUG_MEMORY") != NULL) &&
 		(0 == strcmp(getenv("OPENSSL_DEBUG_MEMORY"), "off"))))
 		{
 		CRYPTO_malloc_debug_init();
@@ -480,12 +480,12 @@ int main(void)
 	/* the tests */
 	if (!x9_62_tests(out))  goto err;
 	if (!test_builtin(out)) goto err;
-	
+
 	ret = 0;
-err:	
-	if (ret) 	
+err:
+	if (ret)
 		BIO_printf(out, "\nECDSA test failed\n");
-	else 
+	else
 		BIO_printf(out, "\nECDSA test passed\n");
 	if (ret)
 		ERR_print_errors(out);
@@ -496,5 +496,5 @@ err:
 	if (out != NULL)
 		BIO_free(out);
 	return ret;
-	}	
+	}
 #endif

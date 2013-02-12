@@ -71,7 +71,7 @@ gprint(struct termios *tp)
 }
 
 void
-gread(struct termios *tp, char *s) 
+gread(struct termios *tp, char *s)
 {
 	const struct cchar *cp;
 	char *ep, *p;

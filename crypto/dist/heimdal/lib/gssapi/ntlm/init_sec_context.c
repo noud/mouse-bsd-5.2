@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 2006 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "ntlm/ntlm.h"
@@ -37,9 +37,9 @@ __RCSID("$Heimdal: init_sec_context.c 22382 2007-12-30 12:13:17Z lha $"
         "$NetBSD: init_sec_context.c,v 1.1 2008/03/22 09:39:26 mlelstv Exp $");
 
 static int
-from_file(const char *fn, const char *target_domain, 
+from_file(const char *fn, const char *target_domain,
 	  char **username, struct ntlm_buf *key)
-{	  
+{
     char *str, buf[1024];
     FILE *f;
 
@@ -75,7 +75,7 @@ from_file(const char *fn, const char *target_domain,
 }
 
 static int
-get_user_file(const ntlm_name target_name, 
+get_user_file(const ntlm_name target_name,
 	      char **username, struct ntlm_buf *key)
 {
     const char *fn;
@@ -138,7 +138,7 @@ get_user_ccache(const ntlm_name name, char **username, struct ntlm_buf *key)
 	goto out;
 
     mcreds.session.keytype = ENCTYPE_ARCFOUR_HMAC_MD5;
-    ret = krb5_cc_retrieve_cred(context, id, KRB5_TC_MATCH_KEYTYPE, 
+    ret = krb5_cc_retrieve_cred(context, id, KRB5_TC_MATCH_KEYTYPE,
 				&mcreds, &creds);
     if (ret) {
 	char *s = krb5_get_error_message(context, ret);
@@ -178,11 +178,11 @@ _gss_ntlm_get_user_cred(const ntlm_name target_name,
 {
     ntlm_cred cred;
     int ret;
- 
+
     cred = calloc(1, sizeof(*cred));
     if (cred == NULL)
 	return ENOMEM;
-    
+
     ret = get_user_file(target_name, &cred->username, &cred->key);
     if (ret)
 	ret = get_user_ccache(target_name, &cred->username, &cred->key);
@@ -190,7 +190,7 @@ _gss_ntlm_get_user_cred(const ntlm_name target_name,
 	free(cred);
 	return ret;
     }
-    
+
     cred->domain = strdup(target_name->domain);
     *rcred = cred;
 
@@ -261,7 +261,7 @@ _gss_ntlm_init_sec_context
 	struct ntlm_buf data;
 	uint32_t flags = 0;
 	int ret;
-	
+
 	ctx = calloc(1, sizeof(*ctx));
 	if (ctx == NULL) {
 	    *minor_status = EINVAL;
@@ -294,23 +294,23 @@ _gss_ntlm_init_sec_context
 	flags |= NTLM_NEG_KEYEX;
 
 	memset(&type1, 0, sizeof(type1));
-	
+
 	type1.flags = flags;
 	type1.domain = name->domain;
 	type1.hostname = NULL;
 	type1.os[0] = 0;
 	type1.os[1] = 0;
-	
+
 	ret = heim_ntlm_encode_type1(&type1, &data);
 	if (ret) {
 	    _gss_ntlm_delete_sec_context(minor_status, context_handle, NULL);
 	    *minor_status = ret;
 	    return GSS_S_FAILURE;
 	}
-	
+
 	output_token->value = data.data;
 	output_token->length = data.length;
-	
+
 	return GSS_S_CONTINUE_NEEDED;
     } else {
 	krb5_error_code ret;
@@ -353,7 +353,7 @@ _gss_ntlm_init_sec_context
 		unsigned char nonce[8];
 
 		if (RAND_bytes(nonce, sizeof(nonce)) != 1) {
-		    _gss_ntlm_delete_sec_context(minor_status, 
+		    _gss_ntlm_delete_sec_context(minor_status,
 						 context_handle, NULL);
 		    *minor_status = EINVAL;
 		    return GSS_S_FAILURE;
@@ -365,7 +365,7 @@ _gss_ntlm_init_sec_context
 						     &type3.lm,
 						     &type3.ntlm);
 	    } else {
-		ret = heim_ntlm_calculate_ntlm1(ctx->client->key.data, 
+		ret = heim_ntlm_calculate_ntlm1(ctx->client->key.data,
 						ctx->client->key.length,
 						type2.challange,
 						&type3.ntlm);
@@ -377,7 +377,7 @@ _gss_ntlm_init_sec_context
 		return GSS_S_FAILURE;
 	    }
 
-	    ret = heim_ntlm_build_ntlm1_master(ctx->client->key.data, 
+	    ret = heim_ntlm_build_ntlm1_master(ctx->client->key.data,
 					       ctx->client->key.length,
 					       &sessionkey,
 					       &type3.sessionkey);
@@ -391,7 +391,7 @@ _gss_ntlm_init_sec_context
 		return GSS_S_FAILURE;
 	    }
 
-	    ret = krb5_data_copy(&ctx->sessionkey, 
+	    ret = krb5_data_copy(&ctx->sessionkey,
 				 sessionkey.data, sessionkey.length);
 	    free(sessionkey.data);
 	    if (ret) {
@@ -403,7 +403,7 @@ _gss_ntlm_init_sec_context
 		*minor_status = ret;
 		return GSS_S_FAILURE;
 	    }
-	    ctx->status |= STATUS_SESSIONKEY; 
+	    ctx->status |= STATUS_SESSIONKEY;
 
 	} else {
 	    struct ntlm_buf sessionkey;
@@ -411,17 +411,17 @@ _gss_ntlm_init_sec_context
 	    struct ntlm_targetinfo ti;
 
 	    /* verify infotarget */
-	    
+
 	    ret = heim_ntlm_decode_targetinfo(&type2.targetinfo, 1, &ti);
 	    if(ret) {
-		_gss_ntlm_delete_sec_context(minor_status, 
+		_gss_ntlm_delete_sec_context(minor_status,
 					     context_handle, NULL);
 		*minor_status = ret;
 		return GSS_S_FAILURE;
 	    }
 
 	    if (ti.domainname && strcmp(ti.domainname, name->domain) != 0) {
-		_gss_ntlm_delete_sec_context(minor_status, 
+		_gss_ntlm_delete_sec_context(minor_status,
 					     context_handle, NULL);
 		*minor_status = EINVAL;
 		return GSS_S_FAILURE;
@@ -436,7 +436,7 @@ _gss_ntlm_init_sec_context
 					    ntlmv2,
 					    &type3.ntlm);
 	    if (ret) {
-		_gss_ntlm_delete_sec_context(minor_status, 
+		_gss_ntlm_delete_sec_context(minor_status,
 					     context_handle, NULL);
 		*minor_status = ret;
 		return GSS_S_FAILURE;
@@ -447,21 +447,21 @@ _gss_ntlm_init_sec_context
 					       &type3.sessionkey);
 	    memset(ntlmv2, 0, sizeof(ntlmv2));
 	    if (ret) {
-		_gss_ntlm_delete_sec_context(minor_status, 
+		_gss_ntlm_delete_sec_context(minor_status,
 					     context_handle, NULL);
 		*minor_status = ret;
 		return GSS_S_FAILURE;
 	    }
-	    
+
 	    ctx->flags |= NTLM_NEG_NTLM2_SESSION;
 
-	    ret = krb5_data_copy(&ctx->sessionkey, 
+	    ret = krb5_data_copy(&ctx->sessionkey,
 				 sessionkey.data, sessionkey.length);
 	    free(sessionkey.data);
 	}
 
 	if (ctx->flags & NTLM_NEG_NTLM2_SESSION) {
-	    ctx->status |= STATUS_SESSIONKEY; 
+	    ctx->status |= STATUS_SESSIONKEY;
 	    _gss_ntlm_set_key(&ctx->u.v2.send, 0, (ctx->flags & NTLM_NEG_KEYEX),
 			      ctx->sessionkey.data,
 			      ctx->sessionkey.length);
@@ -469,15 +469,15 @@ _gss_ntlm_init_sec_context
 			      ctx->sessionkey.data,
 			      ctx->sessionkey.length);
 	} else {
-	    ctx->status |= STATUS_SESSIONKEY; 
-	    RC4_set_key(&ctx->u.v1.crypto_recv.key, 
+	    ctx->status |= STATUS_SESSIONKEY;
+	    RC4_set_key(&ctx->u.v1.crypto_recv.key,
 			ctx->sessionkey.length,
 			ctx->sessionkey.data);
-	    RC4_set_key(&ctx->u.v1.crypto_send.key, 
+	    RC4_set_key(&ctx->u.v1.crypto_send.key,
 			ctx->sessionkey.length,
 			ctx->sessionkey.data);
 	}
-	
+
 
 
 	ret = heim_ntlm_encode_type3(&type3, &data);

@@ -45,7 +45,7 @@ __RCSID("$NetBSD: position.c,v 1.5 2003/10/13 14:34:25 agc Exp $");
  * first char on each currently displayed line.
  *
  * {{ The position table is scrolled by moving all the entries.
- *    Would be better to have a circular table 
+ *    Would be better to have a circular table
  *    and just change a couple of pointers. }}
  */
 

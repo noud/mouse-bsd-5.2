@@ -42,7 +42,7 @@
 #if defined(mach_i386)
 #define	CPPMDADD { "-D__i386__", NULL, }
 #elif defined(mach_vax)
-#define CPPMDADD { "-D__vax__", NULL, } 
+#define CPPMDADD { "-D__vax__", NULL, }
 #elif defined(mach_powerpc)
 #define CPPMDADD { "-D__powerpc__", NULL }
 #elif defined(mach_sparc64)

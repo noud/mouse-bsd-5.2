@@ -5,7 +5,7 @@
 ;# Linear Regression Package for perl
 ;# to be 'required' from perl
 ;#
-;#  Copyright (c) 1992 
+;#  Copyright (c) 1992
 ;#  Frank Kardel, Rainer Pruy
 ;#  Friedrich-Alexander Universitaet Erlangen-Nuernberg
 ;#
@@ -30,11 +30,11 @@ package lr;
 ##
 ;# init(tag);		initialize data set for tag
 ;# sample(x, y, tag);	enter sample
-;# Y(x, tag);		compute y for given x 
+;# Y(x, tag);		compute y for given x
 ;# X(y, tag);		compute x for given y
 ;# r(tag);		regression coefficient
 ;# cov(tag);		covariance
-;# A(tag);   
+;# A(tag);
 ;# B(tag);
 ;# sigma(tag);		standard deviation
 ;# mean(tag);
@@ -103,7 +103,7 @@ sub r()
 	  * ($self->{n} * $self->{sy2} - $self->{sy}**2);
 
     return 1 unless $s;
-    
+
     return ($self->{n} * $self->{sxy} - $self->{sx} * $self->{sy}) / sqrt($s);
 }
 

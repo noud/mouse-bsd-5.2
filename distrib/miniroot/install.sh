@@ -59,7 +59,7 @@ MODE="install"
 
 # The following are optional:
 #	md_view_labels_possible	- variable: md_view_labels defined
-#	md_view_labels		- peek at preexisting disk labels, to 
+#	md_view_labels		- peek at preexisting disk labels, to
 #				  better identify disks
 
 # we need to make sure .'s below work if this directory is not in $PATH

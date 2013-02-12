@@ -297,7 +297,7 @@ static int wpa_ndiswrapper_get_capa(void *priv, struct wpa_driver_capa *capa)
 	if (iw_set_ext(drv, WPA_GET_CAPA, &priv_req) < 0)
 		ret = -1;
 	return ret;
-	
+
 }
 
 

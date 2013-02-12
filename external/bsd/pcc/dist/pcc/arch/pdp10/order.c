@@ -131,7 +131,7 @@ special(NODE *p, int shape)
 		if (p->n_op == ASSIGN && p->n_left->n_op == REG &&
 		    p->n_right->n_op == PLUS &&
 		    p->n_right->n_left->n_op == REG &&
-		    p->n_right->n_right->n_op == ICON && 
+		    p->n_right->n_right->n_op == ICON &&
 		    p->n_right->n_right->n_lval == 1 &&
 		    p->n_right->n_left->n_rval == p->n_left->n_rval)
 			return 1;

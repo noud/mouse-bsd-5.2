@@ -25,7 +25,7 @@ printNumber(ef_number number, ef_number base)
 	char		buffer[NUMBER_BUFFER_SIZE];
 	char *		s = &buffer[NUMBER_BUFFER_SIZE];
 	int		size;
-	
+
 	do {
 		ef_number	digit;
 
@@ -102,7 +102,7 @@ vprint(const char * pattern, va_list args)
 			case 'c':
 				{
 					char	c = va_arg(args, char);
-					
+
 					(void) write(2, &c, 1);
 				}
 				break;
@@ -110,7 +110,7 @@ vprint(const char * pattern, va_list args)
 				{
 					EF_Print(bad_pattern, c);
 				}
-		
+
 			}
 		}
 		else

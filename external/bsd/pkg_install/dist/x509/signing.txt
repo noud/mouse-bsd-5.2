@@ -5,7 +5,7 @@ Use of digital signatures in pkg_install
     the pkgsrc security team and updated regulary
 (2) binary packages: check who provided binary packages
 
-For (1) gpg is currently the only choice. After pkgsrcCon (?) a PKCS7 
+For (1) gpg is currently the only choice. After pkgsrcCon (?) a PKCS7
 signature will be added as well. With the pkg_install-renovation branch,
 PKCS7 is the only supported verification mechanism for (2) and preferred
 for (1) once the infrastructure exists.

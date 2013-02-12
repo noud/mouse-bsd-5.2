@@ -135,7 +135,7 @@ SPARCcenter 2000
 sun4u and other UltraSPARC based machines in 64-bit mode.
 They are supported in 32-bit mode with the
 .Nx*M
-.Pa GENERIC_SUN4U 
+.Pa GENERIC_SUN4U
 kernel.
 .Pp
 UltraSPARC based machines in 32-bit or 64-bit mode are supported by the
@@ -149,7 +149,7 @@ Solbourne machines
 .
 .Ss2 Supported devices
 .(bullet -offset indent
-sun4m mbus CPU modules; Sun  4/600, SPARCstation/server 10, 
+sun4m mbus CPU modules; Sun  4/600, SPARCstation/server 10,
 SPARCstation/server 20, and clones
 .(bullet -offset indent
 .Em cpu0 ;
@@ -183,7 +183,7 @@ On-board and Sbus card (GX, GX+, TGX, and TGX+)
 SX 24 bpp accelerated framebuffer.
 .br
 On-board SPARCstation 10SX and SPARCstation 20, requires optional 4 or 8 MB
-VSIMM, 
+VSIMM,
 .br
 limited to
 .Em cgthree
@@ -223,7 +223,7 @@ On-board JavaStation-NC
 limited to text console (no X)
 .bullet)
 .It
-sun4 video; VME card, on-board, or P4 (supported only on 4/100 and 4/300 
+sun4 video; VME card, on-board, or P4 (supported only on 4/100 and 4/300
 series machines)
 .(bullet -offset indent
 .Em bwtwo ;
@@ -340,7 +340,7 @@ portions of those cards should work, even if the other functions do not.
 Non-Sun SCSI CD-ROMs may have trouble booting any OS,
 .Nx
 or otherwise.  Your CD-ROM must support 512 byte blocks for the OpenBoot PROM
-to load a file.  Most newer CD-ROM drives support this automatically, and 
+to load a file.  Most newer CD-ROM drives support this automatically, and
 many older drives allow you to set it using a jumper.  See
 .Lk http://www.ebsinc.com/solaris/suncdrom.html
 for information on bootable CD-ROMs

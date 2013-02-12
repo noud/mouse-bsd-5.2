@@ -22,13 +22,13 @@ scroll the screen moves but the cursor doesn't.
 > really can't move it 'off the screen'.
 
 =-=-=-=
->> BTW, this may be a bug, I can't seem to erase characters in the 
->> colon command line. 
->  
+>> BTW, this may be a bug, I can't seem to erase characters in the
+>> colon command line.
+>
 > It's a bug that I reported earlier.  Core is not (correctly) reading the
-> tty options for the terminal.  Since we have not bound magic 
-> characters (VI_BACKSPACE) to BackSpace and Delete keys, the 
-> editing here is counter-intuitive.  I'd guess that you use 
+> tty options for the terminal.  Since we have not bound magic
+> characters (VI_BACKSPACE) to BackSpace and Delete keys, the
+> editing here is counter-intuitive.  I'd guess that you use
 > Delete for Tty Erase.  Try ^H in the colon line and see what happens.
 
 =-=-=-=

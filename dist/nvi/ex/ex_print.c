@@ -32,7 +32,7 @@ static const char sccsid[] = "Id: ex_print.c,v 10.24 2001/07/29 19:07:29 skimo E
 
 #include "../common/common.h"
 
-static int ex_prchars __P((SCR *, const CHAR_T *, size_t *, size_t, 
+static int ex_prchars __P((SCR *, const CHAR_T *, size_t *, size_t,
                            u_int, int));
 
 /*
@@ -210,7 +210,7 @@ ex_scprint(SCR *sp, MARK *fp, MARK *tp)
  *	Local routine to dump characters to the screen.
  */
 static int
-ex_prchars(SCR *sp, const CHAR_T *p, size_t *colp, size_t len, 
+ex_prchars(SCR *sp, const CHAR_T *p, size_t *colp, size_t len,
 	    u_int flags, int repeatc)
 {
 	CHAR_T ch;

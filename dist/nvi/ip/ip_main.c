@@ -36,7 +36,7 @@ static void	   ip_func_std __P((WIN *));
 static IP_PRIVATE *ip_init __P((WIN *wp, int i_fd, int o_fd, int, int argc, char *argv[]));
 static void	   perr __P((char *, char *));
 static int	   get_fds __P((char *ip_arg, int *i_fd, int *o_fd));
-static int  get_connection __P((WIN *wp, int main_ifd, int main_ofd, 
+static int  get_connection __P((WIN *wp, int main_ifd, int main_ofd,
 				int *i_fd, int *o_fd, int *, int can_pass));
 static void *run_editor __P((void * vp));
 
@@ -191,10 +191,10 @@ ip_init(WIN *wp, int i_fd, int o_fd, int t_fd, int argc, char *argv[])
 	ipp->i_fd = i_fd;
 	ipp->o_fd = o_fd;
 	ipp->t_fd = t_fd;
- 
+
  	ipp->argc = argc;
  	ipp->argv = argv;
- 
+
 	/* Initialize the list of ip functions. */
 	ip_func_std(wp);
 
@@ -226,7 +226,7 @@ usage:		ip_usage();
 }
 
 static int
-get_connection(WIN *wp, int main_ifd, int main_ofd, 
+get_connection(WIN *wp, int main_ifd, int main_ofd,
 	int *i_fd, int *o_fd, int *t_fd, int can_pass)
 {
     *t_fd = -1;

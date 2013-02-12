@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 1984 through 2008, William LeFebvre
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  *     * Redistributions in binary form must reproduce the above
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- * 
+ *
  *     * Neither the name of William LeFebvre nor the names of other
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -103,7 +103,7 @@ static int namelength;
  * per-thread display.  We distinguish between these three ways of
  * handling threads as follows:  HAS_THREADS indicates that the
  * system has and tracks kernel threads (a THR column will appear
- * in the display).  HAS_SHOWTHREADS indicates that the system 
+ * in the display).  HAS_SHOWTHREADS indicates that the system
  * reports correct per-thread information and we will provide a
  * per-thread display (the 'H' and 't' command) upon request.
  * HAS_SHOWTHREADS implies HAS_THREADS.
@@ -248,7 +248,7 @@ static struct sysctl_mib mibs[] = {
 #define K_PROC 22
     { NULL }
 };
-    
+
 
 /* these are for calculating cpu state percentages */
 
@@ -541,7 +541,7 @@ get_sysctlsize(int idx)
     }
     return len;
 }
-    
+
 int
 fmt_pid(char *buf, int sz, struct kinfo_proc *pp)
 
@@ -1106,7 +1106,7 @@ get_system_info(struct system_info *si)
 	{
 	    swap_stats[4] = 0;
 	    swap_stats[5] = 0;
-	} 
+	}
 
 	/* compute differences between old and new swap statistic */
 	else
@@ -1324,7 +1324,7 @@ get_process_info(struct system_info *si,
 	    /* is this one selected for viewing? */
 	    if ((PP(pp, stat) != SZOMB) &&
 		(show_system || ((PP(pp, flag) & P_SYSTEM) == 0)) &&
-		(show_idle || (PP(pp, pctcpu) != 0) || 
+		(show_idle || (PP(pp, pctcpu) != 0) ||
 		 (PP(pp, stat) == SRUN)) &&
 		(!show_uid || PRUID(pp) == (uid_t)sel->uid) &&
 		(show_command == NULL ||
@@ -1476,7 +1476,7 @@ format_next_process(caddr_t handle, char *(*get_userid)(int))
     hp = (struct handle *)handle;
     pp = *(hp->next_proc++);
     hp->remaining--;
-    
+
     /* mode & threads dictate format */
     fi = display_fields;
 
@@ -1536,7 +1536,7 @@ static unsigned char sorted_state[] =
     2,	/* zombie		*/
     4	/* stop			*/
 };
- 
+
 
 #define ORDERKEY_PCTCPU \
   if (lresult = (long) PPCPU(p2) - (long) PPCPU(p1), \
@@ -1559,7 +1559,7 @@ static unsigned char sorted_state[] =
 #endif
 
 #define ORDERKEY_RSSIZE \
-  if ((result = VP(p2, rssize) - VP(p1, rssize)) == 0) 
+  if ((result = VP(p2, rssize) - VP(p1, rssize)) == 0)
 
 #define ORDERKEY_MEM \
   if ( (result = PROCSIZE(p2) - PROCSIZE(p1)) == 0 )
@@ -1658,7 +1658,7 @@ compare_time(struct proc **pp1, struct proc **pp2)
     struct kinfo_proc *p2;
     int result;
     pctcpu lresult;
-  
+
     /* remove one level of indirection */
     p1 = *(struct kinfo_proc **) pp1;
     p2 = *(struct kinfo_proc **) pp2;
@@ -1673,7 +1673,7 @@ compare_time(struct proc **pp1, struct proc **pp2)
 
       return(result);
   }
-  
+
 /* compare_prio - the comparison function for sorting by priority */
 
 int
@@ -1769,7 +1769,7 @@ proc_owner(int pid)
     cnt = pref_len;
     while (--cnt >= 0)
     {
-	pp = *prefp++;	
+	pp = *prefp++;
 	if (PP(pp, pid) == (pid_t)pid)
 	{
 	    return((int)PRUID(pp));

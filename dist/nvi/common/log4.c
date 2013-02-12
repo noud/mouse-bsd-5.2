@@ -94,7 +94,7 @@ log_init(SCR *sp, EXF *ep)
 	ep->l_cursor.cno = 0;
 	ep->l_high = ep->l_cur = 1;
 
-	if ((sp->db_error = ep->env->log_cursor(ep->env, &logc, 0)) 
+	if ((sp->db_error = ep->env->log_cursor(ep->env, &logc, 0))
 		    != 0) {
 		msgq(sp, M_DBERR, "env->log_cursor");
 		F_SET(ep, F_NOLOG);
@@ -107,7 +107,7 @@ retry:
 	data.data = sp->wp->l_lp;
 	data.ulen = sp->wp->l_len;
 	data.flags = DB_DBT_USERMEM;
-	switch ((sp->db_error = 
+	switch ((sp->db_error =
 	    logc->get(logc, &ep->lsn_first, &data, DB_LAST))) {
 	case ENOMEM:
 		nlen = data.size;
@@ -205,13 +205,13 @@ log_cursor1(SCR *sp, int type)
 		return 1;
 	*/
 
-	if (type == LOG_CURSOR_INIT && 
+	if (type == LOG_CURSOR_INIT &&
 	    (sp->db_error = __vi_log_truncate(ep)) != 0) {
 		msgq(sp, M_DBERR, "truncate");
 		return 1;
 	}
-	if ((sp->db_error = 
-		__vi_cursor_log(ep->env, NULL, &ep->lsn_cur, 0, type, 
+	if ((sp->db_error =
+		__vi_cursor_log(ep->env, NULL, &ep->lsn_cur, 0, type,
 			    ep->l_cursor.lno, ep->l_cursor.cno)) != 0) {
 		msgq(sp, M_DBERR, "cursor_log");
 		return 1;
@@ -275,8 +275,8 @@ log_line(SCR *sp, db_recno_t lno, u_int action)
 		return 1;
 	}*/
 
-	if ((sp->db_error = 
-		__vi_change_log(ep->env, NULL, &ep->lsn_cur, 0, action, 
+	if ((sp->db_error =
+		__vi_change_log(ep->env, NULL, &ep->lsn_cur, 0, action,
 			    lno)) != 0) {
 		msgq(sp, M_DBERR, "change_log");
 		return 1;
@@ -343,8 +343,8 @@ log_mark(SCR *sp, LMARK *lmp)
 		ep->l_win = sp->wp;
 	}
 
-	if ((sp->db_error = 
-		__vi_mark_log(ep->env, NULL, &ep->lsn_cur, 0, 
+	if ((sp->db_error =
+		__vi_mark_log(ep->env, NULL, &ep->lsn_cur, 0,
 			    lmp)) != 0) {
 		msgq(sp, M_DBERR, "cursor_log");
 		return 1;

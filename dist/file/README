@@ -51,7 +51,7 @@ README - read this second (you are currently reading this file).
 PORTING - read this only if the program won't compile.
 Makefile - read this next, adapt it as needed (particularly
 	the location of the old existing file command and
-	the man page layouts), type "make" to compile, 
+	the man page layouts), type "make" to compile,
 	"make try" to try it out against your old version.
 	Expect some diffs, particularly since your original
 	file(1) may not grok the embedded-space ("\ ") in
@@ -107,7 +107,7 @@ file, apply this patch [which is going to be in the next version of gzip]:
 --- util.c      Sun Jul 21 21:51:38 1996
 *** 106,111 ****
 --- 108,114 ----
-  
+
       if (insize == 0) {
         if (eof_ok) return EOF;
 +       flush_window();

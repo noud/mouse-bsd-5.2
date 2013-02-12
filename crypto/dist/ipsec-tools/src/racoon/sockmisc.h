@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,9 +49,9 @@ extern int cmpsaddrwop __P((const struct sockaddr *, const struct sockaddr *));
 extern int cmpsaddrwild __P((const struct sockaddr *, const struct sockaddr *));
 extern int cmpsaddrstrict __P((const struct sockaddr *, const struct sockaddr *));
 
-#ifdef ENABLE_NATT 
+#ifdef ENABLE_NATT
 #define CMPSADDR(saddr1, saddr2) cmpsaddrstrict((saddr1), (saddr2))
-#else 
+#else
 #define CMPSADDR(saddr1, saddr2) cmpsaddrwop((saddr1), (saddr2))
 #endif
 
@@ -68,8 +68,8 @@ extern struct sockaddr *newsaddr __P((int));
 extern struct sockaddr *dupsaddr __P((struct sockaddr *));
 extern char *saddr2str __P((const struct sockaddr *));
 extern char *saddrwop2str __P((const struct sockaddr *));
-extern char *saddr2str_fromto __P((const char *format, 
-				   const struct sockaddr *saddr, 
+extern char *saddr2str_fromto __P((const char *format,
+				   const struct sockaddr *saddr,
 				   const struct sockaddr *daddr));
 extern struct sockaddr *str2saddr __P((char *, char *));
 extern void mask_sockaddr __P((struct sockaddr *, const struct sockaddr *,

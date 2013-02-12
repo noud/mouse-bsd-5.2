@@ -24,7 +24,7 @@
 
 /*! \file isc/stdio.h */
 
-/*% 
+/*%
  * These functions are wrappers around the corresponding stdio functions.
  *
  * They return a detailed error code in the form of an an isc_result_t.  ANSI C

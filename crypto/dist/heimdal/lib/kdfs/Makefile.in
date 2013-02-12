@@ -401,7 +401,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libkdfs.la: $(libkdfs_la_OBJECTS) $(libkdfs_la_DEPENDENCIES) 
+libkdfs.la: $(libkdfs_la_OBJECTS) $(libkdfs_la_DEPENDENCIES)
 	$(libkdfs_la_LINK) -rpath $(libdir) $(libkdfs_la_OBJECTS) $(libkdfs_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:

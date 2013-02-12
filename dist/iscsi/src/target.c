@@ -79,7 +79,7 @@
 #ifdef HAVE_INTTYPES_H
 #include <inttypes.h>
 #endif
-           
+
 
 #include "iscsi.h"
 #include "target.h"
@@ -118,7 +118,7 @@ get_iqn(target_session_t *sess, int t, char *buf, size_t size)
 	return buf;
 }
 
-static int 
+static int
 reject_t(target_session_t * sess, uint8_t *header, uint8_t reason)
 {
 	iscsi_reject_t  reject;
@@ -144,7 +144,7 @@ reject_t(target_session_t * sess, uint8_t *header, uint8_t reason)
 	return 0;
 }
 
-static int 
+static int
 scsi_command_t(target_session_t *sess, uint8_t *header)
 {
 	target_cmd_t    cmd;
@@ -439,7 +439,7 @@ response:
 	return 0;
 }
 
-static int 
+static int
 task_command_t(target_session_t * sess, uint8_t *header)
 {
 	iscsi_task_cmd_t cmd;
@@ -509,7 +509,7 @@ task_command_t(target_session_t * sess, uint8_t *header)
 	return 0;
 }
 
-static int 
+static int
 nop_out_t(target_session_t * sess, uint8_t *header)
 {
 	iscsi_nop_out_args_t nop_out;
@@ -585,7 +585,7 @@ nop_out_t(target_session_t * sess, uint8_t *header)
  * text_command_t
  */
 
-static int 
+static int
 text_command_t(target_session_t * sess, uint8_t *header)
 {
 	iscsi_text_cmd_args_t	 text_cmd;
@@ -751,7 +751,7 @@ find_target_tsih(globals_t *globals, int tsih)
  * login_command_t() handles login requests and replies.
  */
 
-static int 
+static int
 login_command_t(target_session_t * sess, uint8_t *header)
 {
 	iscsi_login_cmd_args_t cmd;
@@ -899,7 +899,7 @@ login_command_t(target_session_t * sess, uint8_t *header)
 				iscsi_trace_error(__FILE__, __LINE__, "TargetName not specified\n");
 				goto response;
 			}
-			if ((i = find_target_iqn(sess)) < 0) { 
+			if ((i = find_target_iqn(sess)) < 0) {
 				iscsi_trace_error(__FILE__, __LINE__, "Bad TargetName \"%s\"\n", param_val(sess->params, "TargetName"));
 				goto response;
 			}
@@ -1007,7 +1007,7 @@ response:
 	return 0;
 }
 
-static int 
+static int
 logout_command_t(target_session_t * sess, uint8_t *header)
 {
 	iscsi_logout_cmd_args_t	cmd;
@@ -1043,7 +1043,7 @@ logout_command_t(target_session_t * sess, uint8_t *header)
 	iscsi_trace(TRACE_ISCSI_DEBUG, __FILE__, __LINE__, "sent logout response OK\n");
 
 	/* log information to stdout */
-	(void) snprintf(logbuf, sizeof(logbuf), 
+	(void) snprintf(logbuf, sizeof(logbuf),
 		"< iSCSI %s logout successful from %s on %s disk %d, ISID %" PRIu64 ", TSIH %u",
 		param_val(sess->params, "SessionType"),
 		param_val(sess->params, "InitiatorName"),
@@ -1074,7 +1074,7 @@ logout_command_t(target_session_t * sess, uint8_t *header)
 	return 0;
 }
 
-static int 
+static int
 verify_cmd_t(target_session_t * sess, uint8_t *header)
 {
 	int             op = ISCSI_OPCODE(header);
@@ -1118,7 +1118,7 @@ verify_cmd_t(target_session_t * sess, uint8_t *header)
  * this function looks at the opcode in the received header for the session,
  * and does a switch on the opcode to call the required function.
  */
-static int 
+static int
 execute_t(target_session_t *sess, uint8_t *header)
 {
 	int             op = ISCSI_OPCODE(header);
@@ -1190,7 +1190,7 @@ execute_t(target_session_t *sess, uint8_t *header)
  * Currently one thread per session, used for both Rx and Tx.
  */
 
-static int 
+static int
 worker_proc_t(void *arg)
 {
 	target_session_t *sess = (target_session_t *) arg;
@@ -1302,7 +1302,7 @@ worker_proc_t(void *arg)
 	return 0;
 }
 
-static int 
+static int
 read_data_pdu(target_session_t * sess,
 	      iscsi_write_data_t * data,
 	      iscsi_scsi_cmd_args_t * args)
@@ -1346,7 +1346,7 @@ read_data_pdu(target_session_t * sess,
 	return 0;
 }
 
-int 
+int
 target_transfer_data(target_session_t * sess, iscsi_scsi_cmd_args_t * args, struct iovec * sg, int sg_len)
 {
 	iscsi_write_data_t data;
@@ -1525,7 +1525,7 @@ target_transfer_data(target_session_t * sess, iscsi_scsi_cmd_args_t * args, stru
  * Public Functions *
  ********************/
 
-int 
+int
 target_init(globals_t *gp, targv_t *tv, char *TargetName)
 {
 	int             i;
@@ -1568,7 +1568,7 @@ target_init(globals_t *gp, targv_t *tv, char *TargetName)
 	return 0;
 }
 
-int 
+int
 target_shutdown(globals_t *gp)
 {
 	target_session_t *sess;
@@ -1628,7 +1628,7 @@ target_shutdown(globals_t *gp)
 	return 0;
 }
 
-int 
+int
 target_listen(globals_t *gp)
 {
 	struct sockaddr_in6	remoteAddrStorage6;

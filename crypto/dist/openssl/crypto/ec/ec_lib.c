@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -57,7 +57,7 @@
  */
 /* ====================================================================
  * Copyright 2002 Sun Microsystems, Inc. ALL RIGHTS RESERVED.
- * Binary polynomial ECC support in OpenSSL originally developed by 
+ * Binary polynomial ECC support in OpenSSL originally developed by
  * SUN MICROSYSTEMS, INC., and contributed to the OpenSSL project.
  */
 
@@ -103,7 +103,7 @@ EC_GROUP *EC_GROUP_new(const EC_METHOD *meth)
 	BN_init(&ret->order);
 	BN_init(&ret->cofactor);
 
-	ret->curve_name = 0;	
+	ret->curve_name = 0;
 	ret->asn1_flag  = 0;
 	ret->asn1_form  = POINT_CONVERSION_UNCOMPRESSED;
 
@@ -115,7 +115,7 @@ EC_GROUP *EC_GROUP_new(const EC_METHOD *meth)
 		OPENSSL_free(ret);
 		return NULL;
 		}
-	
+
 	return ret;
 	}
 
@@ -139,7 +139,7 @@ void EC_GROUP_free(EC_GROUP *group)
 
 	OPENSSL_free(group);
 	}
- 
+
 
 void EC_GROUP_clear_free(EC_GROUP *group)
 	{
@@ -184,13 +184,13 @@ int EC_GROUP_copy(EC_GROUP *dest, const EC_GROUP *src)
 		}
 	if (dest == src)
 		return 1;
-	
+
 	EC_EX_DATA_free_all_data(&dest->extra_data);
 
 	for (d = src->extra_data; d != NULL; d = d->next)
 		{
 		void *t = d->dup_func(d->data);
-		
+
 		if (t == NULL)
 			return 0;
 		if (!EC_EX_DATA_set_data(&dest->extra_data, t, d->dup_func, d->free_func, d->clear_free_func))
@@ -241,7 +241,7 @@ int EC_GROUP_copy(EC_GROUP *dest, const EC_GROUP *src)
 		dest->seed = NULL;
 		dest->seed_len = 0;
 		}
-	
+
 
 	return dest->meth->group_copy(dest, src);
 	}
@@ -259,7 +259,7 @@ EC_GROUP *EC_GROUP_dup(const EC_GROUP *a)
 
 	ok = 1;
 
-  err:	
+  err:
 	if (!ok)
 		{
 		if (t) EC_GROUP_free(t);
@@ -297,12 +297,12 @@ int EC_GROUP_set_generator(EC_GROUP *group, const EC_POINT *generator, const BIG
 	if (!EC_POINT_copy(group->generator, generator)) return 0;
 
 	if (order != NULL)
-		{ if (!BN_copy(&group->order, order)) return 0; }	
+		{ if (!BN_copy(&group->order, order)) return 0; }
 	else
 		BN_zero(&group->order);
 
 	if (cofactor != NULL)
-		{ if (!BN_copy(&group->cofactor, cofactor)) return 0; }	
+		{ if (!BN_copy(&group->cofactor, cofactor)) return 0; }
 	else
 		BN_zero(&group->cofactor);
 
@@ -358,7 +358,7 @@ int EC_GROUP_get_asn1_flag(const EC_GROUP *group)
 	}
 
 
-void EC_GROUP_set_point_conversion_form(EC_GROUP *group, 
+void EC_GROUP_set_point_conversion_form(EC_GROUP *group,
                                         point_conversion_form_t form)
 	{
 	group->asn1_form = form;
@@ -489,7 +489,7 @@ int EC_GROUP_cmp(const EC_GROUP *a, const EC_GROUP *b, BN_CTX *ctx)
 		ctx_new = ctx = BN_CTX_new();
 	if (!ctx)
 		return -1;
-	
+
 	BN_CTX_start(ctx);
 	a1 = BN_CTX_get(ctx);
 	a2 = BN_CTX_get(ctx);
@@ -593,7 +593,7 @@ void *EC_EX_DATA_get_data(const EC_EXTRA_DATA *ex_data,
 		if (d->dup_func == dup_func && d->free_func == free_func && d->clear_free_func == clear_free_func)
 			return d->data;
 		}
-	
+
 	return NULL;
 	}
 
@@ -614,7 +614,7 @@ void EC_EX_DATA_free_data(EC_EXTRA_DATA **ex_data,
 
 			(*p)->free_func((*p)->data);
 			OPENSSL_free(*p);
-			
+
 			*p = next;
 			return;
 			}
@@ -638,7 +638,7 @@ void EC_EX_DATA_clear_free_data(EC_EXTRA_DATA **ex_data,
 
 			(*p)->clear_free_func((*p)->data);
 			OPENSSL_free(*p);
-			
+
 			*p = next;
 			return;
 			}
@@ -657,10 +657,10 @@ void EC_EX_DATA_free_all_data(EC_EXTRA_DATA **ex_data)
 	while (d)
 		{
 		EC_EXTRA_DATA *next = d->next;
-		
+
 		d->free_func(d->data);
 		OPENSSL_free(d);
-		
+
 		d = next;
 		}
 	*ex_data = NULL;
@@ -678,10 +678,10 @@ void EC_EX_DATA_clear_free_all_data(EC_EXTRA_DATA **ex_data)
 	while (d)
 		{
 		EC_EXTRA_DATA *next = d->next;
-		
+
 		d->clear_free_func(d->data);
 		OPENSSL_free(d);
-		
+
 		d = next;
 		}
 	*ex_data = NULL;
@@ -713,13 +713,13 @@ EC_POINT *EC_POINT_new(const EC_GROUP *group)
 		}
 
 	ret->meth = group->meth;
-	
+
 	if (!ret->meth->point_init(ret))
 		{
 		OPENSSL_free(ret);
 		return NULL;
 		}
-	
+
 	return ret;
 	}
 
@@ -732,7 +732,7 @@ void EC_POINT_free(EC_POINT *point)
 		point->meth->point_finish(point);
 	OPENSSL_free(point);
 	}
- 
+
 
 void EC_POINT_clear_free(EC_POINT *point)
 	{

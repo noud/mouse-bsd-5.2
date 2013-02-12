@@ -45,7 +45,7 @@ isc_result_t
 isc_parse_uint8(isc_uint8_t *uip, const char *string, int base);
 /*%<
  * Parse the null-terminated string 'string' containing a base 'base'
- * integer, storing the result in '*uip'.  
+ * integer, storing the result in '*uip'.
  * The base is interpreted
  * as in strtoul().  Unlike strtoul(), leading whitespace, minus or
  * plus signs are not accepted, and all errors (including overflow)

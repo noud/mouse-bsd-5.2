@@ -49,7 +49,7 @@ gen_files_crmf = 			\
 	asn1_POPOSigningKey.x		\
 	asn1_POPOSigningKeyInput.x	\
 	asn1_ProofOfPossession.x	\
-	asn1_SubsequentMessage.x	
+	asn1_SubsequentMessage.x
 
 dist_libhx509_la_SOURCES = \
 	ca.c \

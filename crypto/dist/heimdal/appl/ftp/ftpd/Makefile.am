@@ -7,7 +7,7 @@ AM_CPPFLAGS += -I$(srcdir)/../common $(INCLUDE_krb4) -DFTP_SERVER
 
 libexec_PROGRAMS = ftpd
 
-CHECK_LOCAL = 
+CHECK_LOCAL =
 
 if KRB4
 krb4_sources = krb4.c

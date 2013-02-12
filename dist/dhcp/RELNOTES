@@ -17,10 +17,10 @@ that are new since version 2.0:
      - Address pools with access control
      - Client classing
      - Address allocation restriction by class
-     - Relay agent information option support 
+     - Relay agent information option support
      - Dynamic DNS updates
      - Many bug fixes, performance enhancements, and minor new DHCP
-       protocol features. 
+       protocol features.
 
 The main bug fixed here is a bug in the subclass allocation code that
 could result in a memory smash.   Any users of the ISC DHCP server who
@@ -759,7 +759,7 @@ and for prodding me into improving it.
   had been done for a client with no name, even though no update had
   been done, and then when the client's lease expired the deletion of
   that nonexistant record would time out because the name was the null
-  string. 
+  string.
 
 - Clean up the omshell, dhcpctl and omapi man pages a bit.
 
@@ -1284,7 +1284,7 @@ and for prodding me into improving it.
 
 - When we get a bogus state lease binding state transition, don't do
   the transition.
-  
+
 
 	        Changes since 3.0 Beta 2 Patchlevel 12
 

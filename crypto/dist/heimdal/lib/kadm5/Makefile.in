@@ -637,11 +637,11 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libkadm5clnt.la: $(libkadm5clnt_la_OBJECTS) $(libkadm5clnt_la_DEPENDENCIES) 
+libkadm5clnt.la: $(libkadm5clnt_la_OBJECTS) $(libkadm5clnt_la_DEPENDENCIES)
 	$(libkadm5clnt_la_LINK) -rpath $(libdir) $(libkadm5clnt_la_OBJECTS) $(libkadm5clnt_la_LIBADD) $(LIBS)
-libkadm5srv.la: $(libkadm5srv_la_OBJECTS) $(libkadm5srv_la_DEPENDENCIES) 
+libkadm5srv.la: $(libkadm5srv_la_OBJECTS) $(libkadm5srv_la_DEPENDENCIES)
 	$(libkadm5srv_la_LINK) -rpath $(libdir) $(libkadm5srv_la_OBJECTS) $(libkadm5srv_la_LIBADD) $(LIBS)
-sample_passwd_check.la: $(sample_passwd_check_la_OBJECTS) $(sample_passwd_check_la_DEPENDENCIES) 
+sample_passwd_check.la: $(sample_passwd_check_la_OBJECTS) $(sample_passwd_check_la_DEPENDENCIES)
 	$(sample_passwd_check_la_LINK)  $(sample_passwd_check_la_OBJECTS) $(sample_passwd_check_la_LIBADD) $(LIBS)
 
 clean-checkPROGRAMS:
@@ -713,19 +713,19 @@ clean-sbinPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-default_keys$(EXEEXT): $(default_keys_OBJECTS) $(default_keys_DEPENDENCIES) 
+default_keys$(EXEEXT): $(default_keys_OBJECTS) $(default_keys_DEPENDENCIES)
 	@rm -f default_keys$(EXEEXT)
 	$(LINK) $(default_keys_OBJECTS) $(default_keys_LDADD) $(LIBS)
-iprop-log$(EXEEXT): $(iprop_log_OBJECTS) $(iprop_log_DEPENDENCIES) 
+iprop-log$(EXEEXT): $(iprop_log_OBJECTS) $(iprop_log_DEPENDENCIES)
 	@rm -f iprop-log$(EXEEXT)
 	$(LINK) $(iprop_log_OBJECTS) $(iprop_log_LDADD) $(LIBS)
-ipropd-master$(EXEEXT): $(ipropd_master_OBJECTS) $(ipropd_master_DEPENDENCIES) 
+ipropd-master$(EXEEXT): $(ipropd_master_OBJECTS) $(ipropd_master_DEPENDENCIES)
 	@rm -f ipropd-master$(EXEEXT)
 	$(LINK) $(ipropd_master_OBJECTS) $(ipropd_master_LDADD) $(LIBS)
-ipropd-slave$(EXEEXT): $(ipropd_slave_OBJECTS) $(ipropd_slave_DEPENDENCIES) 
+ipropd-slave$(EXEEXT): $(ipropd_slave_OBJECTS) $(ipropd_slave_DEPENDENCIES)
 	@rm -f ipropd-slave$(EXEEXT)
 	$(LINK) $(ipropd_slave_OBJECTS) $(ipropd_slave_LDADD) $(LIBS)
-test_pw_quality$(EXEEXT): $(test_pw_quality_OBJECTS) $(test_pw_quality_DEPENDENCIES) 
+test_pw_quality$(EXEEXT): $(test_pw_quality_OBJECTS) $(test_pw_quality_DEPENDENCIES)
 	@rm -f test_pw_quality$(EXEEXT)
 	$(LINK) $(test_pw_quality_OBJECTS) $(test_pw_quality_LDADD) $(LIBS)
 

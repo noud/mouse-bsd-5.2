@@ -305,12 +305,12 @@ in too much access permission: </p>
 
 <pre>
 1 /etc/postfix/main.cf:
-2     smtpd_recipient_restrictions = 
+2     smtpd_recipient_restrictions =
 3         permit_mynetworks
 4         check_helo_access hash:/etc/postfix/helo_access
 5         reject_unknown_helo_hostname
 6         reject_unauth_destination
-7 
+7
 8 /etc/postfix/helo_access:
 9     localhost.localdomain PERMIT
 </pre>

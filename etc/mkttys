@@ -9,7 +9,7 @@ mkpty()
 	echo "tty$1$2	none				network"
 }
 
-cat "$@" 
+cat "$@"
 cat << _EOF
 #
 # Pseudo-ttys

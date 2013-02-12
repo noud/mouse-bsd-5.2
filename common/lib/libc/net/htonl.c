@@ -14,7 +14,7 @@ __RCSID("$NetBSD: htonl.c,v 1.1 2005/12/20 19:28:51 christos Exp $");
 
 #undef htonl
 
-uint32_t 
+uint32_t
 htonl(x)
 	uint32_t x;
 {

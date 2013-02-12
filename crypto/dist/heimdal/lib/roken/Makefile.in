@@ -494,7 +494,7 @@ libroken_la_CPPFLAGS = -DBUILD_ROKEN_LIB
 nodist_make_roken_SOURCES = make-roken.c
 TESTS = $(check_PROGRAMS)
 LDADD = libroken.la $(LIB_crypt)
-make_roken_LDADD = 
+make_roken_LDADD =
 noinst_LTLIBRARIES = libtest.la
 libtest_la_SOURCES = strftime.c strptime.c snprintf.c
 libtest_la_CFLAGS = -DTEST_SNPRINTF -DTEST_STRPFTIME
@@ -525,20 +525,20 @@ EXTRA_libroken_la_SOURCES = \
 	glob.hin		\
 	fnmatch.hin		\
 	ifaddrs.hin		\
-	vis.hin	
+	vis.hin
 
 libroken_la_LIBADD = @LTLIBOBJS@
 BUILT_SOURCES = make-roken.c roken.h
 @have_err_h_FALSE@err_h = err.h
-@have_err_h_TRUE@err_h = 
+@have_err_h_TRUE@err_h =
 @have_fnmatch_h_FALSE@fnmatch_h = fnmatch.h
-@have_fnmatch_h_TRUE@fnmatch_h = 
+@have_fnmatch_h_TRUE@fnmatch_h =
 @have_glob_h_FALSE@glob_h = glob.h
-@have_glob_h_TRUE@glob_h = 
+@have_glob_h_TRUE@glob_h =
 @have_ifaddrs_h_FALSE@ifaddrs_h = ifaddrs.h
-@have_ifaddrs_h_TRUE@ifaddrs_h = 
+@have_ifaddrs_h_TRUE@ifaddrs_h =
 @have_vis_h_FALSE@vis_h = vis.h
-@have_vis_h_TRUE@vis_h = 
+@have_vis_h_TRUE@vis_h =
 XHEADERS = $(err_h) $(fnmatch_h) $(glob_h) $(ifaddrs_h) $(vis_h)
 dist_include_HEADERS = base64.h getarg.h hex.h parse_bytes.h \
 	parse_time.h parse_units.h resolve.h roken-common.h rtbl.h \
@@ -625,9 +625,9 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libroken.la: $(libroken_la_OBJECTS) $(libroken_la_DEPENDENCIES) 
+libroken.la: $(libroken_la_OBJECTS) $(libroken_la_DEPENDENCIES)
 	$(libroken_la_LINK) -rpath $(libdir) $(libroken_la_OBJECTS) $(libroken_la_LIBADD) $(LIBS)
-libtest.la: $(libtest_la_OBJECTS) $(libtest_la_DEPENDENCIES) 
+libtest.la: $(libtest_la_OBJECTS) $(libtest_la_DEPENDENCIES)
 	$(libtest_la_LINK)  $(libtest_la_OBJECTS) $(libtest_la_LIBADD) $(LIBS)
 
 clean-checkPROGRAMS:
@@ -643,37 +643,37 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-base64-test$(EXEEXT): $(base64_test_OBJECTS) $(base64_test_DEPENDENCIES) 
+base64-test$(EXEEXT): $(base64_test_OBJECTS) $(base64_test_DEPENDENCIES)
 	@rm -f base64-test$(EXEEXT)
 	$(LINK) $(base64_test_OBJECTS) $(base64_test_LDADD) $(LIBS)
-getaddrinfo-test$(EXEEXT): $(getaddrinfo_test_OBJECTS) $(getaddrinfo_test_DEPENDENCIES) 
+getaddrinfo-test$(EXEEXT): $(getaddrinfo_test_OBJECTS) $(getaddrinfo_test_DEPENDENCIES)
 	@rm -f getaddrinfo-test$(EXEEXT)
 	$(LINK) $(getaddrinfo_test_OBJECTS) $(getaddrinfo_test_LDADD) $(LIBS)
-hex-test$(EXEEXT): $(hex_test_OBJECTS) $(hex_test_DEPENDENCIES) 
+hex-test$(EXEEXT): $(hex_test_OBJECTS) $(hex_test_DEPENDENCIES)
 	@rm -f hex-test$(EXEEXT)
 	$(LINK) $(hex_test_OBJECTS) $(hex_test_LDADD) $(LIBS)
-make-roken$(EXEEXT): $(make_roken_OBJECTS) $(make_roken_DEPENDENCIES) 
+make-roken$(EXEEXT): $(make_roken_OBJECTS) $(make_roken_DEPENDENCIES)
 	@rm -f make-roken$(EXEEXT)
 	$(LINK) $(make_roken_OBJECTS) $(make_roken_LDADD) $(LIBS)
-parse_bytes-test$(EXEEXT): $(parse_bytes_test_OBJECTS) $(parse_bytes_test_DEPENDENCIES) 
+parse_bytes-test$(EXEEXT): $(parse_bytes_test_OBJECTS) $(parse_bytes_test_DEPENDENCIES)
 	@rm -f parse_bytes-test$(EXEEXT)
 	$(LINK) $(parse_bytes_test_OBJECTS) $(parse_bytes_test_LDADD) $(LIBS)
-parse_reply-test$(EXEEXT): $(parse_reply_test_OBJECTS) $(parse_reply_test_DEPENDENCIES) 
+parse_reply-test$(EXEEXT): $(parse_reply_test_OBJECTS) $(parse_reply_test_DEPENDENCIES)
 	@rm -f parse_reply-test$(EXEEXT)
 	$(parse_reply_test_LINK) $(parse_reply_test_OBJECTS) $(parse_reply_test_LDADD) $(LIBS)
-parse_time-test$(EXEEXT): $(parse_time_test_OBJECTS) $(parse_time_test_DEPENDENCIES) 
+parse_time-test$(EXEEXT): $(parse_time_test_OBJECTS) $(parse_time_test_DEPENDENCIES)
 	@rm -f parse_time-test$(EXEEXT)
 	$(LINK) $(parse_time_test_OBJECTS) $(parse_time_test_LDADD) $(LIBS)
-resolve-test$(EXEEXT): $(resolve_test_OBJECTS) $(resolve_test_DEPENDENCIES) 
+resolve-test$(EXEEXT): $(resolve_test_OBJECTS) $(resolve_test_DEPENDENCIES)
 	@rm -f resolve-test$(EXEEXT)
 	$(LINK) $(resolve_test_OBJECTS) $(resolve_test_LDADD) $(LIBS)
-snprintf-test$(EXEEXT): $(snprintf_test_OBJECTS) $(snprintf_test_DEPENDENCIES) 
+snprintf-test$(EXEEXT): $(snprintf_test_OBJECTS) $(snprintf_test_DEPENDENCIES)
 	@rm -f snprintf-test$(EXEEXT)
 	$(snprintf_test_LINK) $(snprintf_test_OBJECTS) $(snprintf_test_LDADD) $(LIBS)
-strpftime-test$(EXEEXT): $(strpftime_test_OBJECTS) $(strpftime_test_DEPENDENCIES) 
+strpftime-test$(EXEEXT): $(strpftime_test_OBJECTS) $(strpftime_test_DEPENDENCIES)
 	@rm -f strpftime-test$(EXEEXT)
 	$(strpftime_test_LINK) $(strpftime_test_OBJECTS) $(strpftime_test_LDADD) $(LIBS)
-test-readenv$(EXEEXT): $(test_readenv_OBJECTS) $(test_readenv_DEPENDENCIES) 
+test-readenv$(EXEEXT): $(test_readenv_OBJECTS) $(test_readenv_DEPENDENCIES)
 	@rm -f test-readenv$(EXEEXT)
 	$(LINK) $(test_readenv_OBJECTS) $(test_readenv_LDADD) $(LIBS)
 

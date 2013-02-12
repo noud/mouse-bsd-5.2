@@ -344,7 +344,7 @@ LIB_kafs = $(top_builddir)/lib/kafs/libkafs.la $(AIX_EXTRA_KAFS)
 @KRB5_TRUE@LIB_gssapi = $(top_builddir)/lib/gssapi/libgssapi.la
 @KRB5_TRUE@LIB_tsasl = $(top_builddir)/lib/tsasl/libtsasl.la
 @DCE_TRUE@LIB_kdfs = $(top_builddir)/lib/kdfs/libkdfs.la
-CHECK_LOCAL = 
+CHECK_LOCAL =
 @KRB4_TRUE@krb4_sources = krb4.c
 @KRB5_TRUE@krb5_sources = gssapi.c
 ftp_SOURCES = \
@@ -438,7 +438,7 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-ftp$(EXEEXT): $(ftp_OBJECTS) $(ftp_DEPENDENCIES) 
+ftp$(EXEEXT): $(ftp_OBJECTS) $(ftp_DEPENDENCIES)
 	@rm -f ftp$(EXEEXT)
 	$(LINK) $(ftp_OBJECTS) $(ftp_LDADD) $(LIBS)
 

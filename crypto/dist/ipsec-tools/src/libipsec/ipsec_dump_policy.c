@@ -126,15 +126,15 @@ ipsec_dump_policy1(policy, delimiter, withports)
 		priority_str = "";
 	}
 	/* find which constant the priority is closest to */
-	else if (xpl->sadb_x_policy_priority < 
+	else if (xpl->sadb_x_policy_priority <
 	         (u_int32_t) (PRIORITY_DEFAULT / 4) * 3)
 	{
 		priority_offset = xpl->sadb_x_policy_priority - PRIORITY_HIGH;
 		priority_str = "prio high";
 	}
-	else if (xpl->sadb_x_policy_priority >= 
+	else if (xpl->sadb_x_policy_priority >=
 	         (u_int32_t) (PRIORITY_DEFAULT / 4) * 3 &&
-	         xpl->sadb_x_policy_priority < 
+	         xpl->sadb_x_policy_priority <
 	         (u_int32_t) (PRIORITY_DEFAULT / 4) * 5)
 	{
 		priority_offset = xpl->sadb_x_policy_priority - PRIORITY_DEFAULT;
@@ -158,7 +158,7 @@ ipsec_dump_policy1(policy, delimiter, withports)
 		operator = '+';
 	}
 #endif
-	
+
 	switch (xpl->sadb_x_policy_dir) {
 	case IPSEC_DIR_ANY:
 	case IPSEC_DIR_INBOUND:
@@ -201,19 +201,19 @@ ipsec_dump_policy1(policy, delimiter, withports)
 #ifdef HAVE_PFKEY_POLICY_PRIORITY
 	if (priority_offset != 0)
 	{
-		snprintf(buf, buflen, "%s %s %c %u %s", 
-	    	ipsp_dir_strs[xpl->sadb_x_policy_dir], priority_str, operator, 
+		snprintf(buf, buflen, "%s %s %c %u %s",
+	    	ipsp_dir_strs[xpl->sadb_x_policy_dir], priority_str, operator,
 			priority_offset, ipsp_policy_strs[xpl->sadb_x_policy_type]);
 	}
 	else if (strlen (priority_str) != 0)
 	{
-		snprintf(buf, buflen, "%s %s %s", 
-	    	ipsp_dir_strs[xpl->sadb_x_policy_dir], priority_str, 
+		snprintf(buf, buflen, "%s %s %s",
+	    	ipsp_dir_strs[xpl->sadb_x_policy_dir], priority_str,
 			ipsp_policy_strs[xpl->sadb_x_policy_type]);
 	}
 	else
 	{
-		snprintf(buf, buflen, "%s %s", 
+		snprintf(buf, buflen, "%s %s",
 	    	ipsp_dir_strs[xpl->sadb_x_policy_dir],
 			ipsp_policy_strs[xpl->sadb_x_policy_type]);
 	}
@@ -329,7 +329,7 @@ ipsec_dump_ipsecrequest(buf, len, xisr, bound, withports)
 			__ipsec_errcode = EIPSEC_INVAL_ADDRESS;
 			return NULL;
 		}
-		if (set_addresses(abuf, sizeof(abuf), 
+		if (set_addresses(abuf, sizeof(abuf),
 		    sa1, sa2, withports) != 0) {
 			__ipsec_errcode = EIPSEC_INVAL_ADDRESS;
 			return NULL;
@@ -403,7 +403,7 @@ set_address(buf, len, sa, withports)
 	if (len < 1)
 		return NULL;
 	buf[0] = '\0';
-	if (getnameinfo(sa, (socklen_t)sysdep_sa_len(sa), host, sizeof(host), 
+	if (getnameinfo(sa, (socklen_t)sysdep_sa_len(sa), host, sizeof(host),
 	    serv, sizeof(serv), niflags) != 0)
 		return NULL;
 

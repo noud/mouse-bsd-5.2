@@ -89,7 +89,7 @@ struct enumeration_value *find_enumeration_value (const char *name,
 	statement foo bar { }
 	statement foo bar { statement { } }
 	statement}
- 
+
 	...et cetera. */
 
 void skip_to_semi (cfile)
@@ -200,7 +200,7 @@ char *parse_host_name (cfile)
 	char *t;
 	pair c = (pair)0;
 	int ltid = 0;
-	
+
 	/* Read a dotted hostname... */
 	do {
 		/* Read a token, which should be an identifier. */
@@ -253,7 +253,7 @@ char *parse_host_name (cfile)
 
 /* ip-addr-or-hostname :== ip-address | hostname
    ip-address :== NUMBER DOT NUMBER DOT NUMBER DOT NUMBER
-   
+
    Parse an ip address or a hostname.   If uniform is zero, put in
    an expr_substring node to limit hostnames that evaluate to more
    than one IP address. */
@@ -301,8 +301,8 @@ int parse_ip_addr_or_hostname (expr, cfile, uniform)
 	}
 
 	return 1;
-}	
-	
+}
+
 /*
  * ip-address :== NUMBER DOT NUMBER DOT NUMBER DOT NUMBER
  */
@@ -317,7 +317,7 @@ int parse_ip_addr (cfile, addr)
 				     &addr -> len, DOT, 10, 8))
 		return 1;
 	return 0;
-}	
+}
 
 /*
  * hardware-parameter :== HARDWARE hardware-type colon-seperated-hex-list SEMI
@@ -386,7 +386,7 @@ void parse_hardware_param (cfile, hardware)
 				(sizeof hardware -> hbuf) - hlen - 1);
 		dfree (t, MDL);
 	}
-	
+
       out:
 	token = next_token (&val, (unsigned *)0, cfile);
 	if (token != SEMI) {
@@ -632,9 +632,9 @@ void convert_num (cfile, buf, str, base, size)
 }
 
 /*
- * date :== NUMBER NUMBER SLASH NUMBER SLASH NUMBER 
+ * date :== NUMBER NUMBER SLASH NUMBER SLASH NUMBER
  *		NUMBER COLON NUMBER COLON NUMBER SEMI |
- *          NUMBER NUMBER SLASH NUMBER SLASH NUMBER 
+ *          NUMBER NUMBER SLASH NUMBER SLASH NUMBER
  *		NUMBER COLON NUMBER COLON NUMBER NUMBER SEMI |
  *	    NEVER
  *
@@ -1021,7 +1021,7 @@ int parse_option_code_definition (cfile, option)
 	int is_signed;
 	char *s;
 	int has_encapsulation = 0;
-	
+
 	/* Parse the option code. */
 	token = next_token (&val, (unsigned *)0, cfile);
 	if (token != NUMBER) {
@@ -1299,7 +1299,7 @@ int parse_base64 (data, cfile)
 			   *t;
 	int cc = 0;
 	int terminated = 0;
-	
+
 	/* It's possible for a + or a / to cause a base64 quantity to be
 	   tokenized into more than one token, so we have to parse them all
 	   in before decoding. */
@@ -1331,7 +1331,7 @@ int parse_base64 (data, cfile)
 		data -> data = (unsigned char *)0;
 		return 0;
 	}
-		
+
 	j = k = 0;
 	for (t = bufs; t; t = t -> next) {
 	    for (i = 0; t -> string [i]; i++) {
@@ -1365,7 +1365,7 @@ int parse_base64 (data, cfile)
 				data -> buffer -> data [j++] = (acc >> 4);
 				acc = acc & 0x0f;
 				break;
-				
+
 			      case 2:
 				data -> buffer -> data [j++] = (acc >> 2);
 				acc = acc & 0x03;
@@ -1463,7 +1463,7 @@ int parse_cshl (data, cfile)
 		dfree (sl, MDL);
 		sl = next;
 	}
-	
+
 	memcpy (rvp, ibuf, ilen);
 	return 1;
 }
@@ -1642,7 +1642,7 @@ int parse_executable_statement (result, cfile, lose, case_context)
 	      case ON:
 		token = next_token (&val, (unsigned *)0, cfile);
 		return parse_on_statement (result, cfile, lose);
-			
+
 	      case SWITCH:
 		token = next_token (&val, (unsigned *)0, cfile);
 		return parse_switch_statement (result, cfile, lose);
@@ -1664,7 +1664,7 @@ int parse_executable_statement (result, cfile, lose, case_context)
 		if (case_context == context_any) {
 			parse_warn (cfile, "switch default statement in %s",
 				    "inappropriate scope.");
-		
+
 			*lose = 1;
 			return 0;
 		} else {
@@ -1673,7 +1673,7 @@ int parse_executable_statement (result, cfile, lose, case_context)
 			(*result) -> op = default_statement;
 			return 1;
 		}
-			
+
 	      case DEFINE:
 	      case TOKEN_SET:
 		token = next_token (&val, (unsigned *)0, cfile);
@@ -1941,7 +1941,7 @@ int parse_executable_statement (result, cfile, lose, case_context)
 			return 0;
 		}
 		break;
-			
+
 		/* Not really a statement, but we parse it here anyway
 		   because it's appropriate for all DHCP agents with
 		   parsers. */
@@ -1983,7 +1983,7 @@ int parse_executable_statement (result, cfile, lose, case_context)
 		}
 		dns_zone_dereference (&zone, MDL);
 		return 1;
-		
+
 		/* Also not really a statement, but same idea as above. */
 #if !defined (SMALL)
 	      case KEY:
@@ -2083,7 +2083,7 @@ int parse_zone (struct dns_zone *zone, struct parse *cfile)
 			    log_fatal ("can't allocate primary option cache.");
 		    oc = zone -> primary;
 		    goto consemup;
-		    
+
 		  case SECONDARY:
 		    if (zone -> secondary) {
 			    parse_warn (cfile, "more than one secondary.");
@@ -2345,15 +2345,15 @@ int parse_on_statement (result, cfile, lose)
 		      case EXPIRY:
 			(*result) -> data.on.evtypes |= ON_EXPIRY;
 			break;
-		
+
 		      case COMMIT:
 			(*result) -> data.on.evtypes |= ON_COMMIT;
 			break;
-			
+
 		      case RELEASE:
 			(*result) -> data.on.evtypes |= ON_RELEASE;
 			break;
-			
+
 		      case TRANSMISSION:
 			(*result) -> data.on.evtypes |= ON_TRANSMISSION;
 			break;
@@ -2367,7 +2367,7 @@ int parse_on_statement (result, cfile, lose)
 		}
 		token = next_token (&val, (unsigned *)0, cfile);
 	} while (token == OR);
-		
+
 	/* Semicolon means no statements. */
 	if (token == SEMI)
 		return 1;
@@ -2643,7 +2643,7 @@ int parse_if_statement (result, cfile, lose)
 		}
 	} else
 		(*result) -> data.ie.fc = (struct executable_statement *)0;
-	
+
 	return 1;
 }
 
@@ -2656,7 +2656,7 @@ int parse_if_statement (result, cfile, lose)
  *			  boolean-expression OR boolean-expression
  *			  EXISTS OPTION-NAME
  */
-   			  
+
 int parse_boolean_expression (expr, cfile, lose)
 	struct expression **expr;
 	struct parse *cfile;
@@ -2682,7 +2682,7 @@ int parse_boolean_expression (expr, cfile, lose)
  * data_expression :== SUBSTRING LPAREN data-expression COMMA
  *					numeric-expression COMMA
  *					numeric-expression RPAREN |
- *		       CONCAT LPAREN data-expression COMMA 
+ *		       CONCAT LPAREN data-expression COMMA
 					data-expression RPAREN
  *		       SUFFIX LPAREN data_expression COMMA
  *		       		     numeric-expression RPAREN |
@@ -3176,7 +3176,7 @@ int parse_non_binary (expr, cfile, lose, context)
 			*lose = 1;
 			return 0;
 		}
-			
+
 		if (!strcasecmp (val, "a"))
 			u = T_A;
 		else if (!strcasecmp (val, "ptr"))
@@ -3239,7 +3239,7 @@ int parse_non_binary (expr, cfile, lose, context)
 			token = next_token (&val, (unsigned *)0, cfile);
 			if (token != COMMA)
 				goto nocomma;
-			
+
 			ep = &((*ep) -> data.arg.next);
 			if (!expression_allocate (ep, MDL))
 				log_fatal ("can't allocate expression");
@@ -3287,7 +3287,7 @@ int parse_non_binary (expr, cfile, lose, context)
 			}
 
 			token = next_token (&val, (unsigned *)0, cfile);
-			
+
 			if (token == COMMA) {
 				if (!(expression_allocate
 				      (&nexp -> data.dns_transaction.cdr,
@@ -3344,7 +3344,7 @@ int parse_non_binary (expr, cfile, lose, context)
 			*lose = 1;
 			return 0;
 		}
-			
+
 		if (token == NUMBER)
 			(*expr) -> data.ns_add.rrclass = atoi (val);
 		else if (!strcasecmp (val, "in"))
@@ -3357,7 +3357,7 @@ int parse_non_binary (expr, cfile, lose, context)
 			parse_warn (cfile, "unexpected rrclass: %s", val);
 			goto badnsop;
 		}
-		
+
 		token = next_token (&val, (unsigned *)0, cfile);
 		if (token != COMMA)
 			goto nocomma;
@@ -3367,7 +3367,7 @@ int parse_non_binary (expr, cfile, lose, context)
 			parse_warn (cfile, "expecting identifier or number.");
 			goto badnsop;
 		}
-			
+
 		if (token == NUMBER)
 			(*expr) -> data.ns_add.rrtype = atoi (val);
 		else if (!strcasecmp (val, "a"))
@@ -3405,7 +3405,7 @@ int parse_non_binary (expr, cfile, lose, context)
 			token = next_token (&val, (unsigned *)0, cfile);
 			if (token != COMMA)
 				goto nocomma;
-			
+
 			if (!(parse_numeric_expression
 			      (&(*expr) -> data.ns_add.ttl, cfile,
 			       lose))) {
@@ -3557,7 +3557,7 @@ int parse_non_binary (expr, cfile, lose, context)
 		if (token != RPAREN)
 			goto norparen;
 		break;
-		
+
 	      case STRING:
 		token = next_token (&val, &len, cfile);
 		if (!make_const_data (expr, (const unsigned char *)val,
@@ -3566,7 +3566,7 @@ int parse_non_binary (expr, cfile, lose, context)
 		break;
 
 	      case EXTRACT_INT:
-		token = next_token (&val, (unsigned *)0, cfile);	
+		token = next_token (&val, (unsigned *)0, cfile);
 		token = next_token (&val, (unsigned *)0, cfile);
 		if (token != LPAREN) {
 			parse_warn (cfile, "left parenthesis expected.");
@@ -3634,9 +3634,9 @@ int parse_non_binary (expr, cfile, lose, context)
 			return 0;
 		}
 		break;
-	
+
 	      case ENCODE_INT:
-		token = next_token (&val, (unsigned *)0, cfile);	
+		token = next_token (&val, (unsigned *)0, cfile);
 		token = next_token (&val, (unsigned *)0, cfile);
 		if (token != LPAREN) {
 			parse_warn (cfile, "left parenthesis expected.");
@@ -3701,7 +3701,7 @@ int parse_non_binary (expr, cfile, lose, context)
 			return 0;
 		}
 		break;
-	
+
 	      case NUMBER:
 		/* If we're in a numeric context, this should just be a
 		   number, by itself. */
@@ -3736,7 +3736,7 @@ int parse_non_binary (expr, cfile, lose, context)
 		(*expr) -> op = expr_const_int;
 		(*expr) -> data.const_int = known;
 		break;
-		
+
 	      case NS_NOERROR:
 		known = ISC_R_SUCCESS;
 		goto ns_const;
@@ -4146,12 +4146,12 @@ int parse_expression (expr, cfile, lose, context, plhs, binop)
 	tmp = (struct expression *)0;
 	if (!expression_allocate (&tmp, MDL))
 		log_fatal ("No memory for equal precedence combination.");
-	
+
 	/* Store the LHS and RHS. */
 	tmp -> data.equal [0] = lhs;
 	tmp -> data.equal [1] = rhs;
 	tmp -> op = binop;
-	
+
 	lhs = tmp;
 	tmp = (struct expression *)0;
 	rhs = (struct expression *)0;
@@ -4166,7 +4166,7 @@ int parse_expression (expr, cfile, lose, context, plhs, binop)
 
 	binop = next_op;
 	goto new_rhs;
-}	
+}
 
 /* option-statement :== identifier DOT identifier <syntax> SEMI
 		      | identifier <syntax> SEMI
@@ -4361,7 +4361,7 @@ int parse_option_token (rv, cfile, fmt, expr, uniform, lookups)
 			}
 		}
 		break;
-		
+
 	      case 'd': /* Domain name... */
 		val = parse_host_name (cfile);
 		if (!val) {
@@ -4387,7 +4387,7 @@ int parse_option_token (rv, cfile, fmt, expr, uniform, lookups)
 				      len, 1, 1, MDL))
 			log_fatal ("No memory for concatenation");
 		break;
-		
+
 	      case 'N':
 		f = (*fmt) + 1;
 		g = strchr (*fmt, '.');
@@ -4426,7 +4426,7 @@ int parse_option_token (rv, cfile, fmt, expr, uniform, lookups)
 				return 0;
 		}
 		break;
-		
+
 	      case 'T':	/* Lease interval. */
 		token = next_token (&val, (unsigned *)0, cfile);
 		if (token != INFINITE)
@@ -4565,7 +4565,7 @@ int parse_option_decl (oc, cfile)
 					       sizeof hunkbuf - hunkix);
 				hunkix += len;
 				break;
-					
+
 			      case 't': /* Text string... */
 				token = next_token (&val,
 						    &len, cfile);
@@ -4723,7 +4723,7 @@ int parse_option_decl (oc, cfile)
 	if (!bp -> data)
 		log_fatal ("out of memory allocating option data.");
 	memcpy (bp -> data, hunkbuf, hunkix + nul_term);
-	
+
 	if (!option_cache_allocate (oc, MDL))
 		log_fatal ("out of memory allocating option cache.");
 
@@ -4793,14 +4793,14 @@ int parse_warn (struct parse *cfile, const char *fmt, ...)
 	char mbuf [1024];
 	char fbuf [1024];
 	unsigned i, lix;
-	
+
 	do_percentm (mbuf, fmt);
 	/* %Audit% This is log output. %2004.06.17,Safe%
 	 * If we truncate we hope the user can get a hint from the log.
 	 */
 	snprintf (fbuf, sizeof fbuf, "%s line %d: %s",
 		  cfile -> tlname, cfile -> lexline, mbuf);
-	
+
 	va_start (list, fmt);
 
 	fmt = fbuf;

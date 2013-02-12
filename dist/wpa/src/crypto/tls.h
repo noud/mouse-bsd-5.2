@@ -340,7 +340,7 @@ u8 * tls_connection_server_handshake(void *tls_ctx,
  * @in_data: Pointer to plaintext data to be encrypted
  * @in_len: Input buffer length
  * @out_data: Pointer to output buffer (encrypted TLS data)
- * @out_len: Maximum out_data length 
+ * @out_len: Maximum out_data length
  * Returns: Number of bytes written to out_data, -1 on failure
  *
  * This function is used after TLS handshake has been completed successfully to
@@ -488,7 +488,7 @@ unsigned int tls_capabilities(void *tls_ctx);
  * @conn: Connection context data from tls_connection_init()
  * @final: 1 = FinalPhaseFinished, 0 = IntermediatePhaseFinished
  * @out_data: Pointer to output buffer (encrypted TLS/IA data)
- * @out_len: Maximum out_data length 
+ * @out_len: Maximum out_data length
  * Returns: Number of bytes written to out_data on success, -1 on failure
  *
  * This function is used to send the TLS/IA end phase message, e.g., when the

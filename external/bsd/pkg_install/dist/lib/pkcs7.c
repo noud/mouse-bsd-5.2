@@ -170,7 +170,7 @@ easy_pkcs7_verify(const char *content, size_t len,
 		warnx("Failed to get signers");
 		goto cleanup;
 	}
-    
+
 	if (sk_X509_num(signers) == 0) {
 		warnx("No signers found");
 		goto cleanup;
@@ -304,7 +304,7 @@ easy_pkcs7_sign(const char *content, size_t len,
 
 	in = BIO_new_mem_buf(__UNCONST(content), len);
 
-	p7 = PKCS7_sign(certificate, private_key, cert_chain, in, 
+	p7 = PKCS7_sign(certificate, private_key, cert_chain, in,
 	    PKCS7_DETACHED|PKCS7_NOATTR|PKCS7_BINARY);
 	if (p7 == NULL) {
 		warnx("Failed to create signature structure");

@@ -11,7 +11,7 @@ Things to do ....  in no specific order.
 		if (run_prog("foo") != 0)
 			sleep(5);
 
-	   #2:	   
+	   #2:
 		endwin();
 		run_prog("foo");
 		printf("press return to continue");
@@ -89,7 +89,7 @@ Things to do ....  in no specific order.
            Can we just do "disklabel -w" everywhere?
 
 	-- Michael bumped the in-memory disklabel struct up to 16 entries.
- 	   Also add a runtime check in case that grows in future 
+ 	   Also add a runtime check in case that grows in future
 	   (e.g., slices).  Maybe bump to 32 entries just in case.
 
 	-- Fix sanity-check message code. It currently gets over-written

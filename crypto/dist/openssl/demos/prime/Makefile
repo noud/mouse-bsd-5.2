@@ -3,12 +3,12 @@ CFLAGS= -g -I../../include -Wall
 LIBS=  -L../.. -lcrypto
 EXAMPLES=prime
 
-all: $(EXAMPLES) 
+all: $(EXAMPLES)
 
 prime: prime.o
 	$(CC) -o prime prime.o $(LIBS)
 
-clean:	
+clean:
 	rm -f $(EXAMPLES) *.o
 
 test: all

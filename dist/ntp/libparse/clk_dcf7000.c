@@ -2,7 +2,7 @@
 
 /*
  * /src/NTP/ntp4-dev/libparse/clk_dcf7000.c,v 4.10 2005/04/16 17:32:10 kardel RELEASE_20050508_A
- *  
+ *
  * clk_dcf7000.c,v 4.10 2005/04/16 17:32:10 kardel RELEASE_20050508_A
  *
  * ELV DCF7000 module
@@ -65,7 +65,7 @@ static struct format dcf7000_fmt =
 	},
 	(const unsigned char *)"  -  -  -  -  -  -  -  \r",
 	0
-};    
+};
 static u_long cvt_dcf7000 P((unsigned char *, int, struct format *, clocktime_t *, void *));
 static unsigned long inp_dcf7000 P((parse_t *, unsigned int, timestamp_t *));
 
@@ -119,7 +119,7 @@ cvt_dcf7000(
 		{
 			unsigned char *f = &buffer[format->field_offsets[O_FLAGS].offset];
 			long flags;
-	  
+
 			clock_time->flags = 0;
 			clock_time->usecond = 0;
 
@@ -158,9 +158,9 @@ inp_dcf7000(
 	  )
 {
 	unsigned int rtc;
-	
+
 	parseprintf(DD_PARSE, ("inp_dcf7000(0x%lx, 0x%x, ...)\n", (long)parseio, ch));
-	
+
 	switch (ch)
 	{
 	case '\r':

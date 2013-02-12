@@ -169,7 +169,7 @@ rwm_map_config(
 					fname, lineno, src );
 
 				/*
-				 * we create a fake "proxied" ad 
+				 * we create a fake "proxied" ad
 				 * and add it here.
 				 */
 
@@ -251,8 +251,8 @@ rwm_suffix_massage_regexize( const char *s )
 		return ch_strdup( "^(.+)$" );
 	}
 
-	for ( i = 0, p = s; 
-			( r = strchr( p, ',' ) ) != NULL; 
+	for ( i = 0, p = s;
+			( r = strchr( p, ',' ) ) != NULL;
 			p = r + 1, i++ )
 		;
 
@@ -307,7 +307,7 @@ rwm_suffix_massage_patternize( const char *s, const char *p )
 }
 
 int
-rwm_suffix_massage_config( 
+rwm_suffix_massage_config(
 		struct rewrite_info *info,
 		struct berval *pvnc,
 		struct berval *nvnc,
@@ -336,7 +336,7 @@ rwm_suffix_massage_config(
 	rewrite_parse( info, "<suffix massage>", ++line, 4, rargv );
 	ch_free( rargv[ 1 ] );
 	ch_free( rargv[ 2 ] );
-	
+
 	if ( BER_BVISEMPTY( pvnc ) ) {
 		rargv[ 0 ] = "rewriteRule";
 		rargv[ 1 ] = "^$";
@@ -350,7 +350,7 @@ rwm_suffix_massage_config(
 	rargv[ 1 ] = "searchEntryDN";
 	rargv[ 2 ] = NULL;
 	rewrite_parse( info, "<suffix massage>", ++line, 2, rargv );
-	
+
 	rargv[ 0 ] = "rewriteRule";
 	rargv[ 1 ] = rwm_suffix_massage_regexize( prnc->bv_val );
 	rargv[ 2 ] = rwm_suffix_massage_patternize( prnc->bv_val, pvnc->bv_val );

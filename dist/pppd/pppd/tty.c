@@ -330,7 +330,7 @@ setdevname(cp, argv, doit)
 		devstat = statbuf;
 		default_device = 0;
 	}
-  
+
 	return 1;
 }
 
@@ -591,7 +591,7 @@ int connect_tty()
 				goto errret;
 		}
 		ttyfd = real_ttyfd;
-		if (lockflag) 
+		if (lockflag)
 			if(flock(ttyfd, (LOCK_EX|LOCK_NB)) != 0) {
 				status = EXIT_LOCK_FAILED;
 				close(ttyfd);

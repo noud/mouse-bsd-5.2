@@ -82,7 +82,7 @@ rewrite_map_parse(
 		return NULL;
 	}
 	*currpos = p;
-	
+
 	/*
 	 * Copy the map invocation
 	 */
@@ -142,7 +142,7 @@ rewrite_map_parse(
 	if ( p[ 0 ] == REWRITE_OPERATOR_VARIABLE_GET ) {
 		p++;
 	}
-	
+
 	/*
 	 * Check the syntax of the variable name
 	 */
@@ -193,7 +193,7 @@ rewrite_map_parse(
 		goto cleanup;
 	}
 	memset( map, 0, sizeof( struct rewrite_map ) );
-	
+
 #ifdef USE_REWRITE_LDAP_PVT_THREADS
         if ( ldap_pvt_thread_mutex_init( &map->lm_mutex ) ) {
 		rc = -1;
@@ -201,7 +201,7 @@ rewrite_map_parse(
 	}
 	++mtx;
 #endif /* USE_REWRITE_LDAP_PVT_THREADS */
-			
+
 	/*
 	 * No subst for variable deref
 	 */
@@ -219,7 +219,7 @@ rewrite_map_parse(
 	 * Parses special map types
 	 */
 	switch ( s[ 0 ] ) {
-	
+
 	/*
 	 * Subcontext
 	 */
@@ -244,7 +244,7 @@ rewrite_map_parse(
 	case REWRITE_OPERATOR_COMMAND:		/* '|' */
 		rc = -1;
 		goto cleanup;
-	
+
 	/*
 	 * Variable set
 	 */
@@ -267,7 +267,7 @@ rewrite_map_parse(
 			}
 		}
 		break;
-	
+
 	/*
 	 * Variable dereference
 	 */
@@ -280,7 +280,7 @@ rewrite_map_parse(
 			map->lm_name = strdup( s + 1 );
 		}
 		break;
-	
+
 	/*
 	 * Parameter
 	 */
@@ -288,7 +288,7 @@ rewrite_map_parse(
 		map->lm_type = REWRITE_MAP_GET_PARAM;
 		map->lm_name = strdup( s + 1 );
 		break;
-	
+
 	/*
 	 * Built-in map
 	 */
@@ -351,10 +351,10 @@ rewrite_map_apply(
 
 	val->bv_val = NULL;
 	val->bv_len = 0;
-	
+
 	switch ( map->lm_type ) {
 	case REWRITE_MAP_SUBCONTEXT:
-		rc = rewrite_context_apply( info, op, 
+		rc = rewrite_context_apply( info, op,
 				( struct rewrite_context * )map->lm_data,
 				key->bv_val, &val->bv_val );
 		if ( val->bv_val != NULL ) {
@@ -379,7 +379,7 @@ rewrite_map_apply(
 			val->bv_len = key->bv_len;
 		}
 		break;
-	
+
 	case REWRITE_MAP_GET_OP_VAR: {
 		struct rewrite_var *var;
 
@@ -390,7 +390,7 @@ rewrite_map_apply(
 			val->bv_val = strdup( var->lv_value.bv_val );
 			val->bv_len = var->lv_value.bv_len;
 		}
-		break;	
+		break;
 	}
 
 	case REWRITE_MAP_SET_SESN_VAR:
@@ -399,7 +399,7 @@ rewrite_map_apply(
 			rc = REWRITE_ERR;
 			break;
 		}
-		rc = rewrite_session_var_set( info, op->lo_cookie, 
+		rc = rewrite_session_var_set( info, op->lo_cookie,
 				map->lm_name, key->bv_val );
 		if ( map->lm_type == REWRITE_MAP_SET_SESN_VAR ) {
 			val->bv_val = strdup( "" );
@@ -412,7 +412,7 @@ rewrite_map_apply(
 	case REWRITE_MAP_GET_SESN_VAR:
 		rc = rewrite_session_var_get( info, op->lo_cookie,
 				map->lm_name, val );
-		break;		
+		break;
 
 	case REWRITE_MAP_GET_PARAM:
 		rc = rewrite_param_get( info, map->lm_name, val );
@@ -460,7 +460,7 @@ rewrite_map_destroy(
 )
 {
 	struct rewrite_map *map;
-	
+
 	assert( pmap != NULL );
 	assert( *pmap != NULL );
 
@@ -486,7 +486,7 @@ rewrite_map_destroy(
 
 	free( map );
 	*pmap = NULL;
-	
+
 	return 0;
 }
 

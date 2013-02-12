@@ -6,7 +6,7 @@
 #	/etc/mtree/special
 #	/etc/mtree/special.local
 # and files matching:
-#	/etc/ifconfig.* 
+#	/etc/ifconfig.*
 #	/etc/raid*.conf
 #	/etc/rc.d/*
 #	/etc/rc.conf.d/*

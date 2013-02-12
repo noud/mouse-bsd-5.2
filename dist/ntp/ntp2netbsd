@@ -43,7 +43,7 @@
 #         - not really - we have some changed defaults and the vax port has no ieee.h support.
 #           so do a careful diff and patch - Frank Kardel
 #	$ echo cp scripts/mkver /usr/src/usr.sbin/ntp/scripts
-#		merge possible changes to mkver 
+#		merge possible changes to mkver
 #	        our version uses the import date in the file
 #               /usr/src/usr.sbin/ntp/importdate for the date and buildnumber information
 #		to achieve consistent version string over all builds

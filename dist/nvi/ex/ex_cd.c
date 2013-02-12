@@ -72,7 +72,7 @@ ex_cd(SCR *sp, EXCMD *cmdp)
 		}
 		break;
 	case 1:
-		INT2CHAR(sp, cmdp->argv[0]->bp, cmdp->argv[0]->len + 1, 
+		INT2CHAR(sp, cmdp->argv[0]->bp, cmdp->argv[0]->len + 1,
 			 dir, dlen);
 		break;
 	default:

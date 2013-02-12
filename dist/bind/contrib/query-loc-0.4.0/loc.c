@@ -87,7 +87,7 @@ in_addr_arpa (dottedquad)
   return (addrbuf);
 }
 
-/* 
+/*
    Returns a human-readable version of the LOC information or
    NULL if it failed. Argument is a name (of a network or a machine)
    and a boolean telling is it is a network name or a machine name.
@@ -141,7 +141,7 @@ getlocbyname (name, is_network)
     }
 }
 
-/* 
+/*
    Returns a human-readable version of the LOC information or
    NULL if it failed. Argument is an IP address.
  */
@@ -203,7 +203,7 @@ getlocbyaddr (addr, mask)
     }
 }
 
-/* 
+/*
    Returns a human-readable LOC.
    Argument is a network name in the 0.z.y.x.in-addr.arpa format
    and the original address
@@ -220,10 +220,10 @@ getlocbynet (name, addr, mask)
   struct in_addr newmask;
   u_int32_t a;
   char newname[4 * 4 + sizeof (ARPA_ROOT) + 2];
-  
+
   if (debug >= 2)
     printf ("Testing network %s with mask %s\n", name, inet_ntoa(*mask));
-  
+
   /* Check if this network has an A RR */
   list = findA (name);
   if (list != NULL)
@@ -233,7 +233,7 @@ getlocbynet (name, addr, mask)
        * the actual mask. */
       if (mask != NULL && mask->s_addr < list->addr.s_addr)
 	{
-	  /* compute the new arguments for recursion 
+	  /* compute the new arguments for recursion
 	   * - compute the new network by applying the new mask
 	   *   to the address and get the in_addr_arpa representation
 	   *   of it.
@@ -271,7 +271,7 @@ getlocbynet (name, addr, mask)
     }
 }
 
-/* 
+/*
    The code for these two functions is stolen from the examples in Liu and Albitz
    book "DNS and BIND" (O'Reilly).
  */
@@ -330,7 +330,7 @@ skipToData (cp, type, class, ttl, dlen, endOfMsg)
 }
 
 
-/* 
+/*
    Returns a human-readable version of a DNS RR (resource record)
    associated with the name 'domain'.
    If it does not find, ir returns NULL and sets rr_errno to explain why.
@@ -351,7 +351,7 @@ findRR (domain, requested_type)
       u_char buf[PACKETSZ];	/* defined in arpa/nameser.h */
     }
   response;			/* response buffers */
-short found = 0;  
+short found = 0;
 int responseLen;		/* buffer length */
 
   u_char *cp;			/* character pointer to parse DNS packet */
@@ -369,10 +369,10 @@ int responseLen;		/* buffer length */
 
   result = (char *) malloc (256);
   message = (char *) malloc (256);
-  /* 
+  /*
    * Look up the records for the given domain name.
    * We expect the domain to be a fully qualified name, so
-   * we use res_query().  If we wanted the resolver search 
+   * we use res_query().  If we wanted the resolver search
    * algorithm, we would have used res_search() instead.
    */
   if ((responseLen =
@@ -388,26 +388,26 @@ int responseLen;		/* buffer length */
     }
 
   /*
-   * Keep track of the end of the message so we don't 
-   * pass it while parsing the response.  responseLen is 
+   * Keep track of the end of the message so we don't
+   * pass it while parsing the response.  responseLen is
    * the value returned by res_query.
    */
   endOfMsg = response.buf + responseLen;
 
   /*
-   * Set a pointer to the start of the question section, 
+   * Set a pointer to the start of the question section,
    * which begins immediately AFTER the header.
    */
   cp = response.buf + sizeof (HEADER);
 
   /*
-   * Skip over the whole question section.  The question 
-   * section is comprised of a name, a type, and a class.  
-   * QFIXEDSZ (defined in arpa/nameser.h) is the size of 
-   * the type and class portions, which is fixed.  Therefore, 
-   * we can skip the question section by skipping the 
+   * Skip over the whole question section.  The question
+   * section is comprised of a name, a type, and a class.
+   * QFIXEDSZ (defined in arpa/nameser.h) is the size of
+   * the type and class portions, which is fixed.  Therefore,
+   * we can skip the question section by skipping the
    * name (at the beginning) and then advancing QFIXEDSZ.
-   * After this calculation, cp points to the start of the 
+   * After this calculation, cp points to the start of the
    * answer section, which is a list of NS records.
    */
   cp += skipName (cp, endOfMsg) + QFIXEDSZ;
@@ -448,7 +448,7 @@ int responseLen;		/* buffer length */
 		}
 
 	      /*
-	       * Check the name we've just unpacked and add it to 
+	       * Check the name we've just unpacked and add it to
 	       * the list if it is not a duplicate.
 	       * If it is a duplicate, just ignore it.
 	       */
@@ -477,7 +477,7 @@ int responseLen;		/* buffer length */
       cp += dlen;
 
     }				/* end of while */
-  if (found) 
+  if (found)
   return result;
 else
 return NULL;
@@ -512,10 +512,10 @@ findA (domain)
   end = NULL;
   result = NULL;
 
-  /* 
+  /*
    * Look up the records for the given domain name.
    * We expect the domain to be a fully qualified name, so
-   * we use res_query().  If we wanted the resolver search 
+   * we use res_query().  If we wanted the resolver search
    * algorithm, we would have used res_search() instead.
    */
   if ((responseLen =
@@ -531,26 +531,26 @@ findA (domain)
     }
 
   /*
-   * Keep track of the end of the message so we don't 
-   * pass it while parsing the response.  responseLen is 
+   * Keep track of the end of the message so we don't
+   * pass it while parsing the response.  responseLen is
    * the value returned by res_query.
    */
   endOfMsg = response.buf + responseLen;
 
   /*
-   * Set a pointer to the start of the question section, 
+   * Set a pointer to the start of the question section,
    * which begins immediately AFTER the header.
    */
   cp = response.buf + sizeof (HEADER);
 
   /*
-   * Skip over the whole question section.  The question 
-   * section is comprised of a name, a type, and a class.  
-   * QFIXEDSZ (defined in arpa/nameser.h) is the size of 
-   * the type and class portions, which is fixed.  Therefore, 
-   * we can skip the question section by skipping the 
+   * Skip over the whole question section.  The question
+   * section is comprised of a name, a type, and a class.
+   * QFIXEDSZ (defined in arpa/nameser.h) is the size of
+   * the type and class portions, which is fixed.  Therefore,
+   * we can skip the question section by skipping the
    * name (at the beginning) and then advancing QFIXEDSZ.
-   * After this calculation, cp points to the start of the 
+   * After this calculation, cp points to the start of the
    * answer section, which is a list of NS records.
    */
   cp += skipName (cp, endOfMsg) + QFIXEDSZ;

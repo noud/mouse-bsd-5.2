@@ -155,19 +155,19 @@ inp_trimtaip(
 	  )
 {
 	unsigned int rtc;
-	
+
 	parseprintf(DD_PARSE, ("inp_trimtaip(0x%lx, 0x%x, ...)\n", (long)parseio, ch));
-	
+
 	switch (ch)
 	{
 	case '>':
 		parseprintf(DD_PARSE, ("inp_trimptaip: START seen\n"));
-		
+
 		parseio->parse_index = 1;
 		parseio->parse_data[0] = ch;
 		parseio->parse_dtime.parse_stime = *tstamp; /* collect timestamp */
 		return PARSE_INP_SKIP;
-	  
+
 	case '<':
 		parseprintf(DD_PARSE, ("inp_trimtaip: END seen\n"));
 		if ((rtc = parse_addchar(parseio, ch)) == PARSE_INP_SKIP)

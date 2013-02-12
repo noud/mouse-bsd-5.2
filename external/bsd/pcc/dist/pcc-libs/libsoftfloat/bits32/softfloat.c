@@ -382,7 +382,7 @@ INLINE float64
 {
 
     return FLOAT64_MANGLE( ( ( (bits64) zSign )<<63 ) +
-			   ( ( (bits64) zExp )<<52 ) + 
+			   ( ( (bits64) zExp )<<52 ) +
 			   ( ( (bits64) zSig0 )<<32 ) + zSig1 );
 
 

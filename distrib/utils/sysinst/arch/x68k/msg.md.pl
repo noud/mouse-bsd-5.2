@@ -64,6 +64,6 @@ message ordering
 message emptypart
 {Istnieje poprawna partycja %c po pustych partycjach.
 Wyedytuj jeszcze raz tablice partycji.}
- 
+
 message set_kernel_1
 {Kernel (GENERIC)}

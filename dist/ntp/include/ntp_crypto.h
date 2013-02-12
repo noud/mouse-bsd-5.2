@@ -17,7 +17,7 @@
 #define CRYPTO_FLAG_GQ	  0x0040 /* GQ identity scheme */
 #define	CRYPTO_FLAG_MV	  0x0080 /* MV identity scheme */
 #define CRYPTO_FLAG_MASK  0x00f0 /* identity scheme mask */
-	
+
 /*
  * The following bits are used by the client during the protocol
  * exchange.

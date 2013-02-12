@@ -45,7 +45,7 @@
 
 /*  Typedefs:
 
-	Typedef'ed data storage elements.  Add any algorithm specific 
+	Typedef'ed data storage elements.  Add any algorithm specific
 parameters at the bottom of the structs as appropriate.
 */
 
@@ -77,8 +77,8 @@ typedef struct {                    /* changed order of the components */
 	TODO: implement the following extensions to setup 192-bit and 256-bit block lengths:
         makeKeyEx():    parameter blockLen added
                         -- this parameter is absolutely necessary if you want to
-                        setup the round keys in a variable block length setting 
-	    cipherInitEx(): parameter blockLen added (for obvious reasons)		
+                        setup the round keys in a variable block length setting
+	    cipherInitEx(): parameter blockLen added (for obvious reasons)
  */
 
 int rijndael_makeKey(keyInstance *key, u_int8_t direction, int keyLen, char *keyMaterial);

@@ -101,7 +101,7 @@ sub BODY_00_19 {
 my ($i,$a,$b,$c,$d,$e,$f,$host)=@_;
 my $j=$i+1;
 $code.=<<___ if ($i==0);
-	mov	`4*$i`($inp),$xi	
+	mov	`4*$i`($inp),$xi
 	`"bswap	$xi"	if(!defined($host))`
 	mov	$xi,`4*$i`(%rsp)
 ___
@@ -111,7 +111,7 @@ $code.=<<___ if ($i<15);
 	mov	`4*$j`($inp),$xi
 	mov	$a,$e
 	xor	$d,$t0
-	`"bswap	$xi"	if(!defined($host))`	
+	`"bswap	$xi"	if(!defined($host))`
 	rol	\$5,$e
 	and	$b,$t0
 	mov	$xi,`4*$j`(%rsp)

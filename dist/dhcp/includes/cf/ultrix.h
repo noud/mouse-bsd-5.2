@@ -60,13 +60,13 @@ extern int h_errno;
 #endif
 
 #define int8_t		char
-#define int16_t		short 
-#define int32_t		long 
+#define int16_t		short
+#define int32_t		long
 #define	ssize_t		long
 
 #define u_int8_t	unsigned char		/* Not quite POSIX... */
-#define u_int16_t	unsigned short 
-#define u_int32_t	unsigned long 
+#define u_int16_t	unsigned short
+#define u_int32_t	unsigned long
 
 #define	ssize_t		size_t
 

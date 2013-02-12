@@ -227,7 +227,7 @@ $ test_ss:
 $	write sys$output "Generate and certify a test certificate"
 $	@testss.com
 $	return
-$ test_engine: 
+$ test_engine:
 $	write sys$output "Manipulate the ENGINE structures"
 $	mcr 'texe_dir''enginetest'
 $	return
@@ -250,7 +250,7 @@ $	    write sys$output "Generate and certify a test certificate via the 'ca' pro
 $	    @testca.com
 $	endif
 $	return
-$ test_aes: 
+$ test_aes:
 $!	write sys$output "test AES"
 $!	!mcr 'texe_dir''aestest'
 $	return

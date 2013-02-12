@@ -5,7 +5,7 @@
 #
 # This code is derived from software contributed to The NetBSD Foundation
 # by Hubert Feyrer <hubert@feyrer.de>.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
 # are met:
@@ -14,7 +14,7 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
 # ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 # TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -63,7 +63,7 @@ while(<>) {
 
     # valid data is now in $last_*,
     # $* is saved for possible further processing
-    
+
     $last_port=~s,\s*\[\d+\],,;
     $last_name=~s,\s*\[\d+\],,;
     $last_email=~s,\s*\[\d+\],,;
@@ -71,7 +71,7 @@ while(<>) {
     $last_email=~s,\>,,;
 
     $last_name=~s,ø,\\(/o,g;		# Søren => S\(/oren
-    
+
     # output
     print ".It ";
     printf("Ta %-30s", $last_name);

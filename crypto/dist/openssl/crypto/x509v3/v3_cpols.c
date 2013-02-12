@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -87,7 +87,7 @@ NID_certificate_policies, 0,ASN1_ITEM_ref(CERTIFICATEPOLICIES),
 NULL
 };
 
-ASN1_ITEM_TEMPLATE(CERTIFICATEPOLICIES) = 
+ASN1_ITEM_TEMPLATE(CERTIFICATEPOLICIES) =
 	ASN1_EX_TEMPLATE_TYPE(ASN1_TFLG_SEQUENCE_OF, 0, CERTIFICATEPOLICIES, POLICYINFO)
 ASN1_ITEM_TEMPLATE_END(CERTIFICATEPOLICIES)
 
@@ -261,8 +261,8 @@ static POLICYINFO *policy_section(X509V3_CTX *ctx,
 	err:
 	POLICYINFO_free(pol);
 	return NULL;
-	
-	
+
+
 }
 
 static POLICYQUALINFO *notice_section(X509V3_CTX *ctx,
@@ -316,7 +316,7 @@ static POLICYQUALINFO *notice_section(X509V3_CTX *ctx,
 		}
 	}
 
-	if(not->noticeref && 
+	if(not->noticeref &&
 	      (!not->noticeref->noticenos || !not->noticeref->organization)) {
 			X509V3err(X509V3_F_NOTICE_SECTION,X509V3_R_NEED_ORGANIZATION_AND_NUMBERS);
 			goto err;
@@ -388,7 +388,7 @@ static void print_qualifiers(BIO *out, STACK_OF(POLICYQUALINFO) *quals,
 			BIO_printf(out, "%*sCPS: %s\n", indent, "",
 						qualinfo->d.cpsuri->data);
 			break;
-		
+
 			case NID_id_qt_unotice:
 			BIO_printf(out, "%*sUser Notice:\n", indent, "");
 			print_notice(out, qualinfo->d.usernotice, indent + 2);
@@ -397,7 +397,7 @@ static void print_qualifiers(BIO *out, STACK_OF(POLICYQUALINFO) *quals,
 			default:
 			BIO_printf(out, "%*sUnknown Qualifier: ",
 							 indent + 2, "");
-			
+
 			i2a_ASN1_OBJECT(out, qualinfo->pqualid);
 			BIO_puts(out, "\n");
 			break;
@@ -436,7 +436,7 @@ void X509_POLICY_NODE_print(BIO *out, X509_POLICY_NODE *node, int indent)
 	const X509_POLICY_DATA *dat = node->data;
 
 	BIO_printf(out, "%*sPolicy: ", indent, "");
-			
+
 	i2a_ASN1_OBJECT(out, dat->valid_policy);
 	BIO_puts(out, "\n");
 	BIO_printf(out, "%*s%s\n", indent + 2, "",
@@ -446,4 +446,4 @@ void X509_POLICY_NODE_print(BIO *out, X509_POLICY_NODE *node, int indent)
 	else
 		BIO_printf(out, "%*sNo Qualifiers\n", indent + 2, "");
 	}
-	
+

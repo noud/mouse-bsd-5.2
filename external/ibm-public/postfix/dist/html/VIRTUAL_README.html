@@ -59,7 +59,7 @@ domains, non-UNIX accounts</a>
 
 </ul>
 
-<h2><a name="canonical">Canonical versus hosted versus 
+<h2><a name="canonical">Canonical versus hosted versus
 other domains</a></h2>
 
 <p>Most Postfix systems are <b>final destination</b> for only a
@@ -91,7 +91,7 @@ mail across the internet. Obviously, Postfix is not final destination
 for such mail. This function is available only for authorized
 clients and/or users, and is implemented by the <a href="ADDRESS_CLASS_README.html#default_domain_class">default domain</a>
 address class, as defined in the <a href="ADDRESS_CLASS_README.html">ADDRESS_CLASS_README</a> file. </p>
- 
+
 <h2><a name="local_vs_database">Local files versus network databases</a></h2>
 
 <p> The examples in this text use table lookups from local files
@@ -380,7 +380,7 @@ to a non-Postfix delivery agent: </p>
  3     <a href="postconf.5.html#virtual_mailbox_domains">virtual_mailbox_domains</a> = example.com ...more domains...
  4     <a href="postconf.5.html#virtual_mailbox_maps">virtual_mailbox_maps</a> = hash:/etc/postfix/vmailbox
  5     <a href="postconf.5.html#virtual_alias_maps">virtual_alias_maps</a> = hash:/etc/postfix/virtual
- 6 
+ 6
  7 /etc/postfix/vmailbox:
  8     info@example.com    whatever
  9     sales@example.com   whatever

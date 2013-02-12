@@ -37,7 +37,7 @@ snap_md_post:
 	    ${RELEASEDIR}/${RELEASEMACHINEDIR}/installation/netboot
 
 	# install links to boot and installation utilities for various media
-.for linkdst linksrc in ${INSTALLATION_SYMLINKS} 
+.for linkdst linksrc in ${INSTALLATION_SYMLINKS}
 	rm -f ${RELEASEDIR}/${RELEASEMACHINEDIR}/installation/${linkdst}
 	ln -s ${linksrc} ${RELEASEDIR}/${RELEASEMACHINEDIR}/installation/${linkdst}
 .endfor

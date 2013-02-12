@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: nls.c,v 1.10 2002/07/22 08:33:59 bp Exp 
+ * from: Id: nls.c,v 1.10 2002/07/22 08:33:59 bp Exp
  */
 
 #include <sys/cdefs.h>

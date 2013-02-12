@@ -54,10 +54,10 @@ backsql_db_config(
 
 	Debug( LDAP_DEBUG_TRACE, "==>backsql_db_config()\n", 0, 0, 0 );
 	assert( bi != NULL );
-  
+
 	if ( !strcasecmp( argv[ 0 ], "dbhost" ) ) {
 		if ( argc < 2 ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				"<==backsql_db_config (%s line %d): "
 				"missing hostname in \"dbhost\" directive\n",
 				fname, lineno, 0 );
@@ -70,7 +70,7 @@ backsql_db_config(
 
 	} else if ( !strcasecmp( argv[ 0 ], "dbuser" ) ) {
 		if ( argc < 2 ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				"<==backsql_db_config (%s line %d): "
 				"missing username in \"dbuser\" directive\n",
 				fname, lineno, 0 );
@@ -82,7 +82,7 @@ backsql_db_config(
 
 	} else if ( !strcasecmp( argv[ 0 ], "dbpasswd" ) ) {
 		if ( argc < 2 ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				"<==backsql_db_config (%s line %d): "
 				"missing password in \"dbpasswd\" directive\n",
 				fname, lineno, 0 );
@@ -94,7 +94,7 @@ backsql_db_config(
 
 	} else if ( !strcasecmp( argv[ 0 ], "dbname" ) ) {
 		if ( argc < 2 ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				"<==backsql_db_config (%s line %d): "
 				"missing database name in \"dbname\" "
 				"directive\n", fname, lineno, 0 );
@@ -106,7 +106,7 @@ backsql_db_config(
 
 	} else if ( !strcasecmp( argv[ 0 ], "concat_pattern" ) ) {
 		if ( argc < 2 ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				"<==backsql_db_config (%s line %d): "
 				"missing pattern"
 				"in \"concat_pattern\" directive\n",
@@ -114,7 +114,7 @@ backsql_db_config(
 			return 1;
 		}
 		if ( backsql_split_pattern( argv[ 1 ], &bi->sql_concat_func, 2 ) ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				"<==backsql_db_config (%s line %d): "
 				"unable to parse pattern \"%s\"\n"
 				"in \"concat_pattern\" directive\n",
@@ -126,7 +126,7 @@ backsql_db_config(
 
 	} else if ( !strcasecmp( argv[ 0 ], "subtree_cond" ) ) {
 		if ( argc < 2 ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				"<==backsql_db_config (%s line %d): "
 				"missing SQL condition "
 				"in \"subtree_cond\" directive\n",
@@ -139,7 +139,7 @@ backsql_db_config(
 
 	} else if ( !strcasecmp( argv[ 0 ], "children_cond" ) ) {
 		if ( argc < 2 ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				"<==backsql_db_config (%s line %d): "
 				"missing SQL condition "
 				"in \"children_cond\" directive\n",
@@ -152,7 +152,7 @@ backsql_db_config(
 
 	} else if ( !strcasecmp( argv[ 0 ], "dn_match_cond" ) ) {
 		if ( argc < 2 ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				"<==backsql_db_config (%s line %d): "
 				"missing SQL condition "
 				"in \"dn_match_cond\" directive\n",
@@ -165,7 +165,7 @@ backsql_db_config(
 
 	} else if ( !strcasecmp( argv[ 0 ], "oc_query" ) ) {
 		if ( argc < 2 ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				"<==backsql_db_config (%s line %d): "
 				"missing SQL statement "
 				"in \"oc_query\" directive\n",
@@ -193,7 +193,7 @@ backsql_db_config(
 			!strcasecmp( argv[ 0 ], "insentry_query" ) )
 	{
 		if ( argc < 2 ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				"<==backsql_db_config (%s line %d): "
 				"missing SQL statement "
 				"in \"insentry_stmt\" directive\n",
@@ -230,7 +230,7 @@ backsql_db_config(
 
 		}
 		Debug( LDAP_DEBUG_TRACE, "<==backsql_db_config(): "
-			"create_needs_select =%s\n", 
+			"create_needs_select =%s\n",
 			BACKSQL_CREATE_NEEDS_SELECT( bi ) ? "yes" : "no",
 			0, 0 );
 
@@ -273,7 +273,7 @@ backsql_db_config(
 
 		}
 		Debug( LDAP_DEBUG_TRACE, "<==backsql_db_config(): "
-			"upper_needs_cast =%s\n", 
+			"upper_needs_cast =%s\n",
 			BACKSQL_UPPER_NEEDS_CAST( bi ) ? "yes" : "no", 0, 0 );
 
 	} else if ( !strcasecmp( argv[ 0 ], "strcast_func" ) ) {
@@ -362,7 +362,7 @@ backsql_db_config(
 
 		}
 		Debug( LDAP_DEBUG_TRACE, "<==backsql_db_config(): "
-			"has_ldapinfo_dn_ru=%s\n", 
+			"has_ldapinfo_dn_ru=%s\n",
 			BACKSQL_HAS_LDAPINFO_DN_RU( bi ) ? "yes" : "no", 0, 0 );
 
 	} else if ( !strcasecmp( argv[ 0 ], "fail_if_no_mapping" ) ) {
@@ -391,7 +391,7 @@ backsql_db_config(
 
 		}
 		Debug( LDAP_DEBUG_TRACE, "<==backsql_db_config(): "
-			"fail_if_no_mapping=%s\n", 
+			"fail_if_no_mapping=%s\n",
 			BACKSQL_FAIL_IF_NO_MAPPING( bi ) ? "yes" : "no", 0, 0 );
 
 	} else if ( !strcasecmp( argv[ 0 ], "allow_orphans" ) ) {
@@ -420,7 +420,7 @@ backsql_db_config(
 
 		}
 		Debug( LDAP_DEBUG_TRACE, "<==backsql_db_config(): "
-			"allow_orphans=%s\n", 
+			"allow_orphans=%s\n",
 			BACKSQL_ALLOW_ORPHANS( bi ) ? "yes" : "no", 0, 0 );
 
 	} else if ( !strcasecmp( argv[ 0 ], "baseobject" ) ) {
@@ -439,7 +439,7 @@ backsql_db_config(
 				fname, lineno, 0 );
 			entry_free( bi->sql_baseObject );
 		}
-	
+
 		switch ( argc ) {
 		case 1:
 			return create_baseObject( be, fname, lineno );
@@ -468,7 +468,7 @@ backsql_db_config(
 
 	} else if ( !strcasecmp( argv[ 0 ], "id_query" ) ) {
 		if ( argc < 2 ) {
-			Debug( LDAP_DEBUG_TRACE, 
+			Debug( LDAP_DEBUG_TRACE,
 				"<==backsql_db_config (%s line %d): "
 				"missing SQL condition "
 				"in \"id_query\" directive\n",
@@ -505,7 +505,7 @@ backsql_db_config(
 
 		}
 		Debug( LDAP_DEBUG_TRACE, "<==backsql_db_config(): "
-			"use_subtree_shortcut=%s\n", 
+			"use_subtree_shortcut=%s\n",
 			BACKSQL_USE_SUBTREE_SHORTCUT( bi ) ? "yes" : "no",
 			0, 0 );
 
@@ -535,7 +535,7 @@ backsql_db_config(
 
 		}
 		Debug( LDAP_DEBUG_TRACE, "<==backsql_db_config(): "
-			"fetch_all_attrs=%s\n", 
+			"fetch_all_attrs=%s\n",
 			BACKSQL_FETCH_ALL_ATTRS( bi ) ? "yes" : "no",
 			0, 0 );
 
@@ -600,7 +600,7 @@ backsql_db_config(
 
 		}
 		Debug( LDAP_DEBUG_TRACE, "<==backsql_db_config(): "
-			"check_schema=%s\n", 
+			"check_schema=%s\n",
 			BACKSQL_CHECK_SCHEMA( bi ) ? "yes" : "no",
 			0, 0 );
 
@@ -653,7 +653,7 @@ backsql_db_config(
  * error message and return.
  */
 static int
-read_baseObject( 
+read_baseObject(
 	BackendDB	*be,
 	const char	*fname )
 {
@@ -816,7 +816,7 @@ create_baseObject(
 				fname, lineno, buf );
 			return 1;
 		}
-		
+
 		transf = ad->ad_type->sat_syntax->ssyn_pretty;
 		if ( transf ) {
 			/*
@@ -828,7 +828,7 @@ create_baseObject(
 					? &ava->la_value
 					: (struct berval *) &slap_empty_bv,
 				&bv, NULL );
-	
+
 			if ( rc != LDAP_SUCCESS ) {
 				snprintf( buf, sizeof(buf),
 					"prettying of attribute #%d "

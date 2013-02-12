@@ -76,7 +76,7 @@ dhcpctl_status dhcpctl_set_callback (dhcpctl_handle h, void *data,
 	omapi_object_reference (&callback -> object, h, MDL);
 	callback -> data = data;
 	callback -> callback = func;
-	
+
 	return ISC_R_SUCCESS;
 }
 
@@ -103,7 +103,7 @@ isc_result_t dhcpctl_callback_get_value (omapi_object_t *h,
 {
 	if (h -> type != dhcpctl_callback_type)
 		return ISC_R_INVALIDARG;
-	
+
 	if (h -> inner && h -> inner -> type -> get_value)
 		return (*(h -> inner -> type -> get_value))
 			(h -> inner, id, name, value);

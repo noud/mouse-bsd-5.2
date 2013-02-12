@@ -19,13 +19,13 @@ mostly consists of our not so inspired guesses.  Hopefully it's still
 somewhat useful.
 
 @menu
-* Configuring Windows 2000 to use a Heimdal KDC::  
-* Inter-Realm keys (trust) between Windows 2000 and a Heimdal KDC::  
-* Create account mappings::     
-* Encryption types::            
-* Authorisation data::          
-* Quirks of Windows 2000 KDC::  
-* Useful links when reading about the Windows 2000::  
+* Configuring Windows 2000 to use a Heimdal KDC::
+* Inter-Realm keys (trust) between Windows 2000 and a Heimdal KDC::
+* Create account mappings::
+* Encryption types::
+* Authorisation data::
+* Quirks of Windows 2000 KDC::
+* Useful links when reading about the Windows 2000::
 @end menu
 
 @node Configuring Windows 2000 to use a Heimdal KDC, Inter-Realm keys (trust) between Windows 2000 and a Heimdal KDC, Windows 2000 compatability, Windows 2000 compatability
@@ -99,7 +99,7 @@ Server) for the domain.
 
 By default the trust will be non-transitive. This means that only users
 directly from the trusted domain may authenticate. This can be changed
-to transitive by using the @command{netdom.exe} tool. @command{netdom.exe} 
+to transitive by using the @command{netdom.exe} tool. @command{netdom.exe}
 can also be used to add the trust between two realms.
 
 You need to tell Windows 2000 on what hosts to find the KDCs for the

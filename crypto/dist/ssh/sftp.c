@@ -869,7 +869,7 @@ makeargv(const char *arg, int *argcp)
 			if (state == MA_START) {
 				argv[argc] = argvs + j;
 				state = q;
-			} else if (state == MA_UNQUOTED) 
+			} else if (state == MA_UNQUOTED)
 				state = q;
 			else if (state == q)
 				state = MA_UNQUOTED;

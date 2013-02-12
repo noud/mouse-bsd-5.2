@@ -2,22 +2,22 @@
  * Copyright (c) 1995-2003 Kungliga Tekniska Högskolan
  * (Royal Institute of Technology, Stockholm, Sweden).
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the Institute nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -187,9 +187,9 @@ append_number(struct snprintf_state *state,
 	signchar = ' ';
     else
 	signchar = '\0';
-    
+
     if((flags & alternate_flag) && base == 8) {
-	/* if necessary, increase the precision to 
+	/* if necessary, increase the precision to
 	   make first digit a zero */
 
 	/* XXX C99 claims (regarding # and %o) that "if the value and
@@ -197,7 +197,7 @@ append_number(struct snprintf_state *state,
            no such wording for %x. This would mean that %#.o would
            output "0", but %#.x "". This does not make sense, and is
            also not what other printf implementations are doing. */
-	
+
 	if(prec <= nlen && nstr[nstart] != '0' && nstr[nstart] != '\0')
 	    prec = nlen + 1;
     }
@@ -215,13 +215,13 @@ append_number(struct snprintf_state *state,
 	    width -= prec;
 	else
 	    width -= nlen;
-	
+
 	if(use_alternative(flags, num, base))
 	    width -= 2;
-	
+
 	if(signchar != '\0')
 	    width--;
-	
+
 	/* pad to width */
 	len += pad(state, width, ' ');
     }
@@ -243,12 +243,12 @@ append_number(struct snprintf_state *state,
     } else
 	/* pad to prec with zeros */
 	len += pad(state, prec - nlen, '0');
-	
+
     while(nstr[nstart] != '\0') {
 	(*state->append_char)(state, nstr[nstart++]);
 	++len;
     }
-	
+
     if(flags & minus_flag)
 	len += pad(state, width - len, ' ');
 
@@ -385,7 +385,7 @@ xyzprintf (struct snprintf_state *state, const char *char_format, va_list ap)
 		else
 		    break;
 	    }
-      
+
 	    if((flags & space_flag) && (flags & plus_flag))
 		flags ^= space_flag;
 
@@ -447,7 +447,7 @@ xyzprintf (struct snprintf_state *state, const char *char_format, va_list ap)
 		len += append_string(state,
 				     va_arg(ap, unsigned char*),
 				     width,
-				     prec, 
+				     prec,
 				     flags);
 		break;
 	    case 'd' :

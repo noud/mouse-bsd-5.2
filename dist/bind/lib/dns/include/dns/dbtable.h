@@ -157,7 +157,7 @@ dns_dbtable_find(dns_dbtable_t *dbtable, dns_name_t *name,
  *\li	If the DNS_DBTABLEFIND_NOEXACT option is set, the best partial
  *	match (if any) to 'name' will be returned.
  *
- * Returns:  
+ * Returns:
  * \li #ISC_R_SUCCESS		on success
  *\li	     something else:		no default and match
  */

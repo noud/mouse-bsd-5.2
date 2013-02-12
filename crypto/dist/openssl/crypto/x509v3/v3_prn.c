@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -110,7 +110,7 @@ int X509V3_EXT_print(BIO *out, X509_EXTENSION *ext, unsigned long flag, int inde
 	void *ext_str = NULL;
 	char *value = NULL;
 	const unsigned char *p;
-	X509V3_EXT_METHOD *method;	
+	X509V3_EXT_METHOD *method;
 	STACK_OF(CONF_VALUE) *nval = NULL;
 	int ok = 1;
 
@@ -168,7 +168,7 @@ int X509V3_extensions_print(BIO *bp, char *title, STACK_OF(X509_EXTENSION) *exts
 
 	if(sk_X509_EXTENSION_num(exts) <= 0) return 1;
 
-	if(title) 
+	if(title)
 		{
 		BIO_printf(bp,"%*s%s:\n",indent, "", title);
 		indent += 4;
@@ -219,7 +219,7 @@ static int unknown_ext_print(BIO *out, X509_EXTENSION *ext, unsigned long flag, 
 		return 1;
 	}
 }
-	
+
 
 #ifndef OPENSSL_NO_FP_API
 int X509V3_EXT_print_fp(FILE *fp, X509_EXTENSION *ext, int flag, int indent)

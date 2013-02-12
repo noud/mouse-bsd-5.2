@@ -56,7 +56,7 @@ static struct interpass_prolog *ipp, *epp; /* prolog/epilog */
 
 void bblocks_build(struct interpass *, struct labelinfo *, struct bblockinfo *);
 void cfg_build(struct labelinfo *labinfo);
-void cfg_dfs(struct basicblock *bb, unsigned int parent, 
+void cfg_dfs(struct basicblock *bb, unsigned int parent,
 	     struct bblockinfo *bbinfo);
 void dominators(struct bblockinfo *bbinfo);
 struct basicblock *
@@ -204,7 +204,7 @@ optimize(struct interpass *ipole)
 			}
 		}
 	}
-		
+
 	if (xdeljumps)
 		deljumps(ipole); /* Delete redundant jumps and dead code */
 
@@ -506,7 +506,7 @@ bblocks_build(struct interpass *ipole, struct labelinfo *labinfo,
 	low = ipp->ip_lblnum;
 	high = epp->ip_lblnum;
 
-	/* 
+	/*
 	 * First statement is a leader.
 	 * Any statement that is target of a jump is a leader.
 	 * Any statement that immediately follows a jump is a leader.
@@ -534,7 +534,7 @@ bblocks_build(struct interpass *ipole, struct labelinfo *labinfo,
 			count++;
 		}
 		bb->last = ip;
-		if ((ip->type == IP_NODE) && (ip->ip_node->n_op == GOTO || 
+		if ((ip->type == IP_NODE) && (ip->ip_node->n_op == GOTO ||
 		    ip->ip_node->n_op == CBRANCH))
 			bb = NULL;
 		if (ip->type == IP_PROLOG)
@@ -557,7 +557,7 @@ bblocks_build(struct interpass *ipole, struct labelinfo *labinfo,
 	for (i = 0; i < labinfo->size; i++) {
 		labinfo->arr[i] = NULL;
 	}
-	
+
 	bbinfo->size = count + 1;
 	bbinfo->arr = tmpalloc(bbinfo->size * sizeof(struct basicblock *));
 	for (i = 0; i < bbinfo->size; i++) {
@@ -587,10 +587,10 @@ void
 cfg_build(struct labelinfo *labinfo)
 {
 	/* Child and parent nodes */
-	struct cfgnode *cnode; 
+	struct cfgnode *cnode;
 	struct cfgnode *pnode;
 	struct basicblock *bb;
-	
+
 	DLIST_FOREACH(bb, &bblocks, bbelem) {
 
 		if (bb->first->type == IP_EPILOG) {
@@ -601,13 +601,13 @@ cfg_build(struct labelinfo *labinfo)
 		pnode = tmpalloc(sizeof(struct cfgnode));
 		pnode->bblock = bb;
 
-		if ((bb->last->type == IP_NODE) && 
+		if ((bb->last->type == IP_NODE) &&
 		    (bb->last->ip_node->n_op == GOTO) &&
 		    (bb->last->ip_node->n_left->n_op == ICON))  {
-			if (bb->last->ip_node->n_left->n_lval - labinfo->low > 
+			if (bb->last->ip_node->n_left->n_lval - labinfo->low >
 			    labinfo->size) {
-				comperr("Label out of range: %d, base %d", 
-					bb->last->ip_node->n_left->n_lval, 
+				comperr("Label out of range: %d, base %d",
+					bb->last->ip_node->n_left->n_lval,
 					labinfo->low);
 			}
 			cnode->bblock = labinfo->arr[bb->last->ip_node->n_left->n_lval - labinfo->low];
@@ -615,13 +615,13 @@ cfg_build(struct labelinfo *labinfo)
 			SLIST_INSERT_LAST(&bb->children, cnode, cfgelem);
 			continue;
 		}
-		if ((bb->last->type == IP_NODE) && 
+		if ((bb->last->type == IP_NODE) &&
 		    (bb->last->ip_node->n_op == CBRANCH)) {
-			if (bb->last->ip_node->n_right->n_lval - labinfo->low > 
-			    labinfo->size) 
-				comperr("Label out of range: %d", 
+			if (bb->last->ip_node->n_right->n_lval - labinfo->low >
+			    labinfo->size)
+				comperr("Label out of range: %d",
 					bb->last->ip_node->n_left->n_lval);
-			
+
 			cnode->bblock = labinfo->arr[bb->last->ip_node->n_right->n_lval - labinfo->low];
 			SLIST_INSERT_LAST(&cnode->bblock->parents, pnode, cfgelem);
 			SLIST_INSERT_LAST(&bb->children, cnode, cfgelem);
@@ -640,7 +640,7 @@ void
 cfg_dfs(struct basicblock *bb, unsigned int parent, struct bblockinfo *bbinfo)
 {
 	struct cfgnode *cnode;
-	
+
 	if (bb->dfnum != 0)
 		return;
 
@@ -707,9 +707,9 @@ dominators(struct bblockinfo *bbinfo)
 		bb = bbinfo->arr[h];
 		p = s = bbinfo->arr[bb->dfparent];
 		SLIST_FOREACH(cnode, &bb->parents, cfgelem) {
-			if (cnode->bblock->dfnum <= bb->dfnum) 
+			if (cnode->bblock->dfnum <= bb->dfnum)
 				sprime = cnode->bblock;
-			else 
+			else
 				sprime = bbinfo->arr[ancestorwithlowestsemi
 					      (cnode->bblock, bbinfo)->semi];
 			if (sprime->dfnum < s->dfnum)
@@ -722,7 +722,7 @@ dominators(struct bblockinfo *bbinfo)
 			if(TESTBIT(p->bucket, i)) {
 				v = bbinfo->arr[i];
 				y = ancestorwithlowestsemi(v, bbinfo);
-				if (y->semi == v->semi) 
+				if (y->semi == v->semi)
 					v->idom = p->dfnum;
 				else
 					v->samedom = y->dfnum;
@@ -762,8 +762,8 @@ ancestorwithlowestsemi(struct basicblock *bblock, struct bblockinfo *bbinfo)
 	struct basicblock *v = bblock;
 
 	while (v->ancestor != 0) {
-		if (bbinfo->arr[v->semi]->dfnum < 
-		    bbinfo->arr[u->semi]->dfnum) 
+		if (bbinfo->arr[v->semi]->dfnum <
+		    bbinfo->arr[u->semi]->dfnum)
 			u = v;
 		v = bbinfo->arr[v->ancestor];
 	}
@@ -781,7 +781,7 @@ computeDF(struct basicblock *bblock, struct bblockinfo *bbinfo)
 {
 	struct cfgnode *cnode;
 	int h, i;
-	
+
 	SLIST_FOREACH(cnode, &bblock->children, cfgelem) {
 		if (cnode->bblock->idom != bblock->dfnum)
 			BITSET(bblock->df, cnode->bblock->dfnum);
@@ -791,9 +791,9 @@ computeDF(struct basicblock *bblock, struct bblockinfo *bbinfo)
 			continue;
 		computeDF(bbinfo->arr[h], bbinfo);
 		for (i = 1; i < bbinfo->size; i++) {
-			if (TESTBIT(bbinfo->arr[h]->df, i) && 
+			if (TESTBIT(bbinfo->arr[h]->df, i) &&
 			    (bbinfo->arr[h] == bblock ||
-			     (bblock->idom != bbinfo->arr[h]->dfnum))) 
+			     (bblock->idom != bbinfo->arr[h]->dfnum)))
 			    BITSET(bblock->df, i);
 		}
 	}
@@ -864,7 +864,7 @@ placePhiFunctions(struct bblockinfo *bbinfo)
 		ip = bb->first;
 		bb->Aorig = setalloc(defsites.size);
 		bb->Aphi = setalloc(defsites.size);
-		
+
 
 		while (ip != bb->last) {
 			findTemps(ip);
@@ -884,14 +884,14 @@ placePhiFunctions(struct bblockinfo *bbinfo)
 			for (j = 0; j < bbinfo->size; j++) {
 				if (!TESTBIT(n->bb->df, j))
 					continue;
-				
+
 				if (TESTBIT(bbinfo->arr[j]->Aphi, i))
 					continue;
 
 				ntype = n->n->n_type;
 				k = 0;
 				/* Amount of predecessors for y */
-				SLIST_FOREACH(cnode, &n->bb->parents, cfgelem) 
+				SLIST_FOREACH(cnode, &n->bb->parents, cfgelem)
 					k++;
 				/* Construct phi(...) */
 				p = mktemp(i, ntype);
@@ -911,7 +911,7 @@ placePhiFunctions(struct bblockinfo *bbinfo)
 					pv->next = defsites.arr[i]->next;
 					defsites.arr[i] = pv;
 				}
-					
+
 
 			}
 		}
@@ -920,7 +920,7 @@ placePhiFunctions(struct bblockinfo *bbinfo)
 
 /*
  * Remove unreachable nodes in the CFG.
- */ 
+ */
 
 void
 remunreach(void)
@@ -940,7 +940,7 @@ remunreach(void)
 
 		/* Need the epilogue node for other parts of the
 		   compiler, set its label to 0 and backend will
-		   handle it. */ 
+		   handle it. */
 		if (bb->first->type == IP_EPILOG) {
 			bb->first->ip_lbl = 0;
 			bb = nbb;
@@ -951,12 +951,12 @@ remunreach(void)
 		do {
 			ctree = next;
 			next = DLIST_NEXT(ctree, qelem);
-			
+
 			if (ctree->type == IP_NODE)
 				tfree(ctree->ip_node);
 			DLIST_REMOVE(ctree, qelem);
 		} while (ctree != bb->last);
-			
+
 		DLIST_REMOVE(bb, bbelem);
 		bb = nbb;
 	}

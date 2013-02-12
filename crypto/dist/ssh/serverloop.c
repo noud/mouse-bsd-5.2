@@ -870,7 +870,7 @@ server_loop2(Authctxt *authctxt)
 	total_time = get_current_time() - start_time;
 	logit("SSH: Server;LType: Throughput;Remote: %s-%d;IN: %lu;OUT: %lu;Duration: %.1f;tPut_in: %.1f;tPut_out: %.1f",
 	      get_remote_ipaddr(), get_remote_port(),
-	      stdin_bytes, fdout_bytes, total_time, stdin_bytes / total_time, 
+	      stdin_bytes, fdout_bytes, total_time, stdin_bytes / total_time,
 	      fdout_bytes / total_time);
 }
 
@@ -1120,7 +1120,7 @@ server_input_global_request(int type, u_int32_t seq, void *ctxt)
 		} else {
 			/* Start listening on the port */
 			success = channel_setup_remote_fwd_listener(
-			    listen_address, listen_port, options.gateway_ports, 
+			    listen_address, listen_port, options.gateway_ports,
            		    options.hpn_disabled, options.hpn_buffer_size);
 		}
 		xfree(listen_address);

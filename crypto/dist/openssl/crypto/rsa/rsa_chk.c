@@ -7,7 +7,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -59,7 +59,7 @@ int RSA_check_key(const RSA *key)
 	BN_CTX *ctx;
 	int r;
 	int ret=1;
-	
+
 	i = BN_new();
 	j = BN_new();
 	k = BN_new();
@@ -73,7 +73,7 @@ int RSA_check_key(const RSA *key)
 		RSAerr(RSA_F_RSA_CHECK_KEY, ERR_R_MALLOC_FAILURE);
 		goto err;
 		}
-	
+
 	/* p prime? */
 	r = BN_is_prime_ex(key->p, BN_prime_checks, NULL, NULL);
 	if (r != 1)
@@ -83,7 +83,7 @@ int RSA_check_key(const RSA *key)
 			goto err;
 		RSAerr(RSA_F_RSA_CHECK_KEY, RSA_R_P_NOT_PRIME);
 		}
-	
+
 	/* q prime? */
 	r = BN_is_prime_ex(key->q, BN_prime_checks, NULL, NULL);
 	if (r != 1)
@@ -93,17 +93,17 @@ int RSA_check_key(const RSA *key)
 			goto err;
 		RSAerr(RSA_F_RSA_CHECK_KEY, RSA_R_Q_NOT_PRIME);
 		}
-	
+
 	/* n = p*q? */
 	r = BN_mul(i, key->p, key->q, ctx);
 	if (!r) { ret = -1; goto err; }
-	
+
 	if (BN_cmp(i, key->n) != 0)
 		{
 		ret = 0;
 		RSAerr(RSA_F_RSA_CHECK_KEY, RSA_R_N_DOES_NOT_EQUAL_P_Q);
 		}
-	
+
 	/* d*e = 1  mod lcm(p-1,q-1)? */
 
 	r = BN_sub(i, key->p, BN_value_one());
@@ -127,7 +127,7 @@ int RSA_check_key(const RSA *key)
 		ret = 0;
 		RSAerr(RSA_F_RSA_CHECK_KEY, RSA_R_D_E_NOT_CONGRUENT_TO_1);
 		}
-	
+
 	if (key->dmp1 != NULL && key->dmq1 != NULL && key->iqmp != NULL)
 		{
 		/* dmp1 = d mod (p-1)? */
@@ -143,11 +143,11 @@ int RSA_check_key(const RSA *key)
 			RSAerr(RSA_F_RSA_CHECK_KEY,
 				RSA_R_DMP1_NOT_CONGRUENT_TO_D);
 			}
-	
-		/* dmq1 = d mod (q-1)? */    
+
+		/* dmq1 = d mod (q-1)? */
 		r = BN_sub(i, key->q, BN_value_one());
 		if (!r) { ret = -1; goto err; }
-	
+
 		r = BN_mod(j, key->d, i, ctx);
 		if (!r) { ret = -1; goto err; }
 
@@ -157,7 +157,7 @@ int RSA_check_key(const RSA *key)
 			RSAerr(RSA_F_RSA_CHECK_KEY,
 				RSA_R_DMQ1_NOT_CONGRUENT_TO_D);
 			}
-	
+
 		/* iqmp = q^-1 mod p? */
 		if(!BN_mod_inverse(i, key->q, key->p, ctx))
 			{

@@ -117,7 +117,7 @@ int parse_option_buffer (options, buffer, length, universe)
 		return 0;
 	}
 	memcpy (bp -> data, buffer, length);
-	
+
 	for (offset = 0; buffer [offset] != DHO_END && offset < length; ) {
 		code = buffer [offset];
 		/* Pad options don't have a length - just skip them. */
@@ -251,7 +251,7 @@ int parse_encapsulated_suboptions (struct option_state *options,
 	   decoded the packet and executed the scopes that it matches). */
 	if (!universe)
 		return 0;
-		
+
 	/* If we don't have a decoding function for it, we can't decode
 	   it. */
 	if (!universe -> decode)
@@ -361,7 +361,7 @@ int fqdn_universe_decode (struct option_state *options,
 			if (len > 63) {
 				log_info ("fancy bits in fqdn option");
 				return 0;
-			}	
+			}
 			if (len == 0) {
 				terminated = 1;
 				break;
@@ -535,7 +535,7 @@ int cons_options (inpacket, outpacket, lease, client_state,
 				priority_list [priority_len++] =
 					DHO_SUBNET_SELECTION;
 		}
-			    
+
 		data_string_truncate (prl, (PRIORITY_COUNT - priority_len));
 
 		for (i = 0; i < prl -> len; i++) {
@@ -786,7 +786,7 @@ int store_options (ocount, buffer, buflen, packet, lease, client_state,
 
 	    /* Code for next option to try to store. */
 	    code = priority_list [i];
-	    
+
 	    /* Look up the option in the site option space if the code
 	       is above the cutoff, otherwise in the DHCP option space. */
 	    if (code >= cfg_options -> site_code_min)
@@ -834,7 +834,7 @@ int store_options (ocount, buffer, buflen, packet, lease, client_state,
 			name.data = (unsigned char *)s;
 			name.len = t - s;
 		    }
-			
+
 		    /* If we found a universe, and there are options configured
 		       for that universe, try to encapsulate it. */
 		    if (name.len) {
@@ -859,7 +859,7 @@ int store_options (ocount, buffer, buflen, packet, lease, client_state,
 	    if (!oc && !have_encapsulation) {
 		    continue;
 	    }
-	    
+
 	    /* Find the value of the option... */
 	    if (oc) {
 		evaluate_option_cache (&od, packet,
@@ -910,7 +910,7 @@ int store_options (ocount, buffer, buflen, packet, lease, client_state,
 	    }
 
 	    /* Try to store the option. */
-	    
+
 	    /* If the option's length is more than 255, we must store it
 	       in multiple hunks.   Store 255-byte hunks first.  However,
 	       in any case, if the option data will cross a buffer
@@ -1059,7 +1059,7 @@ const char *pretty_print_option (option, data, len, emit_commas, emit_quotes)
 		comma = ',';
 	else
 		comma = ' ';
-	
+
 	memset (enumbuf, 0, sizeof enumbuf);
 
 	/* Figure out the size of the data. */
@@ -1153,7 +1153,7 @@ const char *pretty_print_option (option, data, len, emit_commas, emit_quotes)
 			      option -> name,
 			      &(option -> format [i]));
 			break;
-		} 
+		}
 	}
 
 	/* Check for too few bytes... */
@@ -1467,11 +1467,11 @@ int save_option_buffer (struct universe *universe,
 	/* Reference buffer copy to option cache. */
 	op -> data.buffer = (struct buffer *)0;
 	buffer_reference (&op -> data.buffer, bp, MDL);
-		
+
 	/* Point option cache into buffer. */
 	op -> data.data = buffer;
 	op -> data.len = length;
-			
+
 	if (tp) {
 		/* NUL terminate (we can get away with this because we (or
 		   the caller!) allocated one more than the buffer size, and
@@ -1482,7 +1482,7 @@ int save_option_buffer (struct universe *universe,
 		op -> data.terminated = 1;
 	} else
 		op -> data.terminated = 0;
-	
+
 	op -> option = option;
 
 	/* Now store the option. */
@@ -1737,7 +1737,7 @@ int store_option (result, universe, packet, lease, client_state,
 	}
 	return 0;
 }
-	
+
 int option_space_encapsulate (result, packet, lease, client_state,
 			      in_options, cfg_options, scope, name)
 	struct data_string *result;
@@ -2254,7 +2254,7 @@ void do_packet (interface, packet, len, from_port, from, hfrom)
 	decoded_packet -> client_addr = from;
 	interface_reference (&decoded_packet -> interface, interface, MDL);
 	decoded_packet -> haddr = hfrom;
-	
+
 	if (packet -> hlen > sizeof packet -> chaddr) {
 		packet_dereference (&decoded_packet, MDL);
 		log_info ("Discarding packet with bogus hlen.");
@@ -2273,7 +2273,7 @@ void do_packet (interface, packet, len, from_port, from, hfrom)
 
 		if (decoded_packet -> options_valid &&
 		    (op = lookup_option (&dhcp_universe,
-					 decoded_packet -> options, 
+					 decoded_packet -> options,
 					 DHO_DHCP_MESSAGE_TYPE))) {
 			struct data_string dp;
 			memset (&dp, 0, sizeof dp);
@@ -2291,7 +2291,7 @@ void do_packet (interface, packet, len, from_port, from, hfrom)
 			data_string_forget (&dp, MDL);
 		}
 	}
-		
+
 	if (decoded_packet -> packet_type)
 		dhcp (decoded_packet);
 	else

@@ -8,7 +8,7 @@
                                                      Cisco Systems
                                                        10 Feb 2004
 
-                 
+
 
 
                                    Negotiation of NAT-Traversal in the IKE

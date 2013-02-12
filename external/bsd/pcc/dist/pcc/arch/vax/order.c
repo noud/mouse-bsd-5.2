@@ -29,7 +29,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -239,7 +239,7 @@ rallo( p, down ) NODE *p; {
 		if( o == FORCE ) down1 = R0|MUSTDO;
 		}
 	else switch( o ) {
-	case ASSIGN:	
+	case ASSIGN:
 		down1 = NOPREF;
 		down2 = down;
 		break;
@@ -281,7 +281,7 @@ rallo( p, down ) NODE *p; {
 		down1 = NOPREF;
 		break;
 
-	case FORCE:	
+	case FORCE:
 		down1 = R0|MUSTDO;
 		break;
 
@@ -305,7 +305,7 @@ comperr("offstar");
 			order( p->n_right, INAREG );
 			return;
 		}
-		if( p->n_left->n_op==LS && 
+		if( p->n_left->n_op==LS &&
 		  (p->n_left->n_left->n_op!=REG || tlen(p->n_left->n_left)!=sizeof(int) ) ) {
 			order( p->n_left->n_left, INAREG );
 			return;

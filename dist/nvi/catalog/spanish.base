@@ -150,7 +150,7 @@
 157 "No se encontr¢ coincidencia"
 158 "No se ingres¢ un identificador anterior"
 159 "Se encontraron menos de %s anotaciones en la pila de identificadores; usar :visualizar i[dentificadores]"
-160 "No hay archivo %s en la pila de identificadores al que se pueda volver; usar :visualizar i[dentificadores]" 
+160 "No hay archivo %s en la pila de identificadores al que se pueda volver; usar :visualizar i[dentificadores]"
 161 "Presionar Intro para continuar: "
 162 "%s: no se encontr¢ el identificador"
 163 "%s: identificador corrompido en %s"

@@ -381,7 +381,7 @@ bfcode(struct symtab **sp, int cnt)
 
 		if ((reg > lastreg) && !xtemps)
 			break;
-		else if (reg > lastreg) 
+		else if (reg > lastreg)
 			putintemp(sp[i]);
 		else if (sp[i]->stype == STRTY || sp[i]->stype == UNIONTY)
 			param_struct(sp[i], &reg);
@@ -472,7 +472,7 @@ bycode(int t, int i)
 		} else if (lastoctal && '0' <= t && t <= '9') {
 			lastoctal = 0;
 			printf("\"\n\t.ascii \"%c", t);
-		} else {	
+		} else {
 			lastoctal = 0;
 			putchar(t);
 		}
@@ -550,7 +550,7 @@ movearg_struct(NODE *p, NODE *parent, int *regp)
                	r = buildtree(ASSIGN, r, t);
 		if (q == NULL)
 			q = r;
-		else 
+		else
 			q = block(CM, q, r, INT, 0, MKSUE(INT));
 	}
 	off = ARGINIT/SZINT + nargregs;

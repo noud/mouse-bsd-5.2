@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997-2005 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "kcm_locl.h"
@@ -86,7 +86,7 @@ update_client_creds(int s, kcm_client *peer)
     /* Solaris 10 */
     {
 	ucred_t *peercred;
-	
+
 	if (getpeerucred(s, &peercred) != 0) {
 	    peer->uid = ucred_geteuid(peercred);
 	    peer->gid = ucred_getegid(peercred);
@@ -94,7 +94,7 @@ update_client_creds(int s, kcm_client *peer)
 	    ucred_free(peercred);
 	    return 0;
 	}
-    } 
+    }
 #endif
 #ifdef GETPEEREID
     /* FreeBSD, OpenBSD */
@@ -148,7 +148,7 @@ update_client_creds(int s, kcm_client *peer)
 	void *crmsg;
 	struct cmsghdr *cmp;
 	struct sockcred *sc;
-	
+
 	memset(&msg, 0, sizeof(msg));
 	crmsgsize = CMSG_SPACE(SOCKCREDSIZE(NGROUPS));
 	if (crmsgsize == 0)
@@ -159,32 +159,32 @@ update_client_creds(int s, kcm_client *peer)
 	    goto failed_scm_creds;
 
 	memset(crmsg, 0, crmsgsize);
-	
+
 	msg.msg_control = crmsg;
 	msg.msg_controllen = crmsgsize;
-	
+
 	if (recvmsg(s, &msg, 0) < 0) {
 	    free(crmsg);
 	    goto failed_scm_creds;
-	}	
-	
+	}
+
 	if (msg.msg_controllen == 0 || (msg.msg_flags & MSG_CTRUNC) != 0) {
 	    free(crmsg);
 	    goto failed_scm_creds;
-	}	
-	
+	}
+
 	cmp = CMSG_FIRSTHDR(&msg);
 	if (cmp->cmsg_level != SOL_SOCKET || cmp->cmsg_type != SCM_CREDS) {
 	    free(crmsg);
 	    goto failed_scm_creds;
-	}	
-	
+	}
+
 	sc = (struct sockcred *)(void *)CMSG_DATA(cmp);
-	
+
 	peer->uid = sc->sc_euid;
 	peer->gid = sc->sc_egid;
 	peer->pid = 0;
-	
+
 	free(crmsg);
 	return 0;
     } else {
@@ -202,7 +202,7 @@ update_client_creds(int s, kcm_client *peer)
  * Create the socket (family, type, port) in `d'
  */
 
-static void 
+static void
 init_socket(struct descr *d)
 {
     struct sockaddr_un un;
@@ -296,15 +296,15 @@ init_sockets(struct descr **desc)
  */
 
 static int
-process_request(unsigned char *buf, 
-		size_t len, 
+process_request(unsigned char *buf,
+		size_t len,
 		krb5_data *reply,
 		kcm_client *client)
 {
     krb5_data request;
-   
+
     if (len < 4) {
-	kcm_log(1, "malformed request from process %d (too short)", 
+	kcm_log(1, "malformed request from process %d (too short)",
 		client->pid);
 	return -1;
     }
@@ -345,7 +345,7 @@ do_request(void *buf, size_t len, struct descr *d)
 	struct msghdr msghdr;
 	struct iovec iov[2];
 
-	kcm_log(5, "sending %lu bytes to process %d", 
+	kcm_log(5, "sending %lu bytes to process %d",
 		(unsigned long)reply.length,
 		(int)d->peercred.pid);
 
@@ -380,7 +380,7 @@ do_request(void *buf, size_t len, struct descr *d)
     }
 
     if (ret) {
-	kcm_log(0, "Failed processing %lu byte request from process %d", 
+	kcm_log(0, "Failed processing %lu byte request from process %d",
 		(unsigned long)len, d->peercred.pid);
     }
 }
@@ -630,7 +630,7 @@ kcm_loop(void)
 	FD_ZERO(&fds);
 	for(i = 0; i < ndescr; i++) {
 	    if (d[i].s >= 0){
-		if(d[i].type == SOCK_STREAM && 
+		if(d[i].type == SOCK_STREAM &&
 		   d[i].timeout && d[i].timeout < time(NULL)) {
 		    kcm_log(1, "Stream connection from %d expired after %lu bytes",
 			    d[i].peercred.pid, (unsigned long)d[i].len);

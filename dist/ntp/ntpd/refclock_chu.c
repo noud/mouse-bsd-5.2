@@ -133,7 +133,7 @@
  * near 1000.
  *
  * Following is format B:
- * 
+ *
  *	n b s code
  *
  * where n is the number of characters in the burst (0-11), b the burst
@@ -277,7 +277,7 @@
 /*
  * Maximum likelihood UART structure. There are eight of these
  * corresponding to the number of phases.
- */ 
+ */
 struct surv {
 	double	shift[12];	/* mark register */
 	double	es_max, es_min;	/* max/min envelope signals */
@@ -506,7 +506,7 @@ chu_start(
 	peer->precision = PRECISION;
 	pp->clockdesc = DESCRIPTION;
 	strcpy(up->ident, "CHU");
-	memcpy(&peer->refid, up->ident, 4); 
+	memcpy(&peer->refid, up->ident, 4);
 	DTOLFP(CHAR, &up->charstamp);
 #ifdef HAVE_AUDIO
 
@@ -658,7 +658,7 @@ chu_audio_receive(
 
 		/*
 		 * Clip noise spikes greater than MAXAMP. If no clips,
-		 * increase the gain a tad; if the clips are too high, 
+		 * increase the gain a tad; if the clips are too high,
 		 * decrease a tad.
 		 */
 		if (sample > MAXAMP) {
@@ -888,7 +888,7 @@ chu_uart(
 	 * minimum and the span as the maximum less the minimum. Compute
 	 * the distance on the assumption the first and last bits must
 	 * be mark, the second space and the rest either mark or space.
-	 */ 
+	 */
 	slice = (es_max + es_min) / 2.;
 	dist = 0;
 	sp->uart = 0;
@@ -1114,7 +1114,7 @@ chu_b(
 		up->tstamp[up->ntstamp] = up->cstamp[i];
 		L_SUB(&up->tstamp[up->ntstamp], &offset);
 		L_ADD(&offset, &up->charstamp);
-		if (up->ntstamp < MAXSTAGE - 1) 
+		if (up->ntstamp < MAXSTAGE - 1)
 			up->ntstamp++;
 	}
 }
@@ -1218,7 +1218,7 @@ chu_a(
 			up->tstamp[up->ntstamp] = up->cstamp[i];
 			L_SUB(&up->tstamp[up->ntstamp], &offset);
 			L_ADD(&offset, &up->charstamp);
-			if (up->ntstamp < MAXSTAGE - 1) 
+			if (up->ntstamp < MAXSTAGE - 1)
 				up->ntstamp++;
 		}
 		while (temp > up->prevsec) {
@@ -1534,7 +1534,7 @@ chu_newchan(
 	 * four dwells the radio is tuned to the data channel. The probe
 	 * channel is selects as the least recently used. At the end of
 	 * each dwell the channel metrics are measured and the highest
-	 * one is selected as the data channel. 
+	 * one is selected as the data channel.
 	 */
 	if (up->fd_icom <= 0)
 		return (0);
@@ -1605,7 +1605,7 @@ chu_newchan(
 		}
 	}
 	sprintf(up->ident, "CHU%d", up->achan);
-	memcpy(&peer->refid, up->ident, 4); 
+	memcpy(&peer->refid, up->ident, 4);
 	up->dwell = (up->dwell + 1) % DWELL;
 	return (rval);
 }
@@ -1620,7 +1620,7 @@ chu_dist(
 	int	y		/* another octet of bits */
 	)
 {
-	int	val;		/* bit count */ 
+	int	val;		/* bit count */
 	int	temp;
 	int	i;
 

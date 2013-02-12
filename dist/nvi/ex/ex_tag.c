@@ -162,14 +162,14 @@ ex_tag_push(SCR *sp, EXCMD *cmdp)
 	if ((tqp = ctag_slist(sp, exp->tag_last)) == NULL)
 		return (1);
 
-	if (tagq_push(sp, tqp, F_ISSET(cmdp, E_NEWSCREEN), 
+	if (tagq_push(sp, tqp, F_ISSET(cmdp, E_NEWSCREEN),
 			       FL_ISSET(cmdp->iflags, E_C_FORCE)))
 		return 1;
 
 	return 0;
 }
 
-/* 
+/*
  * ex_tag_next --
  *	Switch context to the next TAG.
  *
@@ -209,7 +209,7 @@ ex_tag_next(SCR *sp, EXCMD *cmdp)
 	return (0);
 }
 
-/* 
+/*
  * ex_tag_prev --
  *	Switch context to the next TAG.
  *
@@ -368,7 +368,7 @@ ex_tag_pop(SCR *sp, EXCMD *cmdp)
 		dtqp = exp->tq.cqh_first;
 		break;
 	case 1:				/* Name or number. */
-		INT2CHAR(sp, cmdp->argv[0]->bp, cmdp->argv[0]->len+1, 
+		INT2CHAR(sp, cmdp->argv[0]->bp, cmdp->argv[0]->len+1,
 			 arg, nlen);
 		off = strtol(arg, &p, 10);
 		if (*p != '\0')
@@ -617,7 +617,7 @@ ex_tag_copy(SCR *orig, SCR *sp)
 
 	/* Copy the last tag. */
 	if (oexp->tag_last != NULL &&
-	    (nexp->tag_last = v_wstrdup(sp, oexp->tag_last, 
+	    (nexp->tag_last = v_wstrdup(sp, oexp->tag_last,
 					STRLEN(oexp->tag_last))) == NULL) {
 		msgq(sp, M_SYSERR, NULL);
 		return (1);
@@ -977,7 +977,7 @@ ctag_search(SCR *sp, CHAR_T *search, size_t slen, char *tag)
 		m.lno = 1;
 		m.cno = 0;
 		if (f_search(sp, &m, &m,
-		    search, slen, NULL, 
+		    search, slen, NULL,
 		    SEARCH_FIRST | SEARCH_TAG | SEARCH_PARSE)) {
 			INT2CHAR(sp, search, slen, np, nlen);
 			if ((p = strrchr(np, '(')) != NULL) {
@@ -1313,7 +1313,7 @@ corrupt:		p = msg_print(sp, tname, &nf1);
 		ctag_file(sp, tfp, name, &dname, &dlen);
 
 		CALLOC_GOTO(sp, tp,
-		    TAG *, 1, sizeof(TAG) + dlen + 2 + nlen + 1 + 
+		    TAG *, 1, sizeof(TAG) + dlen + 2 + nlen + 1 +
 		    (slen + 1) * sizeof(CHAR_T));
 		tp->fname = (char *)tp->buf;
 		if (dlen != 0) {

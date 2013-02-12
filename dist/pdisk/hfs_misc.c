@@ -169,9 +169,9 @@ u32
 embeded_offset(struct mdb_record *mdb, u32 sector)
 {
     u32 e_offset;
-    
+
     e_offset = mdb->drAlBlSt + mdb->drEmbedExtent.xdrStABN * (mdb->drAlBlkSiz / 512);
-    
+
     return e_offset + sector;
 }
 
@@ -184,7 +184,7 @@ get_HFS_name(partition_map *entry, int *kind)
     //struct HFSPlusVolumeHeader *mdb2;
     char *name = NULL;
     int len;
-    
+
     *kind = kHFS_not;
 
     mdb = (struct mdb_record *) malloc(PBLOCK_SIZE);
@@ -239,7 +239,7 @@ read_partition_block(partition_map *entry, unsigned long num, char *buf)
     partition_map_header * map;
     u32 base;
     u64 offset;
-    
+
     map = entry->the_map;
     data = entry->data;
     base = data->dpme_pblock_start;
@@ -248,6 +248,6 @@ read_partition_block(partition_map *entry, unsigned long num, char *buf)
 	return 0;
     }
     offset = ((long long) base) * map->logical_block + num * 512;
-    
+
     return read_media(map->m, offset, 512, (void *)buf);
 }

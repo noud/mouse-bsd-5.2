@@ -138,10 +138,10 @@ argv_exp2(SCR *sp, EXCMD *excp, const CHAR_T *cmd, size_t cmdlen)
 #define	SHELLECHO	"echo "
 #define	SHELLOFFSET	(sizeof(SHELLECHO) - 1)
 	p = bp;
-	*p++ = 'e'; 
-	*p++ = 'c'; 
-	*p++ = 'h'; 
-	*p++ = 'o'; 
+	*p++ = 'e';
+	*p++ = 'c';
+	*p++ = 'h';
+	*p++ = 'o';
 	*p++ = ' ';
 	len = SHELLOFFSET;
 
@@ -218,7 +218,7 @@ argv_exp2(SCR *sp, EXCMD *excp, const CHAR_T *cmd, size_t cmdlen)
 			size_t nlen;
 
 			*p = '\0';
-			INT2CHAR(sp, bp + SHELLOFFSET, 
+			INT2CHAR(sp, bp + SHELLOFFSET,
 				 STRLEN(bp + SHELLOFFSET) + 1, np1, nlen);
 			d = strdup(np1);
 			rval = argv_lexp(sp, excp, d);
@@ -527,7 +527,7 @@ argv_lexp(SCR *sp, EXCMD *excp, const char *path)
 		dname = ".";
 		dlen = 0;
 		name = path;
-	} else { 
+	} else {
 		if (p == path) {
 			dname = "/";
 			dlen = 1;
@@ -583,7 +583,7 @@ argv_lexp(SCR *sp, EXCMD *excp, const char *path)
 		/*
 		 * If we didn't find a match, complain that the expansion
 		 * failed.  We can't know for certain that's the error, but
-		 * it's a good guess, and it matches historic practice. 
+		 * it's a good guess, and it matches historic practice.
 		 */
 		msgq(sp, M_ERR, "304|Shell expansion failed");
 		return (1);

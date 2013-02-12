@@ -30,13 +30,13 @@ mode_cfg {
 	wins4 10.0.12.1;
 	banner "/etc/racoon/motd";
 	pfs_group 2;
-}	       
-		
+}
+
 sainfo anonymous {
 	pfs_group 2;
 	lifetime time 1 hour;
 	encryption_algorithm aes;
 	authentication_algorithm hmac_sha1;
 	compression_algorithm deflate;
-}   
+}
 

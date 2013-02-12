@@ -6,7 +6,7 @@
 ;#     - show statistics periodically using gnuplot
 ;#     - or print a single plot
 ;#
-;#  Copyright (c) 1992 
+;#  Copyright (c) 1992
 ;#  Rainer Pruy Friedrich-Alexander Universitaet Erlangen-Nuernberg
 ;#
 ;#
@@ -42,7 +42,7 @@ $keyid=0;
     ;#  optional authentication data
     ;#  N  key
     ;#  N2 checksum
-    
+
 ;# first byte of packet
 sub pkt_LI   { return ($_[$[] >> 6) & 0x3; }
 sub pkt_VN   { return ($_[$[] >> 3) & 0x7; }
@@ -87,7 +87,7 @@ sub send	#'
     {
 	$junksize = length($data);
 	$junksize = $MAX_DATA if $junksize > $MAX_DATA;
-	
+
 	($junk,$data) = $data =~ /^(.{$junksize})(.*)$/;
 	$packet
 	    = pack("C2n5a".(($junk eq "") ? 0 : &pad($junksize+12,$pad)-12),
@@ -131,7 +131,7 @@ sub send	#'
 sub getval
 {
     local($val,*list) = @_;
-    
+
     return $list{$val} if defined($list{$val});
     return sprintf("%s#%d",$list{"-"},$val) if defined($list{"-"});
     return "unknown-$val";
@@ -363,7 +363,7 @@ sub handle_packet
 	$STAT_bad_mode++;
 	return ("ERROR", "mode ".&pkt_MODE($li_vn_mode)." packet ignored");
     }
-    
+
     ;# handle single fragment fast
     if ($offset == 0 && &pkt_M($r_e_m_op) == 0)
     {
@@ -389,9 +389,9 @@ sub handle_packet
 	$ID{$id} = 1;
 	*FRAGS = "$id FRAGS";
 	*lastseen = "$id lastseen";
-	
+
 	$STAT_frag++;
-	
+
 	$lastseen = 1 if !&pkt_M($r_e_m_op);
 	if (!defined(%FRAGS))
 	{
@@ -409,9 +409,9 @@ sub handle_packet
 		$STAT_dup_frag++;
 		return ("ERROR","duplicate fragment at $offset seq=$seq");
 	    }
-	    
+
 	    $FRAGS{$offset} = $data;
-	    
+
 	    undef($loff);
 	    foreach $off (sort numerical keys(%FRAGS))
 	    {
@@ -456,10 +456,10 @@ sub handle_packet_timeout
 {
     local($id) = @_;
     local($r_e_m_op,*FRAGS,*lastseen,@x) = (@FRAGS[$[+5]);
-    
+
     *FRAGS = "$id FRAGS";
     *lastseen = "$id lastseen";
-    
+
     @x=((&pkt_E($r_e_m_op) ? &error_status($status) : "TIMEOUT"),
 	$FRAGS{0},@FRAGS[$[ .. $[+4]);
     $STAT_frag_timeout++;

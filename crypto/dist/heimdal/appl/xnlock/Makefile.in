@@ -412,7 +412,7 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-xnlock$(EXEEXT): $(xnlock_OBJECTS) $(xnlock_DEPENDENCIES) 
+xnlock$(EXEEXT): $(xnlock_OBJECTS) $(xnlock_DEPENDENCIES)
 	@rm -f xnlock$(EXEEXT)
 	$(LINK) $(xnlock_OBJECTS) $(xnlock_LDADD) $(LIBS)
 

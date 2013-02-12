@@ -45,6 +45,6 @@ The corresponding command for the RADIUS plugin would be:
 
 gcc -shared -I../../../include -Wall -g -o pw-radius.so radius.c -lradius
 
-(Actually, you might want to statically link the RADIUS client library 
+(Actually, you might want to statically link the RADIUS client library
 libradius.a into the module).
 

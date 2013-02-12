@@ -32,7 +32,7 @@ The name server under test should be set up as an authoritative
 server, serving one or more zones similar in size and number to
 what the server is expected to serve in production.
 
-Be sure to turn off recursion in the server's configuration 
+Be sure to turn off recursion in the server's configuration
 (in BIND 8/9, specify "recursion no;" in the options block).
 In BIND 8, you should also specify "fetch-glue no;"; otherwise
 the server may attempt to retrieve glue information from the
@@ -44,8 +44,8 @@ Constructing the input file
 
 You need to construct a queryperf input file containing a large and
 realistic set of queries, on the order of ten thousand to a million.
-The input file contains one line per query, consisting of a domain 
-name and an RR type name separated by a space.  The class of the 
+The input file contains one line per query, consisting of a domain
+name and an RR type name separated by a space.  The class of the
 query is implicitly IN.
 
 When measuring the performance serving non-terminal zones such as the

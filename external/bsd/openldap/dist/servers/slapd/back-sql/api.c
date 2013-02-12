@@ -51,7 +51,7 @@ backsql_api_config( backsql_info *bi, const char *name, int argc, char *argv[] )
 					return 1;
 				}
 			}
-			
+
 			ba2->ba_next = bi->sql_api;
 			bi->sql_api = ba2;
 			return 0;
@@ -130,8 +130,8 @@ backsql_api_dn2odbc( Operation *op, SlapReply *rs, struct berval *dn )
 			/*
 			 * The dn2odbc() helper is supposed to rewrite
 			 * the contents of bv, freeing the original value
-			 * with ch_free() if required and replacing it 
-			 * with a newly allocated one using ch_malloc() 
+			 * with ch_free() if required and replacing it
+			 * with a newly allocated one using ch_malloc()
 			 * or companion functions.
 			 *
 			 * NOTE: it is supposed to __always__ free
@@ -178,8 +178,8 @@ backsql_api_odbc2dn( Operation *op, SlapReply *rs, struct berval *dn )
 			/*
 			 * The odbc2dn() helper is supposed to rewrite
 			 * the contents of bv, freeing the original value
-			 * with ch_free() if required and replacing it 
-			 * with a newly allocated one using ch_malloc() 
+			 * with ch_free() if required and replacing it
+			 * with a newly allocated one using ch_malloc()
 			 * or companion functions.
 			 *
 			 * NOTE: it is supposed to __always__ free

@@ -263,7 +263,7 @@ libparse_a_SOURCES = parse.c \
 		     mfp_mul.c \
 		     gpstolfp.c
 
-libparse_kernel_a_SOURCES = 
+libparse_kernel_a_SOURCES =
 libparse_kernel_a_LIBADD = kparse$U.o \
 			    kparse_conf$U.o \
 			    kclk_computime$U.o \
@@ -321,11 +321,11 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-libparse.a: $(libparse_a_OBJECTS) $(libparse_a_DEPENDENCIES) 
+libparse.a: $(libparse_a_OBJECTS) $(libparse_a_DEPENDENCIES)
 	-rm -f libparse.a
 	$(libparse_a_AR) libparse.a $(libparse_a_OBJECTS) $(libparse_a_LIBADD)
 	$(RANLIB) libparse.a
-libparse_kernel.a: $(libparse_kernel_a_OBJECTS) $(libparse_kernel_a_DEPENDENCIES) 
+libparse_kernel.a: $(libparse_kernel_a_OBJECTS) $(libparse_kernel_a_DEPENDENCIES)
 	-rm -f libparse_kernel.a
 	$(libparse_kernel_a_AR) libparse_kernel.a $(libparse_kernel_a_OBJECTS) $(libparse_kernel_a_LIBADD)
 	$(RANLIB) libparse_kernel.a
@@ -336,10 +336,10 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-parsesolaris$(EXEEXT): $(parsesolaris_OBJECTS) $(parsesolaris_DEPENDENCIES) 
+parsesolaris$(EXEEXT): $(parsesolaris_OBJECTS) $(parsesolaris_DEPENDENCIES)
 	@rm -f parsesolaris$(EXEEXT)
 	$(LINK) $(parsesolaris_LDFLAGS) $(parsesolaris_OBJECTS) $(parsesolaris_LDADD) $(LIBS)
-parsestreams$(EXEEXT): $(parsestreams_OBJECTS) $(parsestreams_DEPENDENCIES) 
+parsestreams$(EXEEXT): $(parsestreams_OBJECTS) $(parsestreams_DEPENDENCIES)
 	@rm -f parsestreams$(EXEEXT)
 	$(LINK) $(parsestreams_LDFLAGS) $(parsestreams_OBJECTS) $(parsestreams_LDADD) $(LIBS)
 

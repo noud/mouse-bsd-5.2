@@ -110,7 +110,7 @@ hard to provoke.
 It assumes that the local network is tolerably secure and that any accessible
 NTP or SNTP servers are trustworthy.  It also makes no attempt to check that
 it has been installed and is being used correctly (e.g. at an appropriate
-priority) or that the changes it makes have the desired effect.  When you first 
+priority) or that the changes it makes have the desired effect.  When you first
 use it, you should both run it in display mode and use the date command as a
 cross-check.
 
@@ -319,7 +319,7 @@ hourly or nightly) from cron, and it will fail if it is already running
 
 If it is used as a server, it should be started from any suitable system
 initialisation script, just like any other daemon.  It must be started after
-the networking, of course.  To run it in both server modes, start one copy with 
+the networking, of course.  To run it in both server modes, start one copy with
 the -B option and one with the -S option.
 
 

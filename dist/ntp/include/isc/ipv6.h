@@ -61,7 +61,7 @@
 /*
  * We probably don't need this on NTP
  */
-#ifdef ISC_ONLY_IPV6 
+#ifdef ISC_ONLY_IPV6
 /***
  *** Types.
  ***/

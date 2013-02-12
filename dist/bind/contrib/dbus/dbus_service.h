@@ -1,15 +1,15 @@
 /*	$NetBSD: dbus_service.h,v 1.1.1.2 2008/06/21 18:29:16 christos Exp $	*/
 
 /*  D-BUS Service Utilities
- *  
- *  Provides utilities for construction of D-BUS "Services"  
+ *
+ *  Provides utilities for construction of D-BUS "Services"
  *
  *  Copyright(C) Jason Vas Dias, Red Hat Inc., 2005
  *  Modified by Adam Tkac, Red Hat Inc., 2007
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation at 
+ *  the Free Software Foundation at
  *           http://www.fsf.org/licensing/licenses/gpl.txt
  *  and included in this software distribution as the "LICENSE" file.
  *
@@ -17,7 +17,7 @@
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- * 
+ *
  */
 
 #ifndef D_BUS_SERVER_UTILITIES_H
@@ -29,18 +29,18 @@
 
 typedef struct dbcs_s* DBUS_SVC;
 
-typedef enum 
-{ HANDLED, NOT_HANDLED, HANDLED_NOW 
+typedef enum
+{ HANDLED, NOT_HANDLED, HANDLED_NOW
 } dbus_svc_HandlerResult;
 
-typedef enum 
-{  INVALID, CALL, RETURN, ERROR, SIGNAL 
+typedef enum
+{  INVALID, CALL, RETURN, ERROR, SIGNAL
 } dbus_svc_MessageType;
 
-typedef enum 
+typedef enum
 {
     DBUS_SESSION,
-    DBUS_SYSTEM, 
+    DBUS_SYSTEM,
     DBUS_STARTER,
     DBUS_PRIVATE_SYSTEM,
     DBUS_PRIVATE_SESSION
@@ -73,7 +73,7 @@ typedef enum /* D-BUS Protocol Type Codes / Signature Chars */
 
 typedef struct DBusMessage* dbus_svc_MessageHandle;
 
-typedef int 
+typedef int
 (*dbus_svc_ErrorHandler)
 ( const char *errorFmt, ...
 ); /* Error Handler function prototype - handle FATAL errors from D-BUS calls */
@@ -88,21 +88,21 @@ typedef enum
 
 typedef void (*dbus_svc_WatchHandler)( int, dbus_svc_WatchFlags, void *arg );
 
-typedef dbus_svc_HandlerResult 
+typedef dbus_svc_HandlerResult
 (*dbus_svc_MessageHandler)
 ( DBUS_SVC dbus,
   dbus_svc_MessageType type,
   uint8_t  reply_expected,   /* 1 / 0 */
   uint32_t serial,           /* serial number of message; needed to reply */
   const char *destination,         /* D-BUS connection name / destination */
-  const char *path,                /* D-BUS Object Path */  
+  const char *path,                /* D-BUS Object Path */
   const char *member,              /* D-BUS Object Member */
   const char *interface,           /* D-BUS Object interface */
   const char *if_suffix,           /* remainder of interface prefixed by ifPrefix */
   const char *sender,              /* Senders' connection destination */
   const char *signature,           /* Signature String composed of Type Codes      */
   dbus_svc_MessageHandle msg,/* Message pointer: call dbus_svc_get_args(msg,...) to get data */
-  const char *prefix,              /* If non-null, this is the root prefix for this sub-path message */ 
+  const char *prefix,              /* If non-null, this is the root prefix for this sub-path message */
   const char *suffix,              /* If non-null, this is the suffix of this sub-path message */
   void *prefixObject,        /* If non-null, this is the object that was registered for the prefix */
   void *object               /* If non-null, this is the object that was registered for the complete path */
@@ -124,19 +124,19 @@ typedef dbus_svc_HandlerResult
   const char *prefix,            \
   const char *suffix,            \
   void *prefixObject,      \
-  void *object             
+  void *object
 
 #define SHUTDOWN 255
 
 extern isc_result_t dbus_svc_init
-( dbus_svc_DBUS_TYPE bus, 
+( dbus_svc_DBUS_TYPE bus,
   char *name,                         /* name to register with D-BUS */
   DBUS_SVC *dbus,                     /* dbus handle */
   dbus_svc_WatchHandler wh,           /* optional handler for watch events */
   dbus_svc_ErrorHandler eh,           /* optional error log message handler */
   dbus_svc_ErrorHandler dh,           /* optional debug / info log message handler */
   void *wh_arg                        /* optional watch handler arg */
-); 
+);
 /*
  * Obtains connection to DBUS_BUS_STARTER and registers "name".
  * "eh" will be called for all errors from this server session.
@@ -145,10 +145,10 @@ extern isc_result_t dbus_svc_init
 /* EITHER :
  *        pass a NULL WatchHandler to dbus_svc_init and use dbus_svc_main_loop
  * OR:
- *        supply a valid WatchHandler, and call dbus_svc_handle_watch when 
+ *        supply a valid WatchHandler, and call dbus_svc_handle_watch when
  *        select() returns the watch fd as ready for the watch action, and
  *        call dbus_svc_dispatch when all watches have been handled.
- */        
+ */
 
 
 uint8_t
@@ -158,8 +158,8 @@ dbus_svc_add_filter
  * Registers SINGLE message handler to handle ALL messages, adding match rules
  */
 
-void  dbus_svc_main_loop( DBUS_SVC, void (*idle_handler)(DBUS_SVC) ); 
- 
+void  dbus_svc_main_loop( DBUS_SVC, void (*idle_handler)(DBUS_SVC) );
+
 void  dbus_svc_handle_watch( DBUS_SVC, int watch_fd, dbus_svc_WatchFlags action);
 
 void  dbus_svc_dispatch( DBUS_SVC );
@@ -181,7 +181,7 @@ void  dbus_svc_quit( DBUS_SVC );
 
 void  dbus_svc_shutdown( DBUS_SVC );
 /*
- * Close connections and clean up. 
+ * Close connections and clean up.
  * DBUS_SVC pointer is invalid after this.
  */
 
@@ -198,7 +198,7 @@ typedef void (*dbus_svc_ShutdownHandler) ( DBUS_SVC, void * );
 uint8_t
 dbus_svc_add_shutdown_filter
 (
-    DBUS_SVC, dbus_svc_ShutdownHandler sh, void *obj 
+    DBUS_SVC, dbus_svc_ShutdownHandler sh, void *obj
 );
 /* Registers a filter for D-BUS shutdown event.
  * Cannot be used in conjunction with dbus_svc_add_message_filter.
@@ -209,7 +209,7 @@ dbus_svc_remove_message_filter
 ( DBUS_SVC, dbus_svc_MessageHandler mh);
 /* Unregisters the message filter */
 
-uint8_t 
+uint8_t
 dbus_svc_send
 ( DBUS_SVC,
   dbus_svc_MessageType type,
@@ -220,10 +220,10 @@ dbus_svc_send
   const char *member,
   const char *interface,
   dbus_svc_DataType firstType,
-  ... /* pointer, { (dbus_svc_DataType, pointer )...} */ 
+  ... /* pointer, { (dbus_svc_DataType, pointer )...} */
 ); /* sends messages / replies to "destination" */
 
-uint8_t 
+uint8_t
 dbus_svc_send_va
 ( DBUS_SVC cs,
   dbus_svc_MessageType type,

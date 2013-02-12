@@ -552,7 +552,7 @@ x_delete(nc, push)
 {
 	int	i,j;
 	char	*cp;
-	
+
 	if (nc == 0)
 		return;
 	if (xmp != NULL && xmp > xcp) {
@@ -599,7 +599,7 @@ x_delete(nc, push)
 	for (cp = x_lastcp(); cp > xcp; )
 		x_bs(*--cp);
 
-	return;	
+	return;
 }
 
 static int
@@ -871,7 +871,7 @@ static int x_end_hist(c) int c; { x_load_hist(histptr); return KSTD;}
 static int x_prev_com(c) int c; { x_load_hist(x_histp - x_arg); return KSTD;}
 
 static int x_next_com(c) int c; { x_load_hist(x_histp + x_arg); return KSTD;}
- 
+
 /* Goto a particular history number obtained from argument.
  * If no argument is given history 1 is probably not what you
  * want so we'll simply go to the oldest one.
@@ -1082,7 +1082,7 @@ x_redraw(limit)
 {
 	int	i, j;
 	char	*cp;
-	
+
 	x_adj_ok = 0;
 	if (limit == -1)
 		x_e_putc('\n');
@@ -1540,7 +1540,7 @@ x_init_emacs()
 		for (j = 0; j < X_TABSZ; j++)
 			x_atab[i][j] = NULL;
 
-	/* Determine if we can translate meta key or use 8-bit AscII 
+	/* Determine if we can translate meta key or use 8-bit AscII
 	 * XXX - It would be nice if there was a locale attribute to
 	 * determine if the locale is 7-bit or not.
 	 */
@@ -1856,8 +1856,8 @@ do_complete(flags, type)
 		completed = 1;
 	}
 
-	if (completed)	
-		x_redraw(0);	
+	if (completed)
+		x_redraw(0);
 
 	x_free_words(nwords, words);
 }
@@ -1903,7 +1903,7 @@ static int
 x_e_getc()
 {
 	int c;
-	
+
 	if (unget_char >= 0) {
 		c = unget_char;
 		unget_char = -1;
@@ -2138,7 +2138,7 @@ x_fold_case(c)
 	int c;
 {
 	char *cp = xcp;
-	
+
 	if (cp == xep) {
 		x_e_putc(BEL);
 		return KSTD;

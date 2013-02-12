@@ -115,8 +115,8 @@ exit
 #	\fIsrctoman\fR converts comments in various programming languages to
 #	UNIX-style manual pages.
 #	The command processes comments in the style of newsrc(1);
-#	its standard output is suitable for formatting with nroff(1) or 
-#	troff(1) using the "-man" macro package.  
+#	its standard output is suitable for formatting with nroff(1) or
+#	troff(1) using the "-man" macro package.
 #	Typically, srctoman is invoked from make(1) scripts.
 #
 #	Source files are processed in the indicated order; if no
@@ -172,7 +172,7 @@ exit
 #	Section heading: SOC, blank, section name in upper case.
 # .IP o
 #	All other text: SOC and subsequent blanks or tabs are removed.
-#	Lines that do not start with SOC are left unchanged (useful for 
+#	Lines that do not start with SOC are left unchanged (useful for
 #	inclusion of program text).
 # .IP o
 #	End of manual: SOC, followed by `--'.

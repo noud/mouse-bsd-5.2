@@ -21,8 +21,8 @@ and IRIX' @code{login} and @code{xdm} (in
 @file{lib/auth/afskauthlib}).
 
 @menu
-* Digital SIA::                 
-* IRIX::                        
+* Digital SIA::
+* IRIX::
 @end menu
 
 @node Digital SIA, IRIX, Authentication modules, Authentication modules

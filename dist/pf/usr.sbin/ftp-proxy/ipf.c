@@ -100,7 +100,7 @@ ftp_proxy_entry_create(u_int32_t id)
 	return (fpe);
 }
 
-static void 
+static void
 ftp_proxy_entry_remove(struct ftp_proxy_entry *fpe)
 {
 	struct ftp_proxy_nat *fpn;

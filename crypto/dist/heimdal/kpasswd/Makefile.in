@@ -470,13 +470,13 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-kpasswd$(EXEEXT): $(kpasswd_OBJECTS) $(kpasswd_DEPENDENCIES) 
+kpasswd$(EXEEXT): $(kpasswd_OBJECTS) $(kpasswd_DEPENDENCIES)
 	@rm -f kpasswd$(EXEEXT)
 	$(LINK) $(kpasswd_OBJECTS) $(kpasswd_LDADD) $(LIBS)
-kpasswd-generator$(EXEEXT): $(kpasswd_generator_OBJECTS) $(kpasswd_generator_DEPENDENCIES) 
+kpasswd-generator$(EXEEXT): $(kpasswd_generator_OBJECTS) $(kpasswd_generator_DEPENDENCIES)
 	@rm -f kpasswd-generator$(EXEEXT)
 	$(LINK) $(kpasswd_generator_OBJECTS) $(kpasswd_generator_LDADD) $(LIBS)
-kpasswdd$(EXEEXT): $(kpasswdd_OBJECTS) $(kpasswdd_DEPENDENCIES) 
+kpasswdd$(EXEEXT): $(kpasswdd_OBJECTS) $(kpasswdd_DEPENDENCIES)
 	@rm -f kpasswdd$(EXEEXT)
 	$(LINK) $(kpasswdd_OBJECTS) $(kpasswdd_LDADD) $(LIBS)
 

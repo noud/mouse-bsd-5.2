@@ -2,24 +2,24 @@
 /*
  * IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING. By downloading, copying, installing or
  * using the software you agree to this license. If you do not agree to this license, do not download, install,
- * copy or use the software. 
+ * copy or use the software.
  *
- * Intel License Agreement 
+ * Intel License Agreement
  *
  * Copyright (c) 2002, Intel Corporation
- * All rights reserved. 
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that
- * the following conditions are met: 
+ * the following conditions are met:
  *
  * -Redistributions of source code must retain the above copyright notice, this list of conditions and the
- *  following disclaimer. 
+ *  following disclaimer.
  *
  * -Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
- *  following disclaimer in the documentation and/or other materials provided with the distribution. 
+ *  following disclaimer in the documentation and/or other materials provided with the distribution.
  *
  * -The name of Intel Corporation may not be used to endorse or promote products derived from this software
- *  without specific prior written permission. 
+ *  without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -28,7 +28,7 @@
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE. 
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
 /*
@@ -58,7 +58,7 @@
 #include "so.h"
 #include <scsi/scsi_ioctl.h>
 #include "constants.h"
-#include <scsi/scsicam.h>	
+#include <scsi/scsicam.h>
 #include <linux/genhd.h>
 #include "iscsiutil.h"
 #include "osd.h"
@@ -134,7 +134,7 @@ static int so_ioctl(struct inode * inode, struct file * file, unsigned int cmd, 
 	int osdinfo[4];
 
 	iscsi_trace(TRACE_OSDSO, "so_ioctl()\n");
-    
+
 	SDev = rscsi_osds[DEVICE_NR(dev)].device;
 	/*
 	 * If we are in the middle of error recovery, don't let anyone
@@ -148,7 +148,7 @@ static int so_ioctl(struct inode * inode, struct file * file, unsigned int cmd, 
 		return -ENODEV;
 	}
 
-	switch (cmd) 
+	switch (cmd)
 	{
 		case HDIO_GETGEO:   /* Return BIOS osd parameters */
 		{
@@ -157,15 +157,15 @@ static int so_ioctl(struct inode * inode, struct file * file, unsigned int cmd, 
 				return -EINVAL;
 
 			host = rscsi_osds[DEVICE_NR(dev)].device->host;
-	
+
 			/* default to most commonly used values */
-	
+
 		        osdinfo[0] = 0x40;
 	        	osdinfo[1] = 0x20;
 	        	osdinfo[2] = rscsi_osds[DEVICE_NR(dev)].capacity >> 11;
-	
+
 			/* override with calculated, extended default, or driver values */
-	
+
 #if 0
 			if(host->hostt->bios_param != NULL)
 				host->hostt->bios_param(&rscsi_osds[DEVICE_NR(dev)], dev, &osdinfo[0]);
@@ -269,7 +269,7 @@ static int so_init_command(Scsi_Cmnd * SCpnt)
 	osd_args_t args;
 	int index;
 
-	iscsi_trace(TRACE_OSDSO, "so_init_command(MAJOR %i, MINOR %i)\n", 
+	iscsi_trace(TRACE_OSDSO, "so_init_command(MAJOR %i, MINOR %i)\n",
           MAJOR(SCpnt->request.rq_dev), MINOR(SCpnt->request.rq_dev));
         index = MINOR(SCpnt->request.rq_dev);
         so_devname(index, nbuff);
@@ -649,7 +649,7 @@ static int so_init_oneosd(int i) {
 		return i;
 	}
 
-        /* 
+        /*
          * TEST_UNIT_READY
          */
 
@@ -682,7 +682,7 @@ static int so_init_oneosd(int i) {
 
 	/* Wake up a process waiting for device */
 
-	scsi_release_request(SRpnt);  
+	scsi_release_request(SRpnt);
 
 	/* Cleanup */
 

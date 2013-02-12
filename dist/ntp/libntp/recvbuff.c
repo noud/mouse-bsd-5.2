@@ -26,7 +26,7 @@ static u_long volatile buffer_shortfall;/* number of missed free receive buffers
 
 static ISC_LIST(recvbuf_t)	full_recv_list;	/* Currently used recv buffers */
 static ISC_LIST(recvbuf_t)	free_recv_list;	/* Currently unused buffers */
-	
+
 #if defined(SYS_WINNT)
 
 /*
@@ -38,8 +38,8 @@ static CRITICAL_SECTION RecvLock;
 # define LOCK()		EnterCriticalSection(&RecvLock)
 # define UNLOCK()	LeaveCriticalSection(&RecvLock)
 #else
-# define LOCK()	
-# define UNLOCK()	
+# define LOCK()
+# define UNLOCK()
 #endif
 
 u_long
@@ -66,7 +66,7 @@ lowater_additions(void)
 	return lowater_adds;
 }
 
-static void 
+static void
 initialise_buffer(recvbuf_t *buff)
 {
 	memset((char *) buff, 0, sizeof(recvbuf_t));
@@ -143,7 +143,7 @@ freerecvbuf(recvbuf_t *rb)
 	UNLOCK();
 }
 
-	
+
 void
 add_full_recv_buffer(recvbuf_t *rb)
 {
@@ -197,13 +197,13 @@ get_full_recv_buffer(void)
 {
 	recvbuf_t *rbuf;
 	LOCK();
-	
+
 #ifdef HAVE_SIGNALED_IO
 	/*
 	 * make sure there are free buffers when we
 	 * wander off to do lengthy paket processing with
 	 * any buffer we grab from the full list.
-	 * 
+	 *
 	 * fixes malloc() interrupted by SIGIO risk
 	 * (Bug 889)
 	 */

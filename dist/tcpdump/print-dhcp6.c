@@ -30,7 +30,7 @@
  */
 /*
  * RFC3315: DHCPv6
- * supported DHCPv6 options: 
+ * supported DHCPv6 options:
  *  RFC3319,
  *  RFC3633,
  *  RFC3646,
@@ -504,7 +504,7 @@ dhcp6opt_print(const u_char *cp, const u_char *ep)
 			/* protocol dependent part */
 			tp = (u_char *)dh6o + sizeof(authopt);
 			authinfolen =
-			    optlen + sizeof(*dh6o) - sizeof(authopt); 
+			    optlen + sizeof(*dh6o) - sizeof(authopt);
 			switch (authopt.dh6opt_auth_proto) {
 			case DH6OPT_AUTHPROTO_DELAYED:
 				if (authinfolen == 0)

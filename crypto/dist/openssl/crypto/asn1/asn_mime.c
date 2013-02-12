@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -321,7 +321,7 @@ int SMIME_write_ASN1(BIO *bio, ASN1_VALUE *val, BIO *data, int flags,
 
 		/* Headers for signature */
 
-		BIO_printf(bio, "Content-Type: %ssignature;", mime_prefix); 
+		BIO_printf(bio, "Content-Type: %ssignature;", mime_prefix);
 		BIO_printf(bio, " name=\"smime.p7s\"%s", mime_eol);
 		BIO_printf(bio, "Content-Transfer-Encoding: base64%s",
 								mime_eol);
@@ -507,7 +507,7 @@ ASN1_VALUE *SMIME_read_ASN1(BIO *bio, BIO **bcont, const ASN1_ITEM *it)
 		} else sk_BIO_pop_free(parts, BIO_vfree);
 		return val;
 	}
-		
+
 	/* OK, if not multipart/signed try opaque signature */
 
 	if (strcmp (hdr->value, "application/x-pkcs7-mime") &&
@@ -519,7 +519,7 @@ ASN1_VALUE *SMIME_read_ASN1(BIO *bio, BIO **bcont, const ASN1_ITEM *it)
 	}
 
 	sk_MIME_HEADER_pop_free(headers, mime_hdr_free);
-	
+
 	if(!(val = b64_read_asn1(bio, it))) {
 		ASN1err(ASN1_F_SMIME_READ_ASN1, ASN1_R_ASN1_PARSE_ERROR);
 		return NULL;
@@ -785,7 +785,7 @@ static char *strip_end(char *name)
 			*p = 0;
 			return name;
 		}
-		if(isspace((unsigned char)c)) *p = 0;	
+		if(isspace((unsigned char)c)) *p = 0;
 		else return name;
 	}
 	return NULL;
@@ -823,7 +823,7 @@ static MIME_HEADER *mime_hdr_new(char *name, char *value)
 	if(!(mhdr->params = sk_MIME_PARAM_new(mime_param_cmp))) return NULL;
 	return mhdr;
 }
-		
+
 static int mime_hdr_addparam(MIME_HEADER *mhdr, char *name, char *value)
 {
 	char *tmpname, *tmpval, *p;

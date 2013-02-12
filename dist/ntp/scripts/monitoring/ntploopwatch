@@ -7,7 +7,7 @@
 ;#     - show statistics periodically using gnuplot
 ;#     - or print a single plot
 ;#
-;#  Copyright (c) 1992-1998 
+;#  Copyright (c) 1992-1998
 ;#  Rainer Pruy, Friedrich-Alexander Universität Erlangen-Nürnberg
 ;#
 ;#
@@ -49,7 +49,7 @@ If You like long option names, You can use:
     -Y    +maxy
     -y    +miny
 
-If <printer> contains a '/' (slash character) output is directed to 
+If <printer> contains a '/' (slash character) output is directed to
 a file of this name instead of delivered to a printer.
 E-O-P
 
@@ -104,7 +104,7 @@ $verbose = 1;
 while($_ = shift(@ARGV))
 {
     (/^[+-]help$/) && die($usage);
-    
+
     (/^-c$/ || /^\+config$/) &&
 	(@ARGV || die($usage), $config = shift(@ARGV), next);
 
@@ -113,7 +113,7 @@ while($_ = shift(@ARGV))
 
     (/^-h$/ || /^\+host$/) &&
 	(@ARGV || die($usage), $STATHOST = shift, next);
-    
+
     (/^-v(\d*)$/ || /^\+verbose=?(\d*)$/) &&
 	($verbose=($1 eq "") ? 1 : $1, next);
 
@@ -122,19 +122,19 @@ while($_ = shift(@ARGV))
 
     (/^-s(\d*)$/ || /^\+samples=?(\d*)$/) &&
 	(($samples = ($1 eq "") ? (shift || die($usage)): $1), next);
-    
+
     (/^-S$/ || /^\+[Ss]tart[Tt]ime$/) &&
 	(@ARGV || die($usage), $StartTime=&date_time_spec2seconds(shift),next);
 
     (/^-E$/ || /^\+[Ee]nd[Tt]ime$/) &&
 	(@ARGV || die($usage), $EndTime = &date_time_spec2seconds(shift),next);
-    
+
     (/^-Y$/ || /^\+[Mm]ax[Yy]$/) &&
 	(@ARGV || die($usage), $MaxY = shift, next);
-    
+
     (/^-y$/ || /^\+[Mm]in[Yy]$/) &&
 	(@ARGV || die($usage), $MinY = shift, next);
-    
+
     die("$0: unexpected argument \"$_\"\n$usage");
 }
 
@@ -158,9 +158,9 @@ if (!defined($PrintIt))
 	print "WARNING: your MaxY value may be shadowed by config file settings\n";
     defined($MinY) &&
 	print "WARNING: your MinY value may be shadowed by config file settings\n";
-	
+
     ;# check operating environment
-    ;# 
+    ;#
     ;# gnuplot usually has X support
     ;# I vaguely remember there was one with sunview support
     ;#
@@ -180,7 +180,7 @@ $config = "loopwatch.config" unless defined($config);
 
 $srcprefix =~ s/\$STATHOST/$STATHOST/g;
 
-;# plot command 
+;# plot command
 @plotcmd=("gnuplot",
 	  '-title', "Ntp loop filter statistics $STATHOST",
 	  '-name', "NtpLoopWatch_$STATTAG");
@@ -243,7 +243,7 @@ sub boolval
 }
 
 ;#####################
-;# start of real work 
+;# start of real work
 
 print "starting plot command (" . join(" ",@plotcmd) . ")\n" if $verbose > 1;
 
@@ -259,7 +259,7 @@ unless ($Plotpid)
    close(STDOUT);
    open(STDOUT,">&STDERR") ||
        die("$0: failed to redirect STDOUT of plot command: $!\n");
-   
+
    print STDOUT "plot command running as $$\n";
 
    exec @plotcmd;
@@ -445,12 +445,12 @@ sub make_doplot($$)
 	= ("%s \"%s\" using 1:%d title '%s <%lf %lf> %6s' with lines");
     local($regfmt)
 	= ("%s ((%lf * x) + %lf) title 'lin. approx. %s (%f t[h]) %s %f <%f> %6s' with lines");
-    
+
     $doplot = "    set title 'NTP loopfilter statistics for $STATHOST  " .
 	"(last $LastCnt samples from $srcprefix*)'\n";
-    
+
     local($xts,$xte,$i,$t);
-    
+
     local($s,$c) = ("");
 
     ;# number of integral seconds to get at least 12 tic marks on x axis
@@ -465,7 +465,7 @@ sub make_doplot($$)
 	$t = $t - ($t % $i);
     }
     print "time label resolution: $t seconds\n" if $verbose > 1;
-    
+
     ;# make gnuplot use wall clock time labels instead of NTP seconds
     for ($c="", $i = $mintime - ($mintime % $t);
 	 $i <= $maxtime + $t;
@@ -477,7 +477,7 @@ sub make_doplot($$)
 	     (($t <= 60) &&
 	      ($s .= sprintf("'%d:%02d:%02d' %lf",
 			     (localtime($i))[$[+2,$[+1,$[+0],
-			     ($i - $LastTimeBase)/3600))) 
+			     ($i - $LastTimeBase)/3600)))
 		 || (($t <= 2*60*60) &&
 		     ($s .= sprintf("'%d:%02d' %lf",
 				    (localtime($i))[$[+2,$[+1],
@@ -492,7 +492,7 @@ sub make_doplot($$)
 					   ($i - $LastTimeBase)/3600));
     }
     $doplot .= "set xtics ($s)\n";
-    
+
     chop($xts = &ctime($mintime));
     chop($xte = &ctime($maxtime));
     $doplot .= "set xlabel 'Start:  $xts    --   Time Scale   --    End:  $xte'\n";
@@ -501,7 +501,7 @@ sub make_doplot($$)
     $doplot .= ':';
     $doplot .= defined($MaxY) ? sprintf("%lf", $MaxY) : $maxy;
     $doplot .= "]\n";
-    
+
     $doplot .= "   plot";
     $c = "";
     $showoffs &&
@@ -528,7 +528,7 @@ sub make_doplot($$)
 	($doplot .= sprintf($fmt,$c,$tmpfile,3,
 			    "frequency" .
 			    ($LastFreqBase > 0
-			     ? " - $LastFreqBaseString" 
+			     ? " - $LastFreqBaseString"
 			     : ($LastFreqBase == 0 ? "" : " + $LastFreqBaseString")),
 			    $minfreq * $FreqScale - $LastFreqBase,
 			    $maxfreq * $FreqScale - $LastFreqBase,
@@ -567,13 +567,13 @@ sub make_doplot($$)
 sub genfile
 {
     local($cnt,$in,$out,$lo,$lf,@fpos) = @_;
-    
+
     local(@F,@t,$t,$lastT) = ();
     local(@break,@time,@offs,@freq,@cmpl,@loffset,@filekey) = ();
     local($lm,$l,@f);
-    
+
     local($sdir,$sname);
-    
+
     ;# allocate some storage for the tables
     ;# otherwise realloc may get into troubles
     if (defined($StartTime) && defined($EndTime))
@@ -615,11 +615,11 @@ sub genfile
 	($sdir,$sname) = ($in =~ m!^(.*)/([^/]*)!);
 	$sname = "" unless defined($sname);
     }
-    
+
     $Ltime = -1 if ! defined($Ltime);
     if (!defined($Lsdir) || $Lsdir ne $sdir || $Ltime != (stat($sdir))[$[+9] ||
 	grep($F_mtime{$_} != (stat($F_name{$_}))[$[+9], @F_files))
-	
+
     {
 	print "rescanning directory \"$sdir\" for files \"$sname*\"\n"
 	    if $verbose > 1;
@@ -637,11 +637,11 @@ sub genfile
 		(stat($name))[$[,$[+1,$[+7,$[+9];
 	    $modified = 0;
 	    $key = sprintf("%lx|%lu", $st_dev, $st_ino);
-	    
+
 	    print "candidate file \"$name\"",
                   (defined($st_dev) ? "" : " failed: $!"),"\n"
 		      if $verbose > 2;
-	    
+
 	    if (! defined($F_key{$name}) || $F_key{$name} ne $key)
 	    {
 		$F_key{$name} = $key;
@@ -726,7 +726,7 @@ sub genfile
 	    $verbose > 2 && print "no longer referenced: \"$_\"\n";
 	}
 	%Names = ();
-	
+
 	grep($Names{$_} = 1,values(%F_key));
 	foreach (keys %F_name)
 	{
@@ -769,7 +769,7 @@ sub genfile
 	    }
 	}
     }
-    
+
     printf("processing %s; output \"$out\" (%d input files)\n",
 	   ((defined($StartTime) && defined($EndTime))
 	    ? "time range"
@@ -778,13 +778,13 @@ sub genfile
 		 "last $cnt samples"))),
 	    scalar(@F_files))
 	if $verbose > 1;
-    
+
     ;# open output file - will be input for plotcmd
-    open(OUT,">$out") || 
+    open(OUT,">$out") ||
 	do {
 	    warn("$0: cannot create \"$out\": $!\n");
 	};
-    
+
     @f = @F_files;
     if (defined($StartTime))
     {
@@ -810,7 +810,7 @@ sub genfile
 	    pop(@f);
 	}
     }
-    
+
     if (@f)
     {
 	if (defined($StartTime))
@@ -833,7 +833,7 @@ sub genfile
 	    {
 		@fpos = ('start' , $f[$[], undef);
 	    }
-	    
+
 	    if (!defined($fpos[$[+2]))
 	    {
 		if ($StartTime <= $F_first{$f[$[]})
@@ -848,7 +848,7 @@ sub genfile
 			     ($F_last{$f[$[]} - $F_first{$f[$[]})));
 		    $fpos[$[+2] = ($fpos[$[+2] <= 2 * $RecordSize)
 			? 0 : $fpos[$[+2] - 2 * $RecordSize;
-		    ;# anyway  as the data may contain "time holes" 
+		    ;# anyway  as the data may contain "time holes"
 		    ;# our heuristics may baldly fail
 		    ;# so just start at 0
 		    $fpos[$[+2] = 0;
@@ -859,7 +859,7 @@ sub genfile
 	{
 	    print "guess starting point according to EndTime ($EndTime)\n"
 		if $verbose > 3;
-	    
+
 	    if ($fpos[$[] eq 'end')
 	    {
 		if (grep($_ eq $fpos[$[+1],@f))
@@ -875,7 +875,7 @@ sub genfile
 	    {
 		@fpos = ('end', $f[$[], undef);
 	    }
-	    
+
 	    if (!defined($fpos[$[+2]))
 	    {
 		local(@x) = reverse(@f);
@@ -900,7 +900,7 @@ sub genfile
 			shift(@x);
 		    }
 		}
-		
+
 		if (!defined($fpos[$[+2]))
 		{
 		    local($_);
@@ -940,12 +940,12 @@ sub genfile
 	    {
 		@fpos = ('cnt', $f[$[], undef);
 	    }
-	    
+
 	    if (!defined($fpos[$[+2]))
 	    {
 		local(@x) = reverse(@f);
 		local($s,$c) = (0,$cnt);
-		
+
 		local($_);
 		while($_ = shift(@x))
 		{
@@ -981,15 +981,15 @@ sub genfile
 	if $verbose > 2;
 
     $lm = 1;
-    $l = 0;    
+    $l = 0;
     foreach $key (@f)
     {
 	$file = $F_name{$key};
 	print "processing file \"$file\"\n" if $verbose > 2;
-	
+
 	open(IN,"<$file") ||
 	    (warn("$0: cannot read \"$file\": $!\n"), next);
-	
+
 	;# try to seek to a position nearer to the start of the interesting lines
 	;# should always affect only first item in @f
 	($key eq $fpos[$[+1]) &&
@@ -997,7 +997,7 @@ sub genfile
 	     print("Seeking to offset $fpos[$[+2]\n"),
 		seek(IN,$fpos[$[+2],0) ||
 		    warn("$0: seek(\"$F_name{$key}\" failed: $|\n"));
-	
+
 	while(<IN>)
 	{
 	    $l++;
@@ -1009,41 +1009,41 @@ sub genfile
 		  ($l ==  1000) && ($lm =  1000) ||
 		  ($l ==  5000) && ($lm =  5000) ||
 		  ($l == 10000) && ($lm = 10000)));
-	    
+
 	    @F = split;
-	    
+
 	    next if @F < 6;	# no valid input line is this short
 	    next if $F[$[] eq "";
 	    next if ($F[$[] !~ /^\d+$/);
 	    ($F[$[] !~ /^\d+$/) && # A 'never should have happend' error
 		die("$0: unexpected input line: >$_<\n");
-	    
+
 	    ;# modified Julian to UNIX epoch
 	    $t = ($F[$[] - $MJD_1970) * 24 * 60 * 60;
 	    $t += $F[$[+1];	# add seconds + fraction
-	    
+
 	    ;# multiply offset by 1000 to get ms - try to avoid float op
 	    (($F[$[+2] =~ s/(\d*)\.(\d{3})(\d*)/$1$2.$3/) &&
 	     $F[$[+2] =~ s/0+([\d\.])/($1 eq '.') ? '0.' : $1/e) # strip leading zeros
 		|| ($F[$[+2] *= 1000);
 
-	    
+
 	    ;# skip samples out of specified time range
 	    next if (defined($StartTime) && $StartTime > $t);
 	    next if (defined($EndTime) && $EndTime < $t);
-	    
+
 	    next if defined($lastT) && $t < $lastT; # backward in time ??
-	    
+
 	    push(@offs,$F[$[+2]);
 	    push(@freq,$F[$[+3] * (2**20/10**6));
 	    push(@cmpl,$F[$[+5]);
-	    
-	    push(@break, (defined($lastT) && ($t - $lastT > $deltaT))); 
+
+	    push(@break, (defined($lastT) && ($t - $lastT > $deltaT)));
 	    $lastT = $t;
 	    push(@time,$t);
 	    push(@loffset, tell(IN) - length($_));
 	    push(@filekey, $key);
-	    
+
 	    shift(@break),shift(@time),shift(@offs),
 	    shift(@freq), shift(@cmpl),shift(@loffset),
 	    shift(@filekey)
@@ -1057,15 +1057,15 @@ sub genfile
     }
     print "input scanned ($l lines/",scalar(@time)," samples)\n"
 	if $verbose > 1;
-    
+
     if (@time)
     {
 	local($_,@F);
-	
+
 	local($timebase) unless defined($timebase);
 	local($freqbase) unless defined($freqbase);
 	local($cmplscale) unless defined($cmplscale);
-	
+
 	undef $mintime;
 	undef $maxtime;
 	undef $minoffs;
@@ -1076,9 +1076,9 @@ sub genfile
 	undef $maxcmpl;
 	undef $miny;
 	undef $maxy ;
-	
+
 	print "computing ranges\n" if $verbose > 2;
-	
+
 	$LastCnt = @time;
 
 	;# @time is in ascending order (;-)
@@ -1088,7 +1088,7 @@ sub genfile
 	{
 	    local($time,@X) = (time);
 	    @X = localtime($time);
-	    
+
 	    ;# compute today 00:00:00
 	    $timebase = $time - ((($X[$[+2]*60)+$X[$[+1])*60+$X[$[]);
 
@@ -1098,10 +1098,10 @@ sub genfile
 	if ($showoffs)
 	{
 	    local($i,$m,$f);
-	    
+
 	    $minoffs = &min(@offs);
 	    $maxoffs = &max(@offs);
-	    
+
 	    ;# I know, it is not perl style using indices to access arrays,
 	    ;# but I have to proccess two arrays in sync, non-destructively
 	    ;# (otherwise a (shift(@a1),shift(a2)) would do),
@@ -1144,19 +1144,19 @@ sub genfile
 	    print  "offset max clipped from $maxoffs to $maxy\n"
 		if $verbose > 2 && $maxoffs != $maxy;
 	}
-	
+
 	if ($showfreq)
 	{
 	    local($i,$m);
-	    
+
 	    $minfreq = &min(@freq);
 	    $maxfreq = &max(@freq);
-	    
+
 	    $i = $[;
 	    $lf->sample(($time[$i]-$timebase)/3600,$freq[$i]-$minfreq),
 	    $i++
 		while $i <= $#time;
-	    
+
 	    $i = $lf->sigma();
 	    $m = $lf->mean() + $minfreq;
 
@@ -1178,9 +1178,9 @@ sub genfile
 		    $FreqScale = 1;
 		    $FreqScale = 10 ** int(log($s)/log(10) - 0.9999);
 		    $FreqScaleInv =
-			("$FreqScale" =~ /^10(0*)$/) ? "0.${1}1" : 
+			("$FreqScale" =~ /^10(0*)$/) ? "0.${1}1" :
 			 ($FreqScale == 1 ? "" : (1/$FreqScale));
-		    
+
 		    $freqbase = ($maxfreq + $minfreq)/ 2 * $FreqScale; #$m * $FreqScale;
 		    $freqbase -= ($maxy + $miny) / 2; #$lf->mean();
 
@@ -1217,7 +1217,7 @@ sub genfile
 		    (($maxy,$miny) =
 		     (($maxfreq - $minfreq) > 0)
 		     ? ($maxfreq-$freqbase,$minfreq-$freqbase) : (0.5,-0.5));
-		
+
 		$maxy = $MaxY if defined($MaxY) && $MaxY < $maxy;
 		$miny = $MinY if defined($MinY) && $MinY > $miny;
 
@@ -1241,7 +1241,7 @@ sub genfile
 	    $LastFreqBase = 0;
 	    $LastFreqBaseString = "";
 	}
-		
+
 	if ($showcmpl)
 	{
 	    $mincmpl = &min(@cmpl);
@@ -1277,10 +1277,10 @@ sub genfile
 	{
 	    $LastCmplScale = 1;
 	}
-	
+
 	print "creating plot command input file\n" if $verbose > 2;
-	
-	
+
+
 	print OUT ("# preprocessed NTP statistics file for $STATHOST\n");
 	print OUT ("#    timebase is: ",&ctime($LastTimeBase))
 	    if defined($LastTimeBase);
@@ -1289,7 +1289,7 @@ sub genfile
 		   "$LastFreqBaseString [${FreqScaleInv}ppm]\n");
 	print OUT ("#    compliance is scaled by $LastCmplScale\n");
 	print OUT ("# time [h]\toffset [ms]\tfrequency [${FreqScaleInv}ppm]\tcompliance\n");
-	
+
 	printf OUT ("%s%lf\t%lf\t%lf\t%lf\n",
 		    (shift(@break) ? "\n" : ""),
 		    (shift(@time) - $LastTimeBase)/3600,
@@ -1319,11 +1319,11 @@ sub genfile
 	$maxy = 3 + $MinClip;
     }
     close(OUT);
-    
+
     print "plot command input file created\n"
 	if $verbose > 2;
-	
-	
+
+
     if (($fpos[$[] eq 'cnt' && scalar(@loffset) >= $cnt) ||
 	($fpos[$[] eq 'start' && $mintime <= $StartTime) ||
 	($fpos[$[] eq 'end'))
@@ -1341,13 +1341,13 @@ sub genfile
 	    ;# compute a new guess from the first record found
 	    ;# if this equals our last guess use data of first record
 	    ;# otherwise try new guess
-	    
+
 	    if ($fpos[$[+1] eq $filekey[$[] && $loffset[$[] > $fpos[$[+2])
 	    {
 		local($noff);
 		$noff = $loffset[$[] - ($cnt - @loffset + 1) * $RecordSize;
 		$noff = 0 if $noff < 0;
-		
+
 		return (@fpos[$[,$[+1], ($noff == $fpos[$[+2]) ? $loffset[$[] : $noff);
 	    }
 	    return ($fpos[$[],$filekey[$[],$loffset[$[]);
@@ -1360,7 +1360,7 @@ sub genfile
 	    ;# this assumes distance to better starting point is at most one file
 	    ;# the primary guess at top of genfile() should usually allow this
 	    ;# assumption
-	    ;# if the offset of the first sample used is within 
+	    ;# if the offset of the first sample used is within
 	    ;# a different file than we guessed it must have occurred later
 	    ;# in the sequence of files
 	    ;# this only can happen if our starting file did not contain
@@ -1406,9 +1406,9 @@ sub genfile
 	{
 	    return ();
 	}
-	
+
 	return 0 if @loffset <= 1 || ($loffset[$#loffset] - $loffset[$[]) <= 1;
-	
+
 	;# EOF - 1.1 * avg(line) * $cnt
 	local($val) =  $loffset[$#loffset]
 	    - $cnt * 11 * (($loffset[$#loffset] - $loffset[$[]) / @loffset) / 10;
@@ -1452,7 +1452,7 @@ while(1)
   unlink($tmpfile);
   my $lo = lr->new();
   my $lf = lr->new();
-    
+
   @filepos = &genfile($samples,$srcprefix,$tmpfile,$lo,$lf,@filepos);
 
   ;# make plotcmd display samples
@@ -1545,7 +1545,7 @@ sub date_time_spec2seconds
 	{
 	    warn("$0: bad date_time_spec \"$_\"\n"),return(undef)
 		if defined($last);
-	    
+
 	}
 
 	if (s/^(\d{1,2})([_ ]|$)//)
@@ -1585,7 +1585,7 @@ sub date_time_spec2seconds
 	    warn("$0: bad date_time_spec \"$_\" after SECONDS\n");
 	    return undef;
 	}
-	
+
 	if (s/^(\d{1,2})(:|$)//)
 	{
 	    warn("$0: implausible hour $1\n"), return undef

@@ -311,7 +311,7 @@ struct lease {
 	binding_state_t binding_state;
 	binding_state_t next_binding_state;
 	binding_state_t desired_binding_state;
-	
+
 	struct lease_state *state;
 
 	TIME tstp;	/* Time sent to partner. */
@@ -596,7 +596,7 @@ struct subnet {
 
 struct collection {
 	struct collection *next;
-	
+
 	const char *name;
 	struct class *classes;
 };
@@ -628,7 +628,7 @@ struct class {
 	   and to do subclass matching. */
 	struct expression *submatch;
 	int spawning;
-	
+
 	struct group *group;
 
 	/* Statements to execute if class matches. */
@@ -656,7 +656,7 @@ enum dhcp_state {
 	S_REBOOTING = 1,
 	S_INIT = 2,
 	S_SELECTING = 3,
-	S_REQUESTING = 4, 
+	S_REQUESTING = 4,
 	S_BOUND = 5,
 	S_RENEWING = 6,
 	S_REBINDING = 7,
@@ -1290,7 +1290,7 @@ int evaluate_expression (struct binding_value **, struct packet *,
 int binding_value_dereference (struct binding_value **, const char *, int);
 #if defined (NSUPDATE)
 int evaluate_dns_expression PROTO ((ns_updrec **, struct packet *,
-				    struct lease *, 
+				    struct lease *,
 				    struct client_state *,
 				    struct option_state *,
 				    struct option_state *,
@@ -1562,7 +1562,7 @@ int if_register_socket PROTO ((struct interface_info *));
 void if_reinitialize_fallback PROTO ((struct interface_info *));
 void if_register_fallback PROTO ((struct interface_info *));
 ssize_t send_fallback PROTO ((struct interface_info *,
-			      struct packet *, struct dhcp_packet *, size_t, 
+			      struct packet *, struct dhcp_packet *, size_t,
 			      struct in_addr,
 			      struct sockaddr_in *, struct hardware *));
 #endif
@@ -1572,7 +1572,7 @@ void if_reinitialize_send PROTO ((struct interface_info *));
 void if_register_send PROTO ((struct interface_info *));
 void if_deregister_send PROTO ((struct interface_info *));
 ssize_t send_packet PROTO ((struct interface_info *,
-			    struct packet *, struct dhcp_packet *, size_t, 
+			    struct packet *, struct dhcp_packet *, size_t,
 			    struct in_addr,
 			    struct sockaddr_in *, struct hardware *));
 #endif
@@ -1766,7 +1766,7 @@ isc_result_t got_one PROTO ((omapi_object_t *));
 isc_result_t interface_set_value (omapi_object_t *, omapi_object_t *,
 				  omapi_data_string_t *, omapi_typed_data_t *);
 isc_result_t interface_get_value (omapi_object_t *, omapi_object_t *,
-				  omapi_data_string_t *, omapi_value_t **); 
+				  omapi_data_string_t *, omapi_value_t **);
 isc_result_t interface_destroy (omapi_object_t *, const char *, int);
 isc_result_t interface_signal_handler (omapi_object_t *,
 				       const char *, va_list);
@@ -1979,7 +1979,7 @@ void indent PROTO ((int));
 void add_route_direct PROTO ((struct interface_info *, struct in_addr));
 void add_route_net PROTO ((struct interface_info *, struct in_addr,
 			   struct in_addr));
-void add_route_default_gateway PROTO ((struct interface_info *, 
+void add_route_default_gateway PROTO ((struct interface_info *,
 				       struct in_addr));
 void remove_routes PROTO ((struct in_addr));
 void remove_if_route PROTO ((struct interface_info *, struct in_addr));
@@ -2137,7 +2137,7 @@ isc_result_t dhcp_group_set_value  (omapi_object_t *, omapi_object_t *,
 				    omapi_typed_data_t *);
 isc_result_t dhcp_group_get_value (omapi_object_t *, omapi_object_t *,
 				   omapi_data_string_t *,
-				   omapi_value_t **); 
+				   omapi_value_t **);
 isc_result_t dhcp_group_destroy (omapi_object_t *, const char *, int);
 isc_result_t dhcp_group_signal_handler (omapi_object_t *,
 					const char *, va_list);
@@ -2156,7 +2156,7 @@ isc_result_t dhcp_control_set_value  (omapi_object_t *, omapi_object_t *,
 				      omapi_typed_data_t *);
 isc_result_t dhcp_control_get_value (omapi_object_t *, omapi_object_t *,
 				     omapi_data_string_t *,
-				     omapi_value_t **); 
+				     omapi_value_t **);
 isc_result_t dhcp_control_destroy (omapi_object_t *, const char *, int);
 isc_result_t dhcp_control_signal_handler (omapi_object_t *,
 					  const char *, va_list);
@@ -2175,7 +2175,7 @@ isc_result_t dhcp_subnet_set_value  (omapi_object_t *, omapi_object_t *,
 				     omapi_typed_data_t *);
 isc_result_t dhcp_subnet_get_value (omapi_object_t *, omapi_object_t *,
 				    omapi_data_string_t *,
-				    omapi_value_t **); 
+				    omapi_value_t **);
 isc_result_t dhcp_subnet_destroy (omapi_object_t *, const char *, int);
 isc_result_t dhcp_subnet_signal_handler (omapi_object_t *,
 					 const char *, va_list);
@@ -2196,7 +2196,7 @@ isc_result_t dhcp_shared_network_set_value  (omapi_object_t *,
 isc_result_t dhcp_shared_network_get_value (omapi_object_t *,
 					    omapi_object_t *,
 					    omapi_data_string_t *,
-					    omapi_value_t **); 
+					    omapi_value_t **);
 isc_result_t dhcp_shared_network_destroy (omapi_object_t *, const char *, int);
 isc_result_t dhcp_shared_network_signal_handler (omapi_object_t *,
 						 const char *, va_list);
@@ -2230,7 +2230,7 @@ isc_result_t dhcp_lease_set_value  (omapi_object_t *, omapi_object_t *,
 				    omapi_typed_data_t *);
 isc_result_t dhcp_lease_get_value (omapi_object_t *, omapi_object_t *,
 				   omapi_data_string_t *,
-				   omapi_value_t **); 
+				   omapi_value_t **);
 isc_result_t dhcp_lease_destroy (omapi_object_t *, const char *, int);
 isc_result_t dhcp_lease_signal_handler (omapi_object_t *,
 					const char *, va_list);
@@ -2248,7 +2248,7 @@ isc_result_t dhcp_group_set_value  (omapi_object_t *, omapi_object_t *,
 				    omapi_typed_data_t *);
 isc_result_t dhcp_group_get_value (omapi_object_t *, omapi_object_t *,
 				   omapi_data_string_t *,
-				   omapi_value_t **); 
+				   omapi_value_t **);
 isc_result_t dhcp_group_destroy (omapi_object_t *, const char *, int);
 isc_result_t dhcp_group_signal_handler (omapi_object_t *,
 					const char *, va_list);
@@ -2266,7 +2266,7 @@ isc_result_t dhcp_host_set_value  (omapi_object_t *, omapi_object_t *,
 				   omapi_typed_data_t *);
 isc_result_t dhcp_host_get_value (omapi_object_t *, omapi_object_t *,
 				  omapi_data_string_t *,
-				  omapi_value_t **); 
+				  omapi_value_t **);
 isc_result_t dhcp_host_destroy (omapi_object_t *, const char *, int);
 isc_result_t dhcp_host_signal_handler (omapi_object_t *,
 				       const char *, va_list);
@@ -2284,7 +2284,7 @@ isc_result_t dhcp_pool_set_value  (omapi_object_t *, omapi_object_t *,
 				   omapi_typed_data_t *);
 isc_result_t dhcp_pool_get_value (omapi_object_t *, omapi_object_t *,
 				  omapi_data_string_t *,
-				  omapi_value_t **); 
+				  omapi_value_t **);
 isc_result_t dhcp_pool_destroy (omapi_object_t *, const char *, int);
 isc_result_t dhcp_pool_signal_handler (omapi_object_t *,
 				       const char *, va_list);
@@ -2302,7 +2302,7 @@ isc_result_t dhcp_class_set_value  (omapi_object_t *, omapi_object_t *,
 				    omapi_typed_data_t *);
 isc_result_t dhcp_class_get_value (omapi_object_t *, omapi_object_t *,
 				   omapi_data_string_t *,
-				   omapi_value_t **); 
+				   omapi_value_t **);
 isc_result_t dhcp_class_destroy (omapi_object_t *, const char *, int);
 isc_result_t dhcp_class_signal_handler (omapi_object_t *,
 					const char *, va_list);
@@ -2320,7 +2320,7 @@ isc_result_t dhcp_subclass_set_value  (omapi_object_t *, omapi_object_t *,
 				       omapi_typed_data_t *);
 isc_result_t dhcp_subclass_get_value (omapi_object_t *, omapi_object_t *,
 				      omapi_data_string_t *,
-				      omapi_value_t **); 
+				      omapi_value_t **);
 isc_result_t dhcp_subclass_destroy (omapi_object_t *, const char *, int);
 isc_result_t dhcp_subclass_signal_handler (omapi_object_t *,
 					   const char *, va_list);
@@ -2339,7 +2339,7 @@ isc_result_t dhcp_shared_network_set_value  (omapi_object_t *,
 					     omapi_typed_data_t *);
 isc_result_t dhcp_shared_network_get_value (omapi_object_t *, omapi_object_t *,
 					    omapi_data_string_t *,
-					    omapi_value_t **); 
+					    omapi_value_t **);
 isc_result_t dhcp_shared_network_destroy (omapi_object_t *, const char *, int);
 isc_result_t dhcp_shared_network_signal_handler (omapi_object_t *,
 						 const char *, va_list);
@@ -2355,7 +2355,7 @@ isc_result_t dhcp_subnet_set_value  (omapi_object_t *, omapi_object_t *,
 				     omapi_typed_data_t *);
 isc_result_t dhcp_subnet_get_value (omapi_object_t *, omapi_object_t *,
 				    omapi_data_string_t *,
-				    omapi_value_t **); 
+				    omapi_value_t **);
 isc_result_t dhcp_subnet_destroy (omapi_object_t *, const char *, int);
 isc_result_t dhcp_subnet_signal_handler (omapi_object_t *,
 					 const char *, va_list);
@@ -2576,7 +2576,7 @@ const char *dhcp_failover_message_name (unsigned);
 const char *dhcp_failover_option_name (unsigned);
 failover_option_t *dhcp_failover_option_printf (unsigned, char *,
 						unsigned *,
-						unsigned, 
+						unsigned,
 						const char *, ...)
 	__attribute__((__format__(__printf__,5,6)));
 failover_option_t *dhcp_failover_make_option (unsigned, char *,

@@ -127,7 +127,7 @@ tftp_print(register const u_char *bp, u_int length)
 				fn_print(p, snapend);
 			}
 		}
-		
+
 		if (i)
 			goto trunc;
 		break;

@@ -29,7 +29,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -188,7 +188,7 @@ clocal(p) NODE *p; {
 		p->n_op = ASSIGN;
 		p->n_right = p->n_left;
 		p->n_left = block(REG, NIL, NIL, p->n_type, 0, MKSUE(INT));
-		p->n_left->n_rval = p->n_left->n_type == BOOL ? 
+		p->n_left->n_rval = p->n_left->n_type == BOOL ?
 		    RETREG(CHAR) : RETREG(p->n_type);
 		break;
 
@@ -198,7 +198,7 @@ clocal(p) NODE *p; {
 		for (r = p->n_right; r->n_op == CM; r = r->n_left) {
 			if (r->n_right->n_op != STARG &&
 			    r->n_right->n_op != FUNARG)
-				r->n_right = block(FUNARG, r->n_right, NIL, 
+				r->n_right = block(FUNARG, r->n_right, NIL,
 				    r->n_right->n_type, r->n_right->n_df,
 				    r->n_right->n_sue);
 		}
@@ -218,19 +218,19 @@ myp2tree(NODE *p)
 {
 	int o = p->n_op, i;
 
-	if (o != FCON) 
+	if (o != FCON)
 		return;
 
 	/* Write float constants to memory */
 	/* Should be volontary per architecture */
- 
+
 	setloc1(RDATA);
 	defalign(p->n_type == FLOAT ? ALFLOAT : p->n_type == DOUBLE ?
 	    ALDOUBLE : ALLDOUBLE );
-	deflab1(i = getlab()); 
+	deflab1(i = getlab());
 	ninval(0, btdims[p->n_type].suesize, p);
 	p->n_op = NAME;
-	p->n_lval = 0;	
+	p->n_lval = 0;
 	p->n_sp = tmpalloc(sizeof(struct symtab_hdr));
 	p->n_sp->sclass = ILABEL;
 	p->n_sp->soffset = i;
@@ -249,7 +249,7 @@ andable(NODE *p)
 		return 1; /* functions are called by name */
 	return 0; /* Delay name reference to table, for PIC code generation */
 }
- 
+
 void
 cendarg(){ /* at the end of the arguments of a ftn, set the automatic offset */
 	autooff = AUTOINIT;
@@ -370,7 +370,7 @@ ctype(TWORD type ){ /* map types which are not defined on the local machine */
 	}
 
 void
-calldec(NODE *p, NODE *q) 
+calldec(NODE *p, NODE *q)
 {
 }
 

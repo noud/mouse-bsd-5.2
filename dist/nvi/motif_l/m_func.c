@@ -101,7 +101,7 @@ vi_clrtoeol(int ipvi)
 
 	len = __vi_screen->cols - __vi_screen->curx;
 	ptr = CharAt(__vi_screen, __vi_screen->cury, __vi_screen->curx);
-	
+
 	/* Clear backing store. */
 	memset(ptr, ' ', len);
 	memset(FlagAt(__vi_screen, __vi_screen->cury, __vi_screen->curx),

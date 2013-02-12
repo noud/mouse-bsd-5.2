@@ -1533,7 +1533,7 @@ mm_answer_krb4(int socket, Buffer *m)
 	u_int alen;
 
 	reply.length = auth.length = 0;
- 
+
 	p = buffer_get_string(m, &alen);
 	if (alen >=  MAX_KTXT_LEN)
 		 fatal("%s: auth too large", __func__);

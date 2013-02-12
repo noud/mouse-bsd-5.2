@@ -5,7 +5,7 @@ dnl
 
 AC_DEFUN([rk_SUNOS],[
 sunos=no
-case "$host" in 
+case "$host" in
 *-*-sunos4*)
 	sunos=40
 	;;
@@ -20,7 +20,7 @@ case "$host" in
 	;;
 esac
 if test "$sunos" != no; then
-	AC_DEFINE_UNQUOTED(SunOS, $sunos, 
+	AC_DEFINE_UNQUOTED(SunOS, $sunos,
 		[Define to what version of SunOS you are running.])
 fi
 ])

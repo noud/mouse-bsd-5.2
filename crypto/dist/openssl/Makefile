@@ -61,11 +61,11 @@ OPENSSLDIR=/usr/local/ssl
 
 CC= gcc
 CFLAG= -DOPENSSL_THREADS -pthread -D_THREAD_SAFE -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -DTERMIOS -O3 -Wall
-DEPFLAG= -DOPENSSL_NO_GMP -DOPENSSL_NO_MDC2 -DOPENSSL_NO_RC5 -DOPENSSL_NO_RFC3779 
-PEX_LIBS= 
-EX_LIBS= 
-EXE_EXT= 
-ARFLAGS= 
+DEPFLAG= -DOPENSSL_NO_GMP -DOPENSSL_NO_MDC2 -DOPENSSL_NO_RC5 -DOPENSSL_NO_RFC3779
+PEX_LIBS=
+EX_LIBS=
+EXE_EXT=
+ARFLAGS=
 AR=ar $(ARFLAGS) r
 RANLIB= /usr/bin/ranlib
 NM= nm
@@ -84,7 +84,7 @@ ASFLAG=$(CFLAG)
 
 # For x86 assembler: Set PROCESSOR to 386 if you want to support
 # the 80386.
-PROCESSOR= 
+PROCESSOR=
 
 # CPUID module collects small commonly used assembler snippets
 CPUID_OBJ= mem_clr.o
@@ -95,9 +95,9 @@ BF_ENC= bf_enc.o
 CAST_ENC= c_enc.o
 RC4_ENC= rc4_enc.o rc4_skey.o
 RC5_ENC= rc5_enc.o
-MD5_ASM_OBJ= 
-SHA1_ASM_OBJ= 
-RMD160_ASM_OBJ= 
+MD5_ASM_OBJ=
+SHA1_ASM_OBJ=
+RMD160_ASM_OBJ=
 WP_ASM_OBJ= wp_block.o
 CMLL_ENC= camellia.o cmll_misc.o cmll_cbc.o
 PERLASM_SCHEME= void
@@ -121,7 +121,7 @@ SDIRS=  \
 	bn ec rsa dsa ecdsa dh ecdh dso engine \
 	buffer bio stack lhash rand err \
 	evp asn1 pem x509 x509v3 conf txt_db pkcs7 pkcs12 comp ocsp ui krb5 \
-	store cms pqueue ts 
+	store cms pqueue ts
 # keep in mind that the above list is adjusted by ./Configure
 # according to no-xxx arguments...
 
@@ -481,7 +481,7 @@ tar-snap:
 	      --prefix=openssl-$(VERSION) - > ../$(TARFILE);\
 	ls -l ../$(TARFILE)
 
-dist:   
+dist:
 	$(PERL) Configure dist
 	@$(MAKE) dist_pem_h
 	@$(MAKE) SDIRS='${SDIRS}' clean

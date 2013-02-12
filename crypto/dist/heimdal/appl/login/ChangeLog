@@ -7,9 +7,9 @@
 	* limits_conf.c: Report to syslog strings that start with NUL;
 	prevents negative index array access. Ray Lai of OpenBSD via Björn
 	Sandell.
-	
+
 2006-10-07  Love Hörnquist Åstrand  <lha@it.su.se>
-	
+
 	* Makefile.am: Add man_MANS to EXTRA_DIST
 
 2006-09-22  Love Hörnquist Åstrand  <lha@it.su.se>
@@ -17,17 +17,17 @@
 	* read_string.c: try to not call signaction for signal 0 and use
 	NSIG if it exists to determin how many signals there exists, also,
 	only restore those signalhandlers that we got out.
-	
+
 2006-04-27  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* login_locl.h: Include "loginpaths.h"
-	
+
 	* loginpaths.h: Shared paths between login and rshd.
-	
+
 2006-01-09 Johan Danielsson <joda@blubb.pdc.kth.se>
 
 	* login.c: log successful logins
-	
+
 2005-08-08  Love Hörnquist Åstrand <lha@it.su.se>
 
 	* login.c (do_login): only do krb4_get_afs_tokens if we have done
@@ -51,16 +51,16 @@
 2005-04-22  Johan Danielsson  <joda@pdc.kth.se>
 
 	* login.1: document limits.conf
-	
+
 	* Makefile.am: limits_conf.c
-	
+
 	* login_locl.h: template for limits.conf
-	
+
 	* login.c: read limits.conf (from /etc/security by default,
 	overridable in login.conf)
-	
+
 	* limits_conf.c: implement a parser for limits.conf
-	
+
 2004-09-08  Johan Danielsson  <joda@pdc.kth.se>
 
 	* login.c: use krb5_appdefault_boolean instead of
@@ -69,11 +69,11 @@
 2003-09-03  Love Hörnquist Åstrand <lha@it.su.se>
 
 	* login.c (krb5_to4): set client princ of the mcred
-	
+
 2003-07-07  Love Hörnquist Åstrand <lha@it.su.se>
 
 	* login.c (krb5_to4): use krb5_cc_clear_mcred
-	
+
 2003-03-24  Johan Danielsson  <joda@pdc.kth.se>
 
 	* Makefile.am: install man pages
@@ -85,10 +85,10 @@
 	* login.access.5: login.access manual page
 
 2003-03-18  Love Hörnquist Åstrand <lha@it.su.se>
-	
+
 	* login.c: also need pag_set
 	* login.c: if there is kerberos 5, call krb5_afslog\*
-	
+
 2002-08-23  Johan Danielsson  <joda@pdc.kth.se>
 
 	* login.c: if motd is set in login.conf, output its contents
@@ -279,7 +279,7 @@
 1999-05-09  Assar Westerlund  <assar@sics.se>
 
 	* login.c (krb5_verify): check seteuid for errors
-	
+
 Mon Apr 19 22:30:55 1999  Assar Westerlund  <assar@sics.se>
 
 	* login.c: conditionalize the kafs calls on KRB4

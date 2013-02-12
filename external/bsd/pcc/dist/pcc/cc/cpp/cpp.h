@@ -80,8 +80,8 @@ struct includ {
 
 /* Symbol table entry  */
 struct symtab {
-	usch *namep;    
-	usch *value;    
+	usch *namep;
+	usch *value;
 	usch *file;
 	int line;
 };

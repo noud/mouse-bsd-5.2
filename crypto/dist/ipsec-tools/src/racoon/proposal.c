@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -323,7 +323,7 @@ cmpsaprop_alloc(ph1, pp1, pp2, side)
 		goto err;
 	}
 	if (!(*pp1->sctx.ctx_str) && *pp2->sctx.ctx_str) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		     "Peer is missing security context\n");
 		goto err;
 	}
@@ -332,7 +332,7 @@ cmpsaprop_alloc(ph1, pp1, pp2, side)
 		if (pp1->sctx.ctx_doi == pp2->sctx.ctx_doi)
 			newpp->sctx.ctx_doi = pp1->sctx.ctx_doi;
 		else {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			     "sec doi mismatched: my:%d peer:%d\n",
 			     pp2->sctx.ctx_doi, pp1->sctx.ctx_doi);
 			     goto err;
@@ -440,7 +440,7 @@ cmpsaprop_alloc(ph1, pp1, pp2, side)
 		}
 
 #ifdef ENABLE_NATT
-		if ((ph1->natt_flags & NAT_DETECTED) && 
+		if ((ph1->natt_flags & NAT_DETECTED) &&
 		    natt_udp_encap (pr2->encmode))
 		{
 			plog(LLV_INFO, LOCATION, NULL, "Adjusting my encmode %s->%s\n",
@@ -654,7 +654,7 @@ set_satrnsbysainfo(pr, sainfo)
 
 			if (a->alg == IPSECDOI_ATTR_AUTH_NONE)
 				continue;
-				
+
 			/* allocate satrns */
 			newtr = newsatrns();
 			if (newtr == NULL) {
@@ -816,7 +816,7 @@ aproppair2saprop(p0)
 				goto err;
 			}
 
-			if (ipsecdoi_t2satrns(t->trns, 
+			if (ipsecdoi_t2satrns(t->trns,
 			    newpp, newpr, newtr) < 0) {
 				flushsaprop(newpp);
 				racoon_free(newtr);
@@ -828,7 +828,7 @@ aproppair2saprop(p0)
 		}
 
 		/*
-		 * If the peer does not specify encryption mode, use 
+		 * If the peer does not specify encryption mode, use
 		 * transport mode by default.  This is to conform to
 		 * draft-shacham-ippcp-rfc2393bis-08.txt (explicitly specifies
 		 * that unspecified == transport), as well as RFC2407
@@ -1000,7 +1000,7 @@ printsatrns(pri, proto_id, tr)
 
 void
 print_proppair0(pri, p, level)
-	int pri; 
+	int pri;
 	struct prop_pair *p;
 	int level;
 {
@@ -1108,7 +1108,7 @@ set_proposal_from_policy(iph2, sp_main, sp_sub)
 			newpr->encmode = pfkey2ipsecdoi_mode(req->saidx.mode);
 #ifdef ENABLE_NATT
 			if (iph2->ph1 && (iph2->ph1->natt_flags & NAT_DETECTED))
-				newpr->encmode += 
+				newpr->encmode +=
 				    iph2->ph1->natt_options->mode_udp_diff;
 #endif
 		}
@@ -1249,8 +1249,8 @@ set_proposal_from_proposal(iph2)
 				conf->gen_policy == GENERATE_POLICY_UNIQUE){
 				newpr->reqid_in = g_nextreqid ;
 				newpr->reqid_out = g_nextreqid ++;
-				/* 
-				 * XXX there is a (very limited) 
+				/*
+				 * XXX there is a (very limited)
 				 * risk of reusing the same reqid
 				 * as another SP entry for the same peer
 				 */
@@ -1260,7 +1260,7 @@ set_proposal_from_proposal(iph2)
 				newpr->reqid_in = 0;
 				newpr->reqid_out = 0;
 			}
- 
+
 			if (set_satrnsbysainfo(newpr, iph2->sainfo) < 0)
 			{
 				plog(LLV_ERROR, LOCATION, NULL,
@@ -1276,7 +1276,7 @@ set_proposal_from_proposal(iph2)
         }
 
 	plog(LLV_DEBUG, LOCATION, NULL, "make a proposal from peer's:\n");
-	printsaprop0(LLV_DEBUG, newpp);  
+	printsaprop0(LLV_DEBUG, newpp);
 
 	iph2->proposal = newpp;
 

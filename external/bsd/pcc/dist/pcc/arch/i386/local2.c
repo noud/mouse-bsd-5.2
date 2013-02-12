@@ -146,7 +146,7 @@ prologue(struct interpass_prolog *ipp)
 	printf("%s:\n", ipp->ipp_name);
 #endif
 	/*
-	 * We here know what register to save and how much to 
+	 * We here know what register to save and how much to
 	 * add to the stack.
 	 */
 	addto = offcalc(ipp);
@@ -169,7 +169,7 @@ eoftn(struct interpass_prolog *ipp)
 		if (i & 1)
 			fprintf(stdout, "	movl -%d(%s),%s\n",
 			    regoff[j], rnames[FPREG], rnames[j]);
-			
+
 	}
 
 	/* struct return needs special treatment */
@@ -297,7 +297,7 @@ twollcomp(NODE *p)
 		cb1 = LT;
 		cb2 = GT;
 		break;
-	
+
 	default:
 		cb1 = cb2 = 0; /* XXX gcc */
 	}
@@ -398,9 +398,9 @@ starg(NODE *p)
  * Compare two floating point numbers.
  */
 static void
-fcomp(NODE *p)  
+fcomp(NODE *p)
 {
-	
+
 	if (p->n_left->n_op == REG) {
 		if (p->n_su & DORIGHT)
 			expand(p, 0, "	fxch\n");
@@ -412,7 +412,7 @@ fcomp(NODE *p)
 	else
 		comperr("bad compare %p\n", p);
 	expand(p, 0, "	fnstsw %ax\n");	/* move status reg to ax */
-	
+
 	switch (p->n_op) {
 	case EQ:
 		expand(p, 0, "	andb $64,%ah\n	jne LC\n");

@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -200,7 +200,7 @@ static void nist_cp_bn_0(BN_ULONG *buf, BN_ULONG *a, int top, int max)
         }
 
 static void nist_cp_bn(BN_ULONG *buf, BN_ULONG *a, int top)
-        { 
+        {
 	int i;
         BN_ULONG *_tmp1 = (buf), *_tmp2 = (a);
         for (i = (top); i != 0; i--)
@@ -590,7 +590,7 @@ int BN_nist_mod_384(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
 			}
 		*ap=c;
 		}
-	carry = bn_add_words(r_d+(128/BN_BITS2), r_d+(128/BN_BITS2), 
+	carry = bn_add_words(r_d+(128/BN_BITS2), r_d+(128/BN_BITS2),
 		t_d, BN_NIST_256_TOP);
 	/*S2 */
 	carry += bn_add_words(r_d, r_d, buf, BN_NIST_384_TOP);
@@ -677,11 +677,11 @@ int BN_nist_mod_521(BIGNUM *r, const BIGNUM *a, const BIGNUM *field,
 		goto err;
 	top = r->top;
 	r_d = r->d;
-	if (top == BN_NIST_521_TOP  && 
+	if (top == BN_NIST_521_TOP  &&
            (r_d[BN_NIST_521_TOP-1] & ~(BN_NIST_521_TOP_MASK)))
 		{
 		BN_NIST_ADD_ONE(r_d)
-		r->d[BN_NIST_521_TOP-1] &= BN_NIST_521_TOP_MASK; 
+		r->d[BN_NIST_521_TOP-1] &= BN_NIST_521_TOP_MASK;
 		}
 	bn_correct_top(r);
 

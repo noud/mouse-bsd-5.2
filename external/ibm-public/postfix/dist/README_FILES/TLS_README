@@ -51,7 +51,7 @@ programs. Other colored boxes represent storage elements.
 
                     <---seed----             ----seed--->
 Network-> smtpd(8)                tlsmgr(8)                 smtp(8)  ->Network
-                    <-key/cert->             <-key/cert->       
+                    <-key/cert->             <-key/cert->
 
                                 /       |    \
                                         |

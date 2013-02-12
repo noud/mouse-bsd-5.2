@@ -31,7 +31,7 @@ typedef __uint32_t        SW_U32;
 #else
 typedef unsigned long     SW_U32;                 /* 32 bit integer   */
 #endif
- 
+
 #if defined(OPENSSL_SYS_WIN32)
   typedef struct _SW_U64 {
       SW_U32 low32;
@@ -154,7 +154,7 @@ typedef struct _SW_LARGENUMBER {
     SW_U32    nbytes;       /* number of bytes in the buffer "value"  */
     SW_BYTE*  value;        /* the large integer as a string of       */
                             /*   bytes in network (big endian) order  */
-} SW_LARGENUMBER;               
+} SW_LARGENUMBER;
 
 #if defined(OPENSSL_SYS_WIN32)
     #include <windows.h>
@@ -164,7 +164,7 @@ typedef struct _SW_LARGENUMBER {
 #elif defined(OPENSSL_SYS_MACINTOSH_CLASSIC)
     /* async callback mechanisms */
     /* swiftCallbackLevel */
-    #define SW_MAC_CALLBACK_LEVEL_NO         0		
+    #define SW_MAC_CALLBACK_LEVEL_NO         0
     #define SW_MAC_CALLBACK_LEVEL_HARDWARE   1	/* from the hardware ISR */
     #define SW_MAC_CALLBACK_LEVEL_SECONDARY  2	/* as secondary ISR */
     typedef int             SW_MAC_CALLBACK_LEVEL;
@@ -175,7 +175,7 @@ typedef struct _SW_LARGENUMBER {
     typedef int             SW_OSHANDLE;          /* handle to driver */
     #define SW_OS_INVALID_HANDLE  (-1)
     #define SW_CALLCONV
-#endif 
+#endif
 
 typedef struct _SW_CRT {
     SW_LARGENUMBER  p;      /* prime number p                         */

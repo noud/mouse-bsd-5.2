@@ -66,7 +66,7 @@ message onebiosmatch
 }
 
 message onebiosmatch_header
-{BIOS # Zylinder   Köpfe   Sektoren 
+{BIOS # Zylinder   Köpfe   Sektoren
 ------ ---------- ------- --------
 }
 
@@ -79,7 +79,7 @@ message biosmultmatch
 }
 
 message biosmultmatch_header
-{   BIOS # Zylinder   Köpfe   Sektoren 
+{   BIOS # Zylinder   Köpfe   Sektoren
    ------ ---------- ------- --------
 }
 

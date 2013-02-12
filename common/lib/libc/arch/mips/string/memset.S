@@ -31,7 +31,7 @@ LEAF(memset)
 1:
 	and	v1, a2, 3		# compute number of whole words left
 	subu	t0, a2, v1
-	subu	a2, a2, t0 
+	subu	a2, a2, t0
 	addu	t0, t0, a0		# compute ending address
 2:
 	addu	a0, a0, 4		# clear words

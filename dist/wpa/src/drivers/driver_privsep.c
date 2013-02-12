@@ -101,7 +101,7 @@ static int wpa_priv_cmd(struct wpa_driver_privsep_data *drv, int cmd,
 	return 0;
 }
 
-			     
+
 static int wpa_driver_privsep_set_wpa(void *priv, int enabled)
 {
 	struct wpa_driver_privsep_data *drv = priv;

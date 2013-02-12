@@ -58,7 +58,7 @@ typedef struct _omapi_buffer {
 	u_int16_t head, tail;		/* Buffers are organized in a ring. */
 	char buf [OMAPI_BUF_SIZE];	/* The actual buffer is included in
 					   the buffer data structure. */
-} omapi_buffer_t;	
+} omapi_buffer_t;
 
 #define BUFFER_BYTES_FREE(x)	\
 	((x) -> tail > (x) -> head \

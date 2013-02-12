@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 1984 through 2008, William LeFebvre
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  *     * Redistributions in binary form must reproduce the above
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- * 
+ *
  *     * Neither the name of William LeFebvre nor the names of other
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -154,7 +154,7 @@ static int header_status = Yes;
 /* pending messages are stored in a circular buffer, where message_first
    is the next one to display, and message_last is the last one
    in the buffer.  Counters wrap around at MAX_MESSAGES.  The buffer is
-   empty when message_first == message_last and full when 
+   empty when message_first == message_last and full when
    message_last + 1 == message_first.  The pointer message_current holds
    the message currently being displayed, or "" if there is none.
 */
@@ -660,7 +660,7 @@ summary_format_memory(int x, int y, long *numbers, char **names, int *cidx)
  *
  * Reallocate buffer space needed by the display package to accomodate
  * a new screen size.  Must be called whenever the screen's size has
- * changed.  Returns the number of lines available for displaying 
+ * changed.  Returns the number of lines available for displaying
  * processes or -1 if there was a problem allocating space.
  */
 
@@ -821,7 +821,7 @@ display_init(struct statics *statics, int percpuinfo)
 	y_idlecursor++;
 	y_procs++;
     }
-    
+
     /* call resize to do the dirty work */
     top_lines = display_resize();
 
@@ -1045,7 +1045,7 @@ i_timeofday(time_t *tod)
     /*
      *  Display the current time.
      *  "ctime" always returns a string that looks like this:
-     *  
+     *
      *	Sun Sep 16 01:03:52 1973
      *  012345678901234567890123
      *	          1         2
@@ -1772,7 +1772,7 @@ message_clear()
 /*
  * void message_prompt_v(int so, char *msgfmt, va_list ap)
  *
- * Place a prompt in the message area.  A prompt is different from a 
+ * Place a prompt in the message area.  A prompt is different from a
  * message as follows: it is displayed immediately, overwriting any
  * message that may already be there, it may be highlighted in standout
  * mode (if "so" is true), the cursor is left to rest at the end of the
@@ -1893,7 +1893,7 @@ readline(char *buffer, int size, int numeric)
 	    else
 	    {
 		/*
-		 * First: remove all spaces till the first-non-space 
+		 * First: remove all spaces till the first-non-space
 		 * Second: remove all non-spaces till the first-space
 		 */
 		while(cnt > 0 && ptr[-1] == ' ')

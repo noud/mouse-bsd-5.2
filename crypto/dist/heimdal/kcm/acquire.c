@@ -74,7 +74,7 @@ kcm_ccache_acquire(krb5_context context,
 		ccache->name);
 	return KRB5_FCC_INTERNAL;
     }
-	
+
     HEIMDAL_MUTEX_lock(&ccache->mutex);
 
     /* Fake up an internal ccache */
@@ -196,7 +196,7 @@ change_pw(krb5_context context,
 				     &options);
     if (ret) {
 	kcm_log(0, "Failed to acquire password change credentials "
-		"for principal %s: %s", 
+		"for principal %s: %s",
 		cpn, krb5_get_err_text(context, ret));
 	goto out;
     }
@@ -311,7 +311,7 @@ get_salt_and_kvno(krb5_context context,
 	krb5_free_principal(context, creds.client);
 	return ret;
     }
-	
+
     ret = krb5_get_in_tkt(context,
 			  options,
 			  NULL,
@@ -365,7 +365,7 @@ update_keytab_entry(krb5_context context,
     if (ret) {
 	kcm_log(0, "String to key conversion failed for principal %s "
 		"and etype %d: %s",
-		cpn, etype, krb5_get_err_text(context, ret)); 
+		cpn, etype, krb5_get_err_text(context, ret));
 	return ret;
     }
 
@@ -398,7 +398,7 @@ update_keytab_entry(krb5_context context,
 
     krb5_kt_free_entry(context, &entry);
 
-    return ret; 
+    return ret;
 }
 
 static krb5_error_code

@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -63,7 +63,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -202,7 +202,7 @@ int set_cert_stuff(SSL_CTX *ctx, char *cert_file, char *key_file)
 			}
 
 		/*
-		In theory this is no longer needed 
+		In theory this is no longer needed
 		ssl=SSL_new(ctx);
 		x509=SSL_get_certificate(ssl);
 
@@ -218,8 +218,8 @@ int set_cert_stuff(SSL_CTX *ctx, char *cert_file, char *key_file)
 
 		/* If we are using DSA, we can copy the parameters from
 		 * the private key */
-		
-		
+
+
 		/* Now we know that a key and cert have been set against
 		 * the SSL context */
 		if (!SSL_CTX_check_private_key(ctx))
@@ -248,7 +248,7 @@ int set_cert_key_stuff(SSL_CTX *ctx, X509 *cert, EVP_PKEY *key)
 		return 0;
 		}
 
-		
+
 		/* Now we know that a key and cert have been set against
 		 * the SSL context */
 	if (!SSL_CTX_check_private_key(ctx))
@@ -324,7 +324,7 @@ void MS_CALLBACK msg_cb(int write_p, int version, int content_type, const void *
 	{
 	BIO *bio = arg;
 	const char *str_write_p, *str_version, *str_content_type = "", *str_details1 = "", *str_details2= "";
-	
+
 	str_write_p = write_p ? ">>>" : "<<<";
 
 	switch (version)
@@ -356,7 +356,7 @@ void MS_CALLBACK msg_cb(int write_p, int version, int content_type, const void *
 					if (len >= 3)
 						{
 						unsigned err = (((const unsigned char*)buf)[1]<<8) + ((const unsigned char*)buf)[2];
-						
+
 						switch (err)
 							{
 						case 0x0001:
@@ -421,7 +421,7 @@ void MS_CALLBACK msg_cb(int write_p, int version, int content_type, const void *
 		if (content_type == 21) /* Alert */
 			{
 			str_details1 = ", ???";
-			
+
 			if (len == 2)
 				{
 				switch (((const unsigned char*)buf)[0])
@@ -524,7 +524,7 @@ void MS_CALLBACK msg_cb(int write_p, int version, int content_type, const void *
 					}
 				}
 			}
-		
+
 		if (content_type == 22) /* Handshake */
 			{
 			str_details1 = "???";
@@ -573,7 +573,7 @@ void MS_CALLBACK msg_cb(int write_p, int version, int content_type, const void *
 	if (len > 0)
 		{
 		size_t num, i;
-		
+
 		BIO_printf(bio, "   ");
 		num = len;
 #if 0
@@ -649,7 +649,7 @@ void MS_CALLBACK tlsext_cb(SSL *s, int client_server, int type,
 		break;
 
 		}
-	
+
 	BIO_printf(bio, "TLS %s extension \"%s\" (id=%d), len=%d\n",
 			client_server ? "server": "client",
 			extname, type, len);

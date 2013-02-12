@@ -49,7 +49,7 @@ $shlibp=($shlib)?".dll":".lib";
 $lfile='';
 
 $shlib_ex_obj="";
-$app_ex_obj="c0x32.obj"; 
+$app_ex_obj="c0x32.obj";
 
 $asm='nasmw -f obj -d__omf__';
 $asm.=" /Zi" if $debug;
@@ -128,7 +128,7 @@ sub do_link_rule
 	{
 	local($target,$files,$dep_libs,$libs)=@_;
 	local($ret,$_);
-	
+
 	$file =~ s/\//$o/g if $o ne '/';
 	$n=&bname($targer);
 	$ret.="$target: $files $dep_libs\n";

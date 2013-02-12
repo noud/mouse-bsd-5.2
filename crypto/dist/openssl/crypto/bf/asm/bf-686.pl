@@ -116,7 +116,7 @@ sub BF_ENCRYPT
 	&add(	$tot,		$tmp3);
 	&xor(	$tmp1,		$tmp1);
 
-	&xor(	$L,		$tot);					
+	&xor(	$L,		$tot);
 	# delay
 	}
 

@@ -416,10 +416,10 @@ LDAP_SLAPD_F (int) backend_access LDAP_P((
 
 LDAP_SLAPD_F (int) backend_operational LDAP_P((
 	Operation *op,
-	SlapReply *rs 
+	SlapReply *rs
 ));
 
-LDAP_SLAPD_V(BackendInfo) slap_binfo[]; 
+LDAP_SLAPD_V(BackendInfo) slap_binfo[];
 
 /*
  * backglue.c
@@ -547,12 +547,12 @@ LDAP_SLAPD_F (int) extract_component_reference LDAP_P((
 	char* attr,
 	ComponentReference** cr ));
 
-LDAP_SLAPD_F (int) componentFilterMatch LDAP_P(( 
-	int *matchp, 
-	slap_mask_t flags, 
-	Syntax *syntax, 
+LDAP_SLAPD_F (int) componentFilterMatch LDAP_P((
+	int *matchp,
+	slap_mask_t flags,
+	Syntax *syntax,
 	MatchingRule *mr,
-	struct berval *value, 
+	struct berval *value,
 	void *assertedValue ));
 
 LDAP_SLAPD_F (int) directoryComponentsMatch LDAP_P((
@@ -574,8 +574,8 @@ LDAP_SLAPD_F (int) allComponentsMatch LDAP_P((
 LDAP_SLAPD_F (ComponentReference*) dup_comp_ref LDAP_P((
 	Operation *op,
 	ComponentReference *cr ));
-                                                                          
-LDAP_SLAPD_F (int) componentFilterValidate LDAP_P(( 
+
+LDAP_SLAPD_F (int) componentFilterValidate LDAP_P((
 	Syntax *syntax,
 	struct berval* bv ));
 
@@ -851,10 +851,10 @@ LDAP_SLAPD_V (SOCKET *) slapd_ws_sockets;
 #define bvmatch(bv1, bv2)	( ((bv1)->bv_len == (bv2)->bv_len) && (memcmp((bv1)->bv_val, (bv2)->bv_val, (bv1)->bv_len) == 0) )
 
 LDAP_SLAPD_F (int) dnValidate LDAP_P((
-	Syntax *syntax, 
+	Syntax *syntax,
 	struct berval *val ));
 LDAP_SLAPD_F (int) rdnValidate LDAP_P((
-	Syntax *syntax, 
+	Syntax *syntax,
 	struct berval *val ));
 
 LDAP_SLAPD_F (slap_mr_normalize_func) dnNormalize;
@@ -865,35 +865,35 @@ LDAP_SLAPD_F (slap_syntax_transform_func) dnPretty;
 
 LDAP_SLAPD_F (slap_syntax_transform_func) rdnPretty;
 
-LDAP_SLAPD_F (int) dnPrettyNormal LDAP_P(( 
-	Syntax *syntax, 
-	struct berval *val, 
+LDAP_SLAPD_F (int) dnPrettyNormal LDAP_P((
+	Syntax *syntax,
+	struct berval *val,
 	struct berval *pretty,
 	struct berval *normal,
 	void *ctx ));
 
-LDAP_SLAPD_F (int) dnMatch LDAP_P(( 
-	int *matchp, 
-	slap_mask_t flags, 
-	Syntax *syntax, 
+LDAP_SLAPD_F (int) dnMatch LDAP_P((
+	int *matchp,
+	slap_mask_t flags,
+	Syntax *syntax,
 	MatchingRule *mr,
-	struct berval *value, 
+	struct berval *value,
 	void *assertedValue ));
 
-LDAP_SLAPD_F (int) dnRelativeMatch LDAP_P(( 
-	int *matchp, 
-	slap_mask_t flags, 
-	Syntax *syntax, 
+LDAP_SLAPD_F (int) dnRelativeMatch LDAP_P((
+	int *matchp,
+	slap_mask_t flags,
+	Syntax *syntax,
 	MatchingRule *mr,
-	struct berval *value, 
+	struct berval *value,
 	void *assertedValue ));
 
-LDAP_SLAPD_F (int) rdnMatch LDAP_P(( 
-	int *matchp, 
-	slap_mask_t flags, 
-	Syntax *syntax, 
+LDAP_SLAPD_F (int) rdnMatch LDAP_P((
+	int *matchp,
+	slap_mask_t flags,
+	Syntax *syntax,
 	MatchingRule *mr,
-	struct berval *value, 
+	struct berval *value,
 	void *assertedValue ));
 
 
@@ -1118,13 +1118,13 @@ LDAP_SLAPD_F (int) limits_get LDAP_P((
 LDAP_SLAPD_F (int) limits_parse LDAP_P((
 	Backend *be, const char *fname, int lineno,
 	int argc, char **argv ));
-LDAP_SLAPD_F (int) limits_parse_one LDAP_P(( const char *arg, 
+LDAP_SLAPD_F (int) limits_parse_one LDAP_P(( const char *arg,
 	struct slap_limits_set *limit ));
 LDAP_SLAPD_F (int) limits_check LDAP_P((
 	Operation *op, SlapReply *rs ));
-LDAP_SLAPD_F (int) limits_unparse_one LDAP_P(( 
+LDAP_SLAPD_F (int) limits_unparse_one LDAP_P((
 	struct slap_limits_set *limit, int which, struct berval *bv, ber_len_t buflen ));
-LDAP_SLAPD_F (int) limits_unparse LDAP_P(( 
+LDAP_SLAPD_F (int) limits_unparse LDAP_P((
 	struct slap_limits *limit, struct berval *bv, ber_len_t buflen ));
 LDAP_SLAPD_F (void) limits_destroy LDAP_P(( struct slap_limits **lm ));
 
@@ -1150,7 +1150,7 @@ parse_debug_unknowns LDAP_P(( char **unknowns, int *levelp ));
 /*
  * matchedValues.c
  */
-LDAP_SLAPD_F (int) filter_matched_values( 
+LDAP_SLAPD_F (int) filter_matched_values(
 	Operation	*op,
 	Attribute	*a,
 	char		***e_flags );
@@ -1578,10 +1578,10 @@ LDAP_SLAPD_F (void) slap_sasl_regexp_unparse LDAP_P(( BerVarray *bva ));
 LDAP_SLAPD_F (int) slap_sasl_setpolicy LDAP_P(( const char * ));
 LDAP_SLAPD_F (const char *) slap_sasl_getpolicy LDAP_P(( void ));
 #ifdef SLAP_AUTH_REWRITE
-LDAP_SLAPD_F (int) slap_sasl_rewrite_config LDAP_P(( 
+LDAP_SLAPD_F (int) slap_sasl_rewrite_config LDAP_P((
 	const char *fname,
 	int lineno,
-	int argc, 
+	int argc,
 	char **argv ));
 LDAP_SLAPD_F (void) slap_sasl_regexp_destroy LDAP_P(( void ));
 #endif /* SLAP_AUTH_REWRITE */
@@ -1741,7 +1741,7 @@ LDAP_SLAPD_F (Filter *) str2filter_x LDAP_P(( Operation *op, const char *str ));
  * syncrepl.c
  */
 
-LDAP_SLAPD_F (int)  syncrepl_add_glue LDAP_P(( 
+LDAP_SLAPD_F (int)  syncrepl_add_glue LDAP_P((
 					Operation*, Entry* ));
 LDAP_SLAPD_F (void) syncinfo_free LDAP_P(( struct syncinfo_s *, int all ));
 
@@ -2014,7 +2014,7 @@ LDAP_SLAPD_F (int) fe_access_allowed LDAP_P((
 	} while ( 0 )
 
 #elif defined( USE_MP_GMP )
-/* NOTE: according to the documentation, the result 
+/* NOTE: according to the documentation, the result
  * of mpz_sizeinbase() can exceed the length of the
  * string representation of the number by 1
  */

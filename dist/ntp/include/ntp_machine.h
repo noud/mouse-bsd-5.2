@@ -485,7 +485,7 @@ struct servent *getservbyname P((char *name, char *type));
 
 /* standard structures missing from MPE include files */
 
-struct itimerval { 
+struct itimerval {
         struct timeval it_interval;    /* timer interval */
         struct timeval it_value;       /* current value */
 };

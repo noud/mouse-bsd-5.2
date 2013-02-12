@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: print.c,v 1.4 2001/01/28 07:35:01 bp Exp 
+ * from: Id: print.c,v 1.4 2001/01/28 07:35:01 bp Exp
  */
 #include <sys/param.h>
 #include <sys/errno.h>

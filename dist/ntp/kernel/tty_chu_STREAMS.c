@@ -145,7 +145,7 @@ struct streamtab chuinfo = { &rinit, &winit, NULL, NULL };
 /*
  * Here's our private data type and structs
  */
-struct priv_data 
+struct priv_data
 {
 #ifdef SOLARIS2
   kmutex_t chucode_mutex;

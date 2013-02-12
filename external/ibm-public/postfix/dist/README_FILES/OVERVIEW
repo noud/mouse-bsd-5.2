@@ -284,11 +284,11 @@ queues.
 
             /-- smtp(8) --> Internet
 
-    qmgr(8)       |  
+    qmgr(8)       |
                   |
             \--   | smtp(8) --> Internet
                   |
-                  ^          
+                  ^
                   |
 
                   scache(8)
@@ -324,7 +324,7 @@ queues.
 
                         <---seed---            ---seed--->
     Network-> smtpd(8)              tlsmgr(8)               smtp(8)  ->Network
-                        <-session->            <-session->      
+                        <-session->            <-session->
 
                                   /       |    \
                                           |

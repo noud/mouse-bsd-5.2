@@ -39,12 +39,12 @@
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
 #endif
- 
+
 #include <ctype.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-    
+
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
@@ -416,7 +416,7 @@ write_pid_file(const char *f)
 	FILE	*fp;
 
 	if ((fp = fopen(f, "w")) == NULL) {
-		(void) fprintf(stderr, "Couldn't create pid file \"%s\": %s", f, strerror(errno)); 
+		(void) fprintf(stderr, "Couldn't create pid file \"%s\": %s", f, strerror(errno));
 	} else {
 		fprintf(fp, "%ld\n", (long) getpid());
 		fclose(fp);

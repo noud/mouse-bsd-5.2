@@ -46,9 +46,9 @@
 
 /*
  * Unsigned multiply.  Returns %o0 * %o1 in %o0
- *	
+ *
  * According to the manual the smaller parameter should be in
- * rs1, so we'll move it there.  
+ * rs1, so we'll move it there.
  */
 
 FUNC(.umul)

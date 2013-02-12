@@ -310,7 +310,7 @@ gen_files_rfc2459 =					\
 	asn1_id_pkix_ppl_inheritAll.x			\
 	asn1_id_pkix_ppl_independent.x			\
 	asn1_ProxyPolicy.x				\
-	asn1_ProxyCertInfo.x 
+	asn1_ProxyCertInfo.x
 
 gen_files_pkinit =					\
 	asn1_id_pkinit.x				\
@@ -347,7 +347,7 @@ gen_files_pkinit =					\
 	asn1_PA_PK_AS_REP_Win2k.x			\
 	asn1_KDCDHKeyInfo_Win2k.x			\
 	asn1_ReplyKeyPack_Win2k.x			\
-	asn1_PkinitSuppPubInfo.x 
+	asn1_PkinitSuppPubInfo.x
 
 gen_files_pkcs12 =					\
 	asn1_id_pkcs_12.x				\

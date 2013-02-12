@@ -29,7 +29,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <string.h>
@@ -468,7 +468,7 @@ enddo(int here)
 		if((np = ctlstack->donamep)) {
 
 			t = mklhs(mkprim(ctlstack->donamep, 0,0 ,0));
-			t = mkexpr(OPASSIGN, cpexpr(t), 
+			t = mkexpr(OPASSIGN, cpexpr(t),
 			    mkexpr(OPPLUS, t, cpexpr(ctlstack->dostep)));
 
 			if(ctlstack->dostepsign == VARSTEP) {

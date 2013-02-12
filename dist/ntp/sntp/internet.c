@@ -67,7 +67,7 @@ void find_address (struct sockaddr_storage *address,
     struct sockaddr_storage *anywhere,
     int *port, char *hostname, int timespan) {
 
-/* Locate the specified NTP server and return its Internet address and port 
+/* Locate the specified NTP server and return its Internet address and port
 number. */
 
     int family, rval;
@@ -132,7 +132,7 @@ number. */
 void find_address (struct in_addr *address, struct in_addr *anywhere,
     int *port, char *hostname, int timespan) {
 
-/* Locate the specified NTP server and return its Internet address and port 
+/* Locate the specified NTP server and return its Internet address and port
 number. */
 
     unsigned long ipaddr;
@@ -190,7 +190,7 @@ it needs to set up a timeout. */
                 argv0,host->h_name,inet_ntoa(*address));
     }
 
-/* Find out the port number (usually from /etc/services), and leave it in 
+/* Find out the port number (usually from /etc/services), and leave it in
 network format.  This is assumed not to be obtained from a network service!
 Note that a port number is not assumed to be 16 bits. */
 

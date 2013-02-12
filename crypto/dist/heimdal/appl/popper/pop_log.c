@@ -8,7 +8,7 @@
 __RCSID("$Heimdal: pop_log.c 3609 1997-10-14 21:59:37Z joda $"
         "$NetBSD: pop_log.c,v 1.2 2008/03/22 08:36:55 mlelstv Exp $");
 
-/* 
+/*
  *  log:    Make a log entry
  */
 

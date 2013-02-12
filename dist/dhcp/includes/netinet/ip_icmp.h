@@ -63,7 +63,7 @@ struct icmp {
 
 		/* ICMP_UNREACH_NEEDFRAG -- Path MTU Discovery (RFC1191) */
 		struct ih_pmtu {
-			  int16_t ipm_void;    
+			  int16_t ipm_void;
 			  int16_t ipm_nextmtu;
 		} ih_pmtu;
 		struct ih_rtradv {

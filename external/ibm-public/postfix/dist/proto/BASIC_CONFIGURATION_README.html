@@ -205,7 +205,7 @@ to an unqualified recipient address. </p>
 
 <p> The mydestination parameter specifies what domains this
 machine will deliver locally, instead of forwarding to another
-machine. The default is to receive mail for the machine itself. 
+machine. The default is to receive mail for the machine itself.
 See the VIRTUAL_README file for how to configure Postfix for
 hosted domains. </p>
 
@@ -242,7 +242,7 @@ domain, you must list $mydomain as well.  </p>
 <blockquote>
 <pre>
 /etc/postfix/main.cf:
-    mydestination = $myhostname localhost.$mydomain localhost 
+    mydestination = $myhostname localhost.$mydomain localhost
         www.$mydomain ftp.$mydomain
 </pre>
 </blockquote>
@@ -269,7 +269,7 @@ then your default mynetworks setting may be too friendly. </p>
     mynetworks_style = subnet  (default: authorize subnetworks)
     mynetworks_style = host    (safe: authorize local machine only)
     mynetworks = 127.0.0.0/8   (safe: authorize local machine only)
-    mynetworks = 127.0.0.0/8 168.100.189.2/32 (authorize local machine) 
+    mynetworks = 127.0.0.0/8 168.100.189.2/32 (authorize local machine)
 </pre>
 </blockquote>
 
@@ -593,7 +593,7 @@ specify the fully-qualified domain name that the mail system should
 use. </p>
 
 <p> Alternatively, if you specify mydomain in main.cf, then Postfix
-will use its value to generate a fully-qualified default value      
+will use its value to generate a fully-qualified default value
 for the myhostname parameter. </p>
 
 <p> Examples (specify only one of the following): </p>
@@ -625,7 +625,7 @@ for the myhostname parameter. </p>
 /etc/postfix/main.cf:
     mydomain = local.domain
     mydomain = virtual.domain (virtual interface)
-</pre> 
+</pre>
 </blockquote>
 
 <h2><a name="inet_interfaces">My own network addresses</a> </h2>

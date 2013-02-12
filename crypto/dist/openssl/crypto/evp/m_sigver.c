@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -159,7 +159,7 @@ int EVP_DigestSignFinal(EVP_MD_CTX *ctx, unsigned char *sigret, size_t *siglen)
 		{
 		if (sctx)
 			{
-			if (ctx->pctx->pmeth->signctx(ctx->pctx, 
+			if (ctx->pctx->pmeth->signctx(ctx->pctx,
 						sigret, siglen, ctx) <= 0)
 				return 0;
 			}
@@ -183,7 +183,7 @@ int EVP_DigestVerifyFinal(EVP_MD_CTX *ctx, unsigned char *sig, size_t siglen)
 		vctx = 0;
 	EVP_MD_CTX_init(&tmp_ctx);
 	if (!EVP_MD_CTX_copy_ex(&tmp_ctx,ctx))
-		return -1;	
+		return -1;
 	if (vctx)
 		{
 		r = tmp_ctx.pctx->pmeth->verifyctx(tmp_ctx.pctx,

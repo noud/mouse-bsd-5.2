@@ -336,7 +336,7 @@ _s390x_AES_encrypt:
 	or	$s1,$t1
 	or	$t2,$i2
 	or	$t3,$i3
-	
+
 	srlg	$i1,$s2,`8-3`	# i0
 	srlg	$i2,$s2,`16-3`	# i1
 	sllg	$i3,$s2,`0+3`
@@ -382,7 +382,7 @@ _s390x_AES_encrypt:
 	x	$s2,24($key)
 	x	$s3,28($key)
 
-	br	$ra	
+	br	$ra
 .size	_s390x_AES_encrypt,.-_s390x_AES_encrypt
 ___
 
@@ -710,7 +710,7 @@ _s390x_AES_decrypt:
 	x	$s2,24($key)
 	x	$s3,28($key)
 
-	br	$ra	
+	br	$ra
 .size	_s390x_AES_decrypt,.-_s390x_AES_decrypt
 
 # void AES_set_encrypt_key(const unsigned char *in, int bits,

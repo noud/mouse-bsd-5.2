@@ -42,7 +42,7 @@ __RCSID("$Heimdal: hex.c 16504 2006-01-09 17:09:29Z lha $"
 
 const static char hexchar[] = "0123456789ABCDEF";
 
-static int 
+static int
 pos(char c)
 {
     const char *p;
@@ -68,7 +68,7 @@ hex_encode(const void *data, size_t size, char **str)
     p = malloc(size * 2 + 1);
     if (p == NULL)
 	return -1;
-    
+
     for (i = 0; i < size; i++) {
 	p[i * 2] = hexchar[(*q >> 4) & 0xf];
 	p[i * 2 + 1] = hexchar[*q & 0xf];
@@ -86,9 +86,9 @@ hex_decode(const char *str, void *data, size_t len)
     size_t l;
     unsigned char *p = data;
     size_t i;
-	
+
     l = strlen(str);
-    
+
     /* check for overflow, same as (l+1)/2 but overflow safe */
     if ((l/2) + (l&1) > len)
 	return -1;

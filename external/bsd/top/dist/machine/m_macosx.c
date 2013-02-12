@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 1984 through 2008, William LeFebvre
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  *     * Redistributions in binary form must reproduce the above
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- * 
+ *
  *     * Neither the name of William LeFebvre nor the names of other
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -91,7 +91,7 @@
 
 /* define what weighted cpu is */
 #define weighted_cpu(pct, s) (s == 0 ? 0.0 : \
-                         ((pct) / (1.0 - exp(s * logcpu)))) 
+                         ((pct) / (1.0 - exp(s * logcpu))))
 
 /* what we consider to be process size: */
 #ifdef notdef
@@ -216,7 +216,7 @@ static char header[] =
   "  PID X        PRI THRD  SIZE   RES STATE   TIME    MEM    CPU COMMAND";
 /* 0123456   -- field to fill in starts at header+6 */
 #define UNAME_START 6
-     
+
 #define Proc_format \
         "%5d %-8.8s %3d %4d %5s %5s %-5s %6s %5.2f%% %5.2f%% %.16s"
 
@@ -250,7 +250,7 @@ static void puke(const char* fmt, ...)
  * All other behavior is per kvm_read except the error reporting.
  */
 
-static ssize_t kread(u_long addr, void *buf, 
+static ssize_t kread(u_long addr, void *buf,
 	size_t nbytes, const char *errstr)
 {
 	ssize_t	s = 0;
@@ -429,7 +429,7 @@ char *format_next_process(caddr_t handle, char *(*getuserid)())
 	 *
 	 * cputime = PP(pp, p_rtime).tv_sec;
 	 */
-	
+
 	cputime = RP(pp, user_time).seconds + RP(pp, system_time).seconds;
 
 	/*
@@ -535,7 +535,7 @@ caddr_t get_process_info(struct system_info *si,
 		 * first, we set the pointer to the reference in
 		 * the kproc list.
 		 */
-		
+
 		proc_list[i].kproc = pp2;
 
 		/*
@@ -544,8 +544,8 @@ caddr_t get_process_info(struct system_info *si,
 
 		if(PP(pp2, p_stat) != SZOMB)
 			{
-			rc = task_for_pid(mach_task_self(), 
-				PP(pp2, p_pid), 
+			rc = task_for_pid(mach_task_self(),
+				PP(pp2, p_pid),
 				&(proc_list[i].the_task));
 
 			if(rc != KERN_SUCCESS)
@@ -557,7 +557,7 @@ caddr_t get_process_info(struct system_info *si,
 			 * load the task information
 			 */
 
-			rc = task_info(proc_list[i].the_task, TASK_BASIC_INFO, 
+			rc = task_info(proc_list[i].the_task, TASK_BASIC_INFO,
 				(task_info_t)&(proc_list[i].task_info),
 				&info_count);
 
@@ -591,19 +591,19 @@ caddr_t get_process_info(struct system_info *si,
 	for(pp = proc_list, i = 0; i < nproc; pp++, i++)
 		{
 		/*
-		 *  Place pointers to each valid proc structure in 
-		 * proc_ref[].  Process slots that are actually in use 
+		 *  Place pointers to each valid proc structure in
+		 * proc_ref[].  Process slots that are actually in use
 		 * have a non-zero status field.  Processes with
-		 * P_SYSTEM set are system processes---these get 
+		 * P_SYSTEM set are system processes---these get
 		 * ignored unless show_sysprocs is set.
 		 */
-		if(MPP(pp, p_stat) != 0 && 
+		if(MPP(pp, p_stat) != 0 &&
 				(show_system || ((MPP(pp, p_flag) & P_SYSTEM) == 0)))
 			{
 			total_procs++;
 			process_states[(unsigned char) MPP(pp, p_stat)]++;
 			if((MPP(pp, p_stat) != SZOMB) &&
-					(show_idle || (MPP(pp, p_pctcpu) != 0) || 
+					(show_idle || (MPP(pp, p_pctcpu) != 0) ||
 			 		(MPP(pp, p_stat) == SRUN)) &&
 					(!show_uid || MEP(pp, e_pcred.p_ruid) == (uid_t)sel->uid))
 				{
@@ -612,8 +612,8 @@ caddr_t get_process_info(struct system_info *si,
 				}
 			}
 		}
-	
-	/* 
+
+	/*
 	 * if requested, sort the "interesting" processes
 	 */
 
@@ -674,8 +674,8 @@ void get_system_info(struct system_info *si)
 		}
 
 #ifdef MAX_VERBOSE
-	printf("%-30s%03.2f, %03.2f, %03.2f\n", 
-			"load averages:", 
+	printf("%-30s%03.2f, %03.2f, %03.2f\n",
+			"load averages:",
 			si->load_avg[0],
 			si->load_avg[1],
 			si->load_avg[2]);
@@ -723,7 +723,7 @@ void get_system_info(struct system_info *si)
 		swappgsin = vm_stats.pageins;
 		swappgsout = vm_stats.pageouts;
 	}
-	
+
 	si->cpustates = cpu_states;
 	si->memory = memory_stats;
 	si->last_pid = -1;
@@ -802,7 +802,7 @@ static unsigned char sorted_state[] =
     2,	/* zombie		*/
     4	/* stop			*/
 };
- 
+
 int proc_compare(const void *pp1, const void *pp2)
 {
     register struct macos_proc *p1;
@@ -869,7 +869,7 @@ int pid;
     cnt = pref_len;
     while (--cnt >= 0)
     {
-	pp = *prefp++;	
+	pp = *prefp++;
 	if (MPP(pp, p_pid) == (pid_t)pid)
 	{
 	    return((int)MEP(pp, e_pcred.p_ruid));
@@ -902,8 +902,8 @@ int load_thread_info(struct macos_proc *mp)
 	thread_array_t			thread_list = NULL;
 
 	/*
-	 * We need to load all of the threads for the 
-	 * given task so we can get the performance 
+	 * We need to load all of the threads for the
+	 * given task so we can get the performance
 	 * data from them.
 	 */
 
@@ -927,7 +927,7 @@ int load_thread_info(struct macos_proc *mp)
 		unsigned int			icount = THREAD_BASIC_INFO_COUNT;
 		kern_return_t			rc = 0;
 
-		rc = thread_info(thread_list[i], THREAD_BASIC_INFO, 
+		rc = thread_info(thread_list[i], THREAD_BASIC_INFO,
 				(thread_info_t)&t_info, &icount);
 
 		if(rc != KERN_SUCCESS)

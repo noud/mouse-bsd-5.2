@@ -650,7 +650,7 @@ main( int argc, char **argv )
 	nargs[nanum++] = "-e";
 	nargs[nanum++] = NULL;		/* will hold the modrdn entry */
 	nargs[nanum] = NULL;
-	
+
 	/*
 	 * generate the modify clients
 	 */
@@ -1112,7 +1112,7 @@ wait4kids( int nkidval )
 			    (int) WSTOPSIG(status) );
 
 		} else if ( WIFSIGNALED(status) ) {
-			fprintf( stderr, 
+			fprintf( stderr,
 			    "stopping: child terminated with signal %d%s\n",
 			    (int) WTERMSIG(status),
 #ifdef WCOREDUMP
@@ -1124,7 +1124,7 @@ wait4kids( int nkidval )
 			exit( WEXITSTATUS(status)  );
 
 		} else if ( WEXITSTATUS(status) != 0 ) {
-			fprintf( stderr, 
+			fprintf( stderr,
 			    "stopping: child exited with status %d\n",
 			    (int) WEXITSTATUS(status) );
 			exit( WEXITSTATUS(status) );

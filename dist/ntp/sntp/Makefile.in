@@ -217,7 +217,7 @@ AUTOMAKE_OPTIONS = foreign
 ACLOCAL_AMFLAGS = -I libopts/m4
 AM_CPPFLAGS = $(LIBOPTS_CFLAGS)
 LDADD = $(LIBOPTS_LDADD)
-NULL = 
+NULL =
 #run_ag=         cd $(srcdir) && autogen --writable -L $(top_srcdir)/include
 run_ag = cd $(srcdir) && autogen --writable
 SUBDIRS = $(am__append_1) .
@@ -292,7 +292,7 @@ config.h: stamp-h1
 stamp-h1: $(srcdir)/config.h.in $(top_builddir)/config.status
 	@rm -f stamp-h1
 	cd $(top_builddir) && $(SHELL) ./config.status config.h
-$(srcdir)/config.h.in:  $(am__configure_deps) 
+$(srcdir)/config.h.in:  $(am__configure_deps)
 	cd $(top_srcdir) && $(AUTOHEADER)
 	rm -f stamp-h1
 	touch $@
@@ -327,7 +327,7 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-sntp$(EXEEXT): $(sntp_OBJECTS) $(sntp_DEPENDENCIES) 
+sntp$(EXEEXT): $(sntp_OBJECTS) $(sntp_DEPENDENCIES)
 	@rm -f sntp$(EXEEXT)
 	$(LINK) $(sntp_LDFLAGS) $(sntp_OBJECTS) $(sntp_LDADD) $(LIBS)
 

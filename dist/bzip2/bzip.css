@@ -17,14 +17,14 @@ body { font: 80%/126% sans-serif; }
 h1, h2, h3, h4 { color: #74240f; }
 
 dt { color: #336699; font-weight: bold }
-dd { 
- margin-left: 1.5em; 
+dd {
+ margin-left: 1.5em;
  padding-bottom: 0.8em;
 }
 
 /* -- ruler -- */
-div.hr_blue { 
-  height:  3px; 
+div.hr_blue {
+  height:  3px;
   background:#ffffff url("/images/hr_blue.png") repeat-x; }
 div.hr_blue hr { display:none; }
 
@@ -35,18 +35,18 @@ div.hr_blue hr { display:none; }
 
 /* ------ styles for docs|manuals|howto ------ */
 /* -- lists -- */
-ul  { 
+ul  {
  margin:     0px 4px 16px 16px;
  padding:    0px;
- list-style: url("/images/li-blue.png"); 
+ list-style: url("/images/li-blue.png");
 }
-ul li { 
+ul li {
  margin-bottom: 10px;
 }
-ul ul	{ 
- list-style-type:  none; 
- list-style-image: none; 
- margin-left:      0px; 
+ul ul	{
+ list-style-type:  none;
+ list-style-image: none;
+ margin-left:      0px;
 }
 
 /* header / footer nav tables */
@@ -70,5 +70,5 @@ div.literallayout, pre.programlisting, pre.screen {
  background: #eeeeee;
  border:     1px solid #626262;
  background-color: #eeeeee;
- margin: 4px 0px 4px 0px; 
+ margin: 4px 0px 4px 0px;
 }

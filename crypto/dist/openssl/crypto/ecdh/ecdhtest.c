@@ -21,7 +21,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -152,8 +152,8 @@ static int test_ecdh_curve(int nid, const char *text, BN_CTX *ctx, BIO *out)
 #endif
 
 	if (!EC_KEY_generate_key(a)) goto err;
-	
-	if (EC_METHOD_get_field_type(EC_GROUP_method_of(group)) == NID_X9_62_prime_field) 
+
+	if (EC_METHOD_get_field_type(EC_GROUP_method_of(group)) == NID_X9_62_prime_field)
 		{
 		if (!EC_POINT_get_affine_coordinates_GFp(group,
 			EC_KEY_get0_public_key(a), x_a, y_a, ctx)) goto err;
@@ -178,14 +178,14 @@ static int test_ecdh_curve(int nid, const char *text, BN_CTX *ctx, BIO *out)
 
 	if (!EC_KEY_generate_key(b)) goto err;
 
-	if (EC_METHOD_get_field_type(EC_GROUP_method_of(group)) == NID_X9_62_prime_field) 
+	if (EC_METHOD_get_field_type(EC_GROUP_method_of(group)) == NID_X9_62_prime_field)
 		{
-		if (!EC_POINT_get_affine_coordinates_GFp(group, 
+		if (!EC_POINT_get_affine_coordinates_GFp(group,
 			EC_KEY_get0_public_key(b), x_b, y_b, ctx)) goto err;
 		}
 	else
 		{
-		if (!EC_POINT_get_affine_coordinates_GF2m(group, 
+		if (!EC_POINT_get_affine_coordinates_GF2m(group,
 			EC_KEY_get0_public_key(b), x_b, y_b, ctx)) goto err;
 		}
 

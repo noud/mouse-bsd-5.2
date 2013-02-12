@@ -99,8 +99,8 @@ static char *ctrl_ifname = NULL;
 static void usage(void)
 {
 	fprintf(stderr, "%s\n", hostapd_cli_version);
-	fprintf(stderr, 
-		"\n"	
+	fprintf(stderr,
+		"\n"
 		"usage: hostapd_cli [-p<path>] [-i<ifname>] [-hv] "
 		"[command..]\n"
 		"\n"

@@ -257,7 +257,7 @@ clean-pkglibLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-pam_deny.la: $(pam_deny_la_OBJECTS) $(pam_deny_la_DEPENDENCIES) 
+pam_deny.la: $(pam_deny_la_OBJECTS) $(pam_deny_la_DEPENDENCIES)
 	$(LINK) -rpath $(pkglibdir) $(pam_deny_la_LDFLAGS) $(pam_deny_la_OBJECTS) $(pam_deny_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:

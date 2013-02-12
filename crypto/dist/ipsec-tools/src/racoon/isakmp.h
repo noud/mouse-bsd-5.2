@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -395,7 +395,7 @@ struct isakmp_pl_attr {
 	u_int8_t res2;
 	u_int16_t id;		/* Per transaction id */
 } __attribute__((__packed__));
-            
+
 /* Exchange type */
 #define ISAKMP_CFG_REQUEST	1
 #define ISAKMP_CFG_REPLY	2
@@ -409,7 +409,7 @@ struct isakmp_frag {
 	u_int16_t unknown1;	/* always set to 1? */
 	u_int8_t index;
 	u_int8_t flags;
-} __attribute__((__packed__)); 
+} __attribute__((__packed__));
 
 /* flags */
 #define ISAKMP_FRAG_LAST	1

@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: mbuf.c,v 1.6 2001/02/24 15:56:04 bp Exp 
+ * from: Id: mbuf.c,v 1.6 2001/02/24 15:56:04 bp Exp
  */
 
 #include <sys/cdefs.h>
@@ -173,12 +173,12 @@ m_getm(struct mbuf *top, size_t len, struct mbuf **mpp)
 {
 	struct mbuf *m, *mp;
 	int error;
-	
+
 	for (mp = top; ; mp = mp->m_next) {
 		len -= M_TRAILINGSPACE(mp);
 		if (mp->m_next == NULL)
 			break;
-		
+
 	}
 	if (len > 0) {
 		if ((error = m_get(len, &m)) != 0)
@@ -330,7 +330,7 @@ mb_put_mbuf(struct mbdata *mbp, struct mbuf *m)
 	return 0;
 }
 
-int 
+int
 mb_put_pstring(struct mbdata *mbp, const char *s)
 {
 	int error, len = strlen(s);
@@ -440,7 +440,7 @@ mb_get_mem(struct mbdata *mbp, char * target, size_t size)
 {
 	struct mbuf *m = mbp->mb_cur;
 	u_int count;
-	
+
 	while (size > 0) {
 		if (m == NULL) {
 			MBERROR(("incomplete copy\n"));

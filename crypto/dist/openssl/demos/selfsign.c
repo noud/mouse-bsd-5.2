@@ -78,12 +78,12 @@ int days;
 	X509_NAME_ENTRY *ne=NULL;
 	X509_EXTENSION *ex=NULL;
 
-	
+
 	if ((pkeyp == NULL) || (*pkeyp == NULL))
 		{
 		if ((pk=EVP_PKEY_new()) == NULL)
 			{
-			abort(); 
+			abort();
 			return(0);
 			}
 		}
@@ -168,7 +168,7 @@ int days;
 		X509_EXTENSION_free(ex);
 	}
 #endif
-	
+
 	if (!X509_sign(x,pk,EVP_md5()))
 		goto err;
 

@@ -18,7 +18,7 @@ This document is a submission to the IETF IP Security Protocol
 (IPSEC) Working Group.  Comments are solicited and should be
 addressed to the working group mailing list (ipsec@lists.tislabs.com)
 or to the editor.
- 
+
 This document is an Internet-Draft and is in full conformance
 with all provisions of Section 10 of RFC2026.
 
@@ -58,7 +58,7 @@ Internet Key Exchange (IKE).
 T. Kivinen, et. al.                                             [page 1]
 
 INTERNET-DRAFT                                              28 May 2003
- 
+
 Table of Contents
 
 1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . .  2
@@ -117,7 +117,7 @@ described in [RFC-2119] document.
 T. Kivinen, et. al.                                             [page 2]
 
 INTERNET-DRAFT                                              28 May 2003
- 
+
 The detection of the support for the NAT-Traversal and detection of the
 NAT along the path happens in the IKE [RFC-2409] phase 1.
 The NAT may change the IKE UDP source port, and recipients MUST be able
@@ -176,7 +176,7 @@ route the packet out), he can include multiple local hashes to the
 T. Kivinen, et. al.                                             [page 3]
 
 INTERNET-DRAFT                                              28 May 2003
- 
+
 packet (as separate NAT-D payloads). In this case the NAT is detected if
 and only if none of the hashes match.
 
@@ -235,7 +235,7 @@ An example of phase 1 exchange using NAT-Traversal in main mode
 T. Kivinen, et. al.                                             [page 4]
 
 INTERNET-DRAFT                                              28 May 2003
- 
+
         HDR, KE, Ni, NAT-D, NAT-D    -->
                                      <-- HDR, KE, Nr, NAT-D, NAT-D
         HDR*#, IDii, [CERT, ] SIG_I   -->
@@ -294,7 +294,7 @@ new IP address obtained from the incoming valid packet. The port will
 T. Kivinen, et. al.                                             [page 5]
 
 INTERNET-DRAFT                                              28 May 2003
- 
+
 generally be different since the NAT will map UDP(500,500) to
 UDP(X,500), and UDP(4500,4500) to UDP(Y,4500). The IP address will
 seldom be different from the pre-change IP address. The responder MUST
@@ -353,7 +353,7 @@ packets to this peer using UDP(4500,Y).
 T. Kivinen, et. al.                                             [page 6]
 
 INTERNET-DRAFT                                              28 May 2003
- 
+
 While changing ports, the port in the ID payload in Main Mode/Aggressive
 Mode MUST be 0.
 
@@ -412,7 +412,7 @@ proposals.
 T. Kivinen, et. al.                                             [page 7]
 
 INTERNET-DRAFT                                              28 May 2003
- 
+
 5.2.  Sending the original source and destination addresses
 
 In order to perform incremental TCP checksum fix ups, both peers may
@@ -471,7 +471,7 @@ In case of transport mode both ends MUST send the both original
 T. Kivinen, et. al.                                             [page 8]
 
 INTERNET-DRAFT                                              28 May 2003
- 
+
 Initiator and Responder addresses to the other end. For the tunnel mode
 both ends SHOULD NOT send original addresses to the other end.
 
@@ -530,7 +530,7 @@ alive (for example, the keepalive interval is too long, or the NAT box
 T. Kivinen, et. al.                                             [page 9]
 
 INTERNET-DRAFT                                              28 May 2003
- 
+
 is rebooted). To recover from those ends which are NOT behind NAT SHOULD
 use the last valid authenticated packet from the other end to determine
 which IP and port addresses should be used. The host behind dynamic NAT
@@ -589,7 +589,7 @@ o  Updating the IKE SA / ESP UDP encapsulation IP addresses and ports
 T. Kivinen, et. al.                                            [page 10]
 
 INTERNET-DRAFT                                              28 May 2003
- 
+
    for each valid authenticated packet can cause DoS in case we have
    attacker who can listen all traffic in the network, and can change
    the order of the packet and inject new packets before the packet he
@@ -648,7 +648,7 @@ for those patents to the IETF. For more information consult the online
 T. Kivinen, et. al.                                            [page 11]
 
 INTERNET-DRAFT                                              28 May 2003
- 
+
 list of claimed rights.
 
 11.  Acknowledgments
@@ -707,7 +707,7 @@ draft-ietf-ipsec-nat-reqts-04.txt, March 2003.
 T. Kivinen, et. al.                                            [page 12]
 
 INTERNET-DRAFT                                              28 May 2003
- 
+
     124 Grove Street
     Suite 205
     Franklin, MA 02038

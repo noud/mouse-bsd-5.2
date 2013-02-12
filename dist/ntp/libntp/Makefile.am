@@ -29,7 +29,7 @@ EXTRA_libntp_a_SOURCES = adjtimex.c
 INCLUDES = -I$(top_srcdir)/include -I../include
 ETAGS_ARGS = Makefile.am
 
-noinst_HEADERS = lib_strbuf.h 
+noinst_HEADERS = lib_strbuf.h
 
 ../include/des.h:
 	touch ../include/des.h

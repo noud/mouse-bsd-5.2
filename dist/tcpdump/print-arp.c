@@ -173,7 +173,7 @@ atmarp_addr_print(netdissect_options *ndo,
 		ND_PRINT((ndo, "<No address>"));
 	else {
 		ND_PRINT((ndo, "%s", linkaddr_string(ha, ha_len)));
-		if (srca_len != 0) 
+		if (srca_len != 0)
 			ND_PRINT((ndo, ",%s",
 				  linkaddr_string(srca, srca_len)));
 	}

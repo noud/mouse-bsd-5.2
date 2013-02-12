@@ -63,7 +63,7 @@ ENTRY(ffs)
 	movl	%sp@(4),%d0
 	jeq	L2
 	movql	#31,%d1
-L1:	
+L1:
 	lsrl	#1,%d0
 	dbcs	%d1,L1
 	movql	#32,%d0

@@ -31,7 +31,7 @@
  *	@(#)extern.h	8.3 (Berkeley) 4/2/94
  */
 
-/* 
+/*
  * We expect to be included by ps.h, which will already have
  * defined the types we use.
  */

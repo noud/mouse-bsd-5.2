@@ -121,14 +121,14 @@ iscsi_malloc(unsigned n)
 	return ptr;
 }
 
-void 
+void
 iscsi_free_atomic(void *ptr)
 {
 	(void) free(ptr);
 	iscsi_trace(TRACE_MEM, __FILE__, __LINE__, "iscsi_free_atomic(%p)\n", ptr);
 }
 
-void 
+void
 iscsi_free(void *ptr)
 {
 	(void) free(ptr);
@@ -172,7 +172,7 @@ iscsi_thread_create(iscsi_thread_t * thread, void *(*proc) (void *), void *arg)
 /*
  * Queuing Functions
  */
-int 
+int
 iscsi_queue_init(iscsi_queue_t * q, int depth)
 {
 	q->head = q->tail = q->count = 0;
@@ -185,25 +185,25 @@ iscsi_queue_init(iscsi_queue_t * q, int depth)
 	return 0;
 }
 
-void 
+void
 iscsi_queue_destroy(iscsi_queue_t * q)
 {
 	iscsi_free_atomic(q->elem);
 }
 
-int 
+int
 iscsi_queue_full(iscsi_queue_t * q)
 {
 	return (q->count == q->depth);
 }
 
-int 
+int
 iscsi_queue_depth(iscsi_queue_t * q)
 {
 	return q->count;
 }
 
-int 
+int
 iscsi_queue_insert(iscsi_queue_t * q, void *ptr)
 {
 	uint32_t   flags;
@@ -327,7 +327,7 @@ iscsi_print_buffer(const char *buf, const size_t len)
  */
 #include "initiator.h"
 
-int 
+int
 hash_init(hash_t * h, int n)
 {
 	int	i;
@@ -345,7 +345,7 @@ hash_init(hash_t * h, int n)
 	return 0;
 }
 
-int 
+int
 hash_insert(hash_t * h, initiator_cmd_t * cmd, unsigned key)
 {
 	int	i;
@@ -409,7 +409,7 @@ hash_remove(hash_t * h, unsigned key)
 	return curr;
 }
 
-int 
+int
 hash_destroy(hash_t * h)
 {
 	iscsi_free_atomic(h->bucket);
@@ -420,7 +420,7 @@ hash_destroy(hash_t * h)
  * Socket Functions
  */
 
-int 
+int
 modify_iov(struct iovec ** iov_ptr, int *iovc, uint32_t offset, uint32_t length)
 {
 	int             len;
@@ -487,7 +487,7 @@ modify_iov(struct iovec ** iov_ptr, int *iovc, uint32_t offset, uint32_t length)
 	return 0;
 }
 
-int 
+int
 iscsi_sock_setsockopt(iscsi_socket_t * sock, int level, int optname, void *optval, unsigned  optlen)
 {
 	int             rc;
@@ -499,7 +499,7 @@ iscsi_sock_setsockopt(iscsi_socket_t * sock, int level, int optname, void *optva
 	return 1;
 }
 
-int 
+int
 iscsi_sock_getsockopt(iscsi_socket_t * sock, int level, int optname, void *optval, unsigned *optlen)
 {
 	int             rc;
@@ -511,7 +511,7 @@ iscsi_sock_getsockopt(iscsi_socket_t * sock, int level, int optname, void *optva
 	return 1;
 }
 
-int 
+int
 iscsi_sock_create(iscsi_socket_t * sock)
 {
 	int             rc;
@@ -523,7 +523,7 @@ iscsi_sock_create(iscsi_socket_t * sock)
 	return 1;
 }
 
-int 
+int
 iscsi_sock_bind(iscsi_socket_t sock, int port)
 {
 	struct sockaddr_in	laddr;
@@ -540,7 +540,7 @@ iscsi_sock_bind(iscsi_socket_t sock, int port)
 	return 1;
 }
 
-int 
+int
 iscsi_sock_listen(iscsi_socket_t sock)
 {
 	int             rc;
@@ -686,7 +686,7 @@ iscsi_waitfor_connection(iscsi_socket_t *sockv, int sockc, const char *cf, iscsi
 #endif
 }
 
-int 
+int
 iscsi_sock_accept(iscsi_socket_t sock, iscsi_socket_t * newsock)
 {
 	struct sockaddr_in remoteAddr;
@@ -702,7 +702,7 @@ iscsi_sock_accept(iscsi_socket_t sock, iscsi_socket_t * newsock)
 	return 1;
 }
 
-int 
+int
 iscsi_sock_getsockname(iscsi_socket_t sock, struct sockaddr * name, unsigned *namelen)
 {
 	if (getsockname(sock, name, namelen) != 0) {
@@ -712,7 +712,7 @@ iscsi_sock_getsockname(iscsi_socket_t sock, struct sockaddr * name, unsigned *na
 	return 1;
 }
 
-int 
+int
 iscsi_sock_getpeername(iscsi_socket_t sock, struct sockaddr * name, unsigned *namelen)
 {
 	if (getpeername(sock, name, namelen) != 0) {
@@ -722,7 +722,7 @@ iscsi_sock_getpeername(iscsi_socket_t sock, struct sockaddr * name, unsigned *na
 	return 1;
 }
 
-int 
+int
 iscsi_sock_shutdown(iscsi_socket_t sock, int how)
 {
 	int             rc;
@@ -733,7 +733,7 @@ iscsi_sock_shutdown(iscsi_socket_t sock, int how)
 	return 0;
 }
 
-int 
+int
 iscsi_sock_close(iscsi_socket_t sock)
 {
 	int             rc;
@@ -745,7 +745,7 @@ iscsi_sock_close(iscsi_socket_t sock)
 	return 0;
 }
 
-int 
+int
 iscsi_sock_connect(iscsi_socket_t sock, char *hostname, int port)
 {
 	struct addrinfo	hints;
@@ -818,7 +818,7 @@ iscsi_sock_connect(iscsi_socket_t sock, char *hostname, int port)
  * and resent with the appropriate offsets.
  */
 
-int 
+int
 iscsi_sock_msg(iscsi_socket_t sock, int xmit, unsigned len, void *data, int iovc)
 {
 	int             i, n = 0;
@@ -934,7 +934,7 @@ iscsi_sock_msg(iscsi_socket_t sock, int xmit, unsigned len, void *data, int iovc
  * data, else send as two separate messages.
  */
 
-int 
+int
 iscsi_sock_send_header_and_data(iscsi_socket_t sock,
 				void *header, unsigned header_len,
 				const void *data, unsigned data_len, int iovc)
@@ -978,7 +978,7 @@ iscsi_sock_send_header_and_data(iscsi_socket_t sock,
 
 
 /* spin lock functions */
-int 
+int
 iscsi_spin_init(iscsi_spin_t * lock)
 {
 	pthread_mutexattr_t mattr;
@@ -992,33 +992,33 @@ iscsi_spin_init(iscsi_spin_t * lock)
 	return 0;
 }
 
-int 
+int
 iscsi_spin_lock(iscsi_spin_t * lock)
 {
 	return pthread_mutex_lock(lock);
 }
 
-int 
+int
 iscsi_spin_unlock(iscsi_spin_t * lock)
 {
 	return pthread_mutex_unlock(lock);
 }
 
 /* ARGSUSED1 */
-int 
+int
 iscsi_spin_lock_irqsave(iscsi_spin_t * lock, uint32_t *flags)
 {
 	return pthread_mutex_lock(lock);
 }
 
 /* ARGSUSED1 */
-int 
+int
 iscsi_spin_unlock_irqrestore(iscsi_spin_t * lock, uint32_t *flags)
 {
 	return pthread_mutex_unlock(lock);
 }
 
-int 
+int
 iscsi_spin_destroy(iscsi_spin_t * lock)
 {
 	return pthread_mutex_destroy(lock);
@@ -1031,25 +1031,25 @@ iscsi_spin_destroy(iscsi_spin_t * lock)
  * varibles, which is kernel semaphores in kernel module.
  */
 
-int 
+int
 iscsi_mutex_init(iscsi_mutex_t * m)
 {
 	return (pthread_mutex_init(m, NULL) != 0) ? -1 : 0;
 }
 
-int 
+int
 iscsi_mutex_lock(iscsi_mutex_t * m)
 {
 	return pthread_mutex_lock(m);
 }
 
-int 
+int
 iscsi_mutex_unlock(iscsi_mutex_t * m)
 {
 	return pthread_mutex_unlock(m);
 }
 
-int 
+int
 iscsi_mutex_destroy(iscsi_mutex_t * m)
 {
 	return pthread_mutex_destroy(m);
@@ -1059,25 +1059,25 @@ iscsi_mutex_destroy(iscsi_mutex_t * m)
  * Condition Functions
  */
 
-int 
+int
 iscsi_cond_init(iscsi_cond_t * c)
 {
 	return pthread_cond_init(c, NULL);
 }
 
-int 
+int
 iscsi_cond_wait(iscsi_cond_t * c, iscsi_mutex_t * m)
 {
 	return pthread_cond_wait(c, m);
 }
 
-int 
+int
 iscsi_cond_signal(iscsi_cond_t * c)
 {
 	return pthread_cond_signal(c);
 }
 
-int 
+int
 iscsi_cond_destroy(iscsi_cond_t * c)
 {
 	return pthread_cond_destroy(c);
@@ -1087,7 +1087,7 @@ iscsi_cond_destroy(iscsi_cond_t * c)
  * Misc. Functions
  */
 
-uint32_t 
+uint32_t
 iscsi_atoi(char *value)
 {
 	if (value == NULL) {
@@ -1100,7 +1100,7 @@ iscsi_atoi(char *value)
 static const char HexString[] = "0123456789abcdef";
 
 /* get the hex value (subscript) of the character */
-static int 
+static int
 HexStringIndex(const char *s, int c)
 {
 	const char	*cp;
@@ -1108,7 +1108,7 @@ HexStringIndex(const char *s, int c)
 	return (c == '0') ? 0 : ((cp = strchr(s, tolower(c))) == NULL) ? -1 : (int)(cp - s);
 }
 
-int 
+int
 HexDataToText(
 	      uint8_t *data, uint32_t dataLength,
 	      char *text, uint32_t textLength)
@@ -1152,7 +1152,7 @@ HexDataToText(
 }
 
 
-int 
+int
 HexTextToData(
 	      const char *text, uint32_t textLength,
 	      uint8_t *data, uint32_t dataLength)
@@ -1213,7 +1213,7 @@ HexTextToData(
 	return (len == 0) ? -1 : 0;
 }
 
-void 
+void
 GenRandomData(uint8_t *data, uint32_t length)
 {
 	unsigned        n;

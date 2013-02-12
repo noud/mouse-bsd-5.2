@@ -22,7 +22,7 @@
 
 /* Id: naptr_35.h,v 1.23 2007-06-19 23:47:17 tbox Exp */
 
-/*! 
+/*!
  *  \brief Per RFC2915 */
 
 typedef struct dns_rdata_in_naptr {

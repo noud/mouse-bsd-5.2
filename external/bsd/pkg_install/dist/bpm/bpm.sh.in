@@ -118,7 +118,7 @@ while true; do
 		# check for bad release numbering
 		# - it usually shows with 0 categories being displayed
 		${awkprog} 'END { if (NR == 1) { print "\n\n\n*** No categories found - is the OS release set properly? ***\n\n\n" } }' < $tmpcategories
-	
+
 		# display possible categories
 		${awkprog} '{ print NR ". " $0 }' < $tmpcategories | ${moreprog}
 

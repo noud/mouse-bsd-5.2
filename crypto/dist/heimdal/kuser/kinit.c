@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997-2007 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "kuser_locl.h"
@@ -72,14 +72,14 @@ static char *ntlm_domain;
 static char *krb4_cc_name;
 
 static struct getargs args[] = {
-    /* 
+    /*
      * used by MIT
      * a: ~A
      * V: verbose
      * F: ~f
      * P: ~p
      * C: v4 cache name?
-     * 5: 
+     * 5:
      */
     { "524init", 	'4', arg_flag, &get_v4_tgt,
       "obtain version 4 TGT" },
@@ -192,7 +192,7 @@ get_server(krb5_context context,
 }
 
 static krb5_error_code
-do_524init(krb5_context context, krb5_ccache ccache, 
+do_524init(krb5_context context, krb5_ccache ccache,
 	   krb5_creds *creds, const char *server)
 {
     krb5_error_code ret;
@@ -235,10 +235,10 @@ do_524init(krb5_context context, krb5_ccache ccache,
 }
 
 static int
-renew_validate(krb5_context context, 
+renew_validate(krb5_context context,
 	       int renew,
 	       int validate,
-	       krb5_ccache cache, 
+	       krb5_ccache cache,
 	       const char *server,
 	       krb5_deltat life)
 {
@@ -260,8 +260,8 @@ renew_validate(krb5_context context,
     }
 
     if (renew) {
-	/* 
-	 * no need to check the error here, it's only to be 
+	/*
+	 * no need to check the error here, it's only to be
 	 * friendly to the user
 	 */
 	krb5_get_credentials(context, KRB5_GC_CACHED, cache, &in, &out);
@@ -330,13 +330,13 @@ out:
 }
 
 static krb5_error_code
-store_ntlmkey(krb5_context context, krb5_ccache id, 
+store_ntlmkey(krb5_context context, krb5_ccache id,
 	      const char *domain, krb5_const_principal client,
 	      struct ntlm_buf *buf)
 {
     krb5_error_code ret;
     krb5_creds cred;
-    
+
     memset(&cred, 0, sizeof(cred));
 
     ret = krb5_make_principal(context, &cred.server,
@@ -347,7 +347,7 @@ store_ntlmkey(krb5_context context, krb5_ccache id,
     ret = krb5_copy_principal(context, client, &cred.client);
     if (ret)
 	goto out;
-    
+
     cred.times.authtime = time(NULL);
     cred.times.endtime = time(NULL) + 3600 * 24 * 30; /* XXX */
     cred.session.keytype = ENCTYPE_ARCFOUR_HMAC_MD5;
@@ -363,7 +363,7 @@ out:
 }
 
 static krb5_error_code
-get_new_tickets(krb5_context context, 
+get_new_tickets(krb5_context context,
 		krb5_principal principal,
 		krb5_ccache ccache,
 		krb5_deltat ticket_life,
@@ -395,7 +395,7 @@ get_new_tickets(krb5_context context,
 		      password_file);
 
 	if (fgets(passwd, sizeof(passwd), f) == NULL)
-	    krb5_errx(context, 1, 
+	    krb5_errx(context, 1,
 		      "Failed to read password from file %s", password_file);
 	if (f != stdin)
 	    fclose(f);
@@ -408,7 +408,7 @@ get_new_tickets(krb5_context context,
     ret = krb5_get_init_creds_opt_alloc (context, &opt);
     if (ret)
 	krb5_err(context, 1, ret, "krb5_get_init_creds_opt_alloc");
-    
+
     krb5_get_init_creds_opt_set_default_flags(context, "kinit",
 	krb5_principal_get_realm(context, principal), opt);
 
@@ -419,7 +419,7 @@ get_new_tickets(krb5_context context,
     if(anonymous_flag != -1)
 	krb5_get_init_creds_opt_set_anonymous (opt, anonymous_flag);
     if (pac_flag != -1)
-	krb5_get_init_creds_opt_set_pac_request(context, opt, 
+	krb5_get_init_creds_opt_set_pac_request(context, opt,
 						pac_flag ? TRUE : FALSE);
     if (canonicalize_flag)
 	krb5_get_init_creds_opt_set_canonicalize(context, opt, TRUE);
@@ -439,7 +439,7 @@ get_new_tickets(krb5_context context,
     }
 
     if (addrs_flag != -1)
-	krb5_get_init_creds_opt_set_addressless(context, opt, 
+	krb5_get_init_creds_opt_set_addressless(context, opt,
 						addrs_flag ? FALSE : TRUE);
 
     if (renew_life == NULL && renewable_flag)
@@ -450,7 +450,7 @@ get_new_tickets(krb5_context context,
 	renew = parse_time (renewstr, "s");
 	if (renew < 0)
 	    errx (1, "unparsable time: %s", renewstr);
-	
+
 	krb5_get_init_creds_opt_set_renew_life (opt, renew);
     }
 
@@ -472,13 +472,13 @@ get_new_tickets(krb5_context context,
 	if(enctype == NULL)
 	    errx(1, "out of memory");
 	for(i = 0; i < etype_str.num_strings; i++) {
-	    ret = krb5_string_to_enctype(context, 
-					 etype_str.strings[i], 
+	    ret = krb5_string_to_enctype(context,
+					 etype_str.strings[i],
 					 &enctype[i]);
 	    if(ret)
 		errx(1, "unrecognized enctype: %s", etype_str.strings[i]);
 	}
-	krb5_get_init_creds_opt_set_etype_list(opt, enctype, 
+	krb5_get_init_creds_opt_set_etype_list(opt, enctype,
 					       etype_str.num_strings);
     }
 
@@ -516,11 +516,11 @@ get_new_tickets(krb5_context context,
 
 	if (passwd[0] == '\0') {
 	    char *p, *prompt;
-	    
+
 	    krb5_unparse_name (context, principal, &p);
 	    asprintf (&prompt, "%s's Password: ", p);
 	    free (p);
-	    
+
 	    if (UI_UTIL_read_pw_string(passwd, sizeof(passwd)-1, prompt, 0)){
 		memset(passwd, 0, sizeof(passwd));
 		exit(1);
@@ -528,7 +528,7 @@ get_new_tickets(krb5_context context,
 	    free (prompt);
 	}
 
-	
+
 	ret = krb5_get_init_creds_password (context,
 					    &cred,
 					    principal,
@@ -564,7 +564,7 @@ get_new_tickets(krb5_context context,
     if(ticket_life != 0) {
 	if(abs(cred.times.endtime - cred.times.starttime - ticket_life) > 30) {
 	    char life[64];
-	    unparse_time_approx(cred.times.endtime - cred.times.starttime, 
+	    unparse_time_approx(cred.times.endtime - cred.times.starttime,
 				life, sizeof(life));
 	    krb5_warnx(context, "NOTICE: ticket lifetime is %s", life);
 	}
@@ -572,14 +572,14 @@ get_new_tickets(krb5_context context,
     if(renew_life) {
 	if(abs(cred.times.renew_till - cred.times.starttime - renew) > 30) {
 	    char life[64];
-	    unparse_time_approx(cred.times.renew_till - cred.times.starttime, 
+	    unparse_time_approx(cred.times.renew_till - cred.times.starttime,
 				life, sizeof(life));
-	    krb5_warnx(context, "NOTICE: ticket renewable lifetime is %s", 
+	    krb5_warnx(context, "NOTICE: ticket renewable lifetime is %s",
 		       life);
 	}
     }
 
-    ret = krb5_cc_new_unique(context, krb5_cc_get_type(context, ccache), 
+    ret = krb5_cc_new_unique(context, krb5_cc_get_type(context, ccache),
 			     NULL, &tempccache);
     if (ret)
 	krb5_err (context, 1, ret, "krb5_cc_new_unique");
@@ -587,7 +587,7 @@ get_new_tickets(krb5_context context,
     ret = krb5_cc_initialize (context, tempccache, cred.client);
     if (ret)
 	krb5_err (context, 1, ret, "krb5_cc_initialize");
-    
+
     ret = krb5_cc_store_cred (context, tempccache, &cred);
     if (ret)
 	krb5_err (context, 1, ret, "krb5_cc_store_cred");
@@ -608,7 +608,7 @@ get_new_tickets(krb5_context context,
 }
 
 static time_t
-ticket_lifetime(krb5_context context, krb5_ccache cache, 
+ticket_lifetime(krb5_context context, krb5_ccache cache,
 		krb5_principal client, const char *server)
 {
     krb5_creds in_cred, *cred;
@@ -668,7 +668,7 @@ renew_func(void *ptr)
 	new_tickets = 1;
 
     if (new_tickets)
-	get_new_tickets(ctx->context, ctx->principal, 
+	get_new_tickets(ctx->context, ctx->principal,
 			ctx->ccache, ctx->ticket_life, 0);
 
     if(get_v4_tgt || convert_524)
@@ -693,16 +693,16 @@ main (int argc, char **argv)
     int parseflags = 0;
 
     setprogname (argv[0]);
-    
+
     ret = krb5_init_context (&context);
     if (ret == KRB5_CONFIG_BADFORMAT)
 	errx (1, "krb5_init_context failed to parse configuration file");
     else if (ret)
 	errx(1, "krb5_init_context failed: %d", ret);
-  
+
     if(getarg(args, sizeof(args) / sizeof(args[0]), argc, argv, &optidx))
 	usage(1);
-    
+
     if (help_flag)
 	usage (0);
 
@@ -736,15 +736,15 @@ main (int argc, char **argv)
 				krb5_principal_get_realm(context, principal),
 				"renewable", FALSE, &renewable_flag);
     if(get_v4_tgt == -1)
-	krb5_appdefault_boolean(context, "kinit", 
-				krb5_principal_get_realm(context, principal), 
+	krb5_appdefault_boolean(context, "kinit",
+				krb5_principal_get_realm(context, principal),
 				"krb4_get_tickets", FALSE, &get_v4_tgt);
     if(do_afslog == -1)
-	krb5_appdefault_boolean(context, "kinit", 
-				krb5_principal_get_realm(context, principal), 
+	krb5_appdefault_boolean(context, "kinit",
+				krb5_principal_get_realm(context, principal),
 				"afslog", TRUE, &do_afslog);
 
-    if(cred_cache) 
+    if(cred_cache)
 	ret = krb5_cc_resolve(context, cred_cache, &ccache);
     else {
 	if(argc > 1) {
@@ -796,7 +796,7 @@ main (int argc, char **argv)
 	krb5_addresses addresses;
 	memset(&addresses, 0, sizeof(addresses));
 	for(i = 0; i < extra_addresses.num_strings; i++) {
-	    ret = krb5_parse_address(context, extra_addresses.strings[i], 
+	    ret = krb5_parse_address(context, extra_addresses.strings[i],
 				     &addresses);
 	    if (ret == 0) {
 		krb5_add_extra_addresses(context, &addresses);
@@ -807,7 +807,7 @@ main (int argc, char **argv)
     }
 
     if(renew_flag || validate_flag) {
-	ret = renew_validate(context, renew_flag, validate_flag, 
+	ret = renew_validate(context, renew_flag, validate_flag,
 			     ccache, server_str, ticket_life);
 	exit(ret != 0);
     }
@@ -830,7 +830,7 @@ main (int argc, char **argv)
 	ctx.principal = principal;
 	ctx.ticket_life = ticket_life;
 
-	ret = simple_execvp_timed(argv[1], argv+1, 
+	ret = simple_execvp_timed(argv[1], argv+1,
 				  renew_func, &ctx, timeout);
 #define EX_NOEXEC	126
 #define EX_NOTFOUND	127
@@ -838,7 +838,7 @@ main (int argc, char **argv)
 	    krb5_warnx(context, "permission denied: %s", argv[1]);
 	else if(ret == EX_NOTFOUND)
 	    krb5_warnx(context, "command not found: %s", argv[1]);
-	
+
 	krb5_cc_destroy(context, ccache);
 	_krb5_krb_dest_tkt(context, krb4_cc_name);
 	if(k_hasafs())

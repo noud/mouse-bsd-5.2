@@ -45,7 +45,7 @@
  *	Guillou-Quisquater (GQ) identity parameters
  *
  * ntpkey_MVpar_<hostname>.<filestamp>,
- *	Mu-Varadharajan (MV) server identity parameters 
+ *	Mu-Varadharajan (MV) server identity parameters
  *
  * ntpkey_MVkeyX_<hostname>.<filestamp>,
  * ntpkey_mv_<hostname> (MV server) link
@@ -716,7 +716,7 @@ gen_rsa(
 	return (pkey);
 }
 
- 
+
 /*
  * Generate DSA public/private key pair
  */
@@ -1030,7 +1030,7 @@ gen_gqkey(
 
 	/*
 	 * When generating his certificate, Bob rolls random private key
-	 * u. 
+	 * u.
 	 */
 	rsa = gqpar->pkey.rsa;
 	BN_rand(u, BN_num_bits(rsa->n), -1, 0); /* u */
@@ -1072,7 +1072,7 @@ gen_gqkey(
 	/*
 	 * Bob rolls random k (0 < k < n), computes y = k u^r mod n and
 	 * g = k^b mod n, then sends (y, g) to Alice. He needs modulus n
-	 * from the parameters and his private key u. 
+	 * from the parameters and his private key u.
 	 */
 	BN_rand(k, BN_num_bits(rsa->n), -1, 0);	/* k */
 	BN_mod(k, k, rsa->n, ctx);
@@ -1326,7 +1326,7 @@ gen_mv(
 	 */
 	fprintf(stderr,
 	    "Generating polynomial coefficients for %d roots (%d bits)\n",
-	    n, BN_num_bits(dsa->q)); 
+	    n, BN_num_bits(dsa->q));
 	x = malloc((n + 1) * sizeof(BIGNUM));
 	for (j = 1; j <= n; j++) {
 		x[j] = BN_new();
@@ -1626,7 +1626,7 @@ x509	(
 	 * Set the certificate serial to the NTP seconds for grins. Set
 	 * the version to 3. Set the subject name and issuer name to the
 	 * subject name in the request. Set the initial validity to the
-	 * current time and the final validity one year hence. 
+	 * current time and the final validity one year hence.
 	 */
 	id = OBJ_nid2sn(md->pkey_type);
 	fprintf(stderr, "Generating certificate %s\n", id);
@@ -1708,7 +1708,7 @@ x509	(
 	 * The extended key usage extension is used for special purpose
 	 * here. The semantics probably do not conform to the designer's
 	 * intent and will likely change in future.
-	 * 
+	 *
 	 * "trustRoot" designates a root authority
 	 * "private" designates a private certificate
 	 */

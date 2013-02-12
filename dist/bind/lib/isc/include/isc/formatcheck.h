@@ -29,7 +29,7 @@
  *
  * \li fmt is the location of the format string parameter.
  * \li args is the location of the first argument (or 0 for no argument checking).
- * 
+ *
  * Note:
  * \li The first parameter is 1, not 0.
  */

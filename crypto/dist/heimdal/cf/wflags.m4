@@ -5,7 +5,7 @@ dnl set WFLAGS
 
 AC_DEFUN([rk_WFLAGS],[
 
-AC_ARG_ENABLE(developer, 
+AC_ARG_ENABLE(developer,
 	AS_HELP_STRING([--enable-developer], [enable developer warnings]))
 if test "X$enable_developer" = Xyes; then
     dwflags="-Werror"

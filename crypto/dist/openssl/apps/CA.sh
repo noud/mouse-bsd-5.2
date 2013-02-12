@@ -5,10 +5,10 @@
 #      things easier between now and when Eric is convinced to fix it :-)
 #
 # CA -newca ... will setup the right stuff
-# CA -newreq ... will generate a certificate request 
-# CA -sign ... will sign the generated request and output 
+# CA -newreq ... will generate a certificate request
+# CA -sign ... will sign the generated request and output
 #
-# At the end of that grab newreq.pem and newcert.pem (one has the key 
+# At the end of that grab newreq.pem and newcert.pem (one has the key
 # and the other the certificate) and cat them together and that is what
 # you want/need ... I'll make even this a little cleaner later.
 #
@@ -51,27 +51,27 @@ case $i in
     echo "usage: CA -newcert|-newreq|-newca|-sign|-verify" >&2
     exit 0
     ;;
--newcert) 
+-newcert)
     # create a certificate
     $REQ -new -x509 -keyout newkey.pem -out newcert.pem $DAYS
     RET=$?
     echo "Certificate is in newcert.pem, private key is in newkey.pem"
     ;;
--newreq) 
+-newreq)
     # create a certificate request
     $REQ -new -keyout newkey.pem -out newreq.pem $DAYS
     RET=$?
     echo "Request is in newreq.pem, private key is in newkey.pem"
     ;;
--newca)     
+-newca)
     # if explicitly asked for or it doesn't exist then setup the directory
-    # structure that Eric likes to manage things 
+    # structure that Eric likes to manage things
     NEW="1"
     if [ "$NEW" -o ! -f ${CATOP}/serial ]; then
 	# create the directory hierarchy
-	mkdir ${CATOP} 
-	mkdir ${CATOP}/certs 
-	mkdir ${CATOP}/crl 
+	mkdir ${CATOP}
+	mkdir ${CATOP}/certs
+	mkdir ${CATOP}/crl
 	mkdir ${CATOP}/newcerts
 	mkdir ${CATOP}/private
 	echo "00" > ${CATOP}/serial
@@ -91,29 +91,29 @@ case $i in
 			   -out ${CATOP}/$CAREQ
 	    $CA -out ${CATOP}/$CACERT $CADAYS -batch \
 			   -keyfile ${CATOP}/private/$CAKEY -selfsign \
-			   -infiles ${CATOP}/$CAREQ 
+			   -infiles ${CATOP}/$CAREQ
 	    RET=$?
 	fi
     fi
     ;;
 -xsign)
-    $CA -policy policy_anything -infiles newreq.pem 
+    $CA -policy policy_anything -infiles newreq.pem
     RET=$?
     ;;
--sign|-signreq) 
+-sign|-signreq)
     $CA -policy policy_anything -out newcert.pem -infiles newreq.pem
     RET=$?
     cat newcert.pem
     echo "Signed certificate is in newcert.pem"
     ;;
--signcert) 
+-signcert)
     echo "Cert passphrase will be requested twice - bug?"
     $X509 -x509toreq -in newreq.pem -signkey newreq.pem -out tmp.pem
     $CA -policy policy_anything -out newcert.pem -infiles tmp.pem
     cat newcert.pem
     echo "Signed certificate is in newcert.pem"
     ;;
--verify) 
+-verify)
     shift
     if [ -z "$1" ]; then
 	    $VERIFY -CAfile $CATOP/$CACERT newcert.pem

@@ -408,7 +408,7 @@ static void eap_ikev2_process(struct eap_sm *sm, void *priv,
 		eap_ikev2_state(data, FAIL);
 		return;
 	}
-		
+
 	if (flags & IKEV2_FLAGS_MORE_FRAGMENTS) {
 		if (eap_ikev2_process_fragment(data, flags, message_length,
 					       pos, end - pos) < 0)

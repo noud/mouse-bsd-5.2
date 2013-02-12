@@ -171,7 +171,7 @@ The DHCP client normally transmits any protocol messages it sends
 before acquiring an IP address to, 255.255.255.255, the IP limited
 broadcast address.   For debugging purposes, it may be useful to have
 the server transmit these messages to some other address.   This can
-be specified with the 
+be specified with the
 .B -s
 flag, followed by the IP address or domain name of the destination.
 .PP
@@ -271,7 +271,7 @@ The DHCP client provides some ability to control it while it is
 running, without stopping it.  This capability is provided using OMAPI,
 an API for manipulating remote objects.  OMAPI clients connect to the
 client using TCP/IP, authenticate, and can then examine the client's
-current status and make changes to it. 
+current status and make changes to it.
 .PP
 Rather than implementing the underlying OMAPI protocol directly, user
 programs should use the dhcpctl API or OMAPI itself.   Dhcpctl is a

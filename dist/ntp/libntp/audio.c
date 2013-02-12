@@ -405,7 +405,7 @@ audio_gain(
 		l |= r << 8;
                 if ( cf_monitor )
                   rval = ioctl(ctl_fd, monitor, &l );
-                else 
+                else
 		  rval = ioctl(ctl_fd, SOUND_MIXER_WRITE_VOLUME, &l);
 		if (rval == -1) {
 			printf("audio_gain: mongain write: %s\n",

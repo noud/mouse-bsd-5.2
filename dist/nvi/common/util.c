@@ -37,8 +37,8 @@ static const char sccsid[] = "Id: util.c,v 10.22 2001/06/25 15:19:12 skimo Exp (
 void *
 binc(SCR *sp, void *bp, size_t *bsizep, size_t min)
 	        			/* sp MAY BE NULL!!! */
-	         
-	                    
+
+
 {
 	size_t csize;
 

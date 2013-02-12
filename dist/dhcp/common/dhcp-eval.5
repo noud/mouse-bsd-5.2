@@ -46,22 +46,22 @@ statement in a server might be:
 if option dhcp-user-class = "accounting" {
   max-lease-time 17600;
   option domain-name "accounting.example.org";
-  option domain-name-servers ns1.accounting.example.org, 
+  option domain-name-servers ns1.accounting.example.org,
 			     ns2.accounting.example.org;
 } elsif option dhcp-user-class = "sales" {
   max-lease-time 17600;
   option domain-name "sales.example.org";
-  option domain-name-servers ns1.sales.example.org, 
+  option domain-name-servers ns1.sales.example.org,
 			     ns2.sales.example.org;
 } elsif option dhcp-user-class = "engineering" {
   max-lease-time 17600;
   option domain-name "engineering.example.org";
-  option domain-name-servers ns1.engineering.example.org, 
+  option domain-name-servers ns1.engineering.example.org,
 			     ns2.engineering.example.org;
 } else {
   max-lease-time 600;
   option domain-name "misc.example.org";
-  option domain-name-servers ns1.misc.example.org, 
+  option domain-name-servers ns1.misc.example.org,
 			     ns2.misc.example.org;
 }
 .fi
@@ -75,7 +75,7 @@ On the client side, an example of conditional evaluation might be:
 if not option domain-name = "example.org" {
   prepend domain-name-servers 127.0.0.1;
 }
-.fi  
+.fi
 .PP
 The
 .B if
@@ -84,13 +84,13 @@ statement and the
 continuation statement both take boolean expressions as their
 arguments.   That is, they take expressions that, when evaluated,
 produce a boolean result.   If the expression evaluates to true, then
-the statements enclosed in braces following the 
+the statements enclosed in braces following the
 .B if
 statement are executed, and all subsequent
 .B elsif
 and
 .B else
-clauses are skipped.   Otherwise, each subsequent 
+clauses are skipped.   Otherwise, each subsequent
 .B elsif
 clause's expression is checked, until an elsif clause is encountered
 whose test evaluates to true.   If such a clause is found, the
@@ -99,7 +99,7 @@ subsequent
 .B elsif
 and
 .B else
-clauses are skipped.   If all the 
+clauses are skipped.   If all the
 .B if
 and
 .B elsif
@@ -274,7 +274,7 @@ is null.
 The two expressions are evaluated, and then the result of evaluating
 the data expression is reversed in place, using hunks of the size
 specified in the numeric expression.   For example, if the numeric
-expression evaluates to four, and the data expression evaluates to 
+expression evaluates to four, and the data expression evaluates to
 twelve bytes of data, then the reverse expression will evaluate to
 twelve bytes of data, consisting of the last four bytes of the the
 input data, followed by the middle four bytes, followed by the first

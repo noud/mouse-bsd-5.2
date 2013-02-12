@@ -75,7 +75,7 @@ main()
 {
   int current, revision, age, n;
   const int required = 2;
-  if (smiInit("")) 
+  if (smiInit(""))
     exit(1);
   if (strcmp(SMI_LIBRARY_VERSION, smi_library_version))
     exit(2);

@@ -56,7 +56,7 @@ rewrite_param_set(
 			return REWRITE_ERR;
 		}
 	}
-	
+
 #ifdef USE_REWRITE_LDAP_PVT_THREADS
 	ldap_pvt_thread_rdwr_wunlock( &info->li_params_mutex );
 #endif /* USE_REWRITE_LDAP_PVT_THREADS */
@@ -82,28 +82,28 @@ rewrite_param_get(
 
 	value->bv_val = NULL;
 	value->bv_len = 0;
-	
+
 #ifdef USE_REWRITE_LDAP_PVT_THREADS
 	ldap_pvt_thread_rdwr_rlock( &info->li_params_mutex );
 #endif /* USE_REWRITE_LDAP_PVT_THREADS */
-	
+
 	var = rewrite_var_find( info->li_params, name );
 	if ( var == NULL ) {
-		
+
 #ifdef USE_REWRITE_LDAP_PVT_THREADS
 		ldap_pvt_thread_rdwr_runlock( &info->li_params_mutex );
 #endif /* USE_REWRITE_LDAP_PVT_THREADS */
-		
+
 		return REWRITE_ERR;
 	} else {
 		value->bv_val = strdup( var->lv_value.bv_val );
 		value->bv_len = var->lv_value.bv_len;
 	}
-	
+
 #ifdef USE_REWRITE_LDAP_PVT_THREADS
         ldap_pvt_thread_rdwr_runlock( &info->li_params_mutex );
 #endif /* USE_REWRITE_LDAP_PVT_THREADS */
-	
+
 	return REWRITE_SUCCESS;
 }
 
@@ -134,11 +134,11 @@ rewrite_param_destroy(
 	int count;
 
 	assert( info != NULL );
-	
+
 #ifdef USE_REWRITE_LDAP_PVT_THREADS
 	ldap_pvt_thread_rdwr_wlock( &info->li_params_mutex );
 #endif /* USE_REWRITE_LDAP_PVT_THREADS */
-	
+
 	count = avl_free( info->li_params, rewrite_param_free );
 	info->li_params = NULL;
 

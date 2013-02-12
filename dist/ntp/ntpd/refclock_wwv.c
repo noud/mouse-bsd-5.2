@@ -287,12 +287,12 @@ struct progx {
 #define DECIM3		6	/* BCD digit 0-3 */
 #define DECIM2		7	/* BCD digit 0-2 */
 #define MSCBIT		8	/* miscellaneous bit */
-#define MSC20		9	/* miscellaneous bit */		
-#define MSC21		10	/* QSY probe channel */		
-#define MIN1		11	/* latch time */		
+#define MSC20		9	/* miscellaneous bit */
+#define MSC21		10	/* QSY probe channel */
+#define MIN1		11	/* latch time */
 #define MIN2		12	/* leap second */
-#define SYNC2		13	/* latch minute sync pulse */		
-#define SYNC3		14	/* latch data pulse */		
+#define SYNC2		13	/* latch minute sync pulse */
+#define SYNC3		14	/* latch data pulse */
 
 /*
  * Offsets in decoding matrix
@@ -914,7 +914,7 @@ wwv_poll(
  * starting at an arbitrary time. The rsec ramp counts the 60 seconds of
  * the minute starting at the 800-ms minute sync pulse found during the
  * mphase ramp. The rsec ramp drives the seconds state machine to
- * determine the bits and digits of the timecode. 
+ * determine the bits and digits of the timecode.
  *
  * Demodulation operations are based on three synthesized quadrature
  * sinusoids: 100 Hz for the data signal, 1000 Hz for the WWV sync
@@ -1223,7 +1223,7 @@ wwv_rf(
 				up->repoch = up->yepoch = epoch;
 			else
 				up->repoch = up->yepoch;
-			
+
 		}
 	}
 
@@ -1430,7 +1430,7 @@ wwv_endpoc(
 	 * If the signal amplitude or SNR fall below thresholds, dim the
 	 * second sync lamp and wait for hotter ions. If no stations are
 	 * heard, we are either in a probe cycle or the ions are really
-	 * cold. 
+	 * cold.
 	 */
 	scount++;
 	if (up->epomax < STHR || up->eposnr < SSNR) {
@@ -1616,14 +1616,14 @@ wwv_endpoc(
  * sync pulse detected in the wwv_epoch() routine. The transmitted
  * signals are delayed by the propagation delay, receiver delay and
  * filter delay of this program. Delay corrections are introduced
- * separately for WWV and WWVH. 
+ * separately for WWV and WWVH.
  *
  * Most communications radios use a highpass filter in the audio stages,
  * which can do nasty things to the subcarrier phase relative to the
  * sync pulses. Therefore, the data subcarrier reference phase is
  * disciplined using the hardlimited quadrature-phase signal sampled at
  * the same time as the in-phase signal. The phase tracking loop uses
- * phase adjustments of plus-minus one sample (125 us). 
+ * phase adjustments of plus-minus one sample (125 us).
  */
 static void
 wwv_epoch(
@@ -1646,9 +1646,9 @@ wwv_epoch(
 	 * the epoch backwards.
 	 */
 	cp = &up->mitig[up->achan];
-	if (cp->wwv.amp > cp->wwv.syneng) 
+	if (cp->wwv.amp > cp->wwv.syneng)
 		cp->wwv.syneng = cp->wwv.amp;
-	if (cp->wwvh.amp > cp->wwvh.syneng) 
+	if (cp->wwvh.amp > cp->wwvh.syneng)
 		cp->wwvh.syneng = cp->wwvh.amp;
 	if (up->rphase == 800 * MS)
 		up->repoch = up->yepoch;
@@ -1820,7 +1820,7 @@ wwv_rsec(
 	 * here happen at the end of the second numbered as shown.
 	 *
 	 * At the end of second 0 save the minute sync amplitude latched
-	 * at 800 ms as the signal later used to calculate the SNR. 
+	 * at 800 ms as the signal later used to calculate the SNR.
 	 */
 	case SYNC2:			/* 0 */
 		cp = &up->mitig[up->achan];
@@ -1925,13 +1925,13 @@ wwv_rsec(
 	 * given by the argument. Bits not used in the digit are forced
 	 * to zero.
 	 */
-	case COEF1:			/* 4-7 */ 
+	case COEF1:			/* 4-7 */
 		bcddld[arg] = bit;
 		break;
 
 	case COEF:			/* 10-13, 15-17, 20-23, 25-26,
 					   30-33, 35-38, 40-41, 51-54 */
-		if (up->status & DSYNC) 
+		if (up->status & DSYNC)
 			bcddld[arg] = bit;
 		else
 			bcddld[arg] = 0;
@@ -2065,7 +2065,7 @@ wwv_rsec(
  * loss, the minute sync epoch will be in the same second. This requires
  * the codec frequency be accurate within 6 PPM. Practical experience
  * shows the frequency typically within 0.1 PPM, so after a day of
- * signal loss, the time should be within 8.6 ms.. 
+ * signal loss, the time should be within 8.6 ms..
  */
 static void
 wwv_clock(
@@ -2258,7 +2258,7 @@ wwv_tsec(
 
 	/*
 	 * Propagate carries through the day.
-	 */ 
+	 */
 	if (temp == 0)			/* carry minutes */
 		temp = carry(&up->decvec[MN + 1]);
 	if (temp == 0)			/* carry hours */
@@ -2411,7 +2411,7 @@ wwv_snr(
  * from polluting the integrators. In order to consider a station valid,
  * the metric must be at least MTHR (13); otherwise, the station select
  * bits are cleared so the second sync is disabled and the data bit
- * integrators averaged to a miss. 
+ * integrators averaged to a miss.
  */
 static int
 wwv_newchan(
@@ -2488,7 +2488,7 @@ wwv_newchan(
  *	(SYNCH) without finding station sync (INSYNC lit).
  *
  * 4	After finding station sync (INSYNC lit), going more than 2 days
- *	(PANIC) without finding any station. 
+ *	(PANIC) without finding any station.
  */
 static void
 wwv_newgame(
@@ -2523,9 +2523,9 @@ wwv_newgame(
 		cp = &up->mitig[i];
 		cp->gain = up->gain;
 		cp->wwv.select = SELV;
-		sprintf(cp->wwv.refid, "WV%.0f", floor(qsy[i])); 
+		sprintf(cp->wwv.refid, "WV%.0f", floor(qsy[i]));
 		cp->wwvh.select = SELH;
-		sprintf(cp->wwvh.refid, "WH%.0f", floor(qsy[i])); 
+		sprintf(cp->wwvh.refid, "WH%.0f", floor(qsy[i]));
 	}
 	up->dchan = (DCHAN + NCHAN - 1) % NCHAN;;
 	wwv_newchan(peer);
@@ -2627,7 +2627,7 @@ timecode(
 	int year, day, hour, minute, second, dut;
 	char synchar, leapchar, dst;
 	char cptr[50];
-	
+
 
 	/*
 	 * Common fixed-format fields

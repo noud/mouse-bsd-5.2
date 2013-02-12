@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -395,7 +395,7 @@ static int parse_tagging(const char *vstart, int vlen, int *ptag, int *pclass)
 	/* If we have non numeric characters, parse them */
 	if (eptr)
 		vlen -= eptr - vstart;
-	else 
+	else
 		vlen = 0;
 	if (vlen)
 		{
@@ -601,14 +601,14 @@ static int asn1_str2tag(const char *tagstr, int len)
 
 	if (len == -1)
 		len = strlen(tagstr);
-	
-	tntmp = tnst;	
+
+	tntmp = tnst;
 	for (i = 0; i < sizeof(tnst) / sizeof(struct tag_name_st); i++, tntmp++)
 		{
 		if ((len == tntmp->len) && !strncmp(tntmp->strnam, tagstr, len))
 			return tntmp->tag;
 		}
-	
+
 	return -1;
 	}
 
@@ -642,7 +642,7 @@ static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype)
 			goto bad_form;
 			}
 		break;
-		
+
 		case V_ASN1_BOOLEAN:
 		if (format != ASN1_GEN_FORMAT_ASCII)
 			{
@@ -739,7 +739,7 @@ static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype)
 			ASN1err(ASN1_F_ASN1_STR2TYPE, ERR_R_MALLOC_FAILURE);
 			goto bad_str;
 			}
-		
+
 
 		break;
 
@@ -777,9 +777,9 @@ static ASN1_TYPE *asn1_str2type(const char *str, int format, int utype)
 				goto bad_str;
 				}
 			no_unused = 0;
-			
+
 			}
-		else 
+		else
 			{
 			ASN1err(ASN1_F_ASN1_STR2TYPE, ASN1_R_ILLEGAL_BITSTRING_FORMAT);
 			goto bad_form;

@@ -26,8 +26,8 @@ fi
 start() {
 
 	# Check that SPD-file exists and load it.
-	if [ -f "$IPSEC_SPD" ]; then 
-   		$SETKEY -f $IPSEC_SPD 
+	if [ -f "$IPSEC_SPD" ]; then
+   		$SETKEY -f $IPSEC_SPD
 	fi
 	$RACOON
 	touch $VAR_SUBSYS_IPSEC
@@ -36,8 +36,8 @@ start() {
 
 stop() {
 	killall $RACOON 2> /dev/null
-	$SETKEY -FD 
-	$SETKEY -FP 
+	$SETKEY -FD
+	$SETKEY -FP
         rm -f $VAR_SUBSYS_IPSEC
 }
 

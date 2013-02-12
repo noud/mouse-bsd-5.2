@@ -120,7 +120,7 @@ _gss_mg_error(gssapi_mech_interface m, OM_uint32 maj, OM_uint32 min)
     mg->min_stat = min;
 
     major_status = m->gm_display_status(&minor_status,
-					maj, 
+					maj,
 					GSS_C_GSS_CODE,
 					&m->gm_mech_oid,
 					&message_content,
@@ -130,7 +130,7 @@ _gss_mg_error(gssapi_mech_interface m, OM_uint32 maj, OM_uint32 min)
 	mg->maj_error.length = 0;
     }
     major_status = m->gm_display_status(&minor_status,
-					min, 
+					min,
 					GSS_C_MECH_CODE,
 					&m->gm_mech_oid,
 					&message_content,

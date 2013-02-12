@@ -513,7 +513,7 @@ ReliantUNIX-?.5.43) SYSTYPE=ReliantUnix543
 #}
 #EOF
 #			  $CC -o makedefs.test makedefs.test.c || exit 1
-#			  ./makedefs.test 2>/dev/null || 
+#			  ./makedefs.test 2>/dev/null ||
 #				CCARGS="$CCARGS -DNO_KQUEUE"
 #			  rm -f makedefs.test makedefs.test.[co];;
 #		esac

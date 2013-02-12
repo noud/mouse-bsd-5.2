@@ -96,7 +96,7 @@ static int p_aiflags = 0, p_aifamily = PF_UNSPEC;
 
 static struct addrinfo *parse_addr __P((char *, char *));
 static int fix_portstr __P((vchar_t *, vchar_t *, vchar_t *));
-static int setvarbuf __P((char *, int *, struct sadb_ext *, int, 
+static int setvarbuf __P((char *, int *, struct sadb_ext *, int,
     const void *, int));
 void parse_init __P((void));
 void free_buffer __P((void));
@@ -300,7 +300,7 @@ protocol_spec
 #endif
 		}
 	;
-	
+
 spi
 	:	DECSTRING { p_spi = $1; }
 	|	HEXSTRING
@@ -461,14 +461,14 @@ auth_alg
 			p_key_auth = $2.buf;
 #ifdef SADB_X_AALG_TCP_MD5
 			if (p_alg_auth == SADB_X_AALG_TCP_MD5) {
-				if ((p_key_auth_len < 1) || 
+				if ((p_key_auth_len < 1) ||
 				    (p_key_auth_len > 80))
 					return -1;
-			} else 
+			} else
 #endif
 			{
 				if (ipsec_check_keylen(SADB_EXT_SUPPORTED_AUTH,
-				    p_alg_auth, 
+				    p_alg_auth,
 				    PFKEY_UNUNIT64(p_key_auth_len)) < 0) {
 					yyerror(ipsec_strerror());
 					return -1;
@@ -771,8 +771,8 @@ portstr
 upper_spec
 	:	DECSTRING { $$ = $1; }
 	|	ANY { $$ = IPSEC_ULPROTO_ANY; }
-	|	PR_TCP { 
-				$$ = IPPROTO_TCP; 
+	|	PR_TCP {
+				$$ = IPPROTO_TCP;
 			}
 	|	STRING
 		{
@@ -980,13 +980,13 @@ setkeymsg_spdaddr(type, upper, policy, srcs, splen, dsts, dplen)
 				m_sec_ctx.sadb_x_sec_len =
 				PFKEY_UNIT64(slen + PFKEY_ALIGN8(sec_ctx.len));
 
-				m_sec_ctx.sadb_x_sec_exttype = 
+				m_sec_ctx.sadb_x_sec_exttype =
 					SADB_X_EXT_SEC_CTX;
 				m_sec_ctx.sadb_x_ctx_len = sec_ctx.len;/*bytes*/
 				m_sec_ctx.sadb_x_ctx_doi = sec_ctx.doi;
 				m_sec_ctx.sadb_x_ctx_alg = sec_ctx.alg;
-				setvarbuf(buf, &l, 
-					  (struct sadb_ext *)&m_sec_ctx, slen, 
+				setvarbuf(buf, &l,
+					  (struct sadb_ext *)&m_sec_ctx, slen,
 					  (caddr_t)sec_ctx.buf, sec_ctx.len);
 			}
 #endif
@@ -1333,7 +1333,7 @@ setkeymsg_add(type, satype, srcs, dsts)
 		m_sec_ctx.sadb_x_ctx_doi = sec_ctx.doi;
 		m_sec_ctx.sadb_x_ctx_alg = sec_ctx.alg;
 		setvarbuf(buf, &l, (struct sadb_ext *)&m_sec_ctx, slen,
-			  (caddr_t)sec_ctx.buf, sec_ctx.len); 
+			  (caddr_t)sec_ctx.buf, sec_ctx.len);
 	}
 #endif
 
@@ -1461,7 +1461,7 @@ setkeymsg_add(type, satype, srcs, dsts)
 				natt_port.sadb_x_nat_t_port_exttype =
 					SADB_X_EXT_NAT_T_SPORT;
 				natt_port.sadb_x_nat_t_port_port = htons(get_port(s));
-				
+
 				memcpy(buf + l, &natt_port, len);
 				l += len;
 
@@ -1469,7 +1469,7 @@ setkeymsg_add(type, satype, srcs, dsts)
 				natt_port.sadb_x_nat_t_port_exttype =
 					SADB_X_EXT_NAT_T_DPORT;
 				natt_port.sadb_x_nat_t_port_port = htons(get_port(d));
-				
+
 				memcpy(buf + l, &natt_port, len);
 				l += len;
 			}

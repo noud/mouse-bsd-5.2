@@ -27,7 +27,7 @@
  * This driver was developed for use with the RIPE NCC TTM project.
  *
  *
- * The initial driver was developed by Daniel Karrenberg <dfk@ripe.net> 
+ * The initial driver was developed by Daniel Karrenberg <dfk@ripe.net>
  * using the code made available by Trimble. This was for xntpd-3.x.x
  *
  * Rewrite of the driver for ntpd-4.x.x by Mark Santcroos <marks@ripe.net>
@@ -57,7 +57,7 @@
 /* we are on little endian */
 #define BYTESWAP
 
-/* 
+/*
  * DEBUG statements: uncomment if necessary
  */
 /* #define DEBUG_NCC */ /* general debug statements */
@@ -110,7 +110,7 @@
 
 /* TSIP packets have the following structure, whether report or command. */
 typedef struct {
-	short 
+	short
 		counter, 	/* counter */
 		len;		/* size of buf; < MAX_RPTBUF unsigned chars */
 	unsigned char
@@ -231,7 +231,7 @@ typedef struct {
 static char
 	*dayname[7] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"},
 	old_baudnum[] = {0, 1, 4, 5, 6, 8, 9, 11, 28, 12},
-        *st_baud_text_app [] = {"", "", "  300", "  600", " 1200", " 2400", 
+        *st_baud_text_app [] = {"", "", "  300", "  600", " 1200", " 2400",
 		" 4800", " 9600", "19200", "38400"},
 	*old_parity_text[] = {"EVEN", "ODD", "", "", "NONE"},
 	*parity_text [] = {"NONE", "ODD", "EVEN"},
@@ -254,14 +254,14 @@ static char
 /*
  * Unit control structure
  */
-struct ripencc_unit {                   
+struct ripencc_unit {
         int unit;                       /* unit number */
         int     pollcnt;                /* poll message counter */
         int     polled;                 /* Hand in a sample? */
         char leapdelta;                 /* delta of next leap event */
         unsigned char utcflags;         /* delta of next leap event */
         l_fp    tstamp;                 /* timestamp of last poll */
-        
+
         struct timespec ts;             /* last timestamp */
         pps_params_t pps_params;        /* pps parameters */
         pps_info_t pps_info;            /* last pps data */
@@ -361,7 +361,7 @@ short rpt_0x8F14 (TSIPPKT *rpt, short *datum_idx, double datum_coeffs[5]);
 short rpt_0x8F15 (TSIPPKT *rpt, short *datum_idx, double datum_coeffs[5]);
 short rpt_0x8F20 (TSIPPKT *rpt, unsigned char *info, double *lat,
 	double *lon, double *alt, double vel_enu[], double *time_of_fix,
-	short *week_num, unsigned char *nsvs, unsigned char sv_prn[], 
+	short *week_num, unsigned char *nsvs, unsigned char sv_prn[],
 	short sv_IODC[], short *datum_index);
 short rpt_0x8F41 (TSIPPKT *rpt, unsigned char *bSearchRange,
 	unsigned char *bBoardOptions, unsigned long *iiSerialNumber,
@@ -499,7 +499,7 @@ ripencc_start(int unit, struct peer *peer)
 	/*
 	 * Allocate and initialize unit structure
 	 */
-	if (!(up = (struct ripencc_unit *) 
+	if (!(up = (struct ripencc_unit *)
 				emalloc(sizeof(struct ripencc_unit)))) {
 		(void) close(fd);
 		return (0);
@@ -533,29 +533,29 @@ ripencc_start(int unit, struct peer *peer)
 	 */
 
 	/* query software versions */
-	cmd_0x1F(&spt);			
-	ripencc_send(peer, spt);          
-
-	/* query receiver health */
-	cmd_0x26(&spt);			
+	cmd_0x1F(&spt);
 	ripencc_send(peer, spt);
 
-	/* query serial numbers */	
-	cmd_0x8E42q(&spt);		
-	ripencc_send(peer, spt);  
-	
+	/* query receiver health */
+	cmd_0x26(&spt);
+	ripencc_send(peer, spt);
+
+	/* query serial numbers */
+	cmd_0x8E42q(&spt);
+	ripencc_send(peer, spt);
+
 	/* query manuf params */
-	cmd_0x8E41q(&spt);		
-	ripencc_send(peer, spt); 
+	cmd_0x8E41q(&spt);
+	ripencc_send(peer, spt);
 
 	/* i/o opts */ /* trimble manual page A30 */
-	cmd_0x35s(&spt, 
+	cmd_0x35s(&spt,
 		0x1C, 	/* position */
 		0x00, 	/* velocity */
 		0x05, 	/* timing */
 		0x0a); 	/* auxilary */
 	ripencc_send(peer, spt);
-	
+
 	/* turn off port A */
 	cmd_0x3Ds (&spt,
 		0x0B, /* baud_out */
@@ -699,7 +699,7 @@ ripencc_ppsapi(
 
 /*
  * This function is called every 64 seconds from ripencc_receive
- * It will fetch the pps time 
+ * It will fetch the pps time
  *
  * Return 0 on failure and 1 on success.
  */
@@ -721,7 +721,7 @@ ripencc_get_pps_ts(
 
 	/*
 	 * Convert the timespec nanoseconds field to ntp l_fp units.
-	 */ 
+	 */
 	if (up->handle == 0)
 		return (0);
 	timeout.tv_sec = 0;
@@ -823,7 +823,7 @@ ripencc_send(struct peer *peer, TSIPPKT spt)
 #ifdef DEBUG_RAW
 	{
 		register struct ripencc_unit *up;
-		register struct refclockproc *pp;	
+		register struct refclockproc *pp;
 
 		pp = peer->procptr;
 		up = (struct ripencc_unit *)pp->unitptr;
@@ -844,12 +844,12 @@ ripencc_send(struct peer *peer, TSIPPKT spt)
 			refclock_report(peer, CEVNT_FAULT);
 			return;
 		}
-			
+
 		if (*ip == 0x10)  /* byte stuffing */
 			*op++ = 0x10;
 		*op++ = *ip++;
 	}
-	
+
 	*op++ = 0x10;
 	*op++ = 0x03;
 
@@ -861,7 +861,7 @@ ripencc_send(struct peer *peer, TSIPPKT spt)
 		printf("ripencc_send: len %d\n", op-obuf);
 		for (i=1, cp=obuf; cp<op; i++, cp++) {
 			printf(" %02X", *cp);
-			if (i%10 == 0) 
+			if (i%10 == 0)
 				printf("\n");
 		}
 		printf("\n");
@@ -884,11 +884,11 @@ static void
 ripencc_receive(struct recvbuf *rbufp)
 {
 	register struct ripencc_unit *up;
-	register struct refclockproc *pp;	
+	register struct refclockproc *pp;
 	struct peer *peer;
-	static TSIPPKT rpt; /* structure for current incoming TSIP report  */ 
+	static TSIPPKT rpt; /* structure for current incoming TSIP report  */
 	TSIPPKT spt; /* send packet */
-	int ns_since_pps;			
+	int ns_since_pps;
 	int i;
 	char *cp;
 	/* Use these variables to hold data until we decide its worth keeping */
@@ -919,7 +919,7 @@ ripencc_receive(struct recvbuf *rbufp)
 		printf("ripencc_receive: len %d\n", rbufp->recv_length);
 		for (i=1, cp=(char*)&rbufp->recv_space; i <= rbufp->recv_length; i++, cp++) {
 			printf(" %02X", *cp);
-			if (i%10 == 0) 
+			if (i%10 == 0)
 				printf("\n");
 		}
 		printf("\n");
@@ -944,10 +944,10 @@ ripencc_receive(struct recvbuf *rbufp)
 
 			case 0xAD:	/* UTC Time */
 				/*
-				 * When polling on port B the timecode 
+				 * When polling on port B the timecode
 				 * is the time of the previous PPS.
-				 * If we completed receiving the packet 
-				 * less than 150ms after the turn of the second, 
+				 * If we completed receiving the packet
+				 * less than 150ms after the turn of the second,
 				 * it may have the code of the previous second.
 				 * We do not trust that and simply poll again
 				 * without even parsing it.
@@ -968,8 +968,8 @@ ripencc_receive(struct recvbuf *rbufp)
 
 			        /*
  				 * Parse primary utc time packet
-				 * and fill refclock structure 
-				 * from results. 
+				 * and fill refclock structure
+				 * from results.
 				 */
 				if (parse0x8FAD(&rpt, peer) < 0) {
 						msyslog(LOG_INFO, "%s(): parse0x8FAD < 0",__FUNCTION__);
@@ -977,9 +977,9 @@ ripencc_receive(struct recvbuf *rbufp)
 						break;
 				}
 				/*
-				 * If the PPSAPI is working, rather use its 
+				 * If the PPSAPI is working, rather use its
 				 * timestamps.
-				 * assume that the PPS occurs on the second 
+				 * assume that the PPS occurs on the second
 				 * so blow any msec
 				 */
 				if (ripencc_get_pps_ts(up, &rd_tmp) == 1) {
@@ -990,7 +990,7 @@ ripencc_receive(struct recvbuf *rbufp)
 					msyslog(LOG_INFO, "%s(): ripencc_get_pps_ts returns failure\n",__FUNCTION__);
 
 
-				if (!up->polled) { 
+				if (!up->polled) {
 					msyslog(LOG_INFO, "%s(): unrequested packet\n",__FUNCTION__);
 					/* unrequested packet */
 					break;
@@ -1003,7 +1003,7 @@ ripencc_receive(struct recvbuf *rbufp)
 				/* poll for next packet */
 				cmd_0x8E0Bq(&spt);
 				ripencc_send(peer,spt);
-				
+
 				if (ns_since_pps < 0) { /* no PPS */
 					msyslog(LOG_INFO, "%s(): ns_since_pps < 0",__FUNCTION__);
 					refclock_report(peer, CEVNT_BADTIME);
@@ -1012,7 +1012,7 @@ ripencc_receive(struct recvbuf *rbufp)
 
 				/*
 				 * Process the new sample in the median filter and determine the
-				 * reference clock offset and dispersion. 
+				 * reference clock offset and dispersion.
  				 */
 				if (!refclock_process(pp)) {
 					msyslog(LOG_INFO, "%s(): !refclock_process",__FUNCTION__);
@@ -1022,7 +1022,7 @@ ripencc_receive(struct recvbuf *rbufp)
 
 				refclock_receive(peer);
 				break;
-			
+
 			case 0x0B: /* comprehensive time packet */
 				parse0x8F0B(&rpt, peer);
 				break;
@@ -1056,7 +1056,7 @@ ripencc_receive(struct recvbuf *rbufp)
 	}
 }
 
-/* 
+/*
  * All trimble functions that are directly referenced from driver code
  * (so not from parseany)
  */
@@ -1368,8 +1368,8 @@ void bPutDouble (double a, unsigned char *cmdbuf){*(double*) cmdbuf = a;}
 
 /*
  * Parse primary utc time packet
- * and fill refclock structure 
- * from results. 
+ * and fill refclock structure
+ * from results.
  *
  * 0 = success
  * -1 = errors
@@ -1378,9 +1378,9 @@ void bPutDouble (double a, unsigned char *cmdbuf){*(double*) cmdbuf = a;}
 static int
 parse0x8FAD(rpt, peer)
 	TSIPPKT *rpt;
-	struct peer *peer;	
+	struct peer *peer;
 {
-	register struct refclockproc *pp;	
+	register struct refclockproc *pp;
 	register struct ripencc_unit *up;
 
 	unsigned day, month, year;	/* data derived from received timecode */
@@ -1390,16 +1390,16 @@ parse0x8FAD(rpt, peer)
    	static char logbuf[1024];	/* logging string buffer */
 	int i;
 	unsigned char *buf;
-		
+
 	buf = rpt->buf;
 	pp = peer->procptr;
 
-	if (rpt->len != 22) 
+	if (rpt->len != 22)
 		return (-1);
-	
+
 	if (bGetShort(&buf[1]) != 0) {
 #ifdef DEBUG_NCC
-		if (debug) 
+		if (debug)
 			printf("parse0x8FAD: event count != 0\n");
 #endif /* DEBUG_NCC */
 		return(-1);
@@ -1408,7 +1408,7 @@ parse0x8FAD(rpt, peer)
 
 	if (bGetDouble(&buf[3]) != 0.0) {
 #ifdef DEBUG_NCC
-		if (debug) 
+		if (debug)
 			printf("parse0x8FAD: fracsecs != 0\n");
 #endif /* DEBUG_NCC */
 		return(-1);
@@ -1428,7 +1428,7 @@ parse0x8FAD(rpt, peer)
 		day, month, year, hour, minute, second, trackstat, utcflags);
 
 #ifdef DEBUG_NCC
-	if (debug) 
+	if (debug)
    		puts(logbuf);
 #endif /* DEBUG_NCC */
 
@@ -1445,7 +1445,7 @@ parse0x8FAD(rpt, peer)
 		ripencc_send(peer,spt);
 		up->utcflags = utcflags;
 	}
-	
+
 	/*
 	 * If we hit the leap second, we choose to skip this sample
 	 * rather than rely on other code to be perfectly correct.
@@ -1457,16 +1457,16 @@ parse0x8FAD(rpt, peer)
 	/* now check and convert the time we received */
 
 	pp->year = year;
-	if (month < 1 || month > 12 || day < 1 || day > 31) 
+	if (month < 1 || month > 12 || day < 1 || day > 31)
 		return(-1);
 
 	if (pp->year % 4) {
-		if (day > day1tab[month - 1]) 
+		if (day > day1tab[month - 1])
 			return(-1);
 		for (i = 0; i < month - 1; i++)
 			day += day1tab[i];
 	} else {
-		if (day > day2tab[month - 1]) 
+		if (day > day2tab[month - 1])
 			return(-1);
 		for (i = 0; i < month - 1; i++)
 			day += day2tab[i];
@@ -1477,16 +1477,16 @@ parse0x8FAD(rpt, peer)
 	pp-> second = second;
 	pp->nsec = 0;
 
-	if ((utcflags&UTCF_LEAP_PNDG) && up->leapdelta != 0) 
-		pp-> leap = (up->leapdelta > 0 ? LEAP_ADDSECOND : LEAP_DELSECOND); 
+	if ((utcflags&UTCF_LEAP_PNDG) && up->leapdelta != 0)
+		pp-> leap = (up->leapdelta > 0 ? LEAP_ADDSECOND : LEAP_DELSECOND);
 	else
-		pp-> leap = LEAP_NOWARNING;  
+		pp-> leap = LEAP_NOWARNING;
 
 	return (0);
 }
 
 /*
- * Parse comprehensive time packet 
+ * Parse comprehensive time packet
  *
  * 0 = success
  * -1 = errors
@@ -1494,9 +1494,9 @@ parse0x8FAD(rpt, peer)
 
 int parse0x8F0B(rpt, peer)
 	TSIPPKT *rpt;
-	struct peer *peer;	
+	struct peer *peer;
 {
-	register struct refclockproc *pp;	
+	register struct refclockproc *pp;
 
 	unsigned day, month, year;	/* data derived from received timecode */
 	unsigned hour, minute, second;
@@ -1515,13 +1515,13 @@ int parse0x8F0B(rpt, peer)
 	int i;
 	unsigned char *buf;
 	double tow;
-		
+
 	buf = rpt->buf;
 	pp = peer->procptr;
 
-	if (rpt->len != 74) 
+	if (rpt->len != 74)
 		return (-1);
-	
+
 	if (bGetShort(&buf[1]) != 0)
 		return(-1);;
 
@@ -1539,7 +1539,7 @@ int parse0x8F0B(rpt, peer)
 		second = (unsigned int) fmod(tow, 60.);
 		minute =  (unsigned int) fmod(tow/60., 60.);
 		hour = (unsigned int )fmod(tow / 3600., 24.);
-	} 
+	}
 
 
 	day =		(unsigned int) buf[11];
@@ -1548,7 +1548,7 @@ int parse0x8F0B(rpt, peer)
 	mode =		buf[15];
 	utcoff =	bGetShort(&buf[16]);
 	bias = 		bGetDouble(&buf[18]) / GPS_C * 1e9;	/* ns */
-	rate = 		bGetDouble(&buf[26]) / GPS_C * 1e9;	/* ppb */ 
+	rate = 		bGetDouble(&buf[26]) / GPS_C * 1e9;	/* ppb */
 	biasunc = 	bGetSingle(&buf[34]) / GPS_C * 1e9;	/* ns */
 	rateunc = 	bGetSingle(&buf[38]) / GPS_C * 1e9;	/* ppb */
 	lat = 		bGetDouble(&buf[42]) * R2D;
@@ -1594,7 +1594,7 @@ int parse0x8F0B(rpt, peer)
 		sv[0], sv[1], sv[2], sv[3], sv[4], sv[5], sv[6], sv[7]);
 
 #ifdef DEBUG_NCC
-	if (debug) 
+	if (debug)
    		puts(logbuf);
 #endif /* DEBUG_NCC */
 
@@ -1604,18 +1604,18 @@ int parse0x8F0B(rpt, peer)
 }
 
 #ifdef TRIMBLE_OUTPUT_FUNC
-/* 
+/*
  * Parse any packet using Trimble machinery
  */
-int parseany(rpt, peer)	
+int parseany(rpt, peer)
 	TSIPPKT *rpt;
-	struct peer *peer;	
+	struct peer *peer;
 {
    	static char logbuf[1024];	/* logging string buffer */
 
    	TranslateTSIPReportToText (rpt, logbuf);	/* anything else */
 #ifdef DEBUG_NCC
-	if (debug) 
+	if (debug)
    		puts(&logbuf[1]);
 #endif /* DEBUG_NCC */
 	record_clock_stats(&peer->srcadr, &logbuf[1]);
@@ -1626,7 +1626,7 @@ int parseany(rpt, peer)
 
 /*
  * Parse UTC Parameter Packet
- * 
+ *
  * See the IDE for documentation!
  *
  * 0 = success
@@ -1635,7 +1635,7 @@ int parseany(rpt, peer)
 
 int parse0x4F(rpt, peer)
 	TSIPPKT *rpt;
-	struct peer *peer;	
+	struct peer *peer;
 {
 	register struct ripencc_unit *up;
 
@@ -1645,10 +1645,10 @@ int parse0x4F(rpt, peer)
 
    	static char logbuf[1024];	/* logging string buffer */
 	unsigned char *buf;
-		
+
 	buf = rpt->buf;
-	
-	if (rpt->len != 26) 
+
+	if (rpt->len != 26)
 		return (-1);
 	a0 = bGetDouble (buf);
 	a1 = bGetSingle (&buf[8]);
@@ -1660,10 +1660,10 @@ int parse0x4F(rpt, peer)
 	dt_lsf = bGetShort (&buf[24]);
 
 	sprintf(logbuf, "L1 %d %d %d %g %g %g %d %d %d",
-		dt_lsf - dt_ls, dt_ls, dt_lsf, a0, a1, tot, wn_t, wn_lsf, dn); 
+		dt_lsf - dt_ls, dt_ls, dt_lsf, a0, a1, tot, wn_t, wn_lsf, dn);
 
 #ifdef DEBUG_NCC
-	if (debug) 
+	if (debug)
    		puts(logbuf);
 #endif /* DEBUG_NCC */
 
@@ -1684,24 +1684,24 @@ int parse0x4F(rpt, peer)
 
 int parse0x5C(rpt, peer)
 	TSIPPKT *rpt;
-	struct peer *peer;	
+	struct peer *peer;
 {
 	unsigned char prn, channel, aqflag, ephstat;
 	float snr, azinuth, elevation;
 
    	static char logbuf[1024];	/* logging string buffer */
 	unsigned char *buf;
-		
+
 	buf = rpt->buf;
-	
-	if (rpt->len != 24) 
+
+	if (rpt->len != 24)
 		return(-1);
 
 	prn = buf[0];
 	channel = (unsigned char)(buf[1] >> 3);
-	if (channel == 0x10) 
+	if (channel == 0x10)
 		channel = 2;
-	else 
+	else
 		channel++;
 	aqflag = buf[2];
 	ephstat = buf[3];
@@ -1713,7 +1713,7 @@ int parse0x5C(rpt, peer)
 		prn, channel, aqflag, ephstat, snr, azinuth, elevation);
 
 #ifdef DEBUG_NCC
-	if (debug) 
+	if (debug)
    		puts(logbuf);
 #endif /* DEBUG_NCC */
 
@@ -1945,7 +1945,7 @@ short rpt_0x41 (TSIPPKT *rpt,
 {
 	unsigned char *buf;
 	buf = rpt->buf;
-	
+
 	if (rpt->len != 10) return TRUE;
 	*time_of_week = bGetSingle (buf);
 	*week_num = bGetShort (&buf[4]);
@@ -1960,7 +1960,7 @@ short rpt_0x42 (TSIPPKT *rpt,
 {
 	unsigned char *buf;
 	buf = rpt->buf;
-	
+
 	if (rpt->len != 16) return TRUE;
 	pos_ECEF[0] = bGetSingle (buf);
 	pos_ECEF[1]= bGetSingle (&buf[4]);
@@ -1998,7 +1998,7 @@ short rpt_0x45 (TSIPPKT *rpt,
 	unsigned char *dsp_day,
 	unsigned char *dsp_month,
 	unsigned char *dsp_year)
-/* software versions */	
+/* software versions */
 {
 	unsigned char *buf;
 	buf = rpt->buf;
@@ -2222,7 +2222,7 @@ short rpt_0x55 (TSIPPKT *rpt,
 {
 	unsigned char *buf;
 	buf = rpt->buf;
-	
+
 	if (rpt->len != 4) return TRUE;
 	*pos_code = buf[0];
 	*vel_code = buf[1];
@@ -2233,11 +2233,11 @@ short rpt_0x55 (TSIPPKT *rpt,
 
 short rpt_0x56 (TSIPPKT *rpt,
 	float vel_ENU[3], float *freq_offset, float *time_of_fix)
-/* velocity in east-north-up coordinates */	
+/* velocity in east-north-up coordinates */
 {
 	unsigned char *buf;
 	buf = rpt->buf;
-	
+
 	if (rpt->len != 20) return TRUE;
 	/* east */
 	vel_ENU[0] = bGetSingle (buf);
@@ -2258,7 +2258,7 @@ short rpt_0x57 (TSIPPKT *rpt,
 {
 	unsigned char *buf;
 	buf = rpt->buf;
-	
+
 	if (rpt->len != 8) return TRUE;
 	*source_code = buf[0];
 	*diag_code = buf[1];
@@ -2411,12 +2411,12 @@ short rpt_0x58 (TSIPPKT *rpt,
 short rpt_0x59 (TSIPPKT *rpt,
 	unsigned char *code_type,
 	unsigned char status_code[32])
-/* satellite enable/disable or health heed/ignore list */	
+/* satellite enable/disable or health heed/ignore list */
 {
 	short iprn;
 	unsigned char *buf;
 	buf = rpt->buf;
-	
+
 	if (rpt->len != 33) return TRUE;
 	*code_type = buf[0];
 	for (iprn = 0; iprn < 32; iprn++)
@@ -2454,11 +2454,11 @@ short rpt_0x5B (TSIPPKT *rpt,
 	float *time_of_collection,
 	float *time_of_eph,
 	float *sv_accy)
-/* satellite ephorb status */	
+/* satellite ephorb status */
 {
 	unsigned char *buf;
 	buf = rpt->buf;
-	
+
 	if (rpt->len != 16) return TRUE;
 	*sv_prn = buf[0];
 	*time_of_collection = bGetSingle (&buf[1]);
@@ -2488,7 +2488,7 @@ short rpt_0x5C (TSIPPKT *rpt,
 {
 	unsigned char *buf;
 	buf = rpt->buf;
-	
+
 	if (rpt->len != 24) return TRUE;
 	*sv_prn = buf[0];
 	*slot = (unsigned char)((buf[1] & 0x07) + 1);
@@ -2576,7 +2576,7 @@ short rpt_0x84 (TSIPPKT *rpt,
 	double *alt,
 	double *clock_bias,
 	float *time_of_fix)
-/* position, lat-lon-alt double precision */	
+/* position, lat-lon-alt double precision */
 {
 	unsigned char *buf;
 	buf = rpt->buf;
@@ -3003,7 +3003,7 @@ char* show_time (float time_of_week)
 	}
    else
    {
-		if (time_of_week < 604799.9) 
+		if (time_of_week < 604799.9)
 			tow = time_of_week + .00000001;
 		seconds = (float)fmod(tow, 60.);
 		minutes =  (short) fmod(tow/60., 60.);

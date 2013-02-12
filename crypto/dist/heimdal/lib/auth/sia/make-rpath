@@ -13,7 +13,7 @@ case $1 in
   fi
   shift 2
   ;;
--R*) 
+-R*)
   d=`echo $1 | sed 's,^-R,,'`
   if test "$rlist"; then
     rlist="${rlist}:${d}"

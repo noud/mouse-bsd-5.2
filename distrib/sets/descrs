@@ -1,6 +1,6 @@
 base-adosfs-lkm	loadable kernel module for Amiga DOS file system support
 base-adosfs-root	Root file system support for Amiga DOS file system support
-base-amd-bin	auto-mounter daemon 
+base-amd-bin	auto-mounter daemon
 base-amd-examples	example configuration files for the auto-mounter daemon and utilities
 base-amd-shlib	auto-mounter daemon shared library
 base-audio-bin	utilities for playing and recording audio
@@ -15,7 +15,7 @@ base-calendar-share	database of important dates for calendar(1)
 base-coda-lkm	loadable kernel modules for the CODA distributed file system
 base-cron-bin	the cron daemon and related utilities
 base-cron-root	root file system directories required by the cron daemon
-base-crypto-bin	cryptographic utilities 
+base-crypto-bin	cryptographic utilities
 base-crypto-examples	example configuration files for cryptographic utilities
 base-crypto-root	root file system directories required by cryptographic utilities
 base-crypto-shlib	shared library providing cryptographic routines
@@ -35,7 +35,7 @@ base-games-share	shared data files for games
 base-games-usr	directories for the games subsystem
 base-gnats-bin	the GNATS bug reporting utility
 base-gnats-share	shared data files for the GNATS bug reporting utility
-base-groff-font	fonts for the groff family of text formatters 
+base-groff-font	fonts for the groff family of text formatters
 base-groff-share	shared data files for the groff family of text formatters
 base-hesiod-bin	utilities for the HESIOD network information system
 base-htmldoc-share	HTML documentation
@@ -87,7 +87,7 @@ base-locale-pl	Polish language locale support
 base-locale-pt	Portuguese language locale support
 base-locale-ro	Romanian language locale support
 base-locale-ru	Russian language locale support
-base-locale-share	/usr/share file system support for all locales 
+base-locale-share	/usr/share file system support for all locales
 base-locale-sk	Slovak language locale support
 base-locale-sl	Slovenian language locale support
 base-locale-sr	Suriname language locale support
@@ -97,19 +97,19 @@ base-locale-uk	Ukrainian language locale support
 base-locale-zh	Chinese language locale support
 base-lpr-bin	utilities for printing support
 base-lpr-root	root file system support for printing utilities
-base-lpr-usr	/usr file system support for printing 
+base-lpr-usr	/usr file system support for printing
 base-magic-share	shared files for the file(1) utility
 base-mail-bin	mail utilities
 base-mail-root	root file system support for mail utilities
-base-mailwrapper-bin	the mailwrapper(8) program for multiple mailer support 
-base-man-bin	utilities for reading online manual pages 
+base-mailwrapper-bin	the mailwrapper(8) program for multiple mailer support
+base-man-bin	utilities for reading online manual pages
 base-man-share	shared data files for the online manual pages
 base-miscfs-examples	example configuration files for miscellaneous file systems
 base-miscfs-lkm	loadable kernel modules for miscellaneous file systems
 base-miscfs-root	root file system support for miscellaneous file systems
 base-net-shlib	shared libraries for network programming
 base-netutil-bin	networking utilities
-base-netutil-examples	example configuration files for networking programs 
+base-netutil-examples	example configuration files for networking programs
 base-netutil-root	root file system support for networking utilities
 base-nfsclient-bin	network file system client utilities
 base-nfsclient-root	root file system support for network file system client utilities
@@ -131,7 +131,7 @@ base-postfix-root	root file system support for the Postfix mailer
 base-postfix-usr	/usr file system support for the Postfix mailer
 base-ppp-bin	utilities for the PPP point-to-point remote access protocol
 base-ppp-lkm	object files for loadable kernel modules for the PPP point-to-point remote access protocol
-base-psd-share	directory structure for the Programmer's Supplementary Documentation 
+base-psd-share	directory structure for the Programmer's Supplementary Documentation
 base-rcs-bin	utilities for the RCS Revision Control System
 base-reference-share	directory structure for miscellaneous reference documents
 base-rescue-root	statically-linked binaries which can be used in extremis
@@ -147,11 +147,11 @@ base-sup-bin	utilities for the SUP software update protocol
 base-sup-examples	example configuration files for the SUP software update protocol
 base-sys-devlinks	device node symbolic links
 base-sys-examples	example configuration files for kernel functionality
-base-sys-lkm	system support for loadable kernel modules 
+base-sys-lkm	system support for loadable kernel modules
 base-sys-root	required root file system structure
 base-sys-share	required /usr/share file system structure
 base-sys-shlib	shared libraries for basic system functionality
-base-sys-usr	required /usr file system structure 
+base-sys-usr	required /usr file system structure
 base-sysutil-bin	system utilities
 base-sysutil-examples	example configuration files for miscellaneous system utilities
 base-sysutil-root	root file system support for system utilities
@@ -179,9 +179,9 @@ base-texinfo_locale-tr Turkish language support for the GNU texinfo software
 base-texinfo_locale-zh Chinese language support for the GNU texinfo software
 base-timed-bin	utilities for the timed(8) network time daemon
 base-tn3270-bin	utilities for connecting to IBM VM/CMS systems
-base-usd-share	directory structure for the User's Supplementary Documentation 
+base-usd-share	directory structure for the User's Supplementary Documentation
 base-util-bin	standard utilities for use by users
-base-util-root	root file system support for standard user utilities 
+base-util-root	root file system support for standard user utilities
 base-util-share	shared data files for standard user utilities
 base-util_locale-cs	Czech language support for standard utilities
 base-util_locale-de	German language support for standard utilities
@@ -197,18 +197,18 @@ base-util_locale-it	Italian language support for standard utilities
 base-util_locale-ja	Japanese language support for standard utilities
 base-util_locale-sv	Swedish language support for standard utilities
 base-vfs-lkm loadable kernel modules for filesystems
-comp-c-bin	
+comp-c-bin
 comp-c-bin	This package includes compilers and tools for the C programming language:
 comp-c-bin	c89, c99, cc, gcc - C compilers
 comp-c-bin	flex, lex - lexical analyzer generator
 comp-c-bin	lint - C program validator
 comp-c-bin	rpcgen - RPC stub generator
-comp-c-bin	yacc - parser generator 
-comp-c-catman	
-comp-c-catman	
-comp-c-catman	
-comp-c-catman	
-comp-c-catman	
+comp-c-bin	yacc - parser generator
+comp-c-catman
+comp-c-catman
+comp-c-catman
+comp-c-catman
+comp-c-catman
 comp-c-catman		c89, c99, cc, gcc - C compilers
 comp-c-catman		flex, lex - lexical analyzer generator
 comp-c-catman		lint - C program validator
@@ -224,11 +224,11 @@ comp-c-lib	libraries.
 comp-c-lib	programs and simbolic links for use in linking software against shared
 comp-c-lintlib	C language syntax checker.
 comp-c-lintlib	This package contains library description files for use with the lint(1)
-comp-c-man	
-comp-c-man	
-comp-c-man	
-comp-c-man	
-comp-c-man	
+comp-c-man
+comp-c-man
+comp-c-man
+comp-c-man
+comp-c-man
 comp-c-man		c89, c99, cc, gcc - C compilers
 comp-c-man		flex, lex - lexical analyzer generator
 comp-c-man		lint - C program validator
@@ -305,12 +305,12 @@ comp-cvs-man	occurred, etc., like RCS  or SCCS. Unlike the simpler systems, CVS 
 comp-cvs-man	operates on hierarchical collections of directories consisting of version
 comp-cvs-man	triggers to enable/log/control various operations and works well over a
 comp-cvs-man	wide area network (see manual pages).
-comp-cxx-bin	
+comp-cxx-bin
 comp-cxx-bin		c++, g++ - C++ compiler
 comp-cxx-bin		c++filt - tool for demangling C++ single function names
 comp-cxx-bin		flex++ - C++ lexical analyzser generator (a C++ version of flex)
 comp-cxx-bin	This package includes compilers and tools for the C++ programming language:
-comp-cxx-catman	
+comp-cxx-catman
 comp-cxx-catman		c++, g++ - C++ compiler
 comp-cxx-catman		c++filt - tool for demangling C++ single function names
 comp-cxx-catman		flex++ - C++ lexical analyzser generator (a C++ version of flex)
@@ -320,7 +320,7 @@ comp-cxx-include	This contains header files for the C++ programming language.
 comp-cxx-lib	This contains library archives to build statically linked versions of C++
 comp-cxx-lib	libraries.
 comp-cxx-lib	programs and simbolic links for use in linking software against shared
-comp-cxx-man	
+comp-cxx-man
 comp-cxx-man		c++, g++ - C++ compiler
 comp-cxx-man		c++filt - tool for demangling C++ single function names
 comp-cxx-man		flex++ - C++ lexical analyzser generator (a C++ version of flex)
@@ -331,17 +331,17 @@ comp-cxx-piclib	system.
 comp-cxx-piclib	used to recreate the shared C++ libraries distributed with the base NetBSD
 comp-cxx-proflib	This includes versions of system libraries for use in profiling user C++
 comp-cxx-proflib	code.
-comp-debug-bin	
-comp-debug-bin	
-comp-debug-bin	
-comp-debug-bin	
+comp-debug-bin
+comp-debug-bin
+comp-debug-bin
+comp-debug-bin
 comp-debug-bin		-ftest-coverage. These options cause the compiler to insert
 comp-debug-bin		addr2line - translates program addresses into file names and line
 comp-debug-bin		execution profile of C, Pascal, or Fortran77 programs.
 comp-debug-bin		gcov - displays basic block profile / coverage data, if requested
 comp-debug-bin		gdb - is the GNU debugger. The purpose of a debugger such as GDB
 comp-debug-bin		gprof - displays call graph profile data. gprof produces an
-comp-debug-bin		how often each basic block is executed; 
+comp-debug-bin		how often each basic block is executed;
 comp-debug-bin		information in the executable to figure out which file name and
 comp-debug-bin		instrumentation into the object files it generates, which measure
 comp-debug-bin		is to allow you to see what is going on ``inside'' another program
@@ -351,17 +351,17 @@ comp-debug-bin		numbers. Given an address and an executable, it uses the debuggi
 comp-debug-bin		via the C compiler gcc(1) command line options -fprofile-arcs and
 comp-debug-bin		while it executes, or what another program was doing at the moment
 comp-debug-bin	This package contains various C programming debugging utilities, such as:
-comp-debug-catman	
-comp-debug-catman	
-comp-debug-catman	
-comp-debug-catman	
+comp-debug-catman
+comp-debug-catman
+comp-debug-catman
+comp-debug-catman
 comp-debug-catman		-ftest-coverage. These options cause the compiler to insert
 comp-debug-catman		addr2line - translates program addresses into file names and line
 comp-debug-catman		execution profile of C, Pascal, or Fortran77 programs.
 comp-debug-catman		gcov - displays basic block profile / coverage data, if requested
 comp-debug-catman		gdb - is the GNU debugger. The purpose of a debugger such as GDB
 comp-debug-catman		gprof - displays call graph profile data. gprof produces an
-comp-debug-catman		how often each basic block is executed; 
+comp-debug-catman		how often each basic block is executed;
 comp-debug-catman		information in the executable to figure out which file name and
 comp-debug-catman		instrumentation into the object files it generates, which measure
 comp-debug-catman		is to allow you to see what is going on ``inside'' another program
@@ -372,17 +372,17 @@ comp-debug-catman		via the C compiler gcc(1) command line options -fprofile-arcs
 comp-debug-catman		while it executes, or what another program was doing at the moment
 comp-debug-catman	This package contains formatted manual pages on various C programming
 comp-debug-catman	debugging utilities, such as:
-comp-debug-man	
-comp-debug-man	
-comp-debug-man	
-comp-debug-man	
+comp-debug-man
+comp-debug-man
+comp-debug-man
+comp-debug-man
 comp-debug-man		-ftest-coverage. These options cause the compiler to insert
 comp-debug-man		addr2line - translates program addresses into file names and line
 comp-debug-man		execution profile of C, Pascal, or Fortran77 programs.
 comp-debug-man		gcov - displays basic block profile / coverage data, if requested
 comp-debug-man		gdb - is the GNU debugger. The purpose of a debugger such as GDB
 comp-debug-man		gprof - displays call graph profile data. gprof produces an
-comp-debug-man		how often each basic block is executed; 
+comp-debug-man		how often each basic block is executed;
 comp-debug-man		information in the executable to figure out which file name and
 comp-debug-man		instrumentation into the object files it generates, which measure
 comp-debug-man		is to allow you to see what is going on ``inside'' another program
@@ -399,9 +399,9 @@ comp-debug-sbin	file suitable for later analysis by gprof(1).
 comp-debug-sbin	kgmon indicates the state of operating system profiling as running, off,
 comp-debug-sbin	or not configured. (see config(8)) If the -p flag is specified, kgmon
 comp-debug-sbin	used when profiling the operating system. When no arguments are supplied,
-comp-fortran-bin	
-comp-fortran-bin	
-comp-fortran-bin	
+comp-fortran-bin
+comp-fortran-bin
+comp-fortran-bin
 comp-fortran-bin		FORTRAN 77, also called F77). gcc processes input files through
 comp-fortran-bin		and F77 compilers are integrated; g77 is a program to call gcc
 comp-fortran-bin		asa - interpret carriage-control characters. The asa utility reads
@@ -421,9 +421,9 @@ comp-fortran-bin		to line-printer control sequences, and writes them to the stan
 comp-fortran-bin		with options to recognize programs written in Fortran (ANSI
 comp-fortran-bin	This package contains compilers and tools for the FORTRAN programming
 comp-fortran-bin	language, including the following:
-comp-fortran-catman	
-comp-fortran-catman	
-comp-fortran-catman	
+comp-fortran-catman
+comp-fortran-catman
+comp-fortran-catman
 comp-fortran-catman		FORTRAN 77, also called F77). gcc processes input files through
 comp-fortran-catman		and F77 compilers are integrated; g77 is a program to call gcc
 comp-fortran-catman		asa - interpret carriage-control characters. The asa utility reads
@@ -446,9 +446,9 @@ comp-fortran-catman	the FORTRAN programming language, which include:
 comp-fortran-lib	FORTRAN programs and simbolic links for use in linking software against
 comp-fortran-lib	This contains library archives to build statically linked versions of
 comp-fortran-lib	shared libraries.
-comp-fortran-man	
-comp-fortran-man	
-comp-fortran-man	
+comp-fortran-man
+comp-fortran-man
+comp-fortran-man
 comp-fortran-man		FORTRAN 77, also called F77). gcc processes input files through
 comp-fortran-man		and F77 compilers are integrated; g77 is a program to call gcc
 comp-fortran-man		asa - interpret carriage-control characters. The asa utility reads
@@ -479,8 +479,8 @@ comp-ipf-include header files for the IPfilter C API
 comp-krb5-catman formatted manual pages for Kerberos V support
 comp-krb5-include header files for Kerberos V support
 comp-krb5-lib 	libraries to support Kerberos V compilation
-comp-krb5-man 	source manual pages for Kerberos V support 
-comp-krb5-proflib 	profiling libraries for Kerberos V support 
+comp-krb5-man 	source manual pages for Kerberos V support
+comp-krb5-proflib 	profiling libraries for Kerberos V support
 comp-krb5c-catman 	pre-formatted manual pages for Kerberos V C support
 comp-objc-bin	This contains the gcc backend for Objective C programming. With this
 comp-objc-bin	package installed, it is possible to compile Objective C programs with
@@ -501,18 +501,18 @@ comp-sys-shlib	shared library support for basic i386 math and utility libs
 comp-sysutil-catman	formatted manual pages for system utilities
 comp-sysutil-man	manual pages source for system utilities
 comp-sysutil-root	manual pages source for system utilities
-comp-sysutil-sbin	system utilities 
+comp-sysutil-sbin	system utilities
 comp-util-bin	programming utilities
 comp-util-catman	formatted manual pages for programming utilities
 comp-util-man	manual pages source for programming utilities
 comp-util-sbin	system development utilities
-comp-util-share	reference files for programming utilities 
+comp-util-share	reference files for programming utilities
 etc-amd-rc	startup script for auto-mounter daemon
 etc-audio-rc startup script for audio mixer control utility
 etc-bind-etc	configuration files for BIND DNS server
 etc-bind-rc	startup script for BIND DNS server
 etc-bootserver-etc	configuration files for diskless boot server utilities
-etc-bootserver-rc	startup script for diskless boot server utilities 
+etc-bootserver-rc	startup script for diskless boot server utilities
 etc-cron-log	empty log file for cron(8)
 etc-cron-rc	startup script for cron(8) command scheduler
 etc-cron-root	root file system support for cron(8) command scheduler
@@ -525,20 +525,20 @@ etc-ipf-rc	startup script for IP filter
 etc-iscsi-etc	configuration files for the NetBSD iSCSI target
 etc-iscsi-rc	startup script for the NetBSD iSCSI target
 etc-isdn-rc	startup script for ISDN (Integrated Services Digital Network) network connectivity utilities
-etc-krb5-rc	startup script for the Kerberos V authentication service 
+etc-krb5-rc	startup script for the Kerberos V authentication service
 etc-lpr-etc	configuration file for printing services
 etc-lpr-log	empty log file for printing services
 etc-lpr-rc	startup script for printing services
 etc-mail-etc	configuration file for mail utilities
 etc-mailwrapper-etc	configuration files for the mailwrapper(8) program for multiple mailer support
 etc-man-etc	configuration files for the online manual pages
-etc-net-etc	configuration files for networking 
+etc-net-etc	configuration files for networking
 etc-net-rc	startup files for networking
 etc-netutil-etc	configuration files for network utilities
-etc-netutil-log	empty log files for networking utilities 
+etc-netutil-log	empty log files for networking utilities
 etc-nfsserver-rc	startup script for NFS network file system server utilities
-etc-nis-rc	startup script for the NIS network information system 
-etc-nis-root	root file system support for the NIS network file system 
+etc-nis-rc	startup script for the NIS network information system
+etc-nis-root	root file system support for the NIS network file system
 etc-ntp-etc	configuration files for the ntpd(8) Network Time Protocol server
 etc-ntp-rc	startup script for the ntpd(8) Network Time Protocol server
 etc-pf-defaults default configuration for the PF packet filter
@@ -551,7 +551,7 @@ etc-router-etc	configuration files for network routing
 etc-router-rc	startup scripts for routing services
 etc-secsh-etc	configuration file for SSH secure remote shell utility
 etc-secsh-rc	startup script for SSH secure remote shell utility
-etc-sendmail-log	empty log files for the sendmail(8) mailer 
+etc-sendmail-log	empty log files for the sendmail(8) mailer
 etc-sys-defaults	default system startup configuration files
 etc-sys-etc	system software configuration files
 etc-sys-log	empty system log files
@@ -563,7 +563,7 @@ etc-sysutil-rc	startup scripts for miscellaneous system utilities
 etc-timed-rc	startup script for the timed(8) network time daemon
 etc-util-etc	configuration file for standard system utilities
 etc-x11-rc	startup scripts for the X11 X Window System
-games-games-bin	command line games 
+games-games-bin	command line games
 games-games-catman	formatted manual pages for command-line games
 games-games-man	manual pages source for command-line games
 games-games-root	data and score files for command line games
@@ -636,10 +636,10 @@ man-lpr-catman	formatted manual pages for printing support
 man-lpr-man	manual pages source for printing support
 man-mail-catman	formatted manual pages for mail utilities
 man-mail-man	manual pages source for mail utilities
-man-mailwrapper-catman	formatted manual pages for the mailwrapper(8) program for multiple mailer support 
-man-mailwrapper-man	manual pages source for the mailwrapper(8) program for multiple mailer support 
-man-man-catman	formatted manual pages for the utilities for viewing the online manual 
-man-man-man	manual pages source for the utilities for viewing the online manual 
+man-mailwrapper-catman	formatted manual pages for the mailwrapper(8) program for multiple mailer support
+man-mailwrapper-man	manual pages source for the mailwrapper(8) program for multiple mailer support
+man-man-catman	formatted manual pages for the utilities for viewing the online manual
+man-man-man	manual pages source for the utilities for viewing the online manual
 man-miscfs-catman	the GNU texinfo software
 man-miscfs-man	manual pages sources for miscellaneous file system support
 man-net-catman	formatted manual pages for networking support
@@ -660,16 +660,16 @@ man-pf-catman	formatted manual pages for the PF packet filter
 man-pf-man	manual page source for the PF packet filter
 man-pkgutil-catman	formatted manual pages for the package system utilities
 man-pkgutil-man	manual pages source for the package system utilities
-man-postfix-catman	formatted manual pages for the postfix mailer 
+man-postfix-catman	formatted manual pages for the postfix mailer
 man-postfix-man	manual pages source for the postfix mailer
 man-ppp-catman	formatted manual pages for the ppp point-to-point connection protocol
 man-ppp-man	manual pages source for the ppp point-to-point connection protocol
 man-rc-catman	formatted manual pages for system startup scripts
 man-rc-man	manual pages source for system startup scripts
-man-rcs-catman	formatted manual pages for the rcs(1) revision control system 
-man-rcs-man	manual pages source for the rcs(1) revision control system 
-man-reference-catman	formatted manual pages for miscellaneous system- and non-system-related reference documents 
-man-reference-man	manual pages source for miscellaneous system- and non-system-related reference documents 
+man-rcs-catman	formatted manual pages for the rcs(1) revision control system
+man-rcs-man	manual pages source for the rcs(1) revision control system
+man-reference-catman	formatted manual pages for miscellaneous system- and non-system-related reference documents
+man-reference-man	manual pages source for miscellaneous system- and non-system-related reference documents
 man-router-catman	formatted manual pages for routing utilities
 man-router-man		manual pages source for routing utilities
 man-rpcserver-catman	formatted manual pages for RPC server utility
@@ -699,9 +699,9 @@ man-timed-catman	formatted manual pages for the timed(8) network time daemon
 man-timed-man	manual pages source for the timed(8) network time daemon
 man-tn3270-catman	formatted manual pages for utilities for connecting to IBM VM/CMS systems
 man-tn3270-man	manual pages source for utilities for connecting to IBM VM/CMS systems
-man-util-catman	formatted manual pages for basic user utilities 
+man-util-catman	formatted manual pages for basic user utilities
 man-util-info	the GNU texinfo software
-man-util-man	manual pages source for basic user utilities 
+man-util-man	manual pages source for basic user utilities
 misc-amd-examples	example configuration files for automatically mount file systems
 misc-bind-examples	example configuration files for bind
 misc-bind-htmldoc	HTML documentation for bind
@@ -711,12 +711,12 @@ misc-fstab-examples	example configuration files for file system tables
 misc-ipf-examples	example configuration files for IPfilter
 misc-isdn-examples	example configuration files for isdn
 misc-krb5-examples	example configuration files for Kerberos5
-misc-netutil-examples	example configuration files for network software 
+misc-netutil-examples	example configuration files for network software
 misc-ntp-htmldoc	HTML documentation for ntp(8) software
 misc-pf-examples	example configuration files for the PF packet filter
 misc-ntp-htmldoc	HTML documentation for NTP
-misc-postfix-examples	example configuration files for postfix 
-misc-postfix-htmldoc	HTML documentation for postfix 
+misc-postfix-examples	example configuration files for postfix
+misc-postfix-htmldoc	HTML documentation for postfix
 misc-psd-doc	the Programmer's Supplementary Documentation for BSD
 misc-reference-share	miscellaneous reference documents
 misc-router-examples	example configuration files for routing daemons
@@ -724,8 +724,8 @@ misc-smm-doc	the System Manager's Manual for BSD
 misc-sup-examples	example configuration files for sup(8)
 misc-sys-examples	example configuration files for kernel functionality
 misc-sysutil-examples	example configuration files for system utilities
-misc-usd-doc	the User's Supplementary Documents for BSD 
-misc-util-htmldoc	HTML documentation for miscellaneous utilities 
+misc-usd-doc	the User's Supplementary Documents for BSD
+misc-util-htmldoc	HTML documentation for miscellaneous utilities
 text-groff-bin	Groff (GNU Troff) is a document processor which reads plain text mixed
 text-groff-bin	with formatting commands and produces formatted output. Included in this
 text-groff-bin	release are implementations of troff, pic, eqn, tbl, refer, the -man
@@ -733,52 +733,52 @@ text-groff-bin	macros and the -ms macros, and drivers for PostScript, TeX dvi fo
 text-groff-bin	LaserJet 4 printers, HTML format (still alpha), and typewriter-like
 text-groff-bin	devices. Also included is a modified version of the Berkeley -me macros,
 text-groff-bin	an enhanced version of the X11 xditview previewer, and an implementation
-text-groff-bin	of the -mm macros. 
+text-groff-bin	of the -mm macros.
 text-groff-catman	This package contains manual page sources for the groff family of text
 text-groff-catman	formatters. As described in the DESCR file for text-groff-catman, the
 text-groff-catman	online manual pages for groff contain information about the following
 text-groff-catman	groff-related utilities:
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        grog - grog reads files and guesses which of the groff(1) options
 text-groff-catman	        -e, -man, -me, -mm, -ms, -p, -s, and -t are  required  for
 text-groff-catman	        printing  files, and  prints  the groff command including those
 text-groff-catman	        options on the standard output;
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        troff - describes the GNU version of troff, which is part of the
 text-groff-catman	        groff document formatting  system;
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        tbl - tbl compiles  descriptions  of tables embedded within troff
 text-groff-catman	        input files into commands that are understood  by  troff;
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        pic - pic compiles  descriptions  of  pictures embedded within
 text-groff-catman	        troff or TeX input files into commands that are understood  by
 text-groff-catman	        TeX or  troff;
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        eqn - compiles descriptions  of  equations  embedded  within  troff
 text-groff-catman	        input files  into  commands that are understood by troff
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        soelim - eliminate .so directives from nroff input
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        refer - preprocess bibliographic references for groff
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        grops - translates the output of GNU  troff  to  PostScript
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        grodvi - convert groff output to TeX dvi format
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        grotty - translates  the  output  of  GNU troff into a form
 text-groff-catman	        suitable for  typewriter-like  devices
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        groff_font  -  format of groff device and font description files
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        groff_out - groff intermediate output format
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        groff_ms, ms - groff ms macros
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        me - macros for formatting technical papers
-text-groff-catman	
+text-groff-catman
 text-groff-catman	        groff_char - lists the standard groff input characters
-text-groff-catman	
-text-groff-font	
+text-groff-catman
+text-groff-font
 text-groff-font	This package contains groff font description files. The font files for
 text-groff-font	device <name> are stored in a directory 'dev<name>'. There are two types
 text-groff-font	of files per device: a device description file called DESC and for each
@@ -795,46 +795,46 @@ text-groff-man	This package contains manual page sources for the groff family of
 text-groff-man	formatters. As described in the DESCR file for text-groff-catman, the
 text-groff-man	online manual pages for groff contain information about the following
 text-groff-man	groff-related utilities:
-text-groff-man	
+text-groff-man
 text-groff-man	        grog - grog reads files and guesses which of the groff(1) options
 text-groff-man	        -e, -man, -me, -mm, -ms, -p, -s, and -t are  required  for
 text-groff-man	        printing  files, and  prints  the groff command including those
 text-groff-man	        options on the standard output;
-text-groff-man	
+text-groff-man
 text-groff-man	        troff - describes the GNU version of troff, which is part of the
 text-groff-man	        groff document formatting  system;
-text-groff-man	
+text-groff-man
 text-groff-man	        tbl - tbl compiles  descriptions  of tables embedded within troff
 text-groff-man	        input files into commands that are understood  by  troff;
-text-groff-man	
+text-groff-man
 text-groff-man	        pic - pic compiles  descriptions  of  pictures embedded within
 text-groff-man	        troff or TeX input files into commands that are understood  by
 text-groff-man	        TeX or  troff;
-text-groff-man	
+text-groff-man
 text-groff-man	        eqn - compiles descriptions  of  equations  embedded  within  troff
 text-groff-man	        input files  into  commands that are understood by troff
-text-groff-man	
+text-groff-man
 text-groff-man	        soelim - eliminate .so directives from nroff input
-text-groff-man	
+text-groff-man
 text-groff-man	        refer - preprocess bibliographic references for groff
-text-groff-man	
+text-groff-man
 text-groff-man	        grops - translates the output of GNU  troff  to  PostScript
-text-groff-man	
+text-groff-man
 text-groff-man	        grodvi - convert groff output to TeX dvi format
-text-groff-man	
+text-groff-man
 text-groff-man	        grotty - translates  the  output  of  GNU troff into a form
 text-groff-man	        suitable for  typewriter-like  devices
-text-groff-man	
+text-groff-man
 text-groff-man	        groff_font  -  format of groff device and font description files
-text-groff-man	
+text-groff-man
 text-groff-man	        groff_out - groff intermediate output format
-text-groff-man	
+text-groff-man
 text-groff-man	        groff_ms, ms - groff ms macros
-text-groff-man	
+text-groff-man
 text-groff-man	        me - macros for formatting technical papers
-text-groff-man	
+text-groff-man
 text-groff-man	        groff_char - lists the standard groff input characters
-text-groff-man	
+text-groff-man
 text-groff-share	This package contains groff macros and data files for the macro sets
 text-groff-share	distributed with groff. These include:
 text-groff-share		man - wrapper for the man.old and mandoc macro sets for

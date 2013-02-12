@@ -33,7 +33,7 @@
 # Creates a spark format archive. Some metadata is included, notably
 # filetypes, but permissions are not. Filename translation is performed
 # according to RISC OS conventions.
-# 
+#
 # This script is intended to provide sufficient functionality to create
 # an archive for distribution of the NetBSD/acorn32 bootloader which can be
 # used directly in RISC OS.

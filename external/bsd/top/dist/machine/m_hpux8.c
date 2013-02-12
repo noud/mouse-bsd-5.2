@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 1984 through 2008, William LeFebvre
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  *     * Redistributions in binary form must reproduce the above
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- * 
+ *
  *     * Neither the name of William LeFebvre nor the names of other
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -43,7 +43,7 @@
  *	hp9000s700
  *	hp9000s800
  *
- * LIBS: 
+ * LIBS:
  *
  * AUTHOR:  Christos Zoulas <christos@ee.cornell.edu>
  */
@@ -117,7 +117,7 @@ struct handle
 #define X_MPID		6
 
 /*
- * Steinar Haug from University of Trondheim, NORWAY pointed out that 
+ * Steinar Haug from University of Trondheim, NORWAY pointed out that
  * the HP 9000 system 800 doesn't have _hz defined in the kernel.  He
  * provided a patch to work around this.  We've improved on this patch
  * here and set the constant X_HZ only when _hz is available in the
@@ -511,7 +511,7 @@ char *(*get_userid)();
     hp = (struct handle *)handle;
     pp = *(hp->next_proc++);
     hp->remaining--;
-    
+
 
     /* get the process's user struct and set cputime */
     where = getu(pp, &u);
@@ -523,7 +523,7 @@ char *(*get_userid)();
     else
     {
 
-	  
+
 	/* set u_comm for system processes */
 	if (u.u_comm[0] == '\0')
 	{
@@ -660,7 +660,7 @@ register struct nlist *nlst;
  *	    if "refstr" starts with a '!', then a failure on read will not
  *  	    be fatal (this may seem like a silly way to do things, but I
  *  	    really didn't want the overhead of another argument).
- *  	
+ *
  */
 
 getkval(offset, ptr, size, refstr)
@@ -674,22 +674,22 @@ char *refstr;
     if (lseek(kmem, (long)offset, L_SET) == -1) {
         if (*refstr == '!')
             refstr++;
-        (void) fprintf(stderr, "%s: lseek to %s: %s\n", KMEM, 
+        (void) fprintf(stderr, "%s: lseek to %s: %s\n", KMEM,
 		       refstr, strerror(errno));
         quit(23);
     }
     if (read(kmem, (char *) ptr, size) == -1) {
-        if (*refstr == '!') 
+        if (*refstr == '!')
             return(0);
         else {
-            (void) fprintf(stderr, "%s: reading %s: %s\n", KMEM, 
+            (void) fprintf(stderr, "%s: reading %s: %s\n", KMEM,
 			   refstr, strerror(errno));
             quit(23);
         }
     }
     return(1);
 }
-    
+
 /* comparison routine for qsort */
 
 /*
@@ -713,7 +713,7 @@ static unsigned char sorted_state[] =
     2,	/* zombie		*/
     4	/* stop			*/
 };
- 
+
 proc_compare(pp1, pp2)
 
 struct proc **pp1;

@@ -112,7 +112,7 @@ static const u_char PADDING[64] = {
 };
 
 #if !defined(_KERNEL) && defined(__weak_alias)
-__weak_alias(RMD160Init,_RMD160Init) 
+__weak_alias(RMD160Init,_RMD160Init)
 __weak_alias(RMD160Update,_RMD160Update)
 __weak_alias(RMD160Final,_RMD160Final)
 __weak_alias(RMD160Transform,_RMD160Transform)

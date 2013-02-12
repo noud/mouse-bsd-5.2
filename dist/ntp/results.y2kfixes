@@ -32,7 +32,7 @@ Wed Jul 14 13:57:43 EST 1999
 timelord.att.com: stratum 2, offset -0.000094, synch distance 0.06522
 timemaster.att.com: stratum 1, offset -0.010803, synch distance 0.03078, refid 'GPS'
 [root@timetest ntptrace]# cd -
-[root@timetest ntpdate]# date 
+[root@timetest ntpdate]# date
 Wed Mar  1 01:00:03 EST 2000
 [root@timetest ntpdate]# ./ntpdate -b timelord.att.com
 14 Jul 13:58:10 ntpdate[12525]: step time server 135.16.xxxx.xxxx offset -19911719.766061 sec
@@ -46,7 +46,7 @@ timemaster.att.com: stratum 1, offset -0.013598, synch distance 0.03116, refid '
 Script done on Wed Jul 14 13:58:28 1999
 
 RESULTS OK.
---------------------END OF TEST1-------------------- 
+--------------------END OF TEST1--------------------
 
 
 ### freeware test configuration

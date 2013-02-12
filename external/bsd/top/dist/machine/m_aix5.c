@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 1984 through 2008, William LeFebvre
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  *     * Redistributions in binary form must reproduce the above
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- * 
+ *
  *     * Neither the name of William LeFebvre nor the names of other
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -64,7 +64,7 @@
 #include <procinfo.h>
 #include <sys/types.h>
 #include <sys/proc.h>
-#include <sys/sysinfo.h> 
+#include <sys/sysinfo.h>
 #include <sys/sysconfig.h>
 #include <pwd.h>
 #include <errno.h>
@@ -88,7 +88,7 @@ struct vmker {
     uint badmem; /* this is used in RS/6000 model 220 */
     uint freemem;
     uint n12;
-    uint numperm;   /* this seems to keep other than text and data segment 
+    uint numperm;   /* this seems to keep other than text and data segment
                        usage; name taken from /usr/lpp/bos/samples/vmtune.c */
     uint totalvmem,freevmem;
     uint n15, n16, n17, n18, n19;
@@ -173,7 +173,7 @@ char *ordernames[] = {
 };
 
 /* compare routines */
-int compare_cpu(), compare_size(), compare_res(), compare_time(), 
+int compare_cpu(), compare_size(), compare_res(), compare_time(),
     compare_prio();
 
 int (*proc_compares[])() = {
@@ -262,7 +262,7 @@ int machine_init(statics)
     vmker_offset   = nlst[X_VMKER].n_value;
     v_offset       = nlst[X_V].n_value;
 
-    getkval(v_offset, (caddr_t)&v_info, sizeof v_info, "v"); 
+    getkval(v_offset, (caddr_t)&v_info, sizeof v_info, "v");
 #else
 	sysconfig(SYS_GETPARMS, &v_info, sizeof v_info);
 #endif
@@ -372,7 +372,7 @@ void get_system_info(si)
     }
 #endif
     for (i = 0; i < CPU_NTIMES; i++) {
-        cpu_states[i] = 1000 * cp_diff[i] / total; 
+        cpu_states[i] = 1000 * cp_diff[i] / total;
     }
 
     /* calculate memory statistics, scale 4K pages */
@@ -431,7 +431,7 @@ caddr_t get_process_info(si, sel, compare_index)
     gettimeofday(&curtimeval, NULL);
 
     /* get the procentry64 structures of all running processes */
-    nproc = getprocs64(p_info, sizeof (struct procentry64), NULL, 0, 
+    nproc = getprocs64(p_info, sizeof (struct procentry64), NULL, 0,
                        &procsindex, nprocs);
     if (nproc < 0) {
 	perror("getprocs64");
@@ -456,7 +456,7 @@ caddr_t get_process_info(si, sel, compare_index)
     */
     for (pp = p_info, i = 0; i < nproc; pp++, i++) {
         pid_t pid = PROCMASK(pp->pi_pid);
-        
+
         /* total system and user time into cpu_proc */
         cpu_proc[pid] = pp->pi_ru.ru_utime;
         cpu_proc[pid].tv_sec += pp->pi_ru.ru_stime.tv_sec;
@@ -469,14 +469,14 @@ caddr_t get_process_info(si, sel, compare_index)
         /* If this process was around during the previous update, calculate
            a true %CPU.  If not, convert the kernel's cpu value from its
            120-max value to a 10000-max one.
-        */ 
+        */
         if (old_cpu_proc[pid].tv_sec == 0 && old_cpu_proc[pid].tv_usec == 0)
             pp->pi_cpu = pp->pi_cpu * 10000 / 120;
         else
             pp->pi_cpu = ((cpu_proc[pid].tv_sec - old_cpu_proc[pid].tv_sec) +
                          1.0*(cpu_proc[pid].tv_usec - old_cpu_proc[pid].tv_usec) / NS_PER_SEC) / timediff * 10000;
     }
-    
+
     /* remember our current values as old_cpu_proc, and zero out cpu_proc
        for the next update cycle */
     memset(old_cpu_proc, 0, sizeof(struct timeval64) * nprocs);
@@ -506,7 +506,7 @@ caddr_t get_process_info(si, sel, compare_index)
 		active_procs++;
 	    }
 	}
-    }   
+    }
 
     /* the pref array now holds pointers to the procentry64 structures in
      * the p_info array that were selected for display
@@ -514,9 +514,9 @@ caddr_t get_process_info(si, sel, compare_index)
 
     /* sort if requested */
     if ( proc_compares[compare_index] != NULL)
-	qsort((char *)pref, active_procs, sizeof (struct procentry64 *), 
+	qsort((char *)pref, active_procs, sizeof (struct procentry64 *),
 	      proc_compares[compare_index]);
-    
+
     si->last_pid = -1;		/* no way to figure out last used pid */
     si->p_total = total_procs;
     si->p_active = pref_len = active_procs;
@@ -593,7 +593,7 @@ char *format_next_process(handle, get_userid)
  *	    if "refstr" starts with a '!', then a failure on read will not
  *  	    be fatal (this may seem like a silly way to do things, but I
  *  	    really didn't want the overhead of another argument).
- *  	
+ *
  */
 int getkval(offset, ptr, size, refstr)
     unsigned long offset;
@@ -629,7 +629,7 @@ int getkval(offset, ptr, size, refstr)
     return 1 ;
 }
 #endif
-    
+
 /* comparison routine for qsort */
 /*
  * The following code is taken from the solaris module and adjusted
@@ -687,7 +687,7 @@ compare_cpu(ppi1, ppi2)
 
     return result;
 }
-    
+
 
 /* compare_size - the comparison function for sorting by total memory usage */
 
@@ -709,7 +709,7 @@ compare_size(ppi1, ppi2)
 
     return result;
 }
-    
+
 
 /* compare_res - the comparison function for sorting by resident set size */
 
@@ -731,7 +731,7 @@ compare_res(ppi1, ppi2)
 
     return result;
 }
-    
+
 
 /* compare_time - the comparison function for sorting by total cpu time */
 
@@ -753,7 +753,7 @@ compare_time(ppi1, ppi2)
 
     return result;
 }
-    
+
 
 /* compare_prio - the comparison function for sorting by cpu percentage */
 
@@ -775,7 +775,7 @@ compare_prio(ppi1, ppi2)
 
     return result;
 }
-    
+
 
 int proc_owner(pid)
 int pid;
@@ -788,6 +788,6 @@ int pid;
 	   return (*prefp)->pi_uid;
        prefp++;
    }
-   
+
    return(-1);
 }

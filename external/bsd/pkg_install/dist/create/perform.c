@@ -125,7 +125,7 @@ get_dash_string(char **s)
 	if (**s == '-')
 		*s = xstrdup(*s + 1);
 	else
-		*s = fileGetContents(*s); 
+		*s = fileGetContents(*s);
 }
 
 int

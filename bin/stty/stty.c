@@ -61,7 +61,7 @@ __RCSID("$NetBSD: stty.c,v 1.21 2008/07/20 00:52:40 lukem Exp $");
 int main(int, char *[]);
 
 int
-main(int argc, char *argv[]) 
+main(int argc, char *argv[])
 {
 	struct info i;
 	enum FMT fmt;
@@ -119,7 +119,7 @@ args:	argc -= optind;
 		gprint(&i.t);
 		break;
 	}
-	
+
 	for (i.set = i.wset = 0; *argv; ++argv) {
 		if (ksearch(&argv, &i))
 			continue;

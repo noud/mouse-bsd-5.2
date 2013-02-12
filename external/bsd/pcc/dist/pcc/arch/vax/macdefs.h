@@ -29,14 +29,14 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-# define makecc(val,i)  lastcon = (lastcon<<8)|((val<<24)>>24);  
+# define makecc(val,i)  lastcon = (lastcon<<8)|((val<<24)>>24);
 
-# define  ARGINIT 32 
-# define  AUTOINIT 0 
+# define  ARGINIT 32
+# define  AUTOINIT 0
 # define  SZCHAR 8
 # define  SZBOOL 8
 # define  SZINT 32
@@ -58,7 +58,7 @@
 # define ALSHORT 16
 # define ALPOINT 32
 # define ALSTRUCT 8
-# define  ALSTACK 32 
+# define  ALSTACK 32
 
 /*
  * Min/max values.

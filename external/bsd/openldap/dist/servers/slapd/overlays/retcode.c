@@ -148,7 +148,7 @@ retcode_send_onelevel( Operation *op, SlapReply *rs )
 	retcode_t	*rd = (retcode_t *)on->on_bi.bi_private;
 
 	retcode_item_t	*rdi;
-	
+
 	for ( rdi = rd->rd_item; rdi != NULL; rdi = rdi->rdi_next ) {
 		if ( op->o_abandon ) {
 			return rs->sr_err = SLAPD_ABANDON;
@@ -649,7 +649,7 @@ retcode_entry_response( Operation *op, SlapReply *rs, BackendInfo *bi, Entry *e 
 			}
 			rs->sr_ref = referral_rewrite( refs,
 				NULL, &op->o_req_dn, op->oq_search.rs_scope );
-	
+
 			send_search_reference( op, rs );
 			ber_bvarray_free( rs->sr_ref );
 			rs->sr_ref = NULL;
@@ -705,7 +705,7 @@ retcode_entry_response( Operation *op, SlapReply *rs, BackendInfo *bi, Entry *e 
 		if ( disconnect ) {
 			return rs->sr_err = SLAPD_DISCONNECT;
 		}
-	
+
 		op->o_abandon = 1;
 		return rs->sr_err;
 	}
@@ -801,7 +801,7 @@ retcode_db_config(
 		}
 
 		ber_str2bv( argv[ 1 ], 0, 0, &bv );
-		
+
 		rc = dnPrettyNormal( NULL, &bv, &rdn, &nrdn, NULL );
 		if ( rc != LDAP_SUCCESS ) {
 			fprintf( stderr, "%s: line %d: retcode: "
@@ -1049,7 +1049,7 @@ retcode_db_config(
 		for ( rdip = &rd->rd_item; *rdip; rdip = &(*rdip)->rdi_next )
 			/* go to last */ ;
 
-		
+
 		*rdip = ( retcode_item_t * )ch_malloc( sizeof( retcode_item_t ) );
 		*(*rdip) = rdi;
 
@@ -1127,7 +1127,7 @@ retcode_db_open( BackendDB *be, ConfigReply *cr)
 
 			rc = slap_bv2ad( &ava->la_attr, &ad, &text );
 			assert( rc == LDAP_SUCCESS );
-			
+
 			attr_merge_normalize_one( &rdi->rdi_e, ad,
 					&ava->la_value, NULL );
 		}

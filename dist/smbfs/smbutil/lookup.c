@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: lookup.c,v 1.3 2000/10/15 14:26:49 bp Exp 
+ * from: Id: lookup.c,v 1.3 2000/10/15 14:26:49 bp Exp
  */
 #include <sys/param.h>
 #include <sys/errno.h>

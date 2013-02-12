@@ -37,7 +37,7 @@
  */
 
 volatile int interface_interval = 300;     /* update interface every 5 minutes as default */
-	  
+
 /*
  * Alarm flag.	The mainline code imports this.
  */
@@ -88,7 +88,7 @@ static	RETSIGTYPE alarming P((int));
 # if !defined SYS_WINNT || defined(SYS_CYGWIN32)
 #  ifndef HAVE_TIMER_SETTIME
 	struct itimerval itimer;
-#  else 
+#  else
 	static timer_t ntpd_timerid;
 	struct itimerspec itimer;
 #  endif /* HAVE_TIMER_SETTIME */
@@ -98,7 +98,7 @@ static	RETSIGTYPE alarming P((int));
 /*
  * reinit_timer - reinitialize interval timer.
  */
-void 
+void
 reinit_timer(void)
 {
 #if !defined(SYS_WINNT) && !defined(VMS)
@@ -225,7 +225,7 @@ init_timer(void)
 
 	/*
 	 * Set up timer interrupts for every 2**EVENT_TIMEOUT seconds
-	 * Under Windows/NT, 
+	 * Under Windows/NT,
 	 */
 
 	WaitableTimerHandle = CreateWaitableTimer(NULL, FALSE, NULL);
@@ -247,7 +247,7 @@ init_timer(void)
 }
 
 #if defined(SYS_WINNT)
-extern HANDLE 
+extern HANDLE
 get_timer_handle(void)
 {
 	return WaitableTimerHandle;
@@ -352,7 +352,7 @@ timer(void)
 #endif
 	  interface_update(NULL, NULL);
 	}
-	
+
 	/*
 	 * Finally, periodically write stats.
 	 */

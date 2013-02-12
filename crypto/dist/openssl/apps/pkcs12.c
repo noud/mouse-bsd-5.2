@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -95,7 +95,7 @@ int MAIN(int, char **);
 int MAIN(int argc, char **argv)
 {
     ENGINE *e = NULL;
-    char *infile=NULL, *outfile=NULL, *keyname = NULL;	
+    char *infile=NULL, *outfile=NULL, *keyname = NULL;
     char *certfile=NULL;
     BIO *in=NULL, *out = NULL;
     char **args;
@@ -181,7 +181,7 @@ int MAIN(int argc, char **argv)
 					 maciter = -1;
 		else if (!strcmp (*args, "-macalg"))
 		    if (args[1]) {
-			args++;	
+			args++;
 			macalg = *args;
 		    } else badarg = 1;
 		else if (!strcmp (*args, "-nodes")) enc=NULL;
@@ -193,75 +193,75 @@ int MAIN(int argc, char **argv)
 				badarg = 1;
 		} else if (!strcmp (*args, "-rand")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			inrand = *args;
 		    } else badarg = 1;
 		} else if (!strcmp (*args, "-inkey")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			keyname = *args;
 		    } else badarg = 1;
 		} else if (!strcmp (*args, "-certfile")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			certfile = *args;
 		    } else badarg = 1;
 		} else if (!strcmp (*args, "-name")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			name = *args;
 		    } else badarg = 1;
 		} else if (!strcmp (*args, "-CSP")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			csp_name = *args;
 		    } else badarg = 1;
 		} else if (!strcmp (*args, "-caname")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			if (!canames) canames = sk_new_null();
 			sk_push(canames, *args);
 		    } else badarg = 1;
 		} else if (!strcmp (*args, "-in")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			infile = *args;
 		    } else badarg = 1;
 		} else if (!strcmp (*args, "-out")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			outfile = *args;
 		    } else badarg = 1;
 		} else if (!strcmp(*args,"-passin")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			passargin = *args;
 		    } else badarg = 1;
 		} else if (!strcmp(*args,"-passout")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			passargout = *args;
 		    } else badarg = 1;
 		} else if (!strcmp (*args, "-password")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			passarg = *args;
 		    	noprompt = 1;
 		    } else badarg = 1;
 		} else if (!strcmp(*args,"-CApath")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			CApath = *args;
 		    } else badarg = 1;
 		} else if (!strcmp(*args,"-CAfile")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			CAfile = *args;
 		    } else badarg = 1;
 #ifndef OPENSSL_NO_ENGINE
 		} else if (!strcmp(*args,"-engine")) {
 		    if (args[1]) {
-			args++;	
+			args++;
 			engine = *args;
 		    } else badarg = 1;
 #endif
@@ -423,7 +423,7 @@ int MAIN(int argc, char **argv)
 	int i;
 
 	if ((options & (NOCERTS|NOKEYS)) == (NOCERTS|NOKEYS))
-		{	
+		{
 		BIO_printf(bio_err, "Nothing to do!\n");
 		goto export_end;
 		}
@@ -528,7 +528,7 @@ int MAIN(int argc, char **argv)
 
 		if (!vret) {
 		    /* Exclude verified certificate */
-		    for (i = 1; i < sk_X509_num (chain2) ; i++) 
+		    for (i = 1; i < sk_X509_num (chain2) ; i++)
 			sk_X509_push(certs, sk_X509_value (chain2, i));
 		    /* Free first certificate */
 		    X509_free(sk_X509_value(chain2, 0));
@@ -540,7 +540,7 @@ int MAIN(int argc, char **argv)
 			else
 				ERR_print_errors(bio_err);
 			goto export_end;
-		}			
+		}
     	}
 
 	/* Add any CA names */
@@ -554,7 +554,7 @@ int MAIN(int argc, char **argv)
 	if (csp_name && key)
 		EVP_PKEY_add1_attr_by_NID(key, NID_ms_csp_name,
 				MBSTRING_ASC, (unsigned char *)csp_name, -1);
-		
+
 
 #ifdef CRYPTO_MDEBUG
 	CRYPTO_pop_info();
@@ -588,7 +588,7 @@ int MAIN(int argc, char **argv)
 		macmd = EVP_get_digestbyname(macalg);
 		if (!macmd)
 			{
-			BIO_printf(bio_err, "Unknown digest algorithm %s\n", 
+			BIO_printf(bio_err, "Unknown digest algorithm %s\n",
 						macalg);
 			}
 		}
@@ -620,7 +620,7 @@ int MAIN(int argc, char **argv)
 	CRYPTO_pop_info();
 #endif
 	goto end;
-	
+
     }
 
     if (!(p12 = d2i_PKCS12_bio (in, NULL))) {
@@ -707,13 +707,13 @@ int dump_certs_keys_p12 (BIO *out, PKCS12 *p12, char *pass,
 		} else if (bagnid == NID_pkcs7_encrypted) {
 			if (options & INFO) {
 				BIO_printf(bio_err, "PKCS7 Encrypted data: ");
-				alg_print(bio_err, 
+				alg_print(bio_err,
 					p7->d.encrypted->enc_data->algorithm);
 			}
 			bags = PKCS12_unpack_p7encdata(p7, pass, passlen);
 		} else continue;
 		if (!bags) goto err;
-	    	if (!dump_certs_pkeys_bags (out, bags, pass, passlen, 
+	    	if (!dump_certs_pkeys_bags (out, bags, pass, passlen,
 						 options, pempass)) {
 			sk_PKCS12_SAFEBAG_pop_free (bags, PKCS12_SAFEBAG_free);
 			goto err;
@@ -750,7 +750,7 @@ int dump_certs_pkeys_bag (BIO *out, PKCS12_SAFEBAG *bag, char *pass,
 	EVP_PKEY *pkey;
 	PKCS8_PRIV_KEY_INFO *p8;
 	X509 *x509;
-	
+
 	switch (M_PKCS12_bag_type(bag))
 	{
 	case NID_keyBag:
@@ -803,7 +803,7 @@ int dump_certs_pkeys_bag (BIO *out, PKCS12_SAFEBAG *bag, char *pass,
 		print_attribs (out, bag->attrib, "Bag Attributes");
 		return dump_certs_pkeys_bags (out, bag->value.safes, pass,
 							    passlen, options, pempass);
-					
+
 	default:
 		BIO_printf (bio_err, "Warning unsupported bag type: ");
 		i2a_ASN1_OBJECT (bio_err, bag->type);
@@ -841,9 +841,9 @@ int get_cert_chain (X509 *cert, X509_STORE *store, STACK_OF(X509) **chain)
 err:
 	X509_STORE_CTX_cleanup(&store_ctx);
 	*chain = chn;
-	
+
 	return i;
-}	
+}
 
 int alg_print (BIO *x, X509_ALGOR *alg)
 {
@@ -853,7 +853,7 @@ int alg_print (BIO *x, X509_ALGOR *alg)
 	pbe = d2i_PBEPARAM(NULL, &p, alg->parameter->value.sequence->length);
 	if (!pbe)
 		return 1;
-	BIO_printf (bio_err, "%s, Iteration %ld\n", 
+	BIO_printf (bio_err, "%s, Iteration %ld\n",
 		OBJ_nid2ln(OBJ_obj2nid(alg->algorithm)),
 		ASN1_INTEGER_get(pbe->iter));
 	PBEPARAM_free (pbe);
@@ -926,13 +926,13 @@ int print_attribs (BIO *out, STACK_OF(X509_ATTRIBUTE) *attrlst,const char *name)
 				case V_ASN1_OCTET_STRING:
 				hex_prin(out, av->value.octet_string->data,
 					av->value.octet_string->length);
-				BIO_printf(out, "\n");	
+				BIO_printf(out, "\n");
 				break;
 
 				case V_ASN1_BIT_STRING:
 				hex_prin(out, av->value.bit_string->data,
 					av->value.bit_string->length);
-				BIO_printf(out, "\n");	
+				BIO_printf(out, "\n");
 				break;
 
 				default:
@@ -967,5 +967,5 @@ static int set_pbe(BIO *err, int *ppbe, const char *str)
 		}
 	return 1;
 	}
-			
+
 #endif

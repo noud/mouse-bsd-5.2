@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 1984 through 2008, William LeFebvre
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  *     * Redistributions in binary form must reproduce the above
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- * 
+ *
  *     * Neither the name of William LeFebvre nor the names of other
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -48,7 +48,7 @@
  * CFLAGS: -DHAVE_GETOPT -DORDER
  *
  * AUTHOR:  Anthony Baxter, <anthony@aaii.oz.au>
- * Derived originally from m_ultrix, by David S. Comay <dsc@seismo.css.gov>, 
+ * Derived originally from m_ultrix, by David S. Comay <dsc@seismo.css.gov>,
  * although by now there is hardly any of the code from m_ultrix left.
  * Helped a lot by having the source for syd(1), by Claus Kalle, and
  * from several people at DEC who helped with providing information on
@@ -66,9 +66,9 @@
  * Modified: 3-Mar-00, Rainer Orth <ro@TechFak.Uni-Bielefeld.DE>
  *	added support for sort ordering.
  */
-/* 
- * Theory of operation: 
- * 
+/*
+ * Theory of operation:
+ *
  * Use Mach calls to build up a structure that contains all the sorts
  * of stuff normally found in a struct proc in a BSD system. Then
  * everything else uses this structure. This has major performance wins,
@@ -318,11 +318,11 @@ struct statics *statics;
     /* allocate space for proc structure array and array of pointers */
     bytes = nproc * sizeof(struct osf1_top_proc);
     pbase = (struct osf1_top_proc *)malloc(bytes);
-    pref  = (struct osf1_top_proc **)malloc(nproc * 
+    pref  = (struct osf1_top_proc **)malloc(nproc *
                                               sizeof(struct osf1_top_proc *));
 
     /* Just in case ... */
-    if (pbase == (struct osf1_top_proc *)NULL || 
+    if (pbase == (struct osf1_top_proc *)NULL ||
                                   pref == (struct osf1_top_proc **)NULL)
     {
 	fprintf(stderr, "top: cannot allocate sufficient memory\n");
@@ -391,7 +391,7 @@ struct system_info *si;
     if (do_last_pid)
     {
 	/* last pid assigned */
-	(void) getkval(mpid_offset, &(si->last_pid), sizeof(si->last_pid), 
+	(void) getkval(mpid_offset, &(si->last_pid), sizeof(si->last_pid),
 		       "_mpid");
     }
     else
@@ -405,11 +405,11 @@ struct system_info *si;
 	return;
     }
     if (labuf.tl_lscale)   /* scaled */
-	for(i=0;i<3;i++) 
-	    si->load_avg[i] = ((double)labuf.tl_avenrun.l[i] / 
+	for(i=0;i<3;i++)
+	    si->load_avg[i] = ((double)labuf.tl_avenrun.l[i] /
                                             (double)labuf.tl_lscale );
     else                   /* not scaled */
-	for(i=0;i<3;i++) 
+	for(i=0;i<3;i++)
 	    si->load_avg[i] = labuf.tl_avenrun.d[i];
 
     /* array of cpu state counters */
@@ -428,10 +428,10 @@ struct system_info *si;
     }
     si->cpustates = cpu_states;
     if(delta_ticks)
-	for(i=0;i<5;i++) 
-	    si->cpustates[i] = (int)( ( (double)diff_ticks[i] / 
+	for(i=0;i<5;i++)
+	    si->cpustates[i] = (int)( ( (double)diff_ticks[i] /
                                            (double)delta_ticks ) * 1000 );
-    
+
     /* memory information */
     /* this is possibly bogus - we work out total # pages by */
     /* adding up the free, active, inactive, wired down, and */
@@ -494,13 +494,13 @@ int compare_index;
     memset((char *)process_states, 0, sizeof(process_states));
     prefp = pref;
     pp=pbase;
-    for (j=0; j<nproc; j += 8) 
+    for (j=0; j<nproc; j += 8)
     {
-	r = table(TBL_PROCINFO, j, (struct tbl_procinfo *)p_i, 8, 
+	r = table(TBL_PROCINFO, j, (struct tbl_procinfo *)p_i, 8,
                                                sizeof(struct tbl_procinfo));
-	for (k=0; k < r; k++ , pp++) 
+	for (k=0; k < r; k++ , pp++)
 	{
-	    if(p_i[k].pi_pid == 0) 
+	    if(p_i[k].pi_pid == 0)
 	    {
 		pp->p_pid = 0;
 	    }
@@ -515,7 +515,7 @@ int compare_index;
 		/*
 		 *  Place pointers to each valid proc structure in pref[].
 		 *  Process slots that are actually in use have a non-zero
-		 *  status field.  
+		 *  status field.
 		 */
 #ifdef DEBUG
 		/*
@@ -530,7 +530,7 @@ int compare_index;
 		    total_procs++;
 		    process_states[pp->p_mach_state]++;
 		    if ((pp->p_mach_state != 8) &&
-			(show_idle || (pp->p_mach_pct_cpu != 0) || 
+			(show_idle || (pp->p_mach_pct_cpu != 0) ||
 			 (pp->p_mach_state == 1)) &&
 			(!show_uid || pp->p_ruid == (uid_t)sel->uid)) {
 			*prefp++ = pp;
@@ -544,7 +544,7 @@ int compare_index;
     /* if requested, sort the "interesting" processes */
     if (proc_compares[compare_index] != NULL)
     {
-	qsort((char *)pref, active_procs, sizeof(struct osf1_top_proc *), 
+	qsort((char *)pref, active_procs, sizeof(struct osf1_top_proc *),
 	      proc_compares[compare_index]);
     }
 
@@ -576,7 +576,7 @@ char *(*get_userid)();
     hp->remaining--;
 
     /* get the process's user struct and set cputime */
-    
+
     if (table(TBL_UAREA,pp->p_pid,&u,1,sizeof(struct user))<0) {
     /* whoops, it must have died between the read of the proc area
      * and now. Oh well, lets just dump some meaningless thing out
@@ -656,7 +656,7 @@ char *(*get_userid)();
  *	    if "refstr" starts with a '!', then a failure on read will not
  *  	    be fatal (this may seem like a silly way to do things, but I
  *  	    really didn't want the overhead of another argument).
- *  	
+ *
  */
 
 getkval(offset, ptr, size, refstr)
@@ -670,22 +670,22 @@ char *refstr;
     if (lseek(kmem, (long)offset, L_SET) == -1) {
         if (*refstr == '!')
             refstr++;
-        (void) fprintf(stderr, "%s: lseek to %s: %s\n", KMEM, 
+        (void) fprintf(stderr, "%s: lseek to %s: %s\n", KMEM,
 		       refstr, strerror(errno));
         quit(23);
     }
     if (read(kmem, (char *) ptr, size) == -1) {
-        if (*refstr == '!') 
+        if (*refstr == '!')
             return(0);
         else {
-            (void) fprintf(stderr, "%s: reading %s: %s\n", KMEM, 
+            (void) fprintf(stderr, "%s: reading %s: %s\n", KMEM,
 			   refstr, strerror(errno));
             quit(23);
         }
     }
     return(1);
 }
-    
+
 /* comparison routines for qsort */
 
 /*
@@ -728,7 +728,7 @@ static unsigned char sorted_state[] =
    3, /*"???"*/
    2, /*"zomb"*/
 };
- 
+
 /* compare_cpu - the comparison function for sorting by cpu percentage */
 
 compare_cpu(pp1, pp2)
@@ -837,7 +837,7 @@ struct osf1_top_proc **pp2;
     ORDERKEY_RSSIZE
     ORDERKEY_MEM
     ;
-  
+
     return(result);
 }
 
@@ -880,7 +880,7 @@ int pid;
  * later.
  */
 void do_threads_calculations(thisproc)
-struct osf1_top_proc *thisproc; 
+struct osf1_top_proc *thisproc;
 {
   int j;
   task_t  thistask;
@@ -894,18 +894,18 @@ struct osf1_top_proc *thisproc;
   int task_tot_cpu=0;  /* total cpu usage of threads in a task */
   struct user u;
 
-  thisproc->p_pri=0; 
-  thisproc->p_rssize=0; 
-  thisproc->p_mach_virt_size=0; 
-  thisproc->p_mach_state=0; 
+  thisproc->p_pri=0;
+  thisproc->p_rssize=0;
+  thisproc->p_mach_virt_size=0;
+  thisproc->p_mach_state=0;
   thisproc->p_mach_pct_cpu=0;
 
-  if(task_by_unix_pid(task_self(), thisproc->p_pid, &thistask) 
+  if(task_by_unix_pid(task_self(), thisproc->p_pid, &thistask)
                                                 != KERN_SUCCESS){
       thisproc->p_mach_state=8; /* (zombie) */
   } else {
     taskinfo_l=TASK_BASIC_INFO_COUNT;
-    if(task_info(thistask, TASK_BASIC_INFO, (task_info_t) &taskinfo, 
+    if(task_info(thistask, TASK_BASIC_INFO, (task_info_t) &taskinfo,
                                       &taskinfo_l)
        != KERN_SUCCESS) {
       thisproc->p_mach_state=8; /* (zombie) */
@@ -922,30 +922,30 @@ struct osf1_top_proc *thisproc;
 	threadinfo_l=THREAD_BASIC_INFO_COUNT;
 	if(thread_info(threadarr[j],THREAD_BASIC_INFO,
 	       (thread_info_t) threadinfo, &threadinfo_l) == KERN_SUCCESS) {
-	    
+
 	  task_tot_cpu += threadinfo->cpu_usage;
-	  if(minim_state>threadinfo->run_state) 
+	  if(minim_state>threadinfo->run_state)
               minim_state=threadinfo->run_state;
-	  if(mcurp>threadinfo->cur_priority) 
+	  if(mcurp>threadinfo->cur_priority)
               mcurp=threadinfo->cur_priority;
-	  if(mbasp>threadinfo->base_priority) 
+	  if(mbasp>threadinfo->base_priority)
               mbasp=threadinfo->base_priority;
-	  if(mslpt>threadinfo->sleep_time) 
+	  if(mslpt>threadinfo->sleep_time)
               mslpt=threadinfo->sleep_time;
 	}
       }
       switch (minim_state) {
-      case TH_STATE_RUNNING:      
+      case TH_STATE_RUNNING:
 	    thisproc->p_mach_state=1;  break;
-      case TH_STATE_UNINTERRUPTIBLE: 
+      case TH_STATE_UNINTERRUPTIBLE:
 	    thisproc->p_mach_state=2; break;
-      case TH_STATE_WAITING:      
+      case TH_STATE_WAITING:
 	    thisproc->p_mach_state=(threadinfo->sleep_time > 20) ? 4 : 3; break;
-      case TH_STATE_STOPPED:      
+      case TH_STATE_STOPPED:
 	    thisproc->p_mach_state=5; break;
-      case TH_STATE_HALTED:       
+      case TH_STATE_HALTED:
 	    thisproc->p_mach_state=6; break;
-      default:                    
+      default:
 	    thisproc->p_mach_state=7; break;
       }
 
@@ -962,9 +962,9 @@ struct osf1_top_proc *thisproc;
 
 /* The reason for this function is that the system call will let
  * someone lower their own processes priority (because top is setuid :-(
- * Yes, using syscall() is a hack, if you can come up with something 
+ * Yes, using syscall() is a hack, if you can come up with something
  * better, then I'd be thrilled to hear it. I'm not holding my breath,
- * though.  
+ * though.
  *             Anthony.
  */
 int setpriority(int dummy, int procnum, int niceval)
@@ -973,7 +973,7 @@ int setpriority(int dummy, int procnum, int niceval)
     int uid, curprio;
 
     uid=getuid();
-    if ( (curprio=getpriority(PRIO_PROCESS,procnum) ) == -1) 
+    if ( (curprio=getpriority(PRIO_PROCESS,procnum) ) == -1)
     {
 	return(-1); /* errno goes back to renice_process() */
     }

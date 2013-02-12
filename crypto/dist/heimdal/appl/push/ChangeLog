@@ -5,7 +5,7 @@
 2004-06-17  Johan Danielsson  <joda@pdc.kth.se>
 
 	* push.c: alloc memory to handle very long lines
-	
+
 2003-04-03  Assar Westerlund  <assar@kth.se>
 
 	* push.c: fixed one incorrect fprintf to stderr
@@ -14,7 +14,7 @@
 
 	* push.c: add names of pop states, add some more debugging and use
 	fprintf(stderr) for all dbg stmts.
-	
+
 2001-09-04  Assar Westerlund  <assar@sics.se>
 
 	* push.c (doit): check return values from snprintf being negative
@@ -66,7 +66,7 @@
 1999-11-13  Assar Westerlund  <assar@sics.se>
 
 	* push.c: make `-v' a arg_counter
-	
+
 1999-11-02  Assar Westerlund  <assar@sics.se>
 
 	* push.c (main): redo the v4/v5 selection for consistency.  -4 ->
@@ -100,7 +100,7 @@
 1999-05-10  Assar Westerlund  <assar@sics.se>
 
 	* push.c (do_v5): call krb5_sendauth with ccache == NULL
-	
+
 Wed Apr  7 23:40:00 1999  Assar Westerlund  <assar@sics.se>
 
 	* Makefile.in: fix names of hesiod variables

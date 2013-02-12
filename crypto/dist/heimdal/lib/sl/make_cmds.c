@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1998-1999 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "make_cmds.h"
@@ -57,9 +57,9 @@ char *table_name;
 static struct command_list *commands;
 
 void
-add_command(char *function, 
-	    char *help, 
-	    struct string_list *aliases, 
+add_command(char *function,
+	    char *help,
+	    struct string_list *aliases,
 	    unsigned flags)
 {
     struct command_list *cl = malloc(sizeof(*cl));
@@ -87,7 +87,7 @@ quote(const char *str)
     const char *p;
     char *q;
     q = buf;
-    
+
     *q++ = '\"';
     for(p = str; *p != '\0'; p++) {
 	if(*p == '\n') {
@@ -129,7 +129,7 @@ generate_commands(void)
     p = strrchr(base, '.');
     if(p)
 	*p = '\0';
-    
+
     asprintf(&cfn, "%s.c", base);
     if (cfn == NULL)
 	err (1, "asprintf");
@@ -137,7 +137,7 @@ generate_commands(void)
     c_file = fopen(cfn, "w");
     if (c_file == NULL)
 	err (1, "cannot fopen %s", cfn);
-    
+
     fprintf(c_file, "/* Generated from %s */\n", filename);
     fprintf(c_file, "\n");
     fprintf(c_file, "#include <stddef.h>\n");
@@ -156,11 +156,11 @@ generate_commands(void)
 	    /* XXX hack for ss_quit */
 	    if(strcmp(cl->function, "ss_quit") == 0) {
 		fprintf(c_file, "int %s (int, char**);\n", cl->function);
-		fprintf(c_file, "#define _ss_quit_wrap ss_quit\n\n"); 
+		fprintf(c_file, "#define _ss_quit_wrap ss_quit\n\n");
 		continue;
 	    }
 	    fprintf(c_file, "void %s (int, char**);\n", cl->function);
-	    fprintf(c_file, "static int _%s_wrap (int argc, char **argv)\n", 
+	    fprintf(c_file, "static int _%s_wrap (int argc, char **argv)\n",
 		    cl->function);
 	    fprintf(c_file, "{\n");
 	    fprintf(c_file, "  %s (argc, argv);\n", cl->function);
@@ -177,7 +177,7 @@ generate_commands(void)
 	    fprintf(c_file, "  { %s, _%s_wrap, %s },\n", p, cl->function, q);
 	    free(p);
 	    free(q);
-    
+
 	    for(sl = sl->next; sl; sl = sl->next) {
 		p = quote(sl->string);
 		fprintf(c_file, "  { %s },\n", p);
@@ -222,16 +222,16 @@ main(int argc, char **argv)
 	print_version(NULL);
 	exit(0);
     }
-    
+
     if(argc == optidx)
 	usage(1);
     filename = argv[optidx];
     yyin = fopen(filename, "r");
     if(yyin == NULL)
 	err(1, "%s", filename);
-    
+
     yyparse();
-    
+
     generate_commands();
 
     if(numerror)

@@ -412,8 +412,8 @@
 ./usr/X11R7/lib/modules/drivers/kbd_drv.so.1		-unknown-	xorg
 ./usr/X11R7/lib/modules/drivers/mouse_drv.so		-unknown-	xorg
 ./usr/X11R7/lib/modules/drivers/mouse_drv.so.1		-unknown-	xorg
-./usr/X11R7/lib/modules/drivers/newport_drv.so		-unknown-	xorg   
-./usr/X11R7/lib/modules/drivers/newport_drv.so.0	-unknown-	xorg   
+./usr/X11R7/lib/modules/drivers/newport_drv.so		-unknown-	xorg
+./usr/X11R7/lib/modules/drivers/newport_drv.so.0	-unknown-	xorg
 ./usr/X11R7/lib/modules/drivers/void_drv.so		-unknown-	xorg
 ./usr/X11R7/lib/modules/drivers/void_drv.so.1		-unknown-	xorg
 ./usr/X11R7/lib/modules/drivers/wsfb_drv.so		-unknown-	xorg

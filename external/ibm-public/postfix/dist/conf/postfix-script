@@ -160,7 +160,7 @@ stop)
 	    sleep 1
 	done
 	$WARN stopping the Postfix mail system with force
-	pid=`awk '{ print $1; exit 0 } END { exit 1 }' pid/master.pid` && 
+	pid=`awk '{ print $1; exit 0 } END { exit 1 }' pid/master.pid` &&
 		kill -9 -$pid
 	;;
 
@@ -277,7 +277,7 @@ check-warn)
 		-exec $WARN not owned by $mail_owner: {} \;
 
 	todo="$queue_directory/public $queue_directory/maildrop"
-	test -n "$check_shared_files" && 
+	test -n "$check_shared_files" &&
 	   todo="$command_directory/postqueue $command_directory/postdrop $todo"
 
 	find $todo \
@@ -307,7 +307,7 @@ check-warn)
 		test -d $dir && find $dir -type f -print | while read path
 		do
 			test -f /$path && {
-			    cmp -s $path /$path || 
+			    cmp -s $path /$path ||
 				$WARN $queue_directory/$path and /$path differ
 			}
 		done

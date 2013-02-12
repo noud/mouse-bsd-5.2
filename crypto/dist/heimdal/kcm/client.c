@@ -122,7 +122,7 @@ kcm_ccache_new_client(krb5_context context,
 	if (bad && !CLIENT_IS_ROOT(client))
 	    return KRB5_CC_BADNAME;
     }
-	
+
     ret = kcm_ccache_resolve(context, name, &ccache);
     if (ret == 0) {
 	if ((ccache->uid != client->uid ||
@@ -161,7 +161,7 @@ kcm_ccache_new_client(krb5_context context,
 	return ret;
     }
 
-    /* 
+    /*
      * Finally, if the user is root and the cache was created under
      * another user's name, chown the cache to that user and their
      * default gid.
@@ -179,7 +179,7 @@ kcm_ccache_new_client(krb5_context context,
 	    }
 	}
     }
-    
+
     *ccache_p = ccache;
     return 0;
 }

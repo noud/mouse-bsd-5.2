@@ -22,7 +22,7 @@
 #	\fBlocal\fR(8), \fBpipe\fR(8) or \fBspawn\fR(8) services, or
 #	run the server under control by \fBinetd\fR(8) or equivalent.
 # .PP
-#	After changing master.cf you must execute "\fBpostfix reload\fR" 
+#	After changing master.cf you must execute "\fBpostfix reload\fR"
 #	to reload the configuration.
 # SYNTAX
 # .ad

@@ -490,7 +490,7 @@ ssize_t receive_packet (interface, buf, len, from, hfrom)
 		   physical layer that supports this, but WTH), skip this
 		   packet. */
 		if (offset < 0) {
-			interface -> rbuf_offset = 
+			interface -> rbuf_offset =
 				BPF_WORDALIGN (interface -> rbuf_offset +
 					       hdr.bh_caplen);
 			continue;
@@ -507,7 +507,7 @@ ssize_t receive_packet (interface, buf, len, from, hfrom)
 
 		/* If the IP or UDP checksum was bad, skip the packet... */
 		if (offset < 0) {
-			interface -> rbuf_offset = 
+			interface -> rbuf_offset =
 				BPF_WORDALIGN (interface -> rbuf_offset +
 					       hdr.bh_caplen);
 			continue;

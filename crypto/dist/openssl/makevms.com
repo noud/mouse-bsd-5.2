@@ -62,7 +62,7 @@ $!
 $! P6, if defined, sets a compiler thread NOT needed on OpenVMS 7.1 (and up)
 $!
 $!
-$! Check if we're in a batch job, and make sure we get to 
+$! Check if we're in a batch job, and make sure we get to
 $! the directory this script is in
 $!
 $ IF F$MODE() .EQS. "BATCH"
@@ -370,7 +370,7 @@ $ RETURN
 $!
 $! Copy a lot of files around.
 $!
-$ SOFTLINKS: 
+$ SOFTLINKS:
 $!
 $! Tell The User We Are Partly Rebuilding The [.APPS] Directory.
 $!
@@ -489,7 +489,7 @@ $ EXHEADER_PQUEUE := pqueue.h
 $ EXHEADER_TS := ts.h
 $
 $ I = 0
-$ LOOP_SDIRS: 
+$ LOOP_SDIRS:
 $ D = F$EDIT(F$ELEMENT(I, ",", SDIRS),"TRIM")
 $ I = I + 1
 $ IF D .EQS. "," THEN GOTO LOOP_SDIRS_END
@@ -530,11 +530,11 @@ $!
 $ SET DEFAULT SYS$DISK:[.CRYPTO]
 $!
 $! Build The [.xxx.EXE.CRYPTO]LIBCRYPTO.OLB Library.
-$!  
+$!
 $ @CRYPTO-LIB LIBRARY 'DEBUGGER' "''COMPILER'" "''TCPIP_TYPE'" "''ISSEVEN'" "''BUILDPART'"
 $!
 $! Build The [.xxx.EXE.CRYPTO]*.EXE Test Applications.
-$!  
+$!
 $ @CRYPTO-LIB APPS 'DEBUGGER' "''COMPILER'" "''TCPIP_TYPE'" 'ISSEVEN' "''BUILDPART'"
 $!
 $! Go Back To The Main Directory.
@@ -824,7 +824,7 @@ $!
 $!  Check To See If We Have VAXC Or DECC.
 $!
 $   IF (F$GETSYI("CPU").GE.128).OR.(F$TRNLNM("DECC$CC_DEFAULT").EQS."/DECC")
-$   THEN 
+$   THEN
 $!
 $!    Looks Like DECC, Set To Use DECC.
 $!

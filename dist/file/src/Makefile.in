@@ -269,7 +269,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libmagic.la: $(libmagic_la_OBJECTS) $(libmagic_la_DEPENDENCIES) 
+libmagic.la: $(libmagic_la_OBJECTS) $(libmagic_la_DEPENDENCIES)
 	$(libmagic_la_LINK) -rpath $(libdir) $(libmagic_la_OBJECTS) $(libmagic_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -299,7 +299,7 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-file$(EXEEXT): $(file_OBJECTS) $(file_DEPENDENCIES) 
+file$(EXEEXT): $(file_OBJECTS) $(file_DEPENDENCIES)
 	@rm -f file$(EXEEXT)
 	$(LINK) $(file_OBJECTS) $(file_LDADD) $(LIBS)
 

@@ -278,7 +278,7 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-adjtimed$(EXEEXT): $(adjtimed_OBJECTS) $(adjtimed_DEPENDENCIES) 
+adjtimed$(EXEEXT): $(adjtimed_OBJECTS) $(adjtimed_DEPENDENCIES)
 	@rm -f adjtimed$(EXEEXT)
 	$(LINK) $(adjtimed_LDFLAGS) $(adjtimed_OBJECTS) $(adjtimed_LDADD) $(LIBS)
 

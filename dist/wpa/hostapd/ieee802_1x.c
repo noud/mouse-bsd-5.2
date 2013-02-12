@@ -1429,7 +1429,7 @@ static void ieee802_1x_rekey(void *eloop_ctx, void *timeout_ctx)
 
 	wpa_printf(MSG_DEBUG, "IEEE 802.1X: New default WEP key index %d",
 		   hapd->default_wep_key_idx);
-		      
+
 	if (ieee802_1x_rekey_broadcast(hapd)) {
 		hostapd_logger(hapd, NULL, HOSTAPD_MODULE_IEEE8021X,
 			       HOSTAPD_LEVEL_WARNING, "failed to generate a "
@@ -1663,7 +1663,7 @@ void ieee802_1x_deinit(struct hostapd_data *hapd)
 }
 
 
-int ieee802_1x_reconfig(struct hostapd_data *hapd, 
+int ieee802_1x_reconfig(struct hostapd_data *hapd,
 			struct hostapd_config *oldconf,
 			struct hostapd_bss_config *oldbss)
 {

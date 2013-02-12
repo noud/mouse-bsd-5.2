@@ -7,7 +7,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -72,14 +72,14 @@ ECDSA_SIG *ECDSA_do_sign_ex(const unsigned char *dgst, int dlen,
 	return ecdsa->meth->ecdsa_do_sign(dgst, dlen, kinv, rp, eckey);
 }
 
-int ECDSA_sign(int type, const unsigned char *dgst, int dlen, unsigned char 
+int ECDSA_sign(int type, const unsigned char *dgst, int dlen, unsigned char
 		*sig, unsigned int *siglen, EC_KEY *eckey)
 {
 	return ECDSA_sign_ex(type, dgst, dlen, sig, siglen, NULL, NULL, eckey);
 }
 
-int ECDSA_sign_ex(int type, const unsigned char *dgst, int dlen, unsigned char 
-	*sig, unsigned int *siglen, const BIGNUM *kinv, const BIGNUM *r, 
+int ECDSA_sign_ex(int type, const unsigned char *dgst, int dlen, unsigned char
+	*sig, unsigned int *siglen, const BIGNUM *kinv, const BIGNUM *r,
 	EC_KEY *eckey)
 {
 	ECDSA_SIG *s;
@@ -94,11 +94,11 @@ int ECDSA_sign_ex(int type, const unsigned char *dgst, int dlen, unsigned char
 	return 1;
 }
 
-int ECDSA_sign_setup(EC_KEY *eckey, BN_CTX *ctx_in, BIGNUM **kinvp, 
+int ECDSA_sign_setup(EC_KEY *eckey, BN_CTX *ctx_in, BIGNUM **kinvp,
 		BIGNUM **rp)
 {
 	ECDSA_DATA *ecdsa = ecdsa_check(eckey);
 	if (ecdsa == NULL)
 		return 0;
-	return ecdsa->meth->ecdsa_sign_setup(eckey, ctx_in, kinvp, rp); 
+	return ecdsa->meth->ecdsa_sign_setup(eckey, ctx_in, kinvp, rp);
 }

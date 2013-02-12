@@ -3,7 +3,7 @@
 /*
 **	dynamically loadable clk driver
 **
-**	william robertson <rob@agate.berkeley.edu>  
+**	william robertson <rob@agate.berkeley.edu>
 */
 
 #include <sys/types.h>
@@ -42,10 +42,10 @@ struct vdstat *vds;
 	       log(LOG_ERR, "clk stream module already loaded\n");
 	       return (EADDRINUSE);
 	  }
- 
+
 	  i = findmod("\0");
 
-	  if (i == -1 || fmodsw[i].f_name[0] != '\0') 
+	  if (i == -1 || fmodsw[i].f_name[0] != '\0')
 	    return(-1);
 
 	  for (j = 0; vd.Drv_name[j] != '\0'; j++)	/* XXX check bounds */
@@ -66,7 +66,7 @@ struct vdstat *vds;
 	  fmodsw[i].f_str = 0;
 
 	  return(0);
-     
+
 	case VDSTAT:
 	  return(0);
 

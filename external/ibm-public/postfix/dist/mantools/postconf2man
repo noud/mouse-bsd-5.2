@@ -2,10 +2,10 @@
 
 # postconf2man - convert postconf2html to nroff
 
-# Basic operation: 
+# Basic operation:
 #
 # - Process input as blocks of text separated by one or more empty
-# (or all whitespace) lines. 
+# (or all whitespace) lines.
 #
 # Caution: this depends heavily on the postconf2html output format.
 

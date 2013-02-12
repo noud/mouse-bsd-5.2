@@ -469,7 +469,7 @@ CRYPTO=$crypto
 # ENG_D  - dynamic engine output directory
 # Note: if you change these point to different directories then uncomment out
 # the lines around the 'NB' comment below.
-# 
+#
 BIN_D=\$(OUT_D)
 TEST_D=\$(OUT_D)
 LIB_D=\$(OUT_D)
@@ -558,7 +558,7 @@ vclean:
 	\$(RM) \$(OUT_D)$o*.*
 
 EOF
-    
+
 my $platform_cpp_symbol = "MK1MF_PLATFORM_$platform";
 $platform_cpp_symbol =~ s/-/_/g;
 if (open(IN,"crypto/buildinf.h"))
@@ -626,7 +626,7 @@ foreach (values %lib_nam)
 
 	if (($_ eq "SSL") && $no_ssl2 && $no_ssl3)
 		{
-		$rules.="\$(O_SSL):\n\n"; 
+		$rules.="\$(O_SSL):\n\n";
 		next;
 		}
 
@@ -793,7 +793,7 @@ sub do_defs
 	local(*OUT,$tmp,$t);
 
 	$files =~ s/\//$o/g if $o ne '/';
-	$ret="$var="; 
+	$ret="$var=";
 	$n=1;
 	$Vars{$var}.="";
 	foreach (split(/ /,$files))
@@ -920,7 +920,7 @@ sub cc_compile_target
 	{
 	local($target,$source,$ex_flags)=@_;
 	local($ret);
-	
+
 	$ex_flags.=" -DMK1MF_BUILD -D$platform_cpp_symbol" if ($source =~ /cversion/);
 	$target =~ s/\//$o/g if $o ne "/";
 	$source =~ s/\//$o/g if $o ne "/";
@@ -982,7 +982,7 @@ sub do_copy_rule
 	{
 	local($to,$files,$p)=@_;
 	local($ret,$_,$n,$pp);
-	
+
 	$files =~ s/\//$o/g if $o ne '/';
 	foreach (split(/\s+/,$files))
 		{
@@ -1021,7 +1021,7 @@ sub read_options
 		"no-ripemd" => \$no_ripemd,
 		"no-mdc2" => \$no_mdc2,
 		"no-whirlpool" => \$no_whirlpool,
-		"no-patents" => 
+		"no-patents" =>
 			[\$no_rc2, \$no_rc4, \$no_rc5, \$no_idea, \$no_rsa],
 		"no-rsa" => \$no_rsa,
 		"no-dsa" => \$no_dsa,

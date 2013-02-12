@@ -315,7 +315,7 @@ do_bind( char *uri, char *dn, struct berval *pass, int maxloop,
 		/* nothing to do yet */
 		break;
 	}
-			
+
 	if ( maxloop > 1 ) {
 		fprintf( stderr, "PID=%ld - Bind(%d): dn=\"%s\".\n",
 			 (long) pid, maxloop, dn );
@@ -332,7 +332,7 @@ do_bind( char *uri, char *dn, struct berval *pass, int maxloop,
 			}
 
 			(void) ldap_set_option( ld, LDAP_OPT_PROTOCOL_VERSION,
-				&version ); 
+				&version );
 			(void) ldap_set_option( ld, LDAP_OPT_REFERRALS,
 				chaserefs ? LDAP_OPT_ON: LDAP_OPT_OFF );
 		}
@@ -382,7 +382,7 @@ do_bind( char *uri, char *dn, struct berval *pass, int maxloop,
 			/* nothing to do yet */
 			break;
 		}
-			
+
 		if ( !noinit ) {
 			ldap_unbind_ext( ld, NULL, NULL );
 			ld = NULL;

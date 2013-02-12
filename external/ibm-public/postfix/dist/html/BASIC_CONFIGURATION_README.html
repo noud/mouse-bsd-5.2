@@ -205,7 +205,7 @@ to an unqualified recipient address. </p>
 
 <p> The <a href="postconf.5.html#mydestination">mydestination</a> parameter specifies what domains this
 machine will deliver locally, instead of forwarding to another
-machine. The default is to receive mail for the machine itself. 
+machine. The default is to receive mail for the machine itself.
 See the <a href="VIRTUAL_README.html">VIRTUAL_README</a> file for how to configure Postfix for
 <a href="VIRTUAL_README.html#canonical">hosted domains</a>. </p>
 
@@ -242,7 +242,7 @@ domain, you must list $<a href="postconf.5.html#mydomain">mydomain</a> as well. 
 <blockquote>
 <pre>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
-    <a href="postconf.5.html#mydestination">mydestination</a> = $<a href="postconf.5.html#myhostname">myhostname</a> localhost.$<a href="postconf.5.html#mydomain">mydomain</a> localhost 
+    <a href="postconf.5.html#mydestination">mydestination</a> = $<a href="postconf.5.html#myhostname">myhostname</a> localhost.$<a href="postconf.5.html#mydomain">mydomain</a> localhost
         www.$<a href="postconf.5.html#mydomain">mydomain</a> ftp.$<a href="postconf.5.html#mydomain">mydomain</a>
 </pre>
 </blockquote>
@@ -269,7 +269,7 @@ then your default <a href="postconf.5.html#mynetworks">mynetworks</a> setting ma
     <a href="postconf.5.html#mynetworks_style">mynetworks_style</a> = subnet  (default: authorize subnetworks)
     <a href="postconf.5.html#mynetworks_style">mynetworks_style</a> = host    (safe: authorize local machine only)
     <a href="postconf.5.html#mynetworks">mynetworks</a> = 127.0.0.0/8   (safe: authorize local machine only)
-    <a href="postconf.5.html#mynetworks">mynetworks</a> = 127.0.0.0/8 168.100.189.2/32 (authorize local machine) 
+    <a href="postconf.5.html#mynetworks">mynetworks</a> = 127.0.0.0/8 168.100.189.2/32 (authorize local machine)
 </pre>
 </blockquote>
 
@@ -593,7 +593,7 @@ specify the fully-qualified domain name that the mail system should
 use. </p>
 
 <p> Alternatively, if you specify <a href="postconf.5.html#mydomain">mydomain</a> in <a href="postconf.5.html">main.cf</a>, then Postfix
-will use its value to generate a fully-qualified default value      
+will use its value to generate a fully-qualified default value
 for the <a href="postconf.5.html#myhostname">myhostname</a> parameter. </p>
 
 <p> Examples (specify only one of the following): </p>
@@ -625,7 +625,7 @@ for the <a href="postconf.5.html#myhostname">myhostname</a> parameter. </p>
 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
     <a href="postconf.5.html#mydomain">mydomain</a> = local.domain
     <a href="postconf.5.html#mydomain">mydomain</a> = virtual.domain (virtual interface)
-</pre> 
+</pre>
 </blockquote>
 
 <h2><a name="inet_interfaces">My own network addresses</a> </h2>

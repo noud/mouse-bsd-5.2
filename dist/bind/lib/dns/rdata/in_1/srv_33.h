@@ -24,7 +24,7 @@
 
 /* Reviewed: Fri Mar 17 13:01:00 PST 2000 by bwelling */
 
-/*! 
+/*!
  *  \brief Per RFC2782 */
 
 typedef struct dns_rdata_in_srv {

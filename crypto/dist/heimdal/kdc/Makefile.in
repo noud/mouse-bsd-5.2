@@ -416,7 +416,7 @@ LIB_kafs = $(top_builddir)/lib/kafs/libkafs.la $(AIX_EXTRA_KAFS)
 @DCE_TRUE@LIB_kdfs = $(top_builddir)/lib/kdfs/libkdfs.la
 lib_LTLIBRARIES = libkdc.la
 man_MANS = kdc.8 kstash.8 hprop.8 hpropd.8 string2key.8
-hprop_SOURCES = hprop.c mit_dump.c v4_dump.c hprop.h kadb.h 
+hprop_SOURCES = hprop.c mit_dump.c v4_dump.c hprop.h kadb.h
 hpropd_SOURCES = hpropd.c hprop.h
 kstash_SOURCES = kstash.c headers.h
 string2key_SOURCES = string2key.c headers.h
@@ -453,7 +453,7 @@ hprop_LDADD = \
 	$(LIB_hcrypto) \
 	$(top_builddir)/lib/asn1/libasn1.la \
 	$(LIB_roken) \
-	$(DBLIB) 
+	$(DBLIB)
 
 hpropd_LDADD = \
 	$(top_builddir)/lib/hdb/libhdb.la \
@@ -463,7 +463,7 @@ hpropd_LDADD = \
 	$(LIB_hcrypto) \
 	$(top_builddir)/lib/asn1/libasn1.la \
 	$(LIB_roken) \
-	$(DBLIB) 
+	$(DBLIB)
 
 @PKINIT_TRUE@LIB_pkinit = $(top_builddir)/lib/hx509/libhx509.la
 libkdc_la_LIBADD = \
@@ -476,7 +476,7 @@ libkdc_la_LIBADD = \
 	$(LIB_hcrypto) \
 	$(top_builddir)/lib/asn1/libasn1.la \
 	$(LIB_roken) \
-	$(DBLIB) 
+	$(DBLIB)
 
 LDADD = $(top_builddir)/lib/hdb/libhdb.la \
 	$(LIB_openldap) \
@@ -554,7 +554,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libkdc.la: $(libkdc_la_OBJECTS) $(libkdc_la_DEPENDENCIES) 
+libkdc.la: $(libkdc_la_OBJECTS) $(libkdc_la_DEPENDENCIES)
 	$(libkdc_la_LINK) -rpath $(libdir) $(libkdc_la_OBJECTS) $(libkdc_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -647,22 +647,22 @@ clean-sbinPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-hprop$(EXEEXT): $(hprop_OBJECTS) $(hprop_DEPENDENCIES) 
+hprop$(EXEEXT): $(hprop_OBJECTS) $(hprop_DEPENDENCIES)
 	@rm -f hprop$(EXEEXT)
 	$(LINK) $(hprop_OBJECTS) $(hprop_LDADD) $(LIBS)
-hpropd$(EXEEXT): $(hpropd_OBJECTS) $(hpropd_DEPENDENCIES) 
+hpropd$(EXEEXT): $(hpropd_OBJECTS) $(hpropd_DEPENDENCIES)
 	@rm -f hpropd$(EXEEXT)
 	$(LINK) $(hpropd_OBJECTS) $(hpropd_LDADD) $(LIBS)
-kdc$(EXEEXT): $(kdc_OBJECTS) $(kdc_DEPENDENCIES) 
+kdc$(EXEEXT): $(kdc_OBJECTS) $(kdc_DEPENDENCIES)
 	@rm -f kdc$(EXEEXT)
 	$(LINK) $(kdc_OBJECTS) $(kdc_LDADD) $(LIBS)
-kdc-replay$(EXEEXT): $(kdc_replay_OBJECTS) $(kdc_replay_DEPENDENCIES) 
+kdc-replay$(EXEEXT): $(kdc_replay_OBJECTS) $(kdc_replay_DEPENDENCIES)
 	@rm -f kdc-replay$(EXEEXT)
 	$(LINK) $(kdc_replay_OBJECTS) $(kdc_replay_LDADD) $(LIBS)
-kstash$(EXEEXT): $(kstash_OBJECTS) $(kstash_DEPENDENCIES) 
+kstash$(EXEEXT): $(kstash_OBJECTS) $(kstash_DEPENDENCIES)
 	@rm -f kstash$(EXEEXT)
 	$(LINK) $(kstash_OBJECTS) $(kstash_LDADD) $(LIBS)
-string2key$(EXEEXT): $(string2key_OBJECTS) $(string2key_DEPENDENCIES) 
+string2key$(EXEEXT): $(string2key_OBJECTS) $(string2key_DEPENDENCIES)
 	@rm -f string2key$(EXEEXT)
 	$(LINK) $(string2key_OBJECTS) $(string2key_LDADD) $(LIBS)
 

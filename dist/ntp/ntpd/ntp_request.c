@@ -37,7 +37,7 @@
 #define	NO_REQUEST	(-1)
 /*
  * Because we now have v6 addresses in the messages, we need to compensate
- * for the larger size.  Therefore, we introduce the alternate size to 
+ * for the larger size.  Therefore, we introduce the alternate size to
  * keep us friendly with older implementations.  A little ugly.
  */
 static int client_v6_capable = 0;   /* the client can handle longer messages */
@@ -136,7 +136,7 @@ static	struct req_proc ntp_codes[] = {
 				sizeof(struct conf_unpeer), do_unconf },
 	{ REQ_SET_SYS_FLAG, AUTH, sizeof(struct conf_sys_flags),
 				sizeof(struct conf_sys_flags), set_sys_flag },
-	{ REQ_CLR_SYS_FLAG, AUTH, sizeof(struct conf_sys_flags), 
+	{ REQ_CLR_SYS_FLAG, AUTH, sizeof(struct conf_sys_flags),
 				sizeof(struct conf_sys_flags),  clr_sys_flag },
 	{ REQ_GET_RESTRICT,	NOAUTH,	0, 0,	list_restrict },
 	{ REQ_RESADDFLAGS, AUTH, v4sizeof(struct conf_restrict),
@@ -159,18 +159,18 @@ static	struct req_proc ntp_codes[] = {
 				sizeof(struct conf_trap), req_set_trap },
 	{ REQ_CLR_TRAP,	AUTH, v4sizeof(struct conf_trap),
 				sizeof(struct conf_trap), req_clr_trap },
-	{ REQ_REQUEST_KEY, AUTH, sizeof(u_long), sizeof(u_long), 
+	{ REQ_REQUEST_KEY, AUTH, sizeof(u_long), sizeof(u_long),
 				set_request_keyid },
-	{ REQ_CONTROL_KEY, AUTH, sizeof(u_long), sizeof(u_long), 
+	{ REQ_CONTROL_KEY, AUTH, sizeof(u_long), sizeof(u_long),
 				set_control_keyid },
 	{ REQ_GET_CTLSTATS,	NOAUTH,	0, 0,	get_ctl_stats },
 #ifdef KERNEL_PLL
 	{ REQ_GET_KERNEL,	NOAUTH,	0, 0,	get_kernel_info },
 #endif
 #ifdef REFCLOCK
-	{ REQ_GET_CLOCKINFO, NOAUTH, sizeof(u_int32), sizeof(u_int32), 
+	{ REQ_GET_CLOCKINFO, NOAUTH, sizeof(u_int32), sizeof(u_int32),
 				get_clock_info },
-	{ REQ_SET_CLKFUDGE, AUTH, sizeof(struct conf_fudge), 
+	{ REQ_SET_CLKFUDGE, AUTH, sizeof(struct conf_fudge),
 				sizeof(struct conf_fudge), set_clock_fudge },
 	{ REQ_GET_CLKBUGINFO, NOAUTH, sizeof(u_int32), sizeof(u_int32),
 				get_clkbug_info },
@@ -495,11 +495,11 @@ process_private(
 	/*
 	 * If we need data, check to see if we have some.  If we
 	 * don't, check to see that there is none (picky, picky).
-	 */	
+	 */
 
 	/* This part is a bit tricky, we want to be sure that the size
 	 * returned is either the old or the new size.  We also can find
-	 * out if the client can accept both types of messages this way. 
+	 * out if the client can accept both types of messages this way.
 	 *
 	 * Handle the exception of REQ_CONFIG. It can have two data sizes.
 	 */
@@ -551,7 +551,7 @@ process_private(
 	if (proc->needs_auth && sys_authenticate) {
 		l_fp ftmp;
 		double dtemp;
-	
+
 		if (rbufp->recv_length < (int)((REQ_LEN_HDR +
 		    (INFO_ITEMSIZE(inpkt->mbz_itemsize) *
 		    INFO_NITEMS(inpkt->err_nitems))
@@ -701,7 +701,7 @@ peer_list(
 				    ip->flags |= INFO_FLAG_SHORTLIST;
 				ip = (struct info_peer_list *)more_pkt();
 			}
-			pp = pp->next; 
+			pp = pp->next;
 		}
 	}
 	flush_pkt();
@@ -759,7 +759,7 @@ peer_list_sum(
 				if (client_v6_capable)
 					ips->v6_flag = 0;
 /* XXX PDM This code is buggy. Need to replace with a straightforward assignment */
-				
+
 				if (pp->dstadr)
 					ips->dstadr = (pp->processed) ?
 						pp->cast_flags == MDF_BCAST ?
@@ -774,8 +774,8 @@ peer_list_sum(
 
 				skip = 0;
 			}
-			
-			if (!skip){ 
+
+			if (!skip){
 				ips->srcport = NSRCPORT(&pp->srcadr);
 				ips->stratum = pp->stratum;
 				ips->hpoll = pp->hpoll;
@@ -803,8 +803,8 @@ peer_list_sum(
 				DTOLFP(pp->offset, &ltmp);
 				HTONL_FP(&ltmp, &ips->offset);
 				ips->dispersion = HTONS_FP(DTOUFP(SQRT(pp->disp)));
-			}	
-			pp = pp->next; 
+			}
+			pp = pp->next;
 			ips = (struct info_peer_summary *)more_pkt();
 		}
 	}
@@ -978,7 +978,7 @@ peer_stats (
 		} else {
 			addr.ss_family = AF_INET;
 			GET_INADDR(addr) = ipl->addr;
-		}	
+		}
 #ifdef HAVE_SA_LEN_IN_STRUCT_SOCKADDR
 		addr.ss_len = SOCKLEN(&addr);
 #endif
@@ -1008,7 +1008,7 @@ peer_stats (
 					3 : 7;
 			else
 				memset(&ip->dstadr, 0, sizeof(ip->dstadr));
-			
+
 			ip->srcadr = GET_INADDR(pp->srcadr);
 			if (client_v6_capable)
 				ip->v6_flag = 0;
@@ -1019,10 +1019,10 @@ peer_stats (
 					GET_INADDR6(pp->dstadr->sin);
 			else
 				memset(&ip->dstadr6, 0, sizeof(ip->dstadr6));
-			
+
 			ip->srcadr6 = GET_INADDR6(pp->srcadr);
 			ip->v6_flag = 1;
-		}	
+		}
 		ip->srcport = NSRCPORT(&pp->srcadr);
 		ip->flags = 0;
 		if (pp == sys_peer)
@@ -1105,7 +1105,7 @@ sys_info(
 	HTONL_FP(&sys_reftime, &is->reftime);
 
 	is->poll = sys_poll;
-	
+
 	is->flags = 0;
 	if (sys_authenticate)
 		is->flags |= INFO_FLAG_AUTHENTICATE;
@@ -1228,7 +1228,7 @@ io_stats(
 	 * Importations from the io module
 	 */
 	extern u_long io_timereset;
-	
+
 	io = (struct info_io_stats *)prepare_pkt(srcadr, inter, inpkt,
 						 sizeof(struct info_io_stats));
 
@@ -1330,7 +1330,7 @@ do_conf(
 {
 	int items;
 	u_int fl;
-	struct conf_peer *cp; 
+	struct conf_peer *cp;
 	struct conf_peer temp_cp;
 	struct sockaddr_storage peeraddr;
 	struct sockaddr_in tmp_clock;
@@ -1369,7 +1369,7 @@ do_conf(
 	 * Looks okay, try it out
 	 */
 	items = INFO_NITEMS(inpkt->err_nitems);
-	cp = (struct conf_peer *)inpkt->data;  
+	cp = (struct conf_peer *)inpkt->data;
 
 	while (items-- > 0) {
 		memset(&temp_cp, 0, sizeof(struct conf_peer));
@@ -1387,10 +1387,10 @@ do_conf(
 		    fl |= FLAG_IBURST;
 		if (temp_cp.flags & CONF_FLAG_SKEY)
 			fl |= FLAG_SKEY;
-		
+
 		if (client_v6_capable && temp_cp.v6_flag != 0) {
 			peeraddr.ss_family = AF_INET6;
-			GET_INADDR6(peeraddr) = temp_cp.peeraddr6; 
+			GET_INADDR6(peeraddr) = temp_cp.peeraddr6;
 		} else {
 			peeraddr.ss_family = AF_INET;
 			GET_INADDR(peeraddr) = temp_cp.peeraddr;
@@ -1415,7 +1415,7 @@ do_conf(
 
 		/* XXX W2DO? minpoll/maxpoll arguments ??? */
 		if (peer_config(&peeraddr, (struct interface *)0,
-		    temp_cp.hmode, temp_cp.version, temp_cp.minpoll, 
+		    temp_cp.hmode, temp_cp.version, temp_cp.minpoll,
 		    temp_cp.maxpoll, fl, temp_cp.ttl, temp_cp.keyid,
 		    NULL) == 0) {
 			req_ack(srcadr, inter, inpkt, INFO_ERR_NODATA);
@@ -1672,7 +1672,7 @@ setclr_flags(
 
 	flags = ((struct conf_sys_flags *)inpkt->data)->flags;
 	flags = ntohl(flags);
-	
+
 	if (flags & ~(SYS_FLAG_BCLIENT | SYS_FLAG_PPS |
 		      SYS_FLAG_NTP | SYS_FLAG_KERNEL | SYS_FLAG_MONITOR |
 		      SYS_FLAG_FILEGEN | SYS_FLAG_AUTH | SYS_FLAG_CAL)) {
@@ -1732,10 +1732,10 @@ list_restrict(
 
 	ir = (struct info_restrict *)prepare_pkt(srcadr, inter, inpkt,
 	    v6sizeof(struct info_restrict));
-	
+
 	for (rl = restrictlist; rl != 0 && ir != 0; rl = rl->next) {
 		ir->addr = htonl(rl->addr);
-		if (client_v6_capable) 
+		if (client_v6_capable)
 			ir->v6_flag = 0;
 		ir->mask = htonl(rl->mask);
 		ir->count = htonl((u_int32)rl->count);
@@ -1970,9 +1970,9 @@ mon_getlist_1(
 			im->addr = GET_INADDR(md->rmtadr);
 			if (client_v6_capable)
 				im->v6_flag = 0;
-			im->daddr = (md->cast_flags == MDF_BCAST)  
-				? GET_INADDR(md->interface->bcast) 
-				: (md->cast_flags 
+			im->daddr = (md->cast_flags == MDF_BCAST)
+				? GET_INADDR(md->interface->bcast)
+				: (md->cast_flags
 				? (GET_INADDR(md->interface->sin)
 				? GET_INADDR(md->interface->sin)
 				: GET_INADDR(md->interface->bcast))
@@ -2027,7 +2027,7 @@ reset_stats(
 
 	flags = ((struct reset_flags *)inpkt->data)->flags;
 	flags = ntohl(flags);
-     
+
 	if (flags & ~RESET_ALLFLAGS) {
 		msyslog(LOG_ERR, "reset_stats: reset leaves %#lx",
 			flags & ~RESET_ALLFLAGS);
@@ -2228,7 +2228,7 @@ get_auth_info(
 	ia->keyuncached = htonl((u_int32)authkeyuncached);
 	ia->expired = htonl((u_int32)authkeyexpired);
 	ia->timereset = htonl((u_int32)(current_time - auth_timereset));
-	
+
 	(void) more_pkt();
 	flush_pkt();
 }
@@ -2302,7 +2302,7 @@ req_get_traps(
 			} else {
 				if (!client_v6_capable)
 					continue;
-				it->local_address6 
+				it->local_address6
 				    = GET_INADDR6(tr->tr_localaddr->sin);
 				it->trap_address6 = GET_INADDR6(tr->tr_addr);
 				it->v6_flag = 1;
@@ -2587,7 +2587,7 @@ get_kernel_info(
 	ik->calcnt = htonl((u_int32)ntx.calcnt);
 	ik->errcnt = htonl((u_int32)ntx.errcnt);
 	ik->stbcnt = htonl((u_int32)ntx.stbcnt);
-	
+
 	(void) more_pkt();
 	flush_pkt();
 }
@@ -2818,9 +2818,9 @@ fill_info_if_stats(void *data, interface_info_t *interface_info)
 	struct info_if_stats **ifsp = (struct info_if_stats **)data;
 	struct info_if_stats *ifs = *ifsp;
 	struct interface *interface = interface_info->interface;
-	
+
 	memset((char*)ifs, 0, sizeof(*ifs));
-	
+
 	if (interface->sin.ss_family == AF_INET6) {
 		if (!client_v6_capable) {
 			return;
@@ -2851,7 +2851,7 @@ fill_info_if_stats(void *data, interface_info_t *interface_info)
 	ifs->ignore_packets = interface->ignore_packets;
 	ifs->peercnt = htonl(interface->peercnt);
 	ifs->action = interface_info->action;
-	
+
 	*ifsp = (struct info_if_stats *)more_pkt();
 }
 
@@ -2873,7 +2873,7 @@ get_if_stats(
 	    v6sizeof(struct info_if_stats));
 
 	interface_enumerate(fill_info_if_stats, &ifs);
-	
+
 	flush_pkt();
 }
 
@@ -2892,7 +2892,7 @@ do_if_reload(
 	    v6sizeof(struct info_if_stats));
 
 	interface_update(fill_info_if_stats, &ifs);
-	
+
 	flush_pkt();
 }
 

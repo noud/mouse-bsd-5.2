@@ -166,9 +166,9 @@ nspecial(struct optab *q)
 		}
 
 	case SCONV:
-		if ((q->ltype & (TINT|TUNSIGNED|TSHORT|TUSHORT)) && 
+		if ((q->ltype & (TINT|TUNSIGNED|TSHORT|TUSHORT)) &&
 		    q->rtype == (TCHAR|TUCHAR)) {
-			static struct rspecial s[] = { 
+			static struct rspecial s[] = {
 				{ NOLEFT, ESI }, { NOLEFT, EDI }, { 0 } };
 			return s;
 		} else if ((q->ltype & TINT) &&

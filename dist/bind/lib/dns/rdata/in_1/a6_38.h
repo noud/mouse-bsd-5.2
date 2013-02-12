@@ -22,7 +22,7 @@
 
 /* Id: a6_38.h,v 1.24 2007/06/19 23:47:17 tbox Exp */
 
-/*! 
+/*!
  *  \brief Per RFC2874 */
 
 typedef struct dns_rdata_in_a6 {

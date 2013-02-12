@@ -1,7 +1,7 @@
 # $OpenLDAP: pkg/openldap-guide/preamble.sdf,v 1.70.2.7 2008/04/14 19:18:48 quanah Exp $
 # Copyright 1999-2008 The OpenLDAP Foundation, All Rights Reserved.
 # COPYING RESTRICTIONS APPLY, see COPYRIGHT.
- 
+
 #
 # Preamble for all OpenLDAP SDF documents
 #

@@ -3,7 +3,7 @@
 #if defined(sgi) || defined(_UNICOSMP)
 /*
  * timetrim.c
- * 
+ *
  * "timetrim" allows setting and adjustment of the system clock frequency
  * trim parameter on Silicon Graphics machines.  The trim value native
  * units are nanoseconds per second (10**-9), so a trim value of 1 makes
@@ -11,7 +11,7 @@
  * of zero.  Xntpd currently uses units of 2**-20 secs for its frequency
  * offset (drift) values; to convert to a timetrim value, multiply by
  * 1E9 / 2**20 (about 954).
- * 
+ *
  * "timetrim" with no arguments just prints out the current kernel value.
  * With a numeric argument, the kernel value is set to the supplied value.
  * The "-i" flag causes the supplied value to be added to the kernel value.
@@ -20,7 +20,7 @@
  *
  * Note that there is a limit of +-3000000 (0.3%) on the timetrim value
  * which is (silently?) enforced by the kernel.
- * 
+ *
  */
 
 #ifdef HAVE_CONFIG_H
@@ -52,7 +52,7 @@ main(
 	int incremental = 0, ntpunits = 0;
 	long timetrim;
 	double value;
-	
+
 	while (--argc && **++argv == '-' && isalpha((int)argv[0][1])) {
 		switch (argv[0][1]) {
 		    case 'i':

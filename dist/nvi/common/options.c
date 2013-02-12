@@ -643,10 +643,10 @@ opts_set(SCR *sp, ARGS **argv, const char *usage)
 				goto badnum;
 			if ((nret =
 			    nget_uslong(sp, &value, sep, &endp, 10)) != NUM_OK) {
-				INT2CHAR(sp, name, STRLEN(name) + 1, 
+				INT2CHAR(sp, name, STRLEN(name) + 1,
 					     np, nlen);
 				p2 = msg_print(sp, np, &nf);
-				INT2CHAR(sp, sep, STRLEN(sep) + 1, 
+				INT2CHAR(sp, sep, STRLEN(sep) + 1,
 					     np, nlen);
 				t2 = msg_print(sp, np, &nf2);
 				switch (nret) {
@@ -670,10 +670,10 @@ opts_set(SCR *sp, ARGS **argv, const char *usage)
 				break;
 			}
 			if (*endp && !ISBLANK(*endp)) {
-badnum:				INT2CHAR(sp, name, STRLEN(name) + 1, 
+badnum:				INT2CHAR(sp, name, STRLEN(name) + 1,
 					     np, nlen);
 				p2 = msg_print(sp, np, &nf);
-				INT2CHAR(sp, sep, STRLEN(sep) + 1, 
+				INT2CHAR(sp, sep, STRLEN(sep) + 1,
 					     np, nlen);
 				t2 = msg_print(sp, np, &nf2);
 				msgq(sp, M_ERR,
@@ -1051,7 +1051,7 @@ opts_save(SCR *sp, FILE *fp)
 	return (0);
 }
 
-/* 
+/*
  * opts_search --
  *	Search for an option.
  *
@@ -1076,7 +1076,7 @@ opts_search(const CHAR_T *name)
 	if ((op = bsearch(&otmp, optlist, sizeof(optlist) / sizeof(OPTLIST) - 1,
 	    sizeof(OPTLIST), opts_cmp)) != NULL)
 		return (op);
-		
+
 	/*
 	 * Check to see if the name is the prefix of one (and only one)
 	 * option.  If so, return the option.
@@ -1096,7 +1096,7 @@ opts_search(const CHAR_T *name)
 	return (found);
 }
 
-/* 
+/*
  * opts_nomatch --
  *	Standard nomatch error message for options.
  *

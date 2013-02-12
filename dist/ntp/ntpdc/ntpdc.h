@@ -29,7 +29,7 @@
 
 /*
  * Arguments are returned in a struct - no
- * union space saving is attempted. 
+ * union space saving is attempted.
  */
 typedef struct {
 	u_char type;

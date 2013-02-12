@@ -126,7 +126,7 @@ static time_t thiszone;
 void
 usage(int only_version)
 {
-	printf("setkey @(#) %s (%s)\n", TOP_PACKAGE_STRING, TOP_PACKAGE_URL); 
+	printf("setkey @(#) %s (%s)\n", TOP_PACKAGE_STRING, TOP_PACKAGE_URL);
 	if (! only_version) {
 		printf("usage: setkey [-v" RK_OPTS "] file ...\n");
 		printf("       setkey [-nv" RK_OPTS "] -c\n");
@@ -301,7 +301,7 @@ stdin_loop()
 {
 	char line[1024], *semicolon, *comment;
 	size_t linelen = 0;
-	
+
 	memset (line, 0, sizeof(line));
 
 	parse_init();
@@ -602,14 +602,14 @@ postproc(msg, len)
 		break;
 
 	case SADB_X_SPDGET:
-		if (f_withports) 
+		if (f_withports)
 			pfkey_spdump_withports(msg);
 		else
 			pfkey_spdump(msg);
 		break;
 
 	case SADB_X_SPDDUMP:
-		if (f_withports) 
+		if (f_withports)
 			pfkey_spdump_withports(msg);
 		else
 			pfkey_spdump(msg);
@@ -623,9 +623,9 @@ postproc(msg, len)
 		break;
 #ifdef HAVE_PFKEY_POLICY_PRIORITY
 	case SADB_X_SPDADD:
-		if (last_msg_type == SADB_X_SPDADD && last_priority != 0 && 
+		if (last_msg_type == SADB_X_SPDADD && last_priority != 0 &&
 		    msg->sadb_msg_pid == getpid() && !priority_support_check) {
-			priority_support_check = 1;	
+			priority_support_check = 1;
 			if (!verifypriority(msg))
 				printf ("WARNING: Kernel does not support policy priorities\n");
 		}
@@ -665,7 +665,7 @@ verifypriority(m)
 	if (last_priority != xpl->sadb_x_policy_priority)
 		return 0;
 
-	return 1; 
+	return 1;
 }
 #endif
 

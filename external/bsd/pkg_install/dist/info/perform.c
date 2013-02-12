@@ -389,7 +389,7 @@ pkg_do(const char *pkg)
 
 	if (meta == NULL) {
 		warnx("invalid package `%s' skipped", pkg);
-		return 1;	
+		return 1;
 	}
 
 	/*
@@ -414,7 +414,7 @@ pkg_do(const char *pkg)
 		}
 	} else {
 		package_t plist;
-		
+
 		/* Read the contents list */
 		parse_plist(&plist, meta->meta_contents);
 

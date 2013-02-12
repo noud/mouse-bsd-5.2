@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 1984 through 2008, William LeFebvre
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  *     * Redistributions in binary form must reproduce the above
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- * 
+ *
  *     * Neither the name of William LeFebvre nor the names of other
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -102,7 +102,7 @@ struct top_proc
     double pcpu, wcpu;
     struct top_proc *next;
 };
-    
+
 
 /*=STATE IDENT STRINGS==================================================*/
 
@@ -153,7 +153,7 @@ static char fmt_header[] =
 "  PID X        THR PRI NICE  SIZE   RES STATE   TIME    CPU COMMAND";
 
 /* these are names given to allowed sorting orders -- first is default */
-char *ordernames[] = 
+char *ordernames[] =
 {"cpu", "size", "res", "time", "command", NULL};
 
 /* forward definitions for comparison functions */
@@ -170,7 +170,7 @@ int (*proc_compares[])() = {
     compare_time,
     compare_cmd,
     NULL };
-	
+
 /*=SYSTEM STATE INFO====================================================*/
 
 /* these are for calculating cpu state percentages */
@@ -214,7 +214,7 @@ skip_ws(const char *p)
     while (isspace(*p)) p++;
     return (char *)p;
 }
-    
+
 static inline char *
 skip_token(const char *p)
 {
@@ -308,7 +308,7 @@ free_proc(struct top_proc *proc)
     freelist = proc;
 }
 
- 
+
 int
 machine_init(struct statics *statics)
 
@@ -577,7 +577,7 @@ read_one_proc_stat(pid_t pid, struct top_proc *proc, struct process_select *sel)
     proc->uid = (uid_t)proc_owner((int)pid);
 
     /* parse out the status */
-    
+
     /* skip pid and locate command, which is in parentheses */
     if ((p = strchr(buffer, '(')) == NULL)
     {
@@ -608,7 +608,7 @@ read_one_proc_stat(pid_t pid, struct top_proc *proc, struct process_select *sel)
     case 'W': proc->state = 6; break;
     case '\0': return;
     }
-    
+
     proc->ppid = strtoul(p, &p, 10);		/* ppid */
     p = skip_token(p);				/* skip pgrp */
     p = skip_token(p);				/* skip session */
@@ -619,7 +619,7 @@ read_one_proc_stat(pid_t pid, struct top_proc *proc, struct process_select *sel)
     p = skip_token(p);				/* skip cmin flt */
     p = skip_token(p);				/* skip maj flt */
     p = skip_token(p);				/* skip cmaj flt */
-    
+
     proc->time = strtoul(p, &p, 10);		/* utime */
     proc->time += strtoul(p, &p, 10);		/* stime */
 
@@ -858,7 +858,7 @@ get_process_info(struct system_info *si,
 
     /* if requested, sort the "active" procs */
     if (si->p_active)
-	qsort(pactive, si->p_active, sizeof(struct top_proc *), 
+	qsort(pactive, si->p_active, sizeof(struct top_proc *),
 	      proc_compares[compare_index]);
 
     /* don't even pretend that the return value thing here isn't bogus */

@@ -13,7 +13,7 @@ Run <BtNetBSD$Dir>.PreBoot
 
 | Select the monitor definition file and screenmode
 | Uncomment one or both of these only if you intend to use a different
-| MDF or screen mode in NetBSD than is configured in RISC OS. 
+| MDF or screen mode in NetBSD than is configured in RISC OS.
 |Set NetBSD$MDF BootResources:Configure.Monitors.Acorn.AKF85
 |Set NetBSD$ScreenMode "X1024 Y768 C256"
 

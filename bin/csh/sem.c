@@ -61,7 +61,7 @@ static void chkclob(char *);
 void
 execute(struct command *t, int wtty, int *pipein, int *pipeout)
 {
-    static sigset_t csigset, ocsigset; 
+    static sigset_t csigset, ocsigset;
     static int nosigchld = 0, onosigchld = 0;
     volatile int wanttty = wtty;
     struct biltins * volatile bifunc;
@@ -437,7 +437,7 @@ execute(struct command *t, int wtty, int *pipein, int *pipeout)
     }
     /*
      * Fall through for all breaks from switch
-     * 
+     *
      * If there will be no more executions of this command, flush all file
      * descriptors. Places that turn on the F_REPEAT bit are responsible for
      * doing donefds after the last re-execution
@@ -475,7 +475,7 @@ vffree(int i)
  *
  * I don't know what is best to do. I think that Ambiguous is better
  * than restructuring the command vector, because the user can get
- * unexpected results. In any case, the command vector restructuring 
+ * unexpected results. In any case, the command vector restructuring
  * code is present and the user can choose it by setting noambiguous
  */
 static Char *

@@ -80,7 +80,7 @@ int             osd_command(void *dev, osd_args_t * args, OSD_OPS_MEM * mem);
 /*
  * SCSI Command Tests
  */
-int 
+int
 nop_out(uint64_t target, int lun, int length, int ping, const char *data)
 {
 	initiator_cmd_t cmd;
@@ -105,7 +105,7 @@ nop_out(uint64_t target, int lun, int length, int ping, const char *data)
 	return 0;
 }
 
-static int 
+static int
 inquiry(uint64_t target, uint32_t lun, uint32_t *device_type)
 {
 	uint8_t   data[36], cdb[16];
@@ -142,7 +142,7 @@ inquiry(uint64_t target, uint32_t lun, uint32_t *device_type)
 }
 
 
-int 
+int
 read_capacity(uint64_t target, uint32_t lun, uint32_t *max_lba, uint32_t *block_len)
 {
 	uint8_t   data[8], cdb[16];
@@ -197,7 +197,7 @@ read_capacity(uint64_t target, uint32_t lun, uint32_t *max_lba, uint32_t *block_
  */
 /* WRITE_6/READ_6 and WRITE_10/READ_10, respectively.  */
 
-int 
+int
 write_read_test(uint64_t target, uint32_t lun, int type)
 {
 	iscsi_scsi_cmd_args_t	args;
@@ -303,7 +303,7 @@ write_read_test(uint64_t target, uint32_t lun, int type)
  * WRITE_10|READ_10
  */
 
-int 
+int
 read_or_write(uint64_t target, uint32_t lun, uint32_t lba, uint32_t len,
 	      uint32_t block_len, uint8_t *data, int sg_len, int writing)
 {
@@ -351,7 +351,7 @@ read_or_write(uint64_t target, uint32_t lun, uint32_t lba, uint32_t len,
 	return 0;
 }
 
-int 
+int
 throughput_test(uint32_t target, uint32_t lun, uint32_t length, uint32_t request, uint32_t verbose, int writing, int sg_factor)
 {
 	uint32_t        max_lba, block_len;
@@ -446,7 +446,7 @@ done:	for (i = 0; i < sg_factor; i++) {
 	return 0;
 }
 
-int 
+int
 integrity_test(uint32_t target, uint32_t lun, uint32_t length, int sg_factor)
 {
 	uint32_t        max_lba, block_len;
@@ -549,7 +549,7 @@ done:
 	return 0;
 }
 
-int 
+int
 nop_test(uint32_t target, uint32_t lun, uint32_t iters)
 {
 	struct timeval  t_start, t_stop;
@@ -614,7 +614,7 @@ humanise(uint8_t op)
 /* the average latency.  <op> can be any of WRITE_10, READ_10,  */
 /* TEST_UNIT_READY, READ_CAPACITY or INQUIRY. */
 
-int 
+int
 latency_test(uint64_t target, uint32_t lun, uint8_t op, uint32_t iters)
 {
 	uint32_t        length, trans_len;
@@ -733,7 +733,7 @@ done:
  * READ_10.  Instead of specifying a data buffer in args.send_data and
  * arg.recv_data, we specify a scatter/gather list.  */
 
-int 
+int
 scatter_gather_test(uint64_t target, uint32_t lun, uint8_t op)
 {
 	uint32_t        length, trans_len;
@@ -874,7 +874,7 @@ done:
  * OSD Tests
  */
 
-static int 
+static int
 osd_tests(int target, int lun)
 {
 	uint32_t        GroupID;
@@ -939,7 +939,7 @@ osd_tests(int target, int lun)
 	return 0;
 }
 
-static int 
+static int
 disk_tests(int target, int lun)
 {
 	uint32_t        request_size;
@@ -1000,7 +1000,7 @@ disk_tests(int target, int lun)
 	return 0;
 }
 
-int 
+int
 test_all(int target, int lun)
 {
 	uint32_t        device_type = 0;
@@ -1072,7 +1072,7 @@ test_all(int target, int lun)
 	return 0;
 }
 
-int 
+int
 ii_test_all(void)
 {
 	uint32_t        device_type = 0;
@@ -1146,7 +1146,7 @@ ii_test_all(void)
 	return 0;
 }
 
-int 
+int
 osd_command(void *dev, osd_args_t * args, OSD_OPS_MEM * m)
 {
 	initiator_cmd_t initiator_cmd;

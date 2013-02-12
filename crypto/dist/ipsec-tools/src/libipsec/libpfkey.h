@@ -66,7 +66,7 @@ typedef caddr_t ipsec_policy_t;
 
 struct pfkey_send_sa_args {
 	int 		so;			/* socket */
-	u_int		type;			
+	u_int		type;
 	u_int 		satype;
 	u_int		mode;
 	struct sockaddr *src;			/* IP src address for SA */
@@ -118,7 +118,7 @@ u_int pfkey_get_softrate __P((u_int));
 int pfkey_send_getspi __P((int, u_int, u_int, struct sockaddr *,
 	struct sockaddr *, u_int32_t, u_int32_t, u_int32_t, u_int32_t));
 int pfkey_send_update2 __P((struct pfkey_send_sa_args *));
-int pfkey_send_add2 __P((struct pfkey_send_sa_args *)); 
+int pfkey_send_add2 __P((struct pfkey_send_sa_args *));
 int pfkey_send_delete __P((int, u_int, u_int,
 	struct sockaddr *, struct sockaddr *, u_int32_t));
 int pfkey_send_delete_all __P((int, u_int, u_int,
@@ -161,8 +161,8 @@ int pfkey_send __P((int, struct sadb_msg *, int));
 int pfkey_align __P((struct sadb_msg *, caddr_t *));
 int pfkey_check __P((caddr_t *));
 
-/* 
- * Deprecated, available for backward compatibility with third party 
+/*
+ * Deprecated, available for backward compatibility with third party
  * libipsec users. Please use pfkey_send_update2 and pfkey_send_add2 instead
  */
 int pfkey_send_update __P((int, u_int, u_int, struct sockaddr *,

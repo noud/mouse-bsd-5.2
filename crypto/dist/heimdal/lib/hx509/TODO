@@ -49,7 +49,7 @@ certificate request
 	generate CRMF request
 		pk-init KDC/client
 		web server/client
-		jabber server/client 
+		jabber server/client
 		email
 
 

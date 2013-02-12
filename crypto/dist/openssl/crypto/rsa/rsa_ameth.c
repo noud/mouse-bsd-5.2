@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -311,7 +311,7 @@ static int rsa_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
 	}
 
 
-const EVP_PKEY_ASN1_METHOD rsa_asn1_meths[] = 
+const EVP_PKEY_ASN1_METHOD rsa_asn1_meths[] =
 	{
 		{
 		EVP_PKEY_RSA,

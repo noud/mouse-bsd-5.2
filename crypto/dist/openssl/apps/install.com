@@ -38,7 +38,7 @@ $	VEXE_DIR := [-.VAX.EXE.APPS]
 $	AEXE_DIR := [-.AXP.EXE.APPS]
 $
 $	I = 0
-$ LOOP_EXE: 
+$ LOOP_EXE:
 $	E = F$EDIT(F$ELEMENT(I, ",", EXE),"TRIM")
 $	I = I + 1
 $	IF E .EQS. "," THEN GOTO LOOP_EXE_END

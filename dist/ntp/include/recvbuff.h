@@ -33,8 +33,8 @@
  */
 extern HANDLE	get_recv_buff_event P((void));
 #else
-# define RECV_BLOCK_IO()	
-# define RECV_UNBLOCK_IO()	
+# define RECV_BLOCK_IO()
+# define RECV_UNBLOCK_IO()
 #endif
 
 
@@ -47,7 +47,7 @@ extern HANDLE	get_recv_buff_event P((void));
  *  the maximum length NTP packet contains the NTP header, one Autokey
  *  request, one Autokey response and the MAC. Assuming certificates don't
  *  get too big, the maximum packet length is set arbitrarily at 1000.
- */   
+ */
 #define	RX_BUFF_SIZE	1000		/* hail Mary */
 
 
@@ -94,7 +94,7 @@ extern	void	freerecvbuf P((struct recvbuf *));
  *  read can directly place data into the buffer
  *
  *  The buffer is removed from the free list. Make sure
- *  you put it back with freerecvbuf() or 
+ *  you put it back with freerecvbuf() or
  */
 extern	struct recvbuf *get_free_recv_buffer P((void)); /* signal safe - no malloc */
 extern	struct recvbuf *get_free_recv_buffer_alloc P((void)); /* signal unsafe - may malloc */
@@ -106,11 +106,11 @@ extern	void	add_full_recv_buffer	 P((struct recvbuf *));
 /*extern	void	process_recv_buffers	 P((void)); */
 
 /* number of recvbufs on freelist */
-extern u_long free_recvbuffs P((void));		
-extern u_long full_recvbuffs P((void));		
+extern u_long free_recvbuffs P((void));
+extern u_long full_recvbuffs P((void));
 extern u_long total_recvbuffs P((void));
 extern u_long lowater_additions P((void));
-		
+
 /*  Returns the next buffer in the full list.
  *
  */

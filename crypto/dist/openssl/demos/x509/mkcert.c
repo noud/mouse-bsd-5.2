@@ -64,12 +64,12 @@ int mkcert(X509 **x509p, EVP_PKEY **pkeyp, int bits, int serial, int days)
 	EVP_PKEY *pk;
 	RSA *rsa;
 	X509_NAME *name=NULL;
-	
+
 	if ((pkeyp == NULL) || (*pkeyp == NULL))
 		{
 		if ((pk=EVP_PKEY_new()) == NULL)
 			{
-			abort(); 
+			abort();
 			return(0);
 			}
 		}
@@ -135,7 +135,7 @@ int mkcert(X509 **x509p, EVP_PKEY **pkeyp, int bits, int serial, int days)
 		add_ext(x, nid, "example comment alias");
 	}
 #endif
-	
+
 	if (!X509_sign(x,pk,EVP_md5()))
 		goto err;
 
@@ -169,4 +169,4 @@ int add_ext(X509 *cert, int nid, char *value)
 	X509_EXTENSION_free(ex);
 	return 1;
 	}
-	
+

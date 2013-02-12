@@ -11,8 +11,8 @@ The KDC will also have kaserver emulation and be able to handle
 AFS-clients that use @code{klog}.
 
 @menu
-* Principal conversion issues::  
-* Converting a version 4 database::  
+* Principal conversion issues::
+* Converting a version 4 database::
 * kaserver::
 @end menu
 
@@ -152,7 +152,7 @@ in the @samp{v4_instance_convert} section.
 
 Instead of doing this you can use DNS to convert instances. This is not
 a solution without problems, but it is probably easier than adding lots
-of static host entries. 
+of static host entries.
 
 To enable DNS lookup you should turn on @samp{v4_instance_resolve} in
 the @samp{[libdefaults]} section.

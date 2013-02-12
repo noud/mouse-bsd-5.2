@@ -281,27 +281,27 @@ or later.
 
 Sendmail 8.14 Milter features supported at this time:
 
-- NR_CONN, NR_HELO, NR_MAIL, NR_RCPT, NR_DATA, NR_UNKN, NR_HDR, 
+- NR_CONN, NR_HELO, NR_MAIL, NR_RCPT, NR_DATA, NR_UNKN, NR_HDR,
   NR_EOH, NR_BODY: The filter can tell Postfix that it won't reply
-  to some of the SMTP events that Postfix sends. This makes the      
+  to some of the SMTP events that Postfix sends. This makes the
   protocol less chatty and improves performance.
 
-- SKIP: The filter can tell Postfix to skip sending the rest of    
+- SKIP: The filter can tell Postfix to skip sending the rest of
   the message body, which also improves performance.
 
-- HDR_LEADSPC: The filter can request that Postfix does not delete 
-  the first space character between header name and header value       
+- HDR_LEADSPC: The filter can request that Postfix does not delete
+  the first space character between header name and header value
   when sending a header to the filter, and that Postfix does not
-  insert a space character between header name and header value 
+  insert a space character between header name and header value
   when receiving a header from the filter.  This fixes a limitation
   in the old Milter protocol that can break DKIM and DK signatures.
 
 - SETSYMLIST: The filter can override one or more of the main.cf
   milter_xxx_macros parameter settings.
- 
+
 Sendmail 8.14 Milter features not supported at this time:
 
-- RCPT_REJ: report rejected recipients to the mail filter. 
+- RCPT_REJ: report rejected recipients to the mail filter.
 
 - CHGFROM: replace sender, with optional ESMTP command parameters.
 

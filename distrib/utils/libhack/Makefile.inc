@@ -14,7 +14,7 @@
 #			The following extra objects are available:
 #			gethost.o	cut-down gethostby{name,addr}()
 #					that only supports /etc/hosts
-#			
+#
 
 CPPFLAGS+=	-DSMALL
 HACKOBJS+=	getcap.o getgrent.o getnet.o getnetgr.o getpwent.o \

@@ -194,7 +194,7 @@ static	Widget	create_text_ruler_dialog( parent, title )
     set_ruler_text( 0, 0, &h, &w, &asc );
 
     /* keep this global, we might destroy it later */
-    db_ruler = XtVaCreateManagedWidget( "Ruler", 
+    db_ruler = XtVaCreateManagedWidget( "Ruler",
 					xmDrawingAreaWidgetClass,
 					box,
 					XmNheight,	h,

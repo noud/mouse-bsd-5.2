@@ -52,8 +52,8 @@ ENGINE_load_cryptodev(void)
 	return;
 }
 
-#else 
- 
+#else
+
 #include <sys/types.h>
 #include <crypto/cryptodev.h>
 #include <sys/ioctl.h>

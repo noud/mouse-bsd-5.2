@@ -43,7 +43,7 @@ static int	 vs_join __P((SCR *, SCR **, jdir_t *));
  */
 int
 vs_split(SCR *sp, SCR *new, int ccl)
-	              
+
 	        		/* Colon-command line split. */
 {
 	GS *gp;
@@ -839,21 +839,21 @@ vs_resize(SCR *sp, long int count, adj_t adj)
 	}
 
 	/* Find first overlapping screen */
-	for (next = sp->q.cqe_next; 
-	     next != (void *)&wp->scrq && 
-	     (next->coff >= sp->coff + sp->cols || 
-	      next->coff + next->cols <= sp->coff); 
+	for (next = sp->q.cqe_next;
+	     next != (void *)&wp->scrq &&
+	     (next->coff >= sp->coff + sp->cols ||
+	      next->coff + next->cols <= sp->coff);
 	     next = next->q.cqe_next);
 	/* See if we can use it */
-	if (next != (void *)&wp->scrq && 
+	if (next != (void *)&wp->scrq &&
 	    (sp->coff != next->coff || sp->cols != next->cols))
 		next = (void *)&wp->scrq;
-	for (prev = sp->q.cqe_prev; 
-	     prev != (void *)&wp->scrq && 
-	     (prev->coff >= sp->coff + sp->cols || 
-	      prev->coff + prev->cols <= sp->coff); 
+	for (prev = sp->q.cqe_prev;
+	     prev != (void *)&wp->scrq &&
+	     (prev->coff >= sp->coff + sp->cols ||
+	      prev->coff + prev->cols <= sp->coff);
 	     prev = prev->q.cqe_prev);
-	if (prev != (void *)&wp->scrq && 
+	if (prev != (void *)&wp->scrq &&
 	    (sp->coff != prev->coff || sp->cols != prev->cols))
 		prev = (void *)&wp->scrq;
 

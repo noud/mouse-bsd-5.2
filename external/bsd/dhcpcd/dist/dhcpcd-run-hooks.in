@@ -1,5 +1,5 @@
 #!/bin/sh
-# dhcpcd client configuration script 
+# dhcpcd client configuration script
 
 # Handy variables and functions for our hooks to use
 from=from

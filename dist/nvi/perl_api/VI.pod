@@ -223,7 +223,7 @@ Returns a tied array representing the lines of the screen.
 
     $tagq->Add($filename, $searchstring, $msg)
 
-Adds a tag to the tag queue. 
+Adds a tag to the tag queue.
 The $searchstring argument is (line)number or
 a string representing a regular expression.
 

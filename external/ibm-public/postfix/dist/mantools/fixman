@@ -34,7 +34,7 @@ die "Usage: $0 [-fv] protofile [sourcefile...]
 
 # Save one definition.
 
-sub save_text 
+sub save_text
 {
     if ($category eq "PARAM") {
 	$text =~ s/\.\s.*/.\n/s unless $opt_f;
@@ -43,12 +43,12 @@ sub save_text
 	$defval_text{$name} = $defval;
         if ($opt_v) {
             printf "saving entry %s %.20s..\n", $name, $text;
-        } 
+        }
     } elsif ($category eq "CLASS") {
         $class_text{$name} = $text;
         if ($opt_v) {
             printf "saving class %s %.20s..\n", $name, $text;
-        } 
+        }
     } else {
         die "Unknown category: $category. Need PARAM or CLASS.\n";
     }
@@ -155,7 +155,7 @@ while(<POSTCONF>) {
 	$defval =~ s/"/'/g;
 	$text = "";
 	next;
-    } 
+    }
 
     # Accumulate the text in the class or parameter definition.
 

@@ -7,8 +7,8 @@
 #
 # If the console is marked insecure, single-user requires
 # the root password.
-console	"/usr/libexec/getty Pc"		vt220	on secure 
-constty	"/usr/libexec/getty Pc"		vt220	off secure 
+console	"/usr/libexec/getty Pc"		vt220	on secure
+constty	"/usr/libexec/getty Pc"		vt220	off secure
 ttye0	"/usr/libexec/getty Pc"		vt220	off secure 	# custom chips
 ttye1	"/usr/libexec/getty Pc"		vt220	off secure 	# retina
 ttye2	"/usr/libexec/getty Pc"		vt220	off secure 	# retina

@@ -3,7 +3,7 @@
 #if !defined _NTP_IO_H
 #define _NTP_IO_H
 /*
- * POSIX says use <fnct.h> to get O_* symbols and 
+ * POSIX says use <fnct.h> to get O_* symbols and
  * SEEK_SET symbol form <unistd.h>.
  */
 #ifdef HAVE_CONFIG_H

@@ -332,7 +332,7 @@ int	size;
  * don't send a query to every one, but increase the number sent linearly
  * to match the number of resends. This increase only occurs if there are
  * multiple nameserver entries in the resolv.conf file.
- * The return value is the number of messages successfully sent to 
+ * The return value is the number of messages successfully sent to
  * nameservers or -1 if no successful sends.
  */
 static	int	ar_send_res_msg(msg, len, rcount)

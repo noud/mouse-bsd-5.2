@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -57,7 +57,7 @@
  */
 /* ====================================================================
  * Copyright 2002 Sun Microsystems, Inc. ALL RIGHTS RESERVED.
- * Portions originally developed by SUN MICROSYSTEMS, INC., and 
+ * Portions originally developed by SUN MICROSYSTEMS, INC., and
  * contributed to the OpenSSL project.
  */
 
@@ -77,11 +77,11 @@ EC_KEY *EC_KEY_new(void)
 		return(NULL);
 		}
 
-	ret->version = 1;	
+	ret->version = 1;
 	ret->group   = NULL;
 	ret->pub_key = NULL;
 	ret->priv_key= NULL;
-	ret->enc_flag= 0; 
+	ret->enc_flag= 0;
 	ret->conv_form = POINT_CONVERSION_UNCOMPRESSED;
 	ret->references= 1;
 	ret->method_data = NULL;
@@ -121,7 +121,7 @@ void EC_KEY_free(EC_KEY *r)
 		}
 #endif
 
-	if (r->group    != NULL) 
+	if (r->group    != NULL)
 		EC_GROUP_free(r->group);
 	if (r->pub_key  != NULL)
 		EC_POINT_free(r->pub_key);
@@ -186,7 +186,7 @@ EC_KEY *EC_KEY_copy(EC_KEY *dest, const EC_KEY *src)
 	for (d = src->method_data; d != NULL; d = d->next)
 		{
 		void *t = d->dup_func(d->data);
-		
+
 		if (t == NULL)
 			return 0;
 		if (!EC_EX_DATA_set_data(&dest->method_data, t, d->dup_func, d->free_func, d->clear_free_func))
@@ -231,7 +231,7 @@ int EC_KEY_up_ref(EC_KEY *r)
 	}
 
 int EC_KEY_generate_key(EC_KEY *eckey)
-	{	
+	{
 	int	ok = 0;
 	BN_CTX	*ctx = NULL;
 	BIGNUM	*priv_key = NULL, *order = NULL;
@@ -280,7 +280,7 @@ int EC_KEY_generate_key(EC_KEY *eckey)
 
 	ok=1;
 
-err:	
+err:
 	if (order)
 		BN_free(order);
 	if (pub_key  != NULL && eckey->pub_key  == NULL)
@@ -304,7 +304,7 @@ int EC_KEY_check_key(const EC_KEY *eckey)
 		ECerr(EC_F_EC_KEY_CHECK_KEY, ERR_R_PASSED_NULL_PARAMETER);
 		return 0;
 		}
-	
+
 	if ((ctx = BN_CTX_new()) == NULL)
 		goto err;
 	if ((order = BN_new()) == NULL)
@@ -339,8 +339,8 @@ int EC_KEY_check_key(const EC_KEY *eckey)
 		ECerr(EC_F_EC_KEY_CHECK_KEY, EC_R_WRONG_ORDER);
 		goto err;
 		}
-	/* in case the priv_key is present : 
-	 * check if generator * priv_key == pub_key 
+	/* in case the priv_key is present :
+	 * check if generator * priv_key == pub_key
 	 */
 	if (eckey->priv_key)
 		{
@@ -355,7 +355,7 @@ int EC_KEY_check_key(const EC_KEY *eckey)
 			ECerr(EC_F_EC_KEY_CHECK_KEY, ERR_R_EC_LIB);
 			goto err;
 			}
-		if (EC_POINT_cmp(eckey->group, point, eckey->pub_key, 
+		if (EC_POINT_cmp(eckey->group, point, eckey->pub_key,
 			ctx) != 0)
 			{
 			ECerr(EC_F_EC_KEY_CHECK_KEY, EC_R_INVALID_PRIVATE_KEY);

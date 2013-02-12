@@ -28,7 +28,7 @@ ntptrap:
 
 	usage:
 	  ntptrap [-n] [-p <port>] [-l <debug-output>] servers...
-	
+
 	-n:		do not send set_trap requests
 
 	port:		port to listen for responses
@@ -53,7 +53,7 @@ ntploopstat:
 
 	usage:
 	  ntploopstat [-d<delay>] [-t<timeout>] [-l <logfile>] [-v] [ntpserver]
-	
+
 	delay:		number of seconds to wait between samples
 			default: 60 seconds
 	timeout:	number of seconds to wait for reply
@@ -69,7 +69,7 @@ ntploopstat:
 	the format of the files generated is identical to the format used by
 	xntpd with the loopstats file:
 		MJD <seconds since midnight UTC> offset frequency compliance
-	
+
 	if a timeout occurs the next sample is tried after delay/2 seconds
 
 	The script will terminate after MAX_FAIL (currently 60)
@@ -80,7 +80,7 @@ ntploopstat:
 		- error on select call
 		- error on recv call
 		- short packet received
-		- bad packet 
+		- bad packet
 		- error on open for logfile
 
 ntploopwatch:
@@ -91,7 +91,7 @@ ntploopwatch:
 	values, that have been preprocessed and analysed by this script.
 
 	It can either be called to produce a printout of specific data set or
-	used to continously monitor the values. Monitoring is achieved by 
+	used to continously monitor the values. Monitoring is achieved by
 	periodically reprocessing the logfiles, which are updated regularly
 	either by a running ntploopstat process or by the running xntpd.
 
@@ -103,7 +103,7 @@ ntploopwatch:
 			  -P<printer> [-s<samples>]
 				      [-S <start-time>] [-E <end-time>]
 				      [-O <MaxOffs>] [-o <MinOffs>]
-	
+
 	level:		level of verbosity for debugging
 	config-file:	file to read configurable settings from
 			On each iteration it is checked and reread
@@ -111,7 +111,7 @@ ntploopwatch:
 			default: loopwatch.config
 	working-dir:	specify working directory for process, affects
 			interpretation of relative file names
-	
+
 	All other flags are only useful with printing plots, as otherwise
 	command line values would be replaced by settings from the config file.
 
@@ -129,7 +129,7 @@ ntploopwatch:
 			if both start-time and end-time are specified
 			a given samples value is ignored
 	MaxOffs:
-	MinOffs:	restrict value range 
+	MinOffs:	restrict value range
 
 loopwatch.config.SAMPLE:
 	sample config file for ntploopwatch

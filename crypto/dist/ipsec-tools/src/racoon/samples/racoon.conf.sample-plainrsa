@@ -3,7 +3,7 @@
 #                 http://www.logix.cz/michal
 
 # This file shows the usage of PlainRSA keys, which are widely used
-# by FreeSWAN/OpenSwan/StrongSwan/*Swan users. This functionality is 
+# by FreeSWAN/OpenSwan/StrongSwan/*Swan users. This functionality is
 # here mainly for those who are moving from the *Swan world to Racoon.
 
 # Racoon will look for a keyfile in this directory.

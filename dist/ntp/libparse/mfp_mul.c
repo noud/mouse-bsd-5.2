@@ -70,7 +70,7 @@ mfp_mul(
   u_long b[4];			/* operand b */
   u_long c[5];			/* result c - 5 items for performance - see below */
   u_long carry;
-  
+
   int neg = 0;
 
   if (a_i < 0)			/* examine sign situation */
@@ -84,12 +84,12 @@ mfp_mul(
       neg = !neg;
       M_NEG(b_i, b_f);
     }
-  
+
   a[0] = a_f & LOW_MASK;	/* prepare a operand */
   a[1] = (a_f & HIGH_MASK) >> (FRACTION_PREC/2);
   a[2] = a_i & LOW_MASK;
   a[3] = (a_i & HIGH_MASK) >> (FRACTION_PREC/2);
-  
+
   b[0] = b_f & LOW_MASK;	/* prepare b operand */
   b[1] = (b_f & HIGH_MASK) >> (FRACTION_PREC/2);
   b[2] = b_i & LOW_MASK;
@@ -153,7 +153,7 @@ mfp_mul(
       i = c[2];
       f = c[1];
     }
-  
+
   if (neg)			/* recover sign */
     {
       M_NEG(i, f);

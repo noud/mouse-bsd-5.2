@@ -5,13 +5,13 @@
 	  with arguments.  - manual page cross references are done using
 	  the macro `.Xr', not the macro `.Nm' (used for command names
 	  instead).
-	
+
 	From Igor Sobrado.
-	
+
 2006-10-07  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* Makefile.am: Add man_MANS to EXTRA_DIST
-	
+
 2006-01-03  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afslog.1: Document options to allow select principal or
@@ -19,7 +19,7 @@
 
 	* afslog.c: Add options to allow select principal or credential
 	cache when doing afslog.
-	
+
 2005-02-12  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* Makefile.am: man_MANS += pagsh.1
@@ -34,12 +34,12 @@
 
 	* afslog.c: use negative string help string for arg_negative_flag
 	Pointed out by Harald Barth
-	
+
 2004-07-27  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* pagsh.c: use setprogname, if we stripped off -c, try use the
 	fallback code
-	
+
 2003-10-14  Johan Danielsson  <joda@pdc.kth.se>
 
 	* pagsh.c: mkstemp formats must end in exactly six X's
@@ -50,25 +50,25 @@
 	for error printing
 
 	* pagsh.c: unconditionally set KRBTKFILE
-	
+
 2003-04-23  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afslog.c (log_func): drop the error number
-	
+
 2003-04-14  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* afslog.c: set kafs log function if verbose is turned on
-	
+
 2003-03-18  Love Hörnquist Åstrand  <lha@it.su.se>
-	
+
 	* Makefile.am (LDADD): use LIB_kafs
-	
+
 	* afslog.1: --no-v4, --no-v5
-	
+
 	* Makefile.am: always build afsutils now
-	
+
 	* afslog.c: make build without KRB4
-	
+
 2002-11-26  Johan Danielsson  <joda@pdc.kth.se>
 
 	* afslog.c: remove plural form in help string

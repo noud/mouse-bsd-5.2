@@ -232,7 +232,7 @@ cl_pfmap(SCR *sp, seq_t stype, CHAR_T *from, size_t flen, CHAR_T *to, size_t tle
 	const CHAR_T *wp;
 	size_t wlen;
 
-	(void)snprintf(name, sizeof(name), "kf%d", 
+	(void)snprintf(name, sizeof(name), "kf%d",
 			(int)STRTOL(from+1,NULL,10));
 	if ((p = tigetstr(name)) == NULL ||
 	    p == (char *)-1 || strlen(p) == 0)
@@ -243,7 +243,7 @@ cl_pfmap(SCR *sp, seq_t stype, CHAR_T *from, size_t flen, CHAR_T *to, size_t tle
 	}
 
 	nlen = SPRINTF(mykeyname,
-	    SIZE(mykeyname), L("function key %d"), 
+	    SIZE(mykeyname), L("function key %d"),
 			(int)STRTOL(from+1,NULL,10));
 	CHAR2INT(sp, p, strlen(p), wp, wlen);
 	MEMCPYW(ts, wp, wlen);

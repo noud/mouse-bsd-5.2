@@ -1,6 +1,6 @@
 # Id: Makefile.in,v 1.1 2008/02/15 01:47:15 marka Exp
 CC=@CC@
-CFLAGS=@CFLAGS@ 
+CFLAGS=@CFLAGS@
 LIBS=@LIBS@
 DESTDIR=@prefix@
 BINDIR=@prefix@/bin
@@ -18,7 +18,7 @@ query-loc: $(OBJS)
 	$(CC) $(CFLAGS) -c $<
 
 clean:
-	rm -f *.o query-loc *~ 
+	rm -f *.o query-loc *~
 
 distclean: clean
 	rm -f config.h config.cache config.log config.status Makefile

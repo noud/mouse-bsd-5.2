@@ -29,7 +29,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 /* INTERMEDIATE CODE GENERATION FOR S C JOHNSON C COMPILERS */
@@ -404,7 +404,7 @@ putx(bigptr q)
 			case OPNEG:
 				if( ISCOMPLEX(q->vtype) )
 					p = putcxop(q);
-				else	
+				else
 					goto putopp;
 				break;
 
@@ -461,7 +461,7 @@ putx(bigptr q)
 				break;
 
 			case OPCOMMA:
-				for (x1 = q; x1->b_expr.opcode == OPCOMMA; 
+				for (x1 = q; x1->b_expr.opcode == OPCOMMA;
 				    x1 = x1->b_expr.leftp)
 					putexpr(x1->b_expr.rightp);
 				p = putx(x1);
@@ -571,7 +571,7 @@ putforce(int t, bigptr p)
 
 	p = mkconv(t, fixtype(p));
 	p1 = putx(p);
-	p1 = mkunode(FORCE, p1, 0, 
+	p1 = mkunode(FORCE, p1, 0,
 		(t==TYSHORT ? SHORT : (t==TYLONG ? LONG : LDOUBLE)));
 	sendp2(p1);
 }
@@ -607,7 +607,7 @@ putpower(bigptr p)
 		t2 = fmktemp(type, NULL);
 		p3 = putassign(cpexpr(t2), cpexpr(t1));
 		sendp2(p3);
-	
+
 		for(k>>=1 ; k>1 ; k>>=1) {
 			p3 = putassign(cpexpr(t1),
 			    mkexpr(OPSTAR, cpexpr(t1), cpexpr(t1)));
@@ -1276,7 +1276,7 @@ putmnmx(struct bigblock *p)
 	ckfree(p);
 
 	/*
-	 * Store first value in a temporary, then compare it with 
+	 * Store first value in a temporary, then compare it with
 	 * each following value and save that if needed.
 	 */
 	tp = fmktemp(type, NULL);
@@ -1286,7 +1286,7 @@ putmnmx(struct bigblock *p)
 		n1 = putx(cpexpr(tp));
 		n2 = putx(cpexpr(p1->chain.datap));
 		lab = newlabel();
-		sendp2(mkbinode(CBRANCH, mkbinode(op, n1, n2, INT), 
+		sendp2(mkbinode(CBRANCH, mkbinode(op, n1, n2, INT),
 		    mklnode(ICON, lab, 0, INT), INT));
 		sendp2(putassign(cpexpr(tp), p1->chain.datap));
 		putlabel(lab);

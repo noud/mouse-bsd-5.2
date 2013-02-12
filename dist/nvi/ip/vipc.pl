@@ -1,5 +1,5 @@
 #	@(#)vipc.pl	10.1 (Berkeley) 6/8/95
- 
+
 if (/^\/\* (VI_[0-9A-Z_]*)/) {
 	$cmd = $1;
 	$name = lc $1;

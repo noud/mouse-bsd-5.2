@@ -76,12 +76,12 @@ __vi_cursor_recover(dbenv, dbtp, lsnp, op, info)
 	if (sp->state.undo == UNDO_SETLINE) {
 		/* Why the check for ep->l_cur ? (copied from log.c)
 		 */
-		ret = (argp->lno != sp->lno || 
+		ret = (argp->lno != sp->lno ||
 		    (argp->opcode == LOG_CURSOR_INIT && sp->ep->l_cur == 1))
 			  ? LOG_CURSOR_HIT : 0;
 	}
 	else {
-		ret = argp->opcode == 
+		ret = argp->opcode ==
 			(DB_UNDO(op) ? LOG_CURSOR_INIT : LOG_CURSOR_END)
 			  ? LOG_CURSOR_HIT : 0;
 		if (ret) {
@@ -206,7 +206,7 @@ __vi_log_dispatch(DB_ENV *dbenv, DBT *data, DB_LSN *lsn, db_recops ops)
 	return dbenv->dtab[rectype](dbenv, data, lsn, ops, NULL);
 }
 
-static int 
+static int
 vi_log_get(SCR *sp, DB_LOGC *logc, DBT *data, u_int32_t which)
 {
 	size_t nlen;
@@ -257,7 +257,7 @@ __vi_log_traverse(SCR *sp, undo_t undo, MARK *rp)
 
 	sp->state.undo = undo;
 	ep->env->app_private = sp;
-	if ((sp->db_error = ep->env->log_cursor(ep->env, &logc, 0)) 
+	if ((sp->db_error = ep->env->log_cursor(ep->env, &logc, 0))
 		    != 0) {
 		msgq(sp, M_DBERR, "env->log_cursor");
 		return (1);
@@ -284,7 +284,7 @@ __vi_log_traverse(SCR *sp, undo_t undo, MARK *rp)
 
 		if (vi_log_get(sp, logc, &data, which))
 			return 1;
-		if (undo == UNDO_SETLINE && 
+		if (undo == UNDO_SETLINE &&
 		    log_compare(&ep->lsn_cur, &ep->lsn_first) <= 0) {
 			/* Move to previous record without dispatching. */
 			undo = UNDO_BACKWARD;

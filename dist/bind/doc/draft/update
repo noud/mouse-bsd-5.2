@@ -28,9 +28,9 @@ do
 			continue;
 		fi
 	fi
-	if fetch "http://www.ietf.org/internet-drafts/$i" 
+	if fetch "http://www.ietf.org/internet-drafts/$i"
 	then
-		cvs add "$i" 
+		cvs add "$i"
 		if test "X$old" != "X$pat"
 		then
 			rm $old

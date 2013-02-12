@@ -729,7 +729,7 @@ environments.  Specify "home_mailbox = Maildir/", or specify
 required to turn on maildir delivery.
 
 - Incremental updates of aliases and maps. Specify "postmap -i
-mapname" and it will read new entries from stdin. 
+mapname" and it will read new entries from stdin.
 
 - Newaliases will now update more than one alias database.
 Specify the names with the main.cf "alias_database" parameter.

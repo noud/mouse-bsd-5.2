@@ -77,7 +77,7 @@ slapindex( int argc, char **argv )
 			progname );
 		exit( EXIT_FAILURE );
 	}
-	
+
 	for ( id = be->be_entry_first( be );
 		id != NOID;
 		id = be->be_entry_next( be ) )

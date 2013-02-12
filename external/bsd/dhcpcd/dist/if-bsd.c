@@ -1,4 +1,4 @@
-/* 
+/*
  * dhcpcd - DHCP client daemon
  * Copyright (c) 2006-2009 Roy Marples <roy@marples.name>
  * All rights reserved
@@ -172,7 +172,7 @@ if_route(const struct interface *iface, const struct in_addr *dest,
 		struct sockaddr_dl sdl;
 		struct sockaddr_storage ss;
 	} su;
-	struct rtm 
+	struct rtm
 	{
 		struct rt_msghdr hdr;
 		char buffer[sizeof(su) * 4];

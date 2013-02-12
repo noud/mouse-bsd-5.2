@@ -48,7 +48,7 @@ static int
 alock_grab_lock ( int fd, int slot )
 {
 	int res;
-	
+
 #if defined( HAVE_LOCKF )
 	res = lseek (fd, (off_t) (ALOCK_SLOT_SIZE * slot), SEEK_SET);
 	if (res == -1) return -1;
@@ -89,7 +89,7 @@ static int
 alock_release_lock ( int fd, int slot )
 {
 	int res;
-	
+
 #if defined( HAVE_LOCKF )
 	res = lseek (fd, (off_t) (ALOCK_SLOT_SIZE * slot), SEEK_SET);
 	if (res == -1) return -1;
@@ -129,7 +129,7 @@ alock_test_lock ( int fd, int slot )
 
 	res = lockf (fd, F_TEST, (off_t) ALOCK_SLOT_SIZE);
 	if (res == -1) {
-		if (errno == EACCES || errno == EAGAIN) { 
+		if (errno == EACCES || errno == EAGAIN) {
 			return ALOCK_LOCKED;
 		} else {
 			return -1;
@@ -163,7 +163,7 @@ alock_test_lock ( int fd, int slot )
 #else
 #   error alock needs lockf, fcntl, or _locking
 #endif
-	
+
 	return 0;
 }
 
@@ -211,15 +211,15 @@ alock_read_slot ( alock_info_t * info,
 	assert (slot_data != NULL);
 	assert (info->al_slot > 0);
 
-	res = lseek (info->al_fd, 
-		     (off_t) (ALOCK_SLOT_SIZE * info->al_slot), 
+	res = lseek (info->al_fd,
+		     (off_t) (ALOCK_SLOT_SIZE * info->al_slot),
 		     SEEK_SET);
 	if (res == -1) return -1;
 
 	size_total = 0;
 	while (size_total < ALOCK_SLOT_SIZE) {
-		size = read (info->al_fd, 
-			     slotbuf + size_total, 
+		size = read (info->al_fd,
+			     slotbuf + size_total,
 			     ALOCK_SLOT_SIZE - size_total);
 		if (size == 0) return -1;
 		if (size < 0) {
@@ -229,7 +229,7 @@ alock_read_slot ( alock_info_t * info,
 			size_total += size;
 		}
 	}
-	
+
 	if (alock_read_iattr (slotbuf) != ALOCK_MAGIC) {
 		return -1;
 	}
@@ -257,7 +257,7 @@ alock_write_slot ( alock_info_t * info,
 	assert (info->al_slot > 0);
 
 	(void) memset ((void *) slotbuf, 0, ALOCK_SLOT_SIZE);
-	
+
 	alock_write_iattr (slotbuf,    ALOCK_MAGIC);
 	assert (alock_read_iattr (slotbuf) == ALOCK_MAGIC);
 	alock_write_iattr (slotbuf+8,  slot_data->al_lock);
@@ -268,15 +268,15 @@ alock_write_slot ( alock_info_t * info,
 		strncpy ((char *)slotbuf+32, slot_data->al_appname, ALOCK_MAX_APPNAME-1);
 	slotbuf[ALOCK_SLOT_SIZE-1] = '\0';
 
-	res = lseek (info->al_fd, 
+	res = lseek (info->al_fd,
 		     (off_t) (ALOCK_SLOT_SIZE * info->al_slot),
 		     SEEK_SET);
 	if (res == -1) return -1;
 
 	size_total = 0;
 	while (size_total < ALOCK_SLOT_SIZE) {
-		size = write (info->al_fd, 
-			      slotbuf + size_total, 
+		size = write (info->al_fd,
+			      slotbuf + size_total,
 			      ALOCK_SLOT_SIZE - size_total);
 		if (size == 0) return -1;
 		if (size < 0) {
@@ -286,7 +286,7 @@ alock_write_slot ( alock_info_t * info,
 			size_total += size;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -298,7 +298,7 @@ alock_query_slot ( alock_info_t * info )
 
 	assert (info != NULL);
 	assert (info->al_slot > 0);
-	
+
 	(void) memset ((void *) &slot_data, 0, sizeof (alock_slot_t));
 	alock_read_slot (info, &slot_data);
 
@@ -319,11 +319,11 @@ alock_query_slot ( alock_info_t * info )
 			return ALOCK_LOCKED | nosave;
 		}
 	}
-	
+
 	return ALOCK_DIRTY | nosave;
 }
 
-int 
+int
 alock_open ( alock_info_t * info,
 	     const char * appname,
 	     const char * envdir,
@@ -360,14 +360,14 @@ alock_open ( alock_info_t * info,
 	info->al_slot = 0;
 
 	res = alock_grab_lock (info->al_fd, 0);
-	if (res == -1) { 
+	if (res == -1) {
 		close (info->al_fd);
 		free (slot_data.al_appname);
 		return ALOCK_UNSTABLE;
 	}
 
 	res = fstat (info->al_fd, &statbuf);
-	if (res == -1) { 
+	if (res == -1) {
 		close (info->al_fd);
 		free (slot_data.al_appname);
 		return ALOCK_UNSTABLE;
@@ -378,7 +378,7 @@ alock_open ( alock_info_t * info,
 	live_count = 0;
 	nosave = 0;
 	scan_info.al_fd = info->al_fd;
-	for (scan_info.al_slot = 1; 
+	for (scan_info.al_slot = 1;
 	     scan_info.al_slot < max_slot;
 	     ++ scan_info.al_slot) {
 		if (scan_info.al_slot != info->al_slot) {
@@ -418,33 +418,33 @@ alock_open ( alock_info_t * info,
 		free (slot_data.al_appname);
 		return ALOCK_UNSTABLE;
 	}
-	
+
 	if (info->al_slot == 0) info->al_slot = max_slot + 1;
 	res = alock_grab_lock (info->al_fd,
 			       info->al_slot);
-	if (res == -1) { 
+	if (res == -1) {
 		close (info->al_fd);
 		free (slot_data.al_appname);
 		return ALOCK_UNSTABLE;
 	}
 	res = alock_write_slot (info, &slot_data);
 	free (slot_data.al_appname);
-	if (res == -1) { 
+	if (res == -1) {
 		close (info->al_fd);
 		return ALOCK_UNSTABLE;
 	}
 
 	res = alock_release_lock (info->al_fd, 0);
-	if (res == -1) { 
+	if (res == -1) {
 		close (info->al_fd);
 		return ALOCK_UNSTABLE;
 	}
-	
+
 	if (dirty_count) return ALOCK_RECOVER | nosave;
 	return ALOCK_CLEAN | nosave;
 }
 
-int 
+int
 alock_scan ( alock_info_t * info )
 {
 	struct stat statbuf;
@@ -472,7 +472,7 @@ alock_scan ( alock_info_t * info )
 	dirty_count = 0;
 	live_count = 0;
 	nosave = 0;
-	for (scan_info.al_slot = 1; 
+	for (scan_info.al_slot = 1;
 	     scan_info.al_slot < max_slot;
 	     ++ scan_info.al_slot) {
 		if (scan_info.al_slot != info->al_slot) {
@@ -485,7 +485,7 @@ alock_scan ( alock_info_t * info )
 
 			if (res == ALOCK_LOCKED) {
 				++live_count;
-				
+
 			} else if (res == ALOCK_DIRTY) {
 				++dirty_count;
 
@@ -511,7 +511,7 @@ alock_scan ( alock_info_t * info )
 			return ALOCK_RECOVER | nosave;
 		}
 	}
-	
+
 	return ALOCK_CLEAN | nosave;
 }
 
@@ -536,7 +536,7 @@ alock_close ( alock_info_t * info, int nosave )
 	res = alock_read_slot (info, &slot_data);
 	if (res == -1) {
 		close (info->al_fd);
-		if (slot_data.al_appname != NULL) 
+		if (slot_data.al_appname != NULL)
 			free (slot_data.al_appname);
 		return ALOCK_UNSTABLE;
 	}
@@ -546,7 +546,7 @@ alock_close ( alock_info_t * info, int nosave )
 	res = alock_write_slot (info, &slot_data);
 	if (res == -1) {
 		close (info->al_fd);
-		if (slot_data.al_appname != NULL) 
+		if (slot_data.al_appname != NULL)
 			free (slot_data.al_appname);
 		return ALOCK_UNSTABLE;
 	}
@@ -568,11 +568,11 @@ alock_close ( alock_info_t * info, int nosave )
 
 	res = close (info->al_fd);
 	if (res == -1) return ALOCK_UNSTABLE;
-	
+
 	return ALOCK_CLEAN;
 }
 
-int 
+int
 alock_recover ( alock_info_t * info )
 {
 	struct stat statbuf;
@@ -599,7 +599,7 @@ alock_recover ( alock_info_t * info )
 	}
 
 	max_slot = (statbuf.st_size + ALOCK_SLOT_SIZE - 1) / ALOCK_SLOT_SIZE;
-	for (scan_info.al_slot = 1; 
+	for (scan_info.al_slot = 1;
 	     scan_info.al_slot < max_slot;
 	     ++ scan_info.al_slot) {
 		if (scan_info.al_slot != info->al_slot) {
@@ -610,7 +610,7 @@ alock_recover ( alock_info_t * info )
 				/* recovery attempt on an active db? */
 				close (info->al_fd);
 				return ALOCK_UNSTABLE;
-				
+
 			} else if (res == ALOCK_DIRTY) {
 				/* mark it clean */
 				res = alock_read_slot (&scan_info, &slot_data);
@@ -622,7 +622,7 @@ alock_recover ( alock_info_t * info )
 				res = alock_write_slot (&scan_info, &slot_data);
 				if (res == -1) {
 					close (info->al_fd);
-					if (slot_data.al_appname != NULL) 
+					if (slot_data.al_appname != NULL)
 						free (slot_data.al_appname);
 					return ALOCK_UNSTABLE;
 				}
@@ -630,7 +630,7 @@ alock_recover ( alock_info_t * info )
 					free (slot_data.al_appname);
 					slot_data.al_appname = NULL;
 				}
-				
+
 			} else if (res == -1) {
 				close (info->al_fd);
 				return ALOCK_UNSTABLE;

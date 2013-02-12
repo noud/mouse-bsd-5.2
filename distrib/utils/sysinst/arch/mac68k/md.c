@@ -25,13 +25,13 @@
  * THIS SOFTWARE IS PROVIDED BY PIERMONT INFORMATION SYSTEMS INC. ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL PIERMONT INFORMATION SYSTEMS INC. BE 
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * ARE DISCLAIMED. IN NO EVENT SHALL PIERMONT INFORMATION SYSTEMS INC. BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
@@ -606,7 +606,7 @@ check_for_errors()
 		errs++;
 	if ((map.blk[j].pmPyPartStart + map.blk[j].pmPartBlkCnt) > dlsize + 1)
 		errs++;
-    } 
+    }
     return(errs);
 }
 
@@ -886,11 +886,11 @@ md_post_disklabel(void)
     struct disklabel updated_label;
     int fd, i, no_match;
     char dev_name[100], buf[80];
-    const char *fst[] = {"free", "swap", " v6 ", " v7 ", "sysv", "v71k", 
+    const char *fst[] = {"free", "swap", " v6 ", " v7 ", "sysv", "v71k",
 			" v8 ", "ffs ", "dos ", "lfs ", "othr", "hpfs",
 			"9660", "boot", "ados", "hfs ", "fcor", "ex2f",
 			"ntfs", "raid", "ccd "};
-      
+
     snprintf(dev_name, sizeof(dev_name), "/dev/r%sc", diskdev);
     /*
      * Open the disk as a raw device
@@ -1037,7 +1037,7 @@ md_make_bsd_partitions(void)
 		pl = bzb->flags.part - 'a';
 		switch (whichType(&map.blk[j])) {
 		    case HFS_PART:
-			bsdlabel[pl].pi_fstype = FS_HFS; 
+			bsdlabel[pl].pi_fstype = FS_HFS;
 			strcpy (bsdlabel[pl].pi_mount, (char *)bzb->mount_point);
 			break;
 		    case ROOT_PART:

@@ -36,7 +36,7 @@
  * Audio Decoder (refclock_irig.c in this distribution), it should be
  * configured for AM IRIG output and IRIG format 1 (IRIG B with
  * signature control). The GPS clock can be configured either to respond
- * to a 'T' poll character or left running continuously. 
+ * to a 'T' poll character or left running continuously.
  *
  * There are two timecode formats used by these clocks. Format 0, which
  * is available with both the Netclock/2 and 8170, and format 2, which

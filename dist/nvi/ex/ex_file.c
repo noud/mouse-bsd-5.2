@@ -50,7 +50,7 @@ ex_file(SCR *sp, EXCMD *cmdp)
 		frp = sp->frp;
 
 		/* Make sure can allocate enough space. */
-		INT2CHAR(sp, cmdp->argv[0]->bp, cmdp->argv[0]->len + 1, 
+		INT2CHAR(sp, cmdp->argv[0]->bp, cmdp->argv[0]->len + 1,
 			    np, nlen);
 		if ((p = v_strdup(sp, np, nlen - 1)) == NULL)
 			return (1);

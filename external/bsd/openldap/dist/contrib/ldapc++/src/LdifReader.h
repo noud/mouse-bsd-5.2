@@ -38,7 +38,7 @@ class LdifReader
     private:
         int getLdifLine(std::string &line);
 
-        void splitLine(const std::string& line, 
+        void splitLine(const std::string& line,
                     std::string &type,
                     std::string &value ) const;
 

@@ -18,7 +18,7 @@ This document is a submission to the IETF IP Security Protocol
 (IPSEC) Working Group.  Comments are solicited and should be
 addressed to the working group mailing list (ipsec@lists.tislabs.com)
 or to the editor.
- 
+
 This document is an Internet-Draft and is in full conformance
 with all provisions of Section 10 of RFC2026.
 
@@ -58,7 +58,7 @@ packets through the NAT boxes in IKE.
 T. Kivinen, et. al.                                             [page 1]
 
 INTERNET-DRAFT                                          24 October 2002
- 
+
 Table of Contents
 
 1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . .  2
@@ -117,7 +117,7 @@ described in [RFC-2119] document.
 T. Kivinen, et. al.                                             [page 2]
 
 INTERNET-DRAFT                                          24 October 2002
- 
+
 The detection of the support for the NAT-Traversal and detection of the
 NAT along the path happens in the IKE [RFC-2409] phase 1.
 
@@ -176,7 +176,7 @@ multiple interfaces, and implementation don't know which is used to
 T. Kivinen, et. al.                                             [page 3]
 
 INTERNET-DRAFT                                          24 October 2002
- 
+
 route the packet out), he can include multiple local hashes to the
 packet (as separate NAT-D payloads). In this case the NAT is detected if
 and only if none of the hashes match.
@@ -235,7 +235,7 @@ An example of phase 1 exchange using NAT-Traversal in main mode
 T. Kivinen, et. al.                                             [page 4]
 
 INTERNET-DRAFT                                          24 October 2002
- 
+
                                      <-- HDR, SA, VID
         HDR, KE, Ni, NAT-D, NAT-D    -->
                                      <-- HDR, KE, Nr, NAT-D, NAT-D
@@ -294,7 +294,7 @@ informational notifications) to the peer use the new port, and possibly
 T. Kivinen, et. al.                                             [page 5]
 
 INTERNET-DRAFT                                          24 October 2002
- 
+
 new IP address obtained from the incoming valid packet. The port will
 generally be different since the NAT will map UDP(500,500) to
 UDP(X,500), and UDP(4500,4500) to UDP(Y,4500). The IP address will
@@ -353,7 +353,7 @@ packets to this peer using UDP(4500,Y).
 T. Kivinen, et. al.                                             [page 6]
 
 INTERNET-DRAFT                                          24 October 2002
- 
+
                                              <-- UDP(4500, Y) HDR*#, ...
 
 While changing ports, the port in the ID payload in Main Mode/Aggressive
@@ -412,7 +412,7 @@ UDP-Encapsulated-Transport      4
 T. Kivinen, et. al.                                             [page 7]
 
 INTERNET-DRAFT                                          24 October 2002
- 
+
 It is not normally useful to propose both normal tunnel or transport
 mode and UDP-Encapsulated modes. If there is a NAT box between normal
 tunnel or transport encapsulations may not work, and if there is no NAT
@@ -471,7 +471,7 @@ An example of quick mode using NAT-OA payloads is:
 T. Kivinen, et. al.                                             [page 8]
 
 INTERNET-DRAFT                                          24 October 2002
- 
+
           [, IDci, IDcr ] [, NAT-OA] -->
                                      <-- HDR*, HASH(2), SA, Nr, [, KE]
                                           [, IDci, IDcr ] [, NAT-OA]
@@ -530,7 +530,7 @@ o  As the internal address space is only 32 bits, and it is usually very
 T. Kivinen, et. al.                                             [page 9]
 
 INTERNET-DRAFT                                          24 October 2002
- 
+
    guess of use of private address space is done, then the number of
    hash calculations needed to find out the internal IP address goes
    down to the 2^24 + 2 * (2^16).
@@ -589,7 +589,7 @@ Change in the registered port registry:
 T. Kivinen, et. al.                                            [page 10]
 
 INTERNET-DRAFT                                          24 October 2002
- 
+
 New IKE payload numbers are (There is no IANA registry related to this,
 and no need to create new one):
 
@@ -648,7 +648,7 @@ November 1998
 T. Kivinen, et. al.                                            [page 11]
 
 INTERNET-DRAFT                                          24 October 2002
- 
+
 [RFC-2407] Piper D., "The Internet IP Security Domain Of Interpretation
 for ISAKMP", November 1998
 

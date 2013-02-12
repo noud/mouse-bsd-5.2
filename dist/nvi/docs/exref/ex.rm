@@ -208,7 +208,7 @@ connected with the current file name,
 so that writing the current buffer contents onto that file,
 even if it exists,
 is a reasonable action.
-If the current file is not 
+If the current file is not
 .I edited
 then
 .I ex
@@ -245,7 +245,7 @@ file name.\(dg
 two files and eliminates the need for retyping the
 name supplied on an
 .I edit
-command after a 
+command after a
 .I "No write since last change"
 diagnostic is received.
 .FE
@@ -406,7 +406,7 @@ works on \s-2CRT\s0 terminals with random positioning cursors, using the
 screen as a (single) window for file editing changes.
 These modes are described (only) in
 .I "An Introduction to Display Editing with Vi."
-.NH 
+.NH
 Command structure
 .PP
 Most command names are English words,
@@ -414,10 +414,10 @@ and initial prefixes of the words are acceptable abbreviations.
 The ambiguity of abbreviations is resolved in favor of the more commonly
 used commands.*
 .FS
-* As an example, the command 
+* As an example, the command
 .I substitute
 can be abbreviated `s'
-while the shortest available abbreviation for the 
+while the shortest available abbreviation for the
 .I set
 command is `se'.
 .FE
@@ -777,7 +777,7 @@ rather than at the last line;
 .ZP
 Prints the current file name,
 whether it has been `[Modified]' since the last
-.I write 
+.I write
 command,
 whether it is
 .I "read only" ,
@@ -795,7 +795,7 @@ destroy a file unrelated to the current contents of the buffer.
 .ZP
 The current file name is changed to
 .I file
-which is considered 
+which is considered
 `[Not edited]'.
 .LC
 ( 1 , $ ) \fBglobal\fR /\fIpat\|\fR/ \fIcmds\fR	abbr: \fBg\fR
@@ -1054,7 +1054,7 @@ previous time.
 .LC
 \fBquit\fR	abbr: \fBq\fR
 .ZP
-Causes 
+Causes
 .I ex
 to terminate.
 No automatic write of the editor buffer to a file is performed.
@@ -1070,7 +1070,7 @@ command was issued, and does not
 will also issue a diagnostic if there are more files in the argument
 list.
 .FE
-Normally, you will wish to save your changes, and you 
+Normally, you will wish to save your changes, and you
 should give a \fIwrite\fR command;
 if you wish to discard them, use the \fBq!\fR command variant.
 .LC
@@ -1082,14 +1082,14 @@ Quits from the editor, discarding changes to the buffer without complaint.
 .ZP
 Places a copy of the text of the given file in the
 editing buffer after the specified line.
-If no 
+If no
 .I file
 is given the current file name is used.
 The current file name is not changed unless there is none in which
 case
 .I file
 becomes the current name.
-The sensibility restrictions for the 
+The sensibility restrictions for the
 .I edit
 command apply here also.
 If the file buffer is empty and there is no current name then
@@ -1100,9 +1100,9 @@ command.
 .IP
 Address `0' is legal for this command and causes the file to be read at
 the beginning of the buffer.
-Statistics are given as for the 
+Statistics are given as for the
 .I edit
-command when the 
+command when the
 .I read
 successfully terminates.
 After a
@@ -1124,7 +1124,7 @@ into the buffer after the specified line.
 This is not a variant form of the command, rather a read
 specifying a
 .I command
-rather than a 
+rather than a
 .I filename;
 a blank or tab before the \fB!\fR is mandatory.
 .LC
@@ -1170,7 +1170,7 @@ Boolean options are given values either by the form
 string and numeric options are assigned via the form
 `set \fIoption\fR=value'.
 .IP
-More than one parameter may be given to 
+More than one parameter may be given to
 .I set \|;
 they are interpreted left-to-right.
 .LC
@@ -1245,7 +1245,7 @@ command.
 .ZP
 The
 .I t
-command is a synonym for 
+command is a synonym for
 .I copy .
 .LC
 \fBta\fR \fItag\fR
@@ -1289,7 +1289,7 @@ Reverses the changes made in the buffer by the last
 buffer editing command.
 Note that
 .I global
-commands are considered a single command for the purpose of 
+commands are considered a single command for the purpose of
 .I undo
 (as are
 .I open
@@ -1405,7 +1405,7 @@ and will write to any file which the system permits.
 .LC
 ( 1 , $ ) \fBw\fR  \fB!\fR\fIcommand\fR
 .ZP
-Writes the specified lines into 
+Writes the specified lines into
 .I command.
 Note the difference between \fBw!\fR which overrides checks and
 \fBw\ \ !\fR which writes to a command.
@@ -1465,7 +1465,7 @@ The remainder of the line after the `!' character is sent to a shell
 to be executed.
 Within the text of
 .I command
-the characters 
+the characters
 `%' and `#' are expanded as in filenames and the character
 `!' is replaced with the text of the previous command.
 Thus, in particular,
@@ -1553,7 +1553,7 @@ can always be referred to by a null \fIre\fR, e.g. `//' or `??'.
 Magic and nomagic
 .PP
 The regular expressions allowed by
-.I ex 
+.I ex
 are constructed in one of two ways depending on the setting of
 the
 .I magic
@@ -1945,7 +1945,7 @@ To be recognized as a command line, the line must have the string
 or
 .B vi:
 preceeded by a tab or a space.  This string may be anywhere in the
-line and anything after the 
+line and anything after the
 .I :
 is interpeted as editor commands.  This option defaults to off because
 of unexpected behavior when editting files such as
@@ -1967,7 +1967,7 @@ and
 are not permitted.
 This is set for
 .I edit
-to prevent confusion resulting from accidental entry to 
+to prevent confusion resulting from accidental entry to
 open or visual mode.
 .LC
 \fBoptimize, opt\fR	default: optimize
@@ -1982,7 +1982,7 @@ cursors when text with leading white space is printed.
 .ZP
 Specifies the paragraphs for the \fB{\fR and \fB}\fR operations in
 .I open
-and 
+and
 .I visual.
 The pairs of characters in the option's value are the names
 of the macros which start paragraphs.
@@ -2064,7 +2064,7 @@ of the macros which start paragraphs.
 .LC
 \fBshell\fR, \fBsh\fR	default: sh=/bin/sh
 .ZP
-Gives the path name of the shell forked for 
+Gives the path name of the shell forked for
 the shell escape command `!', and by the
 .I shell
 command.

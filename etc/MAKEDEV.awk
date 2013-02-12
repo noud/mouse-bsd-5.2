@@ -134,7 +134,7 @@ BEGIN {
 				diskbackcompat = $3
 			else if ($1 == "#define" && $2 == "RAW_PART")
 				RAWDISK_OFF = $3
-			else if ($1 == "#include" && 
+			else if ($1 == "#include" &&
 				 $2 ~ "<.*/disklabel.h>" &&
 				 $2 !~ ".*nbinclude.*")
 			{
@@ -214,7 +214,7 @@ BEGIN {
 	ARCSID = "$NetBSD: MAKEDEV.awk,v 1.20 2008/04/30 13:10:49 martin Exp $"
 	gsub(/\$/, "", ARCSID)
 	print "#	" ARCSID
-	
+
 	# MAKEDEV.tmpl RCS Id
 	gsub(/\$/, "")
 	print $0
@@ -233,7 +233,7 @@ BEGIN {
 /^\#   PLEASE RUN/, /^\#\#\#\#\#\#/ {
 	next
 }
- 
+
 # filter the device list
 /^\# Tapes/,/^$/ {
 	next

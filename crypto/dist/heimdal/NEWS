@@ -65,7 +65,7 @@ Changes in release 0.8.1
 
  * Add symbol versioning to libgssapi when using GNU ld.
 
- * Fix memory leaks 
+ * Fix memory leaks
 
  * Bugs fixes
 
@@ -203,12 +203,12 @@ Changes in release 0.6.1
  * kdc: stop clients from renewing tickets into the future
 
  * bug fixes
-	
+
 Changes in release 0.6
 
 * The DES3 GSS-API mechanism has been changed to inter-operate with
   other GSSAPI implementations. See man page for gssapi(3) how to turn
-  on generation of correct MIC messages. Next major release of heimdal 
+  on generation of correct MIC messages. Next major release of heimdal
   will generate correct MIC by default.
 
 * More complete GSS-API support
@@ -348,7 +348,7 @@ Changes in release 0.3f
 
  * improve building with openssl
 
- * add kadmin -K, rcp -F 
+ * add kadmin -K, rcp -F
 
  * fix two incorrect weak DES keys
 

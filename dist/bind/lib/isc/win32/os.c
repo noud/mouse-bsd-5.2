@@ -30,7 +30,7 @@ static void
 initialize_action(void) {
 	if (bInit)
 		return;
-	
+
 	GetSystemInfo(&SystemInfo);
 	bInit = TRUE;
 }

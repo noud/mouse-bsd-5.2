@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -90,7 +90,7 @@ static int dh_pub_decode(EVP_PKEY *pkey, X509_PUBKEY *pubkey)
 		goto err;
 		}
 
-	pstr = pval;	
+	pstr = pval;
 	pm = pstr->data;
 	pmlen = pstr->length;
 
@@ -180,7 +180,7 @@ static int dh_pub_encode(X509_PUBKEY *pk, const EVP_PKEY *pkey)
  * that the AlgorithmIdentifier contains the paramaters, the private key
  * is explcitly included and the pubkey must be recalculated.
  */
-	
+
 static int dh_priv_decode(EVP_PKEY *pkey, PKCS8_PRIV_KEY_INFO *p8)
 	{
 	const unsigned char *p, *pm;
@@ -205,7 +205,7 @@ static int dh_priv_decode(EVP_PKEY *pkey, PKCS8_PRIV_KEY_INFO *p8)
 		goto decerr;
 
 
-	pstr = pval;	
+	pstr = pval;
 	pm = pstr->data;
 	pmlen = pstr->length;
 	if (!(dh = d2i_DHparams(NULL, &pm, pmlen)))
@@ -466,7 +466,7 @@ int DHparams_print(BIO *bp, const DH *x)
 	return do_dh_print(bp, x, 4, NULL, 0);
 	}
 
-const EVP_PKEY_ASN1_METHOD dh_asn1_meth = 
+const EVP_PKEY_ASN1_METHOD dh_asn1_meth =
 	{
 	EVP_PKEY_DH,
 	EVP_PKEY_DH,

@@ -25,7 +25,7 @@ static const char sccsid[] = "Id: ip_read.c,v 8.23 2001/06/25 15:19:24 skimo Exp
 #include <time.h>
 #include <unistd.h>
 #include <netinet/in.h>
- 
+
 #include "../common/common.h"
 #include "../ex/script.h"
 #include "../ipc/ip.h"
@@ -244,7 +244,7 @@ ip_read(SCR *sp, IP_PRIVATE *ipp, struct timeval *tp, int termread, int *nr)
 			break;
 		}
 	}
-	
+
 	/*
 	 * 2: Wait for input.
 	 *
@@ -263,8 +263,8 @@ ip_read(SCR *sp, IP_PRIVATE *ipp, struct timeval *tp, int termread, int *nr)
 	/*
 	 * 3: Read the input.
 	 */
-	switch (*nr = read(fd, termread ? (char *)ipp->tbuf : bp, 
-			      termread ? sizeof(ipp->tbuf)/sizeof(CHAR_T) 
+	switch (*nr = read(fd, termread ? (char *)ipp->tbuf : bp,
+			      termread ? sizeof(ipp->tbuf)/sizeof(CHAR_T)
 				       : blen)) {
 	case  0:				/* EOF. */
 		rval = INP_EOF;
@@ -357,7 +357,7 @@ ip_trans(SCR *sp, IP_PRIVATE *ipp, EVENT *evp)
 	return (1);
 }
 
-/* 
+/*
  * ip_resize --
  *	Reset the options for a resize event.
  */

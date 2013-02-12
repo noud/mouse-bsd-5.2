@@ -1016,7 +1016,7 @@ struct optab table[] = {
 		"ZQ", },
 
 /*
- * DIV/MOD/MUL 
+ * DIV/MOD/MUL
  */
 /* long long div is emulated */
 { DIV,	INCREG,
@@ -1255,13 +1255,13 @@ struct optab table[] = {
 		0,	RLEFT,
 		"	andl AR,AL\n", },
 
-{ AND,	INAREG|FOREFF,  
+{ AND,	INAREG|FOREFF,
 	SAREG|SOREG|SNAME,	TSHORT|TUSHORT,
 	SCON|SAREG,		TSHORT|TUSHORT,
 		0,	RLEFT,
 		"	andw AR,AL\n", },
 
-{ AND,	INAREG|FOREFF,  
+{ AND,	INAREG|FOREFF,
 	SAREG,			TSHORT|TUSHORT,
 	SAREG|SOREG|SNAME,	TSHORT|TUSHORT,
 		0,	RLEFT,

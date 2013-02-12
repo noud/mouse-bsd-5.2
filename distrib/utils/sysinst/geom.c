@@ -53,7 +53,7 @@ get_label(const char *disk, struct disklabel *l, unsigned long cmd)
 
 	/* Open the disk. */
 	fd = opendisk(disk, O_RDONLY, diskpath, sizeof(diskpath), 0);
-	if (fd < 0) 
+	if (fd < 0)
 		return 0;
 
 	if (ioctl(fd, cmd, l) < 0) {

@@ -58,7 +58,7 @@ used to configure the software.
 the schema that is hard-coded in slapd).
 .. Child entries of {{EX:cn=schema,cn=config}} contain user schema as
 loaded from config files or added at runtime.
-* Backend-specific configuration 
+* Backend-specific configuration
 * Database-specific configuration
 .. Overlays are defined in children of the Database entry.
 .. Databases and Overlays may also have other miscellaneous children.
@@ -607,7 +607,7 @@ schema conformance. The default is off.
 The {{EX:binddn}} parameter gives the DN to bind as for the
 syncrepl searches to the provider slapd. It should be a DN
 which has read access to the replication content in the
-master database. 
+master database.
 
 The {{EX:bindmethod}} is {{EX:simple}} or {{EX:sasl}},
 depending on whether simple password-based authentication or
@@ -776,7 +776,7 @@ delete transaction log files as soon as their contents have been
 checkpointed and they are no longer needed. Without this setting the
 transaction log files will continue to accumulate until some other
 cleanup procedure removes them. See the Berkeley DB documentation for the
-{{EX:db_archive}} command for details. For a complete list of Berkeley DB 
+{{EX:db_archive}} command for details. For a complete list of Berkeley DB
 flags please see - {{URL:http://www.oracle.com/technology/documentation/berkeley-db/db/api_c/env_set_flags.html}}
 
 Ideally the BDB cache must be
@@ -838,7 +838,7 @@ matches do not use an index. However, some attributes do support
 indexing for inequality matches, based on the equality index.
 
 A substring index can be more explicitly specified as {{EX:subinitial}},
-{{EX:subany}}, or {{EX:subfinal}}, corresponding to the three 
+{{EX:subany}}, or {{EX:subfinal}}, corresponding to the three
 possible components
 of a substring match filter. A subinitial index only indexes
 substrings that appear at the beginning of an attribute value.

@@ -7,7 +7,7 @@ requires the use of
 to boot.
 Open Firmware is a command environment using the FORTH language.  The
 .Nx
-kernel uses Open Firmware to gather information about your system and to 
+kernel uses Open Firmware to gather information about your system and to
 control some of your devices.  It is part of the boot ROMs in most
 .Tn PowerPC Ns No -based
 .Tn Macintosh
@@ -31,7 +31,7 @@ is to set up Open Firmware properly.
 Open Firmware versions 1.0.5 and 2.0.x act similarly
 and the same set of instructions applies to them.
 Open Firmware version 2.4 is slightly different with regards to booting.
-Open Firmware version 3 is altogether different, but easier to set up for 
+Open Firmware version 3 is altogether different, but easier to set up for
 .Nx .
 .Pp
 At present,
@@ -112,7 +112,7 @@ models with ATI Rage Pro: Desktop, Mini Tower, and All-in-One)
 .Pp
 .(bullet -compact
 Apple original iBook, iBook SE, iBook (Dual USB), iBook (Late 2001),
-iBook (16VRAM), iBook (Opaque 16 VRAM), iBook (32 VRAM), 
+iBook (16VRAM), iBook (Opaque 16 VRAM), iBook (32 VRAM),
 iBook (14.1 LCD 32 VRAM), and iBook G4
 .It
 Apple iMac; Bondi Blue (Rev A and Rev B, 233 MHz),
@@ -123,14 +123,14 @@ Apple original eMac and eMac (ATI Graphics)
 .It
 Apple PowerBook (G3 Series (bronze keyboard) and G3 (FireWire))
 .It
-Apple PowerBook (G4 (Titanium), G4 (Gigabit Ethernet), G4 (DVI), 
+Apple PowerBook (G4 (Titanium), G4 (Gigabit Ethernet), G4 (DVI),
 G4 (12-inch), G4 (17-inch), G4 (12-inch DVI), PowerBook G4
 (15-inch FW 800), PowerBook G4 (17-inch 1.33GHz/1.5GHz))
 .It
 Apple PowerMacintosh G3 (Blue and White)
 .It
 Apple PowerMacintosh (G4 (PCI), G4 (AGP), G4 (Gigabit Ethernet), G4
-(Digital Audio), G4 (Quicksilver), G4 (Quicksilver 2002), 
+(Digital Audio), G4 (Quicksilver), G4 (Quicksilver 2002),
 G4 (Mirrored Drive Doors), G4 (FW 800), and G4 Cube)
 .It
 Apple Mac Mini G4 (1.25GHz/1.42GHz/1.5GHz)
@@ -282,7 +282,7 @@ and AIC-78xx
 .(Note
 The 294x models are not bootable in Open Firmware, even though they
 can boot
-.Tn MacOS 
+.Tn MacOS
 9 and earlier.
 .Note)
 .Pp
@@ -388,7 +388,7 @@ has been thoroughly tested
 Serial ports
 .br
 .Nx*M
-refers to the on-board serial ports as 
+refers to the on-board serial ports as
 .Pq Em tty00
 and
 .Pq Em tty01 .
@@ -418,7 +418,7 @@ reported problems trying to run ppp or other high speed serial applications
 .It
 The Xserve serial port.
 .(Note
-This serial port can be used for console (57600 bps, 8 bits, no 
+This serial port can be used for console (57600 bps, 8 bits, no
 parity, 1 stop bit, no handshaking).  Use
 .Pq Em scca
 for the Open Firmware

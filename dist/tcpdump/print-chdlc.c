@@ -49,7 +49,7 @@ __RCSID("$NetBSD: print-chdlc.c,v 1.5 2007/07/24 11:53:42 drochner Exp $");
 
 static void chdlc_slarp_print(const u_char *, u_int);
 
-const struct tok chdlc_cast_values[] = { 
+const struct tok chdlc_cast_values[] = {
     { CHDLC_UNICAST, "unicast" },
     { CHDLC_BCAST, "bcast" },
     { 0, NULL}

@@ -64,8 +64,8 @@ can't deal well with this.
 .Pp
 If you are using a serial console, the
 .Nx*M
-installer defaults to using 9600 bps, 8N1 settings.  You may want to 
-configure your system and serial terminal like this prior to booting the 
+installer defaults to using 9600 bps, 8N1 settings.  You may want to
+configure your system and serial terminal like this prior to booting the
 installer.  Additionally, a new installation of
 .Nx*M
 will default to these settings as well.

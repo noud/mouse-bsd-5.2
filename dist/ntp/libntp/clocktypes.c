@@ -111,7 +111,7 @@ clockname(
 	)
 {
 	register struct clktype *clk;
-  
+
 	for (clk = clktypes; clk->code != -1; clk++) {
 		if (num == clk->code)
 		    return (clk->abbrev);

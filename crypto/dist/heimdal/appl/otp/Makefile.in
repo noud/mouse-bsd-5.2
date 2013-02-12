@@ -409,10 +409,10 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-otp$(EXEEXT): $(otp_OBJECTS) $(otp_DEPENDENCIES) 
+otp$(EXEEXT): $(otp_OBJECTS) $(otp_DEPENDENCIES)
 	@rm -f otp$(EXEEXT)
 	$(LINK) $(otp_OBJECTS) $(otp_LDADD) $(LIBS)
-otpprint$(EXEEXT): $(otpprint_OBJECTS) $(otpprint_DEPENDENCIES) 
+otpprint$(EXEEXT): $(otpprint_OBJECTS) $(otpprint_DEPENDENCIES)
 	@rm -f otpprint$(EXEEXT)
 	$(LINK) $(otpprint_OBJECTS) $(otpprint_LDADD) $(LIBS)
 

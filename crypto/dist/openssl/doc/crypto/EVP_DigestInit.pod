@@ -25,13 +25,13 @@ EVP digest routines
  int EVP_MD_CTX_cleanup(EVP_MD_CTX *ctx);
  void EVP_MD_CTX_destroy(EVP_MD_CTX *ctx);
 
- int EVP_MD_CTX_copy_ex(EVP_MD_CTX *out,const EVP_MD_CTX *in);  
+ int EVP_MD_CTX_copy_ex(EVP_MD_CTX *out,const EVP_MD_CTX *in);
 
  int EVP_DigestInit(EVP_MD_CTX *ctx, const EVP_MD *type);
  int EVP_DigestFinal(EVP_MD_CTX *ctx, unsigned char *md,
         unsigned int *s);
 
- int EVP_MD_CTX_copy(EVP_MD_CTX *out,EVP_MD_CTX *in);  
+ int EVP_MD_CTX_copy(EVP_MD_CTX *out,EVP_MD_CTX *in);
 
  #define EVP_MAX_MD_SIZE (16+20) /* The SSLv3 md5+sha1 type */
 
@@ -175,15 +175,15 @@ are still in common use.
 For most applications the B<impl> parameter to EVP_DigestInit_ex() will be
 set to NULL to use the default digest implementation.
 
-The functions EVP_DigestInit(), EVP_DigestFinal() and EVP_MD_CTX_copy() are 
+The functions EVP_DigestInit(), EVP_DigestFinal() and EVP_MD_CTX_copy() are
 obsolete but are retained to maintain compatibility with existing code. New
-applications should use EVP_DigestInit_ex(), EVP_DigestFinal_ex() and 
+applications should use EVP_DigestInit_ex(), EVP_DigestFinal_ex() and
 EVP_MD_CTX_copy_ex() because they can efficiently reuse a digest context
 instead of initializing and cleaning it up on each call and allow non default
 implementations of digests to be specified.
 
 In OpenSSL 0.9.7 and later if digest contexts are not cleaned up after use
-memory leaks will occur. 
+memory leaks will occur.
 
 =head1 EXAMPLE
 

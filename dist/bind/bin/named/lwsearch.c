@@ -50,7 +50,7 @@ ns_lwsearchlist_create(isc_mem_t *mctx, ns_lwsearchlist_t **listp) {
 	list = isc_mem_get(mctx, sizeof(ns_lwsearchlist_t));
 	if (list == NULL)
 		return (ISC_R_NOMEMORY);
-	
+
 	result = isc_mutex_init(&list->lock);
 	if (result != ISC_R_SUCCESS) {
 		isc_mem_put(mctx, list, sizeof(ns_lwsearchlist_t));

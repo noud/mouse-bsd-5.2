@@ -71,9 +71,9 @@ bzero(dst0, length)
 
 void *
 memset(void *dst0, register int c0, register size_t length)
-	           
-	                
-	                       
+
+
+
 #endif
 {
 	register size_t t;
@@ -93,7 +93,7 @@ memset(void *dst0, register int c0, register size_t length)
 	 *
 	 * but we use a minimum of 3 here since the overhead of the code
 	 * to do word writes is substantial.
-	 */ 
+	 */
 	if (length < 3 * wsize) {
 		while (length != 0) {
 			*dst++ = VAL;

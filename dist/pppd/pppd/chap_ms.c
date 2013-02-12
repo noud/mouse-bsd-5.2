@@ -481,7 +481,7 @@ ChallengeResponse(u_char *challenge,
 void
 ChallengeHash(u_char PeerChallenge[16], u_char *rchallenge,
 	      char *username, u_char Challenge[8])
-    
+
 {
     SHA1_CTX	sha1Context;
     u_char	sha1Hash[SHA1_SIGNATURE_SIZE];

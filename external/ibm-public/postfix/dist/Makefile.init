@@ -1,4 +1,4 @@
-# Usage: 
+# Usage:
 #	make makefiles [CC=compiler] [OPT=compiler-flags] [DEBUG=debug-flags]
 #
 # The defaults are: CC=gcc, OPT=-O, and DEBUG=-g. Examples:

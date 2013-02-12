@@ -3,16 +3,16 @@
 	* Makefile.am (libel_compat_la_SOURCES): add edit_compat.h
 
 	* Makefile.am (libeditline_la_SOURCES): add edit_locl.h
-	
+
 2005-07-07  Love Hörnquist Åstrand  <lha@it.su.se>
-	
+
 	* editline.c (TTYinfo): only call tgetent if we found it using
 	autoconf
 
 2005-06-16  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* complete.c: move const to make it pass -Wcast-qual
-	
+
 	* testit.c: rename optind to optidx
 
 	* editline.c: ansi'ify the code

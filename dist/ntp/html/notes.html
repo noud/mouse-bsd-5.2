@@ -161,23 +161,23 @@ key (6) for accessing server variables
 		<p>The <tt>ntp.keys</tt> file contains the list of keys and associated key IDs the server knows about (for obvious reasons this file is better left unreadable by anyone except root). The contents of this file might look like:</p>
 		<pre>
      # ntp keys file (ntp.keys)
-     1    N   
+     1    N
 29233E0461ECD6AE    # DES key in NTP format
-     2    M   
+     2    M
 RIrop8KPPvQvYotM    # md5 key as an ASCII random string
-     14   M   
-sundial           
+     14   M
+sundial
 ;  # md5 key as an ASCII string
-     15   A   
-sundial           
+     15   A
+sundial
 ;  # DES key as an ASCII string
 
      # the following 3 keys are identical
 
      10   A    SeCReT
-     10   N   
+     10   N
 d3e54352e5548080
-     10   S   
+     10   S
 a7cb86a4cba80101
 </pre>
 		In the keys file the first token on each line indicates the key ID, the second token the format of the key and the third the key itself. There are four key formats. An <tt>A</tt> indicates a DES key written as a 1- to-8 character string in 7-bit ASCII representation, with each character standing for a key octet (like a Unix password). An <tt>S</tt> indicates a DES key written as a hex number in the DES standard format, with the low order bit (LSB) of each octet being the (odd) parity bit. An <tt>N</tt> indicates a DES key again written as a hex number, but in NTP standard format with the high order bit of each octet being the (odd) parity bit (confusing enough?). An <tt>M</tt> indicates an MD5 key written as a 1-to-31 character ASCII string in the <tt>A</tt> format. Note that, because of the simple tokenizing routine, the characters <tt>' ', '#', '\t', '\n'</tt> and <tt>'\0'</tt> can't be used in either a DES or MD5 ASCII key. Everything else is fair game, though. Key 0 (zero) is used for special purposes and should not appear in this file.
@@ -190,23 +190,23 @@ a7cb86a4cba80101
 		<tt>ntpd</tt> was written specifically to allow its configuration to be fully modifiable at run time. Indeed, the only way to configure the server is at run time. The configuration file is read only after the rest of the server has been initialized into a running default-configured state. This facility was included not so much for the benefit of Unix, where it is handy but not strictly essential, but rather for dedicated platforms where the feature is more important for maintenance. Nevertheless, run time configuration works very nicely for Unix servers as well.
 		<p>Nearly all of the things it is possible to configure in the configuration file may be altered via NTP mode-7 messages using the <tt>ntpdc</tt> program. Mode-6 messages may also provide some limited configuration functionality (though the only thing you can currently do with mode-6 messages is set the leap-second warning bits) and the <tt>ntpq</tt> program provides generic support for the latter. The leap bits that can be set in the <tt>leap_warning</tt> variable (up to one month ahead) and in the <tt>leap_indication</tt> variable have a slightly different encoding than the usual interpretation:</p>
 		<pre>
-       
+
 Value           Action
 
-        
-00            
+
+00
 p; The daemon passes the leap bits of its
-            
-           
+
+
 synchronisation source (usual mode of operation)
 
         01/10   A leap
 second is added/deleted
 
-        
-11            
+
+11
 p; Leap information from the synchronization source
-            
+
             is
 ignored (thus LEAP_NOWARNING is passed on)
 </pre>
@@ -244,7 +244,7 @@ requests
 		<pre>
      # preferred server declaration
 
-     peer rackety.udel.edu prefer   
+     peer rackety.udel.edu prefer
 # preferred server
 </pre>
 		The preferred server will always be included in the surviving population, regardless of its characteristics and as long as it survives preliminary sanity checks and validation procedures.

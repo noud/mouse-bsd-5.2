@@ -207,7 +207,7 @@ void
 f_insane(struct info *ip)
 {
 	int f, r;
-	
+
 	r = f = open(_PATH_URANDOM, O_RDONLY, 0);
 	if (f >= 0) {
 		r = read(f, &(ip->t), sizeof(struct termios));
@@ -215,7 +215,7 @@ f_insane(struct info *ip)
 	}
 	if (r < 0) {
 		/* XXX not cryptographically secure! */
-	    
+
 	        srandom(time(NULL));
 		ip->t.c_iflag = random();
 		ip->t.c_oflag = random();
@@ -227,7 +227,7 @@ f_insane(struct info *ip)
 		ip->t.c_ispeed = random();
 		ip->t.c_ospeed = random();
 	}
-    
+
 	ip->set = 1;
 }
 

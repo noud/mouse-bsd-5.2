@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -131,7 +131,7 @@ ASN1_STRING *ASN1_pack_string(void *obj, i2d_of_void *i2d, ASN1_STRING **oct)
 		}
 		if (oct) *oct = octmp;
 	} else octmp = *oct;
-		
+
 	if (!(octmp->length = i2d(obj, NULL))) {
 		ASN1err(ASN1_F_ASN1_PACK_STRING,ASN1_R_ENCODE_ERROR);
 		return NULL;
@@ -165,7 +165,7 @@ ASN1_STRING *ASN1_item_pack(void *obj, const ASN1_ITEM *it, ASN1_STRING **oct)
 		OPENSSL_free(octmp->data);
 		octmp->data = NULL;
 	}
-		
+
 	if (!(octmp->length = ASN1_item_i2d(obj, &octmp->data, it))) {
 		ASN1err(ASN1_F_ASN1_ITEM_PACK,ASN1_R_ENCODE_ERROR);
 		return NULL;

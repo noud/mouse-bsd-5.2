@@ -460,10 +460,10 @@ $(srcdir)/heimdal.info: heimdal.texi $(heimdal_TEXINFOS)
 heimdal.dvi: heimdal.texi $(heimdal_TEXINFOS)
 heimdal.pdf: heimdal.texi $(heimdal_TEXINFOS)
 heimdal.html: heimdal.texi $(heimdal_TEXINFOS)
-$(srcdir)/hx509.info: hx509.texi 
-hx509.dvi: hx509.texi 
-hx509.pdf: hx509.texi 
-hx509.html: hx509.texi 
+$(srcdir)/hx509.info: hx509.texi
+hx509.dvi: hx509.texi
+hx509.pdf: hx509.texi
+hx509.html: hx509.texi
 .dvi.ps:
 	TEXINPUTS="$(am__TEXINFO_TEX_DIR)$(PATH_SEPARATOR)$$TEXINPUTS" \
 	$(DVIPS) -o $@ $<

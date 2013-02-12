@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 1984 through 2008, William LeFebvre
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  *     * Redistributions in binary form must reproduce the above
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- * 
+ *
  *     * Neither the name of William LeFebvre nor the names of other
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -45,11 +45,11 @@
  *
  * CFLAGS: -DHAVE_GETOPT
  *
- * LIBS: 
+ * LIBS:
  *
  * AUTHOR: John Haxby <john_haxby@hp.com>
  * AUTHOR: adapted from Rich Holland <holland@synopsys.com>
- * AUTHOR: adapted from Kevin Schmidt <kevin@mcl.ucsb.edu> 
+ * AUTHOR: adapted from Kevin Schmidt <kevin@mcl.ucsb.edu>
  */
 
 #include "config.h"
@@ -204,7 +204,7 @@ static unsigned char sorted_state[] =
     5,	/* start		*/
     1,  /* other                */
 };
- 
+
 proc_compare(p1, p2)
 struct pst_status *p1;
 struct pst_status *p2;
@@ -350,7 +350,7 @@ struct system_info *si;
 
     /*
      * VM statistics
-     */	
+     */
     memory_stats[0] = -1;
     memory_stats[1] = pagetok (dynamic.psd_arm);
     memory_stats[2] = pagetok (dynamic.psd_rm);
@@ -361,7 +361,7 @@ struct system_info *si;
     si->memory = memory_stats;
 
     /*
-     * If we can get mpid from the kernel, then we will do so now. 
+     * If we can get mpid from the kernel, then we will do so now.
      * Otherwise we'll guess at mpid from the most recently started
      * process time.  Note that this requires us to get the pst array
      * now rather than in get_process_info().  We rely on
@@ -381,7 +381,7 @@ struct system_info *si;
 
 	for (i = 0; i < n; i++)
 	{
-	    if (last_start_time <= pst[i].pst_start) 
+	    if (last_start_time <= pst[i].pst_start)
 	    {
 	    	last_start_time = pst[i].pst_start;
 		if (pid <= pst[i].pst_pid)
@@ -432,7 +432,7 @@ int compare_index;
 	    && (state == PS_SLEEP || state == PS_STOP || state == PS_ZOMBIE)
 	    && (state != PS_SLEEP && pst[i].pst_pctcpu < CPU_IDLE_THRESH/100.0))
 	    pst[i].pst_stat = -1;
-		
+
 	if (sel->uid > 0 && sel->uid != pst[i].pst_uid)
 	    pst[i].pst_stat = -1;
 
@@ -582,7 +582,7 @@ char *(*get_userid)();
  *	    if "refstr" starts with a '!', then a failure on read will not
  *  	    be fatal (this may seem like a silly way to do things, but I
  *  	    really didn't want the overhead of another argument).
- *  	
+ *
  */
 
 getkval(offset, ptr, size, refstr)
@@ -596,22 +596,22 @@ char *refstr;
     if (lseek(kmem, (long)offset, SEEK_SET) == -1) {
         if (*refstr == '!')
             refstr++;
-        (void) fprintf(stderr, "%s: lseek to %s: %s\n", KMEM, 
+        (void) fprintf(stderr, "%s: lseek to %s: %s\n", KMEM,
 		       refstr, strerror(errno));
         quit(23);
     }
     if (read(kmem, (char *) ptr, size) == -1) {
-        if (*refstr == '!') 
+        if (*refstr == '!')
             return(0);
         else {
-            (void) fprintf(stderr, "%s: reading %s: %s\n", KMEM, 
+            (void) fprintf(stderr, "%s: reading %s: %s\n", KMEM,
 			   refstr, strerror(errno));
             quit(23);
         }
     }
     return(1);
 }
-    
+
 void (*signal(sig, func))()
     int sig;
     void (*func)();
@@ -681,7 +681,7 @@ int *m;
 	sprintf (name, "%s/%s", dir, str);
 	if (stat (name, &statbuf) < 0)
 	    continue;
-	
+
 	if (!isalpha (*str))
 	    str = name + sizeof ("/dev");
 	if (S_ISCHR (statbuf.st_mode))

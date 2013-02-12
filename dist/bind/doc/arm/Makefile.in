@@ -52,7 +52,7 @@ Bv9ARM.tex: Bv9ARM-book.xml releaseinfo.xml
 	expand Bv9ARM-book.xml | \
 	${XSLTPROC} ${top_srcdir}/doc/xsl/pre-latex.xsl - | \
 	${XSLTPROC} ${top_srcdir}/doc/xsl/isc-docbook-latex.xsl - | \
-	@PERL@ latex-fixup.pl >$@.tmp 
+	@PERL@ latex-fixup.pl >$@.tmp
 	if test -s $@.tmp; then mv $@.tmp $@; else rm -f $@.tmp; exit 1; fi
 
 Bv9ARM.dvi: Bv9ARM.tex releaseinfo.xml

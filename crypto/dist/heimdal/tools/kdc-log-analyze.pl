@@ -1,36 +1,36 @@
 #! /usr/pkg/bin/perl
 # -*- mode: perl; perl-indent-level: 8 -*-
-# 
+#
 # Copyright (c) 2003 Kungliga Tekniska Högskolan
-# (Royal Institute of Technology, Stockholm, Sweden). 
-# All rights reserved. 
-# 
-# Redistribution and use in source and binary forms, with or without 
-# modification, are permitted provided that the following conditions 
-# are met: 
-# 
-# 1. Redistributions of source code must retain the above copyright 
-#    notice, this list of conditions and the following disclaimer. 
-# 
-# 2. Redistributions in binary form must reproduce the above copyright 
-#    notice, this list of conditions and the following disclaimer in the 
-#    documentation and/or other materials provided with the distribution. 
-# 
-# 3. Neither the name of the Institute nor the names of its contributors 
-#    may be used to endorse or promote products derived from this software 
-#    without specific prior written permission. 
-# 
-# THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
-# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-# ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
-# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
-# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
-# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
-# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
-# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
-# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
-# SUCH DAMAGE. 
+# (Royal Institute of Technology, Stockholm, Sweden).
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#
+# 3. Neither the name of the Institute nor the names of its contributors
+#    may be used to endorse or promote products derived from this software
+#    without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+# SUCH DAMAGE.
 #
 # $Heimdal: kdc-log-analyze.pl 17173 2006-04-23 13:19:21Z lha $
 # $NetBSD: kdc-log-analyze.pl,v 1.1 2008/03/22 08:37:23 mlelstv Exp $
@@ -40,7 +40,7 @@
 # Note: The parts you want likely want to customize are the variable $notlocal,
 # the array @local_network_re and the array @local_realms.
 #
-# Idea and implemetion for MIT Kerberos was done first by 
+# Idea and implemetion for MIT Kerberos was done first by
 # Ken Hornstein <kenh@cmf.nrl.navy.mil>, this program wouldn't exists
 # without his help.
 #
@@ -50,8 +50,8 @@ use Sys::Hostname;
 
 my $notlocal = 'not SU';
 my @local_realms = ( "SU.SE" );
-my @local_networks_re = 
-    ( 
+my @local_networks_re =
+    (
       "130\.237",
       "193\.11\.3[0-9]\.",
       "130.242.128",
@@ -127,7 +127,7 @@ while (<>) {
 	process_line($_);
 }
 
-print "Kerberos KDC Log Report for ", 
+print "Kerberos KDC Log Report for ",
     hostname, " on ", scalar localtime, "\n\n";
 
 print "General Statistics\n\n";
@@ -223,7 +223,7 @@ print "\tTotal number: $as_req\n";
 
 print "\nAS_REQ client/server statistics\n\n";
 
-print "\tDistinct IP Addresses performing requests: ", 
+print "\tDistinct IP Addresses performing requests: ",
     int(keys %as_req_addr),"\n";
 print "\tOverall top ten IP addresses\n";
 topten(\%as_req_addr);
@@ -241,7 +241,7 @@ if ($pa_failed) {
 	topten(\%pa_failed_princ);
 }
 
-print "\n\tDistinct clients performing requests: ", 
+print "\n\tDistinct clients performing requests: ",
     int(keys %as_req_client), "\n";
 print "\tTop ten clients:\n";
 topten(\%as_req_client);
@@ -278,7 +278,7 @@ print "\n\n\nReport on 524_REQ requests:\n\n";
 
 print "\t524_REQ client/server statistics\n\n";
 
-print "\tDistinct IP Addresses performing requests: ", 
+print "\tDistinct IP Addresses performing requests: ",
     int(keys %five24_req_addr),"\n";
 print "\tOverall top ten IP addresses\n";
 topten(\%five24_req_addr);
@@ -383,7 +383,7 @@ sub process_line {
 
 		my $source = $1;
 		my $dest = $4;
-		
+
 		if (!islocalrealm($source)) {
 			$tgs_xrealm_in++;
 			$tgs_xrealm_in_princ{$source}++;
@@ -489,7 +489,7 @@ sub process_line {
 	} elsif (/Bad request for ([,a-zA-Z0-9]+) ticket/) {
 		# XXX
 	} elsif (/Failed to verify AP-REQ: Ticket expired/) {
-		# XXX 
+		# XXX
 	} elsif (/Client not found in database:/) {
 		# XXX
 	} elsif (/Server not found in database \(krb4\)/) {

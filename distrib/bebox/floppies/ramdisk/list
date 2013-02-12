@@ -83,6 +83,6 @@ COPY	${CURDIR}/dot.hdprofile		tmp/.hdprofile
 # SPECIAL	chmod 755 upgrade
 # SPECIAL	chmod 755 start
 
-#the lists of obsolete files used by sysinst  
+#the lists of obsolete files used by sysinst
 SPECIAL sh ${CURDIR}/../../../../distrib/sets/makeobsolete -b -s ${CURDIR}/../../../../distrib/sets -t ./dist
 

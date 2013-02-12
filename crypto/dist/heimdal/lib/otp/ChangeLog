@@ -14,7 +14,7 @@
 
 	* otp_parse.c: Less "pointer targets in passing argument differ in
 	signedness" warnings.
-	
+
 2005-07-09  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* otp.h: remove parameter names to avoid shadow warnings
@@ -27,7 +27,7 @@
 2005-01-09  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* otp_parse.c: cast argument to tolower to unsigned char
-	
+
 2003-04-16  Love Hörnquist Åstrand  <lha@it.su.se>
 
 	* roken_rename.h: rename strlcat, strlcpy
@@ -35,7 +35,7 @@
 	* otp_db.c: use strlcpy, from openbsd
 	* otp_md.c: use strlcat/strlcpy, from openbsd
 	* otp_challenge.c: do strdup again, we desupport ultrix
-	
+
 2002-09-10  Johan Danielsson  <joda@pdc.kth.se>
 
 	* otp_md.c: if we only have old hash names, we need to include

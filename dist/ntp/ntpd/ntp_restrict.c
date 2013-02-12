@@ -133,8 +133,8 @@ init_restrict(void)
 	 */
 	resinit[0].addr = htonl(INADDR_ANY);
 	resinit[0].mask = 0;
-	memset(&resinit6[0].addr6, 0, sizeof(struct in6_addr)); 
-	memset(&resinit6[0].mask6, 0, sizeof(struct in6_addr)); 
+	memset(&resinit6[0].addr6, 0, sizeof(struct in6_addr));
+	memset(&resinit6[0].mask6, 0, sizeof(struct in6_addr));
 	restrictlist = &resinit[0];
 	restrictlist6 = &resinit6[0];
 	restrictcount = 1;
@@ -310,8 +310,8 @@ hack_restrict(
 	register struct restrictlist6 *rl6 = NULL;
 	register struct restrictlist6 *rlprev6 = NULL;
 	int i, addr_cmp, mask_cmp;
-	memset(&addr6, 0, sizeof(struct in6_addr)); 
-	memset(&mask6, 0, sizeof(struct in6_addr)); 
+	memset(&addr6, 0, sizeof(struct in6_addr));
+	memset(&mask6, 0, sizeof(struct in6_addr));
 
 	if (resaddr->ss_family == AF_INET) {
 		/*
@@ -475,7 +475,7 @@ hack_restrict(
 				rl->flags &= (u_short)~flags;
 			}
 			break;
-	
+
 		case RESTRICT_REMOVE:
 		case RESTRICT_REMOVEIF:
 			/*

@@ -1,18 +1,18 @@
 /*
  * Copyright (c) 1999-2005 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
  * 3. Neither the name of KTH nor the names of its contributors may be
  *    used to endorse or promote products derived from this software without
@@ -37,7 +37,7 @@
 __RCSID("$Heimdal: print.c 16378 2005-12-12 12:40:12Z lha $"
         "$NetBSD: print.c,v 1.2 2008/03/22 08:37:12 mlelstv Exp $");
 
-/* 
+/*
    This is the present contents of a dump line. This might change at
    any time. Fields are separated by white space.
 
@@ -144,11 +144,11 @@ entry2string_int (krb5_context context, krb5_storage *sp, hdb_entry *ent)
     for(i = 0; i < ent->keys.len; i++){
 	/* --- mkvno, keytype */
 	if(ent->keys.val[i].mkvno)
-	    append_string(context, sp, ":%d:%d:", 
-			  *ent->keys.val[i].mkvno, 
+	    append_string(context, sp, ":%d:%d:",
+			  *ent->keys.val[i].mkvno,
 			  ent->keys.val[i].key.keytype);
 	else
-	    append_string(context, sp, "::%d:", 
+	    append_string(context, sp, "::%d:",
 			  ent->keys.val[i].key.keytype);
 	/* --- keydata */
 	append_hex(context, sp, &ent->keys.val[i].key.keyvalue);
@@ -177,7 +177,7 @@ entry2string_int (krb5_context context, krb5_storage *sp, hdb_entry *ent)
 	append_string(context, sp, "%s ", time2str(*ent->valid_end));
     else
 	append_string(context, sp, "- ");
-    
+
     /* --- password ends */
     if(ent->pw_end)
 	append_string(context, sp, "%s ", time2str(*ent->pw_end));
@@ -195,7 +195,7 @@ entry2string_int (krb5_context context, krb5_storage *sp, hdb_entry *ent)
 	append_string(context, sp, "%d ", *ent->max_renew);
     else
 	append_string(context, sp, "- ");
-    
+
     /* --- flags */
     append_string(context, sp, "%d ", HDBFlags2int(ent->flags));
 
@@ -229,14 +229,14 @@ entry2string_int (krb5_context context, krb5_storage *sp, hdb_entry *ent)
 	    }
 
 	    free(d);
-	    append_string(context, sp, "%s%s", p, 
+	    append_string(context, sp, "%s%s", p,
 			  ent->extensions->len - 1 != i ? ":" : "");
 	    free(p);
 	}
     } else
 	append_string(context, sp, "-");
 
-    
+
     return 0;
 }
 
@@ -252,7 +252,7 @@ hdb_entry2string (krb5_context context, hdb_entry *ent, char **str)
 	krb5_set_error_string(context, "malloc: out of memory");
 	return ENOMEM;
     }
-    
+
     ret = entry2string_int(context, sp, ent);
     if(ret) {
 	krb5_storage_free(sp);
@@ -282,7 +282,7 @@ hdb_print_entry(krb5_context context, HDB *db, hdb_entry_ex *entry, void *data)
 	krb5_set_error_string(context, "malloc: out of memory");
 	return ENOMEM;
     }
-    
+
     ret = entry2string_int(context, sp, &entry->entry);
     if(ret) {
 	krb5_storage_free(sp);

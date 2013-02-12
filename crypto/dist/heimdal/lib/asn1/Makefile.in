@@ -916,7 +916,7 @@ gen_files_rfc2459 = \
 	asn1_id_pkix_ppl_inheritAll.x			\
 	asn1_id_pkix_ppl_independent.x			\
 	asn1_ProxyPolicy.x				\
-	asn1_ProxyCertInfo.x 
+	asn1_ProxyCertInfo.x
 
 gen_files_pkinit = \
 	asn1_id_pkinit.x				\
@@ -953,7 +953,7 @@ gen_files_pkinit = \
 	asn1_PA_PK_AS_REP_Win2k.x			\
 	asn1_KDCDHKeyInfo_Win2k.x			\
 	asn1_ReplyKeyPack_Win2k.x			\
-	asn1_PkinitSuppPubInfo.x 
+	asn1_PkinitSuppPubInfo.x
 
 gen_files_pkcs12 = \
 	asn1_id_pkcs_12.x				\
@@ -1208,7 +1208,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libasn1.la: $(libasn1_la_OBJECTS) $(libasn1_la_DEPENDENCIES) 
+libasn1.la: $(libasn1_la_OBJECTS) $(libasn1_la_DEPENDENCIES)
 	$(libasn1_la_LINK) -rpath $(libdir) $(libasn1_la_OBJECTS) $(libasn1_la_LIBADD) $(LIBS)
 
 clean-checkPROGRAMS:
@@ -1224,22 +1224,22 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-asn1_compile$(EXEEXT): $(asn1_compile_OBJECTS) $(asn1_compile_DEPENDENCIES) 
+asn1_compile$(EXEEXT): $(asn1_compile_OBJECTS) $(asn1_compile_DEPENDENCIES)
 	@rm -f asn1_compile$(EXEEXT)
 	$(LINK) $(asn1_compile_OBJECTS) $(asn1_compile_LDADD) $(LIBS)
-asn1_gen$(EXEEXT): $(asn1_gen_OBJECTS) $(asn1_gen_DEPENDENCIES) 
+asn1_gen$(EXEEXT): $(asn1_gen_OBJECTS) $(asn1_gen_DEPENDENCIES)
 	@rm -f asn1_gen$(EXEEXT)
 	$(LINK) $(asn1_gen_OBJECTS) $(asn1_gen_LDADD) $(LIBS)
-asn1_print$(EXEEXT): $(asn1_print_OBJECTS) $(asn1_print_DEPENDENCIES) 
+asn1_print$(EXEEXT): $(asn1_print_OBJECTS) $(asn1_print_DEPENDENCIES)
 	@rm -f asn1_print$(EXEEXT)
 	$(LINK) $(asn1_print_OBJECTS) $(asn1_print_LDADD) $(LIBS)
-check-der$(EXEEXT): $(check_der_OBJECTS) $(check_der_DEPENDENCIES) 
+check-der$(EXEEXT): $(check_der_OBJECTS) $(check_der_DEPENDENCIES)
 	@rm -f check-der$(EXEEXT)
 	$(LINK) $(check_der_OBJECTS) $(check_der_LDADD) $(LIBS)
-check-gen$(EXEEXT): $(check_gen_OBJECTS) $(check_gen_DEPENDENCIES) 
+check-gen$(EXEEXT): $(check_gen_OBJECTS) $(check_gen_DEPENDENCIES)
 	@rm -f check-gen$(EXEEXT)
 	$(LINK) $(check_gen_OBJECTS) $(check_gen_LDADD) $(LIBS)
-check-timegm$(EXEEXT): $(check_timegm_OBJECTS) $(check_timegm_DEPENDENCIES) 
+check-timegm$(EXEEXT): $(check_timegm_OBJECTS) $(check_timegm_DEPENDENCIES)
 	@rm -f check-timegm$(EXEEXT)
 	$(LINK) $(check_timegm_OBJECTS) $(check_timegm_LDADD) $(LIBS)
 

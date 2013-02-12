@@ -35,7 +35,7 @@ __RCSID("$NetBSD: print-stp.c,v 1.5 2007/07/24 11:53:48 drochner Exp $");
 #include "addrtoname.h"
 #include "extract.h"
 
-#define	RSTP_EXTRACT_PORT_ROLE(x) (((x)&0x0C)>>2) 
+#define	RSTP_EXTRACT_PORT_ROLE(x) (((x)&0x0C)>>2)
 /* STP timers are expressed in multiples of 1/256th second */
 #define STP_TIME_BASE 256
 #define STP_BPDU_MSTP_MIN_LEN 102
@@ -149,7 +149,7 @@ stp_print_config_bpdu(const struct stp_bpdu_ *stp_bpdu, u_int length)
  * MSTP BPDU
  *
  * 2 -  bytes Protocol Id
- * 1 -  byte  Protocol Ver. 
+ * 1 -  byte  Protocol Ver.
  * 1 -  byte  BPDU tye
  * 1 -  byte  Flags
  * 8 -  bytes CIST Root Identifier
@@ -264,7 +264,7 @@ stp_print_mstp_bpdu(const struct stp_bpdu_ *stp_bpdu, u_int length)
                                   MST_BPDU_MSTI_ROOT_PRIO_OFFSET);
             msti = msti & 0x0FFF;
 
-            printf("\n\tMSTI %d, Flags [%s], port-role %s", 
+            printf("\n\tMSTI %d, Flags [%s], port-role %s",
                    msti, bittok2str(stp_bpdu_flag_values, "none", ptr[offset]),
                    tok2str(rstp_obj_port_role_values, "Unknown",
                            RSTP_EXTRACT_PORT_ROLE(ptr[offset])));
@@ -292,13 +292,13 @@ stp_print(const u_char *p, u_int length)
 {
     const struct stp_bpdu_ *stp_bpdu;
     u_int16_t              mstp_len;
-    
+
     stp_bpdu = (struct stp_bpdu_*)p;
 
     /* Minimum STP Frame size. */
     if (length < 4)
         goto trunc;
-        
+
     if (EXTRACT_16BITS(&stp_bpdu->protocol_id)) {
         printf("unknown STP version, length %u", length);
         return;

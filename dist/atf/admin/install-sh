@@ -138,7 +138,7 @@ if [ x"$msrc" = x ]
 then
 	echo "install: no destination specified"
 	exit 1
-fi      
+fi
 
 for srcarg in $msrc; do
 
@@ -149,7 +149,7 @@ else
 	dstarg="$dst"
 
 # Waiting for this to be detected by the "$instcmd $srcarg $dsttmp" command
-# might cause directories to be created, which would be especially bad 
+# might cause directories to be created, which would be especially bad
 # if $src (and thus $dsttmp) contains '*'.
 
 	if [ -f "$srcarg" ]
@@ -166,7 +166,7 @@ else
 		echo "install:  $srcarg does not exist"
 		exit 1
 	fi
-	
+
 # If destination is a directory, append the input filename; if your system
 # does not like double slashes in filenames, you may need to add some logic
 
@@ -184,7 +184,7 @@ dstdir=`echo "$dstarg" | sed -e 's,[^/]*$,,;s,/$,,;s,^$,.,'`
 
 # Skip lots of stat calls in the usual case.
 if [ ! -d "$dstdir" ]; then
-defaultIFS='	
+defaultIFS='	''
 '
 IFS="${IFS-${defaultIFS}}"
 

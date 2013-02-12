@@ -279,42 +279,42 @@ cut here for LynxOS 2.4.0 system include files patches
 --- ioctl.h	Sat May 18 17:55:16 1996
 ***************
 *** 572,576 ****
-  
+
   #ifndef __LYNXOS
 ! extern int ioctl	_AP((int, int, char *));
   #endif
-  
+
 --- 572,576 ----
-  
+
   #ifndef __LYNXOS
 ! extern int ioctl	_AP((int, int, ...));
   #endif
-  
+
 *** stdarg.h	Fri Apr 26 16:51:02 1996
 --- stdarg.h	Sat May 18 19:34:13 1996
 ***************
 *** 88,92 ****
   	(((sizeof(TYPE) + sizeof(int) - 1) / sizeof(int)) * sizeof(int))
-  
+
 ! #define va_start(AP, LASTARG)	(AP = ((char *) __builtin_next_arg ()))
-  
+
   void va_end(va_list);		/* Defined in libgcc.a */
 --- 88,92 ----
   	(((sizeof(TYPE) + sizeof(int) - 1) / sizeof(int)) * sizeof(int))
-  
+
 ! #define va_start(AP, LASTARG)	(AP = ((char *) __builtin_next_arg (LASTARG)))
-  
+
   void va_end(va_list);		/* Defined in libgcc.a */
 ***************
 *** 162,166 ****
   	(((sizeof(TYPE) + sizeof(int) - 1) / sizeof(int)) * sizeof(int))
-  
+
 ! #define va_start(AP, LASTARG)	(AP = ((char *) __builtin_next_arg ()))
-  
+
   void va_end(va_list);		/* Defined in libgcc.a */
 --- 162,166 ----
   	(((sizeof(TYPE) + sizeof(int) - 1) / sizeof(int)) * sizeof(int))
-  
+
 ! #define va_start(AP, LASTARG)	(AP = ((char *) __builtin_next_arg (LASTARG)))
-  
+
   void va_end(va_list);		/* Defined in libgcc.a */

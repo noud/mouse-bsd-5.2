@@ -359,7 +359,7 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-libntpd.a: $(libntpd_a_OBJECTS) $(libntpd_a_DEPENDENCIES) 
+libntpd.a: $(libntpd_a_OBJECTS) $(libntpd_a_DEPENDENCIES)
 	-rm -f libntpd.a
 	$(libntpd_a_AR) libntpd.a $(libntpd_a_OBJECTS) $(libntpd_a_LIBADD)
 	$(RANLIB) libntpd.a
@@ -398,13 +398,13 @@ clean-checkPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-check_y2k$(EXEEXT): $(check_y2k_OBJECTS) $(check_y2k_DEPENDENCIES) 
+check_y2k$(EXEEXT): $(check_y2k_OBJECTS) $(check_y2k_DEPENDENCIES)
 	@rm -f check_y2k$(EXEEXT)
 	$(LINK) $(check_y2k_LDFLAGS) $(check_y2k_OBJECTS) $(check_y2k_LDADD) $(LIBS)
-ntpd$(EXEEXT): $(ntpd_OBJECTS) $(ntpd_DEPENDENCIES) 
+ntpd$(EXEEXT): $(ntpd_OBJECTS) $(ntpd_DEPENDENCIES)
 	@rm -f ntpd$(EXEEXT)
 	$(LINK) $(ntpd_LDFLAGS) $(ntpd_OBJECTS) $(ntpd_LDADD) $(LIBS)
-ntpdsim$(EXEEXT): $(ntpdsim_OBJECTS) $(ntpdsim_DEPENDENCIES) 
+ntpdsim$(EXEEXT): $(ntpdsim_OBJECTS) $(ntpdsim_DEPENDENCIES)
 	@rm -f ntpdsim$(EXEEXT)
 	$(LINK) $(ntpdsim_LDFLAGS) $(ntpdsim_OBJECTS) $(ntpdsim_LDADD) $(LIBS)
 

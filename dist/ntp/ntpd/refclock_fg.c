@@ -41,7 +41,7 @@ static	void	fg_shutdown		P((int, struct peer *));
 static	void	fg_poll		P((int, struct peer *));
 static  void    fg_receive     P((struct recvbuf *));
 
-/* 
+/*
  * Forum Graphic unit control structure
  */
 
@@ -51,7 +51,7 @@ struct fgunit {
        int y2kwarn;		/* Y2K bug */
 };
 
-/* 
+/*
  * Queries definition
  */
 static char fginit[] = { 0x10, 0x48, 0x10, 0x0D, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -114,7 +114,7 @@ fg_start(
 #endif
 	 if (!(fd = refclock_open(device, SPEED232, LDISC_CLK)))
                 return (0);
-	
+
         /*
          * Allocate and initialize unit structure
          */
@@ -136,7 +136,7 @@ fg_start(
                 return (0);
         }
 
-	
+
 	/*
 	 * Initialize miscellaneous variables
 	 */
@@ -144,8 +144,8 @@ fg_start(
 	pp->clockdesc = DESCRIPTION;
 	memcpy((char *)&pp->refid, REFID, 3);
 	up->pollnum = 0;
-	
-	/* 
+
+	/*
 	 * Setup dating station to use GPS receiver.
 	 * GPS receiver should work before this operation.
          */
@@ -167,7 +167,7 @@ fg_shutdown(
 {
 	struct refclockproc *pp;
 	struct fgunit *up;
-	
+
 	pp = peer->procptr;
 	up = (struct fgunit *)pp->unitptr;
         io_closeclock(&pp->io);
@@ -185,7 +185,7 @@ fg_poll(
 	)
 {
 	struct refclockproc *pp;
-	
+
 	pp = peer->procptr;
 
 	 /*
@@ -211,8 +211,8 @@ fg_poll(
         peer->burst = NSTAGE;
 
         record_clock_stats(&peer->srcadr, pp->a_lastcode);
-        
-	
+
+
 	return;
 
 }
@@ -247,7 +247,7 @@ fg_receive(
 		return;
 	}
 
-	
+
 	if (rbufp->recv_length < (LENFG-2))
 	{
 		refclock_report(peer, CEVNT_BADREPLY);
@@ -265,9 +265,9 @@ fg_receive(
 
 #define BP2(x) ( bpt[x] & 15 )
 #define BP1(x) (( bpt[x] & 240 ) >> 4)
-	
+
         pp->year = BP1(2)*10 + BP2(2);
-	
+
 	if(pp->year == 94)
 	{
 		refclock_report(peer, CEVNT_BADREPLY);
@@ -277,8 +277,8 @@ fg_receive(
 		 /* GPS is just powered up. The date is invalid -
 		 discarding it. Initilize GPS one more time */
 		/* Sorry - this driver will broken in 2094 ;) */
-	}	
-	
+	}
+
 	if (pp->year < 99)
                 pp->year += 100;
 
@@ -289,7 +289,7 @@ fg_receive(
    After Jan, 10 2000 Forum Graphic GPS receiver had a very strange
    benahour. It doubles day number for an hours in replys after 10:10:10 UTC
    and doubles min every hour at HH:10:ss for a minute.
-   Hope it is a problem of my unit only and not a Y2K problem of FG GPS. 
+   Hope it is a problem of my unit only and not a Y2K problem of FG GPS.
    Below small code to avoid such situation.
 */
 	if(up->y2kwarn > 10)
@@ -310,7 +310,7 @@ fg_receive(
         	pp->nsec = (BP1(8)*10 + BP2(8)) * 1000000;
         	pp->nsec += BP1(9) * 1000;
 	}
-        
+
 	if((pp->hour == 10) && (pp->minute == 10))
 	{
 		up->y2kwarn++;

@@ -401,7 +401,7 @@ true_receive(
 				new_station = GOES_WEST;
 				label = "WEST";
 			}
-				
+
 			if (new_station != up->station) {
 				double dtemp;
 
@@ -499,8 +499,8 @@ true_receive(
 			 * find out what time it really is. Include
 			 * the count from the PCL720
 			 */
-			if (!clocktime(pp->day, pp->hour, pp->minute, 
-				       pp->second, GMT, pp->lastrec.l_ui, 
+			if (!clocktime(pp->day, pp->hour, pp->minute,
+				       pp->second, GMT, pp->lastrec.l_ui,
 				       &pp->yearstart, &off.l_ui)) {
 				refclock_report(peer, CEVNT_BADTIME);
 				return;

@@ -96,7 +96,7 @@ signame_to_signum(const char *p)
 
 	if (strcasecmp(p, "exit") == 0 )
 		return 0;
-	
+
 	if (strncasecmp(p, "sig", 3) == 0)
 		p += 3;
 

@@ -79,7 +79,7 @@ static int checkpattern_fn(const char *, void *);
 /*
  * Assumes CWD is in /var/db/pkg/<pkg>!
  */
-static void 
+static void
 check1pkg(const char *pkgdir, int *filecnt, int *pkgcnt)
 {
 	FILE   *f;
@@ -108,7 +108,7 @@ check1pkg(const char *pkgdir, int *filecnt, int *pkgcnt)
 				warnx("dirp not initialized, please send-pr!");
 				abort();
 			}
-			
+
 			(void) snprintf(file, sizeof(file), "%s/%s", dirp, p->name);
 
 			if (isfile(file) || islinktodir(file)) {
@@ -138,7 +138,7 @@ check1pkg(const char *pkgdir, int *filecnt, int *pkgcnt)
 						}
 					}
 				}
-				
+
 				(*filecnt)++;
 			} else if (isbrokenlink(file)) {
 				warnx("%s: Symlink `%s' exists and is in %s but target does not exist!", PkgName, file, CONTENTS_FNAME);

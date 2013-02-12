@@ -3,15 +3,15 @@
 /*  dbus_service.c
  *
  *  D-BUS Service Utilities
- *  
+ *
  *  Provides MINIMAL utilities for construction of D-BUS "Services".
- *  
+ *
  *  Copyright(C) Jason Vas Dias, Red Hat Inc., 2005
  *  Modified by Adam Tkac, Red Hat Inc., 2007
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation at 
+ *  the Free Software Foundation at
  *           http://www.fsf.org/licensing/licenses/gpl.txt
  *  and included in this software distribution as the "LICENSE" file.
  *
@@ -68,21 +68,21 @@ typedef struct dbcs_s
     dbus_svc_MessageHandler mf;
     void          * def_mf_obj;
     dbus_svc_ShutdownHandler sh;
-    void          * sh_obj;  
+    void          * sh_obj;
     dbus_svc_ErrorHandler eh;
     dbus_svc_ErrorHandler dh;
     /*{ glibc b-trees: */
     void *          roots;
-    void *          timeouts;  
+    void *          timeouts;
     void *          watches;
     void *          filters;
     /*}*/
-    int             n; 
+    int             n;
     fd_set          r_fds;
     fd_set          s_r_fds;
     fd_set          w_fds;
     fd_set          s_w_fds;
-    fd_set          e_fds;  
+    fd_set          e_fds;
     fd_set          s_e_fds;
     DBusMessage     *currentMessage;
     int             rejectMessage;
@@ -90,18 +90,18 @@ typedef struct dbcs_s
 
 typedef struct root_s
 {
-    char *path;    
+    char *path;
     char *if_prefix;
     DBUS_SVC cs;
-    dbus_svc_MessageHandler mh;        
+    dbus_svc_MessageHandler mh;
     void *object;
     void *tree;
 } Root;
 
 typedef struct mhn_s
 {
-    char *path;    
-    dbus_svc_MessageHandler mh;    
+    char *path;
+    dbus_svc_MessageHandler mh;
     void *object;
 } MessageHandlerNode;
 
@@ -126,7 +126,7 @@ static void no_free( void *p){ p=0; }
 static int ptr_key_comparator( const void *p1, const void *p2 )
 {
     return
-	(  (p1 == p2) 
+	(  (p1 == p2)
 	   ? 0
 	   :( (p1 > p2)
 	      ? 1
@@ -136,7 +136,7 @@ static int ptr_key_comparator( const void *p1, const void *p2 )
 }
 
 static DBusHandlerResult
-default_message_filter 
+default_message_filter
 (   DBusConnection     *connection,
     DBusMessage        *message,
     void               *p
@@ -146,7 +146,7 @@ default_message_filter
     uint32_t type  =dbus_message_get_type( message ),
 	   serial  =dbus_message_get_serial( message );
     uint8_t  reply =dbus_message_get_no_reply( message )==0;
-    const char 
+    const char
 	*path =    dbus_message_get_path( message ),
 	*dest =    dbus_message_get_destination( message ),
 	*member =  dbus_message_get_member( message ),
@@ -171,7 +171,7 @@ dbus_svc_add_filter
     char *m;
 
     va_start(va, n_matches );
-    
+
     cs->mf = mh;
     cs->def_mf_obj = obj;
 
@@ -237,10 +237,10 @@ dbus_svc_get_args(DBusConnectionState *cs, DBusMessage* msg, dbus_svc_DataType f
     return r;
 }
 
-uint8_t 
+uint8_t
 dbus_svc_send_va
 (  DBusConnectionState *cs,
-   dbus_svc_MessageType type,   
+   dbus_svc_MessageType type,
    int32_t reply_serial,
    uint32_t *new_serial,
    const char *destination,
@@ -253,7 +253,7 @@ dbus_svc_send_va
 {
     DBusMessageIter iter;
     char *e;
-    DBusMessage *msg = 
+    DBusMessage *msg =
 	dbus_svc_new_message
 	(   cs,
 	    type,
@@ -282,7 +282,7 @@ dbus_svc_send_va
 	if( firstType == DBUS_TYPE_STRING )
 	{
 	    e = 0L;
-	    e = va_arg( va, char* );	    
+	    e = va_arg( va, char* );
 	    if( (e == 0L) ||  !dbus_message_set_error_name( msg, e ) )
 	    {
 		if( cs->eh != 0L ) (*(cs->eh))("dbus_svc_send: dbus_message_set_error_name failed");
@@ -296,21 +296,21 @@ dbus_svc_send_va
 		if( e == 0L )
 		{
 		    if( cs->eh != 0L ) (*(cs->eh))("dbus_svc_send: NULL error message");
-		    return 0;		    		    
+		    return 0;
 		}
-		dbus_message_iter_init_append (msg, &iter);		
-		if( !dbus_message_iter_append_basic 
+		dbus_message_iter_init_append (msg, &iter);
+		if( !dbus_message_iter_append_basic
 		    (&iter, DBUS_TYPE_STRING, &e)
 		  )
 		{
 		    if( cs->eh != 0L ) (*(cs->eh))("dbus_svc_send: dbus_message_iter_append_basic failed");
-		    return 0;		    		    
+		    return 0;
 		}
 	    }
 	}else
 	{
 	    if( cs->eh != 0L ) (*(cs->eh))("dbus_svc_send: unhandled type for error name: %c", firstType);
-	    return 0;	    
+	    return 0;
 	}
     }
 
@@ -324,7 +324,7 @@ dbus_svc_send_va
     return 1;
 }
 
-uint8_t 
+uint8_t
 dbus_svc_send
 (  DBusConnectionState *cs,
    dbus_svc_MessageType type,
@@ -358,7 +358,7 @@ dbus_svc_new_message
 )
 {
     DBusMessage *msg = dbus_message_new(type);
-    
+
     if( msg == 0L)
     {
 	if( cs->eh != 0L ) (*(cs->eh))("dbus_svc_new_message: dbus_message_set_reply_serial failed");
@@ -371,9 +371,9 @@ dbus_svc_new_message
 	{
 	    if( cs->eh != 0L ) (*(cs->eh))("dbus_svc_new_message: dbus_message_set_reply_serial failed");
 	    return 0;
-	}    
+	}
     }
-	    
+
     if( (destination !=0L) && !dbus_message_set_destination(msg, destination) )
     {
 	if( cs->eh != 0L ) (*(cs->eh))("dbus_svc_new_message: dbus_message_set_destination failed");
@@ -398,15 +398,15 @@ dbus_svc_new_message
 	return 0;
     }
 
-    return msg;    
+    return msg;
 }
 
 extern uint8_t
 dbus_svc_send_message
 (
-    DBusConnectionState *cs, 
-    dbus_svc_MessageHandle msg, 
-    uint32_t *new_serial 
+    DBusConnectionState *cs,
+    dbus_svc_MessageHandle msg,
+    uint32_t *new_serial
 )
 {
     if( !dbus_connection_send(cs->connection, msg, new_serial) )
@@ -415,7 +415,7 @@ dbus_svc_send_message
 	return 0;
     }
     if( cs->dh != 0L ) (*(cs->dh))("Sending message");
-    dbus_connection_flush(cs->connection);   
+    dbus_connection_flush(cs->connection);
     return 1;
 }
 
@@ -428,13 +428,13 @@ dbus_svc_message_append_args(DBusConnectionState *cs, dbus_svc_MessageHandle msg
     {
 	if( cs->eh != 0L ) (*(cs->eh))("dbus_svc_send: dbus_message_append_args failed");
 	va_end(va);
-	return 0;	
+	return 0;
     }
     va_end(va);
     return ( 1 ) ;
 }
 
-dbus_svc_MessageHandle 
+dbus_svc_MessageHandle
 dbus_svc_call
 ( DBusConnectionState *cs,
   const char *destination,
@@ -442,7 +442,7 @@ dbus_svc_call
   const char *member,
   const char *interface,
   dbus_svc_DataType firstType,
-  ... 
+  ...
 )
 {
     DBusMessage *message=0L, *reply=0L;
@@ -455,8 +455,8 @@ dbus_svc_call
     memset(&error,'\0',sizeof(DBusError));
     dbus_error_init(&error);
 
-    if(( message = 
-	 dbus_message_new_method_call 
+    if(( message =
+	 dbus_message_new_method_call
 	 (  destination,
 	    path,
 	    interface,
@@ -477,13 +477,13 @@ dbus_svc_call
 	return(0L);
     }
 
-    if((reply = 
-	dbus_connection_send_with_reply_and_block 
+    if((reply =
+	dbus_connection_send_with_reply_and_block
 	(cs->connection,
 	 message, reply_timeout,
 	 &error
 	)
-       ) == 0L    
+       ) == 0L
       )
     {
 	if( cs->eh != 0L ) (*(cs->eh))("dbus_svc_call: dbus_message_send_with_reply_and_block failed: %s %s",
@@ -584,7 +584,7 @@ timeout_new( DBusTimeout *timeout )
 	{
 	    to->tv.tv_sec = 0 ;
 	    to->tv.tv_usec = 0 ;
-	}	    
+	}
     }
     return( to );
 }
@@ -617,9 +617,9 @@ remove_timeout( DBusTimeout *timeout, void *csp )
 	{
 	    free(to);
 	}else
-	    if( cs->eh != 0L ) (*(cs->eh))("remove_timeout: can't happen?!?: timeout data %p not found", to);   	
+	    if( cs->eh != 0L ) (*(cs->eh))("remove_timeout: can't happen?!?: timeout data %p not found", to);
     }else
-	if( cs->eh != 0L ) (*(cs->eh))("remove_timeout: can't happen?!?: timeout %p did not record data %p %p", 
+	if( cs->eh != 0L ) (*(cs->eh))("remove_timeout: can't happen?!?: timeout %p did not record data %p %p",
 		    timeout, to, ((to != 0L) ? to->to : 0L)
 	           );
 }
@@ -628,7 +628,7 @@ static void
 toggle_timeout( DBusTimeout *timeout, void *csp )
 {
     DBusConnectionState   *cs = csp;
-    DBusConnectionTimeout **top = tfind( (const void*) dbus_timeout_get_data(timeout), 
+    DBusConnectionTimeout **top = tfind( (const void*) dbus_timeout_get_data(timeout),
 				         &(cs->timeouts),
 				         ptr_key_comparator
 	                               ),
@@ -644,10 +644,10 @@ toggle_timeout( DBusTimeout *timeout, void *csp )
 	    to->tv.tv_usec = 0 ;
 	}
     }else
-	if( cs->eh != 0L ) (*(cs->eh))("toggle_timeout: can't happen?!?: timeout %p %s %p %p", timeout, 
+	if( cs->eh != 0L ) (*(cs->eh))("toggle_timeout: can't happen?!?: timeout %p %s %p %p", timeout,
 		    ((to==0L) ? "did not record data" : "not found"),
 		    to, ((to != 0L) ? to->to : 0L)
-	           );	
+	           );
 }
 
 static void
@@ -662,8 +662,8 @@ process_timeout( const void *p, const VISIT which, const int level)
     l=l;
 
     gettimeofday(&tv,0L);
-    
-    if( (tpp != 0L) && (*tpp != 0L) && ((which == postorder) || (which == leaf)) ) 
+
+    if( (tpp != 0L) && (*tpp != 0L) && ((which == postorder) || (which == leaf)) )
     {
 	to = (DBusConnectionTimeout*)*tpp;
 	cs = to->cs;
@@ -694,7 +694,7 @@ process_timeouts ( DBusConnectionState *cs )
     twalk( cs->timeouts, process_timeout );
 }
 
-static void 
+static void
 set_watch_fds( DBusWatch *watch, DBusConnectionState *cs )
 {
     uint8_t flags = dbus_watch_get_flags(watch);
@@ -709,36 +709,36 @@ set_watch_fds( DBusWatch *watch, DBusConnectionState *cs )
 	{
 	    FD_SET(fd , &(cs->r_fds));
 	    if( cs->wh != 0L )
-		(*(cs->wh))( fd, WATCH_ENABLE | WATCH_READ, cs->wh_arg ); 
-	}else	    
+		(*(cs->wh))( fd, WATCH_ENABLE | WATCH_READ, cs->wh_arg );
+	}else
 	{
 	    FD_CLR(fd , &(cs->r_fds));
 	    if( cs->wh != 0L )
-		(*(cs->wh))( fd, WATCH_READ, cs->wh_arg ); 
+		(*(cs->wh))( fd, WATCH_READ, cs->wh_arg );
 	}
 
 	if ( flags & DBUS_WATCH_WRITABLE )
 	{
 	    FD_SET(fd , &(cs->w_fds));
 	    if( cs->wh != 0L )
-		(*(cs->wh))( fd, WATCH_ENABLE | WATCH_WRITE, cs->wh_arg ); 	 
-	}else	    
+		(*(cs->wh))( fd, WATCH_ENABLE | WATCH_WRITE, cs->wh_arg );
+	}else
 	{
 	    FD_CLR(fd , &(cs->w_fds));
 	    if( cs->wh != 0L )
-		(*(cs->wh))( fd, WATCH_WRITE, cs->wh_arg ); 	 
+		(*(cs->wh))( fd, WATCH_WRITE, cs->wh_arg );
 	}
 	if ( flags & DBUS_WATCH_ERROR )
 	{
 	    FD_SET(fd , &(cs->e_fds));
 	    if( cs->wh != 0L )
-		(*(cs->wh))( fd, WATCH_ENABLE | WATCH_ERROR, cs->wh_arg ); 	
-	}else	    
+		(*(cs->wh))( fd, WATCH_ENABLE | WATCH_ERROR, cs->wh_arg );
+	}else
 	{
 	    FD_CLR(fd , &(cs->e_fds));
 	    if( cs->wh != 0L )
-		(*(cs->wh))( fd, WATCH_ERROR, cs->wh_arg ); 	
-	}	
+		(*(cs->wh))( fd, WATCH_ERROR, cs->wh_arg );
+	}
     }else
     {
 	if( FD_ISSET( fd, &(cs->r_fds)) )
@@ -748,19 +748,19 @@ set_watch_fds( DBusWatch *watch, DBusConnectionState *cs )
 
 	if( FD_ISSET( fd, &(cs->w_fds)) )
 	    if( cs->wh != 0L )
-		(*(cs->wh))( fd, WATCH_WRITE, cs->wh_arg );	
+		(*(cs->wh))( fd, WATCH_WRITE, cs->wh_arg );
 	FD_CLR(fd , &(cs->w_fds));
-	
+
 	if( FD_ISSET( fd, &(cs->e_fds)) )
 	    if( cs->wh != 0L )
 		(*(cs->wh))( fd, WATCH_ERROR, cs->wh_arg );
 	FD_CLR(fd , &(cs->e_fds));
-    }	
+    }
 }
 
 static dbus_bool_t
 add_watch ( DBusWatch *watch, void *csp )
-{    
+{
     DBusConnectionState *cs = csp;
 
     dbus_watch_set_data(watch, cs, no_free );
@@ -769,7 +769,7 @@ add_watch ( DBusWatch *watch, void *csp )
     {
 	if( cs->eh != 0L ) (*(cs->eh))("add_watch: out of memory");
 	return FALSE;
-    }    
+    }
     set_watch_fds(watch,cs);
     return TRUE;
 }
@@ -792,7 +792,7 @@ remove_watch ( DBusWatch *watch, void *csp )
 static void
 toggle_watch ( DBusWatch *watch, void *csp )
 {
-    DBusConnectionState *cs = csp;    
+    DBusConnectionState *cs = csp;
     if( cs->dh != 0L ) (*(cs->dh))("toggle_watch: %d", dbus_watch_get_fd(watch));
     set_watch_fds(watch,cs);
 }
@@ -826,7 +826,7 @@ process_watch( const void *p, const VISIT which, const int level)
 	if ( (flags & DBUS_WATCH_ERROR) && (FD_ISSET(fd, &(cs->s_e_fds))) )
 	    dbus_watch_handle(w, DBUS_WATCH_ERROR);
     }
-} 
+}
 
 static void
 process_watches ( DBusConnectionState *cs )
@@ -845,7 +845,7 @@ void dbus_svc_handle_watch(  DBusConnectionState *cs, int fd, dbus_svc_WatchFlag
     case WATCH_WRITE:
 	FD_SET(fd, &(cs->s_w_fds));
 	break;
-	
+
     case WATCH_ERROR:
 	FD_SET(fd, &(cs->s_e_fds));
 	break;
@@ -854,9 +854,9 @@ void dbus_svc_handle_watch(  DBusConnectionState *cs, int fd, dbus_svc_WatchFlag
 
 static void
 dispatch_status
-(   DBusConnection *connection, 
+(   DBusConnection *connection,
     DBusDispatchStatus new_status,
-    void *csp 
+    void *csp
 )
 {
     connection=connection;
@@ -875,13 +875,13 @@ dbus_svc_main_loop( DBusConnectionState *cs, void (*idle_handler)(DBusConnection
 	cs->s_r_fds = cs->r_fds;
 	cs->s_w_fds = cs->w_fds;
 	cs->s_e_fds = cs->e_fds;
-	
+
 	timeout.tv_sec = 0;
 	timeout.tv_usec= 200000;
 
 	if ( (n_fds = select(cs->n, &(cs->s_r_fds), &(cs->s_w_fds), &(cs->s_e_fds), &timeout)) < 0 )
-	{	    
-	    if (errno != EINTR) 
+	{
+	    if (errno != EINTR)
 	    {
 		if( cs->eh != 0L ) (*(cs->eh))( "select failed: %d : %s", errno, strerror(errno));
 	        return;
@@ -904,7 +904,7 @@ dbus_svc_main_loop( DBusConnectionState *cs, void (*idle_handler)(DBusConnection
 void dbus_svc_dispatch(DBusConnectionState *cs)
 {
     process_watches(cs);
-    
+
     FD_ZERO(&(cs->s_r_fds));
     FD_ZERO(&(cs->s_w_fds));
     FD_ZERO(&(cs->s_e_fds));
@@ -915,24 +915,24 @@ void dbus_svc_dispatch(DBusConnectionState *cs)
 	dbus_connection_dispatch( cs->connection );
 }
 
-void 
+void
 dbus_svc_quit( DBusConnectionState *cs )
 {
     cs->status = SHUTDOWN;
 }
 
 static isc_result_t
-connection_setup 
+connection_setup
 (   DBusConnection *connection,
     DBUS_SVC *dbus,
-    dbus_svc_WatchHandler wh, 
-    dbus_svc_ErrorHandler eh, 
+    dbus_svc_WatchHandler wh,
+    dbus_svc_ErrorHandler eh,
     dbus_svc_ErrorHandler dh,
     void *wh_arg
 )
 {
     *dbus = dbcs_new( connection );
-    
+
     if ( *dbus == 0L )
     {
 	if(eh)(*(eh))("connection_setup: out of memory");
@@ -943,7 +943,7 @@ connection_setup
     (*dbus)->eh = eh;
     (*dbus)->dh = dh;
 
-    if (!dbus_connection_set_watch_functions 
+    if (!dbus_connection_set_watch_functions
 	 (    (*dbus)->connection,
 	      add_watch,
 	      remove_watch,
@@ -954,15 +954,15 @@ connection_setup
        )
     {
 	if( (*dbus)->eh != 0L ) (*((*dbus)->eh))("connection_setup: dbus_connection_set_watch_functions failed");
-	goto fail; 
+	goto fail;
     }
-      
-    if (!dbus_connection_set_timeout_functions 
+
+    if (!dbus_connection_set_timeout_functions
 	 (    connection,
 	      add_timeout,
 	      remove_timeout,
 	      toggle_timeout,
-	      *dbus, 
+	      *dbus,
 	      no_free
 	 )
        )
@@ -971,26 +971,26 @@ connection_setup
 	goto fail;
     }
 
-    dbus_connection_set_dispatch_status_function 
-    (   connection, 
-	dispatch_status, 
-	*dbus, 
+    dbus_connection_set_dispatch_status_function
+    (   connection,
+	dispatch_status,
+	*dbus,
 	no_free
-    ); 
+    );
 
     if (dbus_connection_get_dispatch_status (connection) != DBUS_DISPATCH_COMPLETE)
-	dbus_connection_ref(connection);    
-    
+	dbus_connection_ref(connection);
+
     return ISC_R_SUCCESS;
-  
+
  fail:
     if( *dbus != 0L )
 	free(*dbus);
-  
+
     dbus_connection_set_dispatch_status_function (connection, NULL, NULL, NULL);
     dbus_connection_set_watch_functions (connection, NULL, NULL, NULL, NULL, NULL);
     dbus_connection_set_timeout_functions (connection, NULL, NULL, NULL, NULL, NULL);
-  
+
     return ISC_R_FAILURE;
 }
 
@@ -998,7 +998,7 @@ isc_result_t
 dbus_svc_init
 (
     dbus_svc_DBUS_TYPE    bus,
-    char                  *name, 
+    char                  *name,
     DBUS_SVC		  *dbus,
     dbus_svc_WatchHandler wh ,
     dbus_svc_ErrorHandler eh ,
@@ -1019,7 +1019,7 @@ dbus_svc_init
 	/* DBUS_PRIVATE_* bus types are the only type which allow reconnection if the dbus-daemon is restarted
          */
     case DBUS_PRIVATE_SYSTEM:
-       
+
 	if ( (connection = dbus_connection_open_private("unix:path=/var/run/dbus/system_bus_socket", &error)) == 0L )
 	{
 	    if(eh)(*eh)("dbus_svc_init failed: %s %s",error.name, error.message);
@@ -1036,7 +1036,7 @@ dbus_svc_init
 	break;
 
     case DBUS_PRIVATE_SESSION:
-	
+
 	session_bus_address = getenv("DBUS_SESSION_BUS_ADDRESS");
 	if ( session_bus_address == 0L )
 	{
@@ -1073,7 +1073,7 @@ dbus_svc_init
 	if(eh)(*eh)("dbus_svc_init failed: unknown bus type %d", bus);
 	return ISC_R_FAILURE;
     }
-    
+
     dbus_connection_set_exit_on_disconnect(connection, FALSE);
 
     if ( (connection_setup(connection, dbus, wh, eh, dh, wh_arg)) != ISC_R_SUCCESS)
@@ -1084,22 +1084,22 @@ dbus_svc_init
 
     if( name == 0L )
 	return ISC_R_SUCCESS;
-    
+
     (*dbus)->unique_name = dbus_bus_get_unique_name(connection);
 
     switch
-	(   dbus_bus_request_name 
-	    (   connection, name, 
+	(   dbus_bus_request_name
+	    (   connection, name,
 #ifdef DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT
 		DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT ,
 #else
 		0 ,
 #endif
 		&error
-	    ) 
+	    )
 	)
-    {   
-    case DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER:	
+    {
+    case DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER:
 	break;
     case DBUS_REQUEST_NAME_REPLY_EXISTS:
     case DBUS_REQUEST_NAME_REPLY_IN_QUEUE:
@@ -1120,7 +1120,7 @@ dbus_svc_init
 	dbus_connection_set_dispatch_status_function (connection, NULL, NULL, NULL);
 	dbus_connection_set_watch_functions (connection, NULL, NULL, NULL, NULL, NULL);
 	dbus_connection_set_timeout_functions (connection, NULL, NULL, NULL, NULL, NULL);
-	free(*dbus);    
+	free(*dbus);
     }
     return ISC_R_FAILURE;
 }
@@ -1131,17 +1131,17 @@ const char *dbus_svc_unique_name(DBusConnectionState *cs)
 }
 
 void
-dbus_svc_shutdown ( DBusConnectionState *cs )                          
+dbus_svc_shutdown ( DBusConnectionState *cs )
 {
-    if (!dbus_connection_set_watch_functions 
+    if (!dbus_connection_set_watch_functions
 	 (   cs->connection,
 	     NULL, NULL, NULL, NULL, NULL
 	 )
        ) if( cs->eh != 0L ) (*(cs->eh))("connection_shutdown: dbus_connection_set_watch_functions: No Memory."
                      "Setting watch functions to NULL failed."
 	            );
-  
-    if (!dbus_connection_set_timeout_functions 
+
+    if (!dbus_connection_set_timeout_functions
 	 (   cs->connection,
 	     NULL, NULL, NULL, NULL, NULL
 	 )
@@ -1150,12 +1150,12 @@ dbus_svc_shutdown ( DBusConnectionState *cs )
 	            );
 
     dbus_connection_set_dispatch_status_function (cs->connection, NULL, NULL, NULL);
-    
+
     tdestroy( cs->timeouts, free);
     cs->timeouts=0L;
     tdestroy( cs->watches, no_free);
     cs->watches=0L;
-    
+
     dbus_connection_close( cs->connection );
     dbus_connection_unref( cs->connection );
 

@@ -31,7 +31,7 @@
    structure. Another render function converts the getnamebyaddr
    response structure -- lwres_gnbaresponse_t to the canonical format.
    This is complemented by a parse function which converts a packet in
-   canonical format to a getnamebyaddr response structure.       
+   canonical format to a getnamebyaddr response structure.
 
    These structures are defined in \link lwres.h <lwres/lwres.h.>\endlink They are shown
    below.
@@ -68,14 +68,14 @@ typedef struct {
    of packet pkt to a lwres_gnbarequest_t structure. Buffer b provides
    space to be used for storing this structure. When the function
    succeeds, the resulting lwres_gnbarequest_t is made available
-   through *structp. lwres_gnbaresponse_parse() offers the same   
-semantics as lwres_gnbarequest_parse() except it yields a    
+   through *structp. lwres_gnbaresponse_parse() offers the same
+semantics as lwres_gnbarequest_parse() except it yields a
    lwres_gnbaresponse_t structure.
 
    lwres_gnbaresponse_free() and lwres_gnbarequest_free() release the
-   memory in resolver context ctx that was allocated to the     
-   lwres_gnbaresponse_t or lwres_gnbarequest_t structures referenced  
-   via structp. Any memory associated with ancillary buffers and      
+   memory in resolver context ctx that was allocated to the
+   lwres_gnbaresponse_t or lwres_gnbarequest_t structures referenced
+   via structp. Any memory associated with ancillary buffers and
    strings for those structures is also discarded.
 
 \section lwres_gbna_return Return Values

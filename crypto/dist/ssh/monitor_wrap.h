@@ -70,7 +70,7 @@ int mm_sshpam_query(void *, char **, char **, u_int *, char ***, u_int **);
 int mm_sshpam_respond(void *, u_int, char **);
 void mm_sshpam_free_ctx(void *);
 #endif
- 
+
 struct Session;
 void mm_terminate(void);
 int mm_pty_allocate(int *, int *, char *, size_t);

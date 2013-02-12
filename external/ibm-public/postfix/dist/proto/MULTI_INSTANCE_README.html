@@ -31,15 +31,15 @@ management framework, and on how to deploy a custom instance manager.
 
 <ul>
 
-<li><a href="#why"> Why multiple Postfix instances </a> 
+<li><a href="#why"> Why multiple Postfix instances </a>
 
 <li><a href="#split"> Null-client instances versus service instances </a>
 
-<li><a href="#quick"> Multi-instance walk-through  </a> 
+<li><a href="#quick"> Multi-instance walk-through  </a>
 
-<li><a href="#parts"> Components of a Postfix system </a> 
+<li><a href="#parts"> Components of a Postfix system </a>
 
-<li><a href="#default"> The default Postfix instance </a> 
+<li><a href="#default"> The default Postfix instance </a>
 
 <li><a href="#group"> Instance groups </a>
 
@@ -515,7 +515,7 @@ pre-filter input instance include: </p>
 <pre>
 /etc/postfix-in/main.cf
     #
-    # ... 
+    # ...
     #
 
     # No local delivery on border gateway
@@ -726,7 +726,7 @@ stages are started. </p>
 
 <dl>
 
-<dt> multi_instance_wrapper </dt> 
+<dt> multi_instance_wrapper </dt>
 
 <dd> <p> This default-instance configuration parameter must be set
 to a suitable multi-instance manager's "wrapper" program that

@@ -366,26 +366,26 @@ LIB_kafs = $(top_builddir)/lib/kafs/libkafs.la $(AIX_EXTRA_KAFS)
 @KRB5_TRUE@LIB_gssapi = $(top_builddir)/lib/gssapi/libgssapi.la
 @KRB5_TRUE@LIB_tsasl = $(top_builddir)/lib/tsasl/libtsasl.la
 @DCE_TRUE@LIB_kdfs = $(top_builddir)/lib/kdfs/libkdfs.la
-@KRB4_FALSE@DEPLIB_krb4 = 
+@KRB4_FALSE@DEPLIB_krb4 =
 @KRB4_TRUE@DEPLIB_krb4 = $(LIB_krb4) $(LIB_hcrypto)
-@KRB4_FALSE@krb4_am_workaround = 
+@KRB4_FALSE@krb4_am_workaround =
 @KRB4_TRUE@krb4_am_workaround = $(INCLUDE_krb4)
-@KRB5_FALSE@DEPLIB_krb5 = 
-@KRB5_TRUE@DEPLIB_krb5 = ../krb5/libkrb5.la 
-@KRB5_FALSE@krb5_am_workaround = 
+@KRB5_FALSE@DEPLIB_krb5 =
+@KRB5_TRUE@DEPLIB_krb5 = ../krb5/libkrb5.la
+@KRB5_FALSE@krb5_am_workaround =
 @KRB5_TRUE@krb5_am_workaround = $(INCLUDE_hcrypto) -I$(top_srcdir)/lib/krb5
-@AIX_FALSE@AFSL_EXP = 
+@AIX_FALSE@AFSL_EXP =
 @AIX_TRUE@AFSL_EXP = $(srcdir)/afsl.exp
 @AIX4_FALSE@@AIX_TRUE@AFS_EXTRA_LD = -e _nostart
 @AIX4_TRUE@@AIX_TRUE@AFS_EXTRA_LD = -bnoentry
 @AIX_DYNAMIC_AFS_FALSE@@AIX_TRUE@AIX_SRC = afslib.c
 @AIX_DYNAMIC_AFS_TRUE@@AIX_TRUE@@HAVE_DLOPEN_FALSE@AIX_SRC = dlfcn.c
-@AIX_DYNAMIC_AFS_TRUE@@AIX_TRUE@@HAVE_DLOPEN_TRUE@AIX_SRC = 
-@AIX_FALSE@AIX_SRC = 
-@AIX_DYNAMIC_AFS_FALSE@@AIX_TRUE@AFS_EXTRA_LIBS = 
+@AIX_DYNAMIC_AFS_TRUE@@AIX_TRUE@@HAVE_DLOPEN_TRUE@AIX_SRC =
+@AIX_FALSE@AIX_SRC =
+@AIX_DYNAMIC_AFS_FALSE@@AIX_TRUE@AFS_EXTRA_LIBS =
 @AIX_DYNAMIC_AFS_TRUE@@AIX_TRUE@AFS_EXTRA_LIBS = afslib.so
 @AIX_DYNAMIC_AFS_FALSE@@AIX_TRUE@AFS_EXTRA_DEFS = -DSTATIC_AFS
-@AIX_DYNAMIC_AFS_TRUE@@AIX_TRUE@AFS_EXTRA_DEFS = 
+@AIX_DYNAMIC_AFS_TRUE@@AIX_TRUE@AFS_EXTRA_DEFS =
 libkafs_la_LIBADD = $(DEPLIB_krb5) $(LIBADD_roken) $(DEPLIB_krb4)
 lib_LTLIBRARIES = libkafs.la
 libkafs_la_LDFLAGS = -version-info 5:1:5
@@ -470,7 +470,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libkafs.la: $(libkafs_la_OBJECTS) $(libkafs_la_DEPENDENCIES) 
+libkafs.la: $(libkafs_la_OBJECTS) $(libkafs_la_DEPENDENCIES)
 	$(libkafs_la_LINK) -rpath $(libdir) $(libkafs_la_OBJECTS) $(libkafs_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:

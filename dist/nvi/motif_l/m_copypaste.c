@@ -43,7 +43,7 @@ static	PFI	icccm_paste,
  * InitCopyPaste --
  *
  * PUBLIC: void __vi_InitCopyPaste
- * PUBLIC:    __P((int (*)(), int (*)(), int (*)(), int (*)())); 
+ * PUBLIC:    __P((int (*)(), int (*)(), int (*)(), int (*)()));
  */
 void
 __vi_InitCopyPaste(PFI f_copy, PFI f_paste, PFI f_clear, PFI f_error)
@@ -174,7 +174,7 @@ int	*format;
  *
  * PUBLIC: void	__vi_AcquirePrimary __P((Widget));
  */
-void 
+void
 __vi_AcquirePrimary(Widget widget)
 {
     /* assert we own the primary selection */

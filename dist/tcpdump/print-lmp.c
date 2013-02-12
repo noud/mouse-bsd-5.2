@@ -56,14 +56,14 @@ __RCSID("$NetBSD: print-lmp.c,v 1.2 2007/07/24 11:53:45 drochner Exp $");
 
 struct lmp_common_header {
     u_int8_t version_res[2];
-    u_int8_t flags;   
+    u_int8_t flags;
     u_int8_t msg_type;
     u_int8_t length[2];
     u_int8_t reserved[2];
 };
 
 #define LMP_VERSION            1
-#define	LMP_EXTRACT_VERSION(x) (((x)&0xf0)>>4) 
+#define	LMP_EXTRACT_VERSION(x) (((x)&0xf0)>>4)
 
 static const struct tok lmp_header_flag_values[] = {
     { 0x01, "Control Channel Down"},
@@ -210,7 +210,7 @@ static const struct tok lmp_msg_type_values[] = {
     { 0, NULL}
 };
 
-/* 
+/*
  * LMP object header
  *
  *  0                   1                   2                   3
@@ -221,7 +221,7 @@ static const struct tok lmp_msg_type_values[] = {
  * |                                                               |
  * //                       (object contents)                     //
  * |                                                               |
- * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
  */
 
 struct lmp_object_header {
@@ -234,7 +234,7 @@ struct lmp_object_header {
 #define	LMP_OBJ_NODE_ID               2
 #define	LMP_OBJ_LINK_ID               3
 #define	LMP_OBJ_INTERFACE_ID          4
-#define	LMP_OBJ_MESSAGE_ID            5 
+#define	LMP_OBJ_MESSAGE_ID            5
 #define	LMP_OBJ_CONFIG                6
 #define	LMP_OBJ_HELLO                 7
 #define	LMP_OBJ_VERIFY_BEGIN          8
@@ -284,13 +284,13 @@ static const struct tok lmp_data_link_subobj[] = {
 #define	LMP_CTYPE_LOC        1
 #define	LMP_CTYPE_RMT        2
 #define	LMP_CTYPE_UNMD       3
- 
+
 #define	LMP_CTYPE_IPV4_LOC   1
 #define	LMP_CTYPE_IPV4_RMT   2
 #define	LMP_CTYPE_IPV6_LOC   3
 #define	LMP_CTYPE_IPV6_RMT   4
-#define	LMP_CTYPE_UNMD_LOC   5  
-#define	LMP_CTYPE_UNMD_RMT   6 
+#define	LMP_CTYPE_UNMD_LOC   5
+#define	LMP_CTYPE_UNMD_RMT   6
 
 #define	LMP_CTYPE_1          1
 #define	LMP_CTYPE_2          2
@@ -307,7 +307,7 @@ static const struct tok lmp_data_link_subobj[] = {
 #define LMP_CTYPE_SERVICE_CONFIG_TRANSPARENCY_TCM     3
 #define LMP_CTYPE_SERVICE_CONFIG_NETWORK_DIVERSITY    4
 
-/* 
+/*
  * Different link types allowed in the Client Port Service Attributes
  * subobject defined for LMP Service Discovery in the UNI 1.0 spec
  */
@@ -377,7 +377,7 @@ lmp_print(register const u_char *pptr, register u_int len) {
     int link_type;
 
     union { /* int to float conversion buffer */
-        float f; 
+        float f;
         u_int32_t i;
     } bw;
 
@@ -535,7 +535,7 @@ lmp_print(register const u_char *pptr, register u_int len) {
                 hexdump=TRUE;
             }
             break;
-	
+
         case LMP_OBJ_HELLO:
             switch(lmp_obj_ctype) {
 	    case LMP_CTYPE_HELLO:
@@ -547,14 +547,14 @@ lmp_print(register const u_char *pptr, register u_int len) {
             default:
                 hexdump=TRUE;
             }
-            break;      
-	    
+            break;
+
         case LMP_OBJ_TE_LINK:
 		printf("\n\t    Flags: [%s]",
 		bittok2str(lmp_obj_te_link_flag_values,
 			"none",
 			EXTRACT_16BITS(obj_tptr)>>8));
-            
+
 	    switch(lmp_obj_ctype) {
 	    case LMP_CTYPE_IPV4:
 		printf("\n\t    Local Link-ID: %s (0x%08x) \
@@ -564,7 +564,7 @@ lmp_print(register const u_char *pptr, register u_int len) {
                        ipaddr_string(obj_tptr+8),
                        EXTRACT_32BITS(obj_tptr+8));
 		break;
-		
+
 #ifdef INET6
 	    case LMP_CTYPE_IPV6:
 #endif
@@ -573,13 +573,13 @@ lmp_print(register const u_char *pptr, register u_int len) {
                 hexdump=TRUE;
             }
             break;
-	
+
         case LMP_OBJ_DATA_LINK:
 		printf("\n\t    Flags: [%s]",
 		bittok2str(lmp_obj_data_link_flag_values,
 			"none",
 			EXTRACT_16BITS(obj_tptr)>>8));
-            
+
 	    switch(lmp_obj_ctype) {
 	    case LMP_CTYPE_IPV4:
 	    case LMP_CTYPE_UNMD:
@@ -589,8 +589,8 @@ lmp_print(register const u_char *pptr, register u_int len) {
                        EXTRACT_32BITS(obj_tptr+4),
                        ipaddr_string(obj_tptr+8),
                        EXTRACT_32BITS(obj_tptr+8));
-		
-		total_subobj_len = lmp_obj_len - 16;	 
+
+		total_subobj_len = lmp_obj_len - 16;
 		offset = 12;
 		while (total_subobj_len > 0 && hexdump == FALSE ) {
 			subobj_type = EXTRACT_16BITS(obj_tptr+offset)>>8;
@@ -604,13 +604,13 @@ lmp_print(register const u_char *pptr, register u_int len) {
 			switch(subobj_type) {
 			case INT_SWITCHING_TYPE_SUBOBJ:
 				printf("\n\t      Switching Type: %s (%u)",
-					tok2str(gmpls_switch_cap_values, 
-						"Unknown", 
+					tok2str(gmpls_switch_cap_values,
+						"Unknown",
 						EXTRACT_16BITS(obj_tptr+offset+2)>>8),
 					EXTRACT_16BITS(obj_tptr+offset+2)>>8);
 				printf("\n\t      Encoding Type: %s (%u)",
-					tok2str(gmpls_encoding_values, 
-						"Unknown", 
+					tok2str(gmpls_encoding_values,
+						"Unknown",
 						EXTRACT_16BITS(obj_tptr+offset+2)&0x00FF),
 					EXTRACT_16BITS(obj_tptr+offset+2)&0x00FF);
 				bw.i = EXTRACT_32BITS(obj_tptr+offset+4);
@@ -619,7 +619,7 @@ lmp_print(register const u_char *pptr, register u_int len) {
 				bw.i = EXTRACT_32BITS(obj_tptr+offset+8);
 				printf("\n\t      Max Reservable Bandwidth: %.3f Mbps",
                                        bw.f*8/1000000);
-				break;	
+				break;
 			case WAVELENGTH_SUBOBJ:
 				printf("\n\t      Wavelength: %u",
 					EXTRACT_32BITS(obj_tptr+offset+4));
@@ -632,16 +632,16 @@ lmp_print(register const u_char *pptr, register u_int len) {
 			total_subobj_len-=subobj_len;
 			offset+=subobj_len;
 		}
-		
+
 		break;
-#ifdef INET6   
+#ifdef INET6
 	    case LMP_CTYPE_IPV6:
 #endif
             default:
                 hexdump=TRUE;
             }
-            break;      
-	    
+            break;
+
         case LMP_OBJ_VERIFY_BEGIN:
 	    switch(lmp_obj_ctype) {
             case LMP_CTYPE_1:
@@ -664,12 +664,12 @@ lmp_print(register const u_char *pptr, register u_int len) {
 		printf("\n\t    Wavelength: %u",
 			EXTRACT_32BITS(obj_tptr+16));
 		break;
-		
+
             default:
                 hexdump=TRUE;
             }
-            break;      
-	
+            break;
+
         case LMP_OBJ_VERIFY_BEGIN_ACK:
 	    switch(lmp_obj_ctype) {
             case LMP_CTYPE_1:
@@ -678,24 +678,24 @@ lmp_print(register const u_char *pptr, register u_int len) {
                        EXTRACT_16BITS(obj_tptr),
                        EXTRACT_16BITS(obj_tptr+2));
                 break;
-		
+
             default:
                 hexdump=TRUE;
             }
-            break;      
-        
+            break;
+
 	case LMP_OBJ_VERIFY_ID:
 	    switch(lmp_obj_ctype) {
             case LMP_CTYPE_1:
                 printf("\n\t    Verify ID: %u",
                        EXTRACT_32BITS(obj_tptr));
                 break;
-		
+
             default:
                 hexdump=TRUE;
             }
-            break;      
-        
+            break;
+
 	case LMP_OBJ_CHANNEL_STATUS:
             switch(lmp_obj_ctype) {
 	    case LMP_CTYPE_IPV4:
@@ -706,15 +706,15 @@ lmp_print(register const u_char *pptr, register u_int len) {
 			printf("\n\t    Interface ID: %s (0x%08x)",
 			ipaddr_string(obj_tptr+offset),
 			EXTRACT_32BITS(obj_tptr+offset));
-			
-			printf("\n\t\t    Active: %s (%u)", 		(EXTRACT_32BITS(obj_tptr+offset+4)>>31) ? 
+
+			printf("\n\t\t    Active: %s (%u)", 		(EXTRACT_32BITS(obj_tptr+offset+4)>>31) ?
 						"Allocated" : "Non-allocated",
 				(EXTRACT_32BITS(obj_tptr+offset+4)>>31));
-			
-			printf("\n\t\t    Direction: %s (%u)", (EXTRACT_32BITS(obj_tptr+offset+4)>>30)&0x1 ? 
+
+			printf("\n\t\t    Direction: %s (%u)", (EXTRACT_32BITS(obj_tptr+offset+4)>>30)&0x1 ?
 						"Transmit" : "Receive",
-				(EXTRACT_32BITS(obj_tptr+offset+4)>>30)&0x1);	
-						
+				(EXTRACT_32BITS(obj_tptr+offset+4)>>30)&0x1);
+
 			printf("\n\t\t    Channel Status: %s (%u)",
 					tok2str(lmp_obj_channel_status_values,
 			 		"Unknown",
@@ -723,14 +723,14 @@ lmp_print(register const u_char *pptr, register u_int len) {
 			offset+=8;
 		}
                 break;
-#ifdef INET6       
+#ifdef INET6
 	    case LMP_CTYPE_IPV6:
 #endif
             default:
                 hexdump=TRUE;
             }
-            break;      
-        
+            break;
+
 	case LMP_OBJ_CHANNEL_STATUS_REQ:
             switch(lmp_obj_ctype) {
 	    case LMP_CTYPE_IPV4:
@@ -743,14 +743,14 @@ lmp_print(register const u_char *pptr, register u_int len) {
 			offset+=4;
 		}
                 break;
-#ifdef INET6       
+#ifdef INET6
 	    case LMP_CTYPE_IPV6:
 #endif
 	    default:
                 hexdump=TRUE;
             }
-            break;      
-	
+            break;
+
         case LMP_OBJ_ERROR_CODE:
 	    switch(lmp_obj_ctype) {
             case LMP_CTYPE_BEGIN_VERIFY_ERROR:
@@ -759,7 +759,7 @@ lmp_print(register const u_char *pptr, register u_int len) {
 			"none",
 			EXTRACT_32BITS(obj_tptr)));
                 break;
-		
+
             case LMP_CTYPE_LINK_SUMMARY_ERROR:
 		printf("\n\t    Error Code: %s",
 		bittok2str(lmp_obj_link_summary_error_values,
@@ -769,31 +769,31 @@ lmp_print(register const u_char *pptr, register u_int len) {
             default:
                 hexdump=TRUE;
             }
-            break;      
+            break;
 
 	case LMP_OBJ_SERVICE_CONFIG:
 	    switch (lmp_obj_ctype) {
 	    case LMP_CTYPE_SERVICE_CONFIG_SP:
-		
+
 		printf("\n\t Flags: %s",
 		       bittok2str(lmp_obj_service_config_sp_flag_values,
-				  "none", 
+				  "none",
 				  EXTRACT_16BITS(obj_tptr)>>8));
 
 		printf("\n\t  UNI Version: %u",
 		       EXTRACT_16BITS(obj_tptr) & 0x00FF);
 
 		break;
-		
+
             case LMP_CTYPE_SERVICE_CONFIG_CPSA:
-		
+
 		link_type = EXTRACT_16BITS(obj_tptr)>>8;
-		
+
 		printf("\n\t Link Type: %s (%u)",
 		       tok2str(lmp_sd_service_config_cpsa_link_type_values,
 			       "Unknown", link_type),
 		       link_type);
-		
+
 		if (link_type == LMP_SD_SERVICE_CONFIG_CPSA_LINK_TYPE_SDH) {
 		    printf("\n\t Signal Type: %s (%u)",
 			   tok2str(lmp_sd_service_config_cpsa_signal_type_sdh_values,
@@ -801,7 +801,7 @@ lmp_print(register const u_char *pptr, register u_int len) {
 				   EXTRACT_16BITS(obj_tptr) & 0x00FF),
 			   EXTRACT_16BITS(obj_tptr) & 0x00FF);
 		}
-		
+
 		if (link_type == LMP_SD_SERVICE_CONFIG_CPSA_LINK_TYPE_SONET) {
 		    printf("\n\t Signal Type: %s (%u)",
 			   tok2str(lmp_sd_service_config_cpsa_signal_type_sonet_values,
@@ -809,37 +809,37 @@ lmp_print(register const u_char *pptr, register u_int len) {
 				   EXTRACT_16BITS(obj_tptr) & 0x00FF),
 			   EXTRACT_16BITS(obj_tptr) & 0x00FF);
 		}
-		
+
 		printf("\n\t Transparency: %s",
 		       bittok2str(lmp_obj_service_config_cpsa_tp_flag_values,
 				  "none",
 				  EXTRACT_16BITS(obj_tptr+2)>>8));
-		
+
 		printf("\n\t Contiguous Concatenation Types: %s",
 		       bittok2str(lmp_obj_service_config_cpsa_cct_flag_values,
 				  "none",
 				  EXTRACT_16BITS(obj_tptr+2)>>8 & 0x00FF));
-		
+
 		printf("\n\t Minimum NCC: %u",
 		       EXTRACT_16BITS(obj_tptr+4));
-		
+
 		printf("\n\t Maximum NCC: %u",
 		       EXTRACT_16BITS(obj_tptr+6));
-		
+
 		printf("\n\t Minimum NVC:%u",
 		       EXTRACT_16BITS(obj_tptr+8));
-		
+
 		printf("\n\t Maximum NVC:%u",
 		       EXTRACT_16BITS(obj_tptr+10));
-		
+
 		printf("\n\t    Local Interface ID: %s (0x%08x)",
 		       ipaddr_string(obj_tptr+12),
 		       EXTRACT_32BITS(obj_tptr+12));
-		
+
 		break;
-		
+
 	    case LMP_CTYPE_SERVICE_CONFIG_TRANSPARENCY_TCM:
-		
+
 		printf("\n\t Transparency Flags: %s",
 		       bittok2str(
 			   lmp_obj_service_config_nsa_transparency_flag_values,
@@ -851,11 +851,11 @@ lmp_print(register const u_char *pptr, register u_int len) {
 			   lmp_obj_service_config_nsa_tcm_flag_values,
 			   "none",
 			   EXTRACT_16BITS(obj_tptr+6) & 0x00FF));
-		
+
 		break;
-		
+
 	    case LMP_CTYPE_SERVICE_CONFIG_NETWORK_DIVERSITY:
-		
+
 		printf("\n\t Diversity: Flags: %s",
 		       bittok2str(
 			   lmp_obj_service_config_nsa_network_diversity_flag_values,

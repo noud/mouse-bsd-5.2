@@ -32,7 +32,7 @@ check_PROGRAMS = 				\
 TESTS = $(check_PROGRAMS)
 
 LDADD = libroken.la $(LIB_crypt)
-make_roken_LDADD = 
+make_roken_LDADD =
 
 noinst_LTLIBRARIES = libtest.la
 libtest_la_SOURCES = strftime.c strptime.c snprintf.c
@@ -108,7 +108,7 @@ EXTRA_libroken_la_SOURCES =	\
 	glob.hin		\
 	fnmatch.hin		\
 	ifaddrs.hin		\
-	vis.hin	
+	vis.hin
 
 libroken_la_LIBADD = @LTLIBOBJS@
 
@@ -141,7 +141,7 @@ ifaddrs_h = ifaddrs.h
 endif
 
 if have_vis_h
-vis_h = 
+vis_h =
 else
 vis_h = vis.h
 endif

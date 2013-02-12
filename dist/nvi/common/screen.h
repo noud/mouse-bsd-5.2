@@ -103,7 +103,7 @@ struct _scr {
 
 	CHAR_T	*c_lp;			/* Cached line. */
 	size_t	 c_len;			/* Cached line length. */
-	/* May move out again once we use DB 
+	/* May move out again once we use DB
 	 * to cache internal representation
 	 */
 	size_t	 c_blen;		/* Cached line buffer length. */

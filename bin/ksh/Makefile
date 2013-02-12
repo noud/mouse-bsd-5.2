@@ -15,7 +15,7 @@ DPSRCS+=ksh.1
 .endif
 
 # needs tbl for the man page.
-USETBL= 
+USETBL=
 
 # Environment for scripts executed during build.
 SCRIPT_ENV= \

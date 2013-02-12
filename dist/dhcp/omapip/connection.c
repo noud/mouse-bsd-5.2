@@ -166,7 +166,7 @@ isc_result_t omapi_connect_list (omapi_object_t *c,
 			local_sin.sin_len = sizeof local_addr;
 #endif
 			local_sin.sin_family = AF_INET;
-			
+
 			if (bind (obj -> socket, (struct sockaddr *)&local_sin,
 				  sizeof local_sin) < 0) {
 				omapi_object_dereference ((void *) &obj, MDL);
@@ -196,7 +196,7 @@ isc_result_t omapi_connect_list (omapi_object_t *c,
 			omapi_connection_dereference (&obj, MDL);
 			return ISC_R_UNEXPECTED;
 		}
-	
+
 		/* Set the file to nonblocking mode. */
 		if (fcntl (obj -> socket, F_SETFL, O_NONBLOCK) < 0) {
 			omapi_connection_dereference (&obj, MDL);
@@ -262,7 +262,7 @@ void omapi_connection_register (omapi_connection_object_t *obj,
 #if defined (TRACING)
 	if (trace_record ()) {
 		/* Connection registration packet:
-		   
+
 		     int32_t index
 		     int32_t listener_index [-1 means no listener]
 		   u_int16_t remote_port
@@ -341,7 +341,7 @@ static void trace_connect_input (trace_type_t *ttype,
 				omapi_listener_reference (&listener, lp, MDL);
 				omapi_listener_dereference (&lp, MDL);
 				break;
-			} 
+			}
 		} omapi_array_foreach_end (trace_listeners,
 					   omapi_listener_object_t, lp);
 		if (!listener) {
@@ -389,7 +389,7 @@ static void trace_connect_input (trace_type_t *ttype,
 		}
 	} omapi_array_foreach_end (omapi_connections,
 				   omapi_connection_object_t, lp);
-						 
+
 	log_error ("Spurious traced connect - index %ld, addr %s, port %d",
 		   (long int)connect_index, inet_ntoa (remote.sin_addr),
 		   ntohs (remote.sin_port));
@@ -406,7 +406,7 @@ static void trace_disconnect_input (trace_type_t *ttype,
 		log_error ("trace disconnect: wrong length %d", length);
 		return;
 	}
-	
+
 	index = (int32_t *)buf;
 
 	omapi_array_foreach_begin (omapi_connections,
@@ -640,7 +640,7 @@ static isc_result_t omapi_connection_connect_internal (omapi_object_t *h)
 		}
 		c -> state = omapi_connection_connected;
 	}
-	
+
 	/* I don't know why this would fail, so I'm tempted not to test
 	   the return value. */
 	sl = sizeof (c -> local_addr);
@@ -883,7 +883,7 @@ isc_result_t omapi_connection_set_value (omapi_object_t *h,
 
 		return ISC_R_SUCCESS;
 	}
-	
+
 	if (h -> inner && h -> inner -> type -> set_value)
 		return (*(h -> inner -> type -> set_value))
 			(h -> inner, id, name, value);
@@ -947,7 +947,7 @@ isc_result_t omapi_connection_get_value (omapi_object_t *h,
 		return omapi_make_int_value (value, name,
 					     dst_sig_size (c -> out_key), MDL);
 	}
-	
+
 	if (h -> inner && h -> inner -> type -> get_value)
 		return (*(h -> inner -> type -> get_value))
 			(h -> inner, id, name, value);
@@ -984,7 +984,7 @@ isc_result_t omapi_connection_signal_handler (omapi_object_t *h,
 #ifdef DEBUG_PROTOCOL
 	log_debug ("omapi_connection_signal_handler(%s)", name);
 #endif
-	
+
 	if (h -> inner && h -> inner -> type -> signal_handler)
 		return (*(h -> inner -> type -> signal_handler)) (h -> inner,
 								  name, ap);

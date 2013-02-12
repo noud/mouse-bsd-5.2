@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -80,7 +80,7 @@ int RSA_padding_add_X931(unsigned char *to, int tlen,
 		RSAerr(RSA_F_RSA_PADDING_ADD_X931,RSA_R_DATA_TOO_LARGE_FOR_KEY_SIZE);
 		return -1;
 		}
-	
+
 	p=(unsigned char *)to;
 
 	/* If no padding start and end nibbles are in one byte */

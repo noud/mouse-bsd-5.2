@@ -105,7 +105,7 @@ while(<>) {
 		# remove , within ()
 		while(s/\(([^()]*),(.*)\)/($1\$$2)/g){}
 		s/\<\s*void\s*\>/<>/;
-		# remove parameter names 
+		# remove parameter names
 		if($opt_P eq "remove") {
 		    s/(\s*)([a-zA-Z0-9_]+)([,>])/$3/g;
 		    s/\s+\*/*/g;
@@ -134,7 +134,7 @@ while(<>) {
 		    $RP = ")";
 		}
 		# only add newline if more than one parameter
-                if($flags{"multiline-proto"} && /,/){ 
+                if($flags{"multiline-proto"} && /,/){
 		    s/\</ $LP\n\t/;
 		}else{
 		    s/\</ $LP/;
@@ -306,7 +306,7 @@ if ($opt_E) {
 #endif
 
 ";
-    
+
     $private_h_header .= "#ifndef $opt_E
 #if defined(_WIN32)
 #define $opt_E _stdcall
@@ -317,9 +317,9 @@ if ($opt_E) {
 
 ";
 }
-    
+
 if ($public_h ne "" && $flags{"header"}) {
-    $public_h = $public_h_header . $public_h . 
+    $public_h = $public_h_header . $public_h .
 	$public_h_trailer . "#endif /* $block */\n";
 }
 if ($private_h ne "" && $flags{"header"}) {
@@ -329,10 +329,10 @@ if ($private_h ne "" && $flags{"header"}) {
 
 if($opt_o) {
     print OUT $public_h;
-} 
+}
 if($opt_p) {
     print PRIV $private_h;
-} 
+}
 
 close OUT;
 close PRIV;

@@ -62,10 +62,10 @@ ENTRY(ffs)
 	 * if X = 0, all further instructions are skipped
 	 */
 	adrne   r2, .L_ffs_table
-	orrne   r0, r0, r0, lsl #4  /* r0 = X * 0x11 */ 
+	orrne   r0, r0, r0, lsl #4  /* r0 = X * 0x11 */
 	orrne   r0, r0, r0, lsl #6  /* r0 = X * 0x451 */
 	rsbne   r0, r0, r0, lsl #16 /* r0 = X * 0x0450fbaf */
-              
+
 	/* now lookup in table indexed on top 6 bits of r0 */
 	ldrneb  r0, [ r2, r0, lsr #26 ]
 

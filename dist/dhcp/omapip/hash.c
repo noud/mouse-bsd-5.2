@@ -129,7 +129,7 @@ void relinquish_hash_bucket_hunks ()
 		if (!n)
 			p = &c -> next;
 	}
-		
+
 	for (c = hash_bucket_hunks; c; c = n) {
 		n = c -> next;
 		if (c -> len != 126) {
@@ -394,7 +394,7 @@ int casecmp (const void *v1, const void *v2, unsigned long len)
 	unsigned i;
 	const char *s = v1;
 	const char *t = v2;
-	
+
 	for (i = 0; i < len; i++)
 	{
 		int c1, c2;
@@ -402,12 +402,12 @@ int casecmp (const void *v1, const void *v2, unsigned long len)
 			c1 = tolower ((unsigned char)s [i]);
 		else
 			c1 = s [i];
-		
+
 		if (isupper ((unsigned char)t [i]))
 			c2 = tolower ((unsigned char)t [i]);
 		else
 			c2 = t [i];
-		
+
 		if (c1 < c2)
 			return -1;
 		if (c1 > c2)

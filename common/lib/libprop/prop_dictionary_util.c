@@ -51,7 +51,7 @@ prop_dictionary_get_bool(prop_dictionary_t dict,
 	b = prop_dictionary_get(dict, key);
 	if (prop_object_type(b) != PROP_TYPE_BOOL)
 		return (false);
-	
+
 	*valp = prop_bool_true(b);
 
 	return (true);

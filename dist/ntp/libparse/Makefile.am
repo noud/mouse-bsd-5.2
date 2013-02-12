@@ -29,7 +29,7 @@ libparse_a_SOURCES = parse.c \
 		     mfp_mul.c \
 		     gpstolfp.c
 
-libparse_kernel_a_SOURCES = 
+libparse_kernel_a_SOURCES =
 libparse_kernel_a_LIBADD = kparse$U.o \
 			    kparse_conf$U.o \
 			    kclk_computime$U.o \

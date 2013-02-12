@@ -3,9 +3,9 @@
 @pindex ntpdsim
 @cindex NTP daemon simulation program
 @ignore
-# 
+#
 # EDIT THIS FILE WITH CAUTION  (ntpdsim-opts.texi)
-# 
+#
 # It has been AutoGen-ed  Thursday January  8, 2009 at 06:12:03 AM EST
 # From the definitions    ntpdsim-opts.def
 # and the template file   aginfo.tpl
@@ -210,7 +210,7 @@ The name and path of the frequency file,
 by default.
 This is the same operation as the
 driftfile driftfile
-configuration specification in the 
+configuration specification in the
 /etc/ntp.conf
 file.
 

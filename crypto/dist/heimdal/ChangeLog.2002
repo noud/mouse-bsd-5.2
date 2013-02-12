@@ -114,7 +114,7 @@
 	lib/krb5/transited.c (krb5_domain_x500_decode): Validate some
 	counts: Check that they are non-negative, and that they are small
 	enough to avoid integer overflow when used in memory allocation
-	calculations.  Potential problem areas pointed out by 
+	calculations.  Potential problem areas pointed out by
 	Sebastian Krahmer <krahmer@suse.de>.
 
 	* lib/krb5/keytab_keyfile.c (akf_add_entry): Use O_EXCL when
@@ -161,7 +161,7 @@
 	* lib/krb5/get_cred.c (init_tgs_req): use
 	in_creds->session.keytype literally instead of trying to convert
 	to a list of enctypes (it should already be an enctype)
-	
+
 	* lib/krb5/get_cred.c (init_tgs_req): init ret
 
 2002-09-03  Johan Danielsson  <joda@pdc.kth.se>
@@ -285,15 +285,15 @@
 
 	* lib/krb5/krb5.h: we seem to call KRB5KDC_ERR_KEY_EXP
 	KRB5KDC_ERR_KEY_EXPIRED, so define the former to the latter
-	
+
 	* kdc/kdc.8: add blurb about adding and removing addresses; update
 	kdc.conf section to match reality
 
 	* configure.in: KRB_SENDAUTH_VLEN seems to always have existed, so
 	don't define it
-	
+
 2002-08-21  Assar Westerlund  <assar@kth.se>
-	
+
 	* lib/asn1/asn1_print.c: print OIDs too, based on a patch from
 	Love <lha@stacken.kth.se>
 
@@ -301,7 +301,7 @@
 
 	* kuser/kinit.c (do_v4_fallback): don't use krb_get_pw_in_tkt2
 	since it might not exist, and we don't actually care about the key
-	
+
 2002-08-20  Johan Danielsson  <joda@pdc.kth.se>
 
 	* lib/krb5/krb5.conf.5: correct documentation for
@@ -599,7 +599,7 @@
 2002-04-17  Johan Danielsson  <joda@pdc.kth.se>
 
 	* lib/krb5/verify_krb5_conf.c: add some log checking
-	
+
 	* lib/krb5/log.c (krb5_addlog_dest): reorganise syslog parsing
 
 2002-04-16  Johan Danielsson  <joda@pdc.kth.se>
@@ -628,7 +628,7 @@
 	18:3:1
 	* lib/hdb/Makefile.am (libhdb_la_LDFLAGS): bump version to 7:5:0
 	* lib/asn1/Makefile.am (libasn1_la_LDFLAGS): bump version to 6:0:0
-	
+
 2002-03-10  Assar Westerlund  <assar@sics.se>
 
 	* lib/krb5/rd_cred.c: handle addresses with port numbers

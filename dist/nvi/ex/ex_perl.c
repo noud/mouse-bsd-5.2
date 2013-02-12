@@ -33,7 +33,7 @@ static const char sccsid[] = "Id: ex_perl.c,v 8.11 2001/06/25 15:19:18 skimo Exp
 
 #include "../common/common.h"
 
-/* 
+/*
  * ex_perl -- :[line [,line]] perl [command]
  *	Run a command through the perl interpreter.
  *
@@ -42,7 +42,7 @@ static const char sccsid[] = "Id: ex_perl.c,v 8.11 2001/06/25 15:19:18 skimo Exp
  *
  * PUBLIC: int ex_perl __P((SCR*, EXCMD *));
  */
-int 
+int
 ex_perl(SCR *sp, EXCMD *cmdp)
 {
 #ifdef HAVE_PERL_INTERP

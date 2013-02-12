@@ -41,10 +41,10 @@ __RCSID("$NetBSD: osd-target.c,v 1.7 2007/11/12 23:25:42 agc Exp $");
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
 #endif
-  
+
 #include <stdio.h>
 #include <stdlib.h>
-    
+
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
@@ -71,7 +71,7 @@ static globals_t	g;
  */
 
 /* ARGSUSED0 */
-static void 
+static void
 handler(int s)
 {
 	if (ISCSI_GETPID != g_main_pid)
@@ -83,7 +83,7 @@ handler(int s)
 	return;
 }
 
-int 
+int
 main(int argc, char **argv)
 {
 	const char	*cf;

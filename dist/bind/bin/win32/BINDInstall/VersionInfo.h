@@ -11,7 +11,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-class CVersionInfo  
+class CVersionInfo
 {
 public:
 	CVersionInfo(CString filename);

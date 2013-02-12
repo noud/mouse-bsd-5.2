@@ -165,7 +165,7 @@ eoftn(struct interpass_prolog *ipp)
 		return; /* no code needs to be generated */
 
 	/* struct return needs special treatment */
-	if (ftype == STRTY || ftype == UNIONTY) 
+	if (ftype == STRTY || ftype == UNIONTY)
 		cerror("eoftn");
 
 	/* unwind stack frame */
@@ -278,7 +278,7 @@ twollcomp(NODE *p)
 		cb1 = LT;
 		cb2 = GT;
 		break;
-	
+
 	default:
 		cb1 = cb2 = 0; /* XXX gcc */
 	}
@@ -528,7 +528,7 @@ emul(NODE *p)
         else if (p->n_op == RS && p->n_type == LONGLONG) ch = "ashrdi3";
         else if (p->n_op == RS && (p->n_type == LONG || p->n_type == INT))
                 ch = "ashrsi3";
-        
+
         else if (p->n_op == DIV && p->n_type == LONGLONG) ch = "divdi3";
         else if (p->n_op == DIV && (p->n_type == LONG || p->n_type == INT))
                 ch = "divsi3";
@@ -629,7 +629,7 @@ ftou(NODE *p)
 		else
 			expand(p, 0, "\tlfd A3,");
 		printf("-4(%s)\n", rnames[SPREG]);
-		
+
 	} else {
 		if (l->n_type == FLOAT)
 			expand(p, 0, "\tlfs A3,AL\n");
@@ -1000,7 +1000,7 @@ reg64name(int reg, int hi)
 	if ((hi == HIREG && !features(FEATURE_BIGENDIAN)) ||
 	    (hi == LOWREG && features(FEATURE_BIGENDIAN)))
 		off = 1;
-		
+
 	fprintf(stdout, "%s" , rnames[idx + off]);
 }
 
@@ -1151,7 +1151,7 @@ static int
 calc_args_size(NODE *p)
 {
 	int n = 0;
-        
+
         if (p->n_op == CM) {
                 n += calc_args_size(p->n_left);
                 n += calc_args_size(p->n_right);

@@ -457,7 +457,7 @@ esp_print(netdissect_options *ndo,
 	 */
 	if (sa == NULL)
 		sa = ndo->ndo_sa_default;
-	
+
 	/* if not found fail */
 	if (sa == NULL)
 		goto fail;

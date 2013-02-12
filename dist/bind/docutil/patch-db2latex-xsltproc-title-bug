@@ -1,5 +1,5 @@
 ;; Id: patch-db2latex-xsltproc-title-bug,v 1.2 2007/01/12 22:24:20 sra Exp
-;; 
+;;
 ;; This patches around a problem that I don't completely understand,
 ;; and which may in fact be an xsltproc bug rather than a db2latex
 ;; bug.  Symptom is that the generated \title{} contains not only the
@@ -9,7 +9,7 @@
 ;; with --verbose and <xsl:message/> leave me more wondering whether
 ;; it's me or xsltproc that doesn't understand the XSLT pattern
 ;; matching rules.
-;; 
+;;
 ;; All that said, the change below prevents the bad behavior and
 ;; should be completely harmless, so it will do as a workaround.
 

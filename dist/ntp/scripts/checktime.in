@@ -1,12 +1,12 @@
 #! @PATH_PERL@
 #! @PATH_PERL@ -d
-# 
+#
 # This script compares the time of several machines with the
 # time on the local host.
 #
-# Use or modify it as you wish. 
+# Use or modify it as you wish.
 #
-# As the original author is only expecting 14 minutes of fame, 
+# As the original author is only expecting 14 minutes of fame,
 # leaving his name attached would be appreciated.
 #
 # R. Gary Cutbill <rgary@chrysalis.com>
@@ -30,19 +30,19 @@ print "\n";
 
 #
 # Sort the list of hosts, and print out there offsets
-# from the local host.  
+# from the local host.
 #
 @list=sort appropriately @results;
 foreach $i ( @list ) {
 
    @dargs=split(/\s+/,$i);
-   if ( $dargs[1] eq "\*Timeout\*" ) { 
+   if ( $dargs[1] eq "\*Timeout\*" ) {
      print "$i\n";
      chop $dargs[0];
      push(@down,$dargs[0]);
    } else {
      printf "%-25s %7s %3s %6s %10s %5s %8s %8s\n",@dargs;
-     if ( ( $dargs[4] > $tol ) || ( $dargs[4] < -$tol ) ) { 
+     if ( ( $dargs[4] > $tol ) || ( $dargs[4] < -$tol ) ) {
 	 chop $dargs[0];
          push(@toofarout,$dargs[0]); }
    }
@@ -52,11 +52,11 @@ foreach $i ( @list ) {
 # are in @toofarout.  Hosts that are down are in @down. They are treated the same
 # way here, but you might want to do something different depending on your site.
 #
-# print a set of suggested rsh commands to run on the hosts that 
+# print a set of suggested rsh commands to run on the hosts that
 # don't have "good" time.   "restartntp" is left as an excersize to the reader.
 # I usually use it to kill a running xntpd, ntpdate some server, and the start xntp
 # again.
-# 
+#
 print "\nConsider:\n";
 foreach $i ( (@down,@toofarout) ) {
     print "  rsh $i sudo restartntp\n";

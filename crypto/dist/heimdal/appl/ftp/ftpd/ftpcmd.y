@@ -504,7 +504,7 @@ cmd
 		{
 #ifdef KRB4
 			char *p;
-			
+
 			if(guest)
 				reply(500, "Can't be done as guest.");
 			else{
@@ -755,7 +755,7 @@ host_port
 
 			sin4->sin_family = AF_INET;
 			sin4->sin_port = htons($9 * 256 + $11);
-			sin4->sin_addr.s_addr = 
+			sin4->sin_addr.s_addr =
 			    htonl(($1 << 24) | ($3 << 16) | ($5 << 8) | $7);
 		}
 	;
@@ -1032,7 +1032,7 @@ struct tab sitetab[] = {
 	{ "FIND", LOCATE, STR1, 1,	"<sp> globexpr" },
 
 	{ "URL",  URL,  ARGS, 1,	"?" },
-	
+
 	{ NULL,   0,    0,    0,	0 }
 };
 

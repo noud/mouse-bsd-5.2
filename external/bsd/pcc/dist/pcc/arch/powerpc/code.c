@@ -180,7 +180,7 @@ param_double(struct symtab *sym, int *argofsp, int dotemps)
 		p = block(UMUL, p, NIL, ULONGLONG, 0, MKSUE(ULONGLONG));
 		p = buildtree(ASSIGN, p, q);
 		ecomp(p);
-	
+
 	        t = tempnode(0, sym->stype, sym->sdf, sym->ssue);
 		tmpnr = regno(t);
 		p = block(REG, NIL, NIL,
@@ -201,7 +201,7 @@ param_double(struct symtab *sym, int *argofsp, int dotemps)
 	}
 
 	(*argofsp) += 2;
-	
+
 	sym->soffset = tmpnr;
 	sym->sflags |= STNODE;
 }
@@ -560,7 +560,7 @@ ejobcode(int flag )
 
 #ifndef os_darwin
 #define _MKSTR(x) #x
-#define MKSTR(x) _MKSTR(x) 
+#define MKSTR(x) _MKSTR(x)
 #define OS MKSTR(TARGOS)
         printf("\t.ident \"PCC: %s (%s)\"\n", PACKAGE_STRING, OS);
 #endif
@@ -602,7 +602,7 @@ bycode(int t, int i)
 		} else if (lastoctal && '0' <= t && t <= '9') {
 			lastoctal = 0;
 			printf("\"\n\t.ascii \"%c", t);
-		} else {	
+		} else {
 			lastoctal = 0;
 			putchar(t);
 		}
@@ -893,7 +893,7 @@ mrst_rec(int num, struct swents **p, int n, int *state, int lab)
 	ecomp(r);
 
 	plabel(tbllabel);
-	
+
 	mrst_put_entry_and_recurse(num, p, n, state, tbllabel, lab,
 		0, tblsize, Wmax, lowbit);
 }
@@ -1362,7 +1362,7 @@ movearg_double(NODE *p, int *fregp, int *regp)
 	(*regp) += 2;
 
 #endif
-	
+
 	return p;
 }
 

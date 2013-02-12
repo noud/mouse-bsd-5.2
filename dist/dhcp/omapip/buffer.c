@@ -149,7 +149,7 @@ static isc_result_t omapi_connection_reader_trace (omapi_object_t *h,
 	int read_status;
 	omapi_connection_object_t *c;
 	unsigned bytes_to_read;
-	
+
 	if (!h || h -> type != omapi_type_connection)
 		return ISC_R_INVALIDARG;
 	c = (omapi_connection_object_t *)h;
@@ -157,7 +157,7 @@ static isc_result_t omapi_connection_reader_trace (omapi_object_t *h,
 	/* Make sure c -> bytes_needed is valid. */
 	if (c -> bytes_needed < 0)
 		return ISC_R_INVALIDARG;
-	
+
 	/* See if there are enough bytes. */
 	if (c -> in_bytes >= OMAPI_BUF_SIZE - 1 &&
 	    c -> in_bytes > c -> bytes_needed)
@@ -412,7 +412,7 @@ isc_result_t omapi_connection_copyout (unsigned char *buf,
 			buffer -> head = first_byte + bytes_this_copy - 1;
 			c -> in_bytes -= bytes_this_copy;
 		}
-			
+
 		if (!BYTES_IN_BUFFER (buffer))
 			buffer = buffer -> next;
 	}
@@ -507,14 +507,14 @@ isc_result_t omapi_connection_writer (omapi_object_t *h)
 			if (trace_record ()) {
 				trace_iov_t iov [2];
 				int32_t connect_index;
-				
+
 				connect_index = htonl (c -> index);
-				
+
 				iov [0].buf = (char *)&connect_index;
 				iov [0].len = sizeof connect_index;
 				iov [1].buf = &buffer -> buf [buffer -> tail];
 				iov [1].len = bytes_written;
-				
+
 				status = (trace_write_packet_iov
 					  (trace_connection_input, 2, iov,
 					   MDL));
@@ -536,11 +536,11 @@ isc_result_t omapi_connection_writer (omapi_object_t *h)
 			if (bytes_written != bytes_this_write)
 				return ISC_R_SUCCESS;
 		}
-			
+
 		if (!BYTES_IN_BUFFER (buffer))
 			buffer = buffer -> next;
 	}
-		
+
 	/* Get rid of any output buffers we emptied. */
 	buffer = (omapi_buffer_t *)0;
 	while (c -> outbufs &&
@@ -580,7 +580,7 @@ isc_result_t omapi_connection_put_uint32 (omapi_object_t *c,
 	u_int32_t inbuf;
 
 	inbuf = htonl (value);
-	
+
 	return omapi_connection_copyin (c, (unsigned char *)&inbuf,
 					sizeof inbuf);
 }
@@ -606,7 +606,7 @@ isc_result_t omapi_connection_put_uint16 (omapi_object_t *c,
 	u_int16_t inbuf;
 
 	inbuf = htons (value);
-	
+
 	return omapi_connection_copyin (c, (unsigned char *)&inbuf,
 					sizeof inbuf);
 }

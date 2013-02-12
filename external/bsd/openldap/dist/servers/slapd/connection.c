@@ -138,7 +138,7 @@ int connections_init(void)
 	/*
 	 * per entry initialization of the Connection array initialization
 	 * will be done by connection_init()
-	 */ 
+	 */
 
 	return 0;
 }
@@ -1088,7 +1088,7 @@ operations_error:
 		tag = LBER_ERROR;
 
 	} else if ( opidx != SLAP_OP_LAST ) {
-		/* increment completed operations count 
+		/* increment completed operations count
 		 * only if operation was initiated
 		 * and rc != SLAPD_DISCONNECT */
 		INCR_OP_COMPLETED( opidx );
@@ -1169,7 +1169,7 @@ void connection_client_stop(
 
 	/* get (locked) connection */
 	c = connection_get( s );
-	
+
 	assert( c->c_conn_state == SLAP_C_CLIENT );
 
 	c->c_listener = NULL;
@@ -1767,7 +1767,7 @@ static void connection_op_queue( Operation *op )
 
 	op->o_authtype = op->o_conn->c_authtype;
 	ber_dupbv( &op->o_authmech, &op->o_conn->c_authmech );
-	
+
 	if (!op->o_protocol) {
 		op->o_protocol = op->o_conn->c_protocol
 			? op->o_conn->c_protocol : LDAP_VERSION3;
@@ -1876,7 +1876,7 @@ connection_fake_destroy(
 	Opheader ohdr = {0};
 
 	conn_fake_extblock *eb = data;
-	
+
 	op.o_hdr = &ohdr;
 	op.o_hdr->oh_extensions = eb->eb_op;
 	conn.c_extensions = eb->eb_conn;

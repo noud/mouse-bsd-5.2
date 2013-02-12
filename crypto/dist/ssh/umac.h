@@ -1,7 +1,7 @@
 /*	$NetBSD: umac.h,v 1.1.1.1 2007/12/17 20:15:38 christos Exp $	*/
 /* $OpenBSD: umac.h,v 1.1 2007/06/07 19:37:34 pvalchev Exp $ */
 /* -----------------------------------------------------------------------
- * 
+ *
  * umac.h -- C Implementation UMAC Message Authentication
  *
  * Version 0.93a of rfc4418.txt -- 2006 July 14
@@ -11,7 +11,7 @@
  * Please report bugs and suggestions to the UMAC webpage.
  *
  * Copyright (c) 1999-2004 Ted Krovetz
- *                                                                 
+ *
  * Permission to use, copy, modify, and distribute this software and
  * its documentation for any purpose and with or without fee, is hereby
  * granted provided that the above copyright notice appears in all copies
@@ -19,10 +19,10 @@
  * holder not be used in advertising or publicity pertaining to
  * distribution of the software without specific, written prior permission.
  *
- * Comments should be directed to Ted Krovetz (tdk@acm.org)                                        
- *                                                                   
+ * Comments should be directed to Ted Krovetz (tdk@acm.org)
+ *
  * ---------------------------------------------------------------------- */
- 
+
  /* ////////////////////// IMPORTANT NOTES /////////////////////////////////
   *
   * 1) This version does not work properly on messages larger than 16MB
@@ -54,7 +54,7 @@
 #endif
 
 struct umac_ctx *umac_new(u_char key[]);
-/* Dynamically allocate a umac_ctx struct, initialize variables, 
+/* Dynamically allocate a umac_ctx struct, initialize variables,
  * generate subkeys from key.
  */
 
@@ -67,15 +67,15 @@ int umac_update(struct umac_ctx *ctx, u_char *input, long len);
 /* Incorporate len bytes pointed to by input into context ctx */
 
 int umac_final(struct umac_ctx *ctx, u_char tag[], u_char nonce[8]);
-/* Incorporate any pending data and the ctr value, and return tag. 
- * This function returns error code if ctr < 0. 
+/* Incorporate any pending data and the ctr value, and return tag.
+ * This function returns error code if ctr < 0.
  */
 
 int umac_delete(struct umac_ctx *ctx);
 /* Deallocate the context structure */
 
 #if 0
-int umac(struct umac_ctx *ctx, u_char *input, 
+int umac(struct umac_ctx *ctx, u_char *input,
          long len, u_char tag[],
          u_char nonce[8]);
 /* All-in-one implementation of the functions Reset, Update and Final */
@@ -88,14 +88,14 @@ int umac(struct umac_ctx *ctx, u_char *input,
 typedef struct uhash_ctx *uhash_ctx_t;
   /* The uhash_ctx structure is defined by the implementation of the    */
   /* UHASH functions.                                                   */
- 
+
 uhash_ctx_t uhash_alloc(u_char key[16]);
   /* Dynamically allocate a uhash_ctx struct and generate subkeys using */
   /* the kdf and kdf_key passed in. If kdf_key_len is 0 then RC6 is     */
   /* used to generate key with a fixed key. If kdf_key_len > 0 but kdf  */
   /* is NULL then the first 16 bytes pointed at by kdf_key is used as a */
   /* key for an RC6 based KDF.                                          */
-  
+
 int uhash_free(uhash_ctx_t ctx);
 
 int uhash_set_params(uhash_ctx_t ctx,

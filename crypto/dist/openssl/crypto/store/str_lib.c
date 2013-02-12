@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -84,7 +84,7 @@ const int STORE_param_sizes[STORE_PARAM_TYPE_NUM+1] =
 	sizeof(size_t),		/* BITS */
 	-1,			/* KEY_PARAMETERS */
 	0			/* KEY_NO_PARAMETERS */
-	};	
+	};
 
 const int STORE_attr_sizes[STORE_ATTR_TYPE_NUM+1] =
 	{
@@ -100,7 +100,7 @@ const int STORE_attr_sizes[STORE_ATTR_TYPE_NUM+1] =
 	SHA_DIGEST_LENGTH,	/* CERTHASH:		SHA1 digest, 160 bits */
 	-1,			/* EMAIL:		C string */
 	-1,			/* FILENAME:		C string */
-	};	
+	};
 
 STORE *STORE_new_method(const STORE_METHOD *method)
 	{
@@ -293,7 +293,7 @@ int STORE_store_certificate(STORE *s, X509 *data, OPENSSL_ITEM attributes[],
 			ERR_R_MALLOC_FAILURE);
 		return 0;
 		}
-	
+
 	CRYPTO_add(&data->references,1,CRYPTO_LOCK_X509);
 #ifdef REF_PRINT
 	REF_PRINT("X509",data);
@@ -510,7 +510,7 @@ int STORE_store_private_key(STORE *s, EVP_PKEY *data, OPENSSL_ITEM attributes[],
 			ERR_R_MALLOC_FAILURE);
 		return 0;
 		}
-	
+
 	CRYPTO_add(&data->references,1,CRYPTO_LOCK_EVP_PKEY);
 #ifdef REF_PRINT
 	REF_PRINT("EVP_PKEY",data);
@@ -574,7 +574,7 @@ int STORE_delete_private_key(STORE *s, OPENSSL_ITEM attributes[],
 	{
 	check_store(s,STORE_F_STORE_DELETE_PRIVATE_KEY,
 		delete_object,STORE_R_NO_DELETE_OBJECT_FUNCTION);
-	
+
 	if (!s->meth->delete_object(s, STORE_OBJECT_TYPE_PRIVATE_KEY,
 		    attributes, parameters))
 		{
@@ -705,7 +705,7 @@ int STORE_store_public_key(STORE *s, EVP_PKEY *data, OPENSSL_ITEM attributes[],
 			ERR_R_MALLOC_FAILURE);
 		return 0;
 		}
-	
+
 	CRYPTO_add(&data->references,1,CRYPTO_LOCK_EVP_PKEY);
 #ifdef REF_PRINT
 	REF_PRINT("EVP_PKEY",data);
@@ -769,7 +769,7 @@ int STORE_delete_public_key(STORE *s, OPENSSL_ITEM attributes[],
 	{
 	check_store(s,STORE_F_STORE_DELETE_PUBLIC_KEY,
 		delete_object,STORE_R_NO_DELETE_OBJECT_FUNCTION);
-	
+
 	if (!s->meth->delete_object(s, STORE_OBJECT_TYPE_PUBLIC_KEY,
 		    attributes, parameters))
 		{
@@ -919,7 +919,7 @@ int STORE_store_crl(STORE *s, X509_CRL *data, OPENSSL_ITEM attributes[],
 			ERR_R_MALLOC_FAILURE);
 		return 0;
 		}
-	
+
 	CRYPTO_add(&data->references,1,CRYPTO_LOCK_X509_CRL);
 #ifdef REF_PRINT
 	REF_PRINT("X509_CRL",data);
@@ -963,7 +963,7 @@ int STORE_delete_crl(STORE *s, OPENSSL_ITEM attributes[],
 	{
 	check_store(s,STORE_F_STORE_DELETE_CRL,
 		delete_object,STORE_R_NO_DELETE_OBJECT_FUNCTION);
-	
+
 	if (!s->meth->delete_object(s, STORE_OBJECT_TYPE_X509_CRL,
 		    attributes, parameters))
 		{
@@ -1061,7 +1061,7 @@ int STORE_store_number(STORE *s, BIGNUM *data, OPENSSL_ITEM attributes[],
 			ERR_R_MALLOC_FAILURE);
 		return 0;
 		}
-	
+
 	object->data.number = data;
 
 	i = s->meth->store_object(s, STORE_OBJECT_TYPE_NUMBER, object,
@@ -1151,7 +1151,7 @@ int STORE_store_arbitrary(STORE *s, BUF_MEM *data, OPENSSL_ITEM attributes[],
 			ERR_R_MALLOC_FAILURE);
 		return 0;
 		}
-	
+
 	object->data.arbitrary = data;
 
 	i = s->meth->store_object(s, STORE_OBJECT_TYPE_ARBITRARY, object,

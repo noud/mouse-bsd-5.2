@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: kiconv.c,v 1.3 2001/08/22 03:31:36 bp Exp 
+ * from: Id: kiconv.c,v 1.3 2001/08/22 03:31:36 bp Exp
  */
 
 #include <sys/cdefs.h>

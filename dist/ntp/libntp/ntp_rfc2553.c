@@ -149,7 +149,7 @@ getaddrinfo (const char *nodename, const char *servname,
 	 */
 	if (nodename == NULL && servname == NULL)
 		return (EAI_NONAME);
-	
+
 	ai = calloc(sizeof(struct addrinfo), 1);
 	if (ai == NULL)
 		return (EAI_MEMORY);

@@ -1,6 +1,6 @@
 /*	$NetBSD: l2vpn.c,v 1.2 2007/07/24 11:53:40 drochner Exp $	*/
 
-/* 
+/*
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that: (1) source code
  * distributions retain the above copyright notice and this paragraph
@@ -38,16 +38,16 @@ struct tok l2vpn_encaps_values[] = {
     { 0x00, "Reserved"},
     { 0x01, "Frame Relay"},
     { 0x02, "ATM AAL5 VCC transport"},
-    { 0x03, "ATM transparent cell transport"}, 
-    { 0x04, "Ethernet VLAN"}, 
-    { 0x05, "Ethernet"}, 
-    { 0x06, "Cisco-HDLC"}, 
-    { 0x07, "PPP"}, 
-    { 0x08, "SONET/SDH Circuit Emulation Service over MPLS"}, 
-    { 0x09, "ATM n-to-one VCC cell transport"}, 
-    { 0x0a, "ATM n-to-one VPC cell transport"}, 
-    { 0x0b, "IP Layer2 Transport"}, 
-    { 0x0c, "ATM one-to-one VCC Cell Mode"}, 
+    { 0x03, "ATM transparent cell transport"},
+    { 0x04, "Ethernet VLAN"},
+    { 0x05, "Ethernet"},
+    { 0x06, "Cisco-HDLC"},
+    { 0x07, "PPP"},
+    { 0x08, "SONET/SDH Circuit Emulation Service over MPLS"},
+    { 0x09, "ATM n-to-one VCC cell transport"},
+    { 0x0a, "ATM n-to-one VPC cell transport"},
+    { 0x0b, "IP Layer2 Transport"},
+    { 0x0c, "ATM one-to-one VCC Cell Mode"},
     { 0x0d, "ATM one-to-one VPC Cell Mode"},
     { 0x0e, "ATM AAL5 PDU VCC transport"},
     { 0x0f, "Frame-Relay Port mode"},
@@ -60,6 +60,6 @@ struct tok l2vpn_encaps_values[] = {
     { 0x16, "TDMoIP basic mode"},
     { 0x17, "CESoPSN TDM with CAS"},
     { 0x18, "TDMoIP TDM with CAS"},
-    { 0x40, "IP-interworking"}, 
+    { 0x40, "IP-interworking"},
     { 0, NULL}
 };

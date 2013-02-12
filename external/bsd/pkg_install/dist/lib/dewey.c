@@ -281,7 +281,7 @@ dewey_match(const char *pattern, const char *pkg)
 	    strncmp(pkg, pattern, (size_t)(version-pkg)) != 0)
 		return 0;
 	version++;
-	
+
 	/* extract comparison operator */
         if ((n = dewey_mktest(&op, sep)) < 0) {
 		return 0;

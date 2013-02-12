@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -199,7 +199,7 @@ int X509_verify_cert(X509_STORE_CTX *ctx)
 			 * match to avoid possible impersonation.
 			 */
 			ok = ctx->get_issuer(&xtmp, ctx, x);
-			if ((ok <= 0) || X509_cmp(x, xtmp)) 
+			if ((ok <= 0) || X509_cmp(x, xtmp))
 				{
 				ctx->error=X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT;
 				ctx->current_cert=x;
@@ -209,7 +209,7 @@ int X509_verify_cert(X509_STORE_CTX *ctx)
 				ok=cb(0,ctx);
 				if (!ok) goto end;
 				}
-			else 
+			else
 				{
 				/* We have a match: replace certificate with store version
 				 * so we get any trust settings.
@@ -385,7 +385,7 @@ static int get_issuer_sk(X509 **issuer, X509_STORE_CTX *ctx, X509 *x)
 	else
 		return 0;
 }
-	
+
 
 /* Check a certificate chains extensions for consistency
  * with the supplied purpose
@@ -740,7 +740,7 @@ static int get_crl_sk(X509_STORE_CTX *ctx, X509_CRL **pcrl,
 		*pcrl = best_crl;
 		CRYPTO_add(&best_crl->references, 1, CRYPTO_LOCK_X509);
 		}
-		
+
 	return 0;
 	}
 
@@ -808,7 +808,7 @@ static int idp_check_scope(X509 *x, X509_CRL *crl)
  * one CRL is retrieved. Multiple CRLs may be needed if we handle
  * CRLs partitioned on reason code later.
  */
-	
+
 static int get_crl(X509_STORE_CTX *ctx, X509_CRL **pcrl, X509 *x)
 	{
 	int ok;
@@ -1191,7 +1191,7 @@ int X509_cmp_time(const ASN1_TIME *ctm, time_t *cmp_time)
 	if ((*str == 'Z') || (*str == '-') || (*str == '+'))
 		{ *(p++)='0'; *(p++)='0'; }
 	else
-		{ 
+		{
 		*(p++)= *(str++);
 		*(p++)= *(str++);
 		/* Skip any fractional seconds... */
@@ -1200,7 +1200,7 @@ int X509_cmp_time(const ASN1_TIME *ctm, time_t *cmp_time)
 			str++;
 			while ((*str >= '0') && (*str <= '9')) str++;
 			}
-		
+
 		}
 	*(p++)='Z';
 	*(p++)='\0';
@@ -1296,7 +1296,7 @@ int X509_get_pubkey_parameters(EVP_PKEY *pkey, STACK_OF(X509) *chain)
 		EVP_PKEY_copy_parameters(ktmp2,ktmp);
 		EVP_PKEY_free(ktmp2);
 		}
-	
+
 	if (pkey != NULL) EVP_PKEY_copy_parameters(pkey,ktmp);
 	EVP_PKEY_free(ktmp);
 	return 1;

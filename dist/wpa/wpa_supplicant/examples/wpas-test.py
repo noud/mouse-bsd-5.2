@@ -14,7 +14,7 @@ WPAS_DBUS_BSSID_INTERFACE = "fi.epitest.hostap.WPASupplicant.BSSID"
 
 def byte_array_to_string(s):
 	import urllib
-	r = ""    
+	r = ""
 	for c in s:
 		if c >= 32 and c < 127:
 			r += "%c" % c

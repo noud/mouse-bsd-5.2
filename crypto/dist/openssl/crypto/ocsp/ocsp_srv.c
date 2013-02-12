@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -162,14 +162,14 @@ OCSP_SINGLERESP *OCSP_basic_add1_status(OCSP_BASICRESP *rsp,
 		        }
 		if (!(cs->value.revoked = ri = OCSP_REVOKEDINFO_new())) goto err;
 		if (!ASN1_TIME_to_generalizedtime(revtime, &ri->revocationTime))
-			goto err;	
+			goto err;
 		if (reason != OCSP_REVOKED_STATUS_NOSTATUS)
 		        {
-			if (!(ri->revocationReason = ASN1_ENUMERATED_new())) 
+			if (!(ri->revocationReason = ASN1_ENUMERATED_new()))
 			        goto err;
-			if (!(ASN1_ENUMERATED_set(ri->revocationReason, 
+			if (!(ASN1_ENUMERATED_set(ri->revocationReason,
 						  reason)))
-			        goto err;	
+			        goto err;
 			}
 		break;
 
@@ -205,7 +205,7 @@ int OCSP_basic_add1_cert(OCSP_BASICRESP *resp, X509 *cert)
 	return 1;
 	}
 
-int OCSP_basic_sign(OCSP_BASICRESP *brsp, 
+int OCSP_basic_sign(OCSP_BASICRESP *brsp,
 			X509 *signer, EVP_PKEY *key, const EVP_MD *dgst,
 			STACK_OF(X509) *certs, unsigned long flags)
         {

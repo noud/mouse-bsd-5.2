@@ -147,7 +147,7 @@ main(
 #endif
 #endif
 	}
-    
+
 	if (__adjtimex(&txc) < 0)
 	{
 		perror("adjtimex");
@@ -272,7 +272,7 @@ main(
 			}
 
 #if defined SCO5_CLOCK
-			if (writetickadj % HZ) 
+			if (writetickadj % HZ)
 			{
 				writetickadj = (writetickadj / HZ) * HZ;
 				(void) fprintf(stderr,
@@ -333,28 +333,28 @@ main(
 
 	if (writetick && (tick_offset == 0))
 	{
-		(void) fprintf(stderr, 
+		(void) fprintf(stderr,
 			       "No tick kernel variable\n");
 		errflg++;
 	}
-	
+
 	if (writeopttickadj && (tickadj_offset == 0))
 	{
-		(void) fprintf(stderr, 
+		(void) fprintf(stderr,
 			       "No tickadj kernel variable\n");
 		errflg++;
 	}
 
 	if (unsetdosync && (dosync_offset == 0))
 	{
-		(void) fprintf(stderr, 
+		(void) fprintf(stderr,
 			       "No dosynctodr kernel variable\n");
 		errflg++;
 	}
-	
+
 	if (setnoprintf && (noprintf_offset == 0))
 	{
-		(void) fprintf(stderr, 
+		(void) fprintf(stderr,
 			       "No noprintf kernel variable\n");
 		errflg++;
 	}
@@ -457,7 +457,7 @@ main(
 				      K_TICK_NAME
 #else
 				      "<this can't happen>"
-#endif			
+#endif
 				      );
 		}
 #ifdef PRESET_TICK
@@ -521,7 +521,7 @@ main(
 	}
 #endif /* MIN_REC_TICKADJ */
 #endif /* SCO5_CLOCK */
-  
+
 
 	if ((!quiet) && (tickadj_offset != 0))
 	{
@@ -851,7 +851,7 @@ writevar(
 	int var
 	)
 {
-	
+
 	if (lseek(ofd, off, L_SET) == -1)
 	{
 		(void) fprintf(stderr, "%s: lseek fails: ", progname);
@@ -879,7 +879,7 @@ readvar(
 	)
 {
 	int i;
-	
+
 	if (lseek(ifd, off, L_SET) == -1)
 	{
 		(void) fprintf(stderr, "%s: lseek fails: ", progname);

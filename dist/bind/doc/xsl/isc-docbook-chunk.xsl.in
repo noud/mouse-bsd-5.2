@@ -16,7 +16,7 @@
 
 <!-- Id: isc-docbook-chunk.xsl.in,v 1.6 2007/06/19 23:47:13 tbox Exp -->
 
-<!-- ISC customizations for Docbook-XSL chunked HTML generator --> 
+<!-- ISC customizations for Docbook-XSL chunked HTML generator -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
@@ -58,7 +58,7 @@
 
 </xsl:stylesheet>
 
-<!-- 
+<!--
   - Local variables:
   - mode: sgml
   - End:

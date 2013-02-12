@@ -81,5 +81,5 @@ initiator.o: initiator.c $(INCLUDE)/iscsi.h $(INCLUDE)/iscsiutil.h $(INCLUDE)/in
 # Util
 #
 
-clean: 
+clean:
 	rm -f $(INITIATORS) $(TARGETS) *.o *.core

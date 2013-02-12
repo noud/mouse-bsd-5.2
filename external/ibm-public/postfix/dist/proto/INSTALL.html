@@ -189,7 +189,7 @@ the following command from the Postfix top-level directory: </p>
 </blockquote>
 
 <p> If you copied the Postfix source code after building it on another
-machine, it is a good idea to cd into the top-level directory and 
+machine, it is a good idea to cd into the top-level directory and
 first do this:</p>
 
 <blockquote>
@@ -216,7 +216,7 @@ directory of the source tree and type: </p>
 <p> To build with a non-default compiler, you need to specify the name
 of the compiler. Here are a few examples: </p>
 
-<blockquote> 
+<blockquote>
 <pre>
 % make makefiles CC=/opt/SUNWspro/bin/cc        (Solaris)
 % make
@@ -425,7 +425,7 @@ build for the native flavor, instead of the emulated one. </p>
 <p> Add an "#ifdef SYSTEMTYPE" section to the central util/sys_defs.h
 include file.  You may have to invent new feature macro names.
 Please choose sensible feature macro names such as HAS_DBM or
-FIONREAD_IN_SYS_FILIO_H.  
+FIONREAD_IN_SYS_FILIO_H.
 
 <p> I strongly recommend against using "#ifdef SYSTEMTYPE" in
 individual source files.  While this may look like the quickest
@@ -789,8 +789,8 @@ main.cf or master.cf (or to their parent directories) means giving
 root privileges to that person. </p>
 
 <p> In /etc/postfix/main.cf, you will have to set up a minimal number
-of configuration parameters.  Postfix configuration parameters  
-resemble shell variables, with two important differences: the first  
+of configuration parameters.  Postfix configuration parameters
+resemble shell variables, with two important differences: the first
 one is that Postfix does not know about quotes like the UNIX shell
 does.</p>
 

@@ -3,7 +3,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -15,7 +15,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -54,7 +54,7 @@ static const char in_addrany[] = { 0, 0, 0, 0 };
 static const char in6_addrany[] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
-static const char in_loopback[] = { 127, 0, 0, 1 }; 
+static const char in_loopback[] = { 127, 0, 0, 1 };
 static const char in6_loopback[] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
 };
@@ -71,7 +71,7 @@ static struct afd {
 	int a_socklen;
 	int a_off;
 	const char *a_addrany;
-	const char *a_loopback;	
+	const char *a_loopback;
 } afdl [] = {
 #ifdef INET6
 #define N_INET6 0
@@ -105,7 +105,7 @@ static int get_addr(const char *, int, struct addrinfo **,
 static int get_addr0(const char *, int, struct addrinfo **,
 		     struct addrinfo *, int);
 static int str_isnumber(const char *);
-	
+
 static char *ai_errlist[] = {
 	"Success",
 	"Address family for hostname not supported",	/* EAI_ADDRFAMILY */
@@ -225,7 +225,7 @@ getaddrinfo(hostname, servname, hints, res)
 	pai->ai_addr = NULL;
 	pai->ai_next = NULL;
 	port = ANY;
-	
+
 	if (hostname == NULL && servname == NULL)
 		return EAI_NONAME;
 	if (hints) {
@@ -327,7 +327,7 @@ getaddrinfo(hostname, servname, hints, res)
 			}
 		}
 	}
-	
+
 	/*
 	 * hostname == NULL.
 	 * passive socket -> anyaddr (0.0.0.0 or ::)
@@ -372,7 +372,7 @@ getaddrinfo(hostname, servname, hints, res)
 		else
 			ERR(EAI_FAMILY);
 	}
-	
+
 	/* hostname as numeric name */
 	for (i = 0; afdl[i].a_af; i++) {
 		if (inet_pton(afdl[i].a_af, hostname, pton) == 1) {
@@ -396,7 +396,7 @@ getaddrinfo(hostname, servname, hints, res)
 				break;
 #endif
 			}
-			
+
 			if (pai->ai_family == afdl[i].a_af ||
 			    pai->ai_family == PF_UNSPEC) {
 				if (! (pai->ai_flags & AI_CANONNAME)) {
@@ -414,7 +414,7 @@ getaddrinfo(hostname, servname, hints, res)
 				 */
 				get_name(pton, &afdl[i], &top, pton, pai, port);
 				goto good;
-			} else 
+			} else
 				ERR(EAI_FAMILY);	/*xxx*/
 		}
 	}
@@ -459,7 +459,7 @@ get_name(addr, afd, res, numaddr, pai, port0)
 		GET_CANONNAME(cur, hp->h_name);
 	} else
 		GET_AI(cur, afd, numaddr, port);
-	
+
 	*res = cur;
 	return SUCCESS;
  free:
@@ -591,7 +591,7 @@ get_addr0(hostname, af, res, pai, port0)
 	if ((hp->h_name == NULL) || (hp->h_name[0] == 0) ||
 	    (hp->h_addr_list[0] == NULL))
 		ERR(EAI_FAIL);
-	
+
 	for (i = 0; (ap = hp->h_addr_list[i]) != NULL; i++) {
 		switch (af) {
 #ifdef INET6

@@ -55,15 +55,15 @@ static const char *dccp_reset_codes[] = {
 };
 
 static const char *dccp_feature_nums[] = {
-	"reserved", 
+	"reserved",
 	"ccid",
 	"allow_short_seqno",
 	"sequence_window",
-	"ecn_incapable", 
-	"ack_ratio",     
+	"ecn_incapable",
+	"ack_ratio",
 	"send_ack_vector",
-	"send_ndp_count", 
-	"minimum checksum coverage", 
+	"send_ndp_count",
+	"minimum checksum coverage",
 	"check data checksum",
 };
 
@@ -217,7 +217,7 @@ static int dccp_print_option(const u_char *option);
 /**
  * dccp_print - show dccp packet
  * @bp - beginning of dccp packet
- * @data2 - beginning of enclosing 
+ * @data2 - beginning of enclosing
  * @len - lenght of ip packet
  */
 void dccp_print(const u_char *bp, const u_char *data2, u_int len)
@@ -292,22 +292,22 @@ void dccp_print(const u_char *bp, const u_char *data2, u_int len)
 			u_int16_t sum, dccp_sum;
 
 			sum = dccp6_cksum(ip6, dh, len);
-			dccp_sum = EXTRACT_16BITS(&dh->dccph_checksum);		
-			printf("cksum 0x%04x", dccp_sum);		
+			dccp_sum = EXTRACT_16BITS(&dh->dccph_checksum);
+			printf("cksum 0x%04x", dccp_sum);
 			if (sum != 0) {
 				(void)printf(" (incorrect (-> 0x%04x), ",in_cksum_shouldbe(dccp_sum, sum));
 			} else
 				(void)printf(" (correct), ");
-		}					
-	} else 
+		}
+	} else
 #endif /* INET6 */
 	if (vflag)
 	{
 		u_int16_t sum, dccp_sum;
 
 		sum = dccp_cksum(ip, dh, len);
-		dccp_sum = EXTRACT_16BITS(&dh->dccph_checksum);		
-		printf("cksum 0x%04x", dccp_sum);		
+		dccp_sum = EXTRACT_16BITS(&dh->dccph_checksum);
+		printf("cksum 0x%04x", dccp_sum);
 		if (sum != 0) {
 			(void)printf(" (incorrect (-> 0x%04x), ",in_cksum_shouldbe(dccp_sum, sum));
 		} else
@@ -376,7 +376,7 @@ void dccp_print(const u_char *bp, const u_char *data2, u_int len)
 		break;
 	}
 
-	if ((DCCPH_TYPE(dh) != DCCP_PKT_DATA) && 
+	if ((DCCPH_TYPE(dh) != DCCP_PKT_DATA) &&
 			(DCCPH_TYPE(dh) != DCCP_PKT_REQUEST))
 		dccp_print_ack_no(bp);
 
@@ -390,19 +390,19 @@ void dccp_print(const u_char *bp, const u_char *data2, u_int len)
 		const u_char *cp;
 		u_int optlen;
 		cp = bp + dccp_basic_hdr_len(dh) + extlen;
-		printf(" <");	
+		printf(" <");
 
 		hlen -= dccp_basic_hdr_len(dh) + extlen;
 		while(1){
 			TCHECK(*cp);
 			optlen = dccp_print_option(cp);
 			if (!optlen) goto trunc2;
-			if (hlen <= optlen) break; 
+			if (hlen <= optlen) break;
 			hlen -= optlen;
 			cp += optlen;
 			printf(", ");
 		}
-		printf(">");	
+		printf(">");
 	}
 	return;
 trunc:
@@ -412,7 +412,7 @@ trunc2:
 }
 
 static int dccp_print_option(const u_char *option)
-{	
+{
 	u_int8_t optlen, i;
 	u_int32_t *ts;
 	u_int16_t *var16;
@@ -434,60 +434,60 @@ static int dccp_print_option(const u_char *option)
 	switch (*option){
 	case 0:
 		printf("nop");
-		break;	
+		break;
 	case 1:
 		printf("mandatory");
-		break;	
+		break;
 	case 2:
 		printf("slowreceiver");
-		break;	
+		break;
 	case 32:
 		printf("change_l");
 		if (*(option +2) < 10){
 			printf(" %s", dccp_feature_nums[*(option +2)]);
-			for (i = 0; i < optlen -3; i ++) printf(" %d", *(option +3 + i));	
+			for (i = 0; i < optlen -3; i ++) printf(" %d", *(option +3 + i));
 		}
-		break;	
+		break;
 	case 33:
 		printf("confirm_l");
 		if (*(option +2) < 10){
 			printf(" %s", dccp_feature_nums[*(option +2)]);
-			for (i = 0; i < optlen -3; i ++) printf(" %d", *(option +3 + i));	
+			for (i = 0; i < optlen -3; i ++) printf(" %d", *(option +3 + i));
 		}
 		break;
 	case 34:
 	        printf("change_r");
 		if (*(option +2) < 10){
 			printf(" %s", dccp_feature_nums[*(option +2)]);
-			for (i = 0; i < optlen -3; i ++) printf(" %d", *(option +3 + i));	
+			for (i = 0; i < optlen -3; i ++) printf(" %d", *(option +3 + i));
 		}
 		break;
 	case 35:
 		printf("confirm_r");
 		if (*(option +2) < 10){
 			printf(" %s", dccp_feature_nums[*(option +2)]);
-			for (i = 0; i < optlen -3; i ++) printf(" %d", *(option +3 + i));	
+			for (i = 0; i < optlen -3; i ++) printf(" %d", *(option +3 + i));
 		}
 		break;
 	case 36:
 		printf("initcookie 0x");
-		for (i = 0; i < optlen -2; i ++) printf("%02x", *(option +2 + i));	
+		for (i = 0; i < optlen -2; i ++) printf("%02x", *(option +2 + i));
 		break;
 	case 37:
 		printf("ndp_count");
-		for (i = 0; i < optlen -2; i ++) printf(" %d", *(option +2 + i));	
+		for (i = 0; i < optlen -2; i ++) printf(" %d", *(option +2 + i));
 		break;
 	case 38:
 		printf("ack_vector0 0x");
-		for (i = 0; i < optlen -2; i ++) printf("%02x", *(option +2 + i));	
+		for (i = 0; i < optlen -2; i ++) printf("%02x", *(option +2 + i));
 		break;
 	case 39:
 		printf("ack_vector1 0x");
-		for (i = 0; i < optlen -2; i ++) printf("%02x", *(option +2 + i));	
+		for (i = 0; i < optlen -2; i ++) printf("%02x", *(option +2 + i));
 		break;
 	case 40:
 		printf("data_dropped 0x");
-		for (i = 0; i < optlen -2; i ++) printf("%02x", *(option +2 + i));	
+		for (i = 0; i < optlen -2; i ++) printf("%02x", *(option +2 + i));
 		break;
 	case 41:
 		ts = (u_int32_t *)(option + 2);
@@ -505,11 +505,11 @@ static int dccp_print_option(const u_char *option)
 		} else {
 			var16 = (u_int16_t *)(option + 2);
 			printf("%u", ntohs(*var16));
-		}	
+		}
 		break;
 	case 44:
 		printf("data_checksum ");
-		for (i = 0; i < optlen -2; i ++) printf("%02x", *(option +2 + i));	
+		for (i = 0; i < optlen -2; i ++) printf("%02x", *(option +2 + i));
 		break;
 	default :
 		if (*option >= 128) {
@@ -528,7 +528,7 @@ static int dccp_print_option(const u_char *option)
 			}
 			break;
 		}
-			
+
 		printf("unknown_opt %d", *option);
 		break;
 	}

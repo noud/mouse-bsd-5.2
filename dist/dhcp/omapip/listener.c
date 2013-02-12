@@ -122,7 +122,7 @@ isc_result_t omapi_listen_addr (omapi_object_t *h,
 				return ISC_R_NORESOURCES;
 			return ISC_R_UNEXPECTED;
 		}
-	
+
 #if defined (HAVE_SETFD)
 		if (fcntl (obj -> socket, F_SETFD, 1) < 0) {
 			close (obj -> socket);
@@ -140,7 +140,7 @@ isc_result_t omapi_listen_addr (omapi_object_t *h,
 			omapi_listener_dereference (&obj, MDL);
 			return ISC_R_UNEXPECTED;
 		}
-		
+
 		/* Try to bind to the wildcard address using the port number
 		   we were given. */
 		i = bind (obj -> socket,
@@ -185,7 +185,7 @@ int omapi_listener_readfd (omapi_object_t *h)
 	if (h -> type != omapi_type_listener)
 		return -1;
 	l = (omapi_listener_object_t *)h;
-	
+
 	return l -> socket;
 }
 
@@ -212,7 +212,7 @@ isc_result_t omapi_accept (omapi_object_t *h)
 			return ISC_R_NORESOURCES;
 		return ISC_R_UNEXPECTED;
 	}
-	
+
 #if defined (TRACING)
 	/* If we're recording a trace, remember the connection. */
 	if (trace_record ()) {
@@ -262,7 +262,7 @@ isc_result_t omapi_listener_connect (omapi_connection_object_t **obj,
 #ifdef DEBUG_PROTOCOL
 	log_debug ("omapi_accept()");
 #endif
-	
+
 	/* Get the handle. */
 	status = omapi_connection_allocate (obj, MDL);
 	if (status != ISC_R_SUCCESS)
@@ -388,7 +388,7 @@ isc_result_t omapi_listener_set_value (omapi_object_t *h,
 {
 	if (h -> type != omapi_type_listener)
 		return ISC_R_INVALIDARG;
-	
+
 	if (h -> inner && h -> inner -> type -> set_value)
 		return (*(h -> inner -> type -> set_value))
 			(h -> inner, id, name, value);
@@ -402,7 +402,7 @@ isc_result_t omapi_listener_get_value (omapi_object_t *h,
 {
 	if (h -> type != omapi_type_listener)
 		return ISC_R_INVALIDARG;
-	
+
 	if (h -> inner && h -> inner -> type -> get_value)
 		return (*(h -> inner -> type -> get_value))
 			(h -> inner, id, name, value);
@@ -421,7 +421,7 @@ isc_result_t omapi_listener_destroy (omapi_object_t *h,
 #ifdef DEBUG_PROTOCOL
 	log_debug ("omapi_listener_destroy()");
 #endif
-	
+
 	if (l -> socket != -1) {
 		close (l -> socket);
 		l -> socket = -1;
@@ -434,7 +434,7 @@ isc_result_t omapi_listener_signal_handler (omapi_object_t *h,
 {
 	if (h -> type != omapi_type_listener)
 		return ISC_R_INVALIDARG;
-	
+
 	if (h -> inner && h -> inner -> type -> signal_handler)
 		return (*(h -> inner -> type -> signal_handler)) (h -> inner,
 								  name, ap);

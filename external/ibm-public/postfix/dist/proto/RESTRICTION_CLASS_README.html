@@ -47,7 +47,7 @@ care about these low-level details. </p>
     restrictive = reject_unknown_sender_domain reject_unknown_client_hostname ...
     permissive = permit
 
-    smtpd_recipient_restrictions = 
+    smtpd_recipient_restrictions =
 	permit_mynetworks
 	reject_unauth_destination
 	check_recipient_access hash:/etc/postfix/recipient_access
@@ -197,7 +197,7 @@ with LDAP or SQL. </p>
         <i>...other stuff...</i>
 
     smtpd_restriction_classes = local_only
-    local_only = 
+    local_only =
         check_recipient_access hash:/etc/postfix/local_domains, reject
 
 /etc/postfix/restricted_senders:

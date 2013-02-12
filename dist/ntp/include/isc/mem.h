@@ -25,9 +25,9 @@
 #include <stdio.h>
 #include <isc/types.h>
 
-void *		
+void *
 isc_mem_get(isc_mem_t *, size_t);
-void 		
+void
 isc_mem_put(isc_mem_t *, void *, size_t);
 
 #endif /* ISC_MEM_H */

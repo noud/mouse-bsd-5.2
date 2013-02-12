@@ -384,7 +384,7 @@ key_setsadbprop()
  	m_comb->sadb_comb_hard_addtime = 0;
  	m_comb->sadb_comb_soft_usetime = 0;
  	m_comb->sadb_comb_hard_usetime = 0;
- 
+
  	key_setsadbextbuf(m_buf, m_len,
  			(caddr_t)&m_prop, sizeof(struct sadb_prop),
  			buf, sizeof(*m_comb) * 3);
@@ -408,7 +408,7 @@ key_setsadbprop()
  	m_comb->sadb_comb_hard_addtime = 0;
  	m_comb->sadb_comb_soft_usetime = 0;
  	m_comb->sadb_comb_hard_usetime = 0;
- 
+
  	key_setsadbextbuf(m_buf, m_len,
  			(caddr_t)&m_prop, sizeof(struct sadb_prop),
  			buf, sizeof(*m_comb) * 3);
@@ -557,7 +557,7 @@ key_setsadbaddr(ext, af, str)
 		/* XXX bark */
 		exit(1);
 	}
-	
+
 	len = sizeof(struct sadb_address) + PFKEY_ALIGN8(res->ai_addrlen);
 	m_addr.sadb_address_len = PFKEY_UNIT64(len);
 	m_addr.sadb_address_exttype = ext;

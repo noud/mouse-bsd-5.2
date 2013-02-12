@@ -60,7 +60,7 @@ over_db_config(
 			/* a database added an overlay;
 			 * work it around... */
 			assert( overlay_is_over( be ) );
-			
+
 			oi2 = ( slap_overinfo * )be->bd_info->bi_private;
 			on2 = oi2->oi_list;
 
@@ -79,9 +79,9 @@ over_db_config(
 
 					/* NOTE: if the overlay already exists,
 					 * there is no way to merge the results
-					 * of the configuration that may have 
+					 * of the configuration that may have
 					 * occurred during bi_db_config(); we
-					 * just issue a warning, and the 
+					 * just issue a warning, and the
 					 * administrator should deal with this */
 				}
 			}
@@ -126,7 +126,7 @@ over_db_config(
 	}
 	be->bd_info = bi_orig;
 	be->be_cf_ocs = be_cf_ocs;
-	
+
 	return rc;
 }
 
@@ -933,8 +933,8 @@ overlay_register(
 
 /*
  * iterator on registered overlays; overlay_next( NULL ) returns the first
- * overlay; subsequent calls with the previously returned value allow to 
- * iterate over the entire list; returns NULL when no more overlays are 
+ * overlay; subsequent calls with the previously returned value allow to
+ * iterate over the entire list; returns NULL when no more overlays are
  * registered.
  */
 
@@ -1016,7 +1016,7 @@ overlay_is_inst( BackendDB *be, const char *over_type )
 	if ( !overlay_is_over( be ) ) {
 		return 0;
 	}
-	
+
 	on = ((slap_overinfo *)be->bd_info->bi_private)->oi_list;
 	for ( ; on; on = on->on_next ) {
 		if ( strcmp( on->on_bi.bi_type, over_type ) == 0 ) {
@@ -1039,7 +1039,7 @@ overlay_register_control( BackendDB *be, const char *oid )
 
 	if ( SLAP_ISGLOBALOVERLAY( be ) ) {
 		BackendDB *bd;
-		
+
 		/* add to all backends... */
 		LDAP_STAILQ_FOREACH( bd, &backendDB, be_next ) {
 			if ( be == bd ) {
@@ -1051,7 +1051,7 @@ overlay_register_control( BackendDB *be, const char *oid )
 		}
 
 	}
-	
+
 	if ( !gotit ) {
 		be->be_ctrls[ cid ] = 1;
 		be->be_ctrls[ SLAP_MAX_CIDS ] = 1;
@@ -1106,9 +1106,9 @@ overlay_remove( BackendDB *be, slap_overinst *on )
 			break;
 		}
 	}
-	
+
 	/* clean up after removing last overlay */
-	if ( ! oi->oi_list ) 
+	if ( ! oi->oi_list )
 	{
 		/* reset db flags and bd_info to orig */
 		SLAP_DBFLAGS( be ) &= ~SLAP_DBFLAG_GLOBAL_OVERLAY;
@@ -1271,7 +1271,7 @@ overlay_config( BackendDB *be, const char *ov, int idx, BackendInfo **res, Confi
 		bi->bi_access_allowed = over_access_allowed;
 		bi->bi_acl_group = over_acl_group;
 		bi->bi_acl_attribute = over_acl_attribute;
-		
+
 		bi->bi_connection_init = over_connection_init;
 		bi->bi_connection_destroy = over_connection_destroy;
 

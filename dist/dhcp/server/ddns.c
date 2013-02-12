@@ -443,7 +443,7 @@ int ddns_updates (struct packet *packet,
 		}
 	}
       in:
-		
+
 	/* If we don't have a name that the client has been assigned, we
 	   can just skip all this. */
 	if (!ddns_fwd_name.len)
@@ -515,7 +515,7 @@ int ddns_updates (struct packet *packet,
 			ddns_rev_name.buffer -> data [ddns_rev_name.len] ='\0';
 			ddns_rev_name.terminated = 1;
 		}
-		
+
 		data_string_forget (&d1, MDL);
 	}
 
@@ -552,7 +552,7 @@ int ddns_updates (struct packet *packet,
 	if (ddns_fwd_name.len && ddns_dhcid.len)
 		rcode1 = ddns_update_a (&ddns_fwd_name, lease -> ip_addr,
 					&ddns_dhcid, ddns_ttl, 0);
-	
+
 	if (rcode1 == ISC_R_SUCCESS) {
 		if (ddns_fwd_name.len && ddns_rev_name.len)
 			rcode2 = ddns_update_ptr (&ddns_fwd_name,
@@ -562,7 +562,7 @@ int ddns_updates (struct packet *packet,
 
 	if (rcode1 == ISC_R_SUCCESS &&
 	    (server_updates_a || rcode2 == ISC_R_SUCCESS)) {
-		bind_ds_value (&lease -> scope, 
+		bind_ds_value (&lease -> scope,
 			       (server_updates_a
 				? "ddns-fwd-name" : "ddns-client-fqdn"),
 			       &ddns_fwd_name);

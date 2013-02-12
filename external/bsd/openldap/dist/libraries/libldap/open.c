@@ -113,7 +113,7 @@ ldap_create( LDAP **ldp )
 	if ( (ld = (LDAP *) LDAP_CALLOC( 1, sizeof(LDAP) )) == NULL ) {
 		return( LDAP_NO_MEMORY );
 	}
-   
+
 	/* copy the global options */
 	AC_MEMCPY(&ld->ld_options, gopts, sizeof(ld->ld_options));
 
@@ -323,7 +323,7 @@ ldap_init_fd(
 	/* Add the connection to the *LDAP's select pool */
 	ldap_mark_select_read( ld, conn->lconn_sb );
 	ldap_mark_select_write( ld, conn->lconn_sb );
-	
+
 	*ldp = ld;
 	return LDAP_SUCCESS;
 }

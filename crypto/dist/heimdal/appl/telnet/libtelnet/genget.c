@@ -73,7 +73,7 @@ char **
 genget(char *name, char **table, int stlen)
      /* name to match */
      /* name entry in table */
-	   	      
+
 {
     char **c, **found;
     int n;

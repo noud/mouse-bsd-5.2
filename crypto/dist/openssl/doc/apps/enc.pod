@@ -243,11 +243,11 @@ Just base64 encode a binary file:
 
 Decode the same file
 
- openssl base64 -d -in file.b64 -out file.bin 
+ openssl base64 -d -in file.b64 -out file.bin
 
 Encrypt a file using triple DES in CBC mode using a prompted password:
 
- openssl des3 -salt -in file.txt -out file.des3 
+ openssl des3 -salt -in file.txt -out file.des3
 
 Decrypt a file using a supplied password:
 

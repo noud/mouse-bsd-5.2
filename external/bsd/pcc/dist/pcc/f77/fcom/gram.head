@@ -79,7 +79,7 @@ stat:	  thislabel entry
 	| thislabel SUNKNOWN
 		{ execerr("unclassifiable statement", 0);  flline(); }
 	| error
-		{ flline();  needkwd = NO;  inioctl = NO; 
+		{ flline();  needkwd = NO;  inioctl = NO;
 		  yyerrok; yyclearin; }
 	;
 

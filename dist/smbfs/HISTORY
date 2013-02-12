@@ -76,7 +76,7 @@
       to implement 'smbiod' process which handles network traffic for each VC.
       Previous model were incapable to serve large number of mount points and
       didn't work well with intensive IO operations performed on a different
-      files on the same mount point. Special care was taken on better 
+      files on the same mount point. Special care was taken on better
       usage of MP systems.
       Unfortunately, kernel threads aren't supported by FreeBSD 3.X and for
       now it is excluded from the list of supported systems.

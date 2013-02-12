@@ -36,7 +36,7 @@ EXTENSIONS
    encryption algorithm, see the bdes(1) man page.  Encryption/decryption
    should be fully compatible with SunOS des(1).
 
-3) The POSIX interactive global commands `G' and `V' are extended to 
+3) The POSIX interactive global commands `G' and `V' are extended to
    support multiple commands, including `a', `i' and `c'.  The command
    format is the same as for the global commands `g' and `v', i.e., one
    command per line with each line, except for the last, ending in a
@@ -81,7 +81,7 @@ DEVIATIONS
    `u' within a global command undoes all previous commands (including
    undo's) in the command list.  This seems the best way, since the
    alternatives are either too complicated to implement or too confusing
-   to use.  
+   to use.
 
    The global/undo combination is useful for masking errors that
    would otherwise cause a script to fail.  For instance, an ed script

@@ -12,7 +12,7 @@ on the stack.
 struct return: a hidden argument containing the address of the struct
 is stored as the first argument _on_the_stack_, never in register.
 
-struct argument: always saved on stack, and terminates the list 
+struct argument: always saved on stack, and terminates the list
 of arguments that are kept in registers.
 
 In case of debugging all arguments are saved on stack in the function.

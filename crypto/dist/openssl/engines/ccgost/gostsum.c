@@ -43,7 +43,7 @@ int main(int argc,char **argv)
 	gost_subst_block *b=  &GostR3411_94_CryptoProParamSet;
 	FILE *check_file = NULL;
 	gost_hash_ctx ctx;
-	
+
 	while( (c=getopt(argc,argv,"bc::tv"))!=-1)
 		{
 		switch (c)
@@ -80,17 +80,17 @@ int main(int argc,char **argv)
 			{
 			check_file=fopen(argv[optind],"r");
 			if (!check_file)
-				{	
+				{
 				perror(argv[optind]);
 				exit(2);
 				}
-			}	
+			}
 		while (get_line(check_file,inhash,filename))
 			{
 			if (!hash_file(&ctx,filename,calcsum,open_mode))
 				{
 				exit (2);
-				}	
+				}
 			count++;
 			if (!strncmp(calcsum,inhash,65))
 				{
@@ -112,7 +112,7 @@ int main(int argc,char **argv)
 					}
 				failcount++;
 				}
-			}	
+			}
 		if (verbose && failcount)
 			{
 			fprintf(stderr,"%s: %d of %d file(f) failed GOST hash sum check\n",
@@ -127,10 +127,10 @@ int main(int argc,char **argv)
 			{
 			perror("stdin");
 			exit(1);
-			}	
+			}
 		printf("%s -\n",sum);
 		exit(0);
-		}	
+		}
 	for (i=optind;i<argc;i++)
 		{
 		char sum[65];
@@ -139,11 +139,11 @@ int main(int argc,char **argv)
 			errors++;
 			}
 		else
-			{	
+			{
 			printf("%s %s\n",sum,argv[i]);
 			}
-		}	
-	exit(errors?1:0);	
+		}
+	exit(errors?1:0);
 	}
 
 int hash_file(gost_hash_ctx *ctx,char *filename,char *sum,int mode)
@@ -158,7 +158,7 @@ int hash_file(gost_hash_ctx *ctx,char *filename,char *sum,int mode)
 		{
 		perror(filename);
 		return 0;
-		}	
+		}
 	close(fd);
 	return 1;
 	}
@@ -176,15 +176,15 @@ int hash_stream(gost_hash_ctx *ctx,int fd, char *sum)
 	if (bytes<0)
 		{
 		return 0;
-		}	
+		}
 	finish_hash(ctx,buffer);
 	for (i=0;i<32;i++)
 		{
 		sprintf(sum+2*i,"%02x",buffer[31-i]);
 		}
 	return 1;
-	}	
-	
+	}
+
 int get_line(FILE *f,char *hash,char *filename)
 	{
 	int i;
@@ -198,7 +198,7 @@ int get_line(FILE *f,char *hash,char *filename)
 			fprintf(stderr,"Not a hash value '%s'\n",hash);
 			return 0;
 			}
-		}	
+		}
 	if (fgetc(f)!=' ')
 		{
 		fprintf(stderr,"Malformed input line\n");
@@ -207,4 +207,4 @@ int get_line(FILE *f,char *hash,char *filename)
 	i=strlen(fgets(filename,PATH_MAX,f));
 	while (filename[--i]=='\n'||filename[i]=='\r') filename[i]=0;
 	return 1;
-	}	
+	}

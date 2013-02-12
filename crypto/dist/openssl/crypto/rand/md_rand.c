@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -63,7 +63,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -168,7 +168,7 @@ RAND_METHOD rand_ssleay_meth={
 	ssleay_rand_add,
 	ssleay_rand_pseudo_bytes,
 	ssleay_rand_status
-	}; 
+	};
 
 RAND_METHOD *RAND_SSLeay(void)
 	{
@@ -241,7 +241,7 @@ static void ssleay_rand_add(const void *buf, int num, double add)
 		state_index%=STATE_SIZE;
 		state_num=STATE_SIZE;
 		}
-	else if (state_num < STATE_SIZE)	
+	else if (state_num < STATE_SIZE)
 		{
 		if (state_index > state_num)
 			state_num=state_index;
@@ -272,7 +272,7 @@ static void ssleay_rand_add(const void *buf, int num, double add)
 			}
 		else
 			MD_Update(&m,&(state[st_idx]),j);
-			
+
 		MD_Update(&m,buf,j);
 		MD_Update(&m,(unsigned char *)&(md_c[0]),sizeof(md_c));
 		MD_Final(&m,local_md);
@@ -309,7 +309,7 @@ static void ssleay_rand_add(const void *buf, int num, double add)
 	if (entropy < ENTROPY_NEEDED) /* stop counting when we have enough */
 	    entropy += add;
 	if (!do_not_lock) CRYPTO_w_unlock(CRYPTO_LOCK_RAND);
-	
+
 #if !defined(OPENSSL_THREADS) && !defined(OPENSSL_SYS_WIN32)
 	assert(md_c[1] == md_count[1]);
 #endif
@@ -363,7 +363,7 @@ static int ssleay_rand_bytes(unsigned char *buf, int num)
 	 * (incrementing looping index). From this digest output (which is kept
 	 * in 'md'), the top (up to) 10 bytes are returned to the caller and the
 	 * bottom 10 bytes are xored into the 'state'.
-	 * 
+	 *
 	 * Finally, after we have finished 'num' random bytes for the
 	 * caller, 'count' (which is incremented) and the local and global 'md'
 	 * are fed into the hash function and the results are kept in the
@@ -383,10 +383,10 @@ static int ssleay_rand_bytes(unsigned char *buf, int num)
 		RAND_poll();
 		initialized = 1;
 		}
-	
+
 	if (!stirred_pool)
 		do_stir_pool = 1;
-	
+
 	ok = (entropy >= ENTROPY_NEEDED);
 	if (!ok)
 		{
@@ -511,7 +511,7 @@ static int ssleay_rand_bytes(unsigned char *buf, int num)
 
 /* pseudo-random bytes that are guaranteed to be unique but not
    unpredictable */
-static int ssleay_rand_pseudo_bytes(unsigned char *buf, int num) 
+static int ssleay_rand_pseudo_bytes(unsigned char *buf, int num)
 	{
 	int ret;
 	unsigned long err;
@@ -544,18 +544,18 @@ static int ssleay_rand_status(void)
 		}
 	else
 		do_not_lock = 0;
-	
+
 	if (!do_not_lock)
 		{
 		CRYPTO_w_lock(CRYPTO_LOCK_RAND);
-		
+
 		/* prevent ssleay_rand_bytes() from trying to obtain the lock again */
 		CRYPTO_w_lock(CRYPTO_LOCK_RAND2);
 		CRYPTO_THREADID_set(&locking_tid);
 		CRYPTO_w_unlock(CRYPTO_LOCK_RAND2);
 		crypto_lock_rand = 1;
 		}
-	
+
 	if (!initialized)
 		{
 		RAND_poll();
@@ -568,9 +568,9 @@ static int ssleay_rand_status(void)
 		{
 		/* before unlocking, we must clear 'crypto_lock_rand' */
 		crypto_lock_rand = 0;
-		
+
 		CRYPTO_w_unlock(CRYPTO_LOCK_RAND);
 		}
-	
+
 	return ret;
 	}

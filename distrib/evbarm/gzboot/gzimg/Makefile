@@ -9,7 +9,7 @@
 #	TARGETS is a list of:
 #		KERNEL_name	GZBOOT_name	GZIMG_name
 #		RELOC_ADDR	WHICH_kernel
-#	
+#
 .if ${MACHINE_ARCH} == "arm"
 # Little endian platforms.
 TARGETS=	ADI_BRH		ADI_BRH		ADI_BRH_sd0	\

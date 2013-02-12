@@ -36,7 +36,7 @@ if [ "$sysname" = "" ]; then
       for foo in $PATH; do
 	if [ x$gcc_path = x ] && [ -x $foo/gcc ]; then
 	  gcc_path=$foo/gcc
-	fi 
+	fi
       done
       IFS=" "
       if [ x$gcc_path = x ]; then
@@ -59,7 +59,7 @@ if [ "$sysname" = "" ]; then
       release=`uname -r`
       minor=`echo $release |sed -e 's/[0-9]*\.\([0-9][0-9]*\)\(\..*\)*$/\1/'`
       major=`echo $release |sed -e 's/\([0-9][0-9]*\)\..*$/\1/'`
-      
+
       case $major in
 	[123]) sysname=bsdos ;;
 	*) case $minor in
@@ -95,7 +95,7 @@ if [ "$sysname" = "" ]; then
       release=`uname -r`
       minor=`echo $release |sed -e 's/[0-9]*\.\([0-9][0-9]*\)\(\..*\)*$/\1/'`
       major=`echo $release |sed -e 's/\([0-9][0-9]*\)\..*$/\1/'`
-      
+
       case $major in
 	1) sysname=linux-1 ;;
 	2) case $minor in
@@ -118,7 +118,7 @@ if [ "$sysname" = "" ]; then
       IFS=" "
 
       case $major in
-        4) 
+        4)
 	  if [ x$gcc_path = x ]; then
 	    echo SunOS 4 build will not work without the GNU C Compiler.
 	    exit 1
@@ -179,7 +179,7 @@ if [ "$sysname" = "" ]; then
           sysname=qnxnto;;
         *)
           sysname=qnx;;
-      esac;;      
+      esac;;
     NEXTSTEP)
       sysname=nextstep;;
     UnixWare)

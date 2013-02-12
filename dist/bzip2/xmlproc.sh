@@ -8,7 +8,7 @@
 #  bzip2/libbzip2 version 1.0.5 of 10 December 2007
 #  Copyright (C) 1996-2007 Julian Seward <jseward@bzip.org>
 #
-#  Please read the WARNING, DISCLAIMER and PATENTS sections in the 
+#  Please read the WARNING, DISCLAIMER and PATENTS sections in the
 #  README file.
 #
 #  This program is released under the terms of the license contained
@@ -60,7 +60,7 @@ export XML_CATALOG_FILES=/etc/xml/catalog
 
 # post-processing tidy up
 cleanup() {
-  echo "Cleaning up: $@" 
+  echo "Cleaning up: $@"
   while [ $# != 0 ]
   do
     arg=$1; shift;
@@ -73,8 +73,8 @@ case $action in
   -v)
    flags='--noout --xinclude --noblanks --postvalid'
    dtd='--dtdvalid http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd'
-   xmllint $flags $dtd $xmlfmtfile 2> $OUT 
-   egrep 'error' $OUT 
+   xmllint $flags $dtd $xmlfmtfile 2> $OUT
+   egrep 'error' $OUT
    rm $OUT
   ;;
 

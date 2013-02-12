@@ -132,7 +132,7 @@ pcap_parse()
 %token  IPV6 ICMPV6 AH ESP
 %token	VLAN MPLS
 %token	PPPOED PPPOES
-%token  ISO ESIS CLNP ISIS L1 L2 IIH LSP SNP CSNP PSNP 
+%token  ISO ESIS CLNP ISIS L1 L2 IIH LSP SNP CSNP PSNP
 %token  STP
 %token  IPX
 %token  NETBEUI
@@ -208,7 +208,7 @@ nid:	  ID			{ $$.b = gen_scode($1, $$.q = $<blk>0.q); }
 					"in this configuration");
 #endif /*INET6*/
 				}
-	| EID			{ 
+	| EID			{
 				  $$.b = gen_ecode($1, $$.q = $<blk>0.q);
 				  /*
 				   * $1 was allocated by "pcap_ether_aton()",

@@ -52,7 +52,7 @@ struct enumeration {
 	struct enumeration *next;
 	const char *name;
 	struct enumeration_value *values;
-};	
+};
 
 /* Tree node types... */
 #define TREE_CONCAT		1
@@ -274,7 +274,7 @@ struct expression {
 	} data;
 	int flags;
 #	define EXPR_EPHEMERAL	1
-};		
+};
 
 /* DNS host entry structure... */
 struct dns_host_entry {

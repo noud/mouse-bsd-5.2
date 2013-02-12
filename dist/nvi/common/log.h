@@ -20,7 +20,7 @@
 #define	LOG_LINE_DELETE_F	7
 #define	LOG_LINE_RESET_B	8
 #define	LOG_LINE_RESET_F	9
-#define	LOG_MARK		10	
+#define	LOG_MARK		10
 
 typedef enum { UNDO_FORWARD, UNDO_BACKWARD, UNDO_SETLINE } undo_t;
 

@@ -216,13 +216,13 @@ pcap_t *septel_open_live(const char *device, int snaplen, int promisc, int to_ms
   }
 
   /* Initialize some components of the pcap structure. */
-  
+
   memset(handle, 0, sizeof(*handle));
-  
+
   handle->snapshot = snaplen;
 
   handle->linktype = DLT_MTP2;
-  
+
   handle->bufsize = 0;
 
   /*
@@ -252,9 +252,9 @@ fail:
 static int septel_stats(pcap_t *p, struct pcap_stat *ps) {
   /*p->md.stat.ps_recv = 0;*/
   /*p->md.stat.ps_drop = 0;*/
-  
+
   *ps = p->md.stat;
- 
+
   return 0;
 }
 
@@ -268,7 +268,7 @@ unsigned char *p;
   int ret = 0;
   pcap_add_if(devlistp,name,0,description,errbuf);
 
-  return (ret); 
+  return (ret);
 }
 
 

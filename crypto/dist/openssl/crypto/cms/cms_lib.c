@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -369,14 +369,14 @@ BIO *cms_DigestAlgorithm_init_bio(X509_ALGOR *digestAlgorithm)
 		{
 		CMSerr(CMS_F_CMS_DIGESTALGORITHM_INIT_BIO,
 				CMS_R_UNKNOWN_DIGEST_ALGORIHM);
-		goto err;	
+		goto err;
 		}
 	mdbio = BIO_new(BIO_f_md());
 	if (!mdbio || !BIO_set_md(mdbio, digest))
 		{
 		CMSerr(CMS_F_CMS_DIGESTALGORITHM_INIT_BIO,
 				CMS_R_MD_BIO_INIT_ERROR);
-		goto err;	
+		goto err;
 		}
 	return mdbio;
 	err:
@@ -473,7 +473,7 @@ int CMS_add0_cert(CMS_ContentInfo *cms, X509 *cert)
 			{
 			if (!X509_cmp(cch->d.certificate, cert))
 				{
-				CMSerr(CMS_F_CMS_ADD0_CERT, 
+				CMSerr(CMS_F_CMS_ADD0_CERT,
 					CMS_R_CERTIFICATE_ALREADY_PRESENT);
 				return 0;
 				}

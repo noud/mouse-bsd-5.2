@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: smb_lib.h,v 1.24 2001/12/20 15:19:43 bp Exp 
+ * from: Id: smb_lib.h,v 1.24 2001/12/20 15:19:43 bp Exp
  */
 #ifndef _NETSMB_SMB_LIB_H_
 #define _NETSMB_SMB_LIB_H_

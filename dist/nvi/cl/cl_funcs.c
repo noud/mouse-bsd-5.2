@@ -34,7 +34,7 @@ static const char sccsid[] = "Id: cl_funcs.c,v 10.72 2002/03/02 23:18:33 skimo E
 
 static void cl_rdiv __P((SCR *));
 
-static int 
+static int
 addstr4(SCR *sp, const void *str, size_t len, int wide)
 {
 	CL_PRIVATE *clp;
@@ -61,7 +61,7 @@ addstr4(SCR *sp, const void *str, size_t len, int wide)
 	if (wide) {
 	    if (waddnwstr(win, str, len) == ERR)
 		return (1);
-	} else 
+	} else
 #endif
 	    if (waddnstr(win, str, len) == ERR)
 		    return (1);
@@ -135,7 +135,7 @@ cl_attr(SCR *sp, scr_attr_t attribute, int on)
 	 *
 	 * Note that the :command input is a true vi input mode, e.g., input
 	 * maps and abbreviations are being done.  So, we need to be able to
-	 * switch back into the vi screen mode, without flashing the screen. 
+	 * switch back into the vi screen mode, without flashing the screen.
 	 *
 	 * To make matters worse, the curses initscr() and endwin() calls will
 	 * do this automatically -- so, this attribute isn't as controlled by
@@ -367,7 +367,7 @@ cl_deleteln(SCR *sp)
 	return (wdeleteln(win) == ERR);
 }
 
-/* 
+/*
  * cl_discard --
  *	Discard a screen.
  *
@@ -390,7 +390,7 @@ cl_discard(SCR *discardp, SCR **acquirep)
 	}
 
 	/* no screens got a piece; we're done */
-	if (!acquirep) 
+	if (!acquirep)
 		return 0;
 
 	for (; (tsp = *acquirep) != NULL; ++acquirep) {
@@ -407,7 +407,7 @@ cl_discard(SCR *discardp, SCR **acquirep)
 	return (0);
 }
 
-/* 
+/*
  * cl_ex_adjust --
  *	Adjust the screen for ex.  This routine is purely for standalone
  *	ex programs.  All special purpose, all special case.
@@ -576,15 +576,15 @@ cl_refresh(SCR *sp, int repaint)
 	 */
 	if (repaint || F_ISSET(clp, CL_LAYOUT)) {
 		getyx(stdscr, y, x);
-		for (psp = sp; 
+		for (psp = sp;
 		    psp != (void *)&sp->wp->scrq; psp = psp->q.cqe_next)
 			for (tsp = psp->q.cqe_next;
-			    tsp != (void *)&sp->wp->scrq; 
+			    tsp != (void *)&sp->wp->scrq;
 			    tsp = tsp->q.cqe_next)
 				if (psp->roff == tsp->roff) {
 				    if (psp->coff + psp->cols + 1 == tsp->coff)
 					cl_rdiv(psp);
-				    else 
+				    else
 				    if (tsp->coff + tsp->cols + 1 == psp->coff)
 					cl_rdiv(tsp);
 				}
@@ -605,8 +605,8 @@ cl_refresh(SCR *sp, int repaint)
 	 * is called for that window after refreshing the others.
 	 * This prevents the cursor being drawn in the other windows.
 	 */
-	return (wnoutrefresh(stdscr) == ERR || 
-		wnoutrefresh(win) == ERR || 
+	return (wnoutrefresh(stdscr) == ERR ||
+		wnoutrefresh(win) == ERR ||
 		(sp == clp->focus && doupdate() == ERR));
 }
 
@@ -703,7 +703,7 @@ cl_setname(GS *gp, char *name)
 	(void)fflush(stdout);
 }
 
-/* 
+/*
  * cl_split --
  *	Split a screen.
  *
@@ -761,7 +761,7 @@ cl_suspend(SCR *sp, int *allowedp)
 	 *
 	 * Setting allowedp to 0 will cause the editor to reject the command.
 	 */
-	if (F_ISSET(sp, SC_EX)) { 
+	if (F_ISSET(sp, SC_EX)) {
 		/* Save the terminal settings, and restore the original ones. */
 		if (F_ISSET(clp, CL_STDIN_TTY)) {
 			(void)tcgetattr(STDIN_FILENO, &t);
@@ -867,7 +867,7 @@ cl_suspend(SCR *sp, int *allowedp)
 /*
  * cl_usage --
  *	Print out the curses usage messages.
- * 
+ *
  * PUBLIC: void cl_usage __P((void));
  */
 void

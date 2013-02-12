@@ -13,7 +13,7 @@ distrib/evbarm/instkernel/instkernel/Makefile	1.14
 distrib/evbarm/gzboot/gzimg/Makefile		1.20
 
 	Register gemini watchdog with sysmon_wdog_register and rip out some
-	debugging code.  Create gemini instkernel and gzimg.	
+	debugging code.  Create gemini instkernel and gzimg.
 	[cliff, ticket #2]
 
 etc/etc.cobalt/MAKEDEV.conf			1.10
@@ -63,7 +63,7 @@ sys/uvm/uvm_extern.h				1.149
 	- allocate 8 pointers on the stack to avoid stack overflow in nfs.
 	- make that 8 a constant
 	- remove bogus panic
-	Fixes PR kern/39777. 
+	Fixes PR kern/39777.
 	[tron, ticket #9]
 
 dist/file/src/apprentice.c			1.20
@@ -286,7 +286,7 @@ doc/CHANGES					patch
 
 	Correct description of NSP2000 driver.  It didn't come from the
 	public FreeBSD sources, it was generously contributed by its owner,
-	NBMK Encryption Technologies, Inc.      
+	NBMK Encryption Technologies, Inc.
 	[tls, ticket #36]
 
 gnu/usr.bin/groff/tmac/mdoc.local		1.46 via patch
@@ -327,7 +327,7 @@ sys/dev/acpi/acpi_tz.c				1.38, 1.39
 
 	- Temp sensor should report a critical-overtemp condition
 	(ENVSYS_SCRITOVER) not a simple critical (ENVSYS_SCRITICAL)
-	condition.  
+	condition.
 	- Leave the task of displaying sensor states to envsys_sysmon()
 	unless we are in debug mode.
 	[pgoyette, ticket #41]
@@ -355,7 +355,7 @@ sbin/sysctl/sysctl.8				1.159
 	Add references to other manual pages for more details.
 	[reed, ticket #46]
 
-include/sched.h					1.11 
+include/sched.h					1.11
 lib/libc/sys/sched.c         			1.2
 lib/librt/sched.3				1.6
 
@@ -384,7 +384,7 @@ sys/dev/sysmon/sysmon_envsys_events.c		1.61, 1.62
 
 	Initialize event's "previous sent state" based on the event monitor
 	type, regardless of sensor type.  Fixes spurious "device: normal
-	state on 'sensor-name' messages which interfere with sysinst.          
+	state on 'sensor-name' messages which interfere with sysinst.
 	[tls, ticket #49]
 
 sys/arch/x86/x86/intel_busclock.c		1.6
@@ -1151,7 +1151,7 @@ sys/arch/atari/conf/MILAN-PCIIDE		regen
 	* Enable 68060 support in FALCON & BOOTX kernels for CT60/63
 	upgrades.
 	* Drop KERNFS from INSTALL kernels. Drop 68040 support from
-	ATARITT kernels. 
+	ATARITT kernels.
 	* Increase min ST_POOL_SIZE from 22 to 24 to avoid out of ST memory
 	issues.
 	[abs, ticket #123]
@@ -1339,7 +1339,7 @@ external/mit/xorg/lib/dri/libmesa/Makefile	1.1
 external/mit/xorg/lib/libOSMesa/Makefile	1.4
 external/mit/xorg/lib/libOSMesa/libmesa.mk	1.1, 1.2
 share/mk/bsd.lib.mk				1.290
-	
+
 	Bring DRI modules closer to loading.
 	[cube, ticket #151]
 
@@ -1785,7 +1785,7 @@ crypto/dist/ipsec-tools/src/setkey/parse.y	1.11
 
 sys/dev/sbus/be.c				1.61
 
-	Move callout_init(sc->sc_tick_ch) before we're trying to  
+	Move callout_init(sc->sc_tick_ch) before we're trying to
 	callout_stop() the ticker.  Fixes a panic on attach.
 	[macallan, ticket #215]
 
@@ -1828,7 +1828,7 @@ sys/dev/sun/cgthree.c				1.17-1.19
 sys/dev/sun/cgthreevar.h			1.6
 sys/dev/sun/files.sun				1.15-1.16
 
-	Add wscons support for bwtwo and cgthree framebuffers.   
+	Add wscons support for bwtwo and cgthree framebuffers.
 	[jdc, ticket #221]
 
 sys/dev/pci/aac_pci.c				1.26
@@ -1978,7 +1978,7 @@ sys/ddb/db_command.c				1.126
 sys/ddb/db_command.h				1.34
 
 	Fix bug introduced in rev 1.98 of db_command.c where command prefix
-	not ambiguous in one table was chosen even if it was ambiguous in  
+	not ambiguous in one table was chosen even if it was ambiguous in
 	another table in same list. Also apply more KNF rules.
 	[haad, ticket #241]
 
@@ -2357,7 +2357,7 @@ usr.sbin/puffs/mount_psshfs/node.c		1.55
 
 doc/3RDPARTY					1.661 via patch
 doc/CHANGES					1.1160 via patch
-usr.sbin/ntp/importdate				1.3  
+usr.sbin/ntp/importdate				1.3
 usr.sbin/ntp/ntp-keygen/ntp-keygen.8		1.5
 usr.sbin/ntp/ntpd/ntpd.8			1.19
 usr.sbin/ntp/ntpdc/ntpdc.8			1.17
@@ -3905,7 +3905,7 @@ crypto/dist/ipsec-tools/src/racoon/ipsec_doi.c 	ipsec_tools-0_7_1
 crypto/dist/ipsec-tools/src/racoon/ipsec_doi.h 	ipsec_tools-0_7_1
 crypto/dist/ipsec-tools/src/racoon/isakmp.c 	ipsec_tools-0_7_1
 crypto/dist/ipsec-tools/src/racoon/isakmp_agg.c	ipsec_tools-0_7_1
-crypto/dist/ipsec-tools/src/racoon/isakmp_base.c ipsec_tools-0_7_1 
+crypto/dist/ipsec-tools/src/racoon/isakmp_base.c ipsec_tools-0_7_1
 crypto/dist/ipsec-tools/src/racoon/isakmp_cfg.c	ipsec_tools-0_7_1
 crypto/dist/ipsec-tools/src/racoon/isakmp_ident.c ipsec_tools-0_7_1
 crypto/dist/ipsec-tools/src/racoon/isakmp_inf.c	ipsec_tools-0_7_1
@@ -3931,7 +3931,7 @@ crypto/dist/ipsec-tools/src/racoon/policy.h	ipsec_tools-0_7_1
 crypto/dist/ipsec-tools/src/racoon/privsep.c	ipsec_tools-0_7_1
 crypto/dist/ipsec-tools/src/racoon/privsep.h	ipsec_tools-0_7_1
 crypto/dist/ipsec-tools/src/racoon/proposal.c	ipsec_tools-0_7_1
-crypto/dist/ipsec-tools/src/racoon/racoon.conf.5 ipsec_tools-0_7_1 
+crypto/dist/ipsec-tools/src/racoon/racoon.conf.5 ipsec_tools-0_7_1
 crypto/dist/ipsec-tools/src/racoon/racoonctl.8	ipsec_tools-0_7_1
 crypto/dist/ipsec-tools/src/racoon/racoonctl.c	ipsec_tools-0_7_1
 crypto/dist/ipsec-tools/src/racoon/remoteconf.c	ipsec_tools-0_7_1
@@ -4128,7 +4128,7 @@ sys/dev/pcmcia/wdc_pcmcia.c			1.113
 	the pcmcia kernel thread while the system is running
 	-in wd_shutdown, call ata_addref first, so that the adapter
 	is either active or we know that it isn't
-	
+
 	This fixes a hang on shutdown -p, reported in PR kern/40531.
 	[drochner, ticket #441]
 
@@ -4324,7 +4324,7 @@ usr.sbin/puffs/rump_udf/rump_udf.8		regen
 
 	- Note mount -o rump support
 	- Note that vnconfig is not required
-	- Fix SYNOPSIS 
+	- Fix SYNOPSIS
 	- Markup fixes
 	[pooka, ticket #465]
 
@@ -5187,9 +5187,9 @@ sys/fs/udf/udf_vnops.c				patch
 
 gnu/usr.bin/groff/tmac/mdoc.local               patched by hand
 sys/sys/param.h                                 patched by hand
-        
+
         Welcome to 5.0_RC3!
-        [snj] 
+        [snj]
 
 sys/dev/pci/if_wm.c				1.165
 sys/dev/pci/pcidevs				1.978
@@ -5209,7 +5209,7 @@ sys/dev/scsipi/cd.c				1.289
 
 	To fix this, on last close explicitly flush the caches releasing
 	the device from this mode and allowing other SCSI commands to reach
-	it.  This fixes PR 40528 and 40998. 
+	it.  This fixes PR 40528 and 40998.
 	[reinoud, ticket #586]
 
 sys/arch/x86/acpi/acpi_wakeup.c			1.12
@@ -6092,9 +6092,9 @@ sys/dist/pf/net/pf.c				1.54
 
 gnu/usr.bin/groff/tmac/mdoc.local               patched by hand
 sys/sys/param.h                                 patched by hand
-        
+
         Welcome to 5.0_RC4!
-        [snj] 
+        [snj]
 
 dist/ntp/ntpq/ntpq.c				1.12
 
@@ -6299,7 +6299,7 @@ distrib/notes/x68k/prep				1.9
 
 gnu/usr.bin/groff/tmac/mdoc.local               patched by hand
 sys/sys/param.h                                 patched by hand
-        
+
         Welcome to NetBSD 5.0!
-        [snj] 
+        [snj]
 

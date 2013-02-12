@@ -28,18 +28,18 @@ void WpaGui::init()
     monitor_conn = NULL;
     msgNotifier = NULL;
     ctrl_iface_dir = strdup("/var/run/wpa_supplicant");
-    
+
     parse_argv();
 
     textStatus->setText("connecting to wpa_supplicant");
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), SLOT(ping()));
     timer->start(1000, FALSE);
-    
+
     if (openCtrlConnection(ctrl_iface) < 0) {
 	printf("Failed to open control connection to wpa_supplicant.\n");
     }
-    
+
     updateStatus();
     networkMayHaveChanged = true;
     updateNetworks();
@@ -59,28 +59,28 @@ void WpaGui::destroy()
 	wpa_ctrl_close(ctrl_conn);
 	ctrl_conn = NULL;
     }
-    
+
     if (eh) {
 	eh->close();
 	delete eh;
 	eh = NULL;
     }
-    
+
     if (scanres) {
 	scanres->close();
 	delete scanres;
 	scanres = NULL;
     }
-    
+
     if (udr) {
 	udr->close();
 	delete udr;
 	udr = NULL;
     }
-    
+
     free(ctrl_iface);
     ctrl_iface = NULL;
-    
+
     free(ctrl_iface_dir);
     ctrl_iface_dir = NULL;
 }
@@ -173,7 +173,7 @@ int WpaGui::openCtrlConnection(const char *ifname)
 	}
 #endif /* CONFIG_CTRL_IFACE_NAMED_PIPE */
     }
-    
+
     if (ctrl_iface == NULL)
 	return -1;
 
@@ -266,7 +266,7 @@ static void wpa_gui_msg_cb(char *msg, size_t)
 int WpaGui::ctrlRequest(const char *cmd, char *buf, size_t *buflen)
 {
     int ret;
-    
+
     if (ctrl_conn == NULL)
 	return -3;
     ret = wpa_ctrl_request(ctrl_conn, cmd, strlen(cmd), buf, buflen,
@@ -276,7 +276,7 @@ int WpaGui::ctrlRequest(const char *cmd, char *buf, size_t *buflen)
     } else if (ret < 0) {
 	printf("'%s' command failed.\n", cmd);
     }
-    
+
     return ret;
 }
 
@@ -298,14 +298,14 @@ void WpaGui::updateStatus()
 	textIpAddress->clear();
 	return;
     }
-    
+
     buf[len] = '\0';
-    
+
     bool auth_updated = false, ssid_updated = false;
     bool bssid_updated = false, ipaddr_updated = false;
     bool status_updated = false;
     char *pairwise_cipher = NULL, *group_cipher = NULL;
-    
+
     start = buf;
     while (*start) {
 	bool last = false;
@@ -317,7 +317,7 @@ void WpaGui::updateStatus()
 		end++;
 	}
 	*end = '\0';
-	
+
 	pos = strchr(start, '=');
 	if (pos) {
 	    *pos++ = '\0';
@@ -343,12 +343,12 @@ void WpaGui::updateStatus()
 		group_cipher = pos;
 	    }
 	}
-	
+
 	if (last)
 	    break;
 	start = end + 1;
     }
-    
+
     if (pairwise_cipher || group_cipher) {
 	QString encr;
 	if (pairwise_cipher && group_cipher &&
@@ -393,11 +393,11 @@ void WpaGui::updateNetworks()
 
     if (ctrl_conn == NULL)
 	return;
-    
+
     len = sizeof(buf) - 1;
     if (ctrlRequest("LIST_NETWORKS", buf, &len) < 0)
 	return;
-    
+
     buf[len] = '\0';
     start = strchr(buf, '\n');
     if (start == NULL)
@@ -414,7 +414,7 @@ void WpaGui::updateNetworks()
 		end++;
 	}
 	*end = '\0';
-	
+
 	id = start;
 	ssid = strchr(id, '\t');
 	if (ssid == NULL)
@@ -428,18 +428,18 @@ void WpaGui::updateNetworks()
 	if (flags == NULL)
 	    break;
 	*flags++ = '\0';
-	
+
 	QString network(id);
 	network.append(": ");
 	network.append(ssid);
 	networkSelect->insertItem(network);
-	
+
 	if (strstr(flags, "[CURRENT]")) {
 	    networkSelect->setCurrentItem(networkSelect->count() - 1);
 	    selected = true;
 	} else if (first_active < 0 && strstr(flags, "[DISABLED]") == NULL)
 	    first_active = networkSelect->count() - 1;
-	
+
 	if (last)
 	    break;
 	start = end + 1;
@@ -528,7 +528,7 @@ void WpaGui::ping()
 {
     char buf[10];
     size_t len;
-    
+
 #ifdef CONFIG_CTRL_IFACE_NAMED_PIPE
     /*
      * QSocketNotifier cannot be used with Windows named pipes, so use a timer
@@ -543,17 +543,17 @@ void WpaGui::ping()
 	delete scanres;
 	scanres = NULL;
     }
-    
+
     if (eh && !eh->isVisible()) {
 	delete eh;
 	eh = NULL;
     }
-    
+
     if (udr && !udr->isVisible()) {
 	delete udr;
 	udr = NULL;
     }
-    
+
     len = sizeof(buf) - 1;
     if (ctrlRequest("PING", buf, &len) < 0) {
 	printf("PING failed - trying to reconnect\n");
@@ -581,7 +581,7 @@ void WpaGui::processMsg(char *msg)
 {
     char *pos = msg, *pos2;
     int priority = 2;
-    
+
     if (*pos == '<') {
 	/* skip priority */
 	pos++;
@@ -599,7 +599,7 @@ void WpaGui::processMsg(char *msg)
     msgs.append(wm);
     while (msgs.count() > 100)
 	msgs.pop_front();
-    
+
     /* Update last message with truncated version of the event */
     if (strncmp(pos, "CTRL-", 5) == 0) {
 	pos2 = strchr(pos, str_match(pos, WPA_CTRL_REQ) ? ':' : ' ');
@@ -612,10 +612,10 @@ void WpaGui::processMsg(char *msg)
     QString lastmsg = pos2;
     lastmsg.truncate(40);
     textLastMessage->setText(lastmsg);
-    
+
     pingsToStatusUpdate = 0;
     networkMayHaveChanged = true;
-    
+
     if (str_match(pos, WPA_CTRL_REQ))
 	processCtrlReq(pos + strlen(WPA_CTRL_REQ));
 }
@@ -644,7 +644,7 @@ void WpaGui::receiveMsgs()
 {
     char buf[256];
     size_t len;
-    
+
     while (monitor_conn && wpa_ctrl_pending(monitor_conn) > 0) {
 	len = sizeof(buf) - 1;
 	if (wpa_ctrl_recv(monitor_conn, buf, &len) == 0) {
@@ -668,7 +668,7 @@ void WpaGui::selectNetwork( const QString &sel )
     QString cmd(sel);
     char reply[10];
     size_t reply_len = sizeof(reply);
-    
+
     int pos = cmd.find(':');
     if (pos < 0) {
 	printf("Invalid selectNetwork '%s'\n", cmd.ascii());
@@ -689,12 +689,12 @@ void WpaGui::editNetwork()
 	return;
     }
     sel.truncate(pos);
-    
+
     NetworkConfig *nc = new NetworkConfig();
     if (nc == NULL)
 	return;
     nc->setWpaGui(this);
-    
+
     nc->paramsFromConfig(sel.toInt());
     nc->show();
     nc->exec();

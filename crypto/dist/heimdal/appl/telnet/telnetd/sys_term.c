@@ -380,12 +380,12 @@ int getpty(int *ptynum)
 	return master;
     }
 #endif
-    
+
 #ifdef	STREAMSPTY
     {
-	char *clone[] = { "/dev/ptc", "/dev/ptmx", "/dev/ptm", 
+	char *clone[] = { "/dev/ptc", "/dev/ptmx", "/dev/ptm",
 			  "/dev/ptym/clone", 0 };
-	
+
 	char **q;
 	int p;
 	for(q=clone; *q; q++){
@@ -409,7 +409,7 @@ int getpty(int *ptynum)
 	int p;
 	char *cp, *p1, *p2;
 	int i;
-	
+
 #ifndef	__hpux
 	snprintf(line, sizeof(Xline), "/dev/ptyXX");
 	p1 = &line[8];
@@ -419,11 +419,11 @@ int getpty(int *ptynum)
 	p1 = &line[13];
 	p2 = &line[14];
 #endif
-	
-	
+
+
 	for (cp = "pqrstuvwxyzPQRST"; *cp; cp++) {
 	    struct stat stb;
-	    
+
 	    *p1 = *cp;
 	    *p2 = '0';
 	    /*
@@ -440,7 +440,7 @@ int getpty(int *ptynum)
 #if SunOS == 40
 		    int dummy;
 #endif
-		    
+
 #ifndef	__hpux
 		    line[5] = 't';
 #else
@@ -468,7 +468,7 @@ int getpty(int *ptynum)
 	extern lowpty, highpty;
 	struct stat sb;
 	int p;
-	
+
 	for (*ptynum = lowpty; *ptynum <= highpty; (*ptynum)++) {
 	    snprintf(myline, sizeof(myline), "/dev/pty/%03d", *ptynum);
 	    p = open(myline, 2);
@@ -749,7 +749,7 @@ static int my_find(int fd, char *module)
     static struct str_list sl;
     int n;
     int i;
-  
+
     if(!flag){
 	n = ioctl(fd, I_LIST, 0);
 	if(n < 0){
@@ -765,7 +765,7 @@ static int my_find(int fd, char *module)
 	}
 	flag = 1;
     }
-  
+
     for(i=0; i<sl.sl_nmods; i++)
 	if(!strcmp(sl.sl_modlist[i].l_name, module))
 	    return 1;
@@ -788,7 +788,7 @@ static void maybe_push_modules(int fd, char **modules)
     }
     /* p points to null or to an already pushed module, now push all
        modules before this one */
-  
+
     for(p--; p >= modules; p--){
 	err = ioctl(fd, I_PUSH, *p);
 	if(err < 0 && errno != EINVAL)
@@ -850,7 +850,7 @@ void getptyslave(void)
 
 #ifdef  STREAMSPTY
     ttyfd = t;
-	  
+
 
     /*
      * Not all systems have (or need) modules ttcompat and pckt so
@@ -870,7 +870,7 @@ void getptyslave(void)
 	       pushed (via autopush, for instance).
 
 	       */
-	     
+
 	    char *ttymodules[] = { "ttcompat", "ldterm", "ptem", NULL };
 	    char *ptymodules[] = { "pckt", NULL };
 
@@ -1082,7 +1082,7 @@ static char *
 make_id (char *tty)
 {
   char *res = tty;
-  
+
   if (strncmp (res, "pts/", 4) == 0)
     res += 4;
   if (strncmp (res, "tty", 3) == 0)
@@ -1224,7 +1224,7 @@ scrub_env(void)
 
     char **cpp, **cpp2;
     const char **p;
-  
+
     for (cpp2 = cpp = environ; *cpp; cpp++) {
 	int reject_it = 0;
 
@@ -1272,18 +1272,18 @@ start_login(const char *host, int autologin, char *name)
     encrypt_output = NULL;
     decrypt_input = NULL;
 #endif
-    
+
 #ifdef HAVE_UTMPX_H
     {
 	int pid = getpid();
 	struct utmpx utmpx;
 	struct timeval tv;
 	char *clean_tty;
-	
+
 	/*
 	 * Create utmp entry for child
 	 */
-	
+
 	clean_tty = clean_ttyname(line);
 	memset(&utmpx, 0, sizeof(utmpx));
 	strncpy(utmpx.ut_user,  ".telnet", sizeof(utmpx.ut_user));
@@ -1292,9 +1292,9 @@ start_login(const char *host, int autologin, char *name)
 	strncpy(utmpx.ut_id, make_id(clean_tty), sizeof(utmpx.ut_id));
 #endif
 	utmpx.ut_pid = pid;
-	
+
 	utmpx.ut_type = LOGIN_PROCESS;
-	
+
 	gettimeofday (&tv, NULL);
 	utmpx.ut_tv.tv_sec = tv.tv_sec;
 	utmpx.ut_tv.tv_usec = tv.tv_usec;
@@ -1305,7 +1305,7 @@ start_login(const char *host, int autologin, char *name)
 #endif
 
     scrub_env();
-	
+
     /*
      * -h : pass on name of host.
      *		WARNING:  -h is accepted by login if and only if
@@ -1315,7 +1315,7 @@ start_login(const char *host, int autologin, char *name)
      * -f : force this login, he has already been authenticated
      */
 
-    /* init argv structure */ 
+    /* init argv structure */
     argv.size=0;
     argv.argc=0;
     argv.argv=malloc(0); /*so we can call realloc later */
@@ -1340,8 +1340,8 @@ start_login(const char *host, int autologin, char *name)
 	    addarg(&argv, "-a");
 	    addarg(&argv, "otp");
 	}
-	if(log_unauth) 
-	    syslog(LOG_INFO, "unauthenticated access from %s (%s)", 
+	if(log_unauth)
+	    syslog(LOG_INFO, "unauthenticated access from %s (%s)",
 		   host, user ? user : "unknown user");
     }
     if (auth_level >= 0 && autologin == AUTH_VALID)
@@ -1434,7 +1434,7 @@ rmut(void)
 #elif defined(__osf__) /* XXX */
 	utxp->ut_exit.ut_termination = 0;
 	utxp->ut_exit.ut_exit = 0;
-#else	
+#else
 	utxp->ut_exit.e_termination = 0;
 	utxp->ut_exit.e_exit = 0;
 #endif
@@ -1586,7 +1586,7 @@ cleanup(int sig)
     int t;
     int child_status; /* status of child process as returned by waitpid */
     int flags = WNOHANG|WUNTRACED;
-    
+
     /*
      * 1: Pick up the zombie, if we are being called
      *    as the signal handler.
@@ -1614,7 +1614,7 @@ cleanup(int sig)
     }
     incleanup = 1;
     sigsetmask(t);
-    
+
     t = cleantmp(&wtmp);
     setutent();	/* just to make sure */
 #endif /* CRAY */
@@ -1642,7 +1642,7 @@ cleanup(int sig)
 #endif
 #else
     char *p;
-    
+
     p = line + sizeof("/dev/") - 1;
     if (logout(p))
 	logwtmp(p, "", "");

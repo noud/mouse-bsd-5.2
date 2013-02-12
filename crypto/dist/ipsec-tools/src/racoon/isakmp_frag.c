@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 2004 Emmanuel Dreyfus
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -41,7 +41,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include <openssl/md5.h> 
+#include <openssl/md5.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -79,7 +79,7 @@
 #include "strnames.h"
 
 int
-isakmp_sendfrags(iph1, buf) 
+isakmp_sendfrags(iph1, buf)
 	struct ph1handle *iph1;
 	vchar_t *buf;
 {
@@ -107,7 +107,7 @@ isakmp_sendfrags(iph1, buf)
 	 * We want to send a a packet smaller than ISAKMP_FRAG_MAXLEN
 	 * First compute the maximum data length that will fit in it
 	 */
-	max_datalen = ISAKMP_FRAG_MAXLEN - 
+	max_datalen = ISAKMP_FRAG_MAXLEN -
 	    (sizeof(*hdr) + sizeof(*fraghdr) + sizeof(trailer));
 
 	sdata = buf->v;
@@ -121,12 +121,12 @@ isakmp_sendfrags(iph1, buf)
 		else
 			datalen = len;
 
-		fraglen = sizeof(*hdr) 
-			+ sizeof(*fraghdr) 
+		fraglen = sizeof(*hdr)
+			+ sizeof(*fraghdr)
 			+ datalen;
 
 		if ((frag = vmalloc(fraglen)) == NULL) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot allocate memory\n");
 			return -1;
 		}
@@ -158,11 +158,11 @@ isakmp_sendfrags(iph1, buf)
 		len -= datalen;
 		sdata += datalen;
 	}
-		
+
 	return fragnum;
 }
 
-unsigned int 
+unsigned int
 vendorid_frag_cap(gen)
 	struct isakmp_gen *gen;
 {
@@ -173,7 +173,7 @@ vendorid_frag_cap(gen)
 	return ntohl(hp[MD5_DIGEST_LENGTH / sizeof(*hp)]);
 }
 
-int 
+int
 isakmp_frag_extract(iph1, msg)
 	struct ph1handle *iph1;
 	vchar_t *msg;
@@ -195,9 +195,9 @@ isakmp_frag_extract(iph1, msg)
 	isakmp = (struct isakmp *)msg->v;
 	frag = (struct isakmp_frag *)(isakmp + 1);
 
-	/* 
+	/*
 	 * frag->len is the frag payload data plus the frag payload header,
-	 * whose size is sizeof(*frag) 
+	 * whose size is sizeof(*frag)
 	 */
 	if (msg->l < sizeof(*isakmp) + ntohs(frag->len)) {
 		plog(LLV_ERROR, LOCATION, NULL, "Fragment too short\n");
@@ -258,7 +258,7 @@ isakmp_frag_extract(iph1, msg)
 		if (item != NULL) /* It is complete */
 			return 1;
 	}
-		
+
 	return 0;
 }
 
@@ -283,7 +283,7 @@ isakmp_frag_reassembly(iph1)
 		len += item->frag_packet->l;
 		item = item->frag_next;
 	} while (item != NULL);
-	
+
 	if ((buf = vmalloc(len)) == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL, "Cannot allocate memory\n");
 		goto out;
@@ -299,7 +299,7 @@ isakmp_frag_reassembly(iph1)
 		} while (item != NULL);
 
 		if (item == NULL) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Missing fragment #%d\n", i);
 			vfree(buf);
 			buf = NULL;
@@ -310,7 +310,7 @@ isakmp_frag_reassembly(iph1)
 	}
 
 out:
-	item = iph1->frag_chain;		
+	item = iph1->frag_chain;
 	do {
 		struct isakmp_frag_item *next_item;
 
@@ -339,7 +339,7 @@ isakmp_frag_addcap(buf, cap)
 	len = buf->l;
 	if (len == MD5_DIGEST_LENGTH) {
 		if ((buf = vrealloc(buf, len + sizeof(cap))) == NULL) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot allocate memory\n");
 			return NULL;
 		}

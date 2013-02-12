@@ -27,18 +27,18 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -178,7 +178,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_BINDINSTALL_DIALOG, DIALOG
     BEGIN
@@ -224,7 +224,7 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_MAINFRAME           "BIND 9 Installer"
     IDS_CREATEDIR           "Directory %s does not exist.\nDo you wish to create it?"
@@ -239,7 +239,7 @@ BEGIN
     IDS_UNINSTALL_DONE      "BIND Uninstall Completed"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_CREATE_KEY          "Creating BIND registry key"
     IDS_ADD_REMOVE          "Setting up Add/Remove Programs entry"
@@ -259,7 +259,7 @@ BEGIN
     IDS_START_SERVICE       "Starting BIND service"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_UNINSTALL_DIR       "Remove Directories..."
     IDS_UNINSTALL_FILES     "Delete Files..."
@@ -279,7 +279,7 @@ BEGIN
     IDS_ERR_CREATE_KEY      "An error occured while creating registry keys\n(%s)"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_ERR_SET_VALUE       "An error occured while setting registry key values\n(%s)"
     IDS_NO_VERSION          "Version Unknown"

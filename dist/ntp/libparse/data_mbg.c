@@ -234,7 +234,7 @@ mbg_time_status_str(
 	{
 		char *start, *p;
 		struct state *s;
-	
+
 		start = p = *buffpp;
 
 		for (s = states; s->flag; s++)
@@ -253,7 +253,7 @@ mbg_time_status_str(
 		*buffpp = p;
 	}
 }
-      
+
 void
 mbg_tm_str(
 	char **buffpp,
@@ -294,7 +294,7 @@ get_mbg_cfgh(
 	)
 {
   int i;
-  
+
   cfghp->csum = get_lsb_short(buffpp);
   cfghp->valid = get_lsb_short(buffpp);
   get_mbg_tgps(buffpp, &cfghp->tot_51);
@@ -305,7 +305,7 @@ get_mbg_cfgh(
     {
       get_mbg_cfg(buffpp, &cfghp->cfg[i]);
     }
-  
+
   for (i = MIN_SVNO; i <= MAX_SVNO; i++)
     {
       get_mbg_health(buffpp, &cfghp->health[i]);
@@ -322,12 +322,12 @@ get_mbg_utc(
   utcp->valid = get_lsb_short(buffpp);
 
   get_mbg_tgps(buffpp, &utcp->t0t);
-  
+
   if (fetch_ieee754(buffpp, IEEE_DOUBLE, &utcp->A0, mbg_double) != IEEE_OK)
     {
       L_CLR(&utcp->A0);
     }
-  
+
   if (fetch_ieee754(buffpp, IEEE_DOUBLE, &utcp->A1, mbg_double) != IEEE_OK)
     {
       L_CLR(&utcp->A1);
@@ -346,7 +346,7 @@ get_mbg_lla(
 	)
 {
   int i;
-  
+
   for (i = LAT; i <= ALT; i++)
     {
       if  (fetch_ieee754(buffpp, IEEE_DOUBLE, &lla[i], mbg_double) != IEEE_OK)
@@ -368,7 +368,7 @@ get_mbg_xyz(
 	)
 {
   int i;
-  
+
   for (i = XP; i <= ZP; i++)
     {
       if  (fetch_ieee754(buffpp, IEEE_DOUBLE, &xyz[i], mbg_double) != IEEE_OK)
@@ -385,7 +385,7 @@ get_mbg_comparam(
 	)
 {
   int i;
-  
+
   comparamp->baud_rate = get_lsb_long(buffpp);
   for (i = 0; i < sizeof(comparamp->framing); i++)
     {
@@ -401,7 +401,7 @@ get_mbg_portparam(
 	)
 {
   int i;
-  
+
   for (i = 0; i < N_COM; i++)
     {
       get_mbg_comparam(buffpp, &portparamp->com[i]);
@@ -417,7 +417,7 @@ get_mbg_portparam(
 	{									\
 	  L_CLR(addr);								\
 	}
-	
+
 void
 get_mbg_eph(
 	unsigned char ** buffpp,
@@ -426,7 +426,7 @@ get_mbg_eph(
 {
   ephp->csum   = get_lsb_short(buffpp);
   ephp->valid  = get_lsb_short(buffpp);
-  
+
   ephp->health = get_lsb_short(buffpp);
   ephp->IODC   = get_lsb_short(buffpp);
   ephp->IODE2  = get_lsb_short(buffpp);
@@ -471,7 +471,7 @@ get_mbg_alm(
 {
   almp->csum   = get_lsb_short(buffpp);
   almp->valid  = get_lsb_short(buffpp);
-  
+
   almp->health = get_lsb_short(buffpp);
   get_mbg_tgps(buffpp, &almp->t0a);
 

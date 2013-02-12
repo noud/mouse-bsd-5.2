@@ -500,7 +500,7 @@ $code.=<<___;
 { .mmi;		xor	T1=T1,r10		// T1=((e & f) ^ (~e & g))
 		xor	r9=r8,r9
 		_rotr	r10=X[15-14],$sigma1[0] };;// ROTR(s1,19)
-{ .mib;		and	T2=A,B		
+{ .mib;		and	T2=A,B
 		_rotr	r11=X[15-14],$sigma1[1] }// ROTR(s1,61)
 { .mib;		and	r8=A,C		};;
 ___

@@ -478,7 +478,7 @@ void            GenRandomData(uint8_t *, uint32_t );
 #define ISCSI_MAX_IOVECS        32
 #endif
 
-enum {  
+enum {
 	/* used in iscsi_sock_msg() */
 	Receive = 0,
 	Transmit = 1

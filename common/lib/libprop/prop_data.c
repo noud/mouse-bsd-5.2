@@ -170,7 +170,7 @@ _prop_data_externalize(struct _prop_object_externalize_context *ctx, void *v)
 
 	if (_prop_object_externalize_end_tag(ctx, "data") == false)
 		return (false);
-	
+
 	return (true);
 }
 
@@ -248,7 +248,7 @@ prop_data_t
 prop_data_create_data_nocopy(const void *v, size_t size)
 {
 	prop_data_t pd;
-	
+
 	pd = _prop_data_alloc();
 	if (pd != NULL) {
 		pd->pd_immutable = v;
@@ -328,7 +328,7 @@ prop_data_data(prop_data_t pd)
 	v = _PROP_MALLOC(pd->pd_size, M_TEMP);
 	if (v != NULL)
 		memcpy(v, pd->pd_immutable, pd->pd_size);
-	
+
 	return (v);
 }
 
@@ -494,7 +494,7 @@ _prop_data_internalize_decode(struct _prop_object_internalize_context *ctx,
 				return (false);
 			ch = (unsigned char) *src;
 			/* FALLTHROUGH */
-		
+
 		case 3:		/* Valid, two bytes of info */
 			/*
 			 * We know this char is a =.  Is there anything but
@@ -587,7 +587,7 @@ _prop_data_internalize(prop_stack_t stack, prop_object_t *obj,
 	buf = _PROP_MALLOC(len + 1, M_PROP_DATA);
 	if (buf == NULL)
 		return (true);
-	
+
 	if (_prop_data_internalize_decode(ctx, buf, len + 1, &alen,
 					  &ctx->poic_cp) == false) {
 		_PROP_FREE(buf, M_PROP_DATA);

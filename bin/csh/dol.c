@@ -165,7 +165,7 @@ static Char *
 Dpack(Char *wbuf, Char *wp)
 {
     int c, i;
-    
+
     i = MAXWLEN - (wp - wbuf);
     for (;;) {
 	c = DgetC(DODOL);
@@ -214,7 +214,7 @@ Dword(void)
     Char wbuf[BUFSIZE], *wp;
     int c, c1, i;
     int dolflg, done, sofar;
-    
+
     done = 0;
     i = MAXWLEN;
     sofar = 0;
@@ -391,7 +391,7 @@ Dgetdol(void)
     int c, lwb, sc, subscr, upb;
     int dimen, bitset;
     char tnp;
-    
+
     bitset = 0;
     dimen = 0;
     lwb = 1;
@@ -412,7 +412,7 @@ Dgetdol(void)
 	if (dimen || bitset)
 	    stderror(ERR_SYNTAX);
 	if (backpid != 0) {
-	    if (dolbang) 
+	    if (dolbang)
 		xfree((ptr_t)dolbang);
 	    setDolp(dolbang = putn(backpid));
 	}
@@ -624,13 +624,13 @@ fixDolMod(void)
 		    dolwcnt = 10000;
 		c = DgetC(0);
 	    }
-	    if ((c == 'g' && dolmcnt != 10000) || 
+	    if ((c == 'g' && dolmcnt != 10000) ||
 		(c == 'a' && dolwcnt != 10000)) {
 		if (c == 'g')
 		    dolmcnt = 10000;
 		else
 		    dolwcnt = 10000;
-		c = DgetC(0); 
+		c = DgetC(0);
 	    }
 
 	    if (c == 's') {	/* [eichin:19910926.0755EST] */
@@ -638,12 +638,12 @@ fixDolMod(void)
 		int delim = DgetC(0);
 		dolmod[dolnmod++] = c;
 		dolmod[dolnmod++] = delim;
-		
+
 		if (!delim || letter(delim)
 		    || Isdigit(delim) || any(" \t\n", delim)) {
 		    seterror(ERR_BADSUBST);
 		    break;
-		}	
+		}
 		while ((c = DgetC(0)) != (-1)) {
 		    dolmod[dolnmod++] = c;
 		    if(c == delim) delimcnt--;
@@ -686,7 +686,7 @@ setDolp(Char *cp)
 	    Char *lhsub, *rhsub, *np;
 	    size_t lhlen = 0, rhlen = 0;
 	    int didmod = 0;
-		
+
 	    delim = dolmod[++i];
 	    if (!delim || letter(delim)
 		|| Isdigit(delim) || any(" \t\n", delim)) {
@@ -827,7 +827,7 @@ again:
 	if (errno == EEXIST) {
 	    if (unlink(tmp) == -1) {
 		(void)gettimeofday(&tv, NULL);
-		mbp = putn((((int)tv.tv_sec) ^ 
+		mbp = putn((((int)tv.tv_sec) ^
 		    ((int)tv.tv_usec) ^ ((int)getpid())) & 0x00ffffff);
 		shtemp = Strspl(STRtmpsh, mbp);
 		xfree((ptr_t)mbp);

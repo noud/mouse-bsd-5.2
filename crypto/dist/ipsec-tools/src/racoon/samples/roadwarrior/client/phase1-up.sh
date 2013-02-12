@@ -40,7 +40,7 @@ NetBSD)
 	;;
 Linux)
 	if=`netstat -rn|awk '($1 == "0.0.0.0"){print $8}'`
-	ifconfig ${if}:1 ${INTERNAL_ADDR4}      
+	ifconfig ${if}:1 ${INTERNAL_ADDR4}
 	route delete default
 	route add ${REMOTE_ADDR} gw ${DEFAULT_GW} dev ${if}
 	route add default gw ${DEFAULT_GW} dev ${if}:1
@@ -64,7 +64,7 @@ spdadd 0.0.0.0/0[any] ${INTERNAL_ADDR4}[any] any
 " | setkey -c
 
 #
-# XXX This is a workaround for Linux forward policies problem. 
+# XXX This is a workaround for Linux forward policies problem.
 # Someone familiar with forward policies please fix this properly.
 #
 case `uname -s` in

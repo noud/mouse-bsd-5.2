@@ -203,7 +203,7 @@ ip_clrtoeol(SCR *sp)
 {
 	IP_BUF ipb;
  	IP_PRIVATE *ipp = IPP(sp);
- 
+
  	/* Temporary hack until we can pass screen pointers
  	 * or name screens
  	 */
@@ -211,12 +211,12 @@ ip_clrtoeol(SCR *sp)
  		size_t x, y, spcnt;
  		IP_PRIVATE *ipp;
  		int error;
- 
+
  		ipp = IPP(sp);
  		y = ipp->row;
  		x = ipp->col;
  		error = 0;
- 		for (spcnt = sp->cols - x; 
+ 		for (spcnt = sp->cols - x;
  		     spcnt > 0 && ! error; --spcnt)
  			error = ip_addstr(sp, " ", 1);
  		if (sp->coff == 0)
@@ -294,7 +294,7 @@ ip_discard(SCR *discardp, SCR **acquirep)
 	return (0);
 }
 
-/* 
+/*
  * ip_ex_adjust --
  *	Adjust the screen for ex.
  *
@@ -506,15 +506,15 @@ ip_suspend(SCR *sp, int *allowedp)
 	return (0);
 }
 
-/*      
+/*
  * ip_usage --
  *      Print out the ip usage messages.
  *
  * PUBLIC: void ip_usage __P((void));
  */
-void    
+void
 ip_usage(void)
-{       
+{
 #define USAGE "\
 usage: vi [-eFlRrSv] [-c command] [-I ifd.ofd] [-t tag] [-w size] [file ...]\n"
         (void)fprintf(stderr, "%s", USAGE);

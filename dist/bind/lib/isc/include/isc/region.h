@@ -86,9 +86,9 @@ struct isc_consttextregion {
 int
 isc_region_compare(isc_region_t *r1, isc_region_t *r2);
 /*%<
- * Compares the contents of two regions 
+ * Compares the contents of two regions
  *
- * Requires: 
+ * Requires:
  *\li	'r1' is a valid region
  *\li	'r2' is a valid region
  *

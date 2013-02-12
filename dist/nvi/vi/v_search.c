@@ -145,7 +145,7 @@ v_exaddr(SCR *sp, VICMD *vp, dir_t dir)
 	 */
 	if (!KEYS_WAITING(sp))
 		F_SET(&wp->excmd, E_SEARCH_WMSG);
-		
+
 	/* Save the current line/column. */
 	s_lno = sp->lno;
 	s_cno = sp->cno;
@@ -177,7 +177,7 @@ v_exaddr(SCR *sp, VICMD *vp, dir_t dir)
 	cmdp = &wp->excmd;
 	if (ex_range(sp, cmdp, &err))
 		return (1);
-	
+
 	/*
 	 * Remember where any remaining command information is, and clean
 	 * up the fake ex command.
@@ -212,7 +212,7 @@ v_exaddr(SCR *sp, VICMD *vp, dir_t dir)
 	 */
 	if (ISMOTION(vp))
 		return (v_correct(sp, vp, F_ISSET(cmdp, E_DELTA)));
-		
+
 	/*
 	 * !!!
 	 * Historically, if it wasn't a motion command, a delta in the search
@@ -257,7 +257,7 @@ v_exaddr(SCR *sp, VICMD *vp, dir_t dir)
 		CHAR2INT(sp, buf, tlen, w, wlen);
 		if (v_event_push(sp, NULL, w, wlen, CH_NOMAP | CH_QUOTED))
 			return (1);
-		 
+
 		/* Don't refresh until after 'z' happens. */
 		F_SET(VIP(sp), VIP_S_REFRESH);
 	}
@@ -394,7 +394,7 @@ v_search(SCR *sp, VICMD *vp, CHAR_T *ptrn, size_t plen, u_int flags, dir_t dir)
 	 */
 	if (!KEYS_WAITING(sp))
 		LF_SET(SEARCH_WMSG);
-		
+
 	switch (dir) {
 	case BACKWARD:
 		if (b_search(sp,

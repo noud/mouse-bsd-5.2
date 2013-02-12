@@ -2,7 +2,7 @@ Header: /tcpdump/master/tcpdump/CHANGES,v 1.87.2.14 2007/07/24 02:17:13 mcr Exp
 
 Wed.	July 23, 2007.  mcr@xelerance.com.  Summary for 0.9.7 libpcap release
 
-    	NFS: Print unsigned values as such. 
+    	NFS: Print unsigned values as such.
 	RX: parse safely.
 	BGP: fixes for IPv6-less builds.
 	801.1ag: use standard codepoint.
@@ -12,7 +12,7 @@ Wed.	July 23, 2007.  mcr@xelerance.com.  Summary for 0.9.7 libpcap release
 	smb: squelch an uninitialized complaint from coverity.
 	NFS: from NetBSD; don't interpret the reply as a possible NFS reply
 		if it got MSG_DENIED.
-	BGP: don't print TLV values that didn't fit, from www.digit-labs.org. 
+	BGP: don't print TLV values that didn't fit, from www.digit-labs.org.
 	revised INSTALL.txt about libpcap dependancy.
 
 Wed.	April 25, 2007. ken@xelerance.com.  Summary for 3.9.6 tcpdump release
@@ -30,11 +30,11 @@ Wed.	April 25, 2007. ken@xelerance.com.  Summary for 3.9.6 tcpdump release
 	Add support for 802.3ah loopback ctrl msg
 	Add support for Multiple-STP as per 802.1s
 	Add support for rapid-SPT as per 802.1w
-	Add support for CFM Link-trace msg, Link-trace-Reply msg, 
+	Add support for CFM Link-trace msg, Link-trace-Reply msg,
 	 Sender-ID tlv, private tlv, port, interface status
 	Add support for unidirectional link detection as per
 	 http://www.ietf.org/internet-drafts/draft-foschiano-udld-02.txt
-	Add support for the olsr protocol as per RFC 3626 plus the LQ 
+	Add support for the olsr protocol as per RFC 3626 plus the LQ
 	 extensions from olsr.org
 	Add support for variable-length checksum in DCCP, as per section 9 of
 	 RFC 4340.
@@ -46,7 +46,7 @@ Wed.	April 25, 2007. ken@xelerance.com.  Summary for 3.9.6 tcpdump release
 
 
 Tue.	September 19, 2006. ken@xelerance.com. Summary for 3.9.5 tcpdump release
-	
+
 	Fix compiling on AIX (, at end of ENUM)
 	Updated list of DNS RR typecodes
 	Use local Ethernet defs on WIN32
@@ -61,7 +61,7 @@ Tue.	September 19, 2006. ken@xelerance.com. Summary for 3.9.5 tcpdump release
 	Add support for BGP signaled VPLS
 	Cleanup the bootp printer
 	Add support for PPP over Frame-Relay
-	Add some bounds checking to the IP options code, and clean up 
+	Add some bounds checking to the IP options code, and clean up
 	 the options output a bit.
 	Add additional modp groups to ISAKMP printer
 	Add support for Address-Withdraw and Label-Withdraw Msgs

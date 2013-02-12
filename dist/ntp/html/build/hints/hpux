@@ -1,7 +1,7 @@
 Last update: Sun Mar 13 15:05:31 PST 1994
 
 This file hopefully describes the whatever and however of how to get xntp
-running on hpux 7.0 and later s300. s400, s700, and s800.  
+running on hpux 7.0 and later s300. s400, s700, and s800.
 
 First off,  all the standard disclaimers hold here ... HP doesn't have anthing
 to do with this stuff.  I fool with it in my spare time because we use it and
@@ -9,11 +9,11 @@ because I like to.  We just happen to have a lot of HP machines around here :-)
 Xntpd has been in use here for several years and has a fair amount of mileage
 on various HP platforms within the company.  I can't really guarantee bug fixes
 but I'd certainly like to hear about bugs and I won't hestitate to look at
-any fixes sent to me.  
+any fixes sent to me.
 
 Now lets talk OS.  If you don't have 7.0 or later, pretty much hang it up now.
-This stuff has run here on pretty much everything from 8.0 upward on s300, 
-s700, and s800.  It is known to run on 7.0 s300/s400 but all reports are 
+This stuff has run here on pretty much everything from 8.0 upward on s300,
+s700, and s800.  It is known to run on 7.0 s300/s400 but all reports are
 from the field and not my personal experience.
 
 If you are lucky enough to have a s300 or s400 with 9.03, then you no longer
@@ -31,7 +31,7 @@ this adjtime(3)/adjtimed(8) other than with xntpd may yield very odd results.
 
 What to do to get this stuff running ?
 
-    * If you are running an OS less than 10.0 or do not have a s300/s400 
+    * If you are running an OS less than 10.0 or do not have a s300/s400
       with 9.03 or better
 	-> cd machines
 	-> vi hpux
@@ -45,18 +45,18 @@ What to do to get this stuff running ?
     * cd authstuff
 	* Say "./authcert < certdata" and check the output.  Every line should
 	  end with "OK" ... if not, we got trouble.
-	* Now try "./authspeed auth.samplekeys".  What we want to 
-	  remember here is the "authentication delay in CPU time" 
+	* Now try "./authspeed auth.samplekeys".  What we want to
+	  remember here is the "authentication delay in CPU time"
 	* cd ..
 
     * Say "make install"
 
     * I'd suggest reading the xntp docs about now :-) ... seriously !!
 
-    * One thing I have added to this version of xntpd is a way to select 
-      config files if you are sharing /usr/local thru NFS or whatever.  
-      If the file /usr/local/etc/xntp.conf happens to be a directory, the 
-      files in that directory are searched until a match is found.  The 
+    * One thing I have added to this version of xntpd is a way to select
+      config files if you are sharing /usr/local thru NFS or whatever.
+      If the file /usr/local/etc/xntp.conf happens to be a directory, the
+      files in that directory are searched until a match is found.  The
       rules for a match are:
 
 	1. Our hostname
@@ -64,7 +64,7 @@ What to do to get this stuff running ?
 	3. default
 
     * Ok, make sure adjtimed is running (just start it up for now with
-      "/usr/local/etc/adjtimed").  Using -z as an option will get you 
+      "/usr/local/etc/adjtimed").  Using -z as an option will get you
       a usage message.
 
     * Now start up xntpd and watch it work.
@@ -106,7 +106,7 @@ Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 
 Dave,
-   After reading the hpux hints file, I realized I didn't install or 
+   After reading the hpux hints file, I realized I didn't install or
 start adjtimed.  In the course of doing this, I discovered that:
 
 --> $(TOP) is not defined in adjtime/Makefile, so "make install" can't
@@ -150,9 +150,9 @@ Thanks for the help.
 On Thu, 15 Jun 1995 Mills@huey.udel.edu wrote:
 
 > Jeff,
-> 
+>
 > Read the hpux file in the hints directory.
-> 
+>
 > Dave
-> 
+>
 

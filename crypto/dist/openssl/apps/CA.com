@@ -3,10 +3,10 @@ $!      some setup stuff to be done before you can use it and this makes
 $!      things easier between now and when Eric is convinced to fix it :-)
 $!
 $! CA -newca ... will setup the right stuff
-$! CA -newreq ... will generate a certificate request 
-$! CA -sign ... will sign the generated request and output 
+$! CA -newreq ... will generate a certificate request
+$! CA -sign ... will sign the generated request and output
 $!
-$! At the end of that grab newreq.pem and newcert.pem (one has the key 
+$! At the end of that grab newreq.pem and newcert.pem (one has the key
 $! and the other the certificate) and cat them together and that is what
 $! you want/need ... I'll make even this a little cleaner later.
 $!
@@ -52,9 +52,9 @@ $ if i .gt. 8 then goto opt_loop_end
 $
 $ prog_opt = F$EDIT(P'i',"lowercase")
 $
-$ IF (prog_opt .EQS. "?" .OR. prog_opt .EQS. "-h" .OR. prog_opt .EQS. "-help") 
+$ IF (prog_opt .EQS. "?" .OR. prog_opt .EQS. "-h" .OR. prog_opt .EQS. "-help")
 $ THEN
-$   echo "usage: CA -newcert|-newreq|-newca|-sign|-verify" 
+$   echo "usage: CA -newcert|-newreq|-newca|-sign|-verify"
 $   exit
 $ ENDIF
 $!
@@ -98,7 +98,7 @@ $     CREATE /DIR /PROTECTION=OWNER:RWED 'CATOP'.crl]
 $     CREATE /DIR /PROTECTION=OWNER:RWED 'CATOP'.newcerts]
 $     CREATE /DIR /PROTECTION=OWNER:RWED 'CATOP'.private]
 $
-$     OPEN   /WRITE ser_file 'CATOP']serial. 
+$     OPEN   /WRITE ser_file 'CATOP']serial.
 $     WRITE ser_file "01"
 $     CLOSE ser_file
 $     APPEND/NEW NL: 'CATOP']index.txt
@@ -152,7 +152,7 @@ $ ENDIF
 $!
 $ IF ((prog_opt .EQS. "-sign") .OR. (prog_opt .EQS. "-signreq"))
 $ THEN
-$!   
+$!
 $   DEFINE/USER SYS$INPUT '__INPUT'
 $   CA -policy policy_anything -out newcert.pem -infiles newreq.pem
 $   RET=$STATUS
@@ -163,7 +163,7 @@ $ ENDIF
 $!
 $ IF (prog_opt .EQS. "-signcert")
 $  THEN
-$!   
+$!
 $   echo "Cert passphrase will be requested twice - bug?"
 $   DEFINE/USER SYS$INPUT '__INPUT'
 $   X509 -x509toreq -in newreq.pem -signkey newreq.pem -out tmp.pem
@@ -178,7 +178,7 @@ $ ENDIF
 $!
 $ IF (prog_opt .EQS. "-verify")
 $ THEN
-$!   
+$!
 $   i = i + 1
 $   IF (p'i' .EQS. "")
 $   THEN
@@ -189,7 +189,7 @@ $     j = i
 $    verify_opt_loop:
 $     IF j .GT. 8 THEN GOTO verify_opt_loop_end
 $     IF p'j' .NES. ""
-$     THEN 
+$     THEN
 $       DEFINE/USER SYS$INPUT '__INPUT'
 $       __tmp = p'j'
 $       VERIFY "-CAfile" 'CATOP''CACERT' '__tmp'
@@ -200,15 +200,15 @@ $     j = j + 1
 $     GOTO verify_opt_loop
 $    verify_opt_loop_end:
 $   ENDIF
-$   
+$
 $   GOTO opt_loop_end
 $ ENDIF
 $!
 $ IF (prog_opt .NES. "")
 $ THEN
-$!   
+$!
 $   echo "Unknown argument ''prog_opt'"
-$   
+$
 $   EXIT 3
 $ ENDIF
 $

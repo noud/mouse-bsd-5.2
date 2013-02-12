@@ -9,7 +9,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -85,7 +85,7 @@ static int dsa_pub_decode(EVP_PKEY *pkey, X509_PUBKEY *pubkey)
 
 	if (ptype == V_ASN1_SEQUENCE)
 		{
-		pstr = pval;	
+		pstr = pval;
 		pm = pstr->data;
 		pmlen = pstr->length;
 
@@ -186,7 +186,7 @@ static int dsa_pub_encode(X509_PUBKEY *pk, const EVP_PKEY *pkey)
 /* In PKCS#8 DSA: you just get a private key integer and parameters in the
  * AlgorithmIdentifier the pubkey must be recalculated.
  */
-	
+
 static int dsa_priv_decode(EVP_PKEY *pkey, PKCS8_PRIV_KEY_INFO *p8)
 	{
 	const unsigned char *p, *pm;
@@ -243,7 +243,7 @@ static int dsa_priv_decode(EVP_PKEY *pkey, PKCS8_PRIV_KEY_INFO *p8)
 			goto decerr;
 		}
 
-	pstr = pval;	
+	pstr = pval;
 	pm = pstr->data;
 	pmlen = pstr->length;
 	if (!(dsa = d2i_DSAparams(NULL, &pm, pmlen)))
@@ -265,7 +265,7 @@ static int dsa_priv_decode(EVP_PKEY *pkey, PKCS8_PRIV_KEY_INFO *p8)
 		DSAerr(DSA_F_DSA_PRIV_DECODE, ERR_R_MALLOC_FAILURE);
 		goto dsaerr;
 		}
-			
+
 	if (!BN_mod_exp(dsa->pub_key, dsa->g, dsa->priv_key, dsa->p, ctx))
 		{
 		DSAerr(DSA_F_DSA_PRIV_DECODE,DSA_R_BN_ERROR);
@@ -550,7 +550,7 @@ static int dsa_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
 			if (hnid == NID_undef)
 				return -1;
 			if (!OBJ_find_sigid_by_algs(&snid, hnid, EVP_PKEY_id(pkey)))
-				return -1; 
+				return -1;
 			X509_ALGOR_set0(alg2, OBJ_nid2obj(snid), V_ASN1_UNDEF, 0);
 			}
 		return 1;
@@ -567,7 +567,7 @@ static int dsa_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
 			if (hnid == NID_undef)
 				return -1;
 			if (!OBJ_find_sigid_by_algs(&snid, hnid, EVP_PKEY_id(pkey)))
-				return -1; 
+				return -1;
 			X509_ALGOR_set0(alg2, OBJ_nid2obj(snid), V_ASN1_UNDEF, 0);
 			}
 		return 1;
@@ -586,7 +586,7 @@ static int dsa_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
 
 /* NB these are sorted in pkey_id order, lowest first */
 
-const EVP_PKEY_ASN1_METHOD dsa_asn1_meths[] = 
+const EVP_PKEY_ASN1_METHOD dsa_asn1_meths[] =
 	{
 
 		{

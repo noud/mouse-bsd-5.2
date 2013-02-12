@@ -88,8 +88,8 @@
 # include <apollo/base.h>
 #endif /* SYS_DOMAINOS */
 
-#include "recvbuff.h"  
-#include "ntp_cmdargs.h"  
+#include "recvbuff.h"
+#include "ntp_cmdargs.h"
 
 #if 0				/* HMS: I don't think we need this. 961223 */
 #ifdef LOCK_PROCESS
@@ -172,9 +172,9 @@ char *group = NULL;		/* group to switch to */
 char *chrootdir = NULL;		/* directory to chroot to */
 int sw_uid;
 int sw_gid;
-char *endp;  
+char *endp;
 struct group *gr;
-struct passwd *pw; 
+struct passwd *pw;
 #endif /* HAVE_DROPROOT */
 
 /*
@@ -326,10 +326,10 @@ main(
 /*
  * OK. AIX is different than solaris in how it implements plock().
  * If you do NOT adjust the stack limit, you will get the MAXIMUM
- * stack size allocated and PINNED with you program. To check the 
- * value, use ulimit -a. 
+ * stack size allocated and PINNED with you program. To check the
+ * value, use ulimit -a.
  *
- * To fix this, we create an automatic variable and set our stack limit 
+ * To fix this, we create an automatic variable and set our stack limit
  * to that PLUS 32KB of extra space (we need some headroom).
  *
  * This subroutine gets the stack address.
@@ -748,7 +748,7 @@ ntpdmain(
 # ifdef HAVE_PLOCK
 #  ifdef PROCLOCK
 #   ifdef _AIX
-	/* 
+	/*
 	 * set the stack limit for AIX for plock().
 	 * see get_aix_stack() for more info.
 	 */
@@ -870,14 +870,14 @@ ntpdmain(
 			exit(-1);
 		}
 #endif /* HAVE_LINUX_CAPABILITIES */
-	
+
 		if (user != NULL) {
 			if (isdigit((unsigned char)*user)) {
 				sw_uid = (uid_t)strtoul(user, &endp, 0);
-				if (*endp != '\0') 
+				if (*endp != '\0')
 					goto getuser;
 			} else {
-getuser:	
+getuser:
 				if ((pw = getpwnam(user)) != NULL) {
 					sw_uid = pw->pw_uid;
 				} else {
@@ -890,10 +890,10 @@ getuser:
 		if (group != NULL) {
 			if (isdigit((unsigned char)*group)) {
 				sw_gid = (gid_t)strtoul(group, &endp, 0);
-				if (*endp != '\0') 
+				if (*endp != '\0')
 					goto getgroup;
 			} else {
-getgroup:	
+getgroup:
 				if ((gr = getgrnam(group)) != NULL) {
 					sw_gid = gr->gr_gid;
 				} else {
@@ -903,7 +903,7 @@ getgroup:
 				}
 			}
 		}
-		
+
 		if( chrootdir ) {
 			/* make sure cwd is inside the jail: */
 			if( chdir(chrootdir) ) {
@@ -931,7 +931,7 @@ getgroup:
 			msyslog(LOG_ERR, "Cannot seteuid() to user `%s': %m", user);
 			exit (-1);
 		}
-	
+
 #ifndef HAVE_LINUX_CAPABILITIES
 		/*
 		 * for now assume that the privilege to bind to privileged ports
@@ -971,7 +971,7 @@ getgroup:
 
 	}    /* if( droproot ) */
 #endif /* HAVE_DROPROOT */
-	
+
 	/*
 	 * Report that we're up to any trappers
 	 */
@@ -1002,7 +1002,7 @@ getgroup:
 	was_alarmed = 0;
 	for (;;)
 	{
-# if !defined(HAVE_SIGNALED_IO) 
+# if !defined(HAVE_SIGNALED_IO)
 		extern fd_set activefds;
 		extern int maxactivefd;
 
@@ -1051,7 +1051,7 @@ getgroup:
 				netsyslog(LOG_DEBUG, "select(): nfound=%d, error: %m", nfound);
 #  endif /* DEBUG */
 # else /* HAVE_SIGNALED_IO */
-                        
+
 			wait_for_signal();
 # endif /* HAVE_SIGNALED_IO */
 			if (alarm_flag) 	/* alarmed? */
@@ -1080,7 +1080,7 @@ getgroup:
 			l_fp pts;
 			l_fp tsa, tsb;
 			int bufcount = 0;
-			
+
 			get_systime(&pts);
 			tsa = pts;
 #endif

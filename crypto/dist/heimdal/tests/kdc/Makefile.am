@@ -10,7 +10,7 @@ noinst_DATA = \
 	krb5-slave.conf
 
 check_PROGRAMS = ap-req
-check_SCRIPTS = $(SCRIPT_TESTS) 
+check_SCRIPTS = $(SCRIPT_TESTS)
 
 SCRIPT_TESTS = \
 	check-digest \
@@ -38,7 +38,7 @@ do_subst = sed $(do_dlopen) \
 	-e 's,[@]port[@],$(port),g' \
 	-e 's,[@]admport[@],$(admport),g' \
 	-e 's,[@]objdir[@],$(top_builddir)/tests/kdc,g' \
-	-e 's,[@]EGREP[@],$(EGREP),g' 
+	-e 's,[@]EGREP[@],$(EGREP),g'
 
 LDADD = ../../lib/krb5/libkrb5.la $(LIB_roken)
 

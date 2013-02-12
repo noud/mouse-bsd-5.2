@@ -8,7 +8,7 @@
  * the name of Vixie Enterprises not be used in advertising or publicity
  * pertaining to distribution of the document or software without specific,
  * written prior permission.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND VIXIE ENTERPRISES DISCLAIMS ALL
  * WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS.   IN NO EVENT SHALL VIXIE ENTERPRISES

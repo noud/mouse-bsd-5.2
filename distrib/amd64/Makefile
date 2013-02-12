@@ -7,7 +7,7 @@ SUBDIR+=	instkernel
 SUBDIR+=	.WAIT
 SUBDIR+=	cdroms
 SUBDIR+=	floppies
-TARGETS+=	release 
+TARGETS+=	release
 
 iso_image:
 	${MAKEDIRTARGET} cdroms iso_image

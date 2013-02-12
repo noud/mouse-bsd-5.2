@@ -364,7 +364,7 @@ LIB_kafs = $(top_builddir)/lib/kafs/libkafs.la $(AIX_EXTRA_KAFS)
 man_MANS = editline.3
 lib_LTLIBRARIES = libeditline.la
 @el_compat_TRUE@noinst_LTLIBRARIES = libel_compat.la
-CHECK_LOCAL = 
+CHECK_LOCAL =
 testit_LDADD = \
 	libeditline.la \
 	$(LIB_tgetent) \
@@ -381,7 +381,7 @@ libeditline_la_SOURCES = \
 	unix.h \
 	$(EXTRA_SOURCE)
 
-EXTRA_SOURCE = $(ES) 
+EXTRA_SOURCE = $(ES)
 libel_compat_la_SOURCES = edit_compat.c edit_compat.h
 EXTRA_DIST = $(man_MANS)
 all: all-am
@@ -453,9 +453,9 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libeditline.la: $(libeditline_la_OBJECTS) $(libeditline_la_DEPENDENCIES) 
+libeditline.la: $(libeditline_la_OBJECTS) $(libeditline_la_DEPENDENCIES)
 	$(LINK) -rpath $(libdir) $(libeditline_la_OBJECTS) $(libeditline_la_LIBADD) $(LIBS)
-libel_compat.la: $(libel_compat_la_OBJECTS) $(libel_compat_la_DEPENDENCIES) 
+libel_compat.la: $(libel_compat_la_OBJECTS) $(libel_compat_la_DEPENDENCIES)
 	$(LINK) $(am_libel_compat_la_rpath) $(libel_compat_la_OBJECTS) $(libel_compat_la_LIBADD) $(LIBS)
 
 clean-noinstPROGRAMS:
@@ -464,7 +464,7 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-testit$(EXEEXT): $(testit_OBJECTS) $(testit_DEPENDENCIES) 
+testit$(EXEEXT): $(testit_OBJECTS) $(testit_DEPENDENCIES)
 	@rm -f testit$(EXEEXT)
 	$(LINK) $(testit_OBJECTS) $(testit_LDADD) $(LIBS)
 

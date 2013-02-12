@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2005 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "krb5_locl.h"
@@ -64,22 +64,22 @@ _krb5_krb_time_to_life(time_t start, time_t end)
     int i;
     time_t life = end - start;
 
-    if (life > MAXTKTLIFETIME || life <= 0) 
+    if (life > MAXTKTLIFETIME || life <= 0)
 	return 0;
-#if 0    
-    if (krb_no_long_lifetimes) 
+#if 0
+    if (krb_no_long_lifetimes)
 	return (life + 5*60 - 1)/(5*60);
 #endif
-    
+
     if (end >= NEVERDATE)
 	return TKTLIFENOEXPIRE;
-    if (life < _tkt_lifetimes[0]) 
+    if (life < _tkt_lifetimes[0])
 	return (life + 5*60 - 1)/(5*60);
     for (i=0; i<TKTLIFENUMFIXED; i++)
 	if (life <= _tkt_lifetimes[i])
 	    return i + TKTLIFEMINFIXED;
     return 0;
-    
+
 }
 
 time_t KRB5_LIB_FUNCTION
@@ -87,7 +87,7 @@ _krb5_krb_life_to_time(int start, int life_)
 {
     unsigned char life = (unsigned char) life_;
 
-#if 0    
+#if 0
     if (krb_no_long_lifetimes)
 	return start + life*5*60;
 #endif
@@ -137,7 +137,7 @@ get_krb4_cc_name(const char *tkfile, char **cc)
 #define KRB5_TF_LCK_RETRY 1
 
 static krb5_error_code
-write_v4_cc(krb5_context context, const char *tkfile, 
+write_v4_cc(krb5_context context, const char *tkfile,
 	    krb5_storage *sp, int append)
 {
     krb5_error_code ret;
@@ -148,24 +148,24 @@ write_v4_cc(krb5_context context, const char *tkfile,
 
     ret = get_krb4_cc_name(tkfile, &path);
     if (ret) {
-	krb5_set_error_string(context, 
+	krb5_set_error_string(context,
 			      "krb5_krb_tf_setup: failed getting "
-			      "the krb4 credentials cache name"); 
+			      "the krb4 credentials cache name");
 	return ret;
     }
 
     fd = open(path, O_WRONLY|O_CREAT, 0600);
     if (fd < 0) {
 	ret = errno;
-	krb5_set_error_string(context, 
-			      "krb5_krb_tf_setup: error opening file %s", 
+	krb5_set_error_string(context,
+			      "krb5_krb_tf_setup: error opening file %s",
 			      path);
 	free(path);
 	return ret;
     }
 
     if (fstat(fd, &sb) != 0 || !S_ISREG(sb.st_mode)) {
-	krb5_set_error_string(context, 
+	krb5_set_error_string(context,
 			      "krb5_krb_tf_setup: tktfile %s is not a file",
 			      path);
 	free(path);
@@ -229,8 +229,8 @@ write_v4_cc(krb5_context context, const char *tkfile,
  */
 
 krb5_error_code KRB5_LIB_FUNCTION
-_krb5_krb_tf_setup(krb5_context context, 
-		   struct credentials *v4creds, 
+_krb5_krb_tf_setup(krb5_context context,
+		   struct credentials *v4creds,
 		   const char *tkfile,
 		   int append)
 {
@@ -264,7 +264,7 @@ _krb5_krb_tf_setup(krb5_context context,
     RCHECK(ret, krb5_store_int32(sp, v4creds->kvno), error);
     RCHECK(ret, krb5_store_int32(sp, v4creds->ticket_st.length), error);
 
-    ret = krb5_storage_write(sp, v4creds->ticket_st.dat, 
+    ret = krb5_storage_write(sp, v4creds->ticket_st.dat,
 			     v4creds->ticket_st.length);
     if (ret != v4creds->ticket_st.length) {
 	ret = KRB5_CC_IO;
@@ -292,15 +292,15 @@ _krb5_krb_dest_tkt(krb5_context context, const char *tkfile)
 
     ret = get_krb4_cc_name(tkfile, &path);
     if (ret) {
-	krb5_set_error_string(context, 
+	krb5_set_error_string(context,
 			      "krb5_krb_tf_setup: failed getting "
-			      "the krb4 credentials cache name"); 
+			      "the krb4 credentials cache name");
 	return ret;
     }
 
     if (unlink(path) < 0) {
 	ret = errno;
-	krb5_set_error_string(context, 
+	krb5_set_error_string(context,
 			      "krb5_krb_dest_tkt failed removing the cache "
 			      "with error %s", strerror(ret));
     }
@@ -340,7 +340,7 @@ static const char eightzeros[8] = "\x00\x00\x00\x00\x00\x00\x00\x00";
 static krb5_error_code
 storage_to_etext(krb5_context context,
 		 krb5_storage *sp,
-		 const krb5_keyblock *key, 
+		 const krb5_keyblock *key,
 		 krb5_data *enc_data)
 {
     krb5_error_code ret;
@@ -433,7 +433,7 @@ _krb5_krb_create_ticket(krb5_context context,
 
     /* session key */
     ret = krb5_storage_write(sp,
-			     session->keyvalue.data, 
+			     session->keyvalue.data,
 			     session->keyvalue.length);
     if (ret != session->keyvalue.length) {
 	ret = KRB4ET_INTK_PROT;
@@ -485,7 +485,7 @@ _krb5_krb_create_ciph(krb5_context context,
 
     /* session key */
     ret = krb5_storage_write(sp,
-			     session->keyvalue.data, 
+			     session->keyvalue.data,
 			     session->keyvalue.length);
     if (ret != session->keyvalue.length) {
 	ret = KRB4ET_INTK_PROT;
@@ -561,7 +561,7 @@ _krb5_krb_create_auth_reply(krb5_context context,
     krb5_storage_free(sp);
     if (ret)
 	krb5_set_error_string(context, "Failed to encode kerberos 4 ticket");
-	
+
     return ret;
 }
 
@@ -612,7 +612,7 @@ _krb5_krb_cr_err_reply(krb5_context context,
     krb5_storage_free(sp);
     if (ret)
 	krb5_set_error_string(context, "Failed to encode kerberos 4 error");
-	
+
     return 0;
 }
 
@@ -673,7 +673,7 @@ _krb5_krb_decomp_ticket(krb5_context context,
     RCHECK(ret, get_v4_stringz(sp, &ad->pinst, INST_SZ), error);
     RCHECK(ret, get_v4_stringz(sp, &ad->prealm, REALM_SZ), error);
     RCHECK(ret, krb5_ret_uint32(sp, &ad->address), error);
-	
+
     size = krb5_storage_read(sp, des_key, sizeof(des_key));
     if (size != sizeof(des_key)) {
 	ret = KRB4ET_INTK_PROT;
@@ -796,7 +796,7 @@ _krb5_krb_rd_req(krb5_context context,
 
     little_endian = type & 1;
     type &= ~1;
-    
+
     if(type != AUTH_MSG_APPL_REQUEST && type != AUTH_MSG_APPL_REQUEST_MUTUAL) {
 	ret = KRB4ET_RD_AP_MSG_TYPE;
 	krb5_set_error_string(context, "Not a valid v4 request type");
@@ -817,7 +817,7 @@ _krb5_krb_rd_req(krb5_context context,
     }
 
     /* Decrypt and take apart ticket */
-    ret = _krb5_krb_decomp_ticket(context, &ticket, key, local_realm, 
+    ret = _krb5_krb_decomp_ticket(context, &ticket, key, local_realm,
 				  &sname, &sinstance, ad);
     if (ret)
 	goto error;
@@ -865,7 +865,7 @@ _krb5_krb_rd_req(krb5_context context,
 	ret = KRB4ET_RD_AP_INCON;
 	goto error;
     }
-    
+
     if (from_addr && ad->address && from_addr != ad->address) {
 	krb5_set_error_string(context, "v4 bad address in ticket");
 	ret = KRB4ET_RD_AP_BADD;
@@ -883,7 +883,7 @@ _krb5_krb_rd_req(krb5_context context,
     /* Now check for expiration of ticket */
 
     tkt_age = tv.tv_sec - ad->time_sec;
-    
+
     if ((tkt_age < 0) && (-tkt_age > CLOCK_SKEW)) {
         ret = KRB4ET_RD_AP_NYV;
 	krb5_set_error_string(context, "v4 clock skew for expiration");

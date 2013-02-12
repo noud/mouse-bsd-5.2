@@ -324,7 +324,7 @@ static int hostap_send_mgmt_frame(void *priv, const void *msg, size_t len,
 				  int flags)
 {
 	struct hostap_driver_data *drv = priv;
-	
+
 	return send(drv->sock, msg, len, flags);
 }
 
@@ -582,7 +582,7 @@ static int hostap_set_privacy(const char *ifname, void *priv, int enabled)
 					enabled);
 }
 
- 
+
 static int hostap_set_ssid(const char *ifname, void *priv, const u8 *buf,
 			   int len)
 {

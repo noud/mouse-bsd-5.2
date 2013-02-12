@@ -106,7 +106,7 @@ struct netdissect_options {
   int ndo_dlt;                  /* if != -1, ask libpcap for the DLT it names*/
   int ndo_pflag;                /* don't go promiscuous */
 
-  int ndo_Cflag;                /* rotate dump files after this many bytes */ 
+  int ndo_Cflag;                /* rotate dump files after this many bytes */
   int ndo_Cflag_count;      /* Keep track of which file number we're writing */
   int ndo_Wflag;          /* recycle output files after this number of files */
   int ndo_WflagChars;
@@ -215,7 +215,7 @@ struct netdissect_options {
 #define ND_PRINT(STUFF) (*ndo->ndo_printf)STUFF
 #define ND_DEFAULTPRINT(ap, length) (*ndo->ndo_default_print)(ndo, ap, length)
 
-#if 0	
+#if 0
 extern void ts_print(netdissect_options *ipdo,
 		     const struct timeval *);
 extern void relts_print(int);
@@ -247,7 +247,7 @@ extern const char *dnnum_string(netdissect_options *, u_short);
 #include <pcap.h>
 
 
-extern void eap_print(netdissect_options *,const u_char *, u_int);    
+extern void eap_print(netdissect_options *,const u_char *, u_int);
 extern int esp_print(netdissect_options *,
 		     register const u_char *bp, int len, register const u_char *bp2,
 		     int *nhdr, int *padlen);
@@ -360,7 +360,7 @@ extern void raw_if_print(u_char *,
 extern void rip_print(netdissect_options *,const u_char *, u_int);
 
 extern void sctp_print(netdissect_options *ndo,
-		       const u_char *bp, const u_char *bp2,       
+		       const u_char *bp, const u_char *bp2,
 		       u_int sctpPacketLength);
 
 extern void sl_if_print(u_char *,const struct pcap_pkthdr *, const u_char *);

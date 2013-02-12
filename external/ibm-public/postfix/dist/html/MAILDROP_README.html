@@ -37,7 +37,7 @@ delivery agent into Postfix: </p>
 <p> Postfix can be configured to deliver mail directly to <a href="QSHAPE_README.html#maildrop_queue">maildrop</a>,
 without using the <a href="local.8.html">local(8)</a> delivery agent as an intermediate.  This
 means that you do not get local <a href="aliases.5.html">aliases(5)</a> expansion or $HOME/.forward
-file processing. You would typically do this for <a href="VIRTUAL_README.html#canonical">hosted domains</a> with 
+file processing. You would typically do this for <a href="VIRTUAL_README.html#canonical">hosted domains</a> with
 recipients that don't have UNIX home directories. </p>
 
 <p> The following example shows how to use maildrop for some.domain
@@ -53,12 +53,12 @@ and for someother.domain. The example comes in two parts. </p>
  4     <a href="postconf.5.html#virtual_transport">virtual_transport</a> = maildrop
  5     <a href="postconf.5.html#virtual_mailbox_maps">virtual_mailbox_maps</a> = hash:/etc/postfix/virtual_mailbox
  6     <a href="postconf.5.html#virtual_alias_maps">virtual_alias_maps</a> = hash:/etc/postfix/virtual_alias
- 7 
+ 7
  8 /etc/postfix/virtual_mailbox:
  9     user1@some.domain        <i>...text here does not matter...</i>
 10     user2@some.domain        <i>...text here does not matter...</i>
 11     user3@someother.domain   <i>...text here does not matter...</i>
-12 
+12
 13 /etc/postfix/virtual_alias:
 14     postmaster@some.domain           postmaster
 15     postmaster@someother.domain      postmaster
@@ -137,7 +137,7 @@ needed. </p>
 <p> Postfix can be configured to deliver mail to maildrop via the
 local delivery agent. This is slightly less efficient than the
 "direct" approach discussed above, but gives you the convenience
-of local <a href="aliases.5.html">aliases(5)</a> expansion and $HOME/.forward file processing. 
+of local <a href="aliases.5.html">aliases(5)</a> expansion and $HOME/.forward file processing.
 You would typically use this for domains that are listed in
 <a href="postconf.5.html#mydestination">mydestination</a> and that have users with a UNIX system account. </p>
 

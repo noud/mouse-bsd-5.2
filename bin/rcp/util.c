@@ -130,7 +130,7 @@ susystem(char *s)
 	switch (pid) {
 	case -1:
 		return (127);
-	
+
 	case 0:
 		(void)execl(_PATH_BSHELL, "sh", "-c", s, NULL);
 		_exit(127);

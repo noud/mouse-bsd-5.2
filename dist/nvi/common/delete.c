@@ -94,7 +94,7 @@ del(SCR *sp, MARK *fm, MARK *tm, int lmode)
 		GET_SPACE_RETW(sp, bp, blen, len);
 		if (fm->cno != 0)
 			MEMCPYW(bp, p, fm->cno);
-		MEMCPYW(bp + fm->cno, p + (tm->cno + 1), 
+		MEMCPYW(bp + fm->cno, p + (tm->cno + 1),
 			len - (tm->cno + 1));
 		if (db_set(sp, fm->lno,
 		    bp, len - ((tm->cno - fm->cno) + 1)))

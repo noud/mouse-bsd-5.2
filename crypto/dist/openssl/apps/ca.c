@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -213,7 +213,7 @@ static int certify_spkac(X509 **xret, char *infile,EVP_PKEY *pkey,X509 *x509,
 			 const EVP_MD *dgst,STACK_OF(CONF_VALUE) *policy,
 			 CA_DB *db, BIGNUM *serial,char *subj,unsigned long chtype, int multirdn, int email_dn,
 			 char *startdate, char *enddate, long days, char *ext_sect,
-			 CONF *conf, int verbose, unsigned long certopt, 
+			 CONF *conf, int verbose, unsigned long certopt,
 			 unsigned long nameopt, int default_op, int ext_copy);
 static int fix_data(int nid, int *type);
 static void write_new_certificate(BIO *bp, X509 *x, int output_der, int notext);
@@ -631,7 +631,7 @@ bad:
 			BIO *oid_bio;
 
 			oid_bio=BIO_new_file(p,"r");
-			if (oid_bio == NULL) 
+			if (oid_bio == NULL)
 				{
 				/*
 				BIO_printf(bio_err,"problems opening %s for extra oid's\n",p);
@@ -645,7 +645,7 @@ bad:
 				BIO_free(oid_bio);
 				}
 			}
-		if (!add_oid_section(bio_err,conf)) 
+		if (!add_oid_section(bio_err,conf))
 			{
 			ERR_print_errors(bio_err);
 			goto err;
@@ -693,7 +693,7 @@ bad:
 	BIO_printf(bio_err, "DEBUG: configured unique_subject is %d\n",
 		db_attr.unique_subject);
 #endif
-	
+
 	in=BIO_new(BIO_s_file());
 	out=BIO_new(BIO_s_file());
 	Sout=BIO_new(BIO_s_file());
@@ -742,7 +742,7 @@ bad:
 			goto err;
 			}
 		}
-	pkey = load_key(bio_err, keyfile, keyform, 0, key, e, 
+	pkey = load_key(bio_err, keyfile, keyform, 0, key, e,
 		"CA private key");
 	if (key) OPENSSL_cleanse(key,strlen(key));
 	if (pkey == NULL)
@@ -934,7 +934,7 @@ bad:
 			db->db->data->num);
 		BIO_printf(bio_err,"generating index\n");
 		}
-	
+
 	if (!index_index(db)) goto err;
 
 	/*****************************************************************/
@@ -954,16 +954,16 @@ bad:
 		else if (i == 0)
 			{
 			if (verbose) BIO_printf(bio_err,
-					"No entries found to mark expired\n"); 
+					"No entries found to mark expired\n");
 			}
 	    	else
 			{
 			if (!save_index(dbfile,"new",db)) goto err;
-				
+
 			if (!rotate_index(dbfile,"new","old")) goto err;
-				
+
 			if (verbose) BIO_printf(bio_err,
-				"Done. %d entries marked as expired\n",i); 
+				"Done. %d entries marked as expired\n",i);
 	      		}
 	  	}
 
@@ -1244,7 +1244,7 @@ bad:
 					goto err;
 					}
 				}
-			}	
+			}
 		/* we have a stack of newly certified certificates
 		 * and a data base and serial number that need
 		 * updating */
@@ -1259,7 +1259,7 @@ bad:
 				fgets(buf[0],10,stdin);
 				if ((buf[0][0] != 'y') && (buf[0][0] != 'Y'))
 					{
-					BIO_printf(bio_err,"CERTIFICATION CANCELED\n"); 
+					BIO_printf(bio_err,"CERTIFICATION CANCELED\n");
 					ret=0;
 					goto err;
 					}
@@ -1271,7 +1271,7 @@ bad:
 
 			if (!save_index(dbfile, "new", db)) goto err;
 			}
-	
+
 		if (verbose)
 			BIO_printf(bio_err,"writing new certificates\n");
 		for (i=0; i<sk_X509_num(cert_sk); i++)
@@ -1283,7 +1283,7 @@ bad:
 
 			j=x->cert_info->serialNumber->length;
 			p=(const char *)x->cert_info->serialNumber->data;
-			
+
 			if(strlen(outdir) >= (size_t)(j ? BSIZE-j*2-6 : BSIZE-8))
 				{
 				BIO_printf(bio_err,"certificate file name too long\n");
@@ -1338,7 +1338,7 @@ bad:
 			BIO_printf(bio_err,"Data Base Updated\n");
 			}
 		}
-	
+
 	/*****************************************************************/
 	if (gencrl)
 		{
@@ -1395,9 +1395,9 @@ bad:
 		tmptm = ASN1_TIME_new();
 		if (!tmptm) goto err;
 		X509_gmtime_adj(tmptm,0);
-		X509_CRL_set_lastUpdate(crl, tmptm);	
+		X509_CRL_set_lastUpdate(crl, tmptm);
 		X509_gmtime_adj(tmptm,(crldays*24+crlhours)*60*60 + crlsec);
-		X509_CRL_set_nextUpdate(crl, tmptm);	
+		X509_CRL_set_nextUpdate(crl, tmptm);
 
 		ASN1_TIME_free(tmptm);
 
@@ -1457,7 +1457,7 @@ bad:
 				goto err; /* version 2 CRL */
 			}
 
-		
+
 		if (crlnumberfile != NULL)	/* we have a CRL number that need updating */
 			if (!save_serial(crlnumberfile,"new",crlnumber,NULL)) goto err;
 
@@ -1478,7 +1478,7 @@ bad:
 	/*****************************************************************/
 	if (dorevoke)
 		{
-		if (infile == NULL) 
+		if (infile == NULL)
 			{
 			BIO_printf(bio_err,"no input files\n");
 			goto err;
@@ -1498,7 +1498,7 @@ bad:
 
 			if (!rotate_index(dbfile, "new", "old")) goto err;
 
-			BIO_printf(bio_err,"Data Base Updated\n"); 
+			BIO_printf(bio_err,"Data Base Updated\n");
 			}
 		}
 	/*****************************************************************/
@@ -1885,7 +1885,7 @@ again2:
 
 	/* Build the correct Subject if no e-mail is wanted in the subject */
 	/* and add it later on because of the method extensions are added (altName) */
-	 
+
 	if (email_dn)
 		dn_subject = subject;
 	else
@@ -2036,10 +2036,10 @@ again2:
 			{
 			if (verbose)
 				BIO_printf(bio_err, "Extra configuration file found\n");
- 
+
 			/* Use the extconf configuration db LHASH */
 			X509V3_set_nconf(&ctx, extconf);
- 
+
 			/* Test the structure (needed?) */
 			/* X509V3_set_ctx_test(&ctx); */
 
@@ -2067,7 +2067,7 @@ again2:
 				goto err;
 				}
 
-			if (verbose) 
+			if (verbose)
 				BIO_printf(bio_err, "Successfully added extensions from config\n");
 			}
 		}
@@ -2092,7 +2092,7 @@ again2:
 		BIO_printf(bio_err, "Certificate Details:\n");
 		/* Never print signature details because signature not present */
 		certopt |= X509_FLAG_NO_SIGDUMP | X509_FLAG_NO_SIGNAME;
-		X509_print_ex(bio_err, ret, nameopt, certopt); 
+		X509_print_ex(bio_err, ret, nameopt, certopt);
 		}
 
 	BIO_printf(bio_err,"Certificate is to be certified until ");
@@ -2312,7 +2312,7 @@ static int certify_spkac(X509 **xret, char *infile, EVP_PKEY *pkey, X509 *x509,
 		if ((nid == NID_pkcs9_emailAddress) && (email_dn == 0))
 			continue;
 		*/
-		
+
 		j=ASN1_PRINTABLE_type((unsigned char *)buf,-1);
 		if (fix_data(nid, &j) == 0)
 			{
@@ -2506,7 +2506,7 @@ static int do_revoke(X509 *x509, CA_DB *db, int type, char *value)
 err:
 	for (i=0; i<DB_NUMBER; i++)
 		{
-		if (row[i] != NULL) 
+		if (row[i] != NULL)
 			OPENSSL_free(row[i]);
 		}
 	return(ok);
@@ -2544,11 +2544,11 @@ static int get_certificate_status(const char *serial, CA_DB *db)
 		memcpy(row[DB_serial], serial, strlen(serial));
 		row[DB_serial][strlen(serial)]='\0';
 		}
-			
+
 	/* Make it Upper Case */
 	for (i=0; row[DB_serial][i] != '\0'; i++)
 		row[DB_serial][i] = toupper(row[DB_serial][i]);
-	
+
 
 	ok=1;
 
@@ -2604,7 +2604,7 @@ static int do_updatedb (CA_DB *db)
 	{
 	ASN1_UTCTIME	*a_tm = NULL;
 	int i, cnt = 0;
-	int db_y2k, a_y2k;  /* flags = 1 if y >= 2000 */ 
+	int db_y2k, a_y2k;  /* flags = 1 if y >= 2000 */
 	char **rrow, *a_tm_s;
 
 	a_tm = ASN1_UTCTIME_new();
@@ -2678,7 +2678,7 @@ static const char *crl_reasons[] = {
 	"keyCompromise",
 	"CACompromise",
 	"affiliationChanged",
-	"superseded", 
+	"superseded",
 	"cessationOfOperation",
 	"certificateHold",
 	"removeFromCRL",
@@ -2741,20 +2741,20 @@ char *make_revocation_str(int rev_type, char *rev_arg)
 		reason = "holdInstruction";
 		other = rev_arg;
 		break;
-		
+
 	case REV_KEY_COMPROMISE:
 	case REV_CA_COMPROMISE:
 
 		/* Argument is the key compromise time  */
 		if (!ASN1_GENERALIZEDTIME_set_string(NULL, rev_arg))
-			{	
+			{
 			BIO_printf(bio_err, "Invalid time format %s. Need YYYYMMDDHHMMSSZ\n", rev_arg);
 			return NULL;
 			}
 		other = rev_arg;
 		if (rev_type == REV_KEY_COMPROMISE)
 			reason = "keyTime";
-		else 
+		else
 			reason = "CAkeyTime";
 
 		break;
@@ -2787,7 +2787,7 @@ char *make_revocation_str(int rev_type, char *rev_arg)
 	return str;
 	}
 
-/* Convert revocation field to X509_REVOKED entry 
+/* Convert revocation field to X509_REVOKED entry
  * return code:
  * 0 error
  * 1 OK
@@ -2871,7 +2871,7 @@ int old_entry_print(BIO *bp, ASN1_OBJECT *obj, ASN1_STRING *str)
 		BIO_printf(bp,"UNIVERSALSTRING:'");
 	else
 		BIO_printf(bp,"ASN.1 %2d:'",str->type);
-			
+
 	p=(char *)str->data;
 	for (j=str->length; j>0; j--)
 		{
@@ -2946,7 +2946,7 @@ int unpack_revinfo(ASN1_TIME **prevtm, int *preason, ASN1_OBJECT **phold, ASN1_G
 		else if (reason_code == 8)		/* Hold instruction */
 			{
 			if (!arg_str)
-				{	
+				{
 				BIO_printf(bio_err, "missing hold instruction\n");
 				goto err;
 				}
@@ -2963,13 +2963,13 @@ int unpack_revinfo(ASN1_TIME **prevtm, int *preason, ASN1_OBJECT **phold, ASN1_G
 		else if ((reason_code == 9) || (reason_code == 10))
 			{
 			if (!arg_str)
-				{	
+				{
 				BIO_printf(bio_err, "missing compromised time\n");
 				goto err;
 				}
 			comp_time = ASN1_GENERALIZEDTIME_new();
 			if (!ASN1_GENERALIZEDTIME_set_string(comp_time, arg_str))
-				{	
+				{
 				BIO_printf(bio_err, "invalid compromised time %s\n", arg_str);
 				goto err;
 				}

@@ -1,6 +1,6 @@
-/* 
+/*
 ------- Strong random data generation on a Macintosh (pre - OS X) ------
-		
+
 --	GENERAL: We aim to generate unpredictable bits without explicit
 	user interaction. A general review of the problem may be found
 	in RFC 1750, "Randomness Recommendations for Security", and some
@@ -21,7 +21,7 @@
 	poorly understood, both by us and by potential interceptors.
 
 	This package has been planned to be used with OpenSSL, v. 0.9.5.
-	It requires the OpenSSL function RAND_add. 
+	It requires the OpenSSL function RAND_add.
 
 --	OTHER WORK: Some source code and other details have been
 	published elsewhere, but I haven't found any to be satisfactory
@@ -82,7 +82,7 @@
 	cycles. On a 60 MHz machine (slowest PowerPC) this translates to
 	a resolution of 1/6 usec. Newer machines seem to be using a 10
 	cycle resolution as well.
-	
+
 	For 68K Macs, the Microseconds() call may be used. See Develop
 	issue 29 on the Apple developer site
 	(developer.apple.com/dev/techsupport/develop/issue29/minow.html)
@@ -154,7 +154,7 @@
 	random, but I don't know in what way. File sizes tend to be
 	divisible by 4 bytes since file format fields are often
 	long-aligned. Entropy > log2 (20000/4) ~= 12 bits.
-	
+
 --	STARTUP DISK FIRST AVAILABLE ALLOCATION BLOCK: As the volume
 	gets fragmented this could be anywhere in principle. In a
 	perfectly unfragmented volume this will be strongly correlated
@@ -206,7 +206,7 @@ unsigned long GetPPCTimer (bool is601);	// Make it global if needed
 					// in total file size and
 					// long-aligned file formats.
 #define kApplicationUpTimeEntropy 6.0	// Variance > 1 second, uptime
-					// in ticks  
+					// in ticks
 #define kSysStartupEntropy 7.0		// Entropy for machine startup
 					// time
 
@@ -216,11 +216,11 @@ unsigned long GetPPCTimer (bool is601);	// Make it global if needed
 CRandomizer::CRandomizer (void)
 {
 	long	result;
-	
+
 	mSupportsLargeVolumes =
 		(Gestalt(gestaltFSAttr, &result) == noErr) &&
 		((result & (1L << gestaltFSSupports2TBVols)) != 0);
-	
+
 	if (Gestalt (gestaltNativeCPUtype, &result) != noErr)
 	{
 		mIsPowerPC = false;
@@ -235,7 +235,7 @@ CRandomizer::CRandomizer (void)
 						// always be recorded
 	mLastPeriodicTicks = TickCount();
 	GetTimeBaseResolution ();
-	
+
 	// Add initial entropy
 	AddTimeSinceMachineStartup ();
 	AddAbsoluteSystemStartupTime ();
@@ -263,18 +263,18 @@ void CRandomizer::AddCurrentMouse (void)
 #else
 	mouseLoc = LMGetMouseLocation();
 #endif
-	
+
 	if (labs (mLastMouse.h - mouseLoc.h) > kMouseResolution/2 &&
 	    labs (mLastMouse.v - mouseLoc.v) > kMouseResolution/2)
 		AddBytes (&mouseLoc, sizeof (mouseLoc),
 				kMousePositionEntropy);
-	
+
 	if (mLastMouse.h == mouseLoc.h && mLastMouse.v == mouseLoc.v)
 		mMouseStill ++;
 	else
 	{
 		double entropy;
-		
+
 		// Mouse has moved. Add the number of measurements for
 		// which it's been still. If the resolution is too
 		// coarse, assume the entropy is 0.
@@ -313,11 +313,11 @@ void CRandomizer::AddAppRunningTime (void)
 {
 	ProcessSerialNumber PSN;
 	ProcessInfoRec		ProcessInfo;
-	
+
 	ProcessInfo.processInfoLength = sizeof (ProcessInfoRec);
 	ProcessInfo.processName = nil;
 	ProcessInfo.processAppSpec = nil;
-	
+
 	GetCurrentProcess (&PSN);
 	GetProcessInformation (&PSN, &ProcessInfo);
 
@@ -334,10 +334,10 @@ void CRandomizer::AddStartupVolumeInfo (void)
 	long			dirID;
 	XVolumeParam	pb;
 	OSErr			err;
-	
+
 	if (!mSupportsLargeVolumes)
 		return;
-		
+
 	FindFolder (kOnSystemDisk, kSystemFolderType, kDontCreateFolder,
 			&vRefNum, &dirID);
 	pb.ioVRefNum = vRefNum;
@@ -347,7 +347,7 @@ void CRandomizer::AddStartupVolumeInfo (void)
 	err = PBXGetVolInfoSync (&pb);
 	if (err != noErr)
 		return;
-		
+
 	// Base the entropy on the amount of space used on the disk and
 	// on the next available allocation block. A lot else might be
 	// unpredictable, so might as well toss the whole block in. See
@@ -385,7 +385,7 @@ void CRandomizer::AddFiller (void)
 		long		systemVersion;	// OS version
 		short		resFile;	// Current resource file
 	} data;
-	
+
 	GetNextProcess ((ProcessSerialNumber*) kNoProcess);
 	while (GetNextProcess (&data.psn) == noErr)
 		data.processCount++;
@@ -395,7 +395,7 @@ void CRandomizer::AddFiller (void)
 	Gestalt (gestaltLogicalRAMSize, &data.totalMemory);
 	Gestalt (gestaltSystemVersion, &data.systemVersion);
 	data.resFile = CurResFile ();
-	
+
 	// Here we pretend to feed the PRNG completely random data. This
 	// is of course false, as much of the above data is predictable
 	// by an outsider. At this point we don't have any more
@@ -426,10 +426,10 @@ void CRandomizer::AddNow (double millisecondUncertainty)
 //----------------- TIMING SUPPORT ------------------
 
 void CRandomizer::GetTimeBaseResolution (void)
-{	
+{
 #ifdef __powerc
 	long speed;
-	
+
 	// gestaltProcClkSpeed available on System 7.5.2 and above
 	if (Gestalt (gestaltProcClkSpeed, &speed) != noErr)
 		// Only PowerPCs running pre-7.5.2 are 60-80 MHz

@@ -858,7 +858,7 @@ rb_tree_check_node(const struct rb_tree *rbt, const struct rb_node *self,
 
 	/*
 	 * The root must be black.
-	 * There can never be two adjacent red nodes. 
+	 * There can never be two adjacent red nodes.
 	 */
 	if (red_check) {
 		KASSERT(!RB_ROOT_P(self) || RB_BLACK_P(self));
@@ -867,7 +867,7 @@ rb_tree_check_node(const struct rb_tree *rbt, const struct rb_node *self,
 			KASSERT(!RB_ROOT_P(self));
 			brother = self->rb_parent->rb_nodes[self->rb_position ^ RB_NODE_OTHER];
 			KASSERT(RB_BLACK_P(self->rb_parent));
-			/* 
+			/*
 			 * I'm red and have no children, then I must either
 			 * have no brother or my brother also be red and
 			 * also have no children.  (black count == 0)
@@ -1045,7 +1045,7 @@ _prop_rb_tree_check(const struct rb_tree *rbt, bool red_check)
 
 	/*
 	 * The root must be black.
-	 * There can never be two adjacent red nodes. 
+	 * There can never be two adjacent red nodes.
 	 */
 	if (red_check) {
 		KASSERT(rbt->rbt_root == NULL || RB_BLACK_P(rbt->rbt_root));

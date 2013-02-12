@@ -39,7 +39,7 @@ These conversion/nameprep processes to domain names have to be
 performed before they are sent to DNS servers.  And since the
 processed domain names (in IDN encoding) consist of only legal ASCII
 characters, no changes are required to DNS servers.
-	
+
 idnkit provides several ways for adding these features.
 
 This kit consists of following components.
@@ -65,7 +65,7 @@ This kit consists of following components.
 	in local encoding (e.g. EUC-JP) to ACE or the opposite direction.
 	It can also convert named.conf and zone master files for BIND.
 
-    + command which adds IDN feature dynamically to unix applications 
+    + command which adds IDN feature dynamically to unix applications
       (runidn)
 	This command enables normal applications to handle
 	internationalized domain names by dynamically attaching special
@@ -83,7 +83,7 @@ This kit consists of following components.
 
     + IDN wrapper for Windows applications
         On windows, name resolving request is passed to WINSOCK DLL. So,
-        replacing WINSOCK DLL with multi-lingual domain name version 
+        replacing WINSOCK DLL with multi-lingual domain name version
         makes legacy windows applications compatible with IDN.  This is
 	wrapper DLL for WINSOCK's name resolving functions. See
 	``3. using IDN wrapper'' below.
@@ -91,7 +91,7 @@ This kit consists of following components.
 
 2. Directory structure of this distribution
 
-Below is a directory structure of this distribution with some 
+Below is a directory structure of this distribution with some
 important files and their brief description.
 
     +README             this file

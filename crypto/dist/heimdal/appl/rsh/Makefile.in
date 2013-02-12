@@ -447,10 +447,10 @@ clean-libexecPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-rsh$(EXEEXT): $(rsh_OBJECTS) $(rsh_DEPENDENCIES) 
+rsh$(EXEEXT): $(rsh_OBJECTS) $(rsh_DEPENDENCIES)
 	@rm -f rsh$(EXEEXT)
 	$(LINK) $(rsh_OBJECTS) $(rsh_LDADD) $(LIBS)
-rshd$(EXEEXT): $(rshd_OBJECTS) $(rshd_DEPENDENCIES) 
+rshd$(EXEEXT): $(rshd_OBJECTS) $(rshd_DEPENDENCIES)
 	@rm -f rshd$(EXEEXT)
 	$(LINK) $(rshd_OBJECTS) $(rshd_LDADD) $(LIBS)
 

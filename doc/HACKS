@@ -336,7 +336,7 @@ kcah
 port	vax
 
 	hack	gcc4/vax ICE
-	cdate	
+	cdate
 	who	tsutsui
 	file	sys/arch/vax/conf/Makefile.vax
 	descr
@@ -361,21 +361,21 @@ port	vax
 		Provide a local definition for abort which doesn't include
 		the noreturn attribute which trips up gcc 2.95 on vax.
 	kcah
-	
+
 	hack	gcc 2.95/vax doesn't have stdbool.h and gettext needs it
 	cdate	Mon May  9 12:16:22 CDT 2005
 	who	jmc
 	file	gnu/usr.bin/gettext/Makefile.inc.prog 1.5
 		gnu/usr.bin/gettext/libgrep/Makefile 1.3
 		gnu/usr.bin/gettext/libnlspr/Makefile 1.5
-		gnu/usr.bin/gettext/libnlsut/Makefile 1.3   
+		gnu/usr.bin/gettext/libnlsut/Makefile 1.3
 	descr
 		The latest gettext assumes a C99 environment or at least
 		configure checks to work around this. As we don't use configure
 		provide a stdbool.h for vax builds locally in directories from
 		the template provided by the gettext code.
 	kcah
-	
+
 	hack	gcc 2.95/vax cannot handle __builtin_ffs()
 	cdate	Fri Aug 23 21:31:15 CEST 2002
 	who	ragge

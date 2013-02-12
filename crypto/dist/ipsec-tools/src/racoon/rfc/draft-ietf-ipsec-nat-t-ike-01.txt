@@ -20,7 +20,7 @@ This document is a submission to the IETF IP Security Protocol
 (IPSEC) Working Group.  Comments are solicited and should be
 addressed to the working group mailing list (ipsec@lists.tislabs.com)
 or to the editor.
- 
+
 This document is an Internet-Draft and is in full conformance
 with all provisions of Section 10 of RFC2026.
 
@@ -58,7 +58,7 @@ packets through the NAT boxes in IKE.
 T. Kivinen, et. al.                                             [page 1]
 
 INTERNET-DRAFT                                          23 October 2001
- 
+
 Table of Contents
 
 1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . .  2
@@ -117,7 +117,7 @@ There are cases where the NAT does not have to float the source port
 T. Kivinen, et. al.                                             [page 2]
 
 INTERNET-DRAFT                                          23 October 2001
- 
+
 keep the port 500, and float only the following IPsec hosts).
 
 Recipients MUST reply back to the source address from the packet. This
@@ -176,7 +176,7 @@ main mode and second and third packet in the aggressive mode.
 T. Kivinen, et. al.                                             [page 3]
 
 INTERNET-DRAFT                                          23 October 2001
- 
+
 The format of the NAT-D packet is
 
       1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8
@@ -235,7 +235,7 @@ An example of phase 1 exchange using NAT-Traversal in aggressive mode
 T. Kivinen, et. al.                                             [page 4]
 
 INTERNET-DRAFT                                          23 October 2001
- 
+
         HDR, SA, KE, Ni, IDii, VID   -->
                                      <-- HDR, SA, KE, Nr, IDir, [CERT, ],
                                            VID, NAT-D, NAT-D, SIG_R
@@ -294,7 +294,7 @@ SA is sent to other end using NAT-OA (NAT Original Address) payload.
 T. Kivinen, et. al.                                             [page 5]
 
 INTERNET-DRAFT                                          23 October 2001
- 
+
 The NAT-OA payloads are sent inside the first and second packets of the
 quick mode. The initiator SHOULD send the payload if it proposes any
 UDP-Encapsulated-Transport mode and the responder SHOULD send the
@@ -353,7 +353,7 @@ o  The value of authentication mechanisms based on IP addresses
 T. Kivinen, et. al.                                             [page 6]
 
 INTERNET-DRAFT                                          23 October 2001
- 
+
    disappears once NATs are in the picture. That is not necessarily a
    bad thing (for any real security, other authentication measures than
    IP addresses should be used). This means that pre-shared-keys
@@ -412,7 +412,7 @@ for ISAKMP", November 1998
 T. Kivinen, et. al.                                             [page 7]
 
 INTERNET-DRAFT                                          23 October 2001
- 
+
 [RFC-2119] Bradner, S., "Key words for use in RFCs to indicate
 Requirement Levels", March 1997
 
@@ -471,7 +471,7 @@ Encapsulation", draft-ietf-ipsec-udp-encaps-justification-00.txt, June
 T. Kivinen, et. al.                                             [page 8]
 
 INTERNET-DRAFT                                          23 October 2001
- 
+
     Nortel Networks
     80 Central Street
     Boxborough, MA 01719

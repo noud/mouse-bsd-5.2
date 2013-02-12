@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 2004 Emmanuel Dreyfus
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -87,7 +87,7 @@ privsep_send(sock, buf, len)
 
 	if (sendto(sock, (char *)buf, len, 0, NULL, 0) == -1) {
 		plog(LLV_ERROR, LOCATION, NULL,
-		    "privsep_send failed: %s\n", 
+		    "privsep_send failed: %s\n",
 		    strerror(errno));
 		return -1;
 	}
@@ -112,7 +112,7 @@ privsep_recv(sock, bufp, lenp)
 	*lenp = 0;
 
 	/* Get the header */
-	while ((len = recvfrom(sock, (char *)&com, 
+	while ((len = recvfrom(sock, (char *)&com,
 	    sizeof(com), MSG_PEEK, NULL, NULL)) == -1) {
 		if (errno == EINTR)
 			continue;
@@ -122,7 +122,7 @@ privsep_recv(sock, bufp, lenp)
 		    strerror(errno));
 		return -1;
 	}
-	
+
 	/* Check for short packets */
 	if (len < sizeof(com)) {
 		plog(LLV_ERROR, LOCATION, NULL,
@@ -138,12 +138,12 @@ privsep_recv(sock, bufp, lenp)
 	}
 
 	/* Get the whole buffer */
-	while ((len = recvfrom(sock, (char *)combuf, 
+	while ((len = recvfrom(sock, (char *)combuf,
 	    com.ac_len, 0, NULL, NULL)) == -1) {
 		if (errno == EINTR)
 			continue;
 		plog(LLV_ERROR, LOCATION, NULL,
-		    "failed to recv privsep command: %s\n", 
+		    "failed to recv privsep command: %s\n",
 		    strerror(errno));
 		return -1;
 	}
@@ -171,8 +171,8 @@ privsep_init(void)
 	if (lcconf->uid == 0)
 		return 0;
 
-	/* 
-	 * When running privsep, certificate and script paths 
+	/*
+	 * When running privsep, certificate and script paths
 	 * are mandatory, as they enable us to check path safety
 	 * in the privilegied instance
 	 */
@@ -184,14 +184,14 @@ privsep_init(void)
 	}
 
 	if (socketpair(PF_LOCAL, SOCK_DGRAM, 0, privsep_sock) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot allocate privsep_sock: %s\n", strerror(errno));
 		return -1;
 	}
 
 	switch (child_pid = fork()) {
 	case -1:
-		plog(LLV_ERROR, LOCATION, NULL, "Cannot fork privsep: %s\n", 
+		plog(LLV_ERROR, LOCATION, NULL, "Cannot fork privsep: %s\n",
 		    strerror(errno));
 		return -1;
 		break;
@@ -199,42 +199,42 @@ privsep_init(void)
 	case 0: /* Child: drop privileges */
 		if (lcconf->chroot != NULL) {
 			if (chdir(lcconf->chroot) != 0) {
-				plog(LLV_ERROR, LOCATION, NULL, 
-				    "Cannot chdir(%s): %s\n", lcconf->chroot, 
+				plog(LLV_ERROR, LOCATION, NULL,
+				    "Cannot chdir(%s): %s\n", lcconf->chroot,
 				    strerror(errno));
 				return -1;
 			}
 			if (chroot(lcconf->chroot) != 0) {
-				plog(LLV_ERROR, LOCATION, NULL, 
-				    "Cannot chroot(%s): %s\n", lcconf->chroot, 
+				plog(LLV_ERROR, LOCATION, NULL,
+				    "Cannot chroot(%s): %s\n", lcconf->chroot,
 				    strerror(errno));
 				return -1;
 			}
 		}
 
 		if (setgid(lcconf->gid) != 0) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot setgid(%d): %s\n", lcconf->gid,
 			    strerror(errno));
 			return -1;
 		}
 
 		if (setegid(lcconf->gid) != 0) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot setegid(%d): %s\n", lcconf->gid,
 			    strerror(errno));
 			return -1;
 		}
 
 		if (setuid(lcconf->uid) != 0) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot setuid(%d): %s\n", lcconf->uid,
 			    strerror(errno));
 			return -1;
 		}
 
 		if (seteuid(lcconf->uid) != 0) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot seteuid(%d): %s\n", lcconf->uid,
 			    strerror(errno));
 			return -1;
@@ -247,8 +247,8 @@ privsep_init(void)
 		break;
 	}
 
-	/* 
-	 * Close everything except the socketpair, 
+	/*
+	 * Close everything except the socketpair,
 	 * and stdout if running in the forground.
 	 */
 	for (i = sysconf(_SC_OPEN_MAX); i > 0; i--) {
@@ -264,15 +264,15 @@ privsep_init(void)
 	/* Above trickery closed the log file, reopen it */
 	ploginit();
 
-	plog(LLV_INFO, LOCATION, NULL, 
+	plog(LLV_INFO, LOCATION, NULL,
 	    "racoon privilegied process running with PID %d\n", getpid());
 
 #ifdef __NetBSD__
 	setproctitle("[priv]");
 #endif
-	
-	/* 
-	 * Don't catch any signal 
+
+	/*
+	 * Don't catch any signal
 	 * This duplicate session:signals[], which is static...
 	 */
 	signal(SIGHUP, SIG_DFL);
@@ -315,11 +315,11 @@ privsep_init(void)
 			    "corrupted privsep message (bufs too big)\n");
 			goto out;
 		}
-	
+
 		/* Prepare the reply buffer */
 		if ((reply = racoon_malloc(sizeof(*reply))) == NULL) {
 			plog(LLV_ERROR, LOCATION, NULL,
-			    "Cannot allocate reply buffer: %s\n", 
+			    "Cannot allocate reply buffer: %s\n",
 			    strerror(errno));
 			goto out;
 		}
@@ -328,11 +328,11 @@ privsep_init(void)
 		reply->hdr.ac_len = sizeof(*reply);
 
 		switch(combuf->hdr.ac_cmd) {
-		/* 
-		 * XXX Improvement: instead of returning the key, 
+		/*
+		 * XXX Improvement: instead of returning the key,
 		 * stuff eay_get_pkcs1privkey and eay_get_x509sign
-		 * together and sign the hash in the privilegied 
-		 * instance? 
+		 * together and sign the hash in the privilegied
+		 * instance?
 		 * pro: the key remains inaccessible to unpriv
 		 * con: a compromised unpriv racoon can still sign anything
 		 */
@@ -345,12 +345,12 @@ privsep_init(void)
 			bufs[0][combuf->bufs.buflen[0] - 1] = '\0';
 
 			if (unsafe_path(bufs[0], LC_PATHTYPE_CERT) != 0) {
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "privsep_eay_get_pkcs1privkey: "
 				    "unsafe cert \"%s\"\n", bufs[0]);
 			}
 
-			plog(LLV_DEBUG, LOCATION, NULL, 
+			plog(LLV_DEBUG, LOCATION, NULL,
 			    "eay_get_pkcs1privkey(\"%s\")\n", bufs[0]);
 
 			if ((privkey = eay_get_pkcs1privkey(bufs[0])) == NULL){
@@ -363,7 +363,7 @@ privsep_init(void)
 			reply = racoon_realloc(reply, reply->hdr.ac_len);
 			if (reply == NULL) {
 				plog(LLV_ERROR, LOCATION, NULL,
-				    "Cannot allocate reply buffer: %s\n", 
+				    "Cannot allocate reply buffer: %s\n",
 				    strerror(errno));
 				goto out;
 			}
@@ -372,7 +372,7 @@ privsep_init(void)
 			vfree(privkey);
 			break;
 		}
-		
+
 		case PRIVSEP_SCRIPT_EXEC: {
 			char *script;
 			int name;
@@ -383,10 +383,10 @@ privsep_init(void)
 
 			/*
 			 * First count the bufs, and make sure strings
-			 * are NULL terminated. 
+			 * are NULL terminated.
 			 *
 			 * We expect: script, name, envp[], void
-			 */ 
+			 */
 			if (safety_check(combuf, 0) != 0)
 				break;
 			bufs[0][combuf->bufs.buflen[0] - 1] = '\0';
@@ -405,33 +405,33 @@ privsep_init(void)
 			/* count a void buf and perform safety check */
 			count++;
 			if (count >= PRIVSEP_NBUF_MAX) {
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "privsep_script_exec: too many args\n");
 				goto out;
 			}
 
 
-			/* 
-			 * Allocate the arrays for envp 
+			/*
+			 * Allocate the arrays for envp
 			 */
 			envp = racoon_malloc((envc + 1) * sizeof(char *));
 			if (envp == NULL) {
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "cannot allocate memory: %s\n",
 				    strerror(errno));
 				goto out;
 			}
 			bzero(envp, (envc + 1) * sizeof(char *));
 
-	
+
 			/*
-			 * Populate script, name and envp 
+			 * Populate script, name and envp
 			 */
 			count = 0;
 			script = bufs[count++];
 
 			if (combuf->bufs.buflen[count] != sizeof(name)) {
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "privsep_script_exec: corrupted message\n");
 				goto out;
 			}
@@ -442,11 +442,11 @@ privsep_init(void)
 
 			count++;		/* void */
 
-			plog(LLV_DEBUG, LOCATION, NULL, 
-			    "script_exec(\"%s\", %d, %p)\n", 
+			plog(LLV_DEBUG, LOCATION, NULL,
+			    "script_exec(\"%s\", %d, %p)\n",
 			    script, name, envp);
 
-			/* 
+			/*
 			 * Check env for dangerous variables
 			 * Check script path and name
 			 * Perform fork and execve
@@ -456,7 +456,7 @@ privsep_init(void)
 			    (unsafe_path(script, LC_PATHTYPE_SCRIPT) == 0))
 				(void)script_exec(script, name, envp);
 			else
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "privsep_script_exec: "
 				    "unsafe script \"%s\"\n", script);
 
@@ -474,13 +474,13 @@ privsep_init(void)
 			bufs[0][combuf->bufs.buflen[0] - 1] = '\0';
 
 			if (combuf->bufs.buflen[1] != sizeof(keylen)) {
-				plog(LLV_ERROR, LOCATION, NULL, 
+				plog(LLV_ERROR, LOCATION, NULL,
 				    "privsep_getpsk: corrupted message\n");
 				goto out;
 			}
 			memcpy(&keylen, bufs[1], sizeof(keylen));
 
-			plog(LLV_DEBUG, LOCATION, NULL, 
+			plog(LLV_DEBUG, LOCATION, NULL,
 			    "getpsk(\"%s\", %d)\n", bufs[0], keylen);
 
 			if ((psk = getpsk(bufs[0], keylen)) == NULL) {
@@ -490,10 +490,10 @@ privsep_init(void)
 
 			reply->bufs.buflen[0] = psk->l;
 			reply->hdr.ac_len = sizeof(*reply) + psk->l;
-			reply = racoon_realloc(reply, reply->hdr.ac_len); 
+			reply = racoon_realloc(reply, reply->hdr.ac_len);
 			if (reply == NULL) {
 				plog(LLV_ERROR, LOCATION, NULL,
-				    "Cannot allocate reply buffer: %s\n", 
+				    "Cannot allocate reply buffer: %s\n",
 				    strerror(errno));
 				goto out;
 			}
@@ -528,12 +528,12 @@ privsep_init(void)
 			if (port_check(port) != 0)
 				break;
 
-			plog(LLV_DEBUG, LOCATION, NULL, 
-			    "accounting_system(%d, %s, %s)\n", 
-			    port, saddr2str(raddr), bufs[2]); 
+			plog(LLV_DEBUG, LOCATION, NULL,
+			    "accounting_system(%d, %s, %s)\n",
+			    port, saddr2str(raddr), bufs[2]);
 
 			errno = 0;
-			if (isakmp_cfg_accounting_system(port, 
+			if (isakmp_cfg_accounting_system(port,
 			    raddr, bufs[2], inout) != 0) {
 				if (errno == 0)
 					reply->hdr.ac_errno = EINVAL;
@@ -551,8 +551,8 @@ privsep_init(void)
 				break;
 			bufs[1][combuf->bufs.buflen[1] - 1] = '\0';
 
-			plog(LLV_DEBUG, LOCATION, NULL, 
-			    "xauth_login_system(\"%s\", <password>)\n", 
+			plog(LLV_DEBUG, LOCATION, NULL,
+			    "xauth_login_system(\"%s\", <password>)\n",
 			    bufs[0]);
 
 			errno = 0;
@@ -588,9 +588,9 @@ privsep_init(void)
 			if (port_check(port) != 0)
 				break;
 
-			plog(LLV_DEBUG, LOCATION, NULL, 
-			    "isakmp_cfg_accounting_pam(%d, %d)\n", 
-			    port, inout); 
+			plog(LLV_DEBUG, LOCATION, NULL,
+			    "isakmp_cfg_accounting_pam(%d, %d)\n",
+			    port, inout);
 
 			errno = 0;
 			if (isakmp_cfg_accounting_pam(port, inout) != 0) {
@@ -621,7 +621,7 @@ privsep_init(void)
 			memcpy(&port, bufs[0], sizeof(port));
 			memcpy(&pool_size, bufs[1], sizeof(pool_size));
 			raddr = (struct sockaddr *)bufs[2];
-			
+
 			bufs[3][combuf->bufs.buflen[3] - 1] = '\0';
 			bufs[4][combuf->bufs.buflen[4] - 1] = '\0';
 
@@ -632,12 +632,12 @@ privsep_init(void)
 			if (port_check(port) != 0)
 				break;
 
-			plog(LLV_DEBUG, LOCATION, NULL, 
-			    "xauth_login_pam(%d, %s, \"%s\", <password>)\n", 
-			    port, saddr2str(raddr), bufs[3]); 
+			plog(LLV_DEBUG, LOCATION, NULL,
+			    "xauth_login_pam(%d, %s, \"%s\", <password>)\n",
+			    port, saddr2str(raddr), bufs[3]);
 
 			errno = 0;
-			if (xauth_login_pam(port, 
+			if (xauth_login_pam(port,
 			    raddr, bufs[3], bufs[4]) != 0) {
 				if (errno == 0)
 					reply->hdr.ac_errno = EINVAL;
@@ -666,7 +666,7 @@ privsep_init(void)
 			if (port_check(port) != 0)
 				break;
 
-			plog(LLV_DEBUG, LOCATION, NULL, 
+			plog(LLV_DEBUG, LOCATION, NULL,
 			    "cleanup_pam(%d)\n", port);
 
 			cleanup_pam(port);
@@ -679,14 +679,14 @@ privsep_init(void)
 
 		default:
 			plog(LLV_ERROR, LOCATION, NULL,
-			    "unexpected privsep command %d\n", 
+			    "unexpected privsep command %d\n",
 			    combuf->hdr.ac_cmd);
 			goto out;
 			break;
 		}
 
 		/* This frees reply */
-		if (privsep_send(privsep_sock[0], 
+		if (privsep_send(privsep_sock[0],
 		    reply, reply->hdr.ac_len) != 0)
 			goto out;
 
@@ -700,7 +700,7 @@ out:
 
 
 vchar_t *
-privsep_eay_get_pkcs1privkey(path) 
+privsep_eay_get_pkcs1privkey(path)
 	char *path;
 {
 	vchar_t *privkey;
@@ -712,7 +712,7 @@ privsep_eay_get_pkcs1privkey(path)
 
 	len = sizeof(*msg) + strlen(path) + 1;
 	if ((msg = racoon_malloc(len)) == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot allocate memory: %s\n", strerror(errno));
 		return NULL;
 	}
@@ -766,7 +766,7 @@ privsep_pfkey_open(void)
 }
 
 /*
- * Consequence of the above trickery: don't 
+ * Consequence of the above trickery: don't
  * really close PFKEY as we never re-open it.
  */
 void
@@ -792,7 +792,7 @@ privsep_script_exec(script, name, envp)
 		return script_exec(script, name, envp);
 
 	if ((msg = racoon_malloc(sizeof(*msg))) == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot allocate memory: %s\n", strerror(errno));
 		return -1;
 	}
@@ -802,7 +802,7 @@ privsep_script_exec(script, name, envp)
 	msg->hdr.ac_len = sizeof(*msg);
 
 	/*
-	 * We send: 
+	 * We send:
 	 * script, name, envp[0], ... envp[N], void
 	 */
 
@@ -843,11 +843,11 @@ privsep_script_exec(script, name, envp)
 	msg->hdr.ac_len += msg->bufs.buflen[count++];
 
 	if ((msg = racoon_realloc(msg, msg->hdr.ac_len)) == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot allocate memory: %s\n", strerror(errno));
 		return -1;
 	}
-	
+
 	/*
 	 * Now copy the data
 	 */
@@ -861,7 +861,7 @@ privsep_script_exec(script, name, envp)
 	data += msg->bufs.buflen[count++];
 
 	for (c = envp; *c; c++) {				/* envp */
-		memcpy(data, *c, msg->bufs.buflen[count]); 
+		memcpy(data, *c, msg->bufs.buflen[count]);
 		data += msg->bufs.buflen[count++];
 	}
 
@@ -902,7 +902,7 @@ privsep_getpsk(str, keylen)
 
 	len = sizeof(*msg) + strlen(str) + 1 + sizeof(keylen);
 	if ((msg = racoon_malloc(len)) == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot allocate memory: %s\n", strerror(errno));
 		return NULL;
 	}
@@ -956,7 +956,7 @@ privsep_xauth_login_system(usr, pwd)
 
 	len = sizeof(*msg) + strlen(usr) + 1 + strlen(pwd) + 1;
 	if ((msg = racoon_malloc(len)) == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot allocate memory: %s\n", strerror(errno));
 		return -1;
 	}
@@ -971,7 +971,7 @@ privsep_xauth_login_system(usr, pwd)
 
 	msg->bufs.buflen[1] = strlen(pwd) + 1;
 	memcpy(data, pwd, msg->bufs.buflen[1]);
-	
+
 	if (privsep_send(privsep_sock[1], msg, len) != 0)
 		return -1;
 
@@ -987,7 +987,7 @@ privsep_xauth_login_system(usr, pwd)
 	return 0;
 }
 
-int 
+int
 privsep_accounting_system(port, raddr, usr, inout)
 	int port;
 	struct sockaddr *raddr;
@@ -1003,14 +1003,14 @@ privsep_accounting_system(port, raddr, usr, inout)
 		return isakmp_cfg_accounting_system(port, raddr,
 						    usr, inout);
 
-	len = sizeof(*msg) 
+	len = sizeof(*msg)
 	    + sizeof(port)
-	    + sysdep_sa_len(raddr) 
+	    + sysdep_sa_len(raddr)
 	    + strlen(usr) + 1
 	    + sizeof(inout);
 
 	if ((msg = racoon_malloc(len)) == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot allocate memory: %s\n", strerror(errno));
 		return -1;
 	}
@@ -1058,7 +1058,7 @@ port_check(port)
 	int port;
 {
 	if ((port < 0) || (port >= isakmp_cfg_config.pool_size)) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "privsep: port %d outside of allowed range [0,%zu]\n",
 		    port, isakmp_cfg_config.pool_size - 1);
 		return -1;
@@ -1068,19 +1068,19 @@ port_check(port)
 }
 #endif
 
-static int 
+static int
 safety_check(msg, index)
 	struct privsep_com_msg *msg;
 	int index;
 {
 	if (index >= PRIVSEP_NBUF_MAX) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "privsep: Corrupted message, too many buffers\n");
 		return -1;
 	}
-		
+
 	if (msg->bufs.buflen[index] == 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "privsep: Corrupted message, unexpected void buffer\n");
 		return -1;
 	}
@@ -1109,7 +1109,7 @@ unsafe_env(envp)
 
 	return 0;
 found:
-	plog(LLV_ERROR, LOCATION, NULL, 
+	plog(LLV_ERROR, LOCATION, NULL,
 	    "privsep_script_exec: unsafe environement variable\n");
 	return -1;
 }
@@ -1117,7 +1117,7 @@ found:
 /*
  * Check path safety
  */
-static int 
+static int
 unsafe_path(script, pathtype)
 	char *script;
 	int pathtype;
@@ -1126,7 +1126,7 @@ unsafe_path(script, pathtype)
 	char rpath[MAXPATHLEN + 1];
 	size_t len;
 
-	if (script == NULL) 
+	if (script == NULL)
 		return -1;
 
 	path = lcconf->pathinfo[pathtype];
@@ -1148,12 +1148,12 @@ unsafe_path(script, pathtype)
 	return 0;
 }
 
-static int 
+static int
 unknown_name(name)
 	int name;
 {
 	if ((name < 0) || (name > SCRIPT_MAX)) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "privsep_script_exec: unsafe name index\n");
 		return -1;
 	}
@@ -1162,7 +1162,7 @@ unknown_name(name)
 }
 
 #ifdef HAVE_LIBPAM
-int 
+int
 privsep_accounting_pam(port, inout)
 	int port;
 	int inout;
@@ -1177,13 +1177,13 @@ privsep_accounting_pam(port, inout)
 	if (geteuid() == 0)
 		return isakmp_cfg_accounting_pam(port, inout);
 
-	len = sizeof(*msg) 
-	    + sizeof(port) 
+	len = sizeof(*msg)
+	    + sizeof(port)
 	    + sizeof(inout)
 	    + sizeof(isakmp_cfg_config.pool_size);
 
 	if ((msg = racoon_malloc(len)) == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot allocate memory: %s\n", strerror(errno));
 		return -1;
 	}
@@ -1221,7 +1221,7 @@ out:
 	return -1;
 }
 
-int 
+int
 privsep_xauth_login_pam(port, raddr, usr, pwd)
 	int port;
 	struct sockaddr *raddr;
@@ -1236,15 +1236,15 @@ privsep_xauth_login_pam(port, raddr, usr, pwd)
 	if (geteuid() == 0)
 		return xauth_login_pam(port, raddr, usr, pwd);
 
-	len = sizeof(*msg) 
+	len = sizeof(*msg)
 	    + sizeof(port)
 	    + sizeof(isakmp_cfg_config.pool_size)
-	    + sysdep_sa_len(raddr) 
+	    + sysdep_sa_len(raddr)
 	    + strlen(usr) + 1
 	    + strlen(pwd) + 1;
 
 	if ((msg = racoon_malloc(len)) == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot allocate memory: %s\n", strerror(errno));
 		return -1;
 	}
@@ -1303,12 +1303,12 @@ privsep_cleanup_pam(port)
 	if (geteuid() == 0)
 		return cleanup_pam(port);
 
-	len = sizeof(*msg) 
+	len = sizeof(*msg)
 	    + sizeof(port)
 	    + sizeof(isakmp_cfg_config.pool_size);
 
 	if ((msg = racoon_malloc(len)) == NULL) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Cannot allocate memory: %s\n", strerror(errno));
 		return;
 	}

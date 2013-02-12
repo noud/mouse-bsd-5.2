@@ -180,7 +180,7 @@ main(int argc, char *argv[])
 			mt_com.mt_count = 1;
 			if (ioctl(mtfd, MTIOCTOP, &mt_com) < 0)
 				err(2, "%s", tape);
-		
+
 			if (count > 0) {
 				mt_com.mt_op = MTFSF;
 				    mt_com.mt_count = count;

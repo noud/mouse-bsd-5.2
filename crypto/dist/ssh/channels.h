@@ -101,7 +101,7 @@ struct Channel {
 	int	dynamic_window;
 	int     extended_usage;
 	int	single_connection;
-	u_int 	tcpwinsz;	
+	u_int 	tcpwinsz;
 
 	char   *ctype;		/* type */
 

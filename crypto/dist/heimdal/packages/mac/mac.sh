@@ -30,7 +30,7 @@ make all > /dev/null || exit 1
 echo "Run regression suite"
 make check > /dev/null || exit 1
 echo "Install"
-make install DESTDIR=${destdir} > /dev/null || exit 1 
+make install DESTDIR=${destdir} > /dev/null || exit 1
 
 echo "Build package"
 /Developer/usr/bin/packagemaker \

@@ -92,7 +92,7 @@ struct clockformat
   u_long (*convert)();
   /* conversion routine - your routine - cvt_&lt;yourclock&gt; */
   /* routine for handling RS232 sync events (time stamps) - usually sync_simple */
-  u_long (*syncpps)(); 
+  u_long (*syncpps)();
   /* PPS input routine - usually pps_one */
   void           *data;
   /* local parameters - any parameters/data/configuration info your conversion
@@ -160,7 +160,7 @@ struct clockformat
 
     u_char  cl_type;              /* clock type (ntp control) */
          Type if clock as in clock status word (ntp control messages) - usually 0
-	 
+
     u_long  cl_maxunsync;         /* time to trust oscillator after losing synch
   */
          seconds a clock can be trusted after losing synchronisation.
@@ -185,7 +185,7 @@ struct clockformat
 		</ol>
 		<p>Well, this is very sketchy, i know. But I hope it helps a little bit. The best way is to look which clock comes closest to your and tweak that code.</p>
 		<p>Two sorts of clocks are used with parse. Clocks that automatically send their time code (once a second) do not need entries in the poll routines because they send the data all the time. The second sort are the clocks that need a command sent to them in order to reply with a time code (like the Trimble clock).</p>
-		<p>For questions: <a href="mailto:%20kardel <AT> acm.org">kardel 
+		<p>For questions: <a href="mailto:%20kardel <AT> acm.org">kardel
 				<AT>
 				acm.org</a>.</p>
 		<p>Please include an exact description on how your clock works. (initialisation, TTY modes, strings to be sent to it, responses received from the clock).</p>

@@ -335,7 +335,7 @@ rawprint(caddr_t loc, size_t len)
 	size_t i;
 
 	TCHECK2(*loc, len);
-	
+
 	p = (u_char *)loc;
 	for (i = 0; i < len; i++)
 		printf("%02x", p[i] & 0xff);
@@ -1233,7 +1233,7 @@ isakmp_sub_print(u_char np, const struct isakmp_gen *ext, const u_char *ep,
 
 	while (np) {
 		TCHECK(*ext);
-		
+
 		safememcpy(&e, ext, sizeof(e));
 
 		TCHECK2(*ext, ntohs(e.len));
@@ -1434,7 +1434,7 @@ isakmp_rfc3948_print(netdissect_options *ndo,
 		bp += advance;
 		length -= advance + padlen;
 		nh = enh & 0xff;
-	     
+
 		ip_print_inner(ndo, bp, length, nh, bp2);
 		return;
 	}
@@ -1452,5 +1452,5 @@ trunc:
  */
 
 
-  
+
 

@@ -684,7 +684,7 @@ main(int ac, char **av)
 	/* Open a connection to the remote host. */
 	if (ssh_connect(host, &hostaddr, options.port,
 	    options.address_family, options.connection_attempts, &timeout_ms,
-	    options.tcp_keep_alive, 
+	    options.tcp_keep_alive,
 	    original_effective_uid == 0 && options.use_privileged_port,
 	    options.proxy_command) != 0)
 		exit(255);
@@ -869,7 +869,7 @@ ssh_init_forwarding(void)
 			else
 				error("Could not request tunnel forwarding.");
 		}
-	}			
+	}
 }
 
 static void
@@ -1186,18 +1186,18 @@ ssh_session2_open(void)
 	/* unless the user has specifically set the tcprcvbufpoll */
 	/* to no. In which case we *can* just set the window to the */
 	/* minimum of the hpn buffer size and tcp receive buffer size */
-	
+
 	if(options.hpn_disabled)
 	{
 		options.hpn_buffer_size = CHAN_SES_WINDOW_DEFAULT;
 	}
-	else if (datafellows & SSH_BUG_LARGEWINDOW) 
+	else if (datafellows & SSH_BUG_LARGEWINDOW)
 	{
 		debug("HPN to Non-HPN Connection");
 		if (options.hpn_buffer_size < 0)
 			options.hpn_buffer_size = 2*1024*1024;
-	} 
-	else 
+	}
+	else
 	{
 		if (options.hpn_buffer_size < 0)
 			options.hpn_buffer_size = BUFFER_MAX_LEN_HPN;
@@ -1207,25 +1207,25 @@ ssh_session2_open(void)
 		sock = socket(AF_INET, SOCK_STREAM, 0);
 		/* if they are using the tcp_rcv_buf option */
 		/* attempt to set the buffer size to that */
-		if (options.tcp_rcv_buf) 
-			setsockopt(sock, SOL_SOCKET, SO_RCVBUF, (void *)&options.tcp_rcv_buf, 
+		if (options.tcp_rcv_buf)
+			setsockopt(sock, SOL_SOCKET, SO_RCVBUF, (void *)&options.tcp_rcv_buf,
 				   sizeof(options.tcp_rcv_buf));
-		getsockopt(sock, SOL_SOCKET, SO_RCVBUF, 
+		getsockopt(sock, SOL_SOCKET, SO_RCVBUF,
 			   &socksize, &socksizelen);
 		close(sock);
 		debug("socksize %d", socksize);
-		if (options.tcp_rcv_buf_poll <= 0) 
+		if (options.tcp_rcv_buf_poll <= 0)
 		{
 			options.hpn_buffer_size = MIN(socksize,options.hpn_buffer_size);
 			debug ("MIN of TCP RWIN and HPNBufferSize: %d", options.hpn_buffer_size);
-		} 
+		}
 		else
 		{
-			if (options.tcp_rcv_buf > 0) 
+			if (options.tcp_rcv_buf > 0)
 				options.hpn_buffer_size = MIN(options.tcp_rcv_buf, options.hpn_buffer_size);
 				debug ("MIN of TCPRcvBuf and HPNBufferSize: %d", options.hpn_buffer_size);
  		}
-		
+
 	}
 
 	debug("Final hpn_buffer_size = %d", options.hpn_buffer_size);
@@ -1537,7 +1537,7 @@ control_client(const char *path)
 	 * Stick around until the controlee closes the client_fd.
 	 * Before it does, it is expected to write this process' exit
 	 * value (one int). This process must read the value and wait for
-	 * the closure of the client_fd; if this one closes early, the 
+	 * the closure of the client_fd; if this one closes early, the
 	 * multiplex master will terminate early too (possibly losing data).
 	 */
 	exitval[0] = 0;

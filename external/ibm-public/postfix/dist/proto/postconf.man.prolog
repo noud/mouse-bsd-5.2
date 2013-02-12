@@ -1,4 +1,4 @@
-.TH POSTCONF 5 
+.TH POSTCONF 5
 .SH NAME
 postconf
 \-
@@ -31,7 +31,7 @@ with whitespace continues a logical line.
 .IP \(bu
 A parameter value may refer to other parameters.
 .RS
-.IP \(bu 
+.IP \(bu
 The expressions "$name", "${name}" or "$(name)" are
 recursively replaced by the value of the named parameter.
 .IP \(bu
@@ -52,9 +52,9 @@ instance is remembered.
 Otherwise, the order of main.cf parameter definitions does not matter.
 .PP
 The remainder of this document is a description of all Postfix
-configuration parameters. Default values are shown after the 
+configuration parameters. Default values are shown after the
 parameter name in parentheses, and can be looked up with the
-"\fBpostconf -d\fR" command. 
+"\fBpostconf -d\fR" command.
 .PP
 Note: this is not an invitation to make changes to Postfix
 configuration parameters. Unnecessary changes can impair the

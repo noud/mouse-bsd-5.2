@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -61,11 +61,11 @@
 #include <openssl/obj_mac.h>
 #include <openssl/bn.h>
 
-static ECDSA_SIG *ecdsa_do_sign(const unsigned char *dgst, int dlen, 
+static ECDSA_SIG *ecdsa_do_sign(const unsigned char *dgst, int dlen,
 		const BIGNUM *, const BIGNUM *, EC_KEY *eckey);
-static int ecdsa_sign_setup(EC_KEY *eckey, BN_CTX *ctx_in, BIGNUM **kinvp, 
+static int ecdsa_sign_setup(EC_KEY *eckey, BN_CTX *ctx_in, BIGNUM **kinvp,
 		BIGNUM **rp);
-static int ecdsa_do_verify(const unsigned char *dgst, int dgst_len, 
+static int ecdsa_do_verify(const unsigned char *dgst, int dgst_len,
 		const ECDSA_SIG *sig, EC_KEY *eckey);
 
 static ECDSA_METHOD openssl_ecdsa_meth = {
@@ -101,7 +101,7 @@ static int ecdsa_sign_setup(EC_KEY *eckey, BN_CTX *ctx_in, BIGNUM **kinvp,
 		return 0;
 	}
 
-	if (ctx_in == NULL) 
+	if (ctx_in == NULL)
 	{
 		if ((ctx = BN_CTX_new()) == NULL)
 		{
@@ -131,15 +131,15 @@ static int ecdsa_sign_setup(EC_KEY *eckey, BN_CTX *ctx_in, BIGNUM **kinvp,
 		ECDSAerr(ECDSA_F_ECDSA_SIGN_SETUP, ERR_R_EC_LIB);
 		goto err;
 	}
-	
+
 	do
 	{
-		/* get random k */	
+		/* get random k */
 		do
 			if (!BN_rand_range(k, order))
 			{
 				ECDSAerr(ECDSA_F_ECDSA_SIGN_SETUP,
-				 ECDSA_R_RANDOM_NUMBER_GENERATION_FAILED);	
+				 ECDSA_R_RANDOM_NUMBER_GENERATION_FAILED);
 				goto err;
 			}
 		while (BN_is_zero(k));
@@ -180,12 +180,12 @@ static int ecdsa_sign_setup(EC_KEY *eckey, BN_CTX *ctx_in, BIGNUM **kinvp,
 	if (!BN_mod_inverse(k, k, order, ctx))
 	{
 		ECDSAerr(ECDSA_F_ECDSA_SIGN_SETUP, ERR_R_BN_LIB);
-		goto err;	
+		goto err;
 	}
 	/* clear old values if necessary */
 	if (*rp != NULL)
 		BN_clear_free(*rp);
-	if (*kinvp != NULL) 
+	if (*kinvp != NULL)
 		BN_clear_free(*kinvp);
 	/* save the pre-computed values  */
 	*rp    = r;
@@ -197,11 +197,11 @@ err:
 		if (k != NULL) BN_clear_free(k);
 		if (r != NULL) BN_clear_free(r);
 	}
-	if (ctx_in == NULL) 
+	if (ctx_in == NULL)
 		BN_CTX_free(ctx);
 	if (order != NULL)
 		BN_free(order);
-	if (tmp_point != NULL) 
+	if (tmp_point != NULL)
 		EC_POINT_free(tmp_point);
 	if (X)
 		BN_clear_free(X);
@@ -209,7 +209,7 @@ err:
 }
 
 
-static ECDSA_SIG *ecdsa_do_sign(const unsigned char *dgst, int dgst_len, 
+static ECDSA_SIG *ecdsa_do_sign(const unsigned char *dgst, int dgst_len,
 		const BIGNUM *in_kinv, const BIGNUM *in_r, EC_KEY *eckey)
 {
 	int     ok = 0;
@@ -224,7 +224,7 @@ static ECDSA_SIG *ecdsa_do_sign(const unsigned char *dgst, int dgst_len,
 	ecdsa    = ecdsa_check(eckey);
 	group    = EC_KEY_get0_group(eckey);
 	priv_key = EC_KEY_get0_private_key(eckey);
-	
+
 	if (group == NULL || priv_key == NULL || ecdsa == NULL)
 	{
 		ECDSAerr(ECDSA_F_ECDSA_DO_SIGN, ERR_R_PASSED_NULL_PARAMETER);
@@ -254,7 +254,7 @@ static ECDSA_SIG *ecdsa_do_sign(const unsigned char *dgst, int dgst_len,
 	if (8 * dgst_len > BN_num_bits(order))
 	{
 		/* XXX
-		 * 
+		 *
 		 * Should provide for optional hash truncation:
 		 * Keep the BN_num_bits(order) leftmost bits of dgst
 		 * (see March 2006 FIPS 186-3 draft, which has a few
@@ -368,7 +368,7 @@ static int ecdsa_do_verify(const unsigned char *dgst, int dgst_len,
 		return -1;
 	}
 	BN_CTX_start(ctx);
-	order = BN_CTX_get(ctx);	
+	order = BN_CTX_get(ctx);
 	u1    = BN_CTX_get(ctx);
 	u2    = BN_CTX_get(ctx);
 	m     = BN_CTX_get(ctx);
@@ -378,7 +378,7 @@ static int ecdsa_do_verify(const unsigned char *dgst, int dgst_len,
 		ECDSAerr(ECDSA_F_ECDSA_DO_VERIFY, ERR_R_BN_LIB);
 		goto err;
 	}
-	
+
 	if (!EC_GROUP_get_order(group, order, ctx))
 	{
 		ECDSAerr(ECDSA_F_ECDSA_DO_VERIFY, ERR_R_EC_LIB);
@@ -387,7 +387,7 @@ static int ecdsa_do_verify(const unsigned char *dgst, int dgst_len,
 	if (8 * dgst_len > BN_num_bits(order))
 	{
 		/* XXX
-		 * 
+		 *
 		 * Should provide for optional hash truncation:
 		 * Keep the BN_num_bits(order) leftmost bits of dgst
 		 * (see March 2006 FIPS 186-3 draft, which has a few
@@ -400,7 +400,7 @@ static int ecdsa_do_verify(const unsigned char *dgst, int dgst_len,
 		goto err;
 	}
 
-	if (BN_is_zero(sig->r)          || BN_is_negative(sig->r) || 
+	if (BN_is_zero(sig->r)          || BN_is_negative(sig->r) ||
 	    BN_ucmp(sig->r, order) >= 0 || BN_is_zero(sig->s)  ||
 	    BN_is_negative(sig->s)      || BN_ucmp(sig->s, order) >= 0)
 	{
@@ -461,7 +461,7 @@ static int ecdsa_do_verify(const unsigned char *dgst, int dgst_len,
 			goto err;
 		}
 	}
-	
+
 	if (!BN_nnmod(u1, X, order, ctx))
 	{
 		ECDSAerr(ECDSA_F_ECDSA_DO_VERIFY, ERR_R_BN_LIB);

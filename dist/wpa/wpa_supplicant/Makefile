@@ -1006,7 +1006,7 @@ wpa_supplicant: .config $(OBJS) $(EXTRA_progs)
 eapol_test: .config $(OBJS_t)
 	$(LDO) $(LDFLAGS) -o eapol_test $(OBJS_t) $(LIBS)
 
-preauth_test: .config $(OBJS_t2) 
+preauth_test: .config $(OBJS_t2)
 	$(LDO) $(LDFLAGS) -o preauth_test $(OBJS_t2) $(LIBS)
 
 wpa_passphrase: $(OBJS_p)
@@ -1078,13 +1078,13 @@ windows-bin: $(WINALL)
 	$(STRIP) $(WINALL)
 
 wpa_gui/Makefile:
-	qmake -o wpa_gui/Makefile wpa_gui/wpa_gui.pro 
+	qmake -o wpa_gui/Makefile wpa_gui/wpa_gui.pro
 
 wpa_gui: wpa_gui/Makefile
 	$(MAKE) -C wpa_gui
 
 wpa_gui-qt4/Makefile:
-	qmake -o wpa_gui-qt4/Makefile wpa_gui-qt4/wpa_gui.pro 
+	qmake -o wpa_gui-qt4/Makefile wpa_gui-qt4/wpa_gui.pro
 
 wpa_gui-qt4: wpa_gui-qt4/Makefile
 	$(MAKE) -C wpa_gui-qt4

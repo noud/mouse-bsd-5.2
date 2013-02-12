@@ -557,7 +557,7 @@ tglob(Char **t)
 	     */
 	    if (c == '`') {
 		gflag |= G_CSH;
-		while (*p && *p != '`') 
+		while (*p && *p != '`')
 		    if (*p++ == '\\') {
 			if (*p)		/* Quoted chars */
 			    p++;
@@ -788,7 +788,7 @@ pword(void)
     pnleft = MAXPATHLEN - 4;
 }
 
-int 
+int
 Gmatch(Char *string, Char *pattern)
 {
     Char **blk, **p;
@@ -813,7 +813,7 @@ Gmatch(Char *string, Char *pattern)
 
     blkfree(blk);
     return(gres == gpol);
-} 
+}
 
 static int
 pmatch(Char *string, Char *pattern)
@@ -852,7 +852,7 @@ pmatch(Char *string, Char *pattern)
 			      (*(pattern-2) & TRIM) <= stringc);
 		    pattern++;
 		}
-		else 
+		else
 		    match = (stringc == (rangec & TRIM));
 	    }
 	    if (rangec == 0)

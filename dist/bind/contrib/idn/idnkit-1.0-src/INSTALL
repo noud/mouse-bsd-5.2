@@ -55,7 +55,7 @@ options.
 
     --prefix=PREFIX
 	Specifies the prefix of install directories of idnkit.  The
-	default is /usr/local.  
+	default is /usr/local.
 
     --enable-runidn
         Build `runidn' command.  The default is "no".
@@ -90,7 +90,7 @@ options.
 	If the header file "iconv.h" resides in a directory where your
 	C compiler doesn't search by default, specify the directory as
 	DIR like this:
-	
+
 	    --with-iconv-include=/usr/local/include
 
 	You cannot set this option when `--enable-liteonly' is set
@@ -213,7 +213,7 @@ encoding name "EUC-JP" as Japanese EUC, and "SJIS" as Japanese Shift
 JIS.  If iconv() on the system doesn't support the encoding name,
 please edit `lib/tests/codeset.h' before `make test'.
 
-*Note* 
+*Note*
   If you use standard iconv which is attached as default on Solaris,
   converter's test "idn_converter_convfromucs4()" may fail.  But it's
   not the problem because the result is derived from the difference of

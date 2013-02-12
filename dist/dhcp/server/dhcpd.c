@@ -405,7 +405,7 @@ int main (argc, argv, envp)
 #endif
 		}
 	}
-  
+
 	remote_port = htons (ntohs (local_port) + 1);
 
 	if (server) {
@@ -471,13 +471,13 @@ int main (argc, argv, envp)
 		    log_error ("** You must specify a lease file with -lf.");
 		    log_error ("   Dhcpd will not overwrite your default");
 		    log_fatal ("   lease file when playing back a trace. **");
-	    }		
+	    }
 	    trace_file_replay (traceinfile);
 
 #if defined (DEBUG_MEMORY_LEAKAGE) && \
                 defined (DEBUG_MEMORY_LEAKAGE_ON_EXIT)
             free_everything ();
-            omapi_print_dmalloc_usage_by_caller (); 
+            omapi_print_dmalloc_usage_by_caller ();
 #endif
 
 	    exit (0);
@@ -491,7 +491,7 @@ int main (argc, argv, envp)
 	postconf_initialization (quiet);
 
         /* test option should cause an early exit */
- 	if (cftest && !lftest) 
+ 	if (cftest && !lftest)
  		exit(0);
 
 	group_write_hook = group_writer;
@@ -645,7 +645,7 @@ void postconf_initialization (int quiet)
 		data_string_forget (&db, MDL);
 		path_dhcpd_db = s;
 	}
-	
+
 	oc = lookup_option (&server_universe, options, SV_PID_FILE_NAME);
 	if (oc &&
 	    evaluate_option_cache (&db, (struct packet *)0,
@@ -814,7 +814,7 @@ void postconf_initialization (int quiet)
 
 	/* Don't need the options anymore. */
 	option_state_dereference (&options, MDL);
-	
+
 #if defined (NSUPDATE)
 	/* If old-style ddns updates have been requested, parse the
 	   old-style ddns updater. */
@@ -990,7 +990,7 @@ int dhcpd_interface_setup_hook (struct interface_info *ip, struct iaddr *ia)
 			interface_reference (&subnet -> interface, ip, MDL);
 			subnet -> interface_address = *ia;
 		} else if (subnet -> interface != ip) {
-			log_error ("Multiple interfaces match the %s: %s %s", 
+			log_error ("Multiple interfaces match the %s: %s %s",
 				   "same subnet",
 				   subnet -> interface -> name, ip -> name);
 		}
@@ -1004,11 +1004,11 @@ int dhcpd_interface_setup_hook (struct interface_info *ip, struct iaddr *ia)
 				shared_network_reference
 					(&ip -> shared_network, share, MDL);
 		}
-		
+
 		if (!share -> interface) {
 			interface_reference (&share -> interface, ip, MDL);
 		} else if (share -> interface != ip) {
-			log_error ("Multiple interfaces match the %s: %s %s", 
+			log_error ("Multiple interfaces match the %s: %s %s",
 				   "same shared network",
 				   share -> interface -> name, ip -> name);
 		}
@@ -1126,13 +1126,13 @@ static isc_result_t dhcp_io_shutdown_countdown (void *vlp)
 	    omapi_print_dmalloc_usage_by_caller ();
 #endif
 	    exit (0);
-	}		
+	}
 #else
 	if (shutdown_state == shutdown_done) {
 #if defined (DEBUG_MEMORY_LEAKAGE) && \
 		defined (DEBUG_MEMORY_LEAKAGE_ON_EXIT)
 		free_everything ();
-		omapi_print_dmalloc_usage_by_caller (); 
+		omapi_print_dmalloc_usage_by_caller ();
 #endif
 		exit (0);
 	}

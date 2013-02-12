@@ -47,7 +47,7 @@ care about these low-level details. </p>
     restrictive = <a href="postconf.5.html#reject_unknown_sender_domain">reject_unknown_sender_domain</a> <a href="postconf.5.html#reject_unknown_client_hostname">reject_unknown_client_hostname</a> ...
     permissive = permit
 
-    <a href="postconf.5.html#smtpd_recipient_restrictions">smtpd_recipient_restrictions</a> = 
+    <a href="postconf.5.html#smtpd_recipient_restrictions">smtpd_recipient_restrictions</a> =
 	<a href="postconf.5.html#permit_mynetworks">permit_mynetworks</a>
 	<a href="postconf.5.html#reject_unauth_destination">reject_unauth_destination</a>
 	<a href="postconf.5.html#check_recipient_access">check_recipient_access</a> hash:/etc/postfix/recipient_access
@@ -197,7 +197,7 @@ with LDAP or SQL. </p>
         <i>...other stuff...</i>
 
     <a href="postconf.5.html#smtpd_restriction_classes">smtpd_restriction_classes</a> = local_only
-    local_only = 
+    local_only =
         <a href="postconf.5.html#check_recipient_access">check_recipient_access</a> hash:/etc/postfix/local_domains, reject
 
 /etc/postfix/restricted_senders:

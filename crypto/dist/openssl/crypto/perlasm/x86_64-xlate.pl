@@ -118,7 +118,7 @@ my $current_function;
 	if (!$win64) {
 	    if ($self->{op} eq "movz") {	# movz is pain...
 		sprintf "%s%s%s",$self->{op},$self->{sz},shift;
-	    } elsif ($self->{op} =~ /^set/) { 
+	    } elsif ($self->{op} =~ /^set/) {
 		"$self->{op}";
 	    } elsif ($self->{op} eq "ret") {
 	    	".byte	0xf3,0xc3";
@@ -416,7 +416,7 @@ my $current_function;
 				    my $conv = sub  {	my $var=shift;
 							if ($var=~s/0x([0-9a-f]+)/0$1h/i) { $var; }
 							else { sprintf"0%Xh",$var; }
-						    };  
+						    };
 
 				    $sz =~ tr/bvlq/BWDQ/;
 				    $self->{value} = "\tD$sz\t";
@@ -532,7 +532,7 @@ close STDOUT;
 # %r13		-		-
 # %r14		-		-
 # %r15		-		-
-# 
+#
 # (*)	volatile register
 # (-)	preserved by callee
 # (#)	Nth argument, volatile

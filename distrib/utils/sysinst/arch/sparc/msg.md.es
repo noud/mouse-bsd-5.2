@@ -53,8 +53,8 @@ message set_kernel_1
 {Núcleo (GENERIC)}
 message set_kernel_2
 {Núcleo (GENERIC_SCSI3)}
-message set_kernel_3 
+message set_kernel_3
 {Núcleo (GENERIC_SUN4U)}
-message set_kernel_4 
+message set_kernel_4
 {Núcleo (GENERIC.MP)}
 

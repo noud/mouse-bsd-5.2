@@ -26,7 +26,7 @@ dist_libss_la_SOURCES = $(dist_libsl_la_SOURCES) ss.c ss.h
 nodist_libss_la_SOURCES = $(ES)
 
 TESTS = test_sl
-check_PROGRAMS = $(TESTS)	
+check_PROGRAMS = $(TESTS)
 
 # install these?
 

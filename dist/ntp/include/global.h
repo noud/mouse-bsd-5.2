@@ -45,7 +45,7 @@ typedef unsigned char BYTE;		/* local modification for RSAEuro */
 
 /* PROTO_LIST is defined depending on how PROTOTYPES is defined above.
    If using PROTOTYPES, then PROTO_LIST returns the list, otherwise it
-     returns an empty list.  
+     returns an empty list.
  */
 #if PROTOTYPES
 #define PROTO_LIST(list) list

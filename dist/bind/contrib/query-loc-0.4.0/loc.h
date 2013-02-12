@@ -31,25 +31,25 @@
 
 #if SIZEOF_LONG == 4
 #define u_int32_t unsigned long
-#ifndef int32_t 
+#ifndef int32_t
 #define int32_t   long
 #endif
 #else
 #define u_int32_t unsigned int
-#ifndef int32_t 
+#ifndef int32_t
 #define int32_t   int
 #endif
 #endif
 
 #if SIZEOF_CHAR == 1
 #define u_int8_t unsigned char
-#ifndef int8_t 
+#ifndef int8_t
 #define int8_t   char
 #endif
-#else 
+#else
 #if SIZEOF_SHORT == 1
 #define u_int8_t unsigned short
-#ifndef int8_t 
+#ifndef int8_t
 #define int8_t   short
 #endif
 #else

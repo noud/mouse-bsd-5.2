@@ -7,7 +7,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -76,7 +76,7 @@ void ECDSA_set_default_method(const ECDSA_METHOD *meth)
 
 const ECDSA_METHOD *ECDSA_get_default_method(void)
 {
-	if(!default_ECDSA_method) 
+	if(!default_ECDSA_method)
 		default_ECDSA_method = ECDSA_OpenSSL();
 	return default_ECDSA_method;
 }
@@ -144,7 +144,7 @@ static ECDSA_DATA *ECDSA_DATA_new_method(ENGINE *engine)
 		OPENSSL_free(ret);
 		ret=NULL;
 	}
-#endif	
+#endif
 	return(ret);
 }
 
@@ -182,7 +182,7 @@ static void ecdsa_data_free(void *data)
 ECDSA_DATA *ecdsa_check(EC_KEY *key)
 {
 	ECDSA_DATA *ecdsa_data;
- 
+
 	void *data = EC_KEY_get_key_method_data(key, ecdsa_data_dup,
 					ecdsa_data_free, ecdsa_data_free);
 	if (data == NULL)
@@ -195,7 +195,7 @@ ECDSA_DATA *ecdsa_check(EC_KEY *key)
 	}
 	else
 		ecdsa_data = (ECDSA_DATA *)data;
-	
+
 
 	return ecdsa_data;
 }
@@ -219,13 +219,13 @@ int ECDSA_size(const EC_KEY *r)
 	{
 		BN_clear_free(order);
 		return 0;
-	} 
+	}
 	i=BN_num_bits(order);
 	bs.length=(i+7)/8;
 	bs.data=buf;
 	bs.type=V_ASN1_INTEGER;
 	/* If the top bit is set the asn1 encoding is 1 larger. */
-	buf[0]=0xff;	
+	buf[0]=0xff;
 
 	i=i2d_ASN1_INTEGER(&bs,NULL);
 	i+=i; /* r and s */

@@ -43,7 +43,7 @@ while(<>) {
 	$_ =~ s/\s+\n$/\n/;
 	$block .= $_;
 	if ($_ =~ /<!--/)
-	    { $comment = 1; } 
+	    { $comment = 1; }
 	if ($comment && $_ =~ /-->/)
 	    { $comment = 0; $block =~ s/<!--.*-->//sg; }
     } while((($_ = <>) && /\S/) || $comment);

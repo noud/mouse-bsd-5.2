@@ -133,7 +133,7 @@ int main (argc, argv, envp)
 
 #if !(defined (DEBUG) || defined (SYSLOG_4_2))
 	setlogmask (LOG_UPTO (LOG_INFO));
-#endif	
+#endif
 
 	/* Set up the OMAPI. */
 	status = omapi_init ();
@@ -257,7 +257,7 @@ int main (argc, argv, envp)
 		endservent ();
 	}
 	remote_port = htons (ntohs (local_port) + 1);
-  
+
 	/* We need at least one server. */
 	if (!sp) {
 		usage ();
@@ -307,7 +307,7 @@ int main (argc, argv, envp)
 			else {
 				fprintf (pf, "%ld\n", (long)getpid ());
 				fclose (pf);
-			}	
+			}
 		}
 
 		close (0);
@@ -450,7 +450,7 @@ void relay (ip, packet, length, from_port, from, hfrom)
 			++client_packets_relayed;
 		}
 	}
-				 
+
 }
 
 static void usage ()

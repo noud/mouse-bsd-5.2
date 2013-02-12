@@ -56,7 +56,7 @@
 
 /* cope with old kame headers - ugly */
 #ifndef SADB_X_AALG_MD5
-#define SADB_X_AALG_MD5		SADB_AALG_MD5	
+#define SADB_X_AALG_MD5		SADB_AALG_MD5
 #endif
 #ifndef SADB_X_AALG_SHA
 #define SADB_X_AALG_SHA		SADB_AALG_SHA
@@ -522,7 +522,7 @@ pfkey_spdump1(m, withports)
 	m_sec_ctx = (struct sadb_x_sec_ctx *)mhp[SADB_X_EXT_SEC_CTX];
 #endif
 #ifdef __linux__
-	/* *bsd indicates per-socket policies by omiting src and dst 
+	/* *bsd indicates per-socket policies by omiting src and dst
 	 * extensions. Linux always includes them, but we can catch it
 	 * by checkin for policy id.
 	 */
@@ -543,7 +543,7 @@ pfkey_spdump1(m, withports)
 				sport = atoi(pbuf);
 			printf("%s%s ", str_ipaddr(sa),
 				str_prefport((u_int)sa->sa_family,
-				    (u_int)m_saddr->sadb_address_prefixlen, 
+				    (u_int)m_saddr->sadb_address_prefixlen,
 				    (u_int)sport,
 				    (u_int)m_saddr->sadb_address_proto));
 			break;
@@ -564,7 +564,7 @@ pfkey_spdump1(m, withports)
 				dport = atoi(pbuf);
 			printf("%s%s ", str_ipaddr(sa),
 				str_prefport((u_int)sa->sa_family,
-				    (u_int)m_daddr->sadb_address_prefixlen, 
+				    (u_int)m_daddr->sadb_address_prefixlen,
 				    (u_int)dport,
 				    (u_int)m_saddr->sadb_address_proto));
 			break;
@@ -601,7 +601,7 @@ pfkey_spdump1(m, withports)
 		d_xpl = ipsec_dump_policy_withports(m_xpl, "\n\t");
 	else
 		d_xpl = ipsec_dump_policy((ipsec_policy_t)m_xpl, "\n\t");
-		
+
 	if (!d_xpl)
 		printf("\n\tPolicy:[%s]\n", ipsec_strerror());
 	else {
@@ -662,7 +662,7 @@ str_ipaddr(sa)
 	if (sa == NULL)
 		return "";
 
-	if (getnameinfo(sa, (socklen_t)sysdep_sa_len(sa), buf, sizeof(buf), 
+	if (getnameinfo(sa, (socklen_t)sysdep_sa_len(sa), buf, sizeof(buf),
 	    NULL, 0, niflag) == 0)
 		return buf;
 	return NULL;
@@ -681,7 +681,7 @@ str_ipport(sa)
 	if (sa == NULL)
 		return "";
 
-	if (getnameinfo(sa, (socklen_t)sysdep_sa_len(sa), NULL, 0, 
+	if (getnameinfo(sa, (socklen_t)sysdep_sa_len(sa), NULL, 0,
 	    buf, sizeof(buf), niflag) == 0)
 		return buf;
 	return NULL;

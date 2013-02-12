@@ -2,7 +2,7 @@
 
 # Usage: hchangered oldfile newfile
 
-# hchangered - crude tool to red-color changes in HTML text. Text is 
+# hchangered - crude tool to red-color changes in HTML text. Text is
 # also underlined so it shows on monochrome printers.
 
 # Bugs: does not red-color text inside tables. Fascist software may

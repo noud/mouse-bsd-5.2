@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -109,7 +109,7 @@ void X509_VERIFY_PARAM_free(X509_VERIFY_PARAM *param)
  *    for SSL servers or clients but only if the application has not set new
  *    ones.
  *
- * The "inh_flags" field determines how this function behaves. 
+ * The "inh_flags" field determines how this function behaves.
  *
  * Normally any values which are set in the default are not copied from the
  * destination and verify flags are ORed together.
@@ -141,7 +141,7 @@ void X509_VERIFY_PARAM_free(X509_VERIFY_PARAM *param)
 #define x509_verify_param_copy(field, def) \
 	if (test_x509_verify_param_copy(field, def)) \
 		dest->field = src->field
-		
+
 
 int X509_VERIFY_PARAM_inherit(X509_VERIFY_PARAM *dest,
 						const X509_VERIFY_PARAM *src)
@@ -265,7 +265,7 @@ int X509_VERIFY_PARAM_add0_policy(X509_VERIFY_PARAM *param, ASN1_OBJECT *policy)
 	return 1;
 	}
 
-int X509_VERIFY_PARAM_set1_policies(X509_VERIFY_PARAM *param, 
+int X509_VERIFY_PARAM_set1_policies(X509_VERIFY_PARAM *param,
 					STACK_OF(ASN1_OBJECT) *policies)
 	{
 	int i;

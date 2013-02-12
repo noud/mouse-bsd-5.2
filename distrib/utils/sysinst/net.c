@@ -89,7 +89,7 @@ static int net_dhcpconf;
 static char net_ip6[STRSIZE];
 char net_namesvr6[STRSIZE];
 static int net_ip6conf;
-#define IP6CONF_AUTOHOST        0x01    
+#define IP6CONF_AUTOHOST        0x01
 #endif
 
 
@@ -921,21 +921,21 @@ done:
 
 #ifdef INET6
 	if (v6config && network_up) {
-		network_up = !run_program(RUN_DISPLAY | RUN_PROGRESS, 
+		network_up = !run_program(RUN_DISPLAY | RUN_PROGRESS,
 		    "/sbin/ping6 -v -c 3 -n -I %s ff02::2", net_dev);
 
 		if (net_namesvr6[0] != '\0')
-			network_up = !run_program(RUN_DISPLAY | RUN_PROGRESS, 
+			network_up = !run_program(RUN_DISPLAY | RUN_PROGRESS,
 			    "/sbin/ping6 -v -c 3 -n %s", net_namesvr6);
 	}
 #endif
 
 	if (net_namesvr[0] != '\0' && network_up)
-		network_up = !run_program(RUN_DISPLAY | RUN_PROGRESS, 
+		network_up = !run_program(RUN_DISPLAY | RUN_PROGRESS,
 		    "/sbin/ping -v -c 5 -w 5 -o -n %s", net_namesvr);
 
 	if (net_defroute[0] != '\0' && network_up)
-		network_up = !run_program(RUN_DISPLAY | RUN_PROGRESS, 
+		network_up = !run_program(RUN_DISPLAY | RUN_PROGRESS,
 		    "/sbin/ping -v -c 5 -w 5 -o -n %s", net_defroute);
 	fflush(NULL);
 
@@ -987,7 +987,7 @@ ftp_fetch(const char *set_name)
 			ftp_dir_encoded + sizeof ftp_dir_encoded,
 			RFC1738_SAFE_LESS_SHELL_PLUS_SLASH, 0);
 
-	rval = run_program(RUN_DISPLAY | RUN_PROGRESS | RUN_XFER_DIR, 
+	rval = run_program(RUN_DISPLAY | RUN_PROGRESS | RUN_XFER_DIR,
 		    "/usr/bin/ftp %s%s://%s%s/%s/%s%s",
 		    ftp_opt, ftp.xfer_type, ftp_user_encoded, ftp.host,
 		    ftp_dir_encoded, set_name, dist_postfix);

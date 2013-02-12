@@ -21,7 +21,7 @@ web site at
 and search for
 .Sq firmware
 and install the most recent version for your model. For most G3 and G4
-models, you will need to run the FirmWare updater from MacOS 9. 
+models, you will need to run the FirmWare updater from MacOS 9.
 .Pp
 .(Note
 If you accidentally change the
@@ -80,7 +80,7 @@ Alternatively, if you are currently running
 .Tn MacOS X
 or
 .Tn Darwin ,
-you can use the 
+you can use the
 .Ic nvram
 command to set this variable before rebooting.
 .(disp
@@ -239,9 +239,9 @@ Umax Apus 2000, Apus 3000, C500, and C600
 Umax S900
 .Pp
 .
-.Ss2 Getting to Open Firmware (MacOS X or Darwin) 
+.Ss2 Getting to Open Firmware (MacOS X or Darwin)
 .
-When you install 
+When you install
 .Tn MacOS X
 or Darwin, it will install the necessary NVRAM bug fixes.  Use the
 .Ic nvram
@@ -301,7 +301,7 @@ NVRAM patches and Open Firmware settings will be erased if you
 by holding down
 .Key COMMAND-OPTION-P-R
 keys during the boot chimes, or if you accidentally boot into
-.Tn MacOS 
+.Tn MacOS
 9 or earlier.
 .Note)
 .Pp
@@ -369,7 +369,7 @@ BootVars tool.
 BootVars does
 .Em not
 apply the (possibly critical) NVRAM patches that System Disk does.
-Expect some devices to not work (such as booting from hard drives and 
+Expect some devices to not work (such as booting from hard drives and
 CD-ROMs).
 .Note)
 .Pp
@@ -469,7 +469,7 @@ Do this on the keyboard attached to the ADB port on your system
 Your system will
 .Em not
 have the (possibly critical) NVRAM patches that System Disk applies.
-Expect some devices to not work (such as booting from hard drives and 
+Expect some devices to not work (such as booting from hard drives and
 CD-ROMs).
 .Note)
 .Pp
@@ -619,8 +619,8 @@ output-device       /chaos/control      ttya
 .disp)
 .Pp
 .(Note
-All Open Firmware 1.0.5 settings and nvram patches will be erased if you 
-boot into 
+All Open Firmware 1.0.5 settings and nvram patches will be erased if you
+boot into
 .Tn MacOS 9
 or earlier.  You will need to re-enter them before booting
 .Nx
@@ -631,7 +631,7 @@ again.
 Open Firmware 2.0.x and Open Firmware 2.4 systems will set the
 .Li real-base
 environment variable to its default value (which prevents
-.Nx 
+.Nx
 from booting) if you boot into
 .Tn MacOS 9
 or earlier.
@@ -706,8 +706,8 @@ output-device       screen              screen
 .Ss2 Available Boot Media
 .
 Open Firmware is capable of booting from a variety of
-media (such as hard drives, 
-.if \*[OF_VERSION_12] floppy disks, 
+media (such as hard drives,
+.if \*[OF_VERSION_12] floppy disks,
 CD-ROMs, and ethernet).
 Open Firmware is able to boot files from a variety of file systems
 (such as ISO9660,
@@ -716,10 +716,10 @@ and MS-DOS FAT).  Unfortunately, Open Firmware is
 .Em not
 able to directly boot from the
 .Nx
-file system (FFS) or Apple's 
+file system (FFS) or Apple's
 .if \*[OF_VERSION_3] BSD-based file system (UFS),
 .if \*[OF_VERSION_12] file systems (HFS, HFS+, or UFS),
-so we must put the bootloader in a location that Open Firmware is capable 
+so we must put the bootloader in a location that Open Firmware is capable
 of understanding.
 .Pp
 Therefore, to boot the
@@ -731,17 +731,17 @@ which knows how to load the
 .Nx
 kernel.
 .if \*[OF_VERSION_12] \{\
-Open Firmware 1 and 2 take either a two or three stage approach, depending 
+Open Firmware 1 and 2 take either a two or three stage approach, depending
 on the boot media.  In the two step approach, Open Firmware loads
 .Pa ofwboot.xcf
-from the boot media, which then loads the kernel.  In the three step 
-approach (used in the 
+from the boot media, which then loads the kernel.  In the three step
+approach (used in the
 .Sq "partition zero"
 method), Open Firmware loads a primary bootloader
 .Pa bootxx
-from a disk which then loads the secondary bootloader 
+from a disk which then loads the secondary bootloader
 .Pa ofwboot
-(which is functionally identical to 
+(which is functionally identical to
 .Pa ofwboot.xcf )
 which then loads the kernel.
 .\}
@@ -809,7 +809,7 @@ You can run your entire system diskless or netboot only the files necessary
 to boot (i.e. the bootloader and the installation kernel).
 You must have root access for the
 .Ul
-netboot server, which must be on the same subnet as your 
+netboot server, which must be on the same subnet as your
 .Nx*M
 machine.
 .(Note
@@ -855,7 +855,7 @@ CD-R
 .Note)
 .bullet)
 .Pp
-Once the bootloader is loaded, it can open the kernel from one of the 
+Once the bootloader is loaded, it can open the kernel from one of the
 following sources:
 .(bullet -offset indent
 .
@@ -886,8 +886,8 @@ partition.
 .bullet)
 .Pp
 .if \*[OF_VERSION_12] \{\
-In theory, Open Firmware 2.4 systems should be able to load the 
-bootloader from an HFS or HFS+ partition or a hybrid CD-R, but users have 
+In theory, Open Firmware 2.4 systems should be able to load the
+bootloader from an HFS or HFS+ partition or a hybrid CD-R, but users have
 reported that it doesn't work.
 .Pp
 The boot floppy images provided have a
@@ -959,9 +959,9 @@ and
 .Nx
 \(em this is necessary for machines which have only
 one hard drive (such as the eMac, iBook, iMac, PowerBook, and
-PowerMacintosh Cube systems).  If you do not want 
+PowerMacintosh Cube systems).  If you do not want
 .Tn MacOS
-you must still follow this procedure, but create only a small HFS+ 
+you must still follow this procedure, but create only a small HFS+
 partition (large enough for the bootloader).
 .\}
 .Pp
@@ -970,7 +970,7 @@ There are two partitioning tools available for
 .Xr disklabel 8
 and
 .Xr pdisk 8 .
-The former is used in the 
+The former is used in the
 .Nx
 .Ic sysinst
 installer, and will render your disk unusable by
@@ -980,12 +980,12 @@ It will also prevent Open Firmware 3 machines from booting from that disk.
 When running the installer, you will need to use the installer's
 .Dq "Re-install sets"
 option to skip the
-.Ic disklabel 
+.Ic disklabel
 step.
 .Pp
 Do not use
 .Ic disklabel No or Dq "Re-install sets"
-unless you will use one drive for 
+unless you will use one drive for
 .Nx
 only and have another drive which will have the bootloader.
 .\}
@@ -993,7 +993,7 @@ only and have another drive which will have the bootloader.
 The process is more fully detailed in the Partitioning HOW-TO:
 .Lk http://www.NetBSD.org/ports/macppc/partitioning.html
 .Pp
-You can create a partition map with 
+You can create a partition map with
 .Xr pdisk 8 ,
 but the disk will not be usable with MacOS 9 and earlier.  If this is a
 concern, you will need to use Apple's Drive Setup or Disk Utility.
@@ -1004,7 +1004,7 @@ Setup will erase the contents of your drive \(em it does not preserve data
 from any of your partitions.
 .Pp
 Apple's Disk Utility only runs under MacOS X 10.0.0 and later.
-Make sure you click the 
+Make sure you click the
 .Dq "Install Mac OS 9 Disk Drivers"
 checkbox.  Also, keep in mind that Disk Utility does
 .Em not
@@ -1027,9 +1027,9 @@ It runs on almost all OSes that \*M machines support.  Download it:
 There is built-in help describing how it works.  When it asks you to enter
 the
 .Dq Li "Type of partition" ,
-use 
+use
 .Li Apple_UNIX_SVR2
-for 
+for
 .Nx
 partitions,
 .Li Apple_HFS
@@ -1041,11 +1041,11 @@ After you've written the partition map with
 .Ic pdisk ,
 you will need to create the file systems.  Use
 .Xr newfs 8
-and 
+and
 .Xr mount 8
-for 
+for
 .Nx
-file systems, and 
+file systems, and
 .Ic hfstools
 to create and mount HFS file systems.
 .Lk ftp://ftp.NetBSD.org/pub/NetBSD/packages/pkgsrc/sysutils/hfsutils/README.html
@@ -1118,7 +1118,7 @@ partition as your root, then it may not be recognized by the
 .Nx
 kernel as the first partition
 .Pq Em a
-on the disk.  You will need to compile a new kernel with the 
+on the disk.  You will need to compile a new kernel with the
 root partition explicitly defined to be the
 .Em UFS
 partition.
@@ -1141,7 +1141,7 @@ If you will be running your system diskless (i.e. entirely over NFS, not
 using any local hard drives), then you do not need to run the installer,
 you only need to extract the distribution sets on the diskless server.
 .Pp
-To get the distribution sets onto appropriate media, see the above 
+To get the distribution sets onto appropriate media, see the above
 section entitled
 .Sx "Getting the NetBSD System on to Useful Media" .
 You may want to get the distribution sets when you create the bootable media.
@@ -1161,10 +1161,10 @@ Make sure to set your ftp program to download in
 mode.
 .Note)
 .Pp
-What follows are the steps to create different types of bootable media 
+What follows are the steps to create different types of bootable media
 for the
 .Nx
-install kernel. You should only need to create one of these to get your 
+install kernel. You should only need to create one of these to get your
 system to boot the installer
 .Pp
 .(bullet
@@ -1364,7 +1364,7 @@ filenames, you may wish to name your kernel
 .Pa netbsd.gz .
 You may also place the
 .Nx \*V
-distribution sets on the 
+distribution sets on the
 .if \*[OF_VERSION_12] disk.
 .if \*[OF_VERSION_3] ISO9660 partition (not only on the HFS partition).
 .Pp
@@ -1423,11 +1423,11 @@ Click the
 button.
 .Pp
 .It
-Click the 
+Click the
 .Sq Settings
-tab, open the 
+tab, open the
 .Sq Naming
-popup menu, and pick 
+popup menu, and pick
 .Sq "Allow Macintosh Names"
 .Pp
 .It
@@ -1498,7 +1498,7 @@ versions prior to X 10.0.0
 .It
 Use
 .Xr mount_msdos 8
-on any 
+on any
 .Ul
 machine.
 .bullet)
@@ -1529,7 +1529,7 @@ Skip forward to
 .To 2 "Preparing a SCSI or IDE drive with the CD-R image"
 .Em "Preparing a SCSI or IDE drive with the CD-R image"
 .Pp
-If the 
+If the
 .Nx*M
 CD-R image is compressed, then you will need to uncompress it first.
 .Pp
@@ -1539,14 +1539,14 @@ the disk image
 to your spare drive, and boot from that drive.
 For example, you could use a Zip drive, a Jaz drive,
 a Compact Flash drive, or even a spare hard drive.
-The disk image has 
+The disk image has
 .if \*[OF_VERSION_12] \{\
 a
 .Sq "partition zero"
 bootloader which ultimately
 .\}
 .if \*[OF_VERSION_3] \{\
-an HFS partition with 
+an HFS partition with
 .Pa ofwboot.xcf
 which
 .\}

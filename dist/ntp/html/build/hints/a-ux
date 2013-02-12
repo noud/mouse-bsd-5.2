@@ -62,13 +62,13 @@ Now, the look of a sample /etc/rc.local is as follows:
     : rc.local
     :
     #	@(#)Copyright Apple Computer 1987	Version 1.17 of rc.sh on 91/11/08 15:56:21 (ATT 1.12)
-    
-    
+
+
     #	Push line discipline/set the device so it will print
     /etc/line_sane 1
     echo " "
     echo "Entering rc.local..."
-    
+
     set `/bin/who -r`
     if [ "$7" = 2 ]
     then
@@ -89,7 +89,7 @@ Now, the look of a sample /etc/rc.local is as follows:
         fi
     #
     fi
-    
+
     echo "Leaving rc.local..."
 
 There are a few things to notice about the above:

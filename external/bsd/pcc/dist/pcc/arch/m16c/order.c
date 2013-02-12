@@ -264,7 +264,7 @@ nspecial(struct optab *q)
 	    }*/
 	comperr("multiplication not implemented");
 	break;
-	
+
     default:
 	break;
     }
@@ -390,7 +390,7 @@ gencall(NODE *p, NODE *prev)
 
 /*
  * Create separate node trees for function arguments.
- * This is partly ticky, the strange calling convention 
+ * This is partly ticky, the strange calling convention
  * may cause a bunch of code reorganization here.
  */
 static int
@@ -439,7 +439,7 @@ storearg(NODE *p)
 			sz += 2;
 		} else /* long, double */
 			sz += 4;
-			
+
 	}
 
 	/*
@@ -545,7 +545,7 @@ storearg(NODE *p)
 	/* move args to registers */
 	for (i = 0; i < stk; i++) {
 		t = narry[i]->n_type;
-		pass2_compile(ipnode(mkbinode(ASSIGN, 
+		pass2_compile(ipnode(mkbinode(ASSIGN,
 		    mklnode(REG, 0, rary[i], t), narry[i], t)));
 	}
 	return sz;

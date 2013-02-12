@@ -3,9 +3,9 @@
 @pindex ntpq
 @cindex standard NTP query program
 @ignore
-# 
+#
 # EDIT THIS FILE WITH CAUTION  (ntpq-opts.texi)
-# 
+#
 # It has been AutoGen-ed  Thursday January  8, 2009 at 06:18:59 AM EST
 # From the definitions    ntpq-opts.def
 # and the template file   aginfo.tpl
@@ -212,4 +212,4 @@ to the standard output and commands read from the standard input.
 
 This is the ``numeric host addresses'' option.
 Output all host addresses in dotted-quad numeric format rather than
-converting to the canonical host names. 
+converting to the canonical host names.

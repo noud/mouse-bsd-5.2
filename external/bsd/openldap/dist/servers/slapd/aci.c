@@ -167,7 +167,7 @@ aci_list_map_rights(
 
 		switch ( *bv.bv_val ) {
 		case 'x':
-			/* **** NOTE: draft-ietf-ldapext-aci-model-0.3.txt does not 
+			/* **** NOTE: draft-ietf-ldapext-aci-model-0.3.txt does not
 			 * define any equivalent to the AUTH right, so I've just used
 			 * 'x' for now.
 			 */
@@ -240,7 +240,7 @@ aci_list_has_attr(
 				 * that means the aci applies only to attrs with
 				 * the given value.  Furthermore, if the attr is
 				 * of the form <attr>=<value>*, then <value> is
-				 * treated as a prefix, and the aci applies to 
+				 * treated as a prefix, and the aci applies to
 				 * any value with that prefix.
 				 *
 				 * Ideally, this would allow r.e. matches.
@@ -439,12 +439,12 @@ aci_mask(
 				opts,
 				sdn;
 	int			rc;
-		
+
 
 	assert( !BER_BVISNULL( &desc->ad_cname ) );
 
 	/* parse an aci of the form:
-		oid # scope # action;rights;attr;rights;attr 
+		oid # scope # action;rights;attr;rights;attr
 			$ action;rights;attr;rights;attr # type # subject
 
 	   [NOTE: the following comment is very outdated,
@@ -527,7 +527,7 @@ aci_mask(
 	if ( ber_bvcmp( &aci_bv[ ACI_BV_PUBLIC ], &type ) == 0 ) {
 		return 1;
 	}
-	
+
 	/* otherwise require an identity */
 	if ( BER_BVISNULL( &op->o_ndn ) || BER_BVISEMPTY( &op->o_ndn ) ) {
 		return 0;
@@ -537,11 +537,11 @@ aci_mask(
 	if ( ber_bvcmp( &aci_bv[ ACI_BV_USERS ], &type ) == 0 ) {
 		return 1;
 	}
-	
+
 	/* NOTE: this may fail if a DN contains a valid '#' (unescaped);
 	 * just grab all the berval up to its end (ITS#3303).
 	 * NOTE: the problem could be solved by providing the DN with
-	 * the embedded '#' encoded as hexpairs: "cn=Foo#Bar" would 
+	 * the embedded '#' encoded as hexpairs: "cn=Foo#Bar" would
 	 * become "cn=Foo\23Bar" and be safely used by aci_mask(). */
 #if 0
 	if ( acl_get_part( aci, 4, '#', &sdn ) < 0 ) {
@@ -568,7 +568,7 @@ aci_mask(
 
 	} else if ( ber_bvcmp( &aci_bv[ ACI_BV_ONELEVEL ], &type ) == 0 ) {
 		struct berval pdn;
-		
+
 		dnParent( &sdn, &pdn );
 
 		return dn_match( &op->o_ndn, &pdn );
@@ -592,7 +592,7 @@ aci_mask(
 				at != NULL;
 				at = attrs_find( at->a_next, ad ) )
 		{
-			if ( attr_valfind( at, 
+			if ( attr_valfind( at,
 				SLAP_MR_ATTRIBUTE_VALUE_NORMALIZED_MATCH |
 					SLAP_MR_ASSERTED_VALUE_NORMALIZED_MATCH,
 				&op->o_ndn, NULL, op->o_tmpmemctx ) == 0 )
@@ -710,7 +710,7 @@ aci_init( void )
 	if ( rc != 0 ) {
 		return rc;
 	}
-	
+
 	/* ACI equality rule */
 	rc = register_matching_rule( &aci_mr_def );
 	if ( rc != 0 ) {
@@ -838,13 +838,13 @@ dynacl_aci_mask(
 				tdeny |= deny;
 			}
 		}
-		
+
 		Debug( LDAP_DEBUG_ACL, "        <= aci_mask grant %s deny %s\n",
-			  accessmask2str( tgrant, accessmaskbuf, 1 ), 
+			  accessmask2str( tgrant, accessmaskbuf, 1 ),
 			  accessmask2str( tdeny, accessmaskbuf1, 1 ), 0 );
 	}
 
-	/* If the entry level aci didn't contain anything valid for the 
+	/* If the entry level aci didn't contain anything valid for the
 	 * current operation, climb up the tree and evaluate the
 	 * acis with scope set to subtree
 	 */
@@ -860,7 +860,7 @@ dynacl_aci_mask(
 			/* to solve the chicken'n'egg problem of accessing
 			 * the OpenLDAPaci attribute, the direct access
 			 * to the entry's attribute is unchecked; however,
-			 * further accesses to OpenLDAPaci values in the 
+			 * further accesses to OpenLDAPaci values in the
 			 * ancestors occur through backend_attribute(), i.e.
 			 * with the identity of the operation, requiring
 			 * further access checking.  For uniformity, this
@@ -870,7 +870,7 @@ dynacl_aci_mask(
 			 * acceptable, then the same check needs be performed
 			 * when accessing the entry's attribute. */
 			struct berval	save_o_dn, save_o_ndn;
-	
+
 			if ( !BER_BVISNULL( &op->o_bd->be_rootndn ) ) {
 				save_o_dn = op->o_dn;
 				save_o_ndn = op->o_ndn;
@@ -903,14 +903,14 @@ dynacl_aci_mask(
 					{
 						tgrant |= grant;
 						tdeny |= deny;
-						/* evaluation stops as soon as either a "deny" or a 
+						/* evaluation stops as soon as either a "deny" or a
 						 * "grant" directive matches.
 						 */
 						if ( tgrant != ACL_PRIV_NONE || tdeny != ACL_PRIV_NONE ) {
 							stop = 1;
 						}
 					}
-					Debug( LDAP_DEBUG_ACL, "<= aci_mask grant %s deny %s\n", 
+					Debug( LDAP_DEBUG_ACL, "<= aci_mask grant %s deny %s\n",
 						accessmask2str( tgrant, accessmaskbuf, 1 ),
 						accessmask2str( tdeny, accessmaskbuf1, 1 ), 0 );
 				}
@@ -918,7 +918,7 @@ dynacl_aci_mask(
 
 			case LDAP_NO_SUCH_ATTRIBUTE:
 				/* just go on if the aci-Attribute is not present in
-				 * the current entry 
+				 * the current entry
 				 */
 				Debug( LDAP_DEBUG_ACL, "no such attribute\n", 0, 0, 0 );
 				stop = 0;
@@ -969,7 +969,7 @@ dynacl_aci_init( void )
 	if ( rc == 0 ) {
 		rc = slap_dynacl_register( &dynacl_aci );
 	}
-	
+
 	return rc;
 }
 
@@ -982,9 +982,9 @@ dynacl_aci_init( void )
  *      >=0 if one if the array elements equals to this berval
  *       -1 if string was not found in array
  */
-static int 
+static int
 bv_getcaseidx(
-	struct berval *bv, 
+	struct berval *bv,
 	const struct berval *arr[] )
 {
 	int i;
@@ -1034,9 +1034,9 @@ bv_get_tail(
  *    type      := public|users|self|dnattr|group|role|set|set-ref|
  *                 access_id|subtree|onelevel|children
  */
-static int 
+static int
 OpenLDAPaciValidatePerms(
-	struct berval *perms ) 
+	struct berval *perms )
 {
 	int		i;
 
@@ -1083,7 +1083,7 @@ static const struct berval *ACIgrantdeny[] = {
 	NULL
 };
 
-static int 
+static int
 OpenLDAPaciValidateRight(
 	struct berval *action )
 {
@@ -1119,20 +1119,20 @@ OpenLDAPaciValidateRight(
 			}
 
 
-			for ( j = 0; acl_get_part( &bv, j, ',', &attr ) >= 0; j++ ) 
+			for ( j = 0; acl_get_part( &bv, j, ',', &attr ) >= 0; j++ )
 			{
 				ad = NULL;
 				text = NULL;
 				if ( acl_get_part( &attr, 0, '=', &left ) < 0
-					|| acl_get_part( &attr, 1, '=', &right ) < 0 ) 
+					|| acl_get_part( &attr, 1, '=', &right ) < 0 )
 				{
-					if ( slap_bv2ad( &attr, &ad, &text ) != LDAP_SUCCESS ) 
+					if ( slap_bv2ad( &attr, &ad, &text ) != LDAP_SUCCESS )
 					{
 						Debug( LDAP_DEBUG_ACL, "aciValidateRight: unknown attribute: '%s'\n", attr.bv_val, 0, 0 );
 						return LDAP_INVALID_SYNTAX;
 					}
 				} else {
-					if ( slap_bv2ad( &left, &ad, &text ) != LDAP_SUCCESS ) 
+					if ( slap_bv2ad( &left, &ad, &text ) != LDAP_SUCCESS )
 					{
 						Debug( LDAP_DEBUG_ACL, "aciValidateRight: unknown attribute: '%s'\n", left.bv_val, 0, 0 );
 						return LDAP_INVALID_SYNTAX;
@@ -1141,7 +1141,7 @@ OpenLDAPaciValidateRight(
 			}
 		}
 	}
-	
+
 	/* "perms;attr" go in pairs */
 	if ( i > 0 && ( i & 1 ) == 0 ) {
 		return LDAP_SUCCESS;
@@ -1207,7 +1207,7 @@ OpenLDAPaciNormalizeRight(
 				int			j;
 				int			len;
 
-				for ( j = 0; acl_get_part( &bv, j, ',', &attr ) >= 0; j++ ) 
+				for ( j = 0; acl_get_part( &bv, j, ',', &attr ) >= 0; j++ )
 				{
 					ad = NULL;
 					text = NULL;
@@ -1229,9 +1229,9 @@ OpenLDAPaciNormalizeRight(
 						break;
 
 					} else if ( acl_get_part( &attr, 0, '=', &left ) < 0
-				     		|| acl_get_part( &attr, 1, '=', &right ) < 0 ) 
+				     		|| acl_get_part( &attr, 1, '=', &right ) < 0 )
 					{
-						if ( slap_bv2ad( &attr, &ad, &text ) != LDAP_SUCCESS ) 
+						if ( slap_bv2ad( &attr, &ad, &text ) != LDAP_SUCCESS )
 						{
 							ber_memfree_x( nattrs.bv_val, ctx );
 							Debug( LDAP_DEBUG_ACL, "aciNormalizeRight: unknown attribute: '%s'\n", attr.bv_val, 0, 0 );
@@ -1239,15 +1239,15 @@ OpenLDAPaciNormalizeRight(
 						}
 
 					} else {
-						if ( slap_bv2ad( &left, &ad, &text ) != LDAP_SUCCESS ) 
+						if ( slap_bv2ad( &left, &ad, &text ) != LDAP_SUCCESS )
 						{
 							ber_memfree_x( nattrs.bv_val, ctx );
 							Debug( LDAP_DEBUG_ACL, "aciNormalizeRight: unknown attribute: '%s'\n", left.bv_val, 0, 0 );
 							return LDAP_INVALID_SYNTAX;
 						}
 					}
-					
-				
+
+
 					len = nattrs.bv_len + ( !BER_BVISEMPTY( &nattrs ) ? STRLENOF( "," ) : 0 )
 				      		+ ad->ad_cname.bv_len;
 					nattrs.bv_val = ber_memrealloc_x( nattrs.bv_val, len + 1, ctx );
@@ -1283,7 +1283,7 @@ OpenLDAPaciNormalizeRight(
 			}
 		}
 	}
-	
+
 	/* perms;attr go in pairs */
 	if ( i > 1 && ( i & 1 ) ) {
 		return LDAP_SUCCESS;
@@ -1294,7 +1294,7 @@ OpenLDAPaciNormalizeRight(
 	}
 }
 
-static int 
+static int
 OpenLDAPaciValidateRights(
 	struct berval *actions )
 
@@ -1311,7 +1311,7 @@ OpenLDAPaciValidateRights(
 	return LDAP_SUCCESS;
 }
 
-static int 
+static int
 OpenLDAPaciNormalizeRights(
 	struct berval	*actions,
 	struct berval	*nactions,
@@ -1363,7 +1363,7 @@ static const struct berval *OpenLDAPaciscopes[] = {
 
 static const struct berval *OpenLDAPacitypes[] = {
 	/* DN-valued */
-	&aci_bv[ ACI_BV_GROUP ], 
+	&aci_bv[ ACI_BV_GROUP ],
 	&aci_bv[ ACI_BV_ROLE ],
 
 /* set to one past the last DN-valued type with options (/) */
@@ -1400,14 +1400,14 @@ OpenLDAPaciValidate(
 			subject = BER_BVNULL;
 	int		idx;
 	int		rc;
-	
+
 	if ( BER_BVISEMPTY( val ) ) {
 		Debug( LDAP_DEBUG_ACL, "aciValidatet: value is empty\n", 0, 0, 0 );
 		return LDAP_INVALID_SYNTAX;
 	}
 
 	/* oid */
-	if ( acl_get_part( val, 0, '#', &oid ) < 0 || 
+	if ( acl_get_part( val, 0, '#', &oid ) < 0 ||
 		numericoidValidate( NULL, &oid ) != LDAP_SUCCESS )
 	{
 		/* NOTE: the numericoidValidate() is rather pedantic;
@@ -1419,7 +1419,7 @@ OpenLDAPaciValidate(
 	}
 
 	/* scope */
-	if ( acl_get_part( val, 1, '#', &scope ) < 0 || 
+	if ( acl_get_part( val, 1, '#', &scope ) < 0 ||
 		bv_getcaseidx( &scope, OpenLDAPaciscopes ) == -1 )
 	{
 		Debug( LDAP_DEBUG_ACL, "aciValidate: invalid scope '%s'\n", scope.bv_val, 0, 0 );
@@ -1428,7 +1428,7 @@ OpenLDAPaciValidate(
 
 	/* rights */
 	if ( acl_get_part( val, 2, '#', &rights ) < 0 ||
-		OpenLDAPaciValidateRights( &rights ) != LDAP_SUCCESS ) 
+		OpenLDAPaciValidateRights( &rights ) != LDAP_SUCCESS )
 	{
 		return LDAP_INVALID_SYNTAX;
 	}
@@ -1566,7 +1566,7 @@ OpenLDAPaciPrettyNormal(
 	}
 
 	/* oid: if valid, it's already normalized */
-	if ( acl_get_part( val, 0, '#', &oid ) < 0 || 
+	if ( acl_get_part( val, 0, '#', &oid ) < 0 ||
 		numericoidValidate( NULL, &oid ) != LDAP_SUCCESS )
 	{
 		Debug( LDAP_DEBUG_ACL, "aciPrettyNormal: invalid oid '%s'\n", oid.bv_val, 0, 0 );
@@ -1591,7 +1591,7 @@ OpenLDAPaciPrettyNormal(
 		return LDAP_INVALID_SYNTAX;
 	}
 	if ( OpenLDAPaciNormalizeRights( &rights, &nrights, ctx )
-		!= LDAP_SUCCESS ) 
+		!= LDAP_SUCCESS )
 	{
 		return LDAP_INVALID_SYNTAX;
 	}
@@ -1676,7 +1676,7 @@ OpenLDAPaciPrettyNormal(
 					atbv.bv_len = type.bv_len
 						- ( atbv.bv_val - type.bv_val );
 					ocbv.bv_len = atbv.bv_val - ocbv.bv_val - 1;
-	
+
 					rc = slap_bv2ad( &atbv, &ad, &text );
 					if ( rc != LDAP_SUCCESS ) {
 	                                        Debug( LDAP_DEBUG_ACL, "aciPrettyNormal: unknown group attribute '%s'\n", atbv.bv_val, 0, 0 );
@@ -1741,7 +1741,7 @@ OpenLDAPaciPrettyNormal(
 	}
 
 
-	out->bv_len = 
+	out->bv_len =
 		oid.bv_len + STRLENOF( "#" )
 		+ scope.bv_len + STRLENOF( "#" )
 		+ nrights.bv_len + STRLENOF( "#" )

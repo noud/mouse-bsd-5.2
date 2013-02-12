@@ -78,7 +78,7 @@ ENTRY(memset)
 	movl	%sp@(16),%d1		| count
 	movb	%sp@(15),%d2		| character
 
-	/* 
+	/*
 	 * It isn't worth the overhead of aligning to {long}word boundries
 	 * if the string is too short.
 	 */
@@ -90,7 +90,7 @@ ENTRY(memset)
 	movl	%d0,%d2
 	lsll	#8,%d0
 	orl	%d0,%d2
-	lsll	#8,%d0 
+	lsll	#8,%d0
 	orl	%d0,%d2
 	lsll	#8,%d0
 	orl	%d0,%d2
@@ -98,7 +98,7 @@ ENTRY(memset)
 	/* word align */
 	movl	%a0,%d0
 	btst	#0,%d0			| if (dst & 1)
-	jeq	Lbzalgndw		| 
+	jeq	Lbzalgndw		|
 	movb	%d2,%a0@+		|	*(char *)dst++ = X
 	subql	#1,%d1			|	len--
 	addql	#1,%d0

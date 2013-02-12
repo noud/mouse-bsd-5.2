@@ -25,7 +25,7 @@
  *	added -T and -U option and \T and \U substitution to pass a phone
  *	number into chat script. Two are needed for some ISDN TA applications.
  *	Keith Dart <kdart@cisco.com>
- *	
+ *
  *
  *	Added SAY keyword to send output to stderr.
  *      This allows to turn ECHO OFF and to output specific, user selected,
@@ -49,7 +49,7 @@
  *      In the same vein as above, added CLR_REPORT keyword.
  *
  *      Allow for comments. Line starting with '#' are comments and are
- *      ignored. If a '#' is to be expected as the first character, the 
+ *      ignored. If a '#' is to be expected as the first character, the
  *      expect string must be quoted.
  *
  *
@@ -200,7 +200,7 @@ int clear_abort_next = 0;
 
 char *report_string[MAX_REPORTS] ;
 char  report_buffer[BUFFER_SIZE] ;
-int n_reports = 0, report_next = 0, report_gathering = 0 ; 
+int n_reports = 0, report_next = 0, report_gathering = 0 ;
 int clear_report_next = 0;
 
 int say_next = 0, hup_next = 0;
@@ -386,7 +386,7 @@ main(argc, argv)
     }
 
     init();
-    
+
     if (chat_file != NULL) {
 	if (argc)
 	    usage();
@@ -769,7 +769,7 @@ int sending;  /* set to 1 when sending (putting) this string. */
 	    if (sending && phone_num) {
 		len += strlen(phone_num);
 		s1 = grow(s1, &p, len);
-		for (phchar = phone_num; *phchar != '\0'; phchar++) 
+		for (phchar = phone_num; *phchar != '\0'; phchar++)
 		    *p++ = *phchar;
 	    }
 	    else {
@@ -782,7 +782,7 @@ int sending;  /* set to 1 when sending (putting) this string. */
 	    if (sending && phone_num2) {
 		len += strlen(phone_num2);
 		s1 = grow(s1, &p, len);
-		for (phchar = phone_num2; *phchar != '\0'; phchar++) 
+		for (phchar = phone_num2; *phchar != '\0'; phchar++)
 		    *p++ = *phchar;
 	    }
 	    else {
@@ -930,7 +930,7 @@ char *s;
 	++hup_next;
         return;
     }
- 
+
     if (strcmp(s, "ABORT") == 0) {
 	++abort_next;
 	return;
@@ -1061,14 +1061,14 @@ register char *s;
 
     if (abort_next) {
 	char *s1;
-	
+
 	abort_next = 0;
-	
+
 	if (n_aborts >= MAX_ABORTS)
 	    fatal(2, "Too many ABORT strings");
-	
+
 	s1 = clean(s, 0);
-	
+
 	if (strlen(s1) > strlen(s)
 	    || strlen(s1) + 1 > sizeof(fail_buffer))
 	    fatal(1, "Illegal or too-long ABORT string ('%v')", s);
@@ -1085,11 +1085,11 @@ register char *s;
 	int   i;
         int   old_max;
 	int   pack = 0;
-	
+
 	clear_abort_next = 0;
-	
+
 	s1 = clean(s, 0);
-	
+
 	if (strlen(s1) > strlen(s)
 	    || strlen(s1) + 1 > sizeof(fail_buffer))
 	    fatal(1, "Illegal or too-long CLR_ABORT string ('%v')", s);
@@ -1113,18 +1113,18 @@ register char *s;
 
     if (report_next) {
 	char *s1;
-	
+
 	report_next = 0;
 	if (n_reports >= MAX_REPORTS)
 	    fatal(2, "Too many REPORT strings");
-	
+
 	s1 = clean(s, 0);
 	if (strlen(s1) > strlen(s)
 	    || strlen(s1) + 1 > sizeof(fail_buffer))
 	    fatal(1, "Illegal or too-long REPORT string ('%v')", s);
-	
+
 	report_string[n_reports++] = s1;
-	
+
 	if (verbose)
 	    msgf("report (%v)", s);
 	return;
@@ -1135,11 +1135,11 @@ register char *s;
 	int   i;
 	int   old_max;
 	int   pack = 0;
-	
+
 	clear_report_next = 0;
-	
+
 	s1 = clean(s, 0);
-	
+
 	if (strlen(s1) > strlen(s)
 	    || strlen(s1) + 1 > sizeof(fail_buffer))
 	    fatal(1, "Illegal or too-long REPORT string ('%v')", s);
@@ -1158,14 +1158,14 @@ register char *s;
         free(s1);
         if (pack)
 	    pack_array(report_string,old_max);
-	
+
 	return;
     }
 
     if (timeout_next) {
 	timeout_next = 0;
 	timeout = atoi(s);
-	
+
 	if (timeout <= 0)
 	    timeout = DEFAULT_CHAT_TIMEOUT;
 
@@ -1241,7 +1241,7 @@ int get_char()
 
 	if (fcntl(0, F_SETFL, status & ~O_NONBLOCK) == -1)
 	    fatal(2, "Can't set file mode flags on stdin: %m");
-	
+
 	return (-1);
     }
 }
@@ -1259,17 +1259,17 @@ int c;
     switch (status) {
     case 1:
 	return (0);
-	
+
     default:
 	msgf("warning: write() on stdout returned %d", status);
-	
+
     case -1:
 	if ((status = fcntl(0, F_GETFL, 0)) == -1)
 	    fatal(2, "Can't get file mode flags on stdin, %m");
 
 	if (fcntl(0, F_SETFL, status & ~O_NONBLOCK) == -1)
 	    fatal(2, "Can't set file mode flags on stdin: %m");
-	
+
 	return (-1);
     }
 }

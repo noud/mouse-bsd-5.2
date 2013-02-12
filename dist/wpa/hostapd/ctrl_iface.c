@@ -186,7 +186,7 @@ static int hostapd_ctrl_iface_sta_next(struct hostapd_data *hapd,
 		if (ret < 0 || (size_t) ret >= buflen)
 			return 0;
 		return ret;
-	}		
+	}
 	return hostapd_ctrl_iface_sta_mib(hapd, sta->next, buf, buflen);
 }
 

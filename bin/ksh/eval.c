@@ -614,7 +614,7 @@ expand(cp, wp, f)
 								special = TRUE;
 								break;
 							}
-								
+
 							p += 2;
 						}
 						if (!special)

@@ -124,7 +124,7 @@ enum {
 #define AUTOMATIC_VARNAME	"automatic"
 
 /* Prefix for extended PLIST cmd */
-#define CMD_CHAR		'@'	
+#define CMD_CHAR		'@'
 
 /* The name of the "prefix" environment variable given to scripts */
 #define PKG_PREFIX_VNAME	"PKG_PREFIX"

@@ -22,7 +22,7 @@
 
 /* Id: px_26.h,v 1.19 2007/06/19 23:47:17 tbox Exp */
 
-/*! 
+/*!
  *  \brief Per RFC2163 */
 
 typedef struct dns_rdata_in_px {

@@ -66,7 +66,7 @@ fmt_blong(
   val <<= 32 - cnt;
   LIB_GETBUF(buf);
   s = buf;
-  
+
   while (i--)
     {
       if (val & 0x80000000)
@@ -178,7 +178,7 @@ fetch_ieee754(
 #endif
   unsigned char val;
   int fieldindex = 0;
-  
+
   switch (size)
     {
     case IEEE_DOUBLE:
@@ -202,14 +202,14 @@ fetch_ieee754(
     default:
       return IEEE_BADCALL;
     }
-  
+
   val = get_byte(bufp, offsets, &fieldindex); /* fetch sign byte & first part of characteristic */
-  
+
   sign     = (val & 0x80) != 0;
   characteristic = (val & 0x7F);
 
   val = get_byte(bufp, offsets, &fieldindex); /* fetch rest of characteristic and start of mantissa */
-  
+
   switch (size)
     {
     case IEEE_SINGLE:
@@ -222,7 +222,7 @@ fetch_ieee754(
       mantissa_low  |= get_byte(bufp, offsets, &fieldindex) << 8;
       mantissa_low  |= get_byte(bufp, offsets, &fieldindex);
       break;
-      
+
     case IEEE_DOUBLE:
       characteristic <<= 4;
       characteristic  |= (val & 0xF0) >> 4; /* grab lower characteristic bits */
@@ -236,7 +236,7 @@ fetch_ieee754(
       mantissa_low  |= get_byte(bufp, offsets, &fieldindex) << 8;
       mantissa_low  |= get_byte(bufp, offsets, &fieldindex);
       break;
-      
+
     default:
       return IEEE_BADCALL;
     }
@@ -265,7 +265,7 @@ fetch_ieee754(
 	    *((unsigned char *)(&d)+i) = *(*buffpp + offsets[i]);
 	  }
       }
-    
+
     printf("fetchieee754: FP: %s -> %s -> %e(=%s)\n", fmt_hex(*buffpp, length),
 	   fmt_flt(sign, mantissa_high, mantissa_low, characteristic),
 	   d, fmt_hex((unsigned char *)&d, length));
@@ -273,7 +273,7 @@ fetch_ieee754(
 #endif
 
   *buffpp += fieldindex;
-  
+
   /*
    * detect funny numbers
    */
@@ -320,10 +320,10 @@ fetch_ieee754(
       else
 	{
 	  int frac_offset;	/* where the fraction starts */
-	  
+
 	  frac_offset = mbits - exponent;
 
-	  if (characteristic == 0) 
+	  if (characteristic == 0)
 	    {
 	      /*
 	       * de-normalized or tiny number - fits only as 0
@@ -380,7 +380,7 @@ fetch_ieee754(
 		      lfpp->l_uf  = (mantissa_low & ((1 << frac_offset) - 1)) << (32 - frac_offset);
 		    }
 		}
-	      
+
 	      /*
 	       * adjust for sign
 	       */
@@ -388,13 +388,13 @@ fetch_ieee754(
 		{
 		  L_NEG(lfpp);
 		}
-	      
+
 	      return IEEE_OK;
 	    }
 	}
     }
 }
-  
+
 int
 put_ieee754(
 	    unsigned char **bufpp,
@@ -419,7 +419,7 @@ put_ieee754(
 #endif
 /*int length;*/
   unsigned long mask;
-  
+
   outlfp = *lfpp;
 
   switch (size)
@@ -445,7 +445,7 @@ put_ieee754(
     default:
       return IEEE_BADCALL;
     }
-  
+
   /*
    * find sign
    */
@@ -493,7 +493,7 @@ put_ieee754(
 	      msb--;
 	    }
 	}
-  
+
       switch (size)
 	{
 	case IEEE_SINGLE:
@@ -508,7 +508,7 @@ put_ieee754(
 	      mantissa_low  = (outlfp.l_uf << (mbits - msb)) & ((1 << mbits) - 1);
 	    }
 	  break;
-	  
+
 	case IEEE_DOUBLE:
 	  if (msb >= 32)
 	    {
@@ -546,7 +546,7 @@ int main(
   double f = 1.0;
   double *f_p = &f;
   l_fp fp;
-  
+
   if (argc == 2)
     {
       if (sscanf(argv[1], "%lf", &f) != 1)
@@ -555,13 +555,13 @@ int main(
 	  return 1;
 	}
     }
-  
+
   printf("double: %s %s\n", fmt_blong(*(unsigned long *)&f, 32), fmt_blong(*(unsigned long *)((char *)(&f)+4), 32));
   printf("fetch from %f = %d\n", f, fetch_ieee754((void *)&f_p, IEEE_DOUBLE, &fp, native_off));
   printf("fp [%s %s] = %s\n", fmt_blong(fp.l_ui, 32), fmt_blong(fp.l_uf, 32), mfptoa(fp.l_ui, fp.l_uf, 15));
   f_p = &f;
   put_ieee754((void *)&f_p, IEEE_DOUBLE, &fp, native_off);
-  
+
   return 0;
 }
 

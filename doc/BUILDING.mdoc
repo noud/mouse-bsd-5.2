@@ -687,7 +687,7 @@ If set, then in addition to the effects described for
 .Sy MKUPDATE=yes
 above, this implies the effects of
 .Sy NOCLEANDIR
-(i.e., 
+(i.e.,
 .Dq make cleandir
 is avoided).
 .DFLTn
@@ -700,7 +700,7 @@ option.
 .
 .It Sy NBUILDJOBS
 Now obsolete.
-Use the 
+Use the
 .Xr make 1
 option
 .Fl j ,
@@ -781,9 +781,9 @@ builds are listed here.
 .It Fl j Ar njob
 Run up to
 .Ar njob
-.Xr make 1 
+.Xr make 1
 subjobs in parallel.
-Makefiles should use .WAIT or have explicit dependencies 
+Makefiles should use .WAIT or have explicit dependencies
 as necessary to enforce build ordering.
 .
 .It Fl m Ar dir
@@ -1207,7 +1207,7 @@ This command will first run
 .Dq make obj
 and
 .Dq make cleandir
-in the 
+in the
 .Pa tools
 subdirectory unless the
 .Fl o
@@ -1330,7 +1330,7 @@ wrapper script so that the resulting name is of the form
 Set the value of
 .Sy CDEXTRA
 to
-.Ar cdextras 
+.Ar cdextras
 which is a space-separated list of files or directories which will be
 added in order to the CD-ROM image when used in conjunction with
 .Dq iso-image
@@ -1370,16 +1370,16 @@ Print a help message.
 .It Fl j Ar njob
 Run up to
 .Ar njob
-.Xr make 1 
+.Xr make 1
 subjobs in parallel;
-passed through to 
+passed through to
 .Xr make 1 .
 If you see failures for reasons other than running out of memory
 while using
 .Sy build.sh
 with
 .Fl j ,
-please save complete build logs 
+please save complete build logs
 so the failures can be analyzed.
 .Pp
 To achieve the fastest builds,
@@ -1568,7 +1568,7 @@ Set the environment variable
 .Ar var
 to an optional
 .Ar value .
-This is propagated to the 
+This is propagated to the
 .Sy \*[toolprefix]make
 wrapper.
 .
@@ -1602,7 +1602,7 @@ Set
 .It Fl Z Ar var
 Unset ("zap") the environment variable
 .Ar var .
-This is propagated to the 
+This is propagated to the
 .Sy \*[toolprefix]make
 wrapper.
 .
@@ -1700,7 +1700,7 @@ portion of the release build.
 .Bl -tag -width "NBUILDJOBS"
 .
 .It Sy NBUILDJOBS
-Use the 
+Use the
 .Xr make 1
 option
 .Fl j

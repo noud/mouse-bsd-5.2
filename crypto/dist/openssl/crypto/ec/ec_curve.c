@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -58,13 +58,13 @@
 /* ====================================================================
  * Copyright 2002 Sun Microsystems, Inc. ALL RIGHTS RESERVED.
  *
- * Portions of the attached software ("Contribution") are developed by 
+ * Portions of the attached software ("Contribution") are developed by
  * SUN MICROSYSTEMS, INC., and are contributed to the OpenSSL project.
  *
  * The Contribution is licensed pursuant to the OpenSSL open source
  * license provided above.
  *
- * The elliptic curve binary polynomial software is originally written by 
+ * The elliptic curve binary polynomial software is originally written by
  * Sheueling Chang Shantz and Douglas Stebila of Sun Microsystems Laboratories.
  *
  */
@@ -1824,7 +1824,7 @@ typedef struct _ec_list_element_st {
 	} ec_list_element;
 
 static const ec_list_element curve_list[] = {
-	/* prime field curves */	
+	/* prime field curves */
 	/* secg curves */
 	{ NID_secp112r1, &_EC_SECG_PRIME_112R1.h, "SECG/WTLS curve over a 112 bit prime field"},
 	{ NID_secp112r2, &_EC_SECG_PRIME_112R2.h, "SECG curve over a 112 bit prime field"},
@@ -1957,7 +1957,7 @@ static EC_GROUP *ec_group_new_from_data(const EC_CURVE_DATA *data)
 		ECerr(EC_F_EC_GROUP_NEW_FROM_DATA, ERR_R_EC_LIB);
 		goto err;
 		}
-	
+
 	if (!(x = BN_bin2bn(params+3*param_len, param_len, NULL))
 		|| !(y = BN_bin2bn(params+4*param_len, param_len, NULL)))
 		{

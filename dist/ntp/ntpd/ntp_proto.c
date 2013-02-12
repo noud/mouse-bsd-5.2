@@ -200,7 +200,7 @@ transmit(
 		/*
 		 * Update the reachability status. If not heard for
 		 * three consecutive polls, stuff infinity in the clock
-		 * filter. 
+		 * filter.
 		 */
 		oreach = peer->reach;
 		peer->outdate = current_time;
@@ -230,7 +230,7 @@ transmit(
 			    peer->unreach == 0) {
 				peer->burst = NTP_BURST;
 			}
-			if (!(peer->flags & FLAG_PREEMPT))	
+			if (!(peer->flags & FLAG_PREEMPT))
 				peer->unreach++;
 			else
 				peer->unreach += 3;
@@ -268,7 +268,7 @@ transmit(
 		/*
 		 * Watch for timeout. If ephemeral or preemptable, toss
 		 * the rascal; otherwise, bump the poll interval.
-		 */ 
+		 */
 		if (peer->unreach >= NTP_UNREACH) {
 			if (peer->flags & FLAG_PREEMPT ||
 			    !(peer->flags & FLAG_CONFIG)) {
@@ -312,7 +312,7 @@ transmit(
 	}
 
 	/*
-	 * Do not transmit if in broadcast client mode. 
+	 * Do not transmit if in broadcast client mode.
 	 */
 	if (peer->hmode != MODE_BCLIENT)
 		peer_xmit(peer);
@@ -415,7 +415,7 @@ receive(
 		sys_badlength++;
 		return;				/* runt packet */
 	}
-	
+
 	/*
 	 * Version check must be after the query packets, since they
 	 * intentionally use early version.
@@ -565,7 +565,7 @@ receive(
 		 * broadcast or unicast address as appropriate.
 		 */
 		if (skeyid > NTP_MAXKEY) {
-		
+
 			/*
 			 * More on the autokey dance (AKD). A cookie is
 			 * constructed from public and private values.
@@ -862,7 +862,7 @@ receive(
 		 * enabled, a symmetric passive association is
 		 * mobilized. If not but correctly authenticated, a
 		 * symmetric active response is sent. If authentication
-		 * fails, send a crypto-NAK packet. 
+		 * fails, send a crypto-NAK packet.
 		 */
 		if (!AUTH(restrict_mask & RES_DONTTRUST, is_authentic))
 		    {
@@ -930,7 +930,7 @@ receive(
 		peer->flash |= TEST1;
 		peer->oldpkt++;
 		return;				/* duplicate packet */
-	
+
 
 	/*
 	 * If this is a broadcast mode packet, skip further checking.
@@ -972,7 +972,7 @@ receive(
 		peer_clear(peer, "AUTH");
 		return;				/* crypto-NAK */
 
-	/* 
+	/*
 	 * If the association is authenticated, the key ID is nonzero
 	 * and received packets must be authenticated. This is designed
 	 * to avoid a bait-and-switch attack, which was possible in past
@@ -1518,7 +1518,7 @@ peer_crypto_clear(
 	if (peer->ident_pkey != NULL)
 		EVP_PKEY_free(peer->ident_pkey);
 	peer->ident_pkey = NULL;
-	
+
 	memset(&peer->fstamp, 0, sizeof(peer->fstamp));
 
 	if (peer->iffval != NULL)
@@ -1555,7 +1555,7 @@ peer_clear(
 	int	i;
 
 	peer_crypto_clear(peer);
-	
+
 	if (peer == sys_peer)
 		sys_peer = NULL;
 
@@ -1650,7 +1650,7 @@ clock_filter(
 	for (i = NTP_SHIFT - 1; i >= 0; i--) {
 		if (i != 0)
 			peer->filter_disp[j] += dtemp;
-		if (peer->filter_disp[j] >= MAXDISPERSE) 
+		if (peer->filter_disp[j] >= MAXDISPERSE)
 			peer->filter_disp[j] = MAXDISPERSE;
 		if (peer->filter_disp[j] >= MAXDISPERSE)
 			dst[i] = MAXDISPERSE;
@@ -1667,7 +1667,7 @@ clock_filter(
 	 * If the clock discipline has stabilized, sort the samples in
 	 * both lists by distance. Note, we do not displace a higher
 	 * distance sample by a lower distance one unless lower by at
-	 * least the precision.  
+	 * least the precision.
 	 */
 	if (state == 4) {
 		for (i = 1; i < NTP_SHIFT; i++) {
@@ -1699,7 +1699,7 @@ clock_filter(
 			continue;
 		m++;
 	}
-	
+
 	/*
 	 * Compute the dispersion and jitter. The dispersion is weighted
 	 * exponentially by NTP_FWEIGHT (0.5) so it is normalized close
@@ -2276,7 +2276,7 @@ clock_select(void)
 
 		/*
 		 * Otherwise, choose the anticlockhopper.
-		 */ 
+		 */
 		sys_peer = typesystem;
 		sys_peer->status = CTL_PST_SEL_SYSPEER;
 		clock_combine(peer_list, nlist);
@@ -2496,7 +2496,7 @@ peer_xmit(
 		 * the session key is generated.
 		 */
 		while (1) {
-		
+
 			/*
 			 * Allocate and initialize a keylist if not
 			 * already done. Then, use the list in inverse
@@ -2730,7 +2730,7 @@ peer_xmit(
 			authtrust(xkeyid, 0);
 			return;
 		}
-	} 
+	}
 #endif /* OPENSSL */
 
 	/*

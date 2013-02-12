@@ -139,7 +139,7 @@ struct codestring crypto_codes[] = {
 	{ XEVNT_PER & ~CRPT_EVENT,	"host certificate_expired" },
 	{ XEVNT_CKY & ~CRPT_EVENT,	"bad_or_missing_cookie" },
 	{ XEVNT_DAT & ~CRPT_EVENT,	"bad_or_missing_leapsecond_table" },
-	{ XEVNT_CRT & ~CRPT_EVENT,	"bad_or_missing_certificate" },	
+	{ XEVNT_CRT & ~CRPT_EVENT,	"bad_or_missing_certificate" },
 	{ XEVNT_ID & ~CRPT_EVENT,	"bad_or_missing_group_key" },
 	{ XEVNT_ERR & ~CRPT_EVENT,	"protocol_error" },
 	{ XEVNT_SRV & ~CRPT_EVENT,	"server certificate expired" },
@@ -213,7 +213,7 @@ statustoa(
 		(void)strcat(cb, ", ");
 		(void)strcat(cb, getcode(CTL_SYS_EVENT(st), sys_codes));
 		break;
-	
+
 	    case TYPE_PEER:
 		/*
 		 * Handcraft the bits
@@ -249,7 +249,7 @@ statustoa(
 						 peer_codes));
 		}
 		break;
-	
+
 	    case TYPE_CLOCK:
 		(void)strcpy(cb, getcode(((st)>>8) & 0xff, clock_codes));
 		(void)strcat(cb, ", last_");

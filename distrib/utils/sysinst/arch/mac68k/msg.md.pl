@@ -45,7 +45,7 @@ message md_hello
 }
 
 message fullpart
-{Zainstalujemy teraz NetBSD na dysku %s. Mozesz wybrac, czy chcesz 
+{Zainstalujemy teraz NetBSD na dysku %s. Mozesz wybrac, czy chcesz
 zainstalowac NetBSD na calym dysku, czy tylko na jego czesci.
 
 Ktora instalacje chcesz zrobic?
@@ -141,7 +141,7 @@ Czy chcesz zrezygnowac z podzialu tej partycji?}
 
 message custom_mount_point
 {Podaj Punkt Montazu dla aktualnie wybranej partycji. Powinna byc to
-unikalna nazwa, zaczynajaca sie od "/", ktora nie jest juz uzywana 
+unikalna nazwa, zaczynajaca sie od "/", ktora nie jest juz uzywana
 przez inna partycje.
 
 }

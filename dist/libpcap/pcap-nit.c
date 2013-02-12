@@ -207,7 +207,7 @@ pcap_inject_nit(pcap_t *p, const void *buf, size_t size)
 		return (-1);
 	}
 	return (ret);
-}                           
+}
 
 static int
 nit_setflags(int fd, int promisc, int to_ms, char *ebuf)

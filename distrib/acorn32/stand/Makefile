@@ -82,7 +82,7 @@ SETTYPE_FILES+=misc/bb_netbsd
 SETTYPE_FILE_misc/bb_netbsd=ffb
 
 .PATH: ${.CURDIR}/BtNetBSD/!BtNetBSD
-.PATH: ${.CURDIR}/BtNetBSD/!BtNetBSD/native 
+.PATH: ${.CURDIR}/BtNetBSD/!BtNetBSD/native
 .PATH: ${.CURDIR}/BtNetBSD/!BtNetBSD/src/Banner
 
 ${UUDECODE_FILES}: setup_tmp

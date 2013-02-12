@@ -466,7 +466,7 @@ if test "$want_dag" != no; then
 	if test -z "$dag_lib_dir"; then
 	    dag_lib_dir="$dag_root/lib"
 	fi
-	
+
 	if test -z "$dag_tools_dir"; then
 	    dag_tools_dir="$dag_root/tools"
 		fi
@@ -479,7 +479,7 @@ fi
 
 if test $ac_cv_lbl_dag_api = yes; then
 
-	AC_MSG_CHECKING([dagapi.o])	
+	AC_MSG_CHECKING([dagapi.o])
 	dagapi_obj=no
 	if test -r $dag_tools_dir/dagapi.o; then
 		# 2.4.x.
@@ -505,7 +505,7 @@ fi
 
 if test $ac_cv_lbl_dag_api = yes; then
 
-	AC_MSG_CHECKING([dagopts.o])	
+	AC_MSG_CHECKING([dagopts.o])
 	dagopts_obj=no
 	if test -r $dag_tools_dir/dagopts.o; then
 		# 2.4.x.
@@ -532,7 +532,7 @@ fi
 if test $ac_cv_lbl_dag_api = yes; then
 	# Under 2.5.x only we need to add dagreg.o.
 	if test -r $dag_include_dir/dagreg.h; then
-		AC_MSG_CHECKING([dagreg.o])	
+		AC_MSG_CHECKING([dagreg.o])
 		dagreg_obj=no
 		if test -r $dag_lib_dir/dagreg.o; then
 			# Object file is ready and waiting.

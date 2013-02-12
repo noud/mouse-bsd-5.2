@@ -677,8 +677,8 @@ HEIMDAL_KRB5_1.0 {
 		krb5_defkeyname;
 
 		# Shared with GSSAPI krb5
-		_krb5_crc_init_table;		
-		_krb5_crc_update;		
+		_krb5_crc_init_table;
+		_krb5_crc_update;
 
 		# V4 compat glue
 		_krb5_krb_tf_setup;

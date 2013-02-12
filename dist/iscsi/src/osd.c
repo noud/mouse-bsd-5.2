@@ -111,7 +111,7 @@ device_set_var(const char *var, char *arg)
 }
 #endif
 
-int 
+int
 device_init(globals_t *gp, char *dev)
 {
 	struct stat     st;
@@ -145,7 +145,7 @@ device_init(globals_t *gp, char *dev)
 	return 0;
 }
 
-int 
+int
 osd_read_callback(void *arg)
 {
 	struct iovec   *sg = (struct iovec *) arg;
@@ -158,7 +158,7 @@ osd_read_callback(void *arg)
 	return 0;
 }
 
-int 
+int
 device_command(target_session_t * sess, target_cmd_t * cmd)
 {
 	iscsi_scsi_cmd_args_t *args = cmd->scsi_cmd;
@@ -655,7 +655,7 @@ done:
 }
 
 /* ARGSUSED */
-int 
+int
 device_shutdown(target_session_t *sess)
 {
 	return 0;

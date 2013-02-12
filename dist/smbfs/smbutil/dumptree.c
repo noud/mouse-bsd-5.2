@@ -66,7 +66,7 @@ print_vcinfo(struct smb_vc_info *vip)
 	char buf[200];
 
 	printf("VC: \\\\%s\\%s\n", vip->srvname, vip->vcname);
-	printf("(%s:%s) %o", user_from_uid(vip->uid, 0), 
+	printf("(%s:%s) %o", user_from_uid(vip->uid, 0),
 	    group_from_gid(vip->gid, 0), vip->mode);
 	printf("\n");
 	if (!verbose)
@@ -89,7 +89,7 @@ print_shareinfo(struct smb_share_info *sip)
 	char buf[200];
 
 	iprintf(4, "Share:    %s", sip->sname);
-	printf("(%s:%s) %o", user_from_uid(sip->uid, 0), 
+	printf("(%s:%s) %o", user_from_uid(sip->uid, 0),
 	    group_from_gid(sip->gid, 0), sip->mode);
 	printf("\n");
 	if (!verbose)
@@ -133,7 +133,7 @@ cmd_dumptree(int argc, char *argv[])
 			printf("Out of sync\n");
 			free(op);
 			return 1;
-		    
+
 		}
 	}
 	free(op);

@@ -74,7 +74,7 @@ slapdn( int argc, char **argv )
 				rc = -1;
 				break;
 			}
-			
+
 		} else {
 			switch ( dn_mode ) {
 			case SLAP_TOOL_LDAPDN_PRETTY:
@@ -98,7 +98,7 @@ slapdn( int argc, char **argv )
 			ch_free( pdn.bv_val );
 		}
 	}
-	
+
 	slap_tool_destroy();
 
 	return rc;

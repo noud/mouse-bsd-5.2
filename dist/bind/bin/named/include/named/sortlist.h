@@ -31,7 +31,7 @@
 /*%
  * Type for callback functions that rank addresses.
  */
-typedef int 
+typedef int
 (*dns_addressorderfunc_t)(const isc_netaddr_t *address, const void *arg);
 
 /*%

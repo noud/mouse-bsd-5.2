@@ -667,12 +667,12 @@ search(int type, int level, Char *goal)
 	    if (type == T_SWITCH || type == T_BRKSW)
 		level++;
 	    break;
-	case T_FOREACH: 
+	case T_FOREACH:
 	case T_WHILE:
 	    wlevel++;
 	    if (type == T_BREAK)
 		level++;
-	    break;	    
+	    break;
 	default:
 	    if (type != T_GOTO && (type != T_SWITCH || level != 0))
 		break;
@@ -690,9 +690,9 @@ search(int type, int level, Char *goal)
 
 static void
 wpfree(struct whyle *wp)
-{ 
+{
     if (wp->w_fe0)
-	blkfree(wp->w_fe0); 
+	blkfree(wp->w_fe0);
     if (wp->w_fename)
 	xfree((ptr_t) wp->w_fename);
     xfree((ptr_t) wp);
@@ -837,12 +837,12 @@ wfree(void)
 	if (wp->w_end.type != I_SEEK && wp->w_start.type == wp->w_end.type &&
 	    wp->w_start.type == o.type) {
 	    if (wp->w_end.type == F_SEEK) {
-		if (o.f_seek >= wp->w_start.f_seek && 
+		if (o.f_seek >= wp->w_start.f_seek &&
 		    (wp->w_end.f_seek == 0 || o.f_seek < wp->w_end.f_seek))
 		    break;
 	    }
 	    else {
-		if (o.a_seek >= wp->w_start.a_seek && 
+		if (o.a_seek >= wp->w_start.a_seek &&
 		    (wp->w_end.a_seek == 0 || o.a_seek < wp->w_end.a_seek))
 		    break;
 	    }

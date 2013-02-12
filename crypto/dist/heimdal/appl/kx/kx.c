@@ -2,22 +2,22 @@
  * Copyright (c) 1995-2003 Kungliga Tekniska Högskolan
  * (Royal Institute of Technology, Stockholm, Sweden).
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the Institute nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@ childhandler (int sig)
      pid_t pid;
      int status;
 
-     do { 
+     do {
 	 pid = waitpid (-1, &status, WNOHANG|WUNTRACED);
 	 if (pid > 0 && (WIFEXITED(status) || WIFSIGNALED(status)))
 	     if (--nchild == 0 && donep)
@@ -115,7 +115,7 @@ connect_host (kx_context *kc)
 	warnx ("%s: %s", kc->host, gai_strerror(error));
 	return -1;
     }
-    
+
     for (a = ai; a != NULL; a = a->ai_next) {
 	s = socket (a->ai_family, a->ai_socktype, a->ai_protocol);
 	if (s < 0)
@@ -183,7 +183,7 @@ status_output (int debugp)
 	printf ("%u\t%s\t%s\n", (unsigned)getpid(), display, xauthfile);
     else {
 	pid_t pid;
-	
+
 	pid = fork();
 	if (pid < 0) {
 	    err(1, "fork");
@@ -280,7 +280,7 @@ doit_passive (kx_context *kc)
 	     p++;
 	     p += kx_get_int (p, &tmp, 4, 0);
 	 }
-	 
+
 	 ++nchild;
 	 child = fork ();
 	 if (child < 0) {
@@ -293,7 +293,7 @@ doit_passive (kx_context *kc)
 	     close (otherside);
 
 	     socket_set_port(kc->thataddr, htons(tmp));
-		 
+
 	     fd = socket (kc->thataddr->sa_family, SOCK_STREAM, 0);
 	     if (fd < 0)
 		 err(1, "socket");
@@ -338,7 +338,7 @@ doit_passive (kx_context *kc)
 }
 
 /*
- * Allocate a local pseudo-xserver and wait for connections 
+ * Allocate a local pseudo-xserver and wait for connections
  */
 
 static int
@@ -385,7 +385,7 @@ doit_active (kx_context *kc)
     --rem;
 
     str = getenv("DISPLAY");
-    if (str == NULL || (str = strchr(str, ':')) == NULL) 
+    if (str == NULL || (str = strchr(str, ':')) == NULL)
 	str = ":0";
     len = strlen (str);
     tmp = kx_put_int (len, p, rem, 4);
@@ -451,7 +451,7 @@ doit_active (kx_context *kc)
 
 	FD_ZERO(&fdset);
 	for (i = 0; i < nsockets; ++i) {
-	    if (sockets[i].fd >= FD_SETSIZE) 
+	    if (sockets[i].fd >= FD_SETSIZE)
 		errx (1, "fd too large");
 	    FD_SET(sockets[i].fd, &fdset);
 	}
@@ -577,7 +577,7 @@ doit (kx_context *kc, int passive_flag)
  */
 
 static int
-doit_v4 (const char *host, int port, const char *user, 
+doit_v4 (const char *host, int port, const char *user,
 	 int passive_flag, int debug_flag, int keepalive_flag, int tcp_flag)
 {
     int ret;
@@ -744,7 +744,7 @@ main(int argc, char **argv)
 	use_v4 = 0;
     if(use_v5 == -1 && use_v4 == 1)
 	use_v5 = 0;
-#endif    
+#endif
 
 #ifdef KRB5
     if (ret && use_v5) {
@@ -758,7 +758,7 @@ main(int argc, char **argv)
     if (ret && use_v4) {
 	if (port == 0)
 	    port = k_getportbyname("kx", "tcp", htons(KX_PORT));
-	ret = doit_v4 (host, port, user, 
+	ret = doit_v4 (host, port, user,
 		       passive_flag, debug_flag, keepalive_flag, tcp_flag);
     }
 #endif

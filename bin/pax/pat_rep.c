@@ -677,7 +677,7 @@ mod_name(ARCHD *arcn, int flags)
 		 * we have replacement strings, modify the name and the link
 		 * name if any.
 		 */
-		if ((res = rep_name(arcn->name, sizeof(arcn->name), 
+		if ((res = rep_name(arcn->name, sizeof(arcn->name),
 			&(arcn->nlen), flags)) != 0)
 			return res;
 

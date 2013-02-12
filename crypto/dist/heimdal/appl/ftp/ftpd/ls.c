@@ -1,18 +1,18 @@
 /*
  * Copyright (c) 1999 - 2002 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
  * 3. Neither the name of KTH nor the names of its contributors may be
  *    used to endorse or promote products derived from this software without
@@ -153,10 +153,10 @@ make_fileinfo(FILE *out, const char *filename, struct fileinfo *file, int flags)
     char buf[128];
     int file_type = 0;
     struct stat *st = &file->st;
-    
+
     file->inode = st->st_ino;
     file->bsize = block_convert(st->st_blocks);
-    
+
     if(S_ISDIR(st->st_mode)) {
 	file->mode[0] = 'd';
 	file_type = '/';
@@ -188,10 +188,10 @@ make_fileinfo(FILE *out, const char *filename, struct fileinfo *file, int flags)
 	file_type = '%';
     }
 #endif
-    else 
+    else
 	file->mode[0] = '?';
     {
-	char *x[] = { "---", "--x", "-w-", "-wx", 
+	char *x[] = { "---", "--x", "-w-", "-wx",
 		      "r--", "r-x", "rw-", "rwx" };
 	strcpy(file->mode + 1, x[(st->st_mode & S_IRWXU) >> 6]);
 	strcpy(file->mode + 4, x[(st->st_mode & S_IRWXG) >> 3]);
@@ -242,7 +242,7 @@ make_fileinfo(FILE *out, const char *filename, struct fileinfo *file, int flags)
 	    return -1;
 	}
     }
-    
+
     if(S_ISCHR(st->st_mode) || S_ISBLK(st->st_mode)) {
 #if defined(major) && defined(minor)
 	if (asprintf(&file->major, "%u", (unsigned)major(st->st_rdev)) == -1)
@@ -415,7 +415,7 @@ lstat_file (const char *file, struct stat *sb)
 {
 #ifdef KRB4
     if (do_the_afs_dance &&
-	k_hasafs() 
+	k_hasafs()
 	&& strcmp(file, ".")
 	&& strcmp(file, "..")
 	&& strcmp(file, "/"))
@@ -426,19 +426,19 @@ lstat_file (const char *file, struct stat *sb)
 	static ino_t	   ino_counter = 0, ino_last = 0;
 	int		   ret;
 	const int	   maxsize = 2048;
-	
+
 	path_bkp = strdup (file);
 	if (path_bkp == NULL)
 	    return -1;
-	
+
 	a_params.out = malloc (maxsize);
-	if (a_params.out == NULL) { 
+	if (a_params.out == NULL) {
 	    free (path_bkp);
 	    return -1;
 	}
-	
+
 	/* If path contains more than the filename alone - split it */
-	
+
 	last = strrchr (path_bkp, '/');
 	if (last != NULL) {
 	    if(last[1] == '\0')
@@ -458,10 +458,10 @@ lstat_file (const char *file, struct stat *sb)
 	    dir = ".";
 	    a_params.in = path_bkp;
 	}
-	
+
 	a_params.in_size  = strlen (a_params.in) + 1;
 	a_params.out_size = maxsize;
-	
+
 	ret = k_pioctl (dir, VIOC_AFS_STAT_MT_PT, &a_params, 0);
 	free (a_params.out);
 	if (ret < 0) {
@@ -474,7 +474,7 @@ lstat_file (const char *file, struct stat *sb)
 		return lstat (file, sb);
 	}
 
-	/* 
+	/*
 	 * wow this was a mountpoint, lets cook the struct stat
 	 * use . as a prototype
 	 */
@@ -552,15 +552,15 @@ list_files(FILE *out, const char **files, int n_files, int flags)
     }
     switch(SORT_MODE(flags)) {
     case LS_SORT_NAME:
-	qsort(fi, n_files, sizeof(*fi), 
+	qsort(fi, n_files, sizeof(*fi),
 	      (int (*)(const void*, const void*))compare_filename);
 	break;
     case LS_SORT_MTIME:
-	qsort(fi, n_files, sizeof(*fi), 
+	qsort(fi, n_files, sizeof(*fi),
 	      (int (*)(const void*, const void*))compare_mtime);
 	break;
     case LS_SORT_SIZE:
-	qsort(fi, n_files, sizeof(*fi), 
+	qsort(fi, n_files, sizeof(*fi),
 	      (int (*)(const void*, const void*))compare_size);
 	break;
     }
@@ -603,7 +603,7 @@ list_files(FILE *out, const char **files, int n_files, int flags)
 	max_inode = find_log10(max_inode);
 	max_bsize = find_log10(max_bsize);
 	max_n_link = find_log10(max_n_link);
-	
+
 	if(n_print > 0)
 	    sec_fprintf2(out, "total %lu\r\n", (unsigned long)total_blocks);
 	if(flags & LS_SORT_REVERSE)
@@ -634,7 +634,7 @@ list_files(FILE *out, const char **files, int n_files, int flags)
 			   max_major,
 			   max_minor,
 			   max_date);
-    } else if(DISP_MODE(flags) == LS_DISP_COLUMN || 
+    } else if(DISP_MODE(flags) == LS_DISP_COLUMN ||
 	      DISP_MODE(flags) == LS_DISP_CROSS) {
 	int max_len = 0;
 	int size_len = 0;
@@ -661,14 +661,14 @@ list_files(FILE *out, const char **files, int n_files, int flags)
 	    max_len = 80 / columns;
 	}
 	if(flags & LS_SIZE)
-	    sec_fprintf2(out, "total %lu\r\n", 
+	    sec_fprintf2(out, "total %lu\r\n",
 			 (unsigned long)total_blocks);
 	if(DISP_MODE(flags) == LS_DISP_CROSS) {
 	    for(i = 0, j = 0; i < n_files; i++) {
 		if(fi[i].filename == NULL)
 		    continue;
 		if(flags & LS_SIZE)
-		    sec_fprintf2(out, "%*u %-*s", size_len, fi[i].bsize, 
+		    sec_fprintf2(out, "%*u %-*s", size_len, fi[i].bsize,
 				 max_len, fi[i].filename);
 		else
 		    sec_fprintf2(out, "%-*s", max_len, fi[i].filename);
@@ -688,7 +688,7 @@ list_files(FILE *out, const char **files, int n_files, int flags)
 		    while(j < n_files && fi[j].filename == NULL)
 			j++;
 		    if(flags & LS_SIZE)
-			sec_fprintf2(out, "%*u %-*s", size_len, fi[j].bsize, 
+			sec_fprintf2(out, "%*u %-*s", size_len, fi[j].bsize,
 				     max_len, fi[j].filename);
 		    else
 			sec_fprintf2(out, "%-*s", max_len, fi[j].filename);
@@ -711,7 +711,7 @@ list_files(FILE *out, const char **files, int n_files, int flags)
 		const char *p = strrchr(files[i], '/');
 		if(p == NULL)
 		    p = files[i];
-		else 
+		else
 		    p++;
 		if(!(flags & LS_DIR_FLAG) || !IS_DOT_DOTDOT(p)) {
 		    if((flags & LS_SHOW_DIRNAME)) {

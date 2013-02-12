@@ -87,7 +87,7 @@ tcldb_driver_create(isc_mem_t *mctx, tcldb_driver_t **driverp) {
  cleanup:
 	isc_mem_put(mctx, driver, sizeof(tcldb_driver_t));
 	return (result);
-	
+
 }
 
 static void
@@ -185,13 +185,13 @@ tcldb_create(const char *zone, int argc, char **argv,
 	tcldb_driver_t *driver = (tcldb_driver_t *) driverdata;
 
 	char *list = Tcl_Merge(argc, argv);
-	
+
 	Tcl_SetVar2(driver->interp, (char *) "dbargs", (char *) zone, list, 0);
 
 	Tcl_Free(list);
 
 	*dbdata = driverdata;
-	
+
 	return (ISC_R_SUCCESS);
 }
 
@@ -213,11 +213,11 @@ isc_result_t
 tcldb_init(void) {
 	isc_result_t result;
 	int flags = DNS_SDBFLAG_RELATIVEOWNER | DNS_SDBFLAG_RELATIVERDATA;
-	
+
 	result = tcldb_driver_create(ns_g_mctx, &the_driver);
 	if (result != ISC_R_SUCCESS)
 		return (result);
-	
+
 	return (dns_sdb_register("tcl", &tcldb_methods, the_driver, flags,
 				 ns_g_mctx, &tcldb));
 }

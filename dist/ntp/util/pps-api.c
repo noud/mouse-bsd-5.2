@@ -62,7 +62,7 @@ main(int argc, char **argv)
 		argv[1] = "/dev/cuaa1";
 	setbuf(stdout, 0);
 	fd = open(argv[1], O_RDONLY);
-	if (fd < 0) 
+	if (fd < 0)
 		err(1, argv[1]);
 	i = time_pps_create(fd, &ph);
 	if (i < 0)

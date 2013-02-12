@@ -241,7 +241,7 @@ chronolog_receive(
              * means we have to do Y2K conversion on the 2-digit year;
 	     * otherwise, we get the time wrong.
 	     */
-	    
+
 	    local.tm_year  = up->year;
 	    local.tm_mon   = up->month-1;
 	    local.tm_mday  = up->day;
@@ -268,7 +268,7 @@ chronolog_receive(
 			adjyear,adjmon,gmtp->tm_mday,pp->hour,pp->minute,
 			pp->second);
 #endif
-	    
+
 #else
 	    /*
 	     * For more rational sites distributing UTC

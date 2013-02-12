@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -120,7 +120,7 @@ PKCS8_PRIV_KEY_INFO *EVP_PKEY2PKCS8_broken(EVP_PKEY *pkey, int broken)
 {
 	PKCS8_PRIV_KEY_INFO *p8;
 
-	if (!(p8 = PKCS8_PRIV_KEY_INFO_new())) {	
+	if (!(p8 = PKCS8_PRIV_KEY_INFO_new())) {
 		EVPerr(EVP_F_EVP_PKEY2PKCS8_BROKEN,ERR_R_MALLOC_FAILURE);
 		return NULL;
 	}

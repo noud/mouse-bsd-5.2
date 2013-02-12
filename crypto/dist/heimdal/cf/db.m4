@@ -84,7 +84,7 @@ dnl test for ndbm compatability
     #include <db.h>
     DBM *dbm;
     ],[NULL])
-  
+
     if test "$ac_cv_func_dbm_firstkey" = "yes"; then
       if test "$ac_cv_funclib_dbm_firstkey" != "yes"; then
         LIB_NDBM="$ac_cv_funclib_dbm_firstkey"
@@ -109,7 +109,7 @@ if test "$enable_ndbm_db" != "no"; then
   	dbm.h					\
   	ndbm.h					\
     ])
-  
+
     AC_FIND_FUNC_NO_LIBS(dbm_firstkey, ndbm, [
     #include <stdio.h>
     #if defined(HAVE_NDBM_H)
@@ -119,7 +119,7 @@ if test "$enable_ndbm_db" != "no"; then
     #endif
     DBM *dbm;
     ],[NULL])
-  
+
     if test "$ac_cv_func_dbm_firstkey" = "yes"; then
       if test "$ac_cv_funclib_dbm_firstkey" != "yes"; then
         LIB_NDBM="$ac_cv_funclib_dbm_firstkey"
@@ -133,20 +133,20 @@ if test "$enable_ndbm_db" != "no"; then
         DBLIB="$LIB_NDBM"
       fi
     else
-  
+
       $as_unset ac_cv_func_dbm_firstkey
       $as_unset ac_cv_funclib_dbm_firstkey
-  
+
       AC_CHECK_HEADERS([				\
   	  gdbm/ndbm.h				\
       ])
-  
+
       AC_FIND_FUNC_NO_LIBS(dbm_firstkey, gdbm, [
       #include <stdio.h>
       #include <gdbm/ndbm.h>
       DBM *dbm;
       ],[NULL])
-  
+
       if test "$ac_cv_func_dbm_firstkey" = "yes"; then
         if test "$ac_cv_funclib_dbm_firstkey" != "yes"; then
   	LIB_NDBM="$ac_cv_funclib_dbm_firstkey"

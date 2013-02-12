@@ -5,7 +5,7 @@ lossless, block-sorting data compression.
 bzip2/libbzip2 version 1.0.5 of 10 December 2007
 Copyright (C) 1996-2007 Julian Seward <jseward@bzip.org>
 
-Please read the WARNING, DISCLAIMER and PATENTS sections in the 
+Please read the WARNING, DISCLAIMER and PATENTS sections in the
 README file.
 
 This program is released under the terms of the license contained
@@ -40,11 +40,11 @@ As a general comment, if you get compilation errors which you think
 are related to large file support, try removing the above define from
 the Makefile, ie, delete the line
 
-   BIGFILES=-D_FILE_OFFSET_BITS=64 
+   BIGFILES=-D_FILE_OFFSET_BITS=64
 
 from the Makefile, and do 'make clean ; make'.  This will give you a
 version of bzip2 without large file support, which, for most
-applications, is probably not a problem.  
+applications, is probably not a problem.
 
 Alternatively, try some of the platform-specific hints listed below.
 

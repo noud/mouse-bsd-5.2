@@ -31,7 +31,7 @@ __RCSID("$Heimdal: gss_names.c 21473 2007-07-10 16:29:53Z lha $"
         "$NetBSD: gss_names.c,v 1.1 2008/03/22 09:39:23 mlelstv Exp $");
 
 OM_uint32
-_gss_find_mn(OM_uint32 *minor_status, struct _gss_name *name, gss_OID mech, 
+_gss_find_mn(OM_uint32 *minor_status, struct _gss_name *name, gss_OID mech,
 	     struct _gss_mechanism_name **output_mn)
 {
 	OM_uint32 major_status;
@@ -60,7 +60,7 @@ _gss_find_mn(OM_uint32 *minor_status, struct _gss_name *name, gss_OID mech,
 		mn = malloc(sizeof(struct _gss_mechanism_name));
 		if (!mn)
 			return GSS_S_FAILURE;
-		
+
 		major_status = m->gm_import_name(minor_status,
 		    &name->gn_value,
 		    (name->gn_type.elements

@@ -1,7 +1,7 @@
 /*	$NetBSD: refclock_shm.c,v 1.6 2006/07/29 08:15:29 kardel Exp $	*/
 
 /*
- * refclock_shm - clock driver for utc via shared memory 
+ * refclock_shm - clock driver for utc via shared memory
  * - under construction -
  * To add new modes: Extend or union the shmTime-struct. Do not
  * extend/shrink size, because otherwise existing implementations
@@ -16,18 +16,18 @@
 #if defined(REFCLOCK) && defined(CLOCK_SHM)
 
 #include "ntpd.h"
-#undef fileno   
+#undef fileno
 #include "ntp_io.h"
-#undef fileno   
+#undef fileno
 #include "ntp_refclock.h"
-#undef fileno   
+#undef fileno
 #include "ntp_unixtime.h"
-#undef fileno   
+#undef fileno
 #include "ntp_stdlib.h"
 
-#undef fileno   
+#undef fileno
 #include <ctype.h>
-#undef fileno   
+#undef fileno
 
 #ifndef SYS_WINNT
 # include <sys/ipc.h>
@@ -39,7 +39,7 @@
 
 /*
  * This driver supports a reference clock attached thru shared memory
- */ 
+ */
 
 /*
  * SHM interface definitions
@@ -71,11 +71,11 @@ struct  refclock refclock_shm = {
 };
 struct shmTime {
 	int    mode; /* 0 - if valid set
-		      *       use values, 
+		      *       use values,
 		      *       clear valid
-		      * 1 - if valid set 
+		      * 1 - if valid set
 		      *       if count before and after read of values is equal,
-		      *         use values 
+		      *         use values
 		      *       clear valid
 		      */
 	int    count;
@@ -87,7 +87,7 @@ struct shmTime {
 	int    precision;
 	int    nsamples;
 	int    valid;
-	int    dummy[10]; 
+	int    dummy[10];
 };
 
 struct shmTime *getShmTime(int);
@@ -97,7 +97,7 @@ struct shmTime *getShmTime (int unit) {
 	int shmid=0;
 
 	assert (unit<10); /* MAXUNIT is 4, so should never happen */
-	shmid=shmget (0x4e545030+unit, sizeof (struct shmTime), 
+	shmid=shmget (0x4e545030+unit, sizeof (struct shmTime),
 		      IPC_CREAT|(unit<2?0700:0777));
 	if (shmid==-1) { /*error */
 		msyslog(LOG_ERR,"SHM shmget (unit %d): %s",unit,strerror(errno));
@@ -142,7 +142,7 @@ struct shmTime *getShmTime (int unit) {
 		return 0;
 	}
 	else {
-		struct shmTime *p=(struct shmTime *) MapViewOfFile (shmid, 
+		struct shmTime *p=(struct shmTime *) MapViewOfFile (shmid,
 								    FILE_MAP_WRITE, 0, 0, sizeof (struct shmTime));
 		if (p==0) { /*error*/
 			char buf[1000];
@@ -287,7 +287,7 @@ shm_poll(
 			pp->nsec=tvt.tv_usec * 1000;
 			peer->precision=up->precision;
 			pp->leap=up->leap;
-		} 
+		}
 		else {
 			refclock_report(peer, CEVNT_FAULT);
 			msyslog (LOG_NOTICE, "SHM: access clash in shared memory");

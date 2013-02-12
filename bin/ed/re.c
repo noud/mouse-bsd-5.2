@@ -42,7 +42,7 @@ __RCSID("$NetBSD: re.c,v 1.19 2005/02/17 16:29:26 xtraeme Exp $");
 
 char errmsg[MAXPATHLEN + 40] = "";
 
-/* get_compiled_pattern: return pointer to compiled pattern from command 
+/* get_compiled_pattern: return pointer to compiled pattern from command
    buffer */
 pattern_t *
 get_compiled_pattern(void)

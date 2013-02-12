@@ -32,7 +32,7 @@ if(! -x $openssl) {
 		if(-x "$_/$openssl") {
 			$found = 1;
 			last;
-		}	
+		}
 	}
 	if($found == 0) {
 		print STDERR "c_rehash: rehashing skipped ('openssl' program not available)\n";

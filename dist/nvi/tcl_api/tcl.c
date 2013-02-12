@@ -705,7 +705,7 @@ tcl_opts_set(clientData, interp, argc, argv)
 /*
  * tcl_opts_get --
  	Return the value of an option.
- *	
+ *
  * Tcl Command: viGetOpt
  * Usage: viGetOpt screenId option
  */
@@ -789,7 +789,7 @@ tcl_init(gp)
  * the screen without first finding the screen... So, this must be the first
  * thing a Tcl routine does, and, if it fails, the last as well.
  */
-static int 
+static int
 getscreenid(interp, spp, id, name)
 	Tcl_Interp *interp;
 	SCR **spp;

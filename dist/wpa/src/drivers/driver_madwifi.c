@@ -152,7 +152,7 @@ set80211param(struct wpa_driver_madwifi_data *drv, int op, int arg,
 	os_memcpy(iwr.u.name+sizeof(u32), &arg, sizeof(arg));
 
 	if (ioctl(drv->sock, IEEE80211_IOCTL_SETPARAM, &iwr) < 0) {
-		if (show_err) 
+		if (show_err)
 			perror("ioctl[IEEE80211_IOCTL_SETPARAM]");
 		return -1;
 	}

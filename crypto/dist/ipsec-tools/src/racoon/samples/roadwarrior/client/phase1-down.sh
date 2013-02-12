@@ -64,7 +64,7 @@ REMOTE="${REMOTE_ADDR}[${REMOTE_PORT}]"
 
 echo "
 deleteall ${REMOTE_ADDR} ${LOCAL_ADDR} esp;
-deleteall ${LOCAL_ADDR} ${REMOTE_ADDR} esp; 
+deleteall ${LOCAL_ADDR} ${REMOTE_ADDR} esp;
 spddelete ${INTERNAL_ADDR4}/32[any] 0.0.0.0/0[any] any
 	-P out ipsec esp/tunnel/${LOCAL}-${REMOTE}/require;
 spddelete 0.0.0.0/0[any] ${INTERNAL_ADDR4}[any] any

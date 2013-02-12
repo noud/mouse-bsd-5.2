@@ -566,7 +566,7 @@ external/bsd/dhcpcd/dist/net.c				patch
 external/bsd/dhcpcd/dist/dhcpcd-hooks/10-mtu		patch
 external/bsd/dhcpcd/dist/dhcpcd-hooks/20-resolv.conf	patch
 external/bsd/dhcpcd/dist/dhcpcd-hooks/50-ntp.conf	patch
-	
+
 	Update dhcpcd to 5.0.4:
 	* ServerID requirement in DHCP messages can be toggled in dhcpcd.conf
 	* If MTU is requested, don't apply if less than 576
@@ -618,7 +618,7 @@ dist/ntp/ntpd/ntp_crypto.c			1.15
 
 sys/arch/sparc64/sparc64/vm_machdep.c           1.88
 
-	When preparing the initial trap frame for a new forked lwp,         
+	When preparing the initial trap frame for a new forked lwp,
 	explicitly clear condition code. Otherwise we might catch a signal
 	(handlers are inherited from the parent) before we ever return to
 	userland. The current trapframe is converted into a ucontext and
@@ -661,9 +661,9 @@ src/external/bsd/fetch/dist/libfetch/ftp.c	libfetch-2-23
 src/external/bsd/fetch/dist/libfetch/ftp.errors	libfetch-2-23
 src/external/bsd/fetch/dist/libfetch/http.c	libfetch-2-23
 src/external/bsd/fetch/dist/libfetch/http.errors libfetch-2-23
-        
+
 	Pull up libfetch-2.23:
-	- if-not-modified support               
+	- if-not-modified support
 	- document that struct URL is not part of the ABI
 	- fetchRestartCalls cleanup for signal handlers
 	- allow HTTP basic auth to be specified in the URL, allow : as part of
@@ -916,7 +916,7 @@ sbin/atactl/atactl.c				1.54
 	[mlelstv, ticket #794]
 
 external/mit/xorg/server/drivers/xf86-video-s3/Makefile patch
- 
+
 	Add missing object file to build a properly working s3 module.
 	Fixes PR xsrc/41206.
 	[ahoka, ticket #795]
@@ -2350,7 +2350,7 @@ lib/libevent/event.h				1.7
 	Matthias Drochner pointed out that I lost the _EVENT_ prefix from all
 	the autoconf defines in the installed event_config.h.
 	Fix this approximately as the stock libevent Makefile does.
-	Also, some applications written for newer libevent 
+	Also, some applications written for newer libevent
 	want event.h to pull in event_config.h by magic.
 	[tls, ticket #920]
 
@@ -13739,7 +13739,7 @@ sys/arch/xen/xen/xenevt.c			1.31
 sys/arch/x86/include/bus.h			1.18, 1.19
 sys/arch/x86/include/isa_machdep.h		1.7
 sys/arch/x86/x86/bus_space.c			1.21, 1.22
-sys/arch/x86/x86/ioapic.c			1.39 
+sys/arch/x86/x86/ioapic.c			1.39
 sys/arch/x86/x86/mpbios.c			1.53
 
 	Add i386PAE support to Xen3 dom0.
@@ -13763,7 +13763,7 @@ sys/dev/pci/if_vr.c				1.98-1.99
 
 sbin/fsck_ffs/extern.h				1.25 via patch
 sbin/fsck_ffs/setup.c				1.88 via patch
-sbin/fsck_ffs/wapbl.c				1.4 via patch 
+sbin/fsck_ffs/wapbl.c				1.4 via patch
 sbin/tunefs/tunefs.c				1.41 via patch
 sys/ufs/ffs/ffs_vfsops.c			1.252 via patch
 sys/ufs/ffs/ffs_wapbl.c				1.13 via patch
@@ -14413,7 +14413,7 @@ external/bsd/pkg_install/dist/lib/version.h		1.1.1.18 - 1.1.1.21
 	  old "p" flag.
 	- restore pkg_add -f functionality for missing dependencies (PR 42001)
 	- pkg_admin rebuild should count packages correctly (he@), also
-	  count @pkgdir   
+	  count @pkgdir
 	- fix gpg-sign-package syntax in pkg_admin(1)
 	- change default URL for pkg-vulnerabilities to use HTTP
 	- Fix German accent
@@ -14524,7 +14524,7 @@ sys/fs/smbfs/smbfs_subr.h			1.20
 	Add support for 64 bit file offsets to smbfs_smb_setfsize(), largely
 	based on code taken from FreeBSD.
 	This stops truncation of files larger than 4GB by VOP_SETATTR() which
-	e.g.  happened when copying large files "rump_smbfs". 
+	e.g.  happened when copying large files "rump_smbfs".
 	[tron, ticket #1109]
 
 usr.bin/systat/syscall.c			1.7
@@ -14768,7 +14768,7 @@ sys/arch/alpha/alpha/pmap.c			1.250
 sys/arch/sparc/sparc/pmap.c			1.336
 
 	Avoid unused variable warnings on sun4c-only kernels.
-	Fixes PR#42249. 
+	Fixes PR#42249.
 	[jdc, ticket #1138]
 
 sys/netkey/keysock.c				1.53
@@ -15508,8 +15508,8 @@ sys/fs/tmpfs/tmpfs_vnops.c			1.63
 
 dist/ntp/ntpd/ntp_request.c			patch
 
-	Fix CVE-2009-3563.            
-	[kardel, ticket #1185]        
+	Fix CVE-2009-3563.
+	[kardel, ticket #1185]
 
 games/rogue/monster.c				1.16
 
@@ -16235,7 +16235,7 @@ lib/libdns/shlib_version			patch
 crypto/dist/openssl/crypto/comp/c_zlib.c	patch
 
 	Fix CVE-2009-4355.
-	[taca, ticket #1265]                     
+	[taca, ticket #1265]
 
 libexec/ld.elf_so/reloc.c			1.101
 libexec/ld.elf_so/rtld.h			1.87, 1.88
@@ -16645,9 +16645,9 @@ external/bsd/pkg_install/dist/x509/pkgsrc.sh	pkg_install-20100130
 	Do not overwrite a string with itself using snprintf. This breaks
 	setting the pkgdb directory internally on Linux. Explicitly check
 	if the string is the same and otherwise just use xstrdup.
-	
+
 	Add support to query arbitrary variables with pkg_admin config-var.
-	
+
 	pkg_install-20100130:
 	- pkg_add -U to rplace an installed version
 	- refactored man pages
@@ -17048,8 +17048,8 @@ crypto/dist/openssl/ssl/s3_pkt.c		patch
 sys/kern/uipc_syscalls.c			patch
 
 	In do_sys_recvmsg(), call free(9) with the same type malloc(9) used.
-	[jakllsch, ticket #1352]                            
- 
+	[jakllsch, ticket #1352]
+
 sys/dev/ic/ahcisata_core.c			1.23, 1.24
 
 	- Clear port interrupt register before ahci_channel_start() which

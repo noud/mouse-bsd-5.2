@@ -271,7 +271,7 @@ nspecial(struct optab *q)
 	case MUL:
 	case DIV:
 	case MOD:
-		if (q->lshape == SBREG && 
+		if (q->lshape == SBREG &&
 		    (q->ltype & (TDOUBLE|TLDOUBLE|TLONGLONG|TULONGLONG))) {
 			static struct rspecial s[] = {
 				{ NLEFT, R3R4 },

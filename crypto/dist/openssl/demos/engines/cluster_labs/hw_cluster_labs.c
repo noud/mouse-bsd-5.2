@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -87,16 +87,16 @@ static int cluster_labs_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f)());
 /* This function is aliased to mod_exp (with the mont stuff dropped). */
 static int cluster_labs_mod_exp_mont(BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
 		const BIGNUM *m, BN_CTX *ctx, BN_MONT_CTX *m_ctx);
-		
+
 /* RSA stuff */
 #ifndef OPENSSL_NO_RSA
 static int cluster_labs_rsa_pub_enc(int flen, const unsigned char *from,
 	     unsigned char *to, RSA *rsa, int padding);
 static int cluster_labs_rsa_pub_dec(int flen, const unsigned char *from,
 	     unsigned char *to, RSA *rsa, int padding);
-static int cluster_labs_rsa_priv_enc(int flen, const unsigned char *from, 
+static int cluster_labs_rsa_priv_enc(int flen, const unsigned char *from,
 		unsigned char *to, RSA *rsa, int padding);
-static int cluster_labs_rsa_priv_dec(int flen, const unsigned char *from, 
+static int cluster_labs_rsa_priv_dec(int flen, const unsigned char *from,
 		unsigned char *to, RSA *rsa, int padding);
 static int cluster_labs_rsa_mod_exp(BIGNUM *r0, const BIGNUM *I, RSA *rsa);
 #endif
@@ -113,15 +113,15 @@ static int cluster_labs_mod_exp_dsa(DSA *dsa, BIGNUM *r, BIGNUM *a,
 		const BIGNUM *p, const BIGNUM *m, BN_CTX *ctx,
 		BN_MONT_CTX *m_ctx);
 #endif
-								
+
 /* DH stuff */
 #ifndef OPENSSL_NO_DH
 /* This function is alised to mod_exp (with the DH and mont dropped). */
-static int cluster_labs_mod_exp_dh(const DH *dh, BIGNUM *r, const BIGNUM *a, const BIGNUM *p, 
+static int cluster_labs_mod_exp_dh(const DH *dh, BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
 		const BIGNUM *m, BN_CTX *ctx, BN_MONT_CTX *m_ctx);
 #endif
-		
-/* RANDOM stuff */						
+
+/* RANDOM stuff */
 static int cluster_labs_rand_bytes(unsigned char *buf, int num);
 
 /* The definitions for control commands specific to this engine */
@@ -171,7 +171,7 @@ static DSA_METHOD cluster_labs_dsa =
 	0, 				/* flags */
 	NULL 				/* app_data */
 	};
-#endif	
+#endif
 
 /* Our internal DH_METHOD that we provide pointers to */
 #ifndef OPENSSL_NO_DH
@@ -186,8 +186,8 @@ static DH_METHOD cluster_labs_dh =
 	0,				/* flags */
 	NULL				/* app_data */
 	};
-#endif	
-	
+#endif
+
 static RAND_METHOD cluster_labs_rand =
 	{
 	/* "Cluster Labs RAND method", */
@@ -197,7 +197,7 @@ static RAND_METHOD cluster_labs_rand =
 	NULL,				/* add */
 	cluster_labs_rand_bytes,	/* pseudorand */
 	NULL,				/* status */
-	};	
+	};
 
 static const char *engine_cluster_labs_id = "cluster_labs";
 static const char *engine_cluster_labs_name = "Cluster Labs hardware engine support";
@@ -206,7 +206,7 @@ static const char *engine_cluster_labs_name = "Cluster Labs hardware engine supp
 /*-----------------------*/
 static int bind_helper(ENGINE *e)
 	{
-	
+
 	if(!ENGINE_set_id(e, engine_cluster_labs_id) ||
 			!ENGINE_set_name(e, engine_cluster_labs_name) ||
 #ifndef OPENSSL_NO_RSA
@@ -229,7 +229,7 @@ static int bind_helper(ENGINE *e)
 	ERR_load_CL_strings();
 	return 1;
 	}
-	
+
 #ifndef ENGINE_DYNAMIC_SUPPORT
 static ENGINE *engine_cluster_labs(void)
 	{
@@ -252,7 +252,7 @@ void ENGINE_load_cluster_labs(void)
 	{
 
 	ENGINE *cluster_labs = engine_cluster_labs();
-	
+
 	if(!cluster_labs) return;
 	ENGINE_add(cluster_labs);
 	ENGINE_free(cluster_labs);
@@ -262,7 +262,7 @@ void ENGINE_load_cluster_labs(void)
 
 static int cluster_labs_destroy(ENGINE *e)
 	{
-	
+
 	ERR_unload_CL_strings();
 	return 1;
 	}
@@ -299,20 +299,20 @@ int cluster_labs_init(ENGINE *e)
 	cl_mod_exp_crt			*p3;
 	cl_rsa_mod_exp			*p4;
 	cl_rsa_priv_enc			*p5;
-	cl_rsa_priv_dec			*p6;	
+	cl_rsa_priv_dec			*p6;
 	cl_rsa_pub_enc			*p7;
 	cl_rsa_pub_dec			*p8;
 	cl_rand_bytes			*p20;
-	cl_dsa_sign			*p30;	
-	cl_dsa_verify			*p31;		
-	
+	cl_dsa_sign			*p30;
+	cl_dsa_verify			*p31;
+
 	/* engine already loaded */
 	if(cluster_labs_dso != NULL)
 		{
 		CLerr(CL_F_CLUSTER_LABS_INIT,CL_R_ALREADY_LOADED);
 		goto err;
 		}
-	/* try to load engine	 */	
+	/* try to load engine	 */
 	cluster_labs_dso = DSO_load(NULL, CLUSTER_LABS_LIB_NAME, NULL,0);
 	if(cluster_labs_dso == NULL)
 		{
@@ -323,11 +323,11 @@ int cluster_labs_init(ENGINE *e)
 	if(	!(p1 = (cl_engine_init *)DSO_bind_func(
 				cluster_labs_dso, CLUSTER_LABS_F1)) ||
 		!(p2 = (cl_mod_exp *)DSO_bind_func(
-				cluster_labs_dso, CLUSTER_LABS_F2)) ||			
+				cluster_labs_dso, CLUSTER_LABS_F2)) ||
 		!(p3 = (cl_mod_exp_crt *)DSO_bind_func(
-				cluster_labs_dso, CLUSTER_LABS_F3)) ||				
+				cluster_labs_dso, CLUSTER_LABS_F3)) ||
 		!(p4 = (cl_rsa_mod_exp *)DSO_bind_func(
-				cluster_labs_dso, CLUSTER_LABS_F4)) ||				
+				cluster_labs_dso, CLUSTER_LABS_F4)) ||
 		!(p5 = (cl_rsa_priv_enc *)DSO_bind_func(
 				cluster_labs_dso, CLUSTER_LABS_F5)) ||
 		!(p6 = (cl_rsa_priv_dec *)DSO_bind_func(
@@ -346,51 +346,51 @@ int cluster_labs_init(ENGINE *e)
 		CLerr(CL_F_CLUSTER_LABS_INIT,CL_R_DSO_FAILURE);
 		goto err;
 		}
-		
+
 	/* copy function pointers */
 	p_cl_engine_init		= p1;
 	p_cl_mod_exp			= p2;
-	p_cl_mod_exp_crt		= p3;	
+	p_cl_mod_exp_crt		= p3;
 	p_cl_rsa_mod_exp 		= p4;
 	p_cl_rsa_priv_enc	 	= p5;
 	p_cl_rsa_priv_dec	 	= p6;
 	p_cl_rsa_pub_enc	 	= p7;
 	p_cl_rsa_pub_dec	 	= p8;
-	p_cl_rand_bytes			= p20;	
+	p_cl_rand_bytes			= p20;
 	p_cl_dsa_sign			= p30;
-	p_cl_dsa_verify			= p31;	
-	
-	
-	
+	p_cl_dsa_verify			= p31;
+
+
+
 	/* cluster labs engine init */
 	if(p_cl_engine_init()== 0){
-		CLerr(CL_F_CLUSTER_LABS_INIT,CL_R_INIT_FAILED);		
+		CLerr(CL_F_CLUSTER_LABS_INIT,CL_R_INIT_FAILED);
 		goto err;
 	}
 
 	return(1);
 
-err:	
+err:
 	/* reset all pointers */
 	if(cluster_labs_dso)
 		DSO_free(cluster_labs_dso);
 
 	cluster_labs_dso		= NULL;
-	p_cl_engine_init		= NULL;	
+	p_cl_engine_init		= NULL;
 	p_cl_mod_exp			= NULL;
 	p_cl_mod_exp_crt		= NULL;
 	p_cl_rsa_mod_exp		= NULL;
 	p_cl_rsa_priv_enc		= NULL;
-	p_cl_rsa_priv_dec		= NULL;	
+	p_cl_rsa_priv_dec		= NULL;
 	p_cl_rsa_pub_enc		= NULL;
-	p_cl_rsa_pub_dec		= NULL;	
-	p_cl_rand_bytes			= NULL;	
+	p_cl_rsa_pub_dec		= NULL;
+	p_cl_rand_bytes			= NULL;
 	p_cl_dsa_sign			= NULL;
-	p_cl_dsa_verify			= NULL;	
-	
+	p_cl_dsa_verify			= NULL;
+
 	return(0);
 	}
-	
+
 
 static int cluster_labs_finish(ENGINE *e)
 	{
@@ -405,24 +405,24 @@ static int cluster_labs_finish(ENGINE *e)
 		CLerr(CL_F_CLUSTER_LABS_FINISH,CL_R_DSO_FAILURE);
 		return 0;
 		}
-		
+
 	cluster_labs_dso 		= NULL;
-	p_cl_engine_init		= NULL;		
+	p_cl_engine_init		= NULL;
 	p_cl_mod_exp			= NULL;
-	p_cl_rsa_mod_exp		= NULL;	
-	p_cl_mod_exp_crt		= NULL;	
-	p_cl_rsa_priv_enc		= NULL;	
-	p_cl_rsa_priv_dec		= NULL;	
+	p_cl_rsa_mod_exp		= NULL;
+	p_cl_mod_exp_crt		= NULL;
+	p_cl_rsa_priv_enc		= NULL;
+	p_cl_rsa_priv_dec		= NULL;
 	p_cl_rsa_pub_enc		= NULL;
-	p_cl_rsa_pub_dec		= NULL;	
-	p_cl_rand_bytes			= NULL;		
+	p_cl_rsa_pub_dec		= NULL;
+	p_cl_rand_bytes			= NULL;
 	p_cl_dsa_sign			= NULL;
-	p_cl_dsa_verify			= NULL;	
-	
-	return(1);	
-	
+	p_cl_dsa_verify			= NULL;
+
+	return(1);
+
 	}
-	
+
 static int cluster_labs_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f)())
 	{
 	int initialised = ((cluster_labs_dso == NULL) ? 0 : 1);
@@ -448,7 +448,7 @@ static int cluster_labs_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f)())
 	CLerr(CL_F_CLUSTER_LABS_CTRL,CL_R_COMMAND_NOT_IMPLEMENTED);
 	return 0;
 	}
-	
+
 
 static int cluster_labs_mod_exp(BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
 		const BIGNUM *m, BN_CTX *ctx)
@@ -458,7 +458,7 @@ static int cluster_labs_mod_exp(BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
 		{
 		CLerr(CL_F_CLUSTER_LABS_MOD_EXP,CL_R_NOT_LOADED);
 		return 0;
-		}	
+		}
 	if(p_cl_mod_exp == NULL)
 		{
 		CLerr(CL_F_CLUSTER_LABS_MOD_EXP,CL_R_FUNCTION_NOT_BINDED);
@@ -468,7 +468,7 @@ static int cluster_labs_mod_exp(BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
 	return	p_cl_mod_exp(r, a, p, m, ctx);
 
 	}
-	
+
 static int cluster_labs_mod_exp_crt(BIGNUM *r, BIGNUM *a, const BIGNUM *p,
 		const BIGNUM *q, const BIGNUM *dmp1, const BIGNUM *dmq1,
 		const BIGNUM *iqmp, BN_CTX *ctx)
@@ -476,74 +476,74 @@ static int cluster_labs_mod_exp_crt(BIGNUM *r, BIGNUM *a, const BIGNUM *p,
 
 	if(cluster_labs_dso == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_MOD_EXP_CRT,CL_R_NOT_LOADED);		
+		CLerr(CL_F_CLUSTER_LABS_MOD_EXP_CRT,CL_R_NOT_LOADED);
 		return 0;
 		}
 	if(p_cl_mod_exp_crt == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_MOD_EXP_CRT,CL_R_FUNCTION_NOT_BINDED);		
+		CLerr(CL_F_CLUSTER_LABS_MOD_EXP_CRT,CL_R_FUNCTION_NOT_BINDED);
 		return 0;
 		}
-	
+
 	return	p_cl_mod_exp_crt(r, a, p, q,dmp1, dmq1, iqmp, ctx);
-	
+
 	}
-	
+
 static int cluster_labs_rsa_mod_exp(BIGNUM *r0, const BIGNUM *I, RSA *rsa)
 	{
 
 	if(cluster_labs_dso == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_RSA_MOD_EXP,CL_R_NOT_LOADED);		
+		CLerr(CL_F_CLUSTER_LABS_RSA_MOD_EXP,CL_R_NOT_LOADED);
 		return 0;
 		}
 	if(p_cl_rsa_mod_exp == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_RSA_MOD_EXP,CL_R_FUNCTION_NOT_BINDED);				
+		CLerr(CL_F_CLUSTER_LABS_RSA_MOD_EXP,CL_R_FUNCTION_NOT_BINDED);
 		return 0;
 		}
 
 	return p_cl_rsa_mod_exp(r0, I, rsa);
 
 	}
-	
+
 static DSA_SIG *cluster_labs_dsa_sign(const unsigned char *dgst, int dlen, DSA *dsa)
 	{
 
 	if(cluster_labs_dso == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_DSA_SIGN,CL_R_NOT_LOADED);		
+		CLerr(CL_F_CLUSTER_LABS_DSA_SIGN,CL_R_NOT_LOADED);
 		return 0;
 		}
 	if(p_cl_dsa_sign == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_DSA_SIGN,CL_R_FUNCTION_NOT_BINDED);				
+		CLerr(CL_F_CLUSTER_LABS_DSA_SIGN,CL_R_FUNCTION_NOT_BINDED);
 		return 0;
 		}
 
 	return p_cl_dsa_sign(dgst, dlen, dsa);
-	
+
 	}
-	
+
 static int cluster_labs_dsa_verify(const unsigned char *dgst, int dgst_len,
 				DSA_SIG *sig, DSA *dsa)
 	{
 
 	if(cluster_labs_dso == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_DSA_VERIFY,CL_R_NOT_LOADED);		
+		CLerr(CL_F_CLUSTER_LABS_DSA_VERIFY,CL_R_NOT_LOADED);
 		return 0;
 		}
-	
+
 	if(p_cl_dsa_verify == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_DSA_VERIFY,CL_R_FUNCTION_NOT_BINDED);				
+		CLerr(CL_F_CLUSTER_LABS_DSA_VERIFY,CL_R_FUNCTION_NOT_BINDED);
 		return 0;
 		}
 
 	return p_cl_dsa_verify(dgst, dgst_len, sig, dsa);
-	
-	}			
+
+	}
 
 static int cluster_labs_dsa_mod_exp(DSA *dsa, BIGNUM *rr, BIGNUM *a1,
 		BIGNUM *p1, BIGNUM *a2, BIGNUM *p2, BIGNUM *m,
@@ -551,7 +551,7 @@ static int cluster_labs_dsa_mod_exp(DSA *dsa, BIGNUM *rr, BIGNUM *a1,
 	{
 	BIGNUM t;
 	int status = 0;
-		
+
 	BN_init(&t);
 	/* let rr = a1 ^ p1 mod m */
 	if (!cluster_labs_mod_exp(rr,a1,p1,m,ctx)) goto end;
@@ -562,7 +562,7 @@ static int cluster_labs_dsa_mod_exp(DSA *dsa, BIGNUM *rr, BIGNUM *a1,
 	status = 1;
 end:
 	BN_free(&t);
-	
+
 	return(1);
 
 	}
@@ -573,14 +573,14 @@ static int cluster_labs_mod_exp_dsa(DSA *dsa, BIGNUM *r, BIGNUM *a,
 	{
 	return 	cluster_labs_mod_exp(r, a, p, m, ctx);
 	}
-	
+
 /* This function is aliased to mod_exp (with the mont stuff dropped). */
 static int cluster_labs_mod_exp_mont(BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
 		const BIGNUM *m, BN_CTX *ctx, BN_MONT_CTX *m_ctx)
 	{
 	return	cluster_labs_mod_exp(r, a, p, m, ctx);
 	}
-	
+
 
 /* This function is aliased to mod_exp (with the dh and mont dropped). */
 static int cluster_labs_mod_exp_dh(const DH *dh, BIGNUM *r, const BIGNUM *a, const BIGNUM *p,
@@ -596,77 +596,77 @@ static int cluster_labs_rsa_pub_enc(int flen, const unsigned char *from,
 
 	if(cluster_labs_dso == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_RSA_PUB_ENC,CL_R_NOT_LOADED);		
+		CLerr(CL_F_CLUSTER_LABS_RSA_PUB_ENC,CL_R_NOT_LOADED);
 		return 0;
 		}
 	if(p_cl_rsa_priv_enc == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_RSA_PUB_ENC,CL_R_FUNCTION_NOT_BINDED);				
+		CLerr(CL_F_CLUSTER_LABS_RSA_PUB_ENC,CL_R_FUNCTION_NOT_BINDED);
 		return 0;
 		}
-		
+
 	return 	p_cl_rsa_pub_enc(flen, from, to, rsa, padding);
-	
-	}  
-	     
+
+	}
+
 static int cluster_labs_rsa_pub_dec(int flen, const unsigned char *from,
 	     unsigned char *to, RSA *rsa, int padding)
 	{
 
 	if(cluster_labs_dso == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_RSA_PUB_DEC,CL_R_NOT_LOADED);		
+		CLerr(CL_F_CLUSTER_LABS_RSA_PUB_DEC,CL_R_NOT_LOADED);
 		return 0;
 		}
 	if(p_cl_rsa_priv_enc == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_RSA_PUB_DEC,CL_R_FUNCTION_NOT_BINDED);				
+		CLerr(CL_F_CLUSTER_LABS_RSA_PUB_DEC,CL_R_FUNCTION_NOT_BINDED);
 		return 0;
 		}
-		
+
 	return 	p_cl_rsa_pub_dec(flen, from, to, rsa, padding);
-	
-	}  
+
+	}
 
 
-static int cluster_labs_rsa_priv_enc(int flen, const unsigned char *from, 
+static int cluster_labs_rsa_priv_enc(int flen, const unsigned char *from,
 		unsigned char *to, RSA *rsa, int padding)
 	{
 
 	if(cluster_labs_dso == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_RSA_PRIV_ENC,CL_R_NOT_LOADED);		
+		CLerr(CL_F_CLUSTER_LABS_RSA_PRIV_ENC,CL_R_NOT_LOADED);
 		return 0;
 		}
 
 	if(p_cl_rsa_priv_enc == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_RSA_PRIV_ENC,CL_R_FUNCTION_NOT_BINDED);				
+		CLerr(CL_F_CLUSTER_LABS_RSA_PRIV_ENC,CL_R_FUNCTION_NOT_BINDED);
 		return 0;
 		}
-		
-	return 	p_cl_rsa_priv_enc(flen, from, to, rsa, padding);
-	
-	}  
 
-static int cluster_labs_rsa_priv_dec(int flen, const unsigned char *from, 
+	return 	p_cl_rsa_priv_enc(flen, from, to, rsa, padding);
+
+	}
+
+static int cluster_labs_rsa_priv_dec(int flen, const unsigned char *from,
 		unsigned char *to, RSA *rsa, int padding)
 	{
-	
+
 	if(cluster_labs_dso == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_RSA_PRIV_DEC,CL_R_NOT_LOADED);		
+		CLerr(CL_F_CLUSTER_LABS_RSA_PRIV_DEC,CL_R_NOT_LOADED);
 		return 0;
 		}
 	if(p_cl_rsa_priv_dec == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_RSA_PRIV_DEC,CL_R_FUNCTION_NOT_BINDED);				
+		CLerr(CL_F_CLUSTER_LABS_RSA_PRIV_DEC,CL_R_FUNCTION_NOT_BINDED);
 		return 0;
 		}
 
 	return 	p_cl_rsa_priv_dec(flen, from, to, rsa, padding);
-		
-	}  
+
+	}
 
 /************************************************************************************
 * Symmetric algorithms
@@ -681,12 +681,12 @@ static int cluster_labs_rand_bytes(unsigned char *buf, int num){
 
 	if(cluster_labs_dso == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_RAND_BYTES,CL_R_NOT_LOADED);		
+		CLerr(CL_F_CLUSTER_LABS_RAND_BYTES,CL_R_NOT_LOADED);
 		return 0;
 		}
 	if(p_cl_mod_exp_crt == NULL)
 		{
-		CLerr(CL_F_CLUSTER_LABS_RAND_BYTES,CL_R_FUNCTION_NOT_BINDED);				
+		CLerr(CL_F_CLUSTER_LABS_RAND_BYTES,CL_R_FUNCTION_NOT_BINDED);
 		return 0;
 		}
 
@@ -709,13 +709,13 @@ static int bind_fn(ENGINE *e, const char *id)
 		fprintf(stderr, "bind_fn return(1) first\n");
 		return 0;
 		}
-	fprintf(stderr, "bind_fn return(1)\n");		
+	fprintf(stderr, "bind_fn return(1)\n");
 	return 1;
 	}
 IMPLEMENT_DYNAMIC_CHECK_FN()
 IMPLEMENT_DYNAMIC_BIND_FN(bind_fn)
 #endif /* ENGINE_DYNAMIC_SUPPORT */
-						
+
 #endif /* !NO_HW_CLUSTER_LABS */
 #endif /* !NO_HW */
 

@@ -2,7 +2,7 @@
 
 # $NetBSD: heimdal2netbsd,v 1.12 2008/03/22 13:08:21 mlelstv Exp $
 
-if [ \! -f kuser/kinit.c ]; then 
+if [ \! -f kuser/kinit.c ]; then
 	echo "`basename $0`: should be run in top src directory" 1>&2
 	exit 1
 fi

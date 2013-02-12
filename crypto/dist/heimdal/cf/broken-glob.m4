@@ -20,7 +20,7 @@ NULL, NULL);
 ]])],[:],[ac_cv_func_glob_working=no]))
 
 if test "$ac_cv_func_glob_working" = yes; then
-	AC_DEFINE(HAVE_GLOB, 1, [define if you have a glob() that groks 
+	AC_DEFINE(HAVE_GLOB, 1, [define if you have a glob() that groks
 	GLOB_BRACE, GLOB_NOCHECK, GLOB_QUOTE, GLOB_TILDE, and GLOB_LIMIT])
 fi
 if test "$ac_cv_func_glob_working" = yes; then

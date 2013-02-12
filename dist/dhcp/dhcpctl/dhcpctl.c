@@ -90,7 +90,7 @@ dhcpctl_status dhcpctl_initialize ()
    synchronous
    returns nonzero status code if it didn't connect, zero otherwise
    stores connection handle through connection, which can be used
-   for subsequent access to the specified server. 
+   for subsequent access to the specified server.
    server_name is the name of the server, and port is the TCP
    port on which it is listening.
    authinfo is the handle to an object containing authentication
@@ -154,7 +154,7 @@ dhcpctl_status dhcpctl_wait_for_completion (dhcpctl_handle h,
 
    synchronous
    returns zero if the call succeeded, a nonzero status code if
-   it didn't. 
+   it didn't.
    result is the address of an empty data string (initialized
    with bzero or cleared with data_string_forget).   On
    successful completion, the addressed data string will contain
@@ -236,7 +236,7 @@ dhcpctl_status dhcpctl_get_boolean (int *result,
 	isc_result_t status;
 	dhcpctl_data_string data = (dhcpctl_data_string)0;
 	int rv;
-	
+
 	status = dhcpctl_get_value (&data, h, value_name);
 	if (status != ISC_R_SUCCESS)
 		return status;

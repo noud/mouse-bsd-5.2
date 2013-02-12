@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -91,7 +91,7 @@ static int cms_copy_content(BIO *out, BIO *in, unsigned int flags)
 				}
 			break;
 			}
-				
+
 		if (tmpout)
 			BIO_write(tmpout, buf, i);
 	}
@@ -130,7 +130,7 @@ static void do_free_upto(BIO *f, BIO *upto)
 	if (upto)
 		{
 		BIO *tbio;
-		do 
+		do
 			{
 			tbio = BIO_pop(f);
 			BIO_free(f);
@@ -400,7 +400,7 @@ int CMS_verify(CMS_ContentInfo *cms, STACK_OF(X509) *certs,
 		}
 	else
 		tmpin = dcont;
-		
+
 
 	cmsbio=CMS_dataInit(cms, tmpin);
 	if (!cmsbio)
@@ -426,7 +426,7 @@ int CMS_verify(CMS_ContentInfo *cms, STACK_OF(X509) *certs,
 	ret = 1;
 
 	err:
-	
+
 	if (dcont && (tmpin == dcont))
 		do_free_upto(cmsbio, dcont);
 	else
@@ -637,7 +637,7 @@ int CMS_decrypt_set1_pkey(CMS_ContentInfo *cms, EVP_PKEY *pk, X509 *cert)
 
 	}
 
-int CMS_decrypt_set1_key(CMS_ContentInfo *cms, 
+int CMS_decrypt_set1_key(CMS_ContentInfo *cms,
 				unsigned char *key, size_t keylen,
 				unsigned char *id, size_t idlen)
 	{
@@ -675,7 +675,7 @@ int CMS_decrypt_set1_key(CMS_ContentInfo *cms,
 	return 0;
 
 	}
-	
+
 int CMS_decrypt(CMS_ContentInfo *cms, EVP_PKEY *pk, X509 *cert,
 				BIO *dcont, BIO *out,
 				unsigned int flags)

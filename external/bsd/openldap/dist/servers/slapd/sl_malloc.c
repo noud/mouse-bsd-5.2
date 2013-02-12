@@ -404,14 +404,14 @@ slap_sl_realloc(void *ptr, ber_len_t size, void *ctx)
 		/* Never shrink blocks */
 		if (size <= p[-1]) {
 			newptr = p;
-	
+
 		/* If reallocing the last block, we can grow it */
 		} else if ((char *)ptr + p[-1] == sh->sh_last &&
 			(char *)ptr + size < (char *)sh->sh_end ) {
 			newptr = p;
 			sh->sh_last = (char *)sh->sh_last + size - p[-1];
 			p[-1] = size;
-	
+
 		/* Nowhere to grow, need to alloc and copy */
 		} else {
 			newptr = slap_sl_malloc(size, ctx);

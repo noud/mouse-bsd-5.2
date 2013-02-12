@@ -1,15 +1,15 @@
 # TRANSPORT(5)                                                      TRANSPORT(5)
-# 
+#
 # NAME
 #        transport - Postfix transport table format
-# 
+#
 # SYNOPSIS
 #        postmap /etc/postfix/transport
-# 
+#
 #        postmap -q "string" /etc/postfix/transport
-# 
+#
 #        postmap -q - /etc/postfix/transport <inputfile
-# 
+#
 # DESCRIPTION
 #        The  optional  transport(5) table specifies a mapping from
 #        email addresses to message delivery transports  and  next-

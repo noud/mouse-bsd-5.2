@@ -20,11 +20,11 @@ public:
     {
 	timestamp = QDateTime::currentDateTime();
     }
-    
+
     QString getMsg() const { return msg; }
     int getPriority() const { return priority; }
     QDateTime getTimestamp() const { return timestamp; }
-    
+
 private:
     QString msg;
     int priority;

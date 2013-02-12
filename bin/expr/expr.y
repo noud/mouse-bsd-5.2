@@ -63,7 +63,7 @@ int main(int, const char * const *);
 %token STRING
 %left SPEC_OR
 %left SPEC_AND
-%left COMPARE 
+%left COMPARE
 %left ADD_SUB_OPERATOR
 %left MUL_DIV_MOD_OPERATOR
 %left SPEC_REG
@@ -117,8 +117,8 @@ expr:	item { $$ = $1; }
 			yyerror("%s", errbuf);
 			/* NOT REACHED */
 		}
-		
-		/* compare string against pattern --  remember that patterns 
+
+		/* compare string against pattern --  remember that patterns
 		   are anchored to the beginning of the line */
 		if (regexec(&rp, $1, 2, rm, 0) == 0 && rm[0].rm_so == 0) {
 			char *val;
@@ -146,7 +146,7 @@ expr:	item { $$ = $1; }
 		/* Returns the results of addition, subtraction */
 		char *val;
 		int64_t res;
-		
+
 		res = perform_arith_op($1, $2, $3);
 		(void) asprintf(&val, "%lld", (long long int) res);
 		if (val == NULL)
@@ -155,8 +155,8 @@ expr:	item { $$ = $1; }
                 }
 
 	| expr MUL_DIV_MOD_OPERATOR expr = {
-		/* 
-		 * Returns the results of multiply, divide or remainder of 
+		/*
+		 * Returns the results of multiply, divide or remainder of
 		 * numeric-valued arguments.
 		 */
 		char *val;
@@ -197,7 +197,7 @@ expr:	item { $$ = $1; }
 			r = 0;
 		}
 
-		switch($2[0]) {	
+		switch($2[0]) {
 		case '=': /* equal */
 			res = (l == r);
 			break;
@@ -309,36 +309,36 @@ perform_arith_op(const char *left, const char *op, const char *right)
 
 	switch(op[0]) {
 	case '+':
-		/* 
+		/*
 		 * Do the op into an unsigned to avoid overflow and then cast
-		 * back to check the resulting signage. 
+		 * back to check the resulting signage.
 		 */
 		temp = l + r;
 		res = (int64_t) temp;
 		/* very simplistic check for over-& underflow */
 		if ((res < 0 && l > 0 && r > 0)
-	  	    || (res > 0 && l < 0 && r < 0)) 
+	  	    || (res > 0 && l < 0 && r < 0))
 			yyerror("integer overflow or underflow occurred for "
                             "operation '%s %s %s'", left, op, right);
 		break;
 	case '-':
-		/* 
+		/*
 		 * Do the op into an unsigned to avoid overflow and then cast
-		 * back to check the resulting signage. 
+		 * back to check the resulting signage.
 		 */
 		temp = l - r;
 		res = (int64_t) temp;
 		/* very simplistic check for over-& underflow */
 		if ((res < 0 && l > 0 && l > r)
-		    || (res > 0 && l < 0 && l < r) ) 
+		    || (res > 0 && l < 0 && l < r) )
 			yyerror("integer overflow or underflow occurred for "
 			    "operation '%s %s %s'", left, op, right);
 		break;
 	case '/':
-		if (r == 0) 
+		if (r == 0)
 			yyerror("second argument to '%s' must not be zero", op);
 		res = l / r;
-			
+
 		break;
 	case '%':
 		if (r == 0)
@@ -351,7 +351,7 @@ perform_arith_op(const char *left, const char *op, const char *right)
 			res = 0;
 			break;
 		}
-				
+
 		sign = 1;
 		if (l < 0)
 			sign *= -1;
@@ -364,7 +364,7 @@ perform_arith_op(const char *left, const char *op, const char *right)
 		 * complement arithmetic. If the signs don't match or the
 		 * result was 0 on 2's complement this overflowed.
 		 */
-		if ((res < 0 && sign > 0) || (res > 0 && sign < 0) || 
+		if ((res < 0 && sign > 0) || (res > 0 && sign < 0) ||
 		    (res == 0))
 			yyerror("integer overflow or underflow occurred for "
 			    "operation '%s %s %s'", left, op, right);
@@ -377,7 +377,7 @@ perform_arith_op(const char *left, const char *op, const char *right)
 static const char *x = "|&=<>+-*/%:()";
 static const int x_token[] = {
 	SPEC_OR, SPEC_AND, COMPARE, COMPARE, COMPARE, ADD_SUB_OPERATOR,
-	ADD_SUB_OPERATOR, MUL_DIV_MOD_OPERATOR, MUL_DIV_MOD_OPERATOR, 
+	ADD_SUB_OPERATOR, MUL_DIV_MOD_OPERATOR, MUL_DIV_MOD_OPERATOR,
 	MUL_DIV_MOD_OPERATOR, SPEC_REG, LEFT_PARENT, RIGHT_PARENT
 };
 

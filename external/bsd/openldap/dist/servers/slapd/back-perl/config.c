@@ -38,7 +38,7 @@ perl_back_db_config(
 	int count ;
 	int args;
 	int return_code;
-	
+
 
 	if ( strcasecmp( argv[0], "perlModule" ) == 0 ) {
 		if ( argc < 2 ) {

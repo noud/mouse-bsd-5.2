@@ -282,7 +282,7 @@ icmp6_print(const u_char *bp, u_int length, const u_char *bp2, int fragmented)
                       ICMP6_HADISCOV_REPLY ||
                       ICMP6_MOBILEPREFIX_ADVERT ))
             printf(", length %u", length);
-                      
+
 	switch (dp->icmp6_type) {
 	case ICMP6_DST_UNREACH:
 		TCHECK(oip->ip6_dst);
@@ -519,7 +519,7 @@ icmp6_print(const u_char *bp, u_int length, const u_char *bp2, int fragmented)
                 return;
         }
         if (!vflag)
-            printf(", length %u", length); 
+            printf(", length %u", length);
 	return;
 trunc:
 	fputs("[|icmp6]", stdout);

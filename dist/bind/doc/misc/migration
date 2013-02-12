@@ -168,7 +168,7 @@ cause resolution to slow down dramatically or fail.
 3.2. Zone Transfers
 
 Outgoing zone transfers now use the "many-answers" format by default.
-This format is not understood by certain old versions of BIND 4.  
+This format is not understood by certain old versions of BIND 4.
 You can work around this problem using the option "transfer-format
 one-answer;", but since these old versions all have known security
 problems, the correct fix is to upgrade the slave servers.

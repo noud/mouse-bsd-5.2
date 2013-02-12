@@ -276,7 +276,7 @@ SM_STATE(AUTH_PAE, AUTHENTICATED)
 
 	if (sm->auth_pae_state == AUTH_PAE_AUTHENTICATING && sm->authSuccess)
 		sm->authAuthSuccessesWhileAuthenticating++;
-							
+
 	SM_ENTRY_MA(AUTH_PAE, AUTHENTICATED, auth_pae);
 
 	sm->authPortStatus = Authorized;

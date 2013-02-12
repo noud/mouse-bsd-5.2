@@ -157,7 +157,7 @@ void bootp (packet)
 				     packet -> options, options,
 				     &lease -> scope,
 				     hp -> group, lease -> subnet -> group);
-	
+
 	/* Drop the request if it's not allowed for this client. */
 	if ((oc = lookup_option (&server_universe, options, SV_ALLOW_BOOTP)) &&
 	    !evaluate_boolean_option_cache (&ignorep, packet, lease,
@@ -167,7 +167,7 @@ void bootp (packet)
 		if (!ignorep)
 			log_info ("%s: bootp disallowed", msgbuf);
 		goto out;
-	} 
+	}
 
 	if ((oc = lookup_option (&server_universe,
 				 options, SV_ALLOW_BOOTING)) &&

@@ -52,7 +52,7 @@
 
 /*
  * A simple database driver for LDAP
- */ 
+ */
 
 /* enough for name with 8 labels of max length */
 #define MAXNAMELEN 519
@@ -241,7 +241,7 @@ ldapdb_search(const char *zone, const char *name, void *dbdata, void *retdata)
 	if (*ldp == NULL) {
 		ldapdb_bind(data, ldp);
 		if (*ldp == NULL) {
-			isc_log_write(ns_g_lctx, NS_LOGCATEGORY_GENERAL, NS_LOGMODULE_SERVER, ISC_LOG_ERROR,	
+			isc_log_write(ns_g_lctx, NS_LOGCATEGORY_GENERAL, NS_LOGMODULE_SERVER, ISC_LOG_ERROR,
 				      "LDAP sdb zone '%s': bind failed", zone);
 			return (ISC_R_FAILURE);
 		}
@@ -267,7 +267,7 @@ ldapdb_search(const char *zone, const char *name, void *dbdata, void *retdata)
 	}
 
 	if (*ldp == NULL || msgid == -1) {
-		isc_log_write(ns_g_lctx, NS_LOGCATEGORY_GENERAL, NS_LOGMODULE_SERVER, ISC_LOG_ERROR,	
+		isc_log_write(ns_g_lctx, NS_LOGCATEGORY_GENERAL, NS_LOGMODULE_SERVER, ISC_LOG_ERROR,
 			      "LDAP sdb zone '%s': search failed, filter %s", zone, fltr);
 		return (ISC_R_FAILURE);
 	}
@@ -279,7 +279,7 @@ ldapdb_search(const char *zone, const char *name, void *dbdata, void *retdata)
 
 		/* not supporting continuation references at present */
 		if (errno != LDAP_RES_SEARCH_ENTRY) {
-			isc_log_write(ns_g_lctx, NS_LOGCATEGORY_GENERAL, NS_LOGMODULE_SERVER, ISC_LOG_ERROR,	
+			isc_log_write(ns_g_lctx, NS_LOGCATEGORY_GENERAL, NS_LOGMODULE_SERVER, ISC_LOG_ERROR,
 				      "LDAP sdb zone '%s': ldap_result returned %d", zone, errno);
 			ldap_msgfree(res);
 			return (ISC_R_FAILURE);
@@ -289,7 +289,7 @@ ldapdb_search(const char *zone, const char *name, void *dbdata, void *retdata)
 		e = ldap_first_entry(ld, res);
 		if (e == NULL) {
 			ldap_msgfree(res);
-			isc_log_write(ns_g_lctx, NS_LOGCATEGORY_GENERAL, NS_LOGMODULE_SERVER, ISC_LOG_ERROR,	
+			isc_log_write(ns_g_lctx, NS_LOGCATEGORY_GENERAL, NS_LOGMODULE_SERVER, ISC_LOG_ERROR,
 				      "LDAP sdb zone '%s': ldap_first_entry failed", zone);
 			return (ISC_R_FAILURE);
                 }
@@ -334,7 +334,7 @@ ldapdb_search(const char *zone, const char *name, void *dbdata, void *retdata)
 						}
 					}
 ;					if (result != ISC_R_SUCCESS) {
-						isc_log_write(ns_g_lctx, NS_LOGCATEGORY_GENERAL, NS_LOGMODULE_SERVER, ISC_LOG_ERROR,	
+						isc_log_write(ns_g_lctx, NS_LOGCATEGORY_GENERAL, NS_LOGMODULE_SERVER, ISC_LOG_ERROR,
 							      "LDAP sdb zone '%s': dns_sdb_put... failed for %s", zone, vals[i]);
 						ldap_value_free(vals);
 #ifndef LDAPDB_RFC1823API
@@ -441,7 +441,7 @@ parseextensions(char *extensions, struct ldapdb_data *data)
 			if (*name == '\0') {
 				return -1;
 			}
-			
+
 			if (!strcasecmp(name, "bindname")) {
 				data->bindname = value;
 			} else if (!strcasecmp(name, "x-bindpw")) {
@@ -570,7 +570,7 @@ ldapdb_create(const char *zone, int argc, char **argv,
 	    (data->bindname != NULL && unhex(data->bindname) == NULL) ||
 	    (data->bindpw != NULL && unhex(data->bindpw) == NULL)) {
 		free_data(data);
-		isc_log_write(ns_g_lctx, NS_LOGCATEGORY_GENERAL, NS_LOGMODULE_SERVER, ISC_LOG_ERROR,	
+		isc_log_write(ns_g_lctx, NS_LOGCATEGORY_GENERAL, NS_LOGMODULE_SERVER, ISC_LOG_ERROR,
 			      "LDAP sdb zone '%s': URL: bad hex values", zone);
 		return (ISC_R_FAILURE);
 	}
@@ -597,7 +597,7 @@ ldapdb_create(const char *zone, int argc, char **argv,
 
 	if (filter == NULL) {
 		sprintf(data->filterall, "(zoneName=%s)", zone);
-		sprintf(data->filterone, "(&(zoneName=%s)(relativeDomainName=", zone); 
+		sprintf(data->filterone, "(&(zoneName=%s)(relativeDomainName=", zone);
 	} else {
 		sprintf(data->filterall, "(&%s(zoneName=%s))", filter, zone);
 		sprintf(data->filterone, "(&%s(zoneName=%s)(relativeDomainName=", filter, zone);
@@ -630,7 +630,7 @@ ldapdb_create(const char *zone, int argc, char **argv,
 static void
 ldapdb_destroy(const char *zone, void *driverdata, void **dbdata) {
 	struct ldapdb_data *data = *dbdata;
-	
+
         UNUSED(zone);
         UNUSED(driverdata);
 

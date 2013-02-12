@@ -44,9 +44,9 @@ operating system (see the section
 .Sx Installing NetBSD by using a diskless setup
 below).
 .Pp
-If you have problems with these or you are installing 
+If you have problems with these or you are installing
 .Nx
-onto the same disk as 
+onto the same disk as
 .Tn Solaris ,
 see the section below on
 .Sx "Manual Installation of NetBSD using Solaris"
@@ -87,10 +87,10 @@ available during the installation process.
 .Pp
 Loading the miniroot onto your raw partition is simple using the
 .Xr dd 1
-command.  Just remember to first uncompress the miniroot image and boot 
+command.  Just remember to first uncompress the miniroot image and boot
 your OS with the
 .Li -s
-flag so that it runs 
+flag so that it runs
 .Dq "single-user"
 and does not attempt to start swapping.
 .(disp
@@ -121,14 +121,14 @@ After transferring the miniroot to disk, bring the system down by:
 .(disp
 .No # Ic halt
 .disp)
-Then boot the miniroot by typing the appropriate command at the 
+Then boot the miniroot by typing the appropriate command at the
 OpenFirmware prompt:
 .(disp
 .No ok Ic "boot disk:b netbsd"
 .disp)
 If you've loaded the miniroot onto some other disk than
 .Li sd0
-use the correct 
+use the correct
 .Pa devalias ,
 such as
 .(disp
@@ -160,9 +160,9 @@ partition size, and parameters used to create the filesystem of your
 root partition, bugs in the bootloader might be triggered and cause this
 method to fail.
 .Pp
-First, copy the 
+First, copy the
 .Pa netbsd-INSTALL.gz
-kernel and bootloader to the root level of your hard drive and halt your 
+kernel and bootloader to the root level of your hard drive and halt your
 system
 .(disp
 .No # Ic "cp binary/kernel/netbsd-INSTALL.gz /"
@@ -176,7 +176,7 @@ At the Open Firmware prompt, boot
 .disp)
 The
 .Li -a
-flag is needed so that the bootloader will ask you to find your 
+flag is needed so that the bootloader will ask you to find your
 installation kernel.
 .(disp
 Rebooting with command: boot disk:a /ofwboot -a
@@ -217,14 +217,14 @@ Skip down to the section on
 .
 (Adapted from Murray Stokely's \*[Lt]murray@osd.bsdi.com\*[Gt] instructions)
 .Pp
-You can use 
-.Tn Solaris 
-to prepare the 
+You can use
+.Tn Solaris
+to prepare the
 .Nx
-user-friendly installer or to perform a full manual installation of 
+user-friendly installer or to perform a full manual installation of
 .Nx .
-If you want to use the user-friendly miniroot installer or RAM disk 
-installation kernel, follow the sections 
+If you want to use the user-friendly miniroot installer or RAM disk
+installation kernel, follow the sections
 .Sx "Installing NetBSD by using the NetBSD miniroot"
 or
 .Sx "Installing NetBSD by using a NetBSD kernel on a Solaris partition" .
@@ -245,9 +245,9 @@ disklabel.  Avoid this by using the -F and -s arguments to newfs.
 The first step is to format and label the disk that you would like to
 use with
 .Nx .
-This can be accomplished with the 
+This can be accomplished with the
 .Xr format 1M
-command in Solaris, which allows you to partition a disk and write a 
+command in Solaris, which allows you to partition a disk and write a
 disklabel.  It also is used to perform a low-level format on SCSI drives.
 You will want to create a root partition and a swap partition.
 Depending on your preferences, you may also wish to create separate
@@ -281,9 +281,9 @@ Formatting...
 done
 Verifying media...
         pass 0 - pattern = 0xc6dec6de
-   8151/19/208  
+   8151/19/208
         pass 1 - pattern = 0x6db6db6d
-   8151/19/208  
+   8151/19/208
 
 Total of 0 defective blocks repaired.
 .No "format\*[Gt]" Ic partition
@@ -309,7 +309,7 @@ Part      Tag    Flag     Cylinders        Size            Blocks
 .Pp
 After your disk has been labeled you need to create file systems on
 your slices.
-The Solaris 
+The Solaris
 .Xr newfs 1M
 command will create ffs file systems that can be used by
 .Nx .
@@ -344,8 +344,8 @@ Now extract the distribution file sets
 .Pp
 Now you should copy the
 .Nx
-second stage bootloader into your new root partition and install the 
-bootblocks using Solaris's 
+second stage bootloader into your new root partition and install the
+bootblocks using Solaris's
 .Xr installboot 1M
 command.
 .(disp
@@ -357,27 +357,27 @@ command.
 .To 2 "Creating NetBSD Device Nodes under Solaris"
 .Em "Creating NetBSD Device Nodes under Solaris"
 .Pp
-This is not a necessary step.  If your 
+This is not a necessary step.  If your
 .Pa /dev
 directory is empty,
 .Xr init 8
-will create a RAM disk with all of the 
-essential device nodes each time the system boots.  If you want to create 
+will create a RAM disk with all of the
+essential device nodes each time the system boots.  If you want to create
 the device nodes on disk, you will need to use the Solaris
 .Xr mknod 1M
-command.  Look in 
+command.  Look in
 .Pa /dev/MAKEDEV
-for the correct names, major and minor numbers, ownership, and 
+for the correct names, major and minor numbers, ownership, and
 permissions.
 .
 .It
 .To 2 "Configuring the NetBSD system from Solaris"
 .Em "Configuring the NetBSD system from Solaris"
 .Pp
-To save effort, you may want to use your favorite Solaris editor 
-to configure some of the files in 
+To save effort, you may want to use your favorite Solaris editor
+to configure some of the files in
 .Pa /etc
-before booting into 
+before booting into
 .Nx
 the first time.  In particular, you should look at
 .Pa /etc/fstab ,
@@ -398,7 +398,7 @@ Now it is time to boot
 .Nx
 for the first time.
 You will boot from your disk using similar syntax as described above in
-.Sx "Setting up Open Firmware" 
+.Sx "Setting up Open Firmware"
 and
 .Sx "Determining how to boot from an SBUS or PCI card" .
 To boot from your first disk, type:

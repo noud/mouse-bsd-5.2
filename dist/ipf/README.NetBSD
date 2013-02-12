@@ -90,7 +90,7 @@ mkdir -p /tmp/cvslock
 export CVSROOT="${WORK}/cvsroot"
 
 
-# Checkout a working copy 
+# Checkout a working copy
 cd ${WORK}
 rm -rf src
 cvs co -P src
@@ -145,7 +145,7 @@ cvs diff -u -kk -rDARRENR $A | less
 cvs diff -u -kk -rDARRENR | less
 
 # src/sys/dist/ipf
-cd ${WORK}/src/sys/dist/ipf 
+cd ${WORK}/src/sys/dist/ipf
 cvs update -kk -j${VEROLD} -j${VERNEW} -d
 B=`cvs update | grep ^C | awk '{ print $2 }'`
 cvs update | grep ^C
@@ -157,7 +157,7 @@ cvs diff -u -rDARRENR | less
 
 # src/sys/lkm/netinet/if_ipl
 cd ${WORK}/src/sys/lkm/netinet/if_ipl
-cvs update -kk -j${VEROLD} -j${VERNEW} -d 
+cvs update -kk -j${VEROLD} -j${VERNEW} -d
 C=`cvs update | grep ^C | awk '{ print $2 }'`
 cvs update | grep ^C
 ##vim $C
@@ -243,12 +243,12 @@ cd ${WORK}/src/dist/ipf
 cvs update -kk -j${VEROLD} -j${VERNEW} -d
 cvs update | grep ^C
 
-cd ${WORK}/src/sys/dist/ipf 
+cd ${WORK}/src/sys/dist/ipf
 cvs update -kk -j${VEROLD} -j${VERNEW} -d
 cvs update | grep ^C
 
 cd ${WORK}/src/sys/lkm/netinet/if_ipl
-cvs update -kk -j${VEROLD} -j${VERNEW} -d 
+cvs update -kk -j${VEROLD} -j${VERNEW} -d
 cvs update | grep ^C
 
 cd ${WORK}/src/regress/sys/kern/ipf
@@ -310,12 +310,12 @@ cd ${WORK}/src/dist/ipf
 cvs update -kk -j${VEROLD} -j${VERNEW} -d
 cvs update | grep ^C
 
-cd ${WORK}/src/sys/dist/ipf 
+cd ${WORK}/src/sys/dist/ipf
 cvs update -kk -j${VEROLD} -j${VERNEW} -d
 cvs update | grep ^C
 
 cd ${WORK}/src/sys/lkm/netinet/if_ipl
-cvs update -kk -j${VEROLD} -j${VERNEW} -d 
+cvs update -kk -j${VEROLD} -j${VERNEW} -d
 cvs update | grep ^C
 
 cd ${WORK}/src/regress/sys/kern/ipf

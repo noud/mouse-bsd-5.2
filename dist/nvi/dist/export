@@ -11,11 +11,11 @@ date=`date +%Y-%m-%d`
 )
 (cd $dir/docs
     mkdir html
-    for i in edit exref vi.man vi.ref vitut; do 
-	(cd $i; 
+    for i in edit exref vi.man vi.ref vitut; do
+	(cd $i;
 	 make;
 	 rm -f core # grops sometimes dumps core on me
-        ); 
+        );
     done
 )
 (cd $dir

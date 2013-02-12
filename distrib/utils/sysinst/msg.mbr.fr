@@ -93,7 +93,7 @@ Le nombre de cylindres sera déduit de la taille du disque.
 
 message nobiosgeom
 {Sysinst n'a pas pu déterminer automatiquement la géométrie utilisée par le
-BIOS pour votre disque. 
+BIOS pour votre disque.
 La géométrie physique est %d cylindres %d secteurs %d têtes\n}
 
 message biosguess
@@ -156,7 +156,7 @@ message Delete_partition
 {Supprimer la Partition}
 message Dont_change
 {Ne pas modifier}
-message Other_kind 
+message Other_kind
 {Autre, entrer un chiffre}
 
 

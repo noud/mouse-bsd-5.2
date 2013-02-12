@@ -1,4 +1,4 @@
-# from: Id: Makefile,v 1.12 2001/04/16 14:27:35 bp Exp 
+# from: Id: Makefile,v 1.12 2001/04/16 14:27:35 bp Exp
 
 LIB=		smb
 
@@ -41,7 +41,7 @@ afterinstall: realinstall
 .endif
 
 deinstall-lib:
-	rm -f ${DESTDIR}/${LIBDIR}/lib${LIB}.a 
+	rm -f ${DESTDIR}/${LIBDIR}/lib${LIB}.a
 .if defined(SHLIB_NAME)
 	rm -f ${DESTDIR}/${SHLIBDIR}/${SHLIB_NAME}
 .endif

@@ -402,7 +402,7 @@ jupiter_pps(struct instance *instance)
 
 	/*
 	 * Convert the timespec nanoseconds field to ntp l_fp units.
-	 */ 
+	 */
 	if (instance->pps_handle == 0)
 		return 1;
 	timeout.tv_sec = 0;
@@ -583,7 +583,7 @@ jupiter_receive(struct recvbuf *rbufp)
 			laststime = instance->stime;
 			instance->stime = DS2UI(((struct jpulse *)sp)->stime);
 			if (laststime != 0 && instance->stime - laststime <= 21) {
-				jupiter_debug(peer, "jupiter_receive", 
+				jupiter_debug(peer, "jupiter_receive",
 				"avoided firmware bug (stime %.2f, laststime %.2f)",
 				(double)instance->stime * 0.01, (double)laststime * 0.01);
 				break;

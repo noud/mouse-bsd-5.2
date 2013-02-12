@@ -1606,7 +1606,7 @@ bconfig.h: stamp-h1
 stamp-h1: $(srcdir)/bconfig.h.in $(top_builddir)/config.status
 	@rm -f stamp-h1
 	cd $(top_builddir) && $(SHELL) ./config.status bconfig.h
-$(srcdir)/bconfig.h.in:  $(am__configure_deps) 
+$(srcdir)/bconfig.h.in:  $(am__configure_deps)
 	cd $(top_srcdir) && $(AUTOHEADER)
 	rm -f stamp-h1
 	touch $@
@@ -1822,7 +1822,7 @@ atf-c++/ui.lo: atf-c++/$(am__dirstamp) \
 	atf-c++/$(DEPDIR)/$(am__dirstamp)
 atf-c++/user.lo: atf-c++/$(am__dirstamp) \
 	atf-c++/$(DEPDIR)/$(am__dirstamp)
-libatf-c++.la: $(libatf_c___la_OBJECTS) $(libatf_c___la_DEPENDENCIES) 
+libatf-c++.la: $(libatf_c___la_OBJECTS) $(libatf_c___la_DEPENDENCIES)
 	$(libatf_c___la_LINK) -rpath $(libdir) $(libatf_c___la_OBJECTS) $(libatf_c___la_LIBADD) $(LIBS)
 atf-c/$(am__dirstamp):
 	@$(MKDIR_P) atf-c
@@ -1851,7 +1851,7 @@ atf-c/tcr.lo: atf-c/$(am__dirstamp) atf-c/$(DEPDIR)/$(am__dirstamp)
 atf-c/tp.lo: atf-c/$(am__dirstamp) atf-c/$(DEPDIR)/$(am__dirstamp)
 atf-c/tp_main.lo: atf-c/$(am__dirstamp) \
 	atf-c/$(DEPDIR)/$(am__dirstamp)
-libatf-c.la: $(libatf_c_la_OBJECTS) $(libatf_c_la_DEPENDENCIES) 
+libatf-c.la: $(libatf_c_la_OBJECTS) $(libatf_c_la_DEPENDENCIES)
 	$(LINK) -rpath $(libdir) $(libatf_c_la_OBJECTS) $(libatf_c_la_LIBADD) $(LIBS)
 install-atf_atf_cPROGRAMS: $(atf_atf_c_PROGRAMS)
 	@$(NORMAL_INSTALL)

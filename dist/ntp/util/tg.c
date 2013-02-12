@@ -372,7 +372,7 @@ main(
 	/*
 	 * For WWV/H and default time, carefully set the signal
 	 * generator seconds number to agree with the current time.
-	 */ 
+	 */
 	case WWV:
 		printf("year %d day %d time %02d:%02d:%02d tone %d\n",
 		    year, day, hour, minute, second, tone);
@@ -549,7 +549,7 @@ main(
 				else
 					sec(DATA0);
 				break;
-				
+
 			case DST1:		/* send DST1 bit */
 				ptr--;
 				if (dst)

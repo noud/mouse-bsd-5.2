@@ -71,9 +71,9 @@ REM Did the kernel request a automatic reboot ?
 
 IF (value% AND &02) THEN
   *Set NetBSD$FastBoot 3
- 
+
   REM Clear the automatic reboot flag
- 
+
   SYS "OS_Byte", 162, 80, value% AND &fd
 ENDIF
 

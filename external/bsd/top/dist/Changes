@@ -52,7 +52,7 @@ Fri Nov  2 2007 - wnl (3.7beta3)
 	Added copyright notices to the top of every source and include file.
 	Added copyright information to the man page.
 	Removed a few outdated things from the manifest.
-	Minor changes to sigconv.awk. 
+	Minor changes to sigconv.awk.
 
 Sat Oct 27 2007 - wnl (3.7beta3)
 	Added check for sys_signame at configure time and if it is
@@ -115,7 +115,7 @@ Wed Sep 19 2007 - wnl (3.7beta3)
 	overflows. Remove weighted cpu calculations entirely as it is
 	an anachronism.
 	For Solaris: Moved check for libelf to accomodate older systems.
-	
+
 Sun Sep  9 2007 - wnl (3.7beta2)
 	Documentation changes.  Fixes to sunos5 port.  Added display of
 	thread count and selection by command name to linux port.  Removed
@@ -146,7 +146,7 @@ Wed Sep  5 2007 - wnl (3.7beta1)
 	functions that use bucket hash for uint, pid, and string.  Changed
 	username.c and the sunos and freebsd modules to use these functions.
 	Added the "kernel" information line to the display to show
-	statistics on what the kernel is doing (context switches, forks, 
+	statistics on what the kernel is doing (context switches, forks,
 	traps, etc.).  This requires explicit support by the platform
 	module, currently only freebsd, linux, and sunos.
 
@@ -215,7 +215,7 @@ Mon Oct 24 2005 - wnl (3.6beta3)
 	dynamic creation of tag names to contol color highlighting.
 	These names are partially derived from the tags used to label
 	memory and swap information on the screen, thus are driven by
-	the machine module itself.  Added -T option to list color 
+	the machine module itself.  Added -T option to list color
 	highlighting information.  Help screen now includes the actual
 	list of sort order names.  Incorporated some minor fixes to
 	the main code from the Freebsd source tree.  Fixed bug #1324582.
@@ -304,7 +304,7 @@ Mon Feb 23 2004 - wnl (3.5)
 
 Mon Feb  2 2004 - wnl (3.5rc1)
 	Changed format_k (utils.c) to use MEMTYPE for its parameter.
-	On most systems this is a long, but if the module defines 
+	On most systems this is a long, but if the module defines
 	USE_SIZE_T, this is set to be a size_t.  The sunos5 module
 	now defines it, so that it will work correctly on 64-bit
 	machines.  New "linuxthr" module for rolling up processes
@@ -379,7 +379,7 @@ Fri Apr 17 1998 - wnl (3.5beta8)
 Tue Nov 18 1997 - wnl (3.5beta7)
 	Added gcc 2.7.2.3 patch for fixinc.svr4 and changed INSTALL and
 	FAQ to refer to it.
-	Added NetBSD HP9000 fix.  Hopefully it doesn't break other 
+	Added NetBSD HP9000 fix.  Hopefully it doesn't break other
 	NetBSD platforms.
 
 Fri Oct 24 1997 - wnl (3.5beta7)
@@ -391,7 +391,7 @@ Sat Oct 11 1997 - wnl (3.5beta6)
 	processor bug ("kstat finds too many cpus").
 
 Sun Jan 20 1996 - wnl (3.5beta5)
-	Fixed Casper's m_sunos5 module: there was a poor interaction with 
+	Fixed Casper's m_sunos5 module: there was a poor interaction with
 	his use of OSREV and SunOS 5.5.1.
 
 Fri Dec 20 1996 - wnl (3.5beta4)
@@ -542,7 +542,7 @@ Wed Jan  4 1995 - wnl (3.3beta4)
 
 Mon Apr 18 1994 - wnl (3.3beta3)
 	I think I finally got a sunos5 module that will work on MP
-	machines.  Fixed cpu states figure in osmp41a so that 
+	machines.  Fixed cpu states figure in osmp41a so that
 	percentages never exceed 100%.  Added shell script "install"
 	since Unix vendors can't seem to make up their minds on what
 	options they want to use for the one that comes with the OS.
@@ -606,7 +606,7 @@ Tue Apr 20 1993 - wnl (3.1BETA)
 Wed Mar 10 1993 - wnl (3.1BETA)
 	MAJOR CHANGE:  I have added a required function to all machine
 	dependent modules, called proc_owner.  It takes a pid as an argument
-	and returns the uid of the process's owner.  Such capability is 
+	and returns the uid of the process's owner.  Such capability is
 	necessary for top to run securely as a set-uid program, something
 	that is needed for SVR4 implementations to read /proc.  I have
 	retrofitted all modules except dgux with this function, but was
@@ -639,7 +639,7 @@ Mon May 18 1992 - wnl (2.9BETA)
 	and handle the sgtty, termio, or termios system.  Integrated many
 	other changes recommended by Christos.  Fixed (I hope) the "-b"
 	batch mode display bug.  Had to change loadavg to load_avg to avoid
-	a conflict with 4.4BSD.  
+	a conflict with 4.4BSD.
 
 Mon Apr 27 1992 - wnl (2.8BETA)
 	Added modules provided by Daniel Trinkle.  Added patchlevel.h,
@@ -652,7 +652,7 @@ Wed Apr 22 1992 - wnl (2.8BETA)
 	system dependent functions are contained in a separate .c file
 	called a "module".  The Configure script knows how to find and
 	set up these modules, but the human installer still needs to tell
-	Configure which module to use (no automagic determination of 
+	Configure which module to use (no automagic determination of
 	machine type---sorry).  Added -U option to specify one user's
 	processes, but there is no corresponding command...yet.  Other
 	changes and improvements too numerous to mention here.  Currently

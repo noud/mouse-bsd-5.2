@@ -80,7 +80,7 @@ makeset()
 		cd "${dir}"
 		srcprefix="${srcprefix}/${dir}"
 	fi
-	# Gets rid of any obj dirs and things below it 
+	# Gets rid of any obj dirs and things below it
 	echo "obj" > "${intmp}"
 	egrep="$*"
 	if [ "${egrep}" = "" ]; then

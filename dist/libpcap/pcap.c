@@ -157,7 +157,7 @@ pcap_fakecallback(u_char *userData, const struct pcap_pkthdr *h,
 	*sp->pkt = pkt;
 }
 
-int 
+int
 pcap_next_ex(pcap_t *p, struct pcap_pkthdr **pkt_header,
     const u_char **pkt_data)
 {
@@ -637,7 +637,7 @@ pcap_setnonblock_fd(pcap_t *p, int nonblock, char *errbuf)
 
 #ifdef WIN32
 /*
- * Generate a string for the last Win32-specific error (i.e. an error generated when 
+ * Generate a string for the last Win32-specific error (i.e. an error generated when
  * calling a Win32 API).
  * For errors occurred during standard C calls, we still use pcap_strerror()
  */

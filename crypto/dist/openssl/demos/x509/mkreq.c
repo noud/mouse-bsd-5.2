@@ -63,7 +63,7 @@ int mkreq(X509_REQ **req, EVP_PKEY **pkeyp, int bits, int serial, int days)
 	RSA *rsa;
 	X509_NAME *name=NULL;
 	STACK_OF(X509_EXTENSION) *exts = NULL;
-	
+
 	if ((pk=EVP_PKEY_new()) == NULL)
 		goto err;
 
@@ -91,7 +91,7 @@ int mkreq(X509_REQ **req, EVP_PKEY **pkeyp, int bits, int serial, int days)
 
 #ifdef REQUEST_EXTENSIONS
 	/* Certificate requests can contain extensions, which can be used
-	 * to indicate the extensions the requestor would like added to 
+	 * to indicate the extensions the requestor would like added to
 	 * their certificate. CAs might ignore them however or even choke
 	 * if they are present.
 	 */
@@ -133,7 +133,7 @@ int mkreq(X509_REQ **req, EVP_PKEY **pkeyp, int bits, int serial, int days)
 	sk_X509_EXTENSION_pop_free(exts, X509_EXTENSION_free);
 
 #endif
-	
+
 	if (!X509_REQ_sign(x,pk,EVP_md5()))
 		goto err;
 
@@ -158,4 +158,4 @@ int add_ext(STACK_OF(X509_REQUEST) *sk, int nid, char *value)
 
 	return 1;
 	}
-	
+

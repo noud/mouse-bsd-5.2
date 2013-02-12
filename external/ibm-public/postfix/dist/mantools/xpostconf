@@ -15,7 +15,7 @@ use Getopt::Std;
 # -p: print the parameters named on the command line (default: all).
 #
 # -s specfile: process the entries listed in the named file: ordinary
-# text is copied as is, 
+# text is copied as is,
 #	%CLASS class-name mode
 #	%PARAM param-name mode
 # are replaced by the respective information. Mode is b (brief)
@@ -31,7 +31,7 @@ $opt_s = undef;
 $opt_v = undef;
 getopts("bcps:v");
 
-die "Usage: $0 [-bcpv] [-s specfile] protofile [parameter...]\n" 
+die "Usage: $0 [-bcpv] [-s specfile] protofile [parameter...]\n"
 	unless $protofile = shift(@ARGV);
 
 # Save one definition.
@@ -41,12 +41,12 @@ sub save_text {
 	$param_text{$name} = $text;
 	if ($opt_v) {
 	    printf "saving entry %s %.20s..\n", $name, $text;
-	} 
+	}
     } elsif ($category eq "CLASS") {
 	$class_text{$name} = $text;
 	if ($opt_v) {
 	    printf "saving class %s %.20s..\n", $name, $text;
-	} 
+	}
     } else {
 	die "Unknown category: $category. Need PARAM or CLASS.\n";
     }
@@ -81,7 +81,7 @@ while(<POSTCONF>) {
 	} while(($_ = <POSTCONF>) && /\S/);
 	($junk, $name, $junk) = split(/\s+/, $text, 3);
 
-    } 
+    }
 
     # Accumulate the text in the class or parameter definition.
 
@@ -103,7 +103,7 @@ if ($opt_s) {
 	if (/^%/) {
 	    ($category, $name, $mode) = split(/\s+/, substr($_, 1));
 	    if ($category eq "CLASS") {
-		die "Unknown class name: $name.\n" 
+		die "Unknown class name: $name.\n"
 		    unless $text = $class_text{$name};
 	    } elsif ($category eq "PARAM") {
 		die "Unknown parameter name: $name.\n"
@@ -140,7 +140,7 @@ if ($#ARGV < 0) {
 	$text =~ s/\.\s.*/.\n\n/s if ($opt_b);
 	print $text, "\n";
     }
-} 
+}
 
 # Print parameters in the specified order.
 

@@ -2,7 +2,7 @@
 
 postconf -d | awk '
 
-BEGIN { 
+BEGIN {
 	# Skip lines with <hN>..</hN>.
 	print "\t/<\\/*[Hh][0-9]+>/{\n\t\tp\n\t\td\n\t\t}"
 

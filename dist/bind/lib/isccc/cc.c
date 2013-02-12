@@ -442,7 +442,7 @@ list_fromwire(isccc_region_t *source, isccc_sexpr_t **listp)
 	}
 
 	*listp = list;
-	
+
 	return (ISC_R_SUCCESS);
 }
 
@@ -458,8 +458,8 @@ isccc_cc_fromwire(isccc_region_t *source, isccc_sexpr_t **alistp,
 		return (ISC_R_UNEXPECTEDEND);
 	GET32(version, source->rstart);
 	if (version != 1)
-		return (ISCCC_R_UNKNOWNVERSION);	
-	
+		return (ISCCC_R_UNKNOWNVERSION);
+
 	return (table_fromwire(source, secret, alistp));
 }
 
@@ -510,7 +510,7 @@ createmessage(isc_uint32_t version, const char *from, const char *to,
 	if (to != NULL &&
 	    isccc_cc_definestring(_ctrl, "_to", to) == NULL)
 		goto bad;
-		
+
 	*alistp = alist;
 
 	return (ISC_R_SUCCESS);

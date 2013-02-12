@@ -60,7 +60,7 @@ krb5_verify_password (POP *p)
 					      1);
 
     krb5_verify_init_creds_opt_init (&verify_options);
-    
+
     ret = krb5_parse_name (p->context, p->user, &client);
     if (ret) {
 	pop_log(p, POP_PRIORITY, "krb5_parse_name: %s",
@@ -109,7 +109,7 @@ krb5_verify_password (POP *p)
     return ret;
 }
 #endif
-/* 
+/*
  *  pass:   Obtain the user password from a POP client
  */
 
@@ -127,14 +127,14 @@ login_user(POP *p)
     }
 
     pop_log(p, POP_INFO, "login from %s as %s", p->ipaddr, p->user);
-    
+
     /*  Build the name of the user's maildrop */
     snprintf(p->drop_name, sizeof(p->drop_name), "%s/%s", POP_MAILDIR, p->user);
     if(stat(p->drop_name, &st) < 0 || !S_ISDIR(st.st_mode)){
 	/*  Make a temporary copy of the user's maildrop */
 	/*    and set the group and user id */
 	if (pop_dropcopy(p, pw) != POP_SUCCESS) return (POP_FAILURE);
-	
+
 	/*  Get information about the maildrop */
 	if (pop_dropinfo(p) != POP_SUCCESS) return(POP_FAILURE);
     } else {
@@ -154,7 +154,7 @@ pop_pass (POP *p)
     int status;
 
     /* Make one string of all these parameters */
-    
+
     for (i = 1; i < p->parm_count; ++i)
 	p->pop_parm[i][strlen(p->pop_parm[i])] = ' ';
 
@@ -184,7 +184,7 @@ pop_pass (POP *p)
 #ifdef KRB5
 	if (p->version == 5) {
 	    char *name;
-	    
+
 	    if (!krb5_kuserok (p->context, p->principal, p->user)) {
 		pop_log (p, POP_PRIORITY,
 			 "krb5 permission denied");

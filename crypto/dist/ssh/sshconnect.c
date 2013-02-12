@@ -75,7 +75,7 @@ ms_subtract_diff(struct timeval *start, int *ms)
 	struct timeval diff, finish;
 
 	gettimeofday(&finish, NULL);
-	timersub(&finish, start, &diff);	
+	timersub(&finish, start, &diff);
 	*ms -= (diff.tv_sec * 1000) + (diff.tv_usec / 1000);
 }
 
@@ -225,7 +225,7 @@ ssh_create_socket(int privileged, struct addrinfo *ai)
 			debug("Allocated local port %d.", p);
 
 		if (options.tcp_rcv_buf > 0)
-			ssh_set_socket_recvbuf(sock);		
+			ssh_set_socket_recvbuf(sock);
 		return sock;
 	}
 	sock = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
@@ -242,7 +242,7 @@ ssh_create_socket(int privileged, struct addrinfo *ai)
 
 	if (options.tcp_rcv_buf > 0)
 		ssh_set_socket_recvbuf(sock);
-	
+
 	/* Bind the socket to an alternative local IP address */
 	if (options.bind_address == NULL)
 		return sock;

@@ -156,7 +156,7 @@ int make_const_data (struct expression **expr, const unsigned char *data,
 				&nt -> data.const_data.buffer -> data [0];
 			memcpy (nt -> data.const_data.buffer -> data,
 				data, len + terminated);
-		} else 
+		} else
 			nt -> data.const_data.data = data;
 		nt -> data.const_data.terminated = terminated;
 	} else
@@ -198,13 +198,13 @@ int make_concat (expr, left, right)
 		expression_reference (expr, left, MDL);
 		return 1;
 	}
-			
+
 	/* Otherwise, allocate a new node to concatenate the two. */
 	if (!expression_allocate (expr, MDL)) {
 		log_error ("No memory for concatenation expression node.");
 		return 0;
 	}
-		
+
 	(*expr) -> op = expr_concat;
 	expression_reference (&(*expr) -> data.concat [0], left, MDL);
 	expression_reference (&(*expr) -> data.concat [1], right, MDL);
@@ -220,7 +220,7 @@ int make_encapsulation (expr, name)
 		log_error ("No memory for encapsulation expression node.");
 		return 0;
 	}
-		
+
 	(*expr) -> op = expr_encapsulate;
 	data_string_copy (&(*expr) -> data.encapsulate, name, MDL);
 	return 1;
@@ -297,7 +297,7 @@ int make_let (result, name)
 {
 	if (!(executable_statement_allocate (result, MDL)))
 		return 0;
-	
+
 	(*result) -> op = let_statement;
 	(*result) -> data.let.name = dmalloc (strlen (name) + 1, MDL);
 	if (!(*result) -> data.let.name) {
@@ -307,7 +307,7 @@ int make_let (result, name)
 	strcpy ((*result) -> data.let.name, name);
 	return 1;
 }
-		
+
 static int do_host_lookup (result, dns)
 	struct data_string *result;
 	struct dns_host_entry *dns;
@@ -374,7 +374,7 @@ static int do_host_lookup (result, dns)
 	/* Count the number of addresses we got... */
 	for (count = 0; h -> h_addr_list [count]; count++)
 		;
-	
+
 	/* Dereference the old data, if any. */
 	data_string_forget (&dns -> data, MDL);
 
@@ -659,7 +659,7 @@ int evaluate_dns_expression (result, packet, lease, client_state, in_options,
 		return 0;
 #endif
 	}
-		
+
 	switch (expr -> op) {
 #if defined (NSUPDATE)
 	      case expr_ns_add:
@@ -744,7 +744,7 @@ int evaluate_dns_expression (result, packet, lease, client_state, in_options,
 					     data.data [1] & 0xff,
 					     data.data [2] & 0xff,
 					     data.data [3] & 0xff);
-				    (*result) -> r_size = 
+				    (*result) -> r_size =
 					    strlen ((const char *)
 						    (*result) -> r_data);
 				} else {
@@ -1619,8 +1619,8 @@ int evaluate_data_expression (result, packet, lease, client_state,
 					       result -> data, 20));
 #endif
 		return s0;
-			
-		
+
+
 	      case expr_encode_int16:
 		s0 = evaluate_numeric_expression (&len, packet, lease,
 						  client_state,
@@ -2040,7 +2040,7 @@ int evaluate_data_expression (result, packet, lease, client_state,
 				memchr (packet -> raw -> sname, 0,
 					sizeof packet -> raw -> sname);
 			if (!fn)
-				fn = ((char *)packet -> raw -> sname + 
+				fn = ((char *)packet -> raw -> sname +
 				      sizeof packet -> raw -> sname);
 			result -> len = fn - &packet -> raw -> sname [0];
 			if (buffer_allocate (&result -> buffer,
@@ -2118,7 +2118,7 @@ int evaluate_data_expression (result, packet, lease, client_state,
 
 	log_error ("Bogus opcode in evaluate_data_expression: %d", expr -> op);
 	return 0;
-}	
+}
 
 int evaluate_numeric_expression (result, packet, lease, client_state,
 				 in_options, cfg_options, scope, expr)
@@ -2256,7 +2256,7 @@ int evaluate_numeric_expression (result, packet, lease, client_state,
 			   cur_time, *result);
 #endif
 		return 1;
- 
+
 	      case expr_dns_transaction:
 #if !defined (NSUPDATE)
 		return 0;
@@ -2665,7 +2665,7 @@ int evaluate_boolean_option_cache (ignorep, packet,
 	/* So that we can be called with option_lookup as an argument. */
 	if (!oc || !in_options)
 		return 0;
-	
+
 	memset (&ds, 0, sizeof ds);
 	if (!evaluate_option_cache (&ds, packet,
 				    lease, client_state, in_options,
@@ -2684,7 +2684,7 @@ int evaluate_boolean_option_cache (ignorep, packet,
 	data_string_forget (&ds, MDL);
 	return result;
 }
-		
+
 
 /* Evaluate a boolean expression and return the result of the evaluation,
    or FALSE if it failed. */
@@ -2705,7 +2705,7 @@ int evaluate_boolean_expression_result (ignorep, packet, lease, client_state,
 	/* So that we can be called with option_lookup as an argument. */
 	if (!expr)
 		return 0;
-	
+
 	if (!evaluate_boolean_expression (&result, packet, lease, client_state,
 					  in_options, cfg_options,
 					  scope, expr))
@@ -2718,7 +2718,7 @@ int evaluate_boolean_expression_result (ignorep, packet, lease, client_state,
 		*ignorep = 0;
 	return result;
 }
-		
+
 
 /* Dereference an expression node, and if the reference count goes to zero,
    dereference any data it refers to, and then free it. */
@@ -3236,7 +3236,7 @@ int write_expression (file, expr, col, indent, firstp)
 	      case expr_none:
 		col = token_print_indent (file, col, indent, "", "", "null");
 		break;
-		
+
 	      case expr_check:
 		col = token_print_indent (file, col, indent, "", "", "check");
 		col = token_print_indent_concat (file, col, indent,
@@ -3377,7 +3377,7 @@ int write_expression (file, expr, col, indent, firstp)
 		if (expr -> data.option -> universe != &dhcp_universe) {
 			col = token_print_indent (file, col, indent,
 						  " ", "",
-						  (expr -> data.option -> 
+						  (expr -> data.option ->
 						   universe -> name));
 			col = token_print_indent (file, col, indent, "", "",
 						  ".");
@@ -3389,7 +3389,7 @@ int write_expression (file, expr, col, indent, firstp)
 		}
 		break;
 
-	      case expr_hardware:	
+	      case expr_hardware:
 		col = token_print_indent (file, col, indent, "", "",
 					  "hardware");
 		break;
@@ -3891,7 +3891,7 @@ int data_subexpression_length (int *rv,
 		else
 			*rv = lrhs;
 		return 1;
-			
+
 	      case expr_binary_to_ascii:
 	      case expr_config_option:
 	      case expr_host_decl_name:

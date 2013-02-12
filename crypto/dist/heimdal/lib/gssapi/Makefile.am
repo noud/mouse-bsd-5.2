@@ -259,7 +259,7 @@ $(srcdir)/spnego/spnego-private.h:
 
 
 TESTS = test_oid test_names test_cfx
-# test_sequence 
+# test_sequence
 
 test_cfx_SOURCES = krb5/test_cfx.c
 

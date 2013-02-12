@@ -411,7 +411,7 @@ efcode()
 	/* get the address from the tempnode */
 	q = tempnode(tempnr, PTR+STRTY, 0, cftnsp->ssue);
 	q = buildtree(UMUL, q, NIL);
-	
+
 	/* now, get the structure destination */
 	p = tempnode(rvnr, PTR+STRTY, 0, cftnsp->ssue);
 	p = buildtree(UMUL, p, NIL);

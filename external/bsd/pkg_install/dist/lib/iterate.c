@@ -189,7 +189,7 @@ match_by_pattern(const char *pkg, void *cookie)
 {
 	const char *pattern = cookie;
 
-	return pkg_match(pattern, pkg);	
+	return pkg_match(pattern, pkg);
 }
 
 struct add_matching_arg {
@@ -317,7 +317,7 @@ match_and_call(const char *pkg, void *cookie)
 
 	if (pkg_match(arg->pattern, pkg) == 1) {
 		return (*arg->call_fn)(pkg, arg->cookie);
-	} else 
+	} else
 		return 0;
 }
 
@@ -460,7 +460,7 @@ match_file_and_call(const char *filename, void *cookie)
 
 	if (ret == 1)
 		return (*arg->call_fn)(filename, arg->cookie);
-	else 
+	else
 		return 0;
 }
 

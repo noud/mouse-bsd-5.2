@@ -3,20 +3,20 @@ A short history of pdisk
 11/1996 -	Spent a week to create a minimal partitioner
 		that reads maps, initializes maps, can add and delete partitions.
 		Released as version 0.1 to MkLinux team
-		
+
 12/1996 -	Spent three weeks adding more commands, writing
 		documentation, fixing bugs and making it prettier.
 		Released version 0.2 to Gilbert
 		Fixed a few more bugs.
 		Released as version 0.3
-		
+
 01/1997 -	Spent two weeks creating MacOS version and fixing
 		a few more bugs.
 		Released as version 0.4
-		
+
 03/1997 - 	Spent an evening adding device driver deletion
 		and a couple of flags to private version.
-		
+
 07/1997 - 	Some one else ported it to Rhapsody.
 		Spent a couple of weeks adding variable block
 		size support to Rhapsody version.
@@ -24,7 +24,7 @@ A short history of pdisk
 		(multiple copies) in linux/mac and put sources under RCS.
 		Folded linux/mac version changes into Rhapsody and
 		brought some of the Rhapsody changes into linux/mac
-		
+
 09/1997 -	Fixed bugs in MacOS version of variable block size.
 		Added new dump routines.
 		Added case-insensitive string matching.

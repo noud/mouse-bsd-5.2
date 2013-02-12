@@ -73,7 +73,7 @@ point in clearing the lock under Unix, but do so anyway. */
         if (remove(lockname) != 0)
             fatal(1,"unable to remove the msntp lockname %s",lockname);
     }
-}       
+}
 
 
 

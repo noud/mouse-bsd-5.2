@@ -159,7 +159,7 @@ int execute_statements (result, packet, lease, client_state,
 				  (&rc, packet,
 				   lease, client_state, in_options,
 				   out_options, scope, r -> data.ie.expr));
-			
+
 #if defined (DEBUG_EXPRESSIONS)
 			log_debug ("exec: if %s", (status
 					      ? (rc ? "true" : "false")
@@ -411,7 +411,7 @@ int execute_statements (result, packet, lease, client_state,
 				   lease, client_state, in_options,
 				   out_options, scope, r -> data.log.expr,
 				   MDL));
-			
+
 #if defined (DEBUG_EXPRESSIONS)
 			log_debug ("exec: log");
 #endif
@@ -704,7 +704,7 @@ void write_statements (file, statements, indent)
 			indent_spaces (file, indent);
 			fprintf (file, "}");
 			break;
-			
+
 		      case case_statement:
 			indent_spaces (file, indent - 1);
 			fprintf (file, "case ");
@@ -714,7 +714,7 @@ void write_statements (file, statements, indent)
 			token_print_indent (file, col, indent + 5,
 					    "", "", ":");
 			break;
-			
+
 		      case default_statement:
 			indent_spaces (file, indent - 1);
 			fprintf (file, "default: ");
@@ -820,7 +820,7 @@ void write_statements (file, statements, indent)
 				token_indent_data_string
 					(file, col, indent + 8, "", "",
 					 &r -> data.option -> data);
-					 
+
 			fprintf (file, ";"); /* XXX */
 			break;
 
@@ -836,7 +836,7 @@ void write_statements (file, statements, indent)
 			col = token_print_indent (file, col, indent + 4,
 						  " ", "", ";");
 			break;
-			
+
 		      case unset_statement:
 			indent_spaces (file, indent);
 			fprintf (file, "unset ");
@@ -879,7 +879,7 @@ void write_statements (file, statements, indent)
 						  "", "", ");");
 
 			break;
-			
+
 		      default:
 			log_fatal ("bogus statement type %d\n", r -> op);
 		}

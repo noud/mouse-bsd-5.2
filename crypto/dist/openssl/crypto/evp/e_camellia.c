@@ -7,7 +7,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -76,19 +76,19 @@ typedef struct
 
 IMPLEMENT_BLOCK_CIPHER(camellia_128, ks, Camellia, EVP_CAMELLIA_KEY,
 	NID_camellia_128, 16, 16, 16, 128,
-	0, camellia_init_key, NULL, 
+	0, camellia_init_key, NULL,
 	EVP_CIPHER_set_asn1_iv,
 	EVP_CIPHER_get_asn1_iv,
 	NULL)
 IMPLEMENT_BLOCK_CIPHER(camellia_192, ks, Camellia, EVP_CAMELLIA_KEY,
 	NID_camellia_192, 16, 24, 16, 128,
-	0, camellia_init_key, NULL, 
+	0, camellia_init_key, NULL,
 	EVP_CIPHER_set_asn1_iv,
 	EVP_CIPHER_get_asn1_iv,
 	NULL)
 IMPLEMENT_BLOCK_CIPHER(camellia_256, ks, Camellia, EVP_CAMELLIA_KEY,
 	NID_camellia_256, 16, 32, 16, 128,
-	0, camellia_init_key, NULL, 
+	0, camellia_init_key, NULL,
 	EVP_CIPHER_set_asn1_iv,
 	EVP_CIPHER_get_asn1_iv,
 	NULL)
@@ -105,7 +105,7 @@ IMPLEMENT_CAMELLIA_CFBR(256,8)
 
 
 
-/* The subkey for Camellia is generated. */ 
+/* The subkey for Camellia is generated. */
 static int camellia_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
 	const unsigned char *iv, int enc)
 	{

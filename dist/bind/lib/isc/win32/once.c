@@ -43,8 +43,8 @@ isc_once_do(isc_once_t *controller, void(*function)(void)) {
 		} else {
 			while (controller->status == ISC_ONCE_INIT_NEEDED) {
 				/*
-				 * Sleep(0) indicates that this thread 
-				 * should be suspended to allow other 
+				 * Sleep(0) indicates that this thread
+				 * should be suspended to allow other
 				 * waiting threads to execute.
 				 */
 				Sleep(0);

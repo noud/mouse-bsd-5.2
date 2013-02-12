@@ -31,10 +31,10 @@
 static int vi_send_ __P((IPVIWIN   *, int));
 static int vi_send_1 __P((IPVIWIN   *, int, u_int32_t  ));
 static int vi_send_12 __P((IPVIWIN *ipvi, int code, u_int32_t val1, u_int32_t val2));
-static int vi_send_ab1 __P((IPVIWIN *ipvi, int code, 
-	    const char *str1, u_int32_t len1, 
+static int vi_send_ab1 __P((IPVIWIN *ipvi, int code,
+	    const char *str1, u_int32_t len1,
 	    const char *str2, u_int32_t len2, u_int32_t val));
-static int vi_send_a1 __P((IPVIWIN *ipvi, int code, const char *str, u_int32_t len, 
+static int vi_send_a1 __P((IPVIWIN *ipvi, int code, const char *str, u_int32_t len,
 	   u_int32_t val));
 static int vi_send_a __P((IPVIWIN *ipvi, int code, const char *str, u_int32_t len));
 
@@ -46,7 +46,7 @@ static int vi_win_close __P((IPVIWIN *));
 static int vi_close __P((IPVI *));
 static int vi_new_window __P((IPVI *, IPVIWIN **, int));
 
-/* 
+/*
  * vi_create
  *
  * PUBLIC: int vi_create __P((IPVI **, u_int32_t));
@@ -73,7 +73,7 @@ alloc_err:
 	return 1;
 }
 
-static int 
+static int
 vi_new_window (IPVI *ipvi, IPVIWIN **ipviwinp, int fd)
 {
 	IPVIWIN	*ipviwin;
@@ -155,7 +155,7 @@ alloc_err:
 	return 1;
 }
 
-static int 
+static int
 vi_set_ops(IPVIWIN *ipvi, IPSIOPS *ops)
 {
 	ipvi->si_ops = ops;
@@ -217,7 +217,7 @@ vi_send_a(IPVIWIN *ipvi, int code, const char *str, u_int32_t len)
 }
 
 static int
-vi_send_a1(IPVIWIN *ipvi, int code, const char *str, u_int32_t len, 
+vi_send_a1(IPVIWIN *ipvi, int code, const char *str, u_int32_t len,
 	   u_int32_t val)
 {
 	IP_BUF	ipb;
@@ -230,7 +230,7 @@ vi_send_a1(IPVIWIN *ipvi, int code, const char *str, u_int32_t len,
 }
 
 static int
-vi_send_ab1(IPVIWIN *ipvi, int code, const char *str1, u_int32_t len1, 
+vi_send_ab1(IPVIWIN *ipvi, int code, const char *str1, u_int32_t len1,
 	    const char *str2, u_int32_t len2, u_int32_t val)
 {
 	IP_BUF	ipb;

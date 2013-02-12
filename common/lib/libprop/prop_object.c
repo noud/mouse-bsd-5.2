@@ -64,7 +64,7 @@ _prop_standalone_realloc(void *v, size_t size)
 		memcpy(rv, v, size);	/* XXX */
 		dealloc(v, 0);		/* XXX */
 	}
-	
+
 	return (rv);
 }
 #endif /* _STANDALONE */
@@ -112,7 +112,7 @@ _prop_object_externalize_start_tag(
 	    _prop_object_externalize_append_cstring(ctx, tag) == false ||
 	    _prop_object_externalize_append_char(ctx, '>') == false)
 		return (false);
-	
+
 	return (true);
 }
 
@@ -156,7 +156,7 @@ _prop_object_externalize_empty_tag(
 	    _prop_object_externalize_append_char(ctx, '>') == false ||
 	    _prop_object_externalize_append_char(ctx, '\n') == false)
 	    	return (false);
-	
+
 	return (true);
 }
 
@@ -424,7 +424,7 @@ _prop_object_internalize_find_tag(struct _prop_object_internalize_context *ctx,
 	    (taglen != ctx->poic_tagname_len ||
 	     memcmp(tag, ctx->poic_tagname, taglen) != 0))
 		return (false);
-	
+
 	/* Check for empty tag. */
 	if (*cp == '/') {
 		if (ctx->poic_tag_type != _PROP_TAG_TYPE_START)
@@ -464,21 +464,21 @@ _prop_object_internalize_find_tag(struct _prop_object_internalize_context *ctx,
 		return (false);
 
 	ctx->poic_tagattr_len = cp - ctx->poic_tagattr;
-	
+
 	cp++;
 	if (*cp != '\"')
 		return (false);
 	cp++;
 	if (_PROP_EOF(*cp))
 		return (false);
-	
+
 	ctx->poic_tagattrval = cp;
 	while (*cp != '\"')
 		cp++;
 	if (_PROP_EOF(*cp))
 		return (false);
 	ctx->poic_tagattrval_len = cp - ctx->poic_tagattrval;
-	
+
 	cp++;
 	if (*cp != '>')
 		return (false);
@@ -500,7 +500,7 @@ _prop_object_internalize_decode_string(
 	const char *src;
 	size_t tarindex;
 	char c;
-	
+
 	tarindex = 0;
 	src = ctx->poic_cp;
 
@@ -559,7 +559,7 @@ _prop_object_internalize_decode_string(
 		*sizep = tarindex;
 	if (cpp != NULL)
 		*cpp = src;
-	
+
 	return (true);
 }
 
@@ -715,7 +715,7 @@ _prop_object_internalize_context_alloc(const char *xml)
 			   M_TEMP);
 	if (ctx == NULL)
 		return (NULL);
-	
+
 	ctx->poic_xml = ctx->poic_cp = xml;
 
 	/*
@@ -798,12 +798,12 @@ _prop_object_externalize_file_dirname(const char *path, char *result)
 	 */
 	if (path == NULL || *path == '\0')
 		goto singledot;
-	
+
 	/* String trailing slashes, if any. */
 	lastp = path + strlen(path) - 1;
 	while (lastp != path && *lastp == '/')
 		lastp--;
-	
+
 	/* Terminate path at the last occurrence of '/'. */
 	do {
 		if (*lastp == '/') {
@@ -904,7 +904,7 @@ _prop_object_internalize_map_file(const char *fname)
 	mf = _PROP_MALLOC(sizeof(*mf), M_TEMP);
 	if (mf == NULL)
 		return (NULL);
-	
+
 	fd = open(fname, O_RDONLY, 0400);
 	if (fd == -1) {
 		_PROP_FREE(mf, M_TEMP);
@@ -1032,7 +1032,7 @@ prop_object_release_emergency(prop_object_t obj)
 
 		/* Save pointerto unlock function */
 		unlock = po->po_type->pot_unlock;
-		
+
 		_PROP_REFCNT_LOCK();
     		ocnt = po->po_refcnt--;
 		_PROP_REFCNT_UNLOCK();
@@ -1043,8 +1043,8 @@ prop_object_release_emergency(prop_object_t obj)
 				unlock();
 			break;
 		}
-		
-		_PROP_ASSERT(po->po_type);		
+
+		_PROP_ASSERT(po->po_type);
 		if ((po->po_type->pot_free)(NULL, &obj) ==
 		    _PROP_OBJECT_FREE_DONE) {
 			if (unlock != NULL)
@@ -1054,7 +1054,7 @@ prop_object_release_emergency(prop_object_t obj)
 
 		if (unlock != NULL)
 			unlock();
-		
+
 		parent = po;
 		_PROP_REFCNT_LOCK();
 		++po->po_refcnt;
@@ -1078,7 +1078,7 @@ prop_object_release(prop_object_t obj)
 {
 	struct _prop_object *po;
 	struct _prop_stack stack;
-	void (*unlock)(void); 
+	void (*unlock)(void);
 	int ret;
 	uint32_t ocnt;
 
@@ -1094,7 +1094,7 @@ prop_object_release(prop_object_t obj)
 
 			/* Save pointer to object unlock function */
 			unlock = po->po_type->pot_unlock;
-			
+
 			_PROP_REFCNT_LOCK();
 			ocnt = po->po_refcnt--;
 			_PROP_REFCNT_UNLOCK();
@@ -1106,7 +1106,7 @@ prop_object_release(prop_object_t obj)
 					unlock();
 				break;
 			}
-			
+
 			ret = (po->po_type->pot_free)(&stack, &obj);
 
 			if (unlock != NULL)
@@ -1114,7 +1114,7 @@ prop_object_release(prop_object_t obj)
 
 			if (ret == _PROP_OBJECT_FREE_DONE)
 				break;
-			
+
 			_PROP_REFCNT_LOCK();
 			++po->po_refcnt;
 			_PROP_REFCNT_UNLOCK();
@@ -1172,7 +1172,7 @@ prop_object_equals_with_error(prop_object_t obj1, prop_object_t obj2,
 
 	if (po1->po_type != po2->po_type)
 		return (false);
-    
+
  continue_subtree:
 	ret = (*po1->po_type->pot_equals)(obj1, obj2,
 					  &stored_pointer1, &stored_pointer2,
@@ -1202,7 +1202,7 @@ finish:
 		po1 = obj1;
 		(*po1->po_type->pot_equals_finish)(obj1, obj2);
 	}
-	return (false);		
+	return (false);
 }
 
 /*

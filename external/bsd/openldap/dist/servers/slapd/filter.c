@@ -136,7 +136,7 @@ get_filter(
 	err = LDAP_SUCCESS;
 
 	f.f_next = NULL;
-	f.f_choice = tag; 
+	f.f_choice = tag;
 
 	switch ( f.f_choice ) {
 	case LDAP_FILTER_EQUALITY:
@@ -196,7 +196,7 @@ get_filter(
 
 			if ( err != LDAP_SUCCESS ) {
 				/* unrecognized attribute description or other error */
-				Debug( LDAP_DEBUG_ANY, 
+				Debug( LDAP_DEBUG_ANY,
 					"get_filter: conn %lu unknown attribute "
 					"type=%s (%d)\n",
 					op->o_connid, type.bv_val, err );
@@ -375,10 +375,10 @@ get_ssa(
 			SLAP_AD_PROXIED|SLAP_AD_NOINSERT );
 
 		if( rc != LDAP_SUCCESS ) {
-			Debug( LDAP_DEBUG_ANY, 
+			Debug( LDAP_DEBUG_ANY,
 				"get_ssa: conn %lu unknown attribute type=%s (%ld)\n",
 				op->o_connid, desc.bv_val, (long) rc );
-	
+
 			ssa.sa_desc = slap_bv2tmp_ad( &desc, op->o_tmpmemctx );
 		}
 	}
@@ -400,12 +400,12 @@ get_ssa(
 		if ( value.bv_val == NULL || value.bv_len == 0 ) {
 			rc = LDAP_INVALID_SYNTAX;
 			goto return_error;
-		} 
+		}
 
 		switch ( tag ) {
 		case LDAP_SUBSTRING_INITIAL:
 			if ( ssa.sa_initial.bv_val != NULL
-				|| ssa.sa_any != NULL 
+				|| ssa.sa_any != NULL
 				|| ssa.sa_final.bv_val != NULL )
 			{
 				rc = LDAP_PROTOCOL_ERROR;
@@ -617,7 +617,7 @@ simple:
 		}
 
 		filter_escape_value_x( &value, &tmp, op->o_tmpmemctx );
-		/* NOTE: tmp can legitimately be NULL (meaning empty) 
+		/* NOTE: tmp can legitimately be NULL (meaning empty)
 		 * since in a Filter values in AVAs are supposed
 		 * to have been normalized, meaning that an empty value
 		 * is legal for that attribute's syntax */
@@ -740,13 +740,13 @@ simple:
 			len = fstr->bv_len;
 
 			filter2bv_x( op, p, &tmp );
-			
+
 			fstr->bv_len += tmp.bv_len;
 			fstr->bv_val = op->o_tmprealloc( fstr->bv_val, fstr->bv_len + 1,
 				op->o_tmpmemctx );
 
 			snprintf( &fstr->bv_val[len-1],
-				tmp.bv_len + STRLENOF( /*(*/ ")" ) + 1, 
+				tmp.bv_len + STRLENOF( /*(*/ ")" ) + 1,
 				/*"("*/ "%s)", tmp.bv_val );
 
 			op->o_tmpfree( tmp.bv_val, op->o_tmpmemctx );
@@ -758,7 +758,7 @@ simple:
 		struct berval ad;
 
 		filter_escape_value_x( &f->f_mr_value, &tmp, op->o_tmpmemctx );
-		/* NOTE: tmp can legitimately be NULL (meaning empty) 
+		/* NOTE: tmp can legitimately be NULL (meaning empty)
 		 * since in a Filter values in MRAs are supposed
 		 * to have been normalized, meaning that an empty value
 		 * is legal for that attribute's syntax */
@@ -769,7 +769,7 @@ simple:
 			ad.bv_len = 0;
 			ad.bv_val = "";
 		}
-		
+
 		fstr->bv_len = ad.bv_len +
 			( f->f_mr_dnattrs ? STRLENOF(":dn") : 0 ) +
 			( f->f_mr_rule_text.bv_len ? f->f_mr_rule_text.bv_len+1 : 0 ) +
@@ -795,11 +795,11 @@ simple:
 		case LDAP_COMPARE_TRUE:
 			tmp = ber_bvtrue;
 			break;
-			
+
 		case SLAPD_COMPARE_UNDEFINED:
 			tmp = ber_bvundefined;
 			break;
-			
+
 		default:
 			tmp = ber_bverror;
 			break;
@@ -807,7 +807,7 @@ simple:
 
 		ber_dupbv_x( fstr, &tmp, op->o_tmpmemctx );
 		break;
-		
+
 	default:
 		ber_dupbv_x( fstr, &ber_bvunknown, op->o_tmpmemctx );
 		break;
@@ -936,7 +936,7 @@ get_simple_vrFilter(
 	vrf.vrf_next = NULL;
 
 	err = LDAP_SUCCESS;
-	vrf.vrf_choice = tag; 
+	vrf.vrf_choice = tag;
 
 	switch ( vrf.vrf_choice ) {
 	case LDAP_FILTER_EQUALITY:
@@ -990,11 +990,11 @@ get_simple_vrFilter(
 
 			if( err != LDAP_SUCCESS ) {
 				/* unrecognized attribute description or other error */
-				Debug( LDAP_DEBUG_ANY, 
+				Debug( LDAP_DEBUG_ANY,
 					"get_simple_vrFilter: conn %lu unknown "
 					"attribute type=%s (%d)\n",
 					op->o_connid, type.bv_val, err );
-	
+
 				vrf.vrf_choice = SLAPD_FILTER_COMPUTED;
 				vrf.vrf_result = LDAP_COMPARE_FALSE;
 				err = LDAP_SUCCESS;
@@ -1191,12 +1191,12 @@ vrFilter2bv( Operation *op, ValuesReturnFilter *vrf, struct berval *fstr )
 		len = fstr->bv_len;
 
 		simple_vrFilter2bv( op, p, &tmp );
-			
+
 		fstr->bv_len += tmp.bv_len;
 		fstr->bv_val = op->o_tmprealloc( fstr->bv_val, fstr->bv_len + 1,
 			op->o_tmpmemctx );
 
-		snprintf( &fstr->bv_val[len-1], tmp.bv_len + 2, 
+		snprintf( &fstr->bv_val[len-1], tmp.bv_len + 2,
 			/*"("*/ "%s)", tmp.bv_val );
 
 		op->o_tmpfree( tmp.bv_val, op->o_tmpmemctx );
@@ -1358,7 +1358,7 @@ simple_vrFilter2bv( Operation *op, ValuesReturnFilter *vrf, struct berval *fstr 
 			ad.bv_len = 0;
 			ad.bv_val = "";
 		}
-			
+
 		fstr->bv_len = ad.bv_len +
 			( vrf->vrf_mr_dnattrs ? STRLENOF(":dn") : 0 ) +
 			( vrf->vrf_mr_rule_text.bv_len

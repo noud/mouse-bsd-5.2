@@ -100,7 +100,7 @@ test "$ans" = "$expect" || ret=1
 test $ret = 0 || echo I:failed, got "'""$ans""'", expected "'""$expect""'"
 status=`expr $status + $ret`
 
-echo "I:Checking updated data to be returned (with CD)" 
+echo "I:Checking updated data to be returned (with CD)"
 ret=0
 expect="2001:db8::3"
 ans=`$DIG $DIGOPTS_CD @10.53.0.4 mail.example.com AAAA` || ret=1

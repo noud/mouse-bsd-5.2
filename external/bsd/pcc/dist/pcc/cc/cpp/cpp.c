@@ -57,7 +57,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 /*
@@ -143,7 +143,7 @@ usch *stringbuf = sbf;
  *   character WARN followed by the argument number.
  * - The value element points to the end of the string, to simplify
  *   pushback onto the input queue.
- * 
+ *
  * The first character (from the end) in the replacement list is
  * the number of arguments:
  *   VARG  - ends with ellipsis, next char is argcount without ellips.
@@ -905,7 +905,7 @@ savch(c)
 	} else {
 		stringbuf = sbf; /* need space to write error message */
 		error("Too much defining");
-	} 
+	}
 }
 
 /*
@@ -1009,7 +1009,7 @@ struct recur *rp;
 			}
 			if (c == '\n')
 				nl++;
-		} while (c == ' ' || c == '\t' || c == '\n' || 
+		} while (c == ' ' || c == '\t' || c == '\n' ||
 			    c == '\r' || c == WARN);
 
 		DPRINT(("c %d\n", c));
@@ -1073,7 +1073,7 @@ expmac(struct recur *rp)
 		case IDENT:
 			/*
 			 * Handle argument concatenation here.
-			 * If an identifier is found and directly 
+			 * If an identifier is found and directly
 			 * after EXPAND or NOEXP then push the
 			 * identifier back on the input stream and
 			 * call yylex() again.
@@ -1141,9 +1141,9 @@ expmac(struct recur *rp)
 			if (canexpand(rp, nl) == 0)
 				goto def;
 			/*
-			 * If noexp == 0 then expansion of any macro is 
+			 * If noexp == 0 then expansion of any macro is
 			 * allowed.  If noexp == 1 then expansion of a
-			 * fun-like macro is allowed iff there is an 
+			 * fun-like macro is allowed iff there is an
 			 * EXPAND between the identifier and the '('.
 			 */
 			if (noexp == 0) {
@@ -1307,7 +1307,7 @@ expdef(vp, rp, gotwarn)
 		    (stringbuf[-1] == ' ' || stringbuf[-1] == '\t'))
 			stringbuf--;
 		savch('\0');
-		
+
 	}
 	if (narg == 0 && ellips == 0)
 		while ((c = yylex()) == WSPACE || c == '\n')
@@ -1325,7 +1325,7 @@ expdef(vp, rp, gotwarn)
 
 	/*
 	 * push-back replacement-list onto lex buffer while replacing
-	 * arguments. 
+	 * arguments.
 	 */
 	cunput(WARN);
 	while (*sp != 0) {
@@ -1365,7 +1365,7 @@ expdef(vp, rp, gotwarn)
 				bp++;
 			while (bp > ap) {
 				bp--;
-				if (snuff && !instr && 
+				if (snuff && !instr &&
 				    (*bp == ' ' || *bp == '\t' || *bp == '\n')){
 					while (*bp == ' ' || *bp == '\t' ||
 					    *bp == '\n') {
@@ -1474,7 +1474,7 @@ num2str(int num)
 	static usch buf[12];
 	usch *b = buf;
 	int m = 0;
-	
+
 	if (num < 0)
 		num = -num, m = 1;
 	do {
@@ -1487,7 +1487,7 @@ num2str(int num)
 }
 
 /*
- * similar to sprintf, but only handles %s and %d. 
+ * similar to sprintf, but only handles %s and %d.
  * saves result on heap.
  */
 usch *
@@ -1531,7 +1531,7 @@ usage()
 /*
  * Symbol table stuff.
  * The data structure used is a patricia tree implementation using only
- * bytes to store offsets.  
+ * bytes to store offsets.
  * The information stored is (lower address to higher):
  *
  *	unsigned char bitno[2]; bit number in the string

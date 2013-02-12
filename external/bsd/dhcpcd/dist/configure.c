@@ -1,4 +1,4 @@
-/* 
+/*
  * dhcpcd - DHCP client daemon
  * Copyright (c) 2006-2009 Roy Marples <roy@marples.name>
  * All rights reserved
@@ -635,7 +635,7 @@ delete_address(struct interface *iface)
 	    inet_ntoa(iface->addr),
 	    inet_ntocidr(iface->net));
 	retval = del_address(iface, &iface->addr, &iface->net);
-	if (retval == -1 && errno != EADDRNOTAVAIL) 
+	if (retval == -1 && errno != EADDRNOTAVAIL)
 		syslog(LOG_ERR, "del_address: %m");
 	iface->addr.s_addr = 0;
 	iface->net.s_addr = 0;

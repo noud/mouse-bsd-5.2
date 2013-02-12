@@ -145,12 +145,12 @@ backsql_operational(
 	rc = backsql_get_db_conn( op, &dbh );
 	if ( rc != LDAP_SUCCESS ) {
 		Debug( LDAP_DEBUG_TRACE, "backsql_operational(): "
-			"could not get connection handle - exiting\n", 
+			"could not get connection handle - exiting\n",
 			0, 0, 0 );
 		return 1;
 	}
 
-	if ( ( SLAP_OPATTRS( rs->sr_attr_flags ) || ad_inlist( slap_schema.si_ad_hasSubordinates, rs->sr_attrs ) ) 
+	if ( ( SLAP_OPATTRS( rs->sr_attr_flags ) || ad_inlist( slap_schema.si_ad_hasSubordinates, rs->sr_attrs ) )
 			&& !got[ BACKSQL_OP_HASSUBORDINATES ]
 			&& attr_find( rs->sr_entry->e_attrs, slap_schema.si_ad_hasSubordinates ) == NULL )
 	{
@@ -172,7 +172,7 @@ backsql_operational(
 		}
 	}
 
-	if ( ( SLAP_OPATTRS( rs->sr_attr_flags ) || ad_inlist( slap_schema.si_ad_entryUUID, rs->sr_attrs ) ) 
+	if ( ( SLAP_OPATTRS( rs->sr_attr_flags ) || ad_inlist( slap_schema.si_ad_entryUUID, rs->sr_attrs ) )
 			&& !got[ BACKSQL_OP_ENTRYUUID ]
 			&& attr_find( rs->sr_entry->e_attrs, slap_schema.si_ad_entryUUID ) == NULL )
 	{
@@ -184,7 +184,7 @@ backsql_operational(
 				BACKSQL_ISF_GET_ID );
 		if ( rc != LDAP_SUCCESS ) {
 			Debug( LDAP_DEBUG_TRACE, "backsql_operational(): "
-				"could not retrieve entry ID - no such entry\n", 
+				"could not retrieve entry ID - no such entry\n",
 				0, 0, 0 );
 			return 1;
 		}
@@ -199,7 +199,7 @@ backsql_operational(
 
 		if ( *ap == NULL ) {
 			Debug( LDAP_DEBUG_TRACE, "backsql_operational(): "
-				"could not retrieve entryUUID\n", 
+				"could not retrieve entryUUID\n",
 				0, 0, 0 );
 			return 1;
 		}
@@ -207,14 +207,14 @@ backsql_operational(
 		ap = &(*ap)->a_next;
 	}
 
-	if ( ( SLAP_OPATTRS( rs->sr_attr_flags ) || ad_inlist( slap_schema.si_ad_entryCSN, rs->sr_attrs ) ) 
+	if ( ( SLAP_OPATTRS( rs->sr_attr_flags ) || ad_inlist( slap_schema.si_ad_entryCSN, rs->sr_attrs ) )
 			&& !got[ BACKSQL_OP_ENTRYCSN ]
 			&& attr_find( rs->sr_entry->e_attrs, slap_schema.si_ad_entryCSN ) == NULL )
 	{
 		*ap = backsql_operational_entryCSN( op );
 		if ( *ap == NULL ) {
 			Debug( LDAP_DEBUG_TRACE, "backsql_operational(): "
-				"could not retrieve entryCSN\n", 
+				"could not retrieve entryCSN\n",
 				0, 0, 0 );
 			return 1;
 		}

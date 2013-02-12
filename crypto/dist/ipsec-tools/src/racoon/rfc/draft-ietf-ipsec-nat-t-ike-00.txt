@@ -20,7 +20,7 @@ This document is a submission to the IETF IP Security Protocol
 (IPSEC) Working Group.  Comments are solicited and should be
 addressed to the working group mailing list (ipsec@lists.tislabs.com)
 or to the editor.
- 
+
 This document is an Internet-Draft and is in full conformance
 with all provisions of Section 10 of RFC2026.
 
@@ -58,7 +58,7 @@ packets through the NAT boxes in IKE.
 T. Kivinen, et. al.                                             [page 1]
 
 INTERNET-DRAFT                                              10 June 2001
- 
+
 Table of Contents
 
 1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . .  2
@@ -117,7 +117,7 @@ exchange of vendor strings; in Phase 1 two first messages, the vendor id
 T. Kivinen, et. al.                                             [page 2]
 
 INTERNET-DRAFT                                              10 June 2001
- 
+
 payload for this specification of NAT-Traversal (MD5 hash of "draft-
 ietf-ipsec-nat-t-ike-00" - ["4485152d 18b6bbcd 0be8a846 9579ddcc"]) MUST
 be sent if supported (and it MUST be received by both sides) for the
@@ -176,7 +176,7 @@ remote ends IP address and port (i.e the destination address of the UDP
 T. Kivinen, et. al.                                             [page 3]
 
 INTERNET-DRAFT                                              10 June 2001
- 
+
 packet). The rest of the NAT-D payloads contain possible local end IP
 addresses and ports (i.e all possible source addresses of the UDP
 packet).
@@ -235,7 +235,7 @@ UDP-Encapsulated-Tunnel mode is negotiation then both ends SHOULD NOT
 T. Kivinen, et. al.                                             [page 4]
 
 INTERNET-DRAFT                                              10 June 2001
- 
+
 send original source address.
 
 It also might be unnecessary in the transport mode if the other end can
@@ -294,7 +294,7 @@ The format of the NAT-OA packet is
 T. Kivinen, et. al.                                             [page 5]
 
 INTERNET-DRAFT                                              10 June 2001
- 
+
       1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8
      +---------------+---------------+---------------+---------------+
      | Next Payload  |    RESERVED   |        Payload length         |
@@ -353,7 +353,7 @@ o  As the internal address space is only 32 bits, and it is usually very
 T. Kivinen, et. al.                                             [page 6]
 
 INTERNET-DRAFT                                              10 June 2001
- 
+
 o  The NAT-D payloads nor the Vendor ID payloads are not authenticated
    at all in the main mode nor in the aggressive mode. This means that
    attacker can remove those payloads, modify them or add them. By
@@ -412,7 +412,7 @@ Encapsulation", draft-ietf-ipsec-udp-encaps-justification-00.txt, June
 T. Kivinen, et. al.                                             [page 7]
 
 INTERNET-DRAFT                                              10 June 2001
- 
+
     FIN-00100 HELSINKI
     Finland
     E-mail: kivinen@ssh.fi

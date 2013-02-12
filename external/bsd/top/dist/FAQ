@@ -10,14 +10,14 @@
 
      GENERAL
 
- 1.  What is top? 
+ 1.  What is top?
 
      Top provies the user with a regularly updated display showing
      information about the system and its top cpu-using processes. Think
      of it as a full-screen "ps" output that gets updated at regular
      intervals.
 
- 2.  Where do I get the latest version of top? 
+ 2.  Where do I get the latest version of top?
 
      The official site for top is "ftp.unixtop.org" in the directory
      "/pub/top". Top is also a SourceForge project, and the most recent
@@ -25,14 +25,14 @@
      SourceForge project page is at
      http://sourceforge.net/projects/unixtop.
 
- 3.  Is there a web page for top? 
+ 3.  Is there a web page for top?
 
      Yes. Point your browser at http://www.unixtop.org. It includes all
      documentation, a nice interactive display which describes the various
      components of the output of top, web-based retrieval of the package,
      year 2000 information, and other neat stuff.
 
- 4.  Is there a mailing list or on-line bulletin board for top? 
+ 4.  Is there a mailing list or on-line bulletin board for top?
 
      There is a mailing list used for general announcements regarding top,
      including new releases. This mailing list is available to sourceforge
@@ -41,21 +41,21 @@
      click on "mailing lists". There are also on-line forums available
      through SourceForge where members can post questions and comments.
 
- 5.  What about Year 2000 compliance? 
+ 5.  What about Year 2000 compliance?
 
      Top did not experience any problems with the transition to the year
      2000. A full statement concerning top and the year 2000 can be found
      in the file "Y2K" included with the distribution.
 
  6.  Will there be another major release of top? Will there be a top
-     version 4? 
+     version 4?
 
      I have some great ideas for the next major release of top, and I very
      much want to make those ideas a reality. What I don't have much of
      these days is free time. But I will keep poking at it and I hope to
      have top version 4.0 ready by the fall of 2006.
 
- 7.  Does top really support multi-processor systems? 
+ 7.  Does top really support multi-processor systems?
 
      On platforms that support multiple processors, top is able to detect
      and correctly summarize the information about those processors. What
@@ -67,7 +67,7 @@
      is not present in the standard top 3.6 release.
 
  8.  Is top under CVS control? Can I access the sources via SourceForge
-     CVS or Subversion? 
+     CVS or Subversion?
 
      I maintain top using subversion, not CVS. Although I utilize my own
      private subversion repository, it is regularly mirrored in to the
@@ -78,7 +78,7 @@
      COMPILING
 
  9.  We just upgraded our operating system to a new version and top broke.
-     What should we do? 
+     What should we do?
 
      Recompile it. Top is very sensitive to changes in internal kernel
      data structures. It is not uncommon for a new version of the
@@ -90,7 +90,7 @@
 10.  I just finished compiling top and it works fine for root, but when I
      try to run it as a regular user it either complains about files it
      can't open or it doesn't display all the information it should. Did I
-     do something wrong? 
+     do something wrong?
 
      Well, you're just not done. On many operating systems today, access
      to many of the kernel memory devices and other system files is
@@ -100,7 +100,7 @@
      However, you have to *install* it first. Do this with the command
      "make install".
 
-11.  Top is (not) displaying idle processes and I don't (do) want it to. 
+11.  Top is (not) displaying idle processes and I don't (do) want it to.
 
      This default has only changed about a dozen times, and I finally got
      tired of people whining about it. Go read the manual page for the
@@ -109,7 +109,7 @@
 
 12.  We have so much memory in our machine that the memory status display
      (the fourth line) ends up being longer than 80 characters. This
-     completely messes up top's output. Is there a patch? 
+     completely messes up top's output. Is there a patch?
 
      Most modules have been changed to use new memory formatting functions
      which will display large values in terms of megabytes instead of
@@ -120,7 +120,7 @@
 13.  I tried to compile top with gcc and it doesn't work. I get
      compilation errors in the include files, or I get an executable that
      dumps core, or top displays incorrect numbers in some of the
-     displays. What's wrong? 
+     displays. What's wrong?
 
      Gnu CC likes very much to use its own include files. Not being a gcc
      expert, I can't explain why it does this. But I can tell you that if
@@ -134,7 +134,7 @@
      normally, or (3) use a different compiler.
 
 14.  The cpu state percentages are all wrong, indicating that my machine
-     is using 95% system time when it is clearly idle. What's wrong? 
+     is using 95% system time when it is clearly idle. What's wrong?
 
      This can happen if you compiled with gcc using the wrong include
      files. See the previous question.
@@ -143,7 +143,7 @@
      FREEBSD PROBLEMS
 
 15.  This version of top does not show individual threads with the "t" or
-     "H" commands. Instead it says "command not available." Why? 
+     "H" commands. Instead it says "command not available." Why?
 
      Previous versions of top attempted to support the display of
      individual threads under FreeBSD through the use of the "t" command.
@@ -156,7 +156,7 @@
      "t" command for version 8.0.
 
 16.  The "f" command (to display full command lines for the processes)
-     does not work and instead says "command not available". Why? 
+     does not work and instead says "command not available". Why?
 
      The current version of top is able to use sysctl to retrieve almost
      all of the information it needs without having to open /dev/kmem. The
@@ -171,7 +171,7 @@
      MACOSX PROBLEMS
 
 17.  I tried to configure top on my Mac OSX system and I got an error
-     claiming "macosx not supported". What up? 
+     claiming "macosx not supported". What up?
 
      Since I don't have full time root access to a Mac OSX system I cannot
      provide effective support for the platform. MacOSX uses Mach, and it
@@ -186,7 +186,7 @@
      SUNOS PROBLEMS
 
 18.  I tried compiling top under SunOS version 4.1.x and it got compile
-     time errors or run time errors. Is there a patch? 
+     time errors or run time errors. Is there a patch?
 
      If you try compiling top in a "System V environment" under SunOS
      (that is, /usr/5bin is before /usr/bin on your path) then the
@@ -204,13 +204,13 @@
      /usr/ucb is not on your path before attempting to compile top under
      Solaris.
 
-19.  Is there somewhere I can get a pre-compiled package? 
+19.  Is there somewhere I can get a pre-compiled package?
 
      Yes. Although I don't provide pre-compiled binaries, you can get a
      Sun-style package from www.sunfreeware.com.
 
 20.  Under Solaris 2, when I type "make", the system says "language
-     optional software package not installed." What's going on? 
+     optional software package not installed." What's going on?
 
      You tried to compile with /usr/ucb/cc. Make sure /usr/ucb is not on
      your path. Furthermore, you do not have a Sun compiler installed on
@@ -219,7 +219,7 @@
 
 21.  Under Solaris 2, when I run top as root it only shows root processes,
      or it only shows processes with a PID less than 1000. It refuses to
-     show anything else. What do I do? 
+     show anything else. What do I do?
 
      You probably compiled it with /usr/ucb/cc instead of the real C
      compiler. /usr/ucb/cc is a cc front end that compiles programs in BSD
@@ -228,7 +228,7 @@
 
 22.  Under Solaris 2, I compiled top using what I am sure is the correct
      compiler but when I try to run it it complains about missing dynamic
-     libraries. What is wrong? 
+     libraries. What is wrong?
 
      Check to see if you have LD_LIBRARY_PATH defined in your shell. If
      you do, make sure that /usr/ucblib is not on the path anywhere. Then
@@ -238,7 +238,7 @@
      open the library "libucb.so.1". So I changed the LIBS line in
      m_sunos5.c to include -R/usr/ucblib to make sure that the dynamic
      linker will look there when top runs. I figured this was just an
-     oversight. Was I right? 
+     oversight. Was I right?
 
      No, you were not right. As distributed, top requires no alterations
      for successful compilation and operations under any release of
@@ -246,7 +246,7 @@
      real C compiler. See FAQ 22 for more details.
 
 24.  On my 64-bit system some processes show up with incorrect information
-     (such as zero memory). 
+     (such as zero memory).
 
      If you are running a 64-bit system, then you need to make sure that
      you are running the 64-bit top binary. Top's configure script
@@ -259,14 +259,14 @@
      the same system. For Sparc systems the 32-bit binary will be created
      in the subdirectory "sparcv7" and the 64-bit binary will be created
      in the subdirectory "sparcv9". For Intel systems the directories will
-     be "i386" (32-bit) and "amd64" (64-bit). In all cases a copy of 
+     be "i386" (32-bit) and "amd64" (64-bit). In all cases a copy of
      /usr/lib/isaexec is made in the main directory and called "top". This
      program will choose the correct binary to run from one of these
      subdirectories. See isaexec(3c) for more details.
 
 25.  Can I install both 32-bit and 64-bit binaries on a central file
      server and have machines which mount it automatically use the correct
-     one? 
+     one?
 
      Yes. If you configure and compile on a 64-bit system, top's configure
      script and makefile will automatically create both 32-bit and 64-bit
@@ -280,10 +280,10 @@
 
 26.  This version of top show less available swap space than previous
      versions. Why does it no longer match the output of the swap summary
-     produced with "swap -s"? 
+     produced with "swap -s"?
 
      Starting with version 3.6 of top, the amount of swap space reported
-     by top has been changed to reflect only disk-based swap space. The 
+     by top has been changed to reflect only disk-based swap space. The
      swap summary produced with "swap -s" also includes memory-based swap
      space. This changed was made for several reasons. It makes the
      display under Solaris more like those of other operating systems. The
@@ -300,7 +300,7 @@
      the system information at the top but does not display any process
      information (or only displays process information for my own
      processes). Yet when I run it as root, everything works fine. What's
-     wrong? 
+     wrong?
 
      Your system probably uses the pseudo file system "/proc", which is by
      default only accessible by root. Top needs to be installed setuid
@@ -310,7 +310,7 @@
 
      SVR42 PROBLEMS
 
-28.  The memory display doesn't work right. Why? 
+28.  The memory display doesn't work right. Why?
 
      This is a known bug with the svr42 module. The problem has been
      traced down to a potential bug in the "mem" driver. The author of the
@@ -319,7 +319,7 @@
 
      STILL STUCK
 
-29.  I'm still stuck. To whom do I report problems with top? 
+29.  I'm still stuck. To whom do I report problems with top?
 
      The most common problems are caused by top's sensitivity to internal
      kernel data structures. So make sure that you are using the right

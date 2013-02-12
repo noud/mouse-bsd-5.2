@@ -91,7 +91,7 @@ BEGIN {
 	if (skip == 0)
 		print
 }
-	
+
 END {
 	if (nested != 0)
 		exit 1

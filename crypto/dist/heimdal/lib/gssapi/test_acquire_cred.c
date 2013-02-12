@@ -1,18 +1,18 @@
 /*
  * Copyright (c) 2003-2007 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
  * 3. Neither the name of KTH nor the names of its contributors may be
  *    used to endorse or promote products derived from this software without
@@ -80,7 +80,7 @@ test_add(gss_cred_id_t cred_handle)
 				 NULL,
 				 &time_rec,
 				 NULL);
-			    
+
     if (GSS_ERROR(major_status))
 	errx(1, "add_cred failed");
 
@@ -99,7 +99,7 @@ copy_cred(void)
     gss_cred_id_t cred_handle;
     OM_uint32 time_rec;
 
-    major_status = gss_acquire_cred(&minor_status, 
+    major_status = gss_acquire_cred(&minor_status,
 				    GSS_C_NO_NAME,
 				    0,
 				    NULL,
@@ -109,7 +109,7 @@ copy_cred(void)
 				    &time_rec);
     if (GSS_ERROR(major_status))
 	errx(1, "acquire_cred failed");
-	
+
     print_time(time_rec);
 
     test_add(cred_handle);
@@ -137,7 +137,7 @@ acquire_cred_service(const char *service,
     if (service) {
 	name_buffer.value = rk_UNCONST(service);
 	name_buffer.length = strlen(service);
-	
+
 	major_status = gss_import_name(&minor_status,
 				       &name_buffer,
 				       nametype,
@@ -146,7 +146,7 @@ acquire_cred_service(const char *service,
 	    errx(1, "import_name failed");
     }
 
-    major_status = gss_acquire_cred(&minor_status, 
+    major_status = gss_acquire_cred(&minor_status,
 				    name,
 				    0,
 				    NULL,
@@ -155,9 +155,9 @@ acquire_cred_service(const char *service,
 				    NULL,
 				    &time_rec);
     if (GSS_ERROR(major_status)) {
-	warnx("acquire_cred failed: %s", 
+	warnx("acquire_cred failed: %s",
 	     gssapi_err(major_status, minor_status, GSS_C_NO_OID));
-    } else {    
+    } else {
 	print_time(time_rec);
 	gss_release_cred(&minor_status, &cred_handle);
     }
@@ -202,7 +202,7 @@ main(int argc, char **argv)
     setprogname(argv[0]);
     if(getarg(args, sizeof(args) / sizeof(args[0]), argc, argv, &optidx))
 	usage(1);
-    
+
     if (help_flag)
 	usage (0);
 
@@ -228,7 +228,7 @@ main(int argc, char **argv)
 	    errx(1, "unknown type %s", acquire_type);
     } else
 	flag = GSS_C_ACCEPT;
-	
+
     if (name_type) {
 	if (strcasecmp("hostbased-service", name_type) == 0)
 	    type = GSS_C_NT_HOSTBASED_SERVICE;
@@ -244,7 +244,7 @@ main(int argc, char **argv)
 	major_status = gss_krb5_ccache_name(&minor_status,
 					    ccache, NULL);
 	if (GSS_ERROR(major_status))
-	    errx(1, "gss_krb5_ccache_name %s", 
+	    errx(1, "gss_krb5_ccache_name %s",
 		 gssapi_err(major_status, minor_status, GSS_C_NO_OID));
     }
 

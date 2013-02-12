@@ -111,7 +111,7 @@ static const char rcsid[] = "@(#)Id: ip_sync.c,v 2.40.2.12 2008/02/09 18:28:08 d
 #ifdef	IPFILTER_SYNC
 # if SOLARIS && defined(_KERNEL)
 extern	struct pollhead	iplpollhead[IPL_LOGSIZE];
-# endif 
+# endif
 
 ipfmutex_t	ipf_syncadd, ipsl_mutex;
 ipfrwlock_t	ipf_syncstate, ipf_syncnat;

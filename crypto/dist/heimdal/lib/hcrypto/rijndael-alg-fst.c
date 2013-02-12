@@ -43,7 +43,7 @@ __RCSID("$Heimdal: rijndael-alg-fst.c 17445 2006-05-05 10:37:46Z lha $"
 
 /* the file should not be used from outside */
 typedef uint8_t			u8;
-typedef uint16_t		u16;	
+typedef uint16_t		u16;
 typedef uint32_t		u32;
 
 /*

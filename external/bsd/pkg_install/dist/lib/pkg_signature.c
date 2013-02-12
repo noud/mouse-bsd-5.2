@@ -491,7 +491,7 @@ extract_pkgname(int fd)
 
 	parse_plist(&plist, buf);
 	free(buf);
-	p = find_plist(&plist, PLIST_NAME);	
+	p = find_plist(&plist, PLIST_NAME);
 	if (p != NULL) {
 		buf = xstrdup(p->name);
 	} else {

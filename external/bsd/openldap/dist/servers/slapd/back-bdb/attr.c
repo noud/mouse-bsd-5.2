@@ -34,7 +34,7 @@ bdb_attr_slot( struct bdb_info *bdb, AttributeDescription *ad, unsigned *ins )
 	unsigned base = 0, cursor = 0;
 	unsigned n = bdb->bi_nattrs;
 	int val = 0;
-	
+
 	while ( 0 < n ) {
 		int pivot = n >> 1;
 		cursor = base + pivot;
@@ -67,7 +67,7 @@ ainfo_insert( struct bdb_info *bdb, AttrInfo *a )
 	if ( i >= 0 )
 		return -1;
 
-	bdb->bi_attrs = ch_realloc( bdb->bi_attrs, ( bdb->bi_nattrs+1 ) * 
+	bdb->bi_attrs = ch_realloc( bdb->bi_attrs, ( bdb->bi_nattrs+1 ) *
 		sizeof( AttrInfo * ));
 	if ( x < bdb->bi_nattrs )
 		AC_MEMCPY( &bdb->bi_attrs[x+1], &bdb->bi_attrs[x],
@@ -238,7 +238,7 @@ bdb_attr_index_config(
 		}
 
 		Debug( LDAP_DEBUG_CONFIG, "index %s 0x%04lx\n",
-			ad->ad_cname.bv_val, mask, 0 ); 
+			ad->ad_cname.bv_val, mask, 0 );
 
 		a = (AttrInfo *) ch_malloc( sizeof(AttrInfo) );
 
@@ -362,7 +362,7 @@ bdb_attr_index_destroy( struct bdb_info *bdb )
 {
 	int i;
 
-	for ( i=0; i<bdb->bi_nattrs; i++ ) 
+	for ( i=0; i<bdb->bi_nattrs; i++ )
 		bdb_attr_info_free( bdb->bi_attrs[i] );
 
 	free( bdb->bi_attrs );

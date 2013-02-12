@@ -290,7 +290,7 @@ Archive Site:	ftp://ftp.gnu.org/gnu/non-gnu/flex/
 Home Page:	http://lex.sourceforge.net/
 Mailing List:
 Responsible:	mikel
-License:	BSD-like	
+License:	BSD-like
 Notes:
 flex 2.5.4a contains only copyright notice changes over version 2.5.4;
 internally not even the version number changed.
@@ -436,13 +436,13 @@ When configure.ac is updated, run the following:
   cd src/crypto/dist/ipsec-tools
   ./bootstrap
   ./configure --enable-adminport --enable-hybrid --enable-frag \
-  	      --enable-natt --enable-dpd 
+  	      --enable-natt --enable-dpd
 Then copy package_version.h to src/lib/libipsec and merge config.h with
 src/lib/libipsec/config.h (it needs some manual tweaking)
 
-NOTE: As NetBSD HEAD and ipsec-tools HEAD are just the same thing, 
+NOTE: As NetBSD HEAD and ipsec-tools HEAD are just the same thing,
 NetBSD-current always contains latest ipsec-tools code. On the other hand,
-ipsec-tools has stable branches (e.g.: ipsec-tools-0_7-branch), which 
+ipsec-tools has stable branches (e.g.: ipsec-tools-0_7-branch), which
 are manually pulled up to NetBSD stable branches (e.g.: netbsd-4 is regularly
 sync with ipsec-tools-0_7-branch)
 
@@ -644,7 +644,7 @@ Archive Site:	http://www.psc.edu/networking/projects/hpn-ssh/openssh-5.0p1-hpn13
 Home Page:	http://www.psc.edu/networking/projects/hpn-ssh/
 Mailing List:
 Responsible:	christos
-License:	
+License:
 Notes:
 Patch applied after OpenSSH import.
 
@@ -671,7 +671,7 @@ markus is very cooperative about it):
 - uidswap.c changed order of set{e,}{u,g}id so that it works on NetBSD
 - added moduli from portable openssh
 - added USE_PAM patches and auth_pam.[ch] from portable openssh
-- add the HPN patch 
+- add the HPN patch
 - always bump major when importing to avoid api problems.
 
 Package:	OpenSSL

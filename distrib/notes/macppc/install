@@ -258,10 +258,10 @@ on ISO9660 (not hybrid) and MS-DOS file systems.
 On Open Firmware 2.4, you can use it on HFS, HFS+, hybrid, ISO9960,
 and MS-DOS file systems.
 On Open Firmware 3, you can use it on HFS, HFS+, hybrid (not pure ISO9660),
-and MS-DOS file systems.  The one exception to this rule is that Open 
-Firmware cannot list files on a disk with a 
+and MS-DOS file systems.  The one exception to this rule is that Open
+Firmware cannot list files on a disk with a
 .Sq "partition zero"
-bootloader (including the 
+bootloader (including the
 .Nx*M
 CD-R image and installation floppies).
 .(disp
@@ -288,11 +288,11 @@ Keep in mind that Open Firmware is often case-sensitive when it
 comes to filenames.
 .Note)
 .(Note
-You may need to append a 
+You may need to append a
 .Pa ;1
 to the filename when using a ISO 9660 file system.  This
 .Dq "version number"
-is part of the ISO 9660 specification and will show up in the directory 
+is part of the ISO 9660 specification and will show up in the directory
 listing if it is present on the disk.  For example:
 .(disp
 .No 0 \*[Gt] Ic "boot cd:,\eOFWBOOT.XCF;1 NETBSD.MACPPC;1"
@@ -731,7 +731,7 @@ Do not change
 .Li load-base
 on an Open Firmware 3 system.
 .Pp
-Reset your system and try using a different boot command (this is the 
+Reset your system and try using a different boot command (this is the
 only way some people have gotten their Open Firmware 2.4 systems to work):
 .(disp
 .No 0 \*[Gt] Ic "0 bootr boot-device boot-file"
@@ -827,8 +827,8 @@ You need to boot with a command like:
 .To 2 "enet:,/netbsd.ram.gz: Inappropriate file type or format"
 .Dq Li "enet:,/netbsd.ram.gz: Inappropriate file type or format"
 .Pp
-Some systems booting over ethernet can't load compressed 
-kernels.  Use 
+Some systems booting over ethernet can't load compressed
+kernels.  Use
 .Xr gunzip 1
 to uncompress the kernel before attempting to netboot.
 .It
@@ -859,7 +859,7 @@ The most likely is a keyboard problem.
 First, try plugging the USB keyboard directly into the computer
 (i.e. not through a hub) and unplugging the mouse.
 .Pp
-If you're trying a model that's not on the supported list (such as a new 
+If you're trying a model that's not on the supported list (such as a new
 laptop model), they keyboard may not be supported yet.
 .bullet)
 .
@@ -878,15 +878,15 @@ specific problems, so read everything because it applies to all models.
 .
 .Ss2 "Finalizing Open Firmware settings"
 .
-Now, you can reboot to get to the Open Firmware prompt.  You still need 
-to figure out how to get Open Firmware to boot the operating system(s) of 
-your choice.  First, try to get 
+Now, you can reboot to get to the Open Firmware prompt.  You still need
+to figure out how to get Open Firmware to boot the operating system(s) of
+your choice.  First, try to get
 .Nx*M
-running.  Using the methods described in the section 
+running.  Using the methods described in the section
 .Sx "Examples of Open Firmware boot commands"
 figure out the boot command for your installation of
 .Nx .
-Try booting.  Once you've got the syntax worked out, decide which operating 
+Try booting.  Once you've got the syntax worked out, decide which operating
 systems you'll be using regularly.
 .(bullet
 .To 2 "Booting NetBSD exclusively"
@@ -898,17 +898,17 @@ on your \*M system, then simply set the Open Firmware
 .Sq Li boot-device
 and
 .Sq Li boot-file
-variables to the values you just determined.  Also, you might want to 
+variables to the values you just determined.  Also, you might want to
 enable the system to always boot
 .Nx
-when powered on or reset.  Once you set up auto-booting you can get to 
+when powered on or reset.  Once you set up auto-booting you can get to
 the Open Firmware prompt again by using the
 .Xr shutdown 8
 command to halt the system.
 .Pp
 If you are not using a
 .Sq "partition zero"
-style boot scheme (e.g. Open Firmware 3 models), then you would type 
+style boot scheme (e.g. Open Firmware 3 models), then you would type
 something like the following:
 .Pp
 .(disp
@@ -949,15 +949,15 @@ settings:
 .disp)
 .Pp
 Also, you may be able to pause a system at the Open Firmware prompt
-if you have 
+if you have
 .Sq Li auto-boot?
 set to
 .Sq Li true
-by holding down any key while the system is resetting.  Set the 
+by holding down any key while the system is resetting.  Set the
 following
 .Sq Li boot-command
 (this may not work on system with Open Firmware 1.0.5) (this method should
-interrupt booting, even when holding down any key while using a serial 
+interrupt booting, even when holding down any key while using a serial
 console):
 .Pp
 .(disp
@@ -967,22 +967,22 @@ console):
 .To 2 "Booting NetBSD and MacOS X or Darwin"
 .Em "Booting NetBSD and MacOS X or Darwin"
 .br
-Alas, this takes a little more work.  Usually, when you select a system 
+Alas, this takes a little more work.  Usually, when you select a system
 to boot in the
 .Dq "Startup Disk"
-panel of the 
+panel of the
 .Dq "System Preferences"
 application, it stores the Open Firmware path to that device in the
 .Sq Li boot-device
-variable.  So, instead of writing the 
+variable.  So, instead of writing the
 .Nx
-device path to Open Firmware, you'll store the paths to your operating 
+device path to Open Firmware, you'll store the paths to your operating
 systems in NVRAM.  Open Firmware cannot deal with nested
 .Ic devalias
-entries.  You must, therefore, enter the 
+entries.  You must, therefore, enter the
 .Em entire
 path to your device.  See the
-.Nx*M 
+.Nx*M
 .Ic nvedit
 HOW-TO for more help:
 .Lk http://www.NetBSD.org/ports/macppc/nvedit.html
@@ -998,7 +998,7 @@ boot-device /pci@f2000000/mac-io@17/ata-4@1f000/@0:10,\e\e:tbxi
 .No 0 \*[Gt] Ic "reset-all"
 .disp)
 .Pp
-Now, when the system is reset, it will stop at the Open Firmware prompt 
+Now, when the system is reset, it will stop at the Open Firmware prompt
 and you can type one of the following to boot an operating system:
 .(disp
 .No 0 \*[Gt] Ic "boot osx"
@@ -1008,54 +1008,54 @@ and you can type one of the following to boot an operating system:
 .To 2 "Booting NetBSD and MacOS 9 or earlier"
 .Em "Booting NetBSD and MacOS 9 or earlier"
 .br
-For Open Firmware 3 systems, the procedure is identical to the section 
+For Open Firmware 3 systems, the procedure is identical to the section
 above on
 .Sx "Booting NetBSD and MacOS X or Darwin"
 .Pp
-For older systems, you're in for more hassle.  Booting an Open Firmware 
-1.0.5, 2.0.x, or 2.4 system into 
+For older systems, you're in for more hassle.  Booting an Open Firmware
+1.0.5, 2.0.x, or 2.4 system into
 .Tn MacOS
-9 or earlier will erase some or all of your Open Firmware settings.  Try 
-it and see which Open Firmware variables survive.  
+9 or earlier will erase some or all of your Open Firmware settings.  Try
+it and see which Open Firmware variables survive.
 .Pp
-If only 
+If only
 .Sq Li real-base
 is lost, you can compile a kernel that does not require changing the
 .Sq Li real-base .
 Just build a kernel that is less than 4 MB uncompressed.  This is easy if
-you remove all of the USB devices from the config file.  Once you've got 
+you remove all of the USB devices from the config file.  Once you've got
 a smaller kernel, just follow the procedure in the section above on
 .Sx "Booting NetBSD and MacOS X or Darwin"
 .Pp
-If everything is lost when you boot into 
+If everything is lost when you boot into
 .Tn MacOS
-9 or earlier, you will need to make a custom BootVars 
+9 or earlier, you will need to make a custom BootVars
 configuration that you run before trying to boot
-.Nx*M 
-since System Disk does not preserve enough information when it saves a 
+.Nx*M
+since System Disk does not preserve enough information when it saves a
 configuration.
 .(enum
-If your system supports System Disk, run it and click 
+If your system supports System Disk, run it and click
 .Dq Save
 to install the NVRAMRC patches.
 .It
-Run BootVars, click the 
+Run BootVars, click the
 .Dq "All Variables"
 button.
 .It
-Fill in 
-.Sq Li real-base , 
-.Sq Li boot-device , 
-.Sq Li boot-file , 
-.Sq Li input-device , 
+Fill in
+.Sq Li real-base ,
+.Sq Li boot-device ,
+.Sq Li boot-file ,
+.Sq Li input-device ,
 and
 .Sq Li output-device .
 .It
-From the 
+From the
 .Dq File
-menu, pick 
+menu, pick
 .Dq Save .
-When you run this file, it will load BootVars with all your settings.  To 
+When you run this file, it will load BootVars with all your settings.  To
 boot
 .Nx
 click the

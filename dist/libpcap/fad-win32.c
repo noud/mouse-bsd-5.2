@@ -44,7 +44,7 @@ static const char rcsid[] _U_ =
 #include <packet32.h>
 
 #include <errno.h>
-	
+
 /*
  * Add an entry to the list of addresses for an interface.
  * "curdev" is the entry for that interface.
@@ -88,7 +88,7 @@ add_addr_to_list(pcap_if_t *curdev, struct sockaddr *addr,
 		}
 	} else
 		curaddr->netmask = NULL;
-		
+
 	if (broadaddr != NULL) {
 		curaddr->broadaddr = (struct sockaddr*)dup_sockaddr(broadaddr, sizeof(struct sockaddr_storage));
 		if (curaddr->broadaddr == NULL) {
@@ -99,7 +99,7 @@ add_addr_to_list(pcap_if_t *curdev, struct sockaddr *addr,
 		}
 	} else
 		curaddr->broadaddr = NULL;
-		
+
 	if (dstaddr != NULL) {
 		curaddr->dstaddr = (struct sockaddr*)dup_sockaddr(dstaddr, sizeof(struct sockaddr_storage));
 		if (curaddr->dstaddr == NULL) {
@@ -110,7 +110,7 @@ add_addr_to_list(pcap_if_t *curdev, struct sockaddr *addr,
 		}
 	} else
 		curaddr->dstaddr = NULL;
-		
+
 	/*
 	 * Find the end of the list of addresses.
 	 */
@@ -223,11 +223,11 @@ pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
 	char *AdaptersName;
 	ULONG NameLength;
 	char *name;
-	
+
 	if(!PacketGetAdapterNames(NULL, &NameLength) && NameLength == 0)
 	{
 		/*
-		 * If PacketGetAdapterNames *and* sets the lenght of the buffer to zero, 
+		 * If PacketGetAdapterNames *and* sets the lenght of the buffer to zero,
 		 * it means there was an error.
 		 */
 		snprintf(errbuf, PCAP_ERRBUF_SIZE, "PacketGetAdapterNames failed: %s", pcap_win32strerror());
@@ -247,7 +247,7 @@ pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
 	{
 		snprintf(errbuf, PCAP_ERRBUF_SIZE, "Cannot allocate enough memory to list the adapters.");
 		return (-1);
-	}			
+	}
 
 	if (!PacketGetAdapterNames(AdaptersName, &NameLength)) {
 		snprintf(errbuf, PCAP_ERRBUF_SIZE,
@@ -256,7 +256,7 @@ pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
 		free(AdaptersName);
 		return (-1);
 	}
-	
+
 	/*
 	 * "PacketGetAdapterNames()" returned a list of
 	 * null-terminated ASCII interface name strings,
@@ -272,7 +272,7 @@ pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
 	desc = &AdaptersName[0];
 	while (*desc != '\0' || *(desc + 1) != '\0')
 		desc++;
-	
+
 	/*
  	 * Found it - "desc" points to the first of the two
 	 * nulls at the end of the list of names, so the
@@ -280,7 +280,7 @@ pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
 	 * after it.
 	 */
 	desc += 2;
-	
+
 	/*
 	 * Loop over the elements in the first list.
 	 */
@@ -299,7 +299,7 @@ pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
 		name += strlen(name) + 1;
 		desc += strlen(desc) + 1;
 	}
-	
+
 	if (ret == -1) {
 		/*
 		 * We had an error; free the list we've been constructing.
@@ -309,7 +309,7 @@ pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
 			devlist = NULL;
 		}
 	}
-	
+
 	*alldevsp = devlist;
 	free(AdaptersName);
 	return (ret);

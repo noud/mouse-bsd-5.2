@@ -2,7 +2,7 @@
 
 /* Do not edit: automatically built by build/distrib. */
 void __vi_InitCopyPaste
-   __P((int (*)(), int (*)(), int (*)(), int (*)())); 
+   __P((int (*)(), int (*)(), int (*)(), int (*)()));
 void	__vi_AcquirePrimary __P((Widget));
 void	__vi_PasteFromClipboard __P((Widget));
 void __vi_send_command_string __P((String));

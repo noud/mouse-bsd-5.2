@@ -69,7 +69,7 @@ rewrite_xmap_parse(
 
 	/*
 	 * Experimental passwd map:
-	 * replaces the uid with the matching gecos from /etc/passwd file 
+	 * replaces the uid with the matching gecos from /etc/passwd file
 	 */
 	if ( strncasecmp(s, "xpasswd", 7 ) == 0 ) {
 		map->lm_type = REWRITE_MAP_XPWDMAP;
@@ -90,7 +90,7 @@ rewrite_xmap_parse(
 
 		/* Don't really care if fails */
 		return map;
-	
+
 	/*
 	 * Experimental file map:
 	 * looks up key in a `key value' ascii file
@@ -100,9 +100,9 @@ rewrite_xmap_parse(
 		const char *p;
 		int l;
 		int c = 5;
-		
+
 		map->lm_type = REWRITE_MAP_XFILEMAP;
-		
+
 		if ( s[ c ] != '(' ) {
 			free( map );
 			return NULL;
@@ -125,7 +125,7 @@ rewrite_xmap_parse(
 		filename = calloc( sizeof( char ), l + 1 );
 		AC_MEMCPY( filename, s + c, l );
 		filename[ l ] = '\0';
-		
+
 		map->lm_args = ( void * )fopen( filename, "r" );
 		free( filename );
 
@@ -142,8 +142,8 @@ rewrite_xmap_parse(
 			free( map );
 			return NULL;
 		}
-#endif /* USE_REWRITE_LDAP_PVT_THREADS */	
-		
+#endif /* USE_REWRITE_LDAP_PVT_THREADS */
+
 		return map;
 
 	/*
@@ -162,7 +162,7 @@ rewrite_xmap_parse(
 			return NULL;
 		}
 		c++;
-		
+
 		p = strchr( s, '}' );
 		if ( p == NULL ) {
 			free( map );
@@ -171,7 +171,7 @@ rewrite_xmap_parse(
 		p--;
 
 		*currpos = p + 2;
-	
+
 		/*
 		 * Add two bytes for urlencoding of '%s'
 		 */
@@ -211,7 +211,7 @@ rewrite_xmap_parse(
 #endif /* USE_REWRITE_LDAP_PVT_THREADS */
 
 		return map;
-	
+
 	/* Unhandled map */
 	}
 
@@ -234,16 +234,16 @@ rewrite_xmap_apply(
 )
 {
 	int rc = REWRITE_SUCCESS;
-	
+
 	assert( info != NULL );
 	assert( op != NULL );
 	assert( map != NULL );
 	assert( key != NULL );
 	assert( val != NULL );
-	
+
 	val->bv_val = NULL;
 	val->bv_len = 0;
-	
+
 	switch ( map->lm_type ) {
 #ifdef HAVE_GETPWNAM
 	case REWRITE_MAP_XPWDMAP: {
@@ -252,7 +252,7 @@ rewrite_xmap_apply(
 #ifdef USE_REWRITE_LDAP_PVT_THREADS
 		ldap_pvt_thread_mutex_lock( &xpasswd_mutex );
 #endif /* USE_REWRITE_LDAP_PVT_THREADS */
-		
+
 		pwd = getpwnam( key->bv_val );
 		if ( pwd == NULL ) {
 
@@ -267,7 +267,7 @@ rewrite_xmap_apply(
 #ifdef HAVE_STRUCT_PASSWD_PW_GECOS
 		if ( pwd->pw_gecos != NULL && pwd->pw_gecos[0] != '\0' ) {
 			int l = strlen( pwd->pw_gecos );
-			
+
 			val->bv_val = strdup( pwd->pw_gecos );
 			if ( val->bv_val == NULL ) {
 
@@ -289,34 +289,34 @@ rewrite_xmap_apply(
 #ifdef USE_REWRITE_LDAP_PVT_THREADS
 		ldap_pvt_thread_mutex_unlock( &xpasswd_mutex );
 #endif /* USE_REWRITE_LDAP_PVT_THREADS */
-			
+
 		break;
 	}
 #endif /* HAVE_GETPWNAM*/
-	
+
 	case REWRITE_MAP_XFILEMAP: {
 		char buf[1024];
-		
+
 		if ( map->lm_args == NULL ) {
 			rc = REWRITE_ERR;
 			break;
 		}
-		
+
 #ifdef USE_REWRITE_LDAP_PVT_THREADS
 		ldap_pvt_thread_mutex_lock( &map->lm_mutex );
 #endif /* USE_REWRITE_LDAP_PVT_THREADS */
 
 		rewind( ( FILE * )map->lm_args );
-		
+
 		while ( fgets( buf, sizeof( buf ), ( FILE * )map->lm_args ) ) {
 			char *p;
 			int blen;
-			
+
 			blen = strlen( buf );
 			if ( buf[ blen - 1 ] == '\n' ) {
 				buf[ blen - 1 ] = '\0';
 			}
-			
+
 			p = strtok( buf, " " );
 			if ( p == NULL ) {
 #ifdef USE_REWRITE_LDAP_PVT_THREADS
@@ -325,7 +325,7 @@ rewrite_xmap_apply(
 				rc = REWRITE_ERR;
 				goto rc_return;
 			}
-			if ( strcasecmp( p, key->bv_val ) == 0 
+			if ( strcasecmp( p, key->bv_val ) == 0
 					&& ( p = strtok( NULL, "" ) ) ) {
 				val->bv_val = strdup( p );
 				if ( val->bv_val == NULL ) {
@@ -333,11 +333,11 @@ rewrite_xmap_apply(
 				}
 
 				val->bv_len = strlen( p );
-				
+
 #ifdef USE_REWRITE_LDAP_PVT_THREADS
 				ldap_pvt_thread_mutex_unlock( &map->lm_mutex );
 #endif /* USE_REWRITE_LDAP_PVT_THREADS */
-				
+
 				goto rc_return;
 			}
 		}
@@ -347,7 +347,7 @@ rewrite_xmap_apply(
 #endif /* USE_REWRITE_LDAP_PVT_THREADS */
 
 		rc = REWRITE_ERR;
-		
+
 		break;
 	}
 
@@ -364,7 +364,7 @@ rewrite_xmap_apply(
 		/*
 		 * No mutex because there is no write on the map data
 		 */
-		
+
 		ld = ldap_init( lud->lud_host, lud->lud_port );
 		if ( ld == NULL ) {
 			rc = REWRITE_ERR;
@@ -422,7 +422,7 @@ rewrite_xmap_apply(
 
 		ldap_msgfree( res );
 		ldap_unbind( ld );
-		
+
 		rc = REWRITE_SUCCESS;
 	}
 	}

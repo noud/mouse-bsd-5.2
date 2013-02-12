@@ -64,7 +64,7 @@
 		<h4>Debugging Aids</h4>
 		<p>The most convenient way to track the driver status is using the <tt>ntpq</tt> program and the <tt>clockvar</tt> command. This displays the last determined timecode and related status and error counters, even when the driver is not disciplining the system clock. If the debugging trace feature (<tt>-d</tt> on the <tt>ntpd</tt> command line)is enabled, the driver produces detailed status messages as it operates. If the <tt>fudge flag 4</tt> is set, these messages are written to the <tt>clockstats</tt> file. All messages produced by this driver have the prefix <tt>wwv</tt> for convenient filtering with the Unix <tt>grep</tt> command.</p>
 		<h4>Monitor Data</h4>
-		
+
 		When enabled by the <tt>filegen</tt> facility, every received timecode is written to the <tt>clockstats</tt> file in the following format:
 		<p><tt>sq yyyy ddd hh:mm:ss ld du lset agc ident metric errs freq avg<br>
 				     s</tt>        synch indicator (<tt>?</tt>&nbsp;or space)

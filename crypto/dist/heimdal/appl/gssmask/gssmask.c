@@ -1,18 +1,18 @@
 /*
  * Copyright (c) 2006 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
  * 3. Neither the name of KTH nor the names of its contributors may be
  *    used to endorse or promote products derived from this software without
@@ -152,7 +152,7 @@ find_handle(struct handle *h, int32_t idx, enum handle_type type)
 {
     if (idx == 0)
 	return NULL;
-    
+
     while (h) {
 	if (h->idx == idx) {
 	    if (type == h->type)
@@ -161,7 +161,7 @@ find_handle(struct handle *h, int32_t idx, enum handle_type type)
 	}
 	h = h->next;
     }
-    return NULL;    
+    return NULL;
 }
 
 
@@ -230,7 +230,7 @@ acquire_cred(struct client *c,
 		   "krb5_get_init_creds failed: %d", ret);
 	return convert_krb5_to_gsm(ret);
     }
-	
+
     ret = krb5_cc_new_unique(context, "MEMORY", NULL, &id);
     if (ret)
 	krb5_err (context, 1, ret, "krb5_cc_initialize");
@@ -238,7 +238,7 @@ acquire_cred(struct client *c,
     ret = krb5_cc_initialize (context, id, cred.client);
     if (ret)
 	krb5_err (context, 1, ret, "krb5_cc_initialize");
-    
+
     ret = krb5_cc_store_cred (context, id, &cred);
     if (ret)
 	krb5_err (context, 1, ret, "krb5_cc_store_cred");
@@ -359,7 +359,7 @@ HandleOP(InitContext)
 	if (ctx)
 	    krb5_errx(context, 1, "initcreds, context not NULL, but first req");
     }
-	
+
     if ((flags & GSS_C_DELEG_FLAG) != 0)
 	logmessage(c, __FILE__, __LINE__, 0, "init_sec_context delegating");
     if ((flags & GSS_C_DCE_STYLE) != 0)
@@ -371,7 +371,7 @@ HandleOP(InitContext)
 				    gss_target_name,
 				    oid,
 				    flags & 0x7f,
-				    0, 
+				    0,
 				    NULL,
 				    input_token_ptr,
 				    NULL,
@@ -383,7 +383,7 @@ HandleOP(InitContext)
 	    del_handle(&c->handles, hContext);
 	new_context_id = 0;
 	logmessage(c, __FILE__, __LINE__, 0,
-		   "gss_init_sec_context returns code: %d/%d", 
+		   "gss_init_sec_context returns code: %d/%d",
 		   maj_stat, min_stat);
     } else {
 	if (input_token.length == 0)
@@ -462,7 +462,7 @@ HandleOP(AcceptContext)
 	if (hContext != 0)
 	    del_handle(&c->handles, hContext);
 	logmessage(c, __FILE__, __LINE__, 0,
-		   "gss_accept_sec_context returns code: %d/%d", 
+		   "gss_accept_sec_context returns code: %d/%d",
 		   maj_stat, min_stat);
 	new_context_id = 0;
     } else {
@@ -485,8 +485,8 @@ HandleOP(AcceptContext)
 	gss_release_cred(&min_stat, &deleg_cred);
 	deleg_hcred = 0;
     }
-	 
-    
+
+
     gsm_error = convert_gss_to_gsm(maj_stat);
 
     put32(c, new_context_id);
@@ -535,11 +535,11 @@ HandleOP(AcquireCreds)
 	gsm_error = convert_krb5_to_gsm(ret);
 	goto out;
     }
-    
+
     ret = krb5_get_init_creds_opt_alloc (context, &opt);
     if (ret)
 	krb5_err(context, 1, ret, "krb5_get_init_creds_opt_alloc");
-    
+
     krb5_get_init_creds_opt_set_pa_password(context, opt, password, NULL);
 
     gsm_error = acquire_cred(c, principal, opt, &handle);
@@ -581,22 +581,22 @@ HandleOP(Sign)
 
     input_token.length = token.length;
     input_token.value = token.data;
-    
+
     maj_stat = gss_get_mic(&min_stat, ctx, 0, &input_token,
 			   &output_token);
     if (maj_stat != GSS_S_COMPLETE)
 	errx(1, "gss_get_mic failed");
-    
+
     krb5_data_free(&token);
-    
+
     token.data = output_token.value;
     token.length = output_token.length;
-    
+
     put32(c, 0); /* XXX fix gsm_error */
     putdata(c, token);
-    
+
     gss_release_buffer(&min_stat, &output_token);
-    
+
     return 0;
 }
 
@@ -622,7 +622,7 @@ HandleOP(Verify)
 
     msg_token.length = msg.length;
     msg_token.value = msg.data;
-    
+
     retdata(c, mic);
 
     mic_token.length = mic.length;
@@ -632,12 +632,12 @@ HandleOP(Verify)
 			      &mic_token, &qop);
     if (maj_stat != GSS_S_COMPLETE)
 	errx(1, "gss_verify_mic failed");
-    
+
     krb5_data_free(&mic);
     krb5_data_free(&msg);
-    
+
     put32(c, 0); /* XXX fix gsm_error */
-    
+
     return 0;
 }
 
@@ -654,7 +654,7 @@ HandleOP(GetVersionAndCapabilities)
     {
 	struct utsname ut;
 	if (uname(&ut) == 0) {
-	    snprintf(name, sizeof(name), "%s-%s-%s", 
+	    snprintf(name, sizeof(name), "%s-%s-%s",
 		     ut.sysname, ut.version, ut.machine);
 	}
     }
@@ -664,7 +664,7 @@ HandleOP(GetVersionAndCapabilities)
 
     put32(c, GSSMAGGOTPROTOCOL);
     put32(c, cap);
-    putstring(c, str); 
+    putstring(c, str);
     free(str);
 
     return 0;
@@ -712,12 +712,12 @@ HandleOP(SetLoggingSocket)
 
     krb5_store_int32(c->logging, eLogSetMoniker);
     store_string(c->logging, c->moniker);
-    
+
     logmessage(c, __FILE__, __LINE__, 0, "logging turned on");
 
     return 0;
 }
-    
+
 
 static int
 HandleOP(ChangePassword)
@@ -752,22 +752,22 @@ HandleOP(Wrap)
 
     input_token.length = token.length;
     input_token.value = token.data;
-    
+
     maj_stat = gss_wrap(&min_stat, ctx, flags, 0, &input_token,
 			&conf_state, &output_token);
     if (maj_stat != GSS_S_COMPLETE)
 	errx(1, "gss_wrap failed");
-    
+
     krb5_data_free(&token);
-    
+
     token.data = output_token.value;
     token.length = output_token.length;
-    
+
     put32(c, 0); /* XXX fix gsm_error */
     putdata(c, token);
-    
+
     gss_release_buffer(&min_stat, &output_token);
-    
+
     return 0;
 }
 
@@ -794,13 +794,13 @@ HandleOP(Unwrap)
 
     input_token.length = token.length;
     input_token.value = token.data;
-    
+
     maj_stat = gss_unwrap(&min_stat, ctx, &input_token,
 			  &output_token, &conf_state, &qop_state);
-    
+
     if (maj_stat != GSS_S_COMPLETE)
 	errx(1, "gss_unwrap failed: %d/%d", maj_stat, min_stat);
-	
+
     krb5_data_free(&token);
     if (maj_stat == GSS_S_COMPLETE) {
 	token.data = output_token.value;
@@ -938,16 +938,16 @@ create_client(int fd, int port, const char *moniker)
     {
 	c->salen = sizeof(c->sa);
 	getpeername(fd, (struct sockaddr *)&c->sa, &c->salen);
-	
-	getnameinfo((struct sockaddr *)&c->sa, c->salen, 
-		    c->servername, sizeof(c->servername), 
+
+	getnameinfo((struct sockaddr *)&c->sa, c->salen,
+		    c->servername, sizeof(c->servername),
 		    NULL, 0, NI_NUMERICHOST);
     }
 
     c->sock = krb5_storage_from_fd(fd);
     if (c->sock == NULL)
 	errx(1, "krb5_storage_from_fd");
-    
+
     close(fd);
 
     return c;
@@ -988,7 +988,7 @@ handleServer(void *ptr)
 	}
 
 	logmessage(c, __FILE__, __LINE__, 0,
-		   "---> Got op %s from server %s", 
+		   "---> Got op %s from server %s",
 		   handler->name, c->servername);
 
 	if ((handler->func)(handler->op, c))
@@ -1077,7 +1077,7 @@ main(int argc, char **argv)
     fprintf(logfile, "connected\n");
 
     {
-	struct client *c; 
+	struct client *c;
 
 	c = create_client(0, port, moniker_str);
 	/* close(0); */

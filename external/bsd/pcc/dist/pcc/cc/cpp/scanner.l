@@ -192,7 +192,7 @@ WS	[\t ]
 			}
 
 0[xX]{H}+{IS}?		{	scale = 16;
-			num:	if (YYSTATE == IFR) 
+			num:	if (YYSTATE == IFR)
 					cvtdig(scale);
 				PRTOUT(NUMBER);
 			}
@@ -670,8 +670,8 @@ elsestmt(void)
 }
 
 static void
-ifdefstmt(void)		 
-{ 
+ifdefstmt(void)
+{
 	int t;
 
 	if (flslvl) {
@@ -698,8 +698,8 @@ ifdefstmt(void)
 }
 
 static void
-ifndefstmt(void)	  
-{ 
+ifndefstmt(void)
+{
 	int t;
 
 	slow = 1;
@@ -717,7 +717,7 @@ ifndefstmt(void)
 }
 
 static void
-endifstmt(void)		 
+endifstmt(void)
 {
 	if (flslvl) {
 		flslvl--;
@@ -735,8 +735,8 @@ endifstmt(void)
 
 /*
  * Note! Ugly!
- * Walk over the string s and search for defined, and replace it with 
- * spaces and a 1 or 0. 
+ * Walk over the string s and search for defined, and replace it with
+ * spaces and a 1 or 0.
  */
 static void
 fixdefined(usch *s)

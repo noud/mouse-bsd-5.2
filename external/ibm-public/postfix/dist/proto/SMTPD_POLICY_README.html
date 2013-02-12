@@ -254,12 +254,12 @@ daemon, you would use something like this: </p>
  1 /etc/postfix/master.cf:
  2     policy  unix  -       n       n       -       0       spawn
  3       user=nobody argv=/some/where/policy-server
- 4 
+ 4
  5 /etc/postfix/main.cf:
  6     smtpd_recipient_restrictions =
- 7         ... 
- 8         reject_unauth_destination 
- 9         check_policy_service unix:private/policy 
+ 7         ...
+ 8         reject_unauth_destination
+ 9         check_policy_service unix:private/policy
 10         ...
 11     policy_time_limit = 3600
 </pre>
@@ -296,11 +296,11 @@ TCP sockets instead: </p>
  1 /etc/postfix/master.cf:
  2     127.0.0.1:9998  inet  n       n       n       -       0       spawn
  3       user=nobody argv=/some/where/policy-server
- 4 
+ 4
  5 /etc/postfix/main.cf:
  6     smtpd_recipient_restrictions =
- 7         ... 
- 8         reject_unauth_destination 
+ 7         ...
+ 8         reject_unauth_destination
  9         check_policy_service inet:127.0.0.1:9998
 10         ...
 11     127.0.0.1:9998_time_limit = 3600
@@ -388,7 +388,7 @@ processes only: </p>
 1 /etc/postfix/master.cf:
 2     policy  unix  -       n       n       -       0       spawn
 3       user=nobody argv=/usr/bin/perl /usr/libexec/postfix/greylist.pl
-4 
+4
 5 /etc/postfix/main.cf:
 6      policy_time_limit = 3600
 </pre>
@@ -424,7 +424,7 @@ client/server configuration</a>" section above.  </p>
 1 /etc/postfix/master.cf:
 2     127.0.0.1:9998  inet  n       n       n       -       0       spawn
 3       user=nobody argv=/usr/bin/perl /usr/libexec/postfix/greylist.pl
-4 
+4
 5 /etc/postfix/main.cf:
 6      127.0.0.1:9998_time_limit = 3600
 </pre>
@@ -447,12 +447,12 @@ http://www.monkeys.com/anti-spam/filtering/sender-domain-validate.in.
  2     smtpd_recipient_restrictions =
  3         reject_unlisted_recipient
  4         ...
- 5         reject_unauth_destination 
+ 5         reject_unauth_destination
  6         check_sender_access hash:/etc/postfix/sender_access
  7         ...
  8     smtpd_restriction_classes = greylist
  9     greylist = check_policy_service unix:private/policy
-10 
+10
 11 /etc/postfix/sender_access:
 12     aol.com     greylist
 13     hotmail.com greylist
@@ -497,11 +497,11 @@ database relatively quickly. </p>
  2     smtpd_recipient_restrictions =
  3         reject_unlisted_recipient
  4         ...
- 5         reject_unauth_destination 
+ 5         reject_unauth_destination
  6         check_sender_access hash:/etc/postfix/sender_access
  7         check_policy_service unix:private/policy
  8         ...
- 9 
+ 9
 10 /etc/postfix/sender_access:
 11     securityfocus.com OK
 12     ...

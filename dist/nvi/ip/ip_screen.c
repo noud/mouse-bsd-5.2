@@ -44,7 +44,7 @@ ip_screen(SCR *sp, u_int32_t flags)
 			return (1);
 		F_CLR(gp, G_SRESTART);
 	}
-	
+
 	/* See if we're already in the right mode. */
 	if (LF_ISSET(SC_EX) && F_ISSET(sp, SC_SCR_EX) ||
 	    LF_ISSET(SC_VI) && F_ISSET(sp, SC_SCR_VI))
@@ -64,7 +64,7 @@ ip_screen(SCR *sp, u_int32_t flags)
 		F_SET(ipp, IP_IN_EX);
 	} else {
 		/* Initialize terminal based information. */
-		if (ip_term_init(sp)) 
+		if (ip_term_init(sp))
 			return (1);
 
 		F_CLR(ipp, IP_IN_EX);

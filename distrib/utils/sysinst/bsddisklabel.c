@@ -153,7 +153,7 @@ set_ptn_titles(menudesc *m, int opt, void *arg)
 	}
 	size = p->size;
 	if (p == pi->pool_part)
-		snprintf(inc_free, sizeof inc_free, "(%" PRIi64 ")", 
+		snprintf(inc_free, sizeof inc_free, "(%" PRIi64 ")",
 		    (size + pi->free_space) / sm);
 	else
 		inc_free[0] = 0;
@@ -349,7 +349,7 @@ get_ptn_sizes(daddr_t part_start, daddr_t sectors, int no_swap)
 #define PI_SWAP 1
 		{ PART_SWAP,	{ 's', 'w', 'a', 'p', '\0' },
 	 	  DEFSWAPSIZE,	DEFSWAPSIZE, 0, 0 },
-		{ PART_TMP_MFS,	
+		{ PART_TMP_MFS,
 		  { 't', 'm', 'p', ' ', '(', 'm', 'f', 's', ')', '\0' },
 		    64, 0, 0, 0 },
 #define PI_USR 3
@@ -666,7 +666,7 @@ make_bsd_partitions(void)
 				}
 			}
 		} else {
-			if (p->pi_offset < ptstart + ptsize &&			
+			if (p->pi_offset < ptstart + ptsize &&
 			    p->pi_offset + p->pi_size > ptstart)
 				/* Not outside area we are allocating */
 				continue;

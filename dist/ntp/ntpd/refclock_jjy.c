@@ -386,7 +386,7 @@ jjy_receive ( struct recvbuf *rbufp )
 		 */
 		if ( pp->lencode == 0  &&  up->charcount == 0 ) return ;
 		/*
-		 * Copy received charaters to temporary buffer 
+		 * Copy received charaters to temporary buffer
 		 */
 		for ( i = 0 ; i < pp->lencode && up->charcount < MAX_RAWBUF - 2 ; i ++ , up->charcount ++ ) {
 			up->rawbuf[up->charcount] = pp->a_lastcode[i] ;
@@ -423,7 +423,7 @@ jjy_receive ( struct recvbuf *rbufp )
 	if ( up->lineerror != 0 ) return ;
 
 	switch ( up->unittype ) {
-	
+
 	case UNITTYPE_TRISTATE_JJY01 :
 		rc = jjy_receive_tristate_jjy01  ( rbufp ) ;
 		break ;
@@ -476,8 +476,8 @@ jjy_receive ( struct recvbuf *rbufp )
 	pp->second = up->second ;
 	pp->nsec   = up->msecond * 1000000;
 
-	/* 
-	 * JST to UTC 
+	/*
+	 * JST to UTC
 	 */
 	pp->hour -= 9 ;
 	if ( pp->hour < 0 ) {
@@ -490,7 +490,7 @@ jjy_receive ( struct recvbuf *rbufp )
 	}
 #ifdef DEBUG
 	if ( debug ) {
-		printf ( "jjy_receive (refclock_jjy.c) : %04d/%02d/%02d %02d:%02d:%02d.%1d JST   ", 
+		printf ( "jjy_receive (refclock_jjy.c) : %04d/%02d/%02d %02d:%02d:%02d.%1d JST   ",
 		          up->year, up->month, up->day, up->hour, up->minute, up->second, up->msecond/100 ) ;
 		printf ( "( %04d/%03d %02d:%02d:%02d.%1d UTC )\n",
 		          pp->year, pp->day, pp->hour, pp->minute, pp->second, (int)(pp->nsec/100000000) ) ;
@@ -582,7 +582,7 @@ jjy_receive_tristate_jjy01 ( struct recvbuf *rbufp )
 		/*
 		 * Send "stim<CR><LF>" or "time<CR><LF>" command
 		 */
-		 
+
 
 		if ( up->version >= 100 ) {
 #ifdef DEBUG
@@ -900,7 +900,7 @@ jjy_poll ( int unit, struct peer *peer )
 	up->charcount = 0 ;
 
 	switch ( up->unittype ) {
-	
+
 	case UNITTYPE_TRISTATE_JJY01 :
 		jjy_poll_tristate_jjy01  ( unit, peer ) ;
 		break ;

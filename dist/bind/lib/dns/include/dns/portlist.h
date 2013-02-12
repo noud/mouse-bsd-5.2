@@ -33,7 +33,7 @@ isc_result_t
 dns_portlist_create(isc_mem_t *mctx, dns_portlist_t **portlistp);
 /*%<
  * Create a port list.
- * 
+ *
  * Requires:
  *\li	'mctx' to be valid.
  *\li	'portlistp' to be non NULL and '*portlistp' to be NULL;

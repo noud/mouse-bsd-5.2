@@ -38,7 +38,7 @@ static const char sccsid[] = "Id: cl_read.c,v 10.29 2001/08/18 21:51:59 skimo Ex
 
 /* Pollution by Solaris curses. */
 #undef columns
-#undef lines  
+#undef lines
 
 static input_t	cl_read __P((SCR *,
     u_int32_t, char *, size_t, int *, struct timeval *));
@@ -110,7 +110,7 @@ read:
 	switch (cl_read(sp, LF_ISSET(EC_QUOTED | EC_RAW),
 	    clp->ibuf + clp->skip, SIZE(clp->ibuf) - clp->skip, &nr, tp)) {
 	case INP_OK:
-		rc = INPUT2INT5(sp, clp->cw, clp->ibuf, nr + clp->skip, 
+		rc = INPUT2INT5(sp, clp->cw, clp->ibuf, nr + clp->skip,
 				wp, wlen);
 		evp->e_csp = __UNCONST(wp);
 		evp->e_len = wlen;
@@ -200,7 +200,7 @@ cl_read(SCR *sp, u_int32_t flags, char *bp, size_t blen, int *nrp, struct timeva
 			break;
 		}
 	}
-	
+
 	/*
 	 * The user can enter a key in the editor to quote a character.  If we
 	 * get here and the next key is supposed to be quoted, do what we can.
@@ -296,7 +296,7 @@ err:		if (errno == EINTR)
 	return (rval);
 }
 
-/* 
+/*
  * cl_resize --
  *	Reset the options for a resize event.
  */

@@ -747,7 +747,7 @@ AC_DEFUN(AC_LBL_LIBRARY_NET, [
     # libraries (i.e. libc):
     AC_CHECK_FUNC(gethostbyname, ,
 	# Some OSes (eg. Solaris) place it in libnsl:
-	AC_LBL_CHECK_LIB(nsl, gethostbyname, , 
+	AC_LBL_CHECK_LIB(nsl, gethostbyname, ,
 	    # Some strange OSes (SINIX) have it in libsocket:
 	    AC_LBL_CHECK_LIB(socket, gethostbyname, ,
 		# Unfortunately libsocket sometimes depends on libnsl.

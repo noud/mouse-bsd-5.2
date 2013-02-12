@@ -143,7 +143,7 @@ struct sockaddr_in6 sin6;
 sin6.sin6_addr = in6addr_loopback;
 ]])],[ac_cv_var_in6addr_loopback=yes],[ac_cv_var_in6addr_loopback=no])])
 	if test "$ac_cv_var_in6addr_loopback" = yes; then
-		AC_DEFINE(HAVE_IN6ADDR_LOOPBACK, 1, 
+		AC_DEFINE(HAVE_IN6ADDR_LOOPBACK, 1,
 			[Define if you have the in6addr_loopback variable])
 	fi
 fi

@@ -900,7 +900,7 @@
     The RAND_EXCH is needed for good PRNG seeding on systems without
     /dev/urandom, I however don't know yet, how to rearrange this requirement.
     I could use the Postfix internal mechanisms to enforce a parameter, but
-    this would annoy people having compiled in TLS but not activated. 
+    this would annoy people having compiled in TLS but not activated.
 
 2000/12/13	== Released 0.6.29 ==
 
@@ -1561,7 +1561,7 @@
     the patch were rejected due to changes in smtpd.
   - Changed patch name with respect of today's release of OpenSSL-0.9.5a.
     The code remained unchanged.
-    
+
 2000/03/25-31
   - The cached informations are not deleted by "tlsmgr" even though stored
     and retrieved by the smtp[d] processess. Strange.

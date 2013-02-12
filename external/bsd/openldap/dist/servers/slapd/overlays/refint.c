@@ -487,7 +487,7 @@ refint_search_cb(
 							build_new_dn( &newdn, &rq->newndn, &newsub, op->o_tmpmemctx );
 
 							ber_bvarray_add_x( &na->new_nvals, &newdn, op->o_tmpmemctx );
-							
+
 							first = -1;
 						}
 

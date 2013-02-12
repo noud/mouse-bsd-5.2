@@ -112,6 +112,6 @@ showall(Char **v, struct command *t)
 {
     memtop = (char *)sbrk(0);
     (void)fprintf(cshout, "Allocated memory from 0x%lx to 0x%lx (%ld).\n",
-	    (unsigned long)membot, (unsigned long)memtop, 
+	    (unsigned long)membot, (unsigned long)memtop,
 	    (unsigned long)(memtop - membot));
 }

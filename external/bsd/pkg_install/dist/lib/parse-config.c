@@ -184,7 +184,7 @@ pkg_install_config(void)
 	if ((value = getenv("PKG_REFCOUNT_DBDIR")) != NULL)
 		config_pkg_refcount_dbdir = value;
 	else if (config_pkg_refcount_dbdir == NULL)
-		config_pkg_refcount_dbdir = xasprintf("%s.refcount", 
+		config_pkg_refcount_dbdir = xasprintf("%s.refcount",
 		    pkgdb_get_dir());
 
 	if (pkg_vulnerabilities_dir == NULL)

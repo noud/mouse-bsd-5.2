@@ -43,7 +43,7 @@ int db_set __P((SCR *, db_recno_t, CHAR_T *, size_t));
 int db_exist __P((SCR *, db_recno_t));
 int db_last __P((SCR *, db_recno_t *));
 void db_err __P((SCR *, db_recno_t));
-int scr_update __P((SCR *sp, db_recno_t lno, 
+int scr_update __P((SCR *sp, db_recno_t lno,
 			lnop_t op, int current));
 void update_cache __P((SCR *sp, lnop_t op, db_recno_t lno));
 int line_insdel __P((SCR *sp, lnop_t op, db_recno_t lno));

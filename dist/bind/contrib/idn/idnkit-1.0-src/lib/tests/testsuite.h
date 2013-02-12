@@ -4,33 +4,33 @@
 /*
  * Copyright (c) 2002 Japan Network Information Center.
  * All rights reserved.
- *  
+ *
  * By using this file, you agree to the terms and conditions set forth bellow.
- * 
- * 			LICENSE TERMS AND CONDITIONS 
- * 
+ *
+ * 			LICENSE TERMS AND CONDITIONS
+ *
  * The following License Terms and Conditions apply, unless a different
  * license is obtained from Japan Network Information Center ("JPNIC"),
  * a Japanese association, Kokusai-Kougyou-Kanda Bldg 6F, 2-3-4 Uchi-Kanda,
  * Chiyoda-ku, Tokyo 101-0047, Japan.
- * 
+ *
  * 1. Use, Modification and Redistribution (including distribution of any
  *    modified or derived work) in source and/or binary forms is permitted
  *    under this License Terms and Conditions.
- * 
+ *
  * 2. Redistribution of source code must retain the copyright notices as they
  *    appear in each source code file, this License Terms and Conditions.
- * 
+ *
  * 3. Redistribution in binary form must reproduce the Copyright Notice,
  *    this License Terms and Conditions, in the documentation and/or other
  *    materials provided with the distribution.  For the purposes of binary
  *    distribution the "Copyright Notice" refers to the following language:
  *    "Copyright (c) 2000-2002 Japan Network Information Center.  All rights reserved."
- * 
+ *
  * 4. The name of JPNIC may not be used to endorse or promote products
  *    derived from this Software without specific prior written approval of
  *    JPNIC.
- * 
+ *
  * 5. Disclaimer/Limitation of Liability: THIS SOFTWARE IS PROVIDED BY JPNIC
  *    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  *    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -185,7 +185,7 @@ idn_testsuite_assertint(idn_testsuite_t ctx, int gotten, int expected,
  * The assertion passes if `gotten' is lexically equal to `expected'.
  */
 extern void
-idn_testsuite_assertstring(idn_testsuite_t ctx, const char *gotten, 
+idn_testsuite_assertstring(idn_testsuite_t ctx, const char *gotten,
 			   const char *expected, const char *file, int lineno);
 
 #define ASSERT_STRING(gotten, expected) \
@@ -200,7 +200,7 @@ idn_testsuite_assertstring(idn_testsuite_t ctx, const char *gotten,
  * The assertion passes if `gotten' is equal to `expected'.
  */
 extern void
-idn_testsuite_assertptr(idn_testsuite_t ctx, const void *gotten, 
+idn_testsuite_assertptr(idn_testsuite_t ctx, const void *gotten,
 			const void *expected, const char *file, int lineno);
 
 #define ASSERT_PTR(gotten, expected) \
@@ -215,7 +215,7 @@ idn_testsuite_assertptr(idn_testsuite_t ctx, const void *gotten,
  * The assertion passes if `gotten' is NOT equal to `expected'.
  */
 extern void
-idn_testsuite_assertptrne(idn_testsuite_t ctx, 
+idn_testsuite_assertptrne(idn_testsuite_t ctx,
 			  const void *gotten, const void *unexpected,
 			  const char *file, int lineno);
 
@@ -248,7 +248,7 @@ idn_testsuite_assertresult(idn_testsuite_t ctx,
  */
 extern void
 idn_testsuite_assertucs4string(idn_testsuite_t ctx,
-			       const unsigned long *gotten, 
+			       const unsigned long *gotten,
 			       const unsigned long *expected,
 			       const char *file,
 			       int lineno);
@@ -262,7 +262,7 @@ idn_testsuite_assertucs4string(idn_testsuite_t ctx,
       goto EXIT__; \
   } while (0)
 
-/* 
+/*
  * Shorthands.
  */
 #define SKIP_TESTCASE \

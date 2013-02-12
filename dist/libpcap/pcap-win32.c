@@ -71,13 +71,13 @@ struct bpf_hdr {
 };
 
 /* Start winsock */
-int 
+int
 wsockinit()
 {
 	WORD wVersionRequested;
 	WSADATA wsaData;
 	int err;
-	wVersionRequested = MAKEWORD( 1, 1); 
+	wVersionRequested = MAKEWORD( 1, 1);
 	err = WSAStartup( wVersionRequested, &wsaData );
 	if ( err != 0 )
 	{
@@ -126,11 +126,11 @@ pcap_read_win32_npf(pcap_t *p, int cnt, pcap_handler callback, u_char *user)
 			snprintf(p->errbuf, PCAP_ERRBUF_SIZE, "read error: PacketReceivePacket failed");
 			return (-1);
 		}
-			
+
 		cc = p->Packet->ulBytesReceived;
 
 		bp = p->Packet->Buffer;
-	} 
+	}
 	else
 		bp = p->bp;
 
@@ -213,14 +213,14 @@ pcap_read_win32_dag(pcap_t *p, int cnt, pcap_handler callback, u_char *user)
 			/* The timeout has expired but we no packets arrived */
 			return 0;
 		header = (dag_record_t*)p->adapter->DagBuffer;
-	} 
+	}
 	else
 		header = (dag_record_t*)p->bp;
-	
+
 	endofbuf = (char*)header + cc;
-	
-	/* 
-	 * Cycle through the packets 
+
+	/*
+	 * Cycle through the packets
 	 */
 	do
 	{
@@ -230,12 +230,12 @@ pcap_read_win32_dag(pcap_t *p, int cnt, pcap_handler callback, u_char *user)
 
 		/* Increase the number of captured packets */
 		p->md.stat.ps_recv++;
-		
+
 		/* Find the beginning of the packet */
 		dp = ((u_char *)header) + dag_record_size;
 
 		/* Determine actual packet len */
-		switch(header->type) 
+		switch(header->type)
 		{
 		case TYPE_ATM:
 			packet_len = ATM_SNAPLEN;
@@ -253,9 +253,9 @@ pcap_read_win32_dag(pcap_t *p, int cnt, pcap_handler callback, u_char *user)
 				caplen = packet_len;
 			}
 			dp += 2;
-			
+
 			break;
-		
+
 		case TYPE_HDLC_POS:
 			swt = SWAPS(header->wlen);
 			packet_len = swt - (p->md.dag_fcs_bits);
@@ -264,10 +264,10 @@ pcap_read_win32_dag(pcap_t *p, int cnt, pcap_handler callback, u_char *user)
 			{
 				caplen = packet_len;
 			}
-			
+
 			break;
 		}
-		
+
 		if(caplen > p->snapshot)
 			caplen = p->snapshot;
 
@@ -280,14 +280,14 @@ pcap_read_win32_dag(pcap_t *p, int cnt, pcap_handler callback, u_char *user)
 		 * out of the loop without having read any packets, and
 		 * return the number of packets we've processed so far.
 		 */
-		if (p->break_loop) 
+		if (p->break_loop)
 		{
-			if (n == 0) 
+			if (n == 0)
 			{
 				p->break_loop = 0;
 				return (-2);
-			} 
-			else 
+			}
+			else
 			{
 				p->bp = (char*)header;
 				p->cc = endofbuf - (char*)header;
@@ -308,30 +308,30 @@ pcap_read_win32_dag(pcap_t *p, int cnt, pcap_handler callback, u_char *user)
 				pcap_header.ts.tv_sec++;
 			}
 		}
-		
+
 		/* No underlaying filtering system. We need to filter on our own */
-		if (p->fcode.bf_insns) 
+		if (p->fcode.bf_insns)
 		{
-			if (bpf_filter(p->fcode.bf_insns, dp, packet_len, caplen) == 0) 
+			if (bpf_filter(p->fcode.bf_insns, dp, packet_len, caplen) == 0)
 			{
 				/* Move to next packet */
 				header = (dag_record_t*)((char*)header + erf_record_len);
 				continue;
 			}
 		}
-		
+
 		/* Fill the header for the user suppplied callback function */
 		pcap_header.caplen = caplen;
 		pcap_header.len = packet_len;
-		
+
 		/* Call the callback function */
 		(*callback)(user, &pcap_header, dp);
-		
+
 		/* Move to next packet */
 		header = (dag_record_t*)((char*)header + erf_record_len);
 
 		/* Stop if the number of packets requested by user has been reached*/
-		if (++n >= cnt && cnt > 0) 
+		if (++n >= cnt && cnt > 0)
 		{
 			p->bp = (char*)header;
 			p->cc = endofbuf - (char*)header;
@@ -339,24 +339,24 @@ pcap_read_win32_dag(pcap_t *p, int cnt, pcap_handler callback, u_char *user)
 		}
 	}
 	while((u_char*)header < endofbuf);
-	
+
   return 1;
 }
 #endif /* HAVE_DAG_API */
 
 /* Send a packet to the network */
-static int 
+static int
 pcap_inject_win32(pcap_t *p, const void *buf, size_t size){
 	LPPACKET PacketToSend;
 
 	PacketToSend=PacketAllocatePacket();
-	
+
 	if (PacketToSend == NULL)
 	{
 		snprintf(p->errbuf, PCAP_ERRBUF_SIZE, "send error: PacketAllocatePacket failed");
 		return -1;
 	}
-	
+
 	PacketInitPacket(PacketToSend,(PVOID)buf,size);
 	if(PacketSendPacket(p->adapter,PacketToSend,TRUE) == FALSE){
 		snprintf(p->errbuf, PCAP_ERRBUF_SIZE, "send error: PacketSendPacket failed");
@@ -399,7 +399,7 @@ pcap_open_live(const char *device, int snaplen, int promisc, int to_ms,
 	wsockinit();
 
 	p = (pcap_t *)malloc(sizeof(*p));
-	if (p == NULL) 
+	if (p == NULL)
 	{
 		snprintf(ebuf, PCAP_ERRBUF_SIZE, "malloc: %s", pcap_strerror(errno));
 		return (NULL);
@@ -408,7 +408,7 @@ pcap_open_live(const char *device, int snaplen, int promisc, int to_ms,
 	p->adapter=NULL;
 
 	p->adapter = PacketOpenAdapter((char*)device);
-	
+
 	if (p->adapter == NULL)
 	{
 		free(p);
@@ -416,21 +416,21 @@ pcap_open_live(const char *device, int snaplen, int promisc, int to_ms,
 		snprintf(ebuf, PCAP_ERRBUF_SIZE, "Error opening adapter: %s", pcap_win32strerror());
 		return NULL;
 	}
-	
+
 	/*get network type*/
 	if(PacketGetNetType (p->adapter,&type) == FALSE)
 	{
 		snprintf(ebuf, PCAP_ERRBUF_SIZE, "Cannot determine the network type: %s", pcap_win32strerror());
 		goto bad;
 	}
-	
+
 	/*Set the linktype*/
-	switch (type.LinkType) 
+	switch (type.LinkType)
 	{
 	case NdisMediumWan:
 		p->linktype = DLT_EN10MB;
 		break;
-		
+
 	case NdisMedium802_3:
 		p->linktype = DLT_EN10MB;
 		/*
@@ -453,27 +453,27 @@ pcap_open_live(const char *device, int snaplen, int promisc, int to_ms,
 			p->dlt_count = 2;
 		}
 		break;
-		
+
 	case NdisMediumFddi:
 		p->linktype = DLT_FDDI;
 		break;
-		
-	case NdisMedium802_5:			
-		p->linktype = DLT_IEEE802;	
+
+	case NdisMedium802_5:
+		p->linktype = DLT_IEEE802;
 		break;
-		
+
 	case NdisMediumArcnetRaw:
 		p->linktype = DLT_ARCNET;
 		break;
-		
+
 	case NdisMediumArcnet878_2:
 		p->linktype = DLT_ARCNET;
 		break;
-		
+
 	case NdisMediumAtm:
 		p->linktype = DLT_ATM_RFC1483;
 		break;
-		
+
 	case NdisMediumCHDLC:
 		p->linktype = DLT_CHDLC;
 		break;
@@ -510,28 +510,28 @@ pcap_open_live(const char *device, int snaplen, int promisc, int to_ms,
 
 	if(!(p->adapter->Flags & INFO_FLAG_DAG_CARD))
 	{
-	/* 
-	 * Traditional Adapter 
+	/*
+	 * Traditional Adapter
 	 */
-		
+
 		p->buffer = (u_char *)malloc(PcapBufSize);
-		if (p->buffer == NULL) 
+		if (p->buffer == NULL)
 		{
 			snprintf(ebuf, PCAP_ERRBUF_SIZE, "malloc: %s", pcap_strerror(errno));
 			goto bad;
 		}
-		
+
 		PacketInitPacket(p->Packet,(BYTE*)p->buffer,p->bufsize);
-		
+
 		p->snapshot = snaplen;
-		
+
 		/* allocate the standard buffer in the driver */
 		if(PacketSetBuff( p->adapter, SIZE_BUF)==FALSE)
 		{
 			snprintf(ebuf, PCAP_ERRBUF_SIZE,"driver error: not enough memory to allocate the kernel buffer\n");
 			goto bad;
 		}
-		
+
 		/* tell the driver to copy the buffer only if it contains at least 16K */
 		if(PacketSetMinToCopy(p->adapter,16000)==FALSE)
 		{
@@ -542,8 +542,8 @@ pcap_open_live(const char *device, int snaplen, int promisc, int to_ms,
 	else
 #ifdef HAVE_DAG_API
 	{
-	/* 
-	 * Dag Card 
+	/*
+	 * Dag Card
 	 */
 		LONG	status;
 		HKEY	dagkey;
@@ -551,8 +551,8 @@ pcap_open_live(const char *device, int snaplen, int promisc, int to_ms,
 		DWORD	lpcbdata;
 		int		postype = 0;
 		char	keyname[512];
-		
-		snprintf(keyname, sizeof(keyname), "%s\\CardParams\\%s", 
+
+		snprintf(keyname, sizeof(keyname), "%s\\CardParams\\%s",
 			"SYSTEM\\CurrentControlSet\\Services\\DAG",
 			strstr(_strlwr((char*)device), "dag"));
 		do
@@ -560,36 +560,36 @@ pcap_open_live(const char *device, int snaplen, int promisc, int to_ms,
 			status = RegOpenKeyEx(HKEY_LOCAL_MACHINE, keyname, 0, KEY_READ, &dagkey);
 			if(status != ERROR_SUCCESS)
 				break;
-			
+
 			status = RegQueryValueEx(dagkey,
 				"PosType",
 				NULL,
 				&lptype,
 				(char*)&postype,
 				&lpcbdata);
-			
+
 			if(status != ERROR_SUCCESS)
 			{
 				postype = 0;
 			}
-			
+
 			RegCloseKey(dagkey);
 		}
 		while(FALSE);
-		
-		
+
+
 		p->snapshot = PacketSetSnapLen(p->adapter, snaplen);
-		
-		/* Set the length of the FCS associated to any packet. This value 
+
+		/* Set the length of the FCS associated to any packet. This value
 		 * will be subtracted to the packet length */
 		p->md.dag_fcs_bits = p->adapter->DagFcsLen;
 	}
 #else
 	goto bad;
 #endif /* HAVE_DAG_API */
-	
+
 	PacketSetReadTimeout(p->adapter, to_ms);
-	
+
 #ifdef HAVE_DAG_API
 	if(p->adapter->Flags & INFO_FLAG_DAG_CARD)
 	{
@@ -659,25 +659,25 @@ pcap_setfilter_win32_npf(pcap_t *p, struct bpf_program *fp)
 /*
  * We filter at user level, since the kernel driver does't process the packets
  */
-static int 
+static int
 pcap_setfilter_win32_dag(pcap_t *p, struct bpf_program *fp) {
-	
-	if(!fp) 
+
+	if(!fp)
 	{
 		strncpy(p->errbuf, "setfilter: No filter specified", sizeof(p->errbuf));
 		return -1;
 	}
-	
+
 	/* Install a user level filter */
-	if (install_bpf_program(p, fp) < 0) 
+	if (install_bpf_program(p, fp) < 0)
 	{
 		snprintf(p->errbuf, sizeof(p->errbuf),
 			"setfilter, unable to install the filter: %s", pcap_strerror(errno));
 		return -1;
 	}
-	
+
 	p->md.use_bpf = 0;
-	
+
 	return (0);
 }
 
@@ -720,9 +720,9 @@ pcap_setnonblock_win32(pcap_t *p, int nonblock, char *errbuf)
 }
 
 /* Set the driver working mode */
-int 
+int
 pcap_setmode(pcap_t *p, int mode){
-	
+
 	if (p->adapter==NULL)
 	{
 		snprintf(p->errbuf, PCAP_ERRBUF_SIZE, "impossible to set mode while reading from a file");
@@ -739,7 +739,7 @@ pcap_setmode(pcap_t *p, int mode){
 }
 
 /* Set the dimension of the kernel-level capture buffer */
-int 
+int
 pcap_setbuff(pcap_t *p, int dim)
 {
 	if (p->adapter==NULL)
@@ -747,7 +747,7 @@ pcap_setbuff(pcap_t *p, int dim)
 		snprintf(p->errbuf, PCAP_ERRBUF_SIZE, "The kernel buffer size cannot be set while reading from a file");
 		return -1;
 	}
-	
+
 	if(PacketSetBuff(p->adapter,dim)==FALSE)
 	{
 		snprintf(p->errbuf, PCAP_ERRBUF_SIZE, "driver error: not enough memory to allocate the kernel buffer");
@@ -757,14 +757,14 @@ pcap_setbuff(pcap_t *p, int dim)
 }
 
 /*set the minimum amount of data that will release a read call*/
-int 
+int
 pcap_setmintocopy(pcap_t *p, int size)
 {
 	if (p->adapter==NULL)
 	{
 		snprintf(p->errbuf, PCAP_ERRBUF_SIZE, "Impossible to set the mintocopy parameter on an offline capture");
 		return -1;
-	}	
+	}
 
 	if(PacketSetMinToCopy(p->adapter, size)==FALSE)
 	{

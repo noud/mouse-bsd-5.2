@@ -292,7 +292,7 @@ When used as a client in non-daemon mode, the program returns a zero exit
 status for success, and a non-zero one otherwise. When used as a daemon
 (either client or server), it does not return except after a serious error.
 .SH BUGS
-The program implements the SNTP protocol, and does not provide all NTP 
+The program implements the SNTP protocol, and does not provide all NTP
 facilities.  In particular, it contains no checks against any form of spoofing.
 If this is a serious concern, some network security mechanism (like a firewall
 or even just

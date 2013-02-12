@@ -158,7 +158,7 @@ do_rollback(void)
 {
 	if (ioctl(dev, DIOCXROLLBACK, &pft) == -1)
 		return (-1);
-	
+
 	return (0);
 }
 
@@ -174,7 +174,7 @@ init_filter(char *opt_qname, int opt_verbose)
 	else if (opt_verbose == 2)
 		rule_log = PF_LOG_ALL;
 
-	dev = open("/dev/pf", O_RDWR);	
+	dev = open("/dev/pf", O_RDWR);
 	if (dev == -1) {
 		syslog(LOG_ERR, "can't open /dev/pf");
 		exit(1);
@@ -226,7 +226,7 @@ prepare_commit(u_int32_t id)
 
 	return (0);
 }
-	
+
 int
 prepare_rule(u_int32_t id, int rs_num, struct sockaddr *src,
     struct sockaddr *dst, u_int16_t d_port, u_int8_t proto)
@@ -383,7 +383,7 @@ server_lookup6(struct sockaddr_in6 *client, struct sockaddr_in6 *proxy,
 	memcpy(&pnl.daddr.v6, &proxy->sin6_addr.s6_addr, sizeof pnl.daddr.v6);
 	pnl.sport = client->sin6_port;
 	pnl.dport = proxy->sin6_port;
-	
+
 	if (ioctl(dev, DIOCNATLOOK, &pnl) == -1)
 		return (-1);
 

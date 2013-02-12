@@ -6,7 +6,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -377,7 +377,7 @@ int main(int argc,char **argv)
 	    if(n > 0) /* FIXME: has to be true now */
 		{
 		int w;
-		
+
 		w=write(1,buf,n);
 		/* FIXME: we should push back any unwritten data */
 		assert(w == n);

@@ -693,9 +693,9 @@
 	* lib/krb5/store-test.c: simple bit storage test
 
 	* lib/krb5/store.c: add more byteorder storage flags
-	
+
 	* lib/krb5/krb5.h: add more byteorder storage flags
-	
+
 	* kdc/kerberos5.c: don't use NULL where we mean 0
 
 	* kdc/kerberos5.c: put referral test code in separate function,
@@ -820,7 +820,7 @@
 
 	* lib/krb5/keytab_any.c: new file, implementing union of keytabs
 	* lib/krb5/Makefile.am (libkrb5_la_SOURCES): add keytab_any.c
-	
+
 	* lib/krb5/init_creds_pw.c (get_init_creds_common): handle options
 	== NULL.  noted by <marc@mit.edu>
 
@@ -1112,7 +1112,7 @@
 	krb5.conf
 
 	* lib/krb5/rd_cred.c: make this match the MIT function
-	
+
 	* lib/krb5/appdefault.c (krb5_appdefault_string): handle NULL
 	def_val
 	(krb5_appdefault_time): new function

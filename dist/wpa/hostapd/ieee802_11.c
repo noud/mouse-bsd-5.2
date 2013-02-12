@@ -142,7 +142,7 @@ u16 hostapd_own_capab_info(struct hostapd_data *hapd, struct sta_info *sta,
 	    hapd->iface->num_sta_no_short_slot_time == 0)
 		capab |= WLAN_CAPABILITY_SHORT_SLOT_TIME;
 
-	if (hapd->iface->dfs_enable) 
+	if (hapd->iface->dfs_enable)
 		capab |= WLAN_CAPABILITY_SPECTRUM_MGMT;
 
 	return capab;

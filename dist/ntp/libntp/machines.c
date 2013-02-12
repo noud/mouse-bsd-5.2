@@ -268,7 +268,7 @@ int alarm_hpe_status;
 unsigned long remaining_msec, value_msec, interval_msec;
 struct sigaction newact;
 
-/* 
+/*
  * Convert the initial interval to milliseconds
  */
 
@@ -308,7 +308,7 @@ if (value_msec > 0 && interval_msec > 0) {
   newact.sa_handler = &setitimer_mpe_handler;
   newact.sa_mask = setitimer_mpe_ctx.oldact.sa_mask;
   newact.sa_flags = setitimer_mpe_ctx.oldact.sa_flags;
- 
+
   if (sigaction(SIGALRM, &newact, NULL) < 0) {
     fprintf(stderr,"MPE setitimer new handler failed, errno=%d\n",errno);
     return -1;
@@ -341,7 +341,7 @@ else
   return (-1);
 }
 
-/* 
+/*
  * MPE lacks gettimeofday(), so we define our own.
  */
 
@@ -373,7 +373,7 @@ tvp->tv_usec = mpetime % 1000000LL;
 return 0;
 }
 
-/* 
+/*
  * MPE lacks settimeofday(), so we define our own.
  */
 

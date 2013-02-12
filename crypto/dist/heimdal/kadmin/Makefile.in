@@ -544,16 +544,16 @@ clean-sbinPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-add_random_users$(EXEEXT): $(add_random_users_OBJECTS) $(add_random_users_DEPENDENCIES) 
+add_random_users$(EXEEXT): $(add_random_users_OBJECTS) $(add_random_users_DEPENDENCIES)
 	@rm -f add_random_users$(EXEEXT)
 	$(LINK) $(add_random_users_OBJECTS) $(add_random_users_LDADD) $(LIBS)
-kadmin$(EXEEXT): $(kadmin_OBJECTS) $(kadmin_DEPENDENCIES) 
+kadmin$(EXEEXT): $(kadmin_OBJECTS) $(kadmin_DEPENDENCIES)
 	@rm -f kadmin$(EXEEXT)
 	$(LINK) $(kadmin_OBJECTS) $(kadmin_LDADD) $(LIBS)
-kadmind$(EXEEXT): $(kadmind_OBJECTS) $(kadmind_DEPENDENCIES) 
+kadmind$(EXEEXT): $(kadmind_OBJECTS) $(kadmind_DEPENDENCIES)
 	@rm -f kadmind$(EXEEXT)
 	$(LINK) $(kadmind_OBJECTS) $(kadmind_LDADD) $(LIBS)
-test_util$(EXEEXT): $(test_util_OBJECTS) $(test_util_DEPENDENCIES) 
+test_util$(EXEEXT): $(test_util_OBJECTS) $(test_util_DEPENDENCIES)
 	@rm -f test_util$(EXEEXT)
 	$(LINK) $(test_util_OBJECTS) $(test_util_LDADD) $(LIBS)
 

@@ -93,7 +93,7 @@ picsymtab(char *p, char *s, char *s2)
 {
 	struct symtab *sp = IALLOC(sizeof(struct symtab));
 	size_t len = strlen(p) + strlen(s) + strlen(s2) + 1;
-	
+
 	sp->sname = sp->soname = IALLOC(len);
 	strlcpy(sp->soname, p, len);
 	strlcat(sp->soname, s, len);
@@ -458,7 +458,7 @@ clocal(NODE *p)
 			l->n_lval = (unsigned)l->n_lval;
 			goto delp;
 		}
-		if (l->n_type < INT || l->n_type == LONGLONG || 
+		if (l->n_type < INT || l->n_type == LONGLONG ||
 		    l->n_type == ULONGLONG) {
 			/* float etc? */
 			p->n_left = block(SCONV, l, NIL,
@@ -485,7 +485,7 @@ clocal(NODE *p)
 		nfree(p);
 		p = l;
 		break;
-		
+
 	case SCONV:
 		l = p->n_left;
 
@@ -616,7 +616,7 @@ clocal(NODE *p)
 		p->n_op = ASSIGN;
 		p->n_right = p->n_left;
 		p->n_left = block(REG, NIL, NIL, p->n_type, 0, MKSUE(INT));
-		p->n_left->n_rval = p->n_left->n_type == BOOL ? 
+		p->n_left->n_rval = p->n_left->n_type == BOOL ?
 		    RETREG(CHAR) : RETREG(p->n_type);
 		break;
 
@@ -698,7 +698,7 @@ fixnames(NODE *p)
 			*c = 0;
 			addstub(&stublist, sp->soname+1);
 			strcpy(c, "$stub");
-		} else 
+		} else
 			*c = 0;
 
 #endif
@@ -1116,7 +1116,7 @@ ctype(TWORD type)
 }
 
 void
-calldec(NODE *p, NODE *q) 
+calldec(NODE *p, NODE *q)
 {
 }
 
@@ -1351,7 +1351,7 @@ mangle(NODE *p)
 	int size = 0;
 	char buf[64];
 
-	if ((p->n_op == NAME || p->n_op == ICON) && 
+	if ((p->n_op == NAME || p->n_op == ICON) &&
 	    p->n_sp && (p->n_sp->sflags & SDLLINDIRECT) && p->n_name) {
 		snprintf(buf, 64, "__imp_%s", p->n_name);
 	        p->n_name = IALLOC(strlen(buf) + 1);
@@ -1371,7 +1371,7 @@ mangle(NODE *p)
 	if (l->n_sp->sflags & SSTDCALL) {
 		if (strchr(l->n_name, '@') == NULL) {
 			if (p->n_op == CALL || p->n_op == STCALL) {
-				for (r = p->n_right;	
+				for (r = p->n_right;
 				    r->n_op == CM; r = r->n_left) {
 					t = r->n_type;
 					if (t == STRTY || t == UNIONTY)

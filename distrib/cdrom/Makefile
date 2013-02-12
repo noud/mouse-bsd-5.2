@@ -265,7 +265,7 @@ MKISOFS_ARGS.${image}+=	-b ${BOOTFILE.amd64} -c boot.catalog -no-emul-boot
 MKISOFS_ARGS.${image}+= -b ${BOOTFILE.amd64} -c boot.catalog
 .endif
 .endif
-        
+
 # Mac (mac68k, macppc)
 
 .if !empty(ports:Mmacppc)

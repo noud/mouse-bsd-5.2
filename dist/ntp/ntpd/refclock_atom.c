@@ -344,7 +344,7 @@ atom_timer(
 	 * previous data are overwritten. If the discipline comes bum or
 	 * the data grow stale, just forget it. A range gate rejects new
 	 * samples if less than a jiggle time from the next second.
-	 */ 
+	 */
 	pp = peer->procptr;
 	up = (struct ppsunit *)pp->unitptr;
 	if (up->handle == 0)
@@ -455,7 +455,7 @@ pps_sample(
 	 * extend the fraction and stash in the buffer. No harm is done
 	 * if previous data are overwritten. If the discipline comes bum
 	 * or the data grow stale, just forget it.
-	 */ 
+	 */
 	pp->lastrec = *offset;
 	L_CLR(&lftmp);
 	L_ADDF(&lftmp, pp->lastrec.l_f);

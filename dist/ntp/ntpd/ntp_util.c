@@ -90,7 +90,7 @@ static FILEGEN cryptostats;
 
 /*
  * This controls whether stats are written to the fileset. Provided
- * so that ntpdc can turn off stats when the file system fills up. 
+ * so that ntpdc can turn off stats when the file system fills up.
  */
 int stats_control;
 
@@ -215,7 +215,7 @@ write_stats(void)
 		    last_offset, drift_comp * 1e6, sys_jitter,
 		    sys_poll);
 
-	
+
 	record_sys_stats();
 	if ((u_long)(fabs(prev_drift_comp - drift_comp) * 1e9) <=
 	    (u_long)(fabs(stats_write_tolerance * drift_comp) * 1e9)) {
@@ -303,7 +303,7 @@ stats_config(
 	} else {
 		value = newvalue;
 	}
-#else    
+#else
 	value = invalue;
 #endif /* SYS_WINNT */
 
@@ -346,7 +346,7 @@ stats_config(
 			break;
 		}
 		if (fscanf(fp, "%lf", &old_drift) != 1) {
-			msyslog(LOG_ERR, "Frequency format error in %s", 
+			msyslog(LOG_ERR, "Frequency format error in %s",
 			    stats_drift_file);
 			old_drift = 1e9;
 			fclose(fp);
@@ -358,7 +358,7 @@ stats_config(
 		    "frequency initialized %.3f PPM from %s",
 			old_drift, stats_drift_file);
 		break;
-	
+
 	    case STATS_STATSDIR:
 		if (strlen(value) >= sizeof(statsdir)) {
 			msyslog(LOG_ERR,
@@ -703,7 +703,7 @@ getauthkeys(
 	len = strlen(keyfile);
 	if (len == 0)
 		return;
-	
+
 	if (key_file_name != 0) {
 		if (len > (int)strlen(key_file_name)) {
 			(void) free(key_file_name);
@@ -721,7 +721,7 @@ getauthkeys(
 #ifndef SYS_WINNT
  	memmove(key_file_name, keyfile, (unsigned)(len+1));
 #else
-	if (!ExpandEnvironmentStrings(keyfile, key_file_name, MAXPATHLEN)) 
+	if (!ExpandEnvironmentStrings(keyfile, key_file_name, MAXPATHLEN))
 	{
 		msyslog(LOG_ERR,
 		    "ExpandEnvironmentStrings(KEY_FILE) failed: %m\n");

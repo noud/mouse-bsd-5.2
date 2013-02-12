@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2006 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "kdc_locl.h"
@@ -59,7 +59,7 @@ static void
 make_err_reply(krb5_context context, krb5_data *reply,
 	       int code, const char *msg)
 {
-    _krb5_krb_cr_err_reply(context, "", "", "", 
+    _krb5_krb_cr_err_reply(context, "", "", "",
 			   kdc_time, code, msg, reply);
 }
 
@@ -107,8 +107,8 @@ _kdc_db_fetch4(krb5_context context,
 
     ctx.config = config;
     ctx.flags = flags;
-    
-    ret = krb5_425_conv_principal_ext2(context, name, instance, realm, 
+
+    ret = krb5_425_conv_principal_ext2(context, name, instance, realm,
 				       valid_princ, &ctx, 0, &p);
     if(ret)
 	return ret;
@@ -126,7 +126,7 @@ _kdc_db_fetch4(krb5_context context,
  */
 
 krb5_error_code
-_kdc_do_version4(krb5_context context, 
+_kdc_do_version4(krb5_context context,
 		 krb5_kdc_configuration *config,
 		 unsigned char *buf,
 		 size_t len,
@@ -172,7 +172,7 @@ _kdc_do_version4(krb5_context context,
     case AUTH_MSG_KDC_REQUEST: {
 	krb5_data ticket, cipher;
 	krb5_keyblock session;
-	
+
 	krb5_data_zero(&ticket);
 	krb5_data_zero(&cipher);
 
@@ -189,11 +189,11 @@ _kdc_do_version4(krb5_context context,
 		  "%s.%s@%s", name, inst, realm);
 	snprintf (server_name, sizeof(server_name),
 		  "%s.%s@%s", sname, sinst, config->v4_realm);
-	
+
 	kdc_log(context, config, 0, "AS-REQ (krb4) %s from %s for %s",
 		client_name, from, server_name);
 
-	ret = _kdc_db_fetch4(context, config, name, inst, realm, 
+	ret = _kdc_db_fetch4(context, config, name, inst, realm,
 			     HDB_F_GET_CLIENT, &client);
 	if(ret) {
 	    kdc_log(context, config, 0, "Client not found in database: %s: %s",
@@ -212,7 +212,7 @@ _kdc_do_version4(krb5_context context,
 	    goto out1;
 	}
 
-	ret = _kdc_check_flags (context, config, 
+	ret = _kdc_check_flags (context, config,
 				client, client_name,
 				server, server_name,
 				TRUE);
@@ -254,7 +254,7 @@ _kdc_do_version4(krb5_context context,
 	ret = _kdc_get_des_key(context, client, FALSE, FALSE, &ckey);
 	if(ret){
 	    kdc_log(context, config, 0, "no suitable DES key for client");
-	    make_err_reply(context, reply, KRB4ET_KDC_NULL_KEY, 
+	    make_err_reply(context, reply, KRB4ET_KDC_NULL_KEY,
 			   "no suitable DES key for client");
 	    goto out1;
 	}
@@ -265,18 +265,18 @@ _kdc_do_version4(krb5_context context,
 	while(ckey->salt == NULL || ckey->salt->salt.length != 0)
 	    ret = hdb_next_keytype2key(context, &client->entry, KEYTYPE_DES, &ckey);
 	if(ret){
-	    kdc_log(context, config, 0, "No version-4 salted key in database -- %s.%s@%s", 
+	    kdc_log(context, config, 0, "No version-4 salted key in database -- %s.%s@%s",
 		    name, inst, realm);
-	    make_err_reply(context, reply, KRB4ET_KDC_NULL_KEY, 
+	    make_err_reply(context, reply, KRB4ET_KDC_NULL_KEY,
 			   "No version-4 salted key in database");
 	    goto out1;
 	}
 #endif
-	
+
 	ret = _kdc_get_des_key(context, server, TRUE, FALSE, &skey);
 	if(ret){
 	    kdc_log(context, config, 0, "no suitable DES key for server");
-	    make_err_reply(context, reply, KRB4ET_KDC_NULL_KEY, 
+	    make_err_reply(context, reply, KRB4ET_KDC_NULL_KEY,
 			   "no suitable DES key for server");
 	    goto out1;
 	}
@@ -288,7 +288,7 @@ _kdc_do_version4(krb5_context context,
 	    max_life = min(max_life, *server->entry.max_life);
 
 	life = krb_time_to_life(kdc_time, kdc_time + max_life);
-    
+
 	ret = krb5_generate_random_keyblock(context,
 					    ETYPE_DES_PCBC_NONE,
 					    &session);
@@ -297,7 +297,7 @@ _kdc_do_version4(krb5_context context,
 			   "Not enough random i KDC");
 	    goto out1;
 	}
-	
+
 	ret = _krb5_krb_create_ticket(context,
 				      0,
 				      name,
@@ -332,11 +332,11 @@ _kdc_do_version4(krb5_context context,
 	krb5_free_keyblock_contents(context, &session);
 	krb5_data_free(&ticket);
 	if (ret) {
-	    make_err_reply(context, reply, KFAILURE, 
+	    make_err_reply(context, reply, KFAILURE,
 			   "Failed to create v4 cipher");
 	    goto out1;
 	}
-	
+
 	ret = _krb5_krb_create_auth_reply(context,
 					  name,
 					  inst,
@@ -364,21 +364,21 @@ _kdc_do_version4(krb5_context context,
 	hdb_entry_ex *tgt = NULL;
 	Key *tkey;
 	time_t max_end, actual_end, issue_time;
-	
+
 	memset(&ad, 0, sizeof(ad));
 	krb5_data_zero(&auth);
 
 	RCHECK(krb5_ret_int8(sp, &kvno), out2);
 	RCHECK(krb5_ret_stringz(sp, &realm), out2);
-	
+
 	ret = krb5_425_conv_principal(context, "krbtgt", realm,
 				      config->v4_realm,
 				      &tgt_princ);
 	if(ret){
 	    kdc_log(context, config, 0,
-		    "Converting krbtgt principal (krb4): %s", 
+		    "Converting krbtgt principal (krb4): %s",
 		    krb5_get_err_text(context, ret));
-	    make_err_reply(context, reply, KFAILURE, 
+	    make_err_reply(context, reply, KFAILURE,
 			   "Failed to convert v4 principal (krbtgt)");
 	    goto out2;
 	}
@@ -388,18 +388,18 @@ _kdc_do_version4(krb5_context context,
 	if(ret){
 	    char *s;
 	    s = kdc_log_msg(context, config, 0, "Ticket-granting ticket not "
-			    "found in database (krb4): krbtgt.%s@%s: %s", 
+			    "found in database (krb4): krbtgt.%s@%s: %s",
 			    realm, config->v4_realm,
 			    krb5_get_err_text(context, ret));
 	    make_err_reply(context, reply, KFAILURE, s);
 	    free(s);
 	    goto out2;
 	}
-	
+
 	if(tgt->entry.kvno % 256 != kvno){
 	    kdc_log(context, config, 0,
 		    "tgs-req (krb4) with old kvno %d (current %d) for "
-		    "krbtgt.%s@%s", kvno, tgt->entry.kvno % 256, 
+		    "krbtgt.%s@%s", kvno, tgt->entry.kvno % 256,
 		    realm, config->v4_realm);
 	    make_err_reply(context, reply, KRB4ET_KDC_AUTH_EXP,
 			   "old krbtgt kvno used");
@@ -408,18 +408,18 @@ _kdc_do_version4(krb5_context context,
 
 	ret = _kdc_get_des_key(context, tgt, TRUE, FALSE, &tkey);
 	if(ret){
-	    kdc_log(context, config, 0, 
+	    kdc_log(context, config, 0,
 		    "no suitable DES key for krbtgt (krb4)");
-	    make_err_reply(context, reply, KRB4ET_KDC_NULL_KEY, 
+	    make_err_reply(context, reply, KRB4ET_KDC_NULL_KEY,
 			   "no suitable DES key for krbtgt");
 	    goto out2;
 	}
 
 	RCHECK(krb5_ret_int8(sp, &ticket_len), out2);
 	RCHECK(krb5_ret_int8(sp, &req_len), out2);
-	
+
 	pos = krb5_storage_seek(sp, ticket_len + req_len, SEEK_CUR);
-	
+
 	auth.data = buf;
 	auth.length = pos;
 
@@ -428,7 +428,7 @@ _kdc_do_version4(krb5_context context,
 	else
 	    address = 0;
 
-	ret = _krb5_krb_rd_req(context, &auth, "krbtgt", realm, 
+	ret = _krb5_krb_rd_req(context, &auth, "krbtgt", realm,
 			       config->v4_realm,
 			       address, &tkey->key, &ad);
 	if(ret){
@@ -436,7 +436,7 @@ _kdc_do_version4(krb5_context context,
 	    make_err_reply(context, reply, ret, "failed to parse request");
 	    goto out2;
 	}
-	
+
 	RCHECK(krb5_ret_int32(sp, &req_time), out2);
 	if(lsb)
 	    req_time = swap32(req_time);
@@ -452,17 +452,17 @@ _kdc_do_version4(krb5_context context,
 
 	kdc_log(context, config, 0, "TGS-REQ (krb4) %s from %s for %s",
 		client_name, from, server_name);
-	
+
 	if(strcmp(ad.prealm, realm)){
-	    kdc_log(context, config, 0, 
+	    kdc_log(context, config, 0,
 		    "Can't hop realms (krb4) %s -> %s", realm, ad.prealm);
-	    make_err_reply(context, reply, KRB4ET_KDC_PR_UNKNOWN, 
+	    make_err_reply(context, reply, KRB4ET_KDC_PR_UNKNOWN,
 			   "Can't hop realms");
 	    goto out2;
 	}
 
 	if (!config->enable_v4_cross_realm && strcmp(realm, config->v4_realm) != 0) {
-	    kdc_log(context, config, 0, 
+	    kdc_log(context, config, 0,
 		    "krb4 Cross-realm %s -> %s disabled",
 		    realm, config->v4_realm);
 	    make_err_reply(context, reply, KRB4ET_KDC_PR_UNKNOWN,
@@ -471,13 +471,13 @@ _kdc_do_version4(krb5_context context,
 	}
 
 	if(strcmp(sname, "changepw") == 0){
-	    kdc_log(context, config, 0, 
+	    kdc_log(context, config, 0,
 		    "Bad request for changepw ticket (krb4)");
-	    make_err_reply(context, reply, KRB4ET_KDC_PR_UNKNOWN, 
+	    make_err_reply(context, reply, KRB4ET_KDC_PR_UNKNOWN,
 			   "Can't authorize password change based on TGT");
 	    goto out2;
 	}
-	
+
 	ret = _kdc_db_fetch4(context, config, ad.pname, ad.pinst, ad.prealm,
 			     HDB_F_GET_CLIENT, &client);
 	if(ret && ret != HDB_ERR_NOENTRY) {
@@ -511,7 +511,7 @@ _kdc_do_version4(krb5_context context,
 	    goto out2;
 	}
 
-	ret = _kdc_check_flags (context, config, 
+	ret = _kdc_check_flags (context, config,
 				client, client_name,
 				server, server_name,
 				FALSE);
@@ -523,9 +523,9 @@ _kdc_do_version4(krb5_context context,
 
 	ret = _kdc_get_des_key(context, server, TRUE, FALSE, &skey);
 	if(ret){
-	    kdc_log(context, config, 0, 
+	    kdc_log(context, config, 0,
 		    "no suitable DES key for server (krb4)");
-	    make_err_reply(context, reply, KRB4ET_KDC_NULL_KEY, 
+	    make_err_reply(context, reply, KRB4ET_KDC_NULL_KEY,
 			   "no suitable DES key for server");
 	    goto out2;
 	}
@@ -537,7 +537,7 @@ _kdc_do_version4(krb5_context context,
 	if(client && client->entry.max_life)
 	    max_end = min(max_end, kdc_time + *client->entry.max_life);
 	life = min(life, krb_time_to_life(kdc_time, max_end));
-	
+
 	issue_time = kdc_time;
 	actual_end = _krb5_krb_life_to_time(issue_time, life);
 	while (actual_end > max_end && life > 1) {
@@ -565,7 +565,7 @@ _kdc_do_version4(krb5_context context,
 			       "Not enough random i KDC");
 		goto out2;
 	    }
-	
+
 	    ret = _krb5_krb_create_ticket(context,
 					  0,
 					  ad.pname,
@@ -603,7 +603,7 @@ _kdc_do_version4(krb5_context context,
 			       "failed to create v4 cipher");
 		goto out2;
 	    }
-	    
+
 	    ret = _krb5_krb_create_auth_reply(context,
 					      ad.pname,
 					      ad.pinst,
@@ -627,9 +627,9 @@ _kdc_do_version4(krb5_context context,
     case AUTH_MSG_ERR_REPLY:
 	break;
     default:
-	kdc_log(context, config, 0, "Unknown message type (krb4): %d from %s", 
+	kdc_log(context, config, 0, "Unknown message type (krb4): %d from %s",
 		msg_type, from);
-	
+
 	make_err_reply(context, reply, KFAILURE, "Unknown message type");
     }
  out:
@@ -652,7 +652,7 @@ _kdc_do_version4(krb5_context context,
 }
 
 krb5_error_code
-_kdc_encode_v4_ticket(krb5_context context, 
+_kdc_encode_v4_ticket(krb5_context context,
 		      krb5_kdc_configuration *config,
 		      void *buf, size_t len, const EncTicketPart *et,
 		      const PrincipalName *service, size_t *size)
@@ -668,7 +668,7 @@ _kdc_encode_v4_ticket(krb5_context context,
 					   &princ,
 					   *service,
 					   et->crealm);
-	ret = krb5_524_conv_principal(context, 
+	ret = krb5_524_conv_principal(context,
 				      princ,
 				      sname,
 				      sinst,
@@ -681,8 +681,8 @@ _kdc_encode_v4_ticket(krb5_context context,
 					   &princ,
 					   et->cname,
 					   et->crealm);
-				     
-	ret = krb5_524_conv_principal(context, 
+
+	ret = krb5_524_conv_principal(context,
 				      princ,
 				      name,
 				      inst,
@@ -693,7 +693,7 @@ _kdc_encode_v4_ticket(krb5_context context,
 	return ret;
 
     sp = krb5_storage_emem();
-    
+
     krb5_store_int8(sp, 0); /* flags */
     krb5_store_stringz(sp, name);
     krb5_store_stringz(sp, inst);
@@ -714,11 +714,11 @@ _kdc_encode_v4_ticket(krb5_context context,
 
     if((et->key.keytype != ETYPE_DES_CBC_MD5 &&
 	et->key.keytype != ETYPE_DES_CBC_MD4 &&
-	et->key.keytype != ETYPE_DES_CBC_CRC) || 
+	et->key.keytype != ETYPE_DES_CBC_CRC) ||
        et->key.keyvalue.length != 8)
 	return -1;
     krb5_storage_write(sp, et->key.keyvalue.data, 8);
-    
+
     {
 	time_t start = et->starttime ? *et->starttime : et->authtime;
 	krb5_store_int8(sp, krb_time_to_life(start, et->endtime));
@@ -727,7 +727,7 @@ _kdc_encode_v4_ticket(krb5_context context,
 
     krb5_store_stringz(sp, sname);
     krb5_store_stringz(sp, sinst);
-    
+
     {
 	krb5_data data;
 	krb5_storage_to_data(sp, &data);
@@ -743,19 +743,19 @@ _kdc_encode_v4_ticket(krb5_context context,
 }
 
 krb5_error_code
-_kdc_get_des_key(krb5_context context, 
-		 hdb_entry_ex *principal, krb5_boolean is_server, 
+_kdc_get_des_key(krb5_context context,
+		 hdb_entry_ex *principal, krb5_boolean is_server,
 		 krb5_boolean prefer_afs_key, Key **ret_key)
 {
     Key *v5_key = NULL, *v4_key = NULL, *afs_key = NULL, *server_key = NULL;
     int i;
-    krb5_enctype etypes[] = { ETYPE_DES_CBC_MD5, 
-			      ETYPE_DES_CBC_MD4, 
+    krb5_enctype etypes[] = { ETYPE_DES_CBC_MD5,
+			      ETYPE_DES_CBC_MD4,
 			      ETYPE_DES_CBC_CRC };
 
     for(i = 0;
 	i < sizeof(etypes)/sizeof(etypes[0])
-	    && (v5_key == NULL || v4_key == NULL || 
+	    && (v5_key == NULL || v4_key == NULL ||
 		afs_key == NULL || server_key == NULL);
 	++i) {
 	Key *key = NULL;
@@ -763,7 +763,7 @@ _kdc_get_des_key(krb5_context context,
 	    if(key->salt == NULL) {
 		if(v5_key == NULL)
 		    v5_key = key;
-	    } else if(key->salt->type == hdb_pw_salt && 
+	    } else if(key->salt->type == hdb_pw_salt &&
 		      key->salt->salt.length == 0) {
 		if(v4_key == NULL)
 		    v4_key = key;

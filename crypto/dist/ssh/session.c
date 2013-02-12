@@ -811,7 +811,7 @@ child_set_env(char ***envp, u_int *envsizep, const char *name,
 /*
  * Sets any environment variables specified in login.conf.
  * Taken from:
- *	NetBSD: login_cap.c,v 1.11 2001/07/22 13:34:01 wiz Exp 
+ *	NetBSD: login_cap.c,v 1.11 2001/07/22 13:34:01 wiz Exp
  * Modified to use child_set_env instead of setenv.
  */
 static void
@@ -822,10 +822,10 @@ lc_setuserenv(char ***env, u_int *envsize, login_cap_t *lc)
 	char *ptr;
 	char **res;
 	char *str = login_getcapstr(lc, "setenv", NULL, NULL);
-		  
+
 	if (str == NULL || *str == '\0')
 		return;
-	
+
 	/* count the sub-strings */
 	for (i = 1, ptr = str; *ptr; i++) {
 		ptr += strcspn(ptr, stop);
@@ -839,7 +839,7 @@ lc_setuserenv(char ***env, u_int *envsize, login_cap_t *lc)
 
 	if (!res)
 		return;
-	
+
 	ptr = (char *)res + count * sizeof(char *);
 	strcpy(ptr, str);
 
@@ -850,19 +850,19 @@ lc_setuserenv(char ***env, u_int *envsize, login_cap_t *lc)
 		if (*ptr)
 			*ptr++ = '\0';
 	}
-	
+
 	res[i] = NULL;
 
 	for (i = 0; i < count && res[i]; i++) {
 		if (*res[i] != '\0') {
 			if ((ptr = strchr(res[i], '=')) != NULL)
 				*ptr++ = '\0';
-			else 
+			else
 				ptr = "";
 			child_set_env(env, envsize, res[i], ptr);
 		}
 	}
-	
+
 	free(res);
 	return;
 }
@@ -1201,7 +1201,7 @@ safely_chroot(const char *path, uid_t uid)
 			memcpy(component, path, cp - path);
 			component[cp - path] = '\0';
 		}
-	
+
 		debug3("%s: checking '%s'", __func__, component);
 
 		if (stat(component, &st) != 0)
@@ -1209,7 +1209,7 @@ safely_chroot(const char *path, uid_t uid)
 			    component, strerror(errno));
 		if (st.st_uid != 0 || (st.st_mode & 022) != 0)
 			fatal("bad ownership or modes for chroot "
-			    "directory %s\"%s\"", 
+			    "directory %s\"%s\"",
 			    cp == NULL ? "" : "component ", component);
 		if (!S_ISDIR(st.st_mode))
 			fatal("chroot path %s\"%s\" is not a directory",
@@ -1971,7 +1971,7 @@ session_set_fds(Session *s, int fdin, int fdout, int fderr)
 	 */
 	if (s->chanid == -1)
 		fatal("no channel for session %d", s->self);
-	if(options.hpn_disabled) 
+	if(options.hpn_disabled)
 	channel_set_fds(s->chanid,
 	    fdout, fdin, fderr,
 	    fderr == -1 ? CHAN_EXTENDED_IGNORE : CHAN_EXTENDED_READ,
@@ -2323,7 +2323,7 @@ session_setup_x11fwd(Session *s)
 	}
 	if (x11_create_display_inet(options.x11_display_offset,
 	    options.x11_use_localhost, s->single_connection,
-	    &s->display_number, &s->x11_chanids, 
+	    &s->display_number, &s->x11_chanids,
 	    options.hpn_disabled, options.hpn_buffer_size) == -1) {
 		debug("x11_create_display_inet failed.");
 		return 0;

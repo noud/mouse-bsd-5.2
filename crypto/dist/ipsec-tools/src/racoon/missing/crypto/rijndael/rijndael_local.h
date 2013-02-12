@@ -4,8 +4,8 @@
 
 /* the file should not be used from outside */
 typedef u_int8_t		BYTE;
-typedef u_int8_t		word8;	
-typedef u_int16_t		word16;	
+typedef u_int8_t		word8;
+typedef u_int16_t		word16;
 typedef u_int32_t		word32;
 
 #define MAXKC		RIJNDAEL_MAXKC

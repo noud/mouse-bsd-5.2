@@ -66,7 +66,7 @@
 #define ALSHORT		16
 #define ALPOINT		32
 #define ALSTRUCT	32
-#define ALSTACK		32 
+#define ALSTACK		32
 
 /*
  * Min/max values.
@@ -312,7 +312,7 @@ int COLORMAP(int c, int *r);
 #define	SSECTION	SLOCAL1
 #define	STLS		SLOCAL2
 #define	SNOUNDERSCORE	SLOCAL3
-#define SSTDCALL	SLOCAL2	
+#define SSTDCALL	SLOCAL2
 #define SDLLINDIRECT	SLOCAL3
 
 /*
@@ -354,7 +354,7 @@ NODE *i386_builtin_return_address(NODE *f, NODE *a);
 struct stub {
 	struct { struct stub *q_forw, *q_back; } link;
 	char *name;
-};    
+};
 extern struct stub stublist;
 extern struct stub nlplist;
 void addstub(struct stub *list, char *name);

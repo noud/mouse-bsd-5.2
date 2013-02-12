@@ -32,7 +32,7 @@
  * sunset without warning. Since the indicated precision is 100 ms,
  * expect a host synchronized only to this thing to wander to and fro,
  * occasionally being rudely stepped when the offset exceeds the default
- * clock_max of 128 ms. 
+ * clock_max of 128 ms.
  *
  * There were two GC-1000 versions supported by this driver. The original
  * GC-1000 with RS-232 output first appeared in 1983, but dissapeared

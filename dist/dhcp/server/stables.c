@@ -100,7 +100,7 @@ struct failover_option_info ft_options [] =
 	  FT_BYTES, 0, FM_OFFSET (hba), FTB_HBA },
 	{ FTO_MESSAGE_DIGEST, "message-digest",
 	  FT_DIGEST, 0, 0, FTB_MESSAGE_DIGEST },
-	{ FTO_PROTOCOL_VERSION, "protocol-version", 
+	{ FTO_PROTOCOL_VERSION, "protocol-version",
 	  FT_UINT8, 1, FM_OFFSET (protocol_version), FTB_PROTOCOL_VERSION },
 	{ FTO_TLS_REQUEST, "TLS-request",
 	  FT_UINT8, 2, FM_OFFSET (tls_request), FTB_TLS_REQUEST },

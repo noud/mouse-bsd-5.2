@@ -9,7 +9,7 @@ This package contains various C programming debugging utilities, such as:
 	via the C compiler gcc(1) command line options -fprofile-arcs and
 	-ftest-coverage. These options cause the compiler to insert
 	instrumentation into the object files it generates, which measure
-	how often each basic block is executed; 
+	how often each basic block is executed;
 
 	gdb - is the GNU debugger. The purpose of a debugger such as GDB
 	is to allow you to see what is going on ``inside'' another program

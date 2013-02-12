@@ -8,8 +8,8 @@
 __RCSID("$Heimdal: pop_parse.c 5530 1999-03-13 21:17:27Z assar $"
         "$NetBSD: pop_parse.c,v 1.2 2008/03/22 08:36:55 mlelstv Exp $");
 
-/* 
- *  parse:  Parse a raw input line from a POP client 
+/*
+ *  parse:  Parse a raw input line from a POP client
  *  into null-delimited tokens
  */
 
@@ -18,10 +18,10 @@ pop_parse(POP *p, char *buf)
 {
     char            *   mp;
     int        i;
-    
+
     /*  Loop through the POP command array */
     for (mp = buf, i = 0; ; i++) {
-    
+
         /*  Skip leading spaces and tabs in the message */
         while (isspace((unsigned char)*mp))mp++;
 
@@ -52,5 +52,5 @@ pop_parse(POP *p, char *buf)
 
     /*  Return the number of tokens extracted minus the command itself */
     return (i-1);
-    
+
 }

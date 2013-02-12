@@ -213,7 +213,7 @@ dst_s_id_calc(const u_char *key, const unsigned keysize)
 
 	if (!key)
 		return 0;
- 
+
 	for (ac = 0; size > 1; size -= 2, kp += 2)
 		ac += ((*kp) << 8) + *(kp + 1);
 
@@ -224,15 +224,15 @@ dst_s_id_calc(const u_char *key, const unsigned keysize)
 	return (ac & 0xffff);
 }
 
-/* 
+/*
  * dst_s_dns_key_id() Function to calculated DNSSEC footprint from KEY reocrd
  *   rdata (all of  record)
  * Input:
- *	dns_key_rdata: the raw data in wire format 
- *      rdata_len: the size of the input data 
+ *	dns_key_rdata: the raw data in wire format
+ *      rdata_len: the size of the input data
  * Output:
- *      the key footprint/id calcuated from the key data 
- */ 
+ *      the key footprint/id calcuated from the key data
+ */
 u_int16_t
 dst_s_dns_key_id(const u_char *dns_key_rdata, const unsigned rdata_len)
 {
@@ -430,14 +430,14 @@ dst_s_fopen(const char *filename, const char *mode, unsigned perm)
 		strcpy(pathname, dst_path);
 		plen -= strlen(pathname);
 	}
-	else 
+	else
 		pathname[0] = '\0';
 
 	if (plen > strlen(filename))
 		strncpy(&pathname[PATH_MAX - plen], filename, plen-1);
-	else 
+	else
 		return (NULL);
-	
+
 	fp = fopen(pathname, mode);
 	if (perm)
 		chmod(pathname, perm);
@@ -446,7 +446,7 @@ dst_s_fopen(const char *filename, const char *mode, unsigned perm)
 
 #if 0
 void
-dst_s_dump(const int mode, const u_char *data, const int size, 
+dst_s_dump(const int mode, const u_char *data, const int size,
 	    const char *msg)
 {
 	if (size > 0) {

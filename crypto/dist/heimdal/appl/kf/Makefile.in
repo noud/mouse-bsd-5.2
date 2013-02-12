@@ -442,10 +442,10 @@ clean-libexecPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-kf$(EXEEXT): $(kf_OBJECTS) $(kf_DEPENDENCIES) 
+kf$(EXEEXT): $(kf_OBJECTS) $(kf_DEPENDENCIES)
 	@rm -f kf$(EXEEXT)
 	$(LINK) $(kf_OBJECTS) $(kf_LDADD) $(LIBS)
-kfd$(EXEEXT): $(kfd_OBJECTS) $(kfd_DEPENDENCIES) 
+kfd$(EXEEXT): $(kfd_OBJECTS) $(kfd_DEPENDENCIES)
 	@rm -f kfd$(EXEEXT)
 	$(LINK) $(kfd_OBJECTS) $(kfd_LDADD) $(LIBS)
 

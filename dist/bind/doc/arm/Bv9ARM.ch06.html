@@ -1,11 +1,11 @@
 <!--
  - Copyright (C) 2004-2012 Internet Systems Consortium, Inc. ("ISC")
  - Copyright (C) 2000-2003 Internet Software Consortium.
- - 
+ -
  - Permission to use, copy, modify, and/or distribute this software for any
  - purpose with or without fee is hereby granted, provided that the above
  - copyright notice and this permission notice appear in all copies.
- - 
+ -
  - THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH
  - REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
  - AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT,
@@ -2123,7 +2123,7 @@ badresp:1,adberr:0,findfail:0,valfail:0]
     [<span class="optional"> forwarders { [<span class="optional"> <em class="replaceable"><code>ip_addr</code></em> [<span class="optional">port <em class="replaceable"><code>ip_port</code></em></span>] ; ... </span>] }; </span>]
     [<span class="optional"> dual-stack-servers [<span class="optional">port <em class="replaceable"><code>ip_port</code></em></span>] {
         ( <em class="replaceable"><code>domain_name</code></em> [<span class="optional">port <em class="replaceable"><code>ip_port</code></em></span>] |
-          <em class="replaceable"><code>ip_addr</code></em> [<span class="optional">port <em class="replaceable"><code>ip_port</code></em></span>] ) ; 
+          <em class="replaceable"><code>ip_addr</code></em> [<span class="optional">port <em class="replaceable"><code>ip_port</code></em></span>] ) ;
         ... }; </span>]
     [<span class="optional"> check-names ( <em class="replaceable"><code>master</code></em> | <em class="replaceable"><code>slave</code></em> | <em class="replaceable"><code>response</code></em> )
         ( <em class="replaceable"><code>warn</code></em> | <em class="replaceable"><code>fail</code></em> | <em class="replaceable"><code>ignore</code></em> ); </span>]
@@ -2162,8 +2162,8 @@ badresp:1,adberr:0,findfail:0,valfail:0]
         [<span class="optional"> address ( <em class="replaceable"><code>ip4_addr</code></em> | <em class="replaceable"><code>*</code></em> ) </span>]
         [<span class="optional"> port ( <em class="replaceable"><code>ip_port</code></em> | <em class="replaceable"><code>*</code></em> ) </span>] ) ; </span>]
     [<span class="optional"> query-source-v6 ( ( <em class="replaceable"><code>ip6_addr</code></em> | <em class="replaceable"><code>*</code></em> )
-        [<span class="optional"> port ( <em class="replaceable"><code>ip_port</code></em> | <em class="replaceable"><code>*</code></em> ) </span>] | 
-        [<span class="optional"> address ( <em class="replaceable"><code>ip6_addr</code></em> | <em class="replaceable"><code>*</code></em> ) </span>] 
+        [<span class="optional"> port ( <em class="replaceable"><code>ip_port</code></em> | <em class="replaceable"><code>*</code></em> ) </span>] |
+        [<span class="optional"> address ( <em class="replaceable"><code>ip6_addr</code></em> | <em class="replaceable"><code>*</code></em> ) </span>]
         [<span class="optional"> port ( <em class="replaceable"><code>ip_port</code></em> | <em class="replaceable"><code>*</code></em> ) </span>] ) ; </span>]
     [<span class="optional"> use-queryport-pool <em class="replaceable"><code>yes_or_no</code></em>; </span>]
     [<span class="optional"> queryport-pool-ports <em class="replaceable"><code>number</code></em>; </span>]
@@ -3947,7 +3947,7 @@ avoid-v6-udp-ports {};
 </pre>
 <p>
             Note: BIND 9.5.0 introduced
-            the <span><strong class="command">use-queryport-pool</strong></span> 
+            the <span><strong class="command">use-queryport-pool</strong></span>
             option to support a pool of such random ports, but this
             option is now obsolete because reusing the same ports in
             the pool may not be sufficiently secure.

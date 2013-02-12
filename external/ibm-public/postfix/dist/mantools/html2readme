@@ -4,7 +4,7 @@ HTML2TEXT="html2text -style pretty -rcfile html2text.rc"
 
 #case $# in
 # 0) $HTML2TEXT;;
-# *) for file 
+# *) for file
 #    do
 #        cat <<EOF | fmt
 #[hyperlinked version: www.postfix.org/$file]

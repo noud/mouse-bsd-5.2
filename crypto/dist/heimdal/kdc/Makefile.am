@@ -17,7 +17,7 @@ noinst_PROGRAMS = kdc-replay
 
 man_MANS = kdc.8 kstash.8 hprop.8 hpropd.8 string2key.8
 
-hprop_SOURCES = hprop.c mit_dump.c v4_dump.c hprop.h kadb.h 
+hprop_SOURCES = hprop.c mit_dump.c v4_dump.c hprop.h kadb.h
 hpropd_SOURCES = hpropd.c hprop.h
 
 kstash_SOURCES = kstash.c headers.h
@@ -73,7 +73,7 @@ hprop_LDADD = \
 	$(LIB_hcrypto) \
 	$(top_builddir)/lib/asn1/libasn1.la \
 	$(LIB_roken) \
-	$(DBLIB) 
+	$(DBLIB)
 
 hpropd_LDADD = \
 	$(top_builddir)/lib/hdb/libhdb.la \
@@ -83,7 +83,7 @@ hpropd_LDADD = \
 	$(LIB_hcrypto) \
 	$(top_builddir)/lib/asn1/libasn1.la \
 	$(LIB_roken) \
-	$(DBLIB) 
+	$(DBLIB)
 
 if PKINIT
 LIB_pkinit = $(top_builddir)/lib/hx509/libhx509.la
@@ -99,7 +99,7 @@ libkdc_la_LIBADD = \
 	$(LIB_hcrypto) \
 	$(top_builddir)/lib/asn1/libasn1.la \
 	$(LIB_roken) \
-	$(DBLIB) 
+	$(DBLIB)
 
 LDADD = $(top_builddir)/lib/hdb/libhdb.la \
 	$(LIB_openldap) \

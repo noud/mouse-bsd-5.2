@@ -55,7 +55,7 @@ cond_copy() {
   lr=`find "$dir" -maxdepth 1 -name "$pat"`
   if test ! -d "$2" ; then exit 1 ; fi
   if test "x$lr" != "x" ; then $CP $1 "$2" ; fi
-} 
+}
 
 set -e
 umask 022

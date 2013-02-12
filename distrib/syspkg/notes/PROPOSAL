@@ -136,7 +136,7 @@ A. Working Plan
   on different filesystems, and packages must be designed so as to
   allow a client to install only those parts of the system which reside
   on local filesystems.
-  
+
   The first of these is addressed by a set of patches described by
   Alistair Crooks in a post to the netbsd-current mailing list on
   Friday, September 18, 1998.  These patches, which have not yet been
@@ -255,7 +255,7 @@ A. Working Plan
   to myself:
 
     1.) Hammer this proposal into a more detailed specification
-    
+
         I am submitting this proposal now in the hopes that it
 	will spark discussion which will lead to a refinement
 	of the planned system package system.  Once some sort

@@ -174,7 +174,7 @@ dhcpctl_status dhcpctl_new_object (dhcpctl_handle *h,
    flags include:
      DHCPCTL_CREATE - if the object doesn't exist, create it
      DHCPCTL_UPDATE - update the object on the server using the
-     		      attached parameters 
+     		      attached parameters
      DHCPCTL_EXCL - error if the object exists and DHCPCTL_CREATE
      		      was also specified */
 
@@ -291,7 +291,7 @@ isc_result_t dhcpctl_remote_get_value (omapi_object_t *h,
 {
 	if (h -> type != dhcpctl_remote_type)
 		return ISC_R_INVALIDARG;
-	
+
 	if (h -> inner && h -> inner -> type -> get_value)
 		return (*(h -> inner -> type -> get_value))
 			(h -> inner, id, name, value);

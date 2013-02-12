@@ -29,7 +29,7 @@ change.
 The roadmap, of course, is constructed in the context of the
 Project's (broad) goals:
 
-	* clean design		* stable		* fast 
+	* clean design		* stable		* fast
 	* clean licensing	* portable		* interoperable
 	* conformant		* commercial-ready	* research-ready
 	* hobby-ready
@@ -75,8 +75,8 @@ a part, please specify the part), and an expected completion date.
 This will hopefully avoid both duplication of effort and too many
 or too-extended stalls.
 
-PLEASE NOTE THAT THIS IS A VOLUNTEER PROJECT, AND THAT NONE OF THESE 
-RELEASE VERSIONS, OR NAMES, IS A GUARANTEE OF THE FUNCTIONALITY BEING  
+PLEASE NOTE THAT THIS IS A VOLUNTEER PROJECT, AND THAT NONE OF THESE
+RELEASE VERSIONS, OR NAMES, IS A GUARANTEE OF THE FUNCTIONALITY BEING
 COMPLETE OR EVEN STARTED.  INTERESTED PARTIES SHOULD CONTACT
 
         core@NetBSD.org

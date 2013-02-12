@@ -122,8 +122,8 @@ struct X86EMU_regs {
 	 *  Delayed flag set        3 bits  (zero, signed, parity)
 	 *  reserved                6 bits
 	 *  interrupt #             8 bits  instruction raised interrupt
-	 *  BIOS video segregs      4 bits  
-	 *  Interrupt Pending       1 bits  
+	 *  BIOS video segregs      4 bits
+	 *  Interrupt Pending       1 bits
 	 *  Extern interrupt        1 bits
 	 *  Halted                  1 bits
 	 */

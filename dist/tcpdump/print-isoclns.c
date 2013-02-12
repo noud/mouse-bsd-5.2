@@ -628,7 +628,7 @@ void isoclns_print(const u_int8_t *p, u_int length, u_int caplen)
             printf("OSI NLPID %s (0x%02x): ",
                    tok2str(nlpid_values,"Unknown",*p),
                    *p);
-        
+
 	switch (*p) {
 
 	case NLPID_CLNP:
@@ -810,7 +810,7 @@ static int clnp_print (const u_int8_t *pptr, u_int length)
         while (li >= 2) {
             u_int op, opli;
             const u_int8_t *tptr;
-            
+
             TCHECK2(*pptr, 2);
             if (li < 2) {
                 printf(", bad opts/li");
@@ -827,7 +827,7 @@ static int clnp_print (const u_int8_t *pptr, u_int length)
             li -= opli;
             tptr = pptr;
             tlen = opli;
-            
+
             printf("\n\t  %s Option #%u, length %u, value: ",
                    tok2str(clnp_option_values,"Unknown",op),
                    op,
@@ -837,7 +837,7 @@ static int clnp_print (const u_int8_t *pptr, u_int length)
 
 
             case CLNP_OPTION_ROUTE_RECORDING: /* those two options share the format */
-            case CLNP_OPTION_SOURCE_ROUTING:  
+            case CLNP_OPTION_SOURCE_ROUTING:
                     printf("%s %s",
                            tok2str(clnp_option_sr_rr_values,"Unknown",*tptr),
                            tok2str(clnp_option_sr_rr_string_values,"Unknown Option %u",op));
@@ -929,12 +929,12 @@ static int clnp_print (const u_int8_t *pptr, u_int length)
                 /* FIXME recursion protection */
                 clnp_print(pptr, length-clnp_header->length_indicator);
                 break;
-            } 
+            }
 
         case 	CLNP_PDU_DT:
         case 	CLNP_PDU_MD:
         case 	CLNP_PDU_ERQ:
-            
+
         default:
             /* dump the PDU specific data */
             if (length-(pptr-optr) > 0) {
@@ -1009,7 +1009,7 @@ esis_print(const u_int8_t *pptr, u_int length)
             printf(" version %d packet not supported", esis_header->version);
             return;
         }
-                
+
 	if (li > length) {
             printf(" length indicator(%d) > PDU size (%d)!", li, length);
             return;
@@ -1126,7 +1126,7 @@ esis_print(const u_int8_t *pptr, u_int length)
             li--;
 
             printf("\n\t  Number of Source Addresses: %u", source_address_number);
-           
+
             while (source_address_number > 0) {
                 TCHECK(*pptr);
             	if (li < 1) {
@@ -1174,7 +1174,7 @@ esis_print(const u_int8_t *pptr, u_int length)
 
 	default:
             if (vflag <= 1) {
-		    if (pptr < snapend) 
+		    if (pptr < snapend)
                             print_unknown_data(pptr,"\n\t  ",snapend-pptr);
             }
             return;
@@ -1184,7 +1184,7 @@ esis_print(const u_int8_t *pptr, u_int length)
         while (li >= 2) {
             u_int op, opli;
             const u_int8_t *tptr;
-            
+
             TCHECK2(*pptr, 2);
             if (li < 2) {
                 printf(", bad opts/li");
@@ -1199,7 +1199,7 @@ esis_print(const u_int8_t *pptr, u_int length)
             }
             li -= opli;
             tptr = pptr;
-            
+
             printf("\n\t  %s Option #%u, length %u, value: ",
                    tok2str(esis_option_values,"Unknown",op),
                    op,
@@ -1248,7 +1248,7 @@ esis_print(const u_int8_t *pptr, u_int length)
         }
 trunc:
 	return;
-}   
+}
 
 /* shared routine for printing system, node and lsp-ids */
 static char *
@@ -1338,13 +1338,13 @@ isis_print_tlv_ip_reach (const u_int8_t *cp, const char *ident, int length)
                            ident,
                            ISIS_LSP_TLV_METRIC_VALUE(tlv_ip_reach->isis_metric_block.metric_delay),
                            ISIS_LSP_TLV_METRIC_IE(tlv_ip_reach->isis_metric_block.metric_delay) ? "External" : "Internal");
-                
+
 		if (!ISIS_LSP_TLV_METRIC_SUPPORTED(tlv_ip_reach->isis_metric_block.metric_expense))
                     printf("%s  Expense Metric: %u, %s",
                            ident,
                            ISIS_LSP_TLV_METRIC_VALUE(tlv_ip_reach->isis_metric_block.metric_expense),
                            ISIS_LSP_TLV_METRIC_IE(tlv_ip_reach->isis_metric_block.metric_expense) ? "External" : "Internal");
-                
+
 		if (!ISIS_LSP_TLV_METRIC_SUPPORTED(tlv_ip_reach->isis_metric_block.metric_error))
                     printf("%s  Error Metric: %u, %s",
                            ident,
@@ -1404,7 +1404,7 @@ isis_print_ip_reach_subtlv (const u_int8_t *tptr,int subt,int subl,const char *i
 	break;
     }
     return(1);
-	
+
 trunctlv:
     printf("%spacket exceeded snapshot",ident);
     return(0);
@@ -1420,7 +1420,7 @@ isis_print_is_reach_subtlv (const u_int8_t *tptr,u_int subt,u_int subl,const cha
 
         u_int te_class,priority_level;
         union { /* int to float conversion buffer for several subTLVs */
-            float f; 
+            float f;
             u_int32_t i;
         } bw;
 
@@ -1437,7 +1437,7 @@ isis_print_is_reach_subtlv (const u_int8_t *tptr,u_int subt,u_int subl,const cha
 	    goto trunctlv;
 
         switch(subt) {
-        case ISIS_SUBTLV_EXT_IS_REACH_ADMIN_GROUP:      
+        case ISIS_SUBTLV_EXT_IS_REACH_ADMIN_GROUP:
         case ISIS_SUBTLV_EXT_IS_REACH_LINK_LOCAL_REMOTE_ID:
         case ISIS_SUBTLV_EXT_IS_REACH_LINK_REMOTE_ID:
 	    if (subl >= 4) {
@@ -1452,7 +1452,7 @@ isis_print_is_reach_subtlv (const u_int8_t *tptr,u_int subt,u_int subl,const cha
               printf(", %s", ipaddr_string(tptr));
             break;
         case ISIS_SUBTLV_EXT_IS_REACH_MAX_LINK_BW :
-	case ISIS_SUBTLV_EXT_IS_REACH_RESERVABLE_BW:  
+	case ISIS_SUBTLV_EXT_IS_REACH_RESERVABLE_BW:
             if (subl >= 4) {
               bw.i = EXTRACT_32BITS(tptr);
               printf(", %.3f Mbps", bw.f*8/1000000 );
@@ -1550,7 +1550,7 @@ isis_print_ext_is_reach (const u_int8_t *tptr,const char *ident, int tlv_type) {
     char ident_buffer[20];
     int subtlv_type,subtlv_len,subtlv_sum_len;
     int proc_bytes = 0; /* how many bytes did we process ? */
-    
+
     if (!TTEST2(*tptr, NODE_ID_LEN))
         return(0);
 
@@ -1563,7 +1563,7 @@ isis_print_ext_is_reach (const u_int8_t *tptr,const char *ident, int tlv_type) {
 	printf(", Metric: %d",EXTRACT_24BITS(tptr));
 	tptr+=3;
     }
-        
+
     if (!TTEST2(*tptr, 1))
         return(0);
     subtlv_sum_len=*(tptr++); /* read out subTLV length */
@@ -1595,7 +1595,7 @@ isis_print_ext_is_reach (const u_int8_t *tptr,const char *ident, int tlv_type) {
 
 static int
 isis_print_mtid (const u_int8_t *tptr,const char *ident) {
-    
+
     if (!TTEST2(*tptr, 2))
         return(0);
 
@@ -1635,7 +1635,7 @@ isis_print_extd_ip_reach (const u_int8_t *tptr, const char *ident, u_int16_t afi
     metric = EXTRACT_32BITS(tptr);
     processed=4;
     tptr+=4;
-    
+
     if (afi == IPV4) {
         if (!TTEST2(*tptr, 1)) /* fetch status byte */
             return (0);
@@ -1666,7 +1666,7 @@ isis_print_extd_ip_reach (const u_int8_t *tptr, const char *ident, u_int16_t afi
         return (0); /* somebody is fooling us */
 
     byte_length = (bit_length + 7) / 8; /* prefix has variable length encoding */
-   
+
     if (!TTEST2(*tptr, byte_length))
         return (0);
     memset(prefix, 0, sizeof prefix);   /* clear the copy buffer */
@@ -1685,8 +1685,8 @@ isis_print_extd_ip_reach (const u_int8_t *tptr, const char *ident, u_int16_t afi
                ident,
                ip6addr_string(prefix),
                bit_length);
-#endif 
-   
+#endif
+
     printf(", Distribution: %s, Metric: %u",
            ISIS_MASK_TLV_EXTD_IP_UPDOWN(status_byte) ? "down" : "up",
            metric);
@@ -1699,7 +1699,7 @@ isis_print_extd_ip_reach (const u_int8_t *tptr, const char *ident, u_int16_t afi
                ISIS_MASK_TLV_EXTD_IP6_IE(status_byte) ? "External" : "Internal",
                ISIS_MASK_TLV_EXTD_IP6_SUBTLV(status_byte) ? ", sub-TLVs present" : "");
 #endif
-    
+
     if ((ISIS_MASK_TLV_EXTD_IP_SUBTLV(status_byte)  && afi == IPV4) ||
         (ISIS_MASK_TLV_EXTD_IP6_SUBTLV(status_byte) && afi == IPV6)) {
         /* assume that one prefix can hold more
@@ -1711,7 +1711,7 @@ isis_print_extd_ip_reach (const u_int8_t *tptr, const char *ident, u_int16_t afi
         sublen=*(tptr++);
         processed+=sublen+1;
         printf(" (%u)",sublen);   /* print out subTLV length */
-        
+
         while (sublen>0) {
             if (!TTEST2(*tptr,2))
                 return (0);
@@ -1823,7 +1823,7 @@ static int isis_print (const u_int8_t *p, u_int length)
     }
 
     /* toss any non 6-byte sys-ID len PDUs */
-    if (id_length != 6 ) { 
+    if (id_length != 6 ) {
 	printf("bad packet -- illegal sys-ID length (%u)", id_length);
 	return (0);
     }
@@ -2179,7 +2179,7 @@ static int isis_print (const u_int8_t *p, u_int length)
                 ext_is_len = isis_print_ext_is_reach(tptr,"\n\t      ",tlv_type);
                 if (ext_is_len == 0) /* did something go wrong ? */
                     goto trunctlv;
-                   
+
                 tmp-=ext_is_len;
                 tptr+=ext_is_len;
             }
@@ -2199,7 +2199,7 @@ static int isis_print (const u_int8_t *p, u_int length)
             while (tmp >= NODE_ID_LEN+3+1) { /* is it worth attempting a decode ? */
                 ext_is_len = isis_print_ext_is_reach(tptr,"\n\t      ",tlv_type);
                 if (ext_is_len == 0) /* did something go wrong ? */
-                    goto trunctlv;                   
+                    goto trunctlv;
                 tmp-=ext_is_len;
                 tptr+=ext_is_len;
             }
@@ -2548,7 +2548,7 @@ static int isis_print (const u_int8_t *p, u_int length)
                     if (!TTEST2(*tptr, SYSTEM_ID_LEN))
                             goto trunctlv;
                     printf(", for %s",isis_print_id(tptr,SYSTEM_ID_LEN));
-            } 
+            }
 	    break;
 
         case ISIS_TLV_IDRP_INFO:

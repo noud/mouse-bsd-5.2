@@ -215,7 +215,7 @@ static int fix_lifebyte __P((u_long));
 %token EXCHANGE_MODE EXCHANGETYPE DOI DOITYPE SITUATION SITUATIONTYPE
 %token CERTIFICATE_TYPE CERTTYPE PEERS_CERTFILE CA_TYPE
 %token VERIFY_CERT SEND_CERT SEND_CR
-%token IDENTIFIERTYPE IDENTIFIERQUAL MY_IDENTIFIER 
+%token IDENTIFIERTYPE IDENTIFIERQUAL MY_IDENTIFIER
 %token PEERS_IDENTIFIER VERIFY_IDENTIFIER
 %token DNSSEC CERT_X509 CERT_PLAINRSA
 %token NONCE_SIZE DH_GROUP KEEPALIVE PASSIVE INITIAL_CONTACT
@@ -242,7 +242,7 @@ static int fix_lifebyte __P((u_long));
 %token EOS BOC EOC COMMA
 
 %type <num> NUMBER BOOLEAN SWITCH keylength
-%type <num> PATHTYPE IDENTIFIERTYPE IDENTIFIERQUAL LOGLEV GSS_ID_ENCTYPE 
+%type <num> PATHTYPE IDENTIFIERTYPE IDENTIFIERQUAL LOGLEV GSS_ID_ENCTYPE
 %type <num> ALGORITHM_CLASS dh_group_num
 %type <num> ALGORITHMTYPE STRENGTHTYPE
 %type <num> PREFIX prefix PORT port ike_port
@@ -296,7 +296,7 @@ privsep_stmt
 				return -1;
 			}
 			lcconf->uid = pw->pw_uid;
-		} 
+		}
 		EOS
 	|	USER NUMBER { lcconf->uid = $2; } EOS
 	|	GROUP QUOTEDSTRING
@@ -460,7 +460,7 @@ listen_stmt
 			yyerror("admin directive is obsoleted.");
 		}
 		PORT EOS
-	|	ADMINSOCK QUOTEDSTRING QUOTEDSTRING QUOTEDSTRING NUMBER 
+	|	ADMINSOCK QUOTEDSTRING QUOTEDSTRING QUOTEDSTRING NUMBER
 		{
 #ifdef ENABLE_ADMINPORT
 			adminsock_conf($2, $3, $4, $5);
@@ -717,7 +717,7 @@ modecfg_stmt
 	|	CFG_DEFAULT_DOMAIN QUOTEDSTRING
 		{
 #ifdef ENABLE_HYBRID
-			strncpy(&isakmp_cfg_config.default_domain[0], 
+			strncpy(&isakmp_cfg_config.default_domain[0],
 			    $2->v, MAXPATHLEN);
 			isakmp_cfg_config.default_domain[MAXPATHLEN] = '\0';
 			vfree($2);
@@ -992,7 +992,7 @@ splitnet
 			/* Turn $2 (the prefix) into a subnet mask */
 			network.mask4.s_addr = ($2) ? htonl(~((1 << (32 - $2)) - 1)) : 0;
 
-			/* add the network to our list */ 
+			/* add the network to our list */
 			if (splitnet_list_add(&icc->splitnet_list, &network,&icc->splitnet_count))
 				yyerror("Unable to allocate split network");
 #else
@@ -1222,7 +1222,7 @@ sainfo_id
 					racoon_free(saddr);
 					return -1;
 				}
-				$$ = ipsecdoi_sockaddr2id(saddr, 
+				$$ = ipsecdoi_sockaddr2id(saddr,
 										  $3 == ~0 ? (sizeof(struct in6_addr) << 3): $3,
 										  $5);
 				break;
@@ -1249,7 +1249,7 @@ sainfo_id
 			}
 
 			snprintf(portbuf, sizeof(portbuf), "%lu", $5);
-			
+
 			laddr = str2saddr($2->v, portbuf);
 			if (laddr == NULL) {
 			    return -1;
@@ -1272,7 +1272,7 @@ sainfo_id
 					racoon_free(haddr);
 				    return -1;
 				}
-                                $$ = ipsecdoi_sockrange2id(laddr, haddr, 
+                                $$ = ipsecdoi_sockrange2id(laddr, haddr,
 							   $6);
 				break;
 #ifdef INET6
@@ -1285,7 +1285,7 @@ sainfo_id
 					    racoon_free(haddr);
 					return -1;
 				}
-				$$ = ipsecdoi_sockrange2id(laddr, haddr, 
+				$$ = ipsecdoi_sockrange2id(laddr, haddr,
 							       $6);
 				break;
 #endif
@@ -1525,7 +1525,7 @@ remote_statement
 			cur_rmconf = new;
 
 			prspec = newprspec();
-			if (prspec == NULL || !cur_rmconf->inherited_from 
+			if (prspec == NULL || !cur_rmconf->inherited_from
 				|| !cur_rmconf->inherited_from->proposal)
 				return -1;
 			prspec->lifetime = cur_rmconf->inherited_from->proposal->lifetime;
@@ -1583,7 +1583,7 @@ remote_specs_block
 					return -1;
 				}
 			}
-			
+
 			if (cur_rmconf->prhead->spspec == NULL
 				&& cur_rmconf->inherited_from
 				&& cur_rmconf->inherited_from->prhead) {
@@ -1806,28 +1806,28 @@ remote_spec
 	|	PASSIVE SWITCH { cur_rmconf->passive = $2; } EOS
 	|	IKE_FRAG SWITCH { cur_rmconf->ike_frag = $2; } EOS
 	|	IKE_FRAG REMOTE_FORCE_LEVEL { cur_rmconf->ike_frag = ISAKMP_FRAG_FORCE; } EOS
-	|	ESP_FRAG NUMBER { 
+	|	ESP_FRAG NUMBER {
 #ifdef SADB_X_EXT_NAT_T_FRAG
         		if (libipsec_opt & LIBIPSEC_OPT_FRAG)
-				cur_rmconf->esp_frag = $2; 
+				cur_rmconf->esp_frag = $2;
 			else
                 		yywarn("libipsec lacks IKE frag support");
 #else
 			yywarn("Your kernel does not support esp_frag");
 #endif
 		} EOS
-	|	SCRIPT QUOTEDSTRING PHASE1_UP { 
+	|	SCRIPT QUOTEDSTRING PHASE1_UP {
 			if (cur_rmconf->script[SCRIPT_PHASE1_UP] != NULL)
 				vfree(cur_rmconf->script[SCRIPT_PHASE1_UP]);
 
-			cur_rmconf->script[SCRIPT_PHASE1_UP] = 
+			cur_rmconf->script[SCRIPT_PHASE1_UP] =
 			    script_path_add(vdup($2));
 		} EOS
-	|	SCRIPT QUOTEDSTRING PHASE1_DOWN { 
+	|	SCRIPT QUOTEDSTRING PHASE1_DOWN {
 			if (cur_rmconf->script[SCRIPT_PHASE1_DOWN] != NULL)
 				vfree(cur_rmconf->script[SCRIPT_PHASE1_DOWN]);
 
-			cur_rmconf->script[SCRIPT_PHASE1_DOWN] = 
+			cur_rmconf->script[SCRIPT_PHASE1_DOWN] =
 			    script_path_add(vdup($2));
 		} EOS
 	|	MODE_CFG SWITCH { cur_rmconf->mode_cfg = $2; } EOS
@@ -2056,7 +2056,7 @@ isakmpproposal_spec
 			}
 			if (cur_rmconf->prhead->spspec->gssid != NULL)
 				racoon_free(cur_rmconf->prhead->spspec->gssid);
-			cur_rmconf->prhead->spspec->gssid = 
+			cur_rmconf->prhead->spspec->gssid =
 			    racoon_strdup($2->v);
 			STRDUP_FATAL(cur_rmconf->prhead->spspec->gssid);
 		}
@@ -2244,7 +2244,7 @@ set_isakmp_proposal(rmconf, prspec)
 {
 	struct proposalspec *p;
 	struct secprotospec *s;
-	int prop_no = 1; 
+	int prop_no = 1;
 	int trns_no = 1;
 	int32_t types[MAXALGCLASS];
 
@@ -2482,8 +2482,8 @@ cfparse()
 	yycf_init_buffer();
 
 	if (yycf_switch_buffer(lcconf->racoon_conf) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
-		    "could not read configuration file \"%s\"\n", 
+		plog(LLV_ERROR, LOCATION, NULL,
+		    "could not read configuration file \"%s\"\n",
 		    lcconf->racoon_conf);
 		return -1;
 	}
@@ -2591,7 +2591,7 @@ adminsock_conf(path, owner, group, mode_dec)
 	if (mode_dec >= 4) { mode += 04; mode_dec -= 4; }
 	if (mode_dec >= 2) { mode += 02; mode_dec -= 2; }
 	if (mode_dec >= 1) { mode += 02; mode_dec -= 1; }
-	
+
 	adminsock_mode = mode;
 
 	return;

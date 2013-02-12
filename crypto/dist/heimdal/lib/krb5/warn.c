@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2001 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "krb5_locl.h"
@@ -37,19 +37,19 @@
 __RCSID("$Heimdal: warn.c 19086 2006-11-21 08:06:40Z lha $"
         "$NetBSD: warn.c,v 1.6 2008/03/22 08:37:15 mlelstv Exp $");
 
-static krb5_error_code _warnerr(krb5_context context, int do_errtext, 
+static krb5_error_code _warnerr(krb5_context context, int do_errtext,
 	 krb5_error_code code, int level, const char *fmt, va_list ap)
 	__attribute__((__format__(__printf__, 5, 0)));
-	
+
 static krb5_error_code
-_warnerr(krb5_context context, int do_errtext, 
+_warnerr(krb5_context context, int do_errtext,
 	 krb5_error_code code, int level, const char *fmt, va_list ap)
 {
     char xfmt[7] = "";
     const char *args[2], **arg;
     char *msg = NULL;
     char *err_str = NULL;
-    
+
     args[0] = args[1] = NULL;
     arg = args;
     if(fmt){
@@ -77,7 +77,7 @@ _warnerr(krb5_context context, int do_errtext,
 		*arg++ = "<unknown error>";
 	}
     }
-	
+
     if(context && context->warn_dest)
 	krb5_log(context, context->warn_dest, level, xfmt, args[0], args[1]);
     else
@@ -98,7 +98,7 @@ _warnerr(krb5_context context, int do_errtext,
 #define __attribute__(X)
 
 krb5_error_code KRB5_LIB_FUNCTION
-krb5_vwarn(krb5_context context, krb5_error_code code, 
+krb5_vwarn(krb5_context context, krb5_error_code code,
 	   const char *fmt, va_list ap)
      __attribute__ ((format (printf, 3, 0)))
 {
@@ -130,7 +130,7 @@ krb5_warnx(krb5_context context, const char *fmt, ...)
 }
 
 krb5_error_code KRB5_LIB_FUNCTION
-krb5_verr(krb5_context context, int eval, krb5_error_code code, 
+krb5_verr(krb5_context context, int eval, krb5_error_code code,
 	  const char *fmt, va_list ap)
      __attribute__ ((noreturn, format (printf, 4, 0)))
 {
@@ -140,7 +140,7 @@ krb5_verr(krb5_context context, int eval, krb5_error_code code,
 
 
 krb5_error_code KRB5_LIB_FUNCTION
-krb5_err(krb5_context context, int eval, krb5_error_code code, 
+krb5_err(krb5_context context, int eval, krb5_error_code code,
 	 const char *fmt, ...)
      __attribute__ ((noreturn, format (printf, 4, 5)))
 {
@@ -165,7 +165,7 @@ krb5_errx(krb5_context context, int eval, const char *fmt, ...)
 }
 
 krb5_error_code KRB5_LIB_FUNCTION
-krb5_vabort(krb5_context context, krb5_error_code code, 
+krb5_vabort(krb5_context context, krb5_error_code code,
 	    const char *fmt, va_list ap)
      __attribute__ ((noreturn, format (printf, 3, 0)))
 {

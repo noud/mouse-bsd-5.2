@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -63,7 +63,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -158,7 +158,7 @@ static void lock_dbg_cb(int mode, int type, const char *file, int line)
 	static int modes[CRYPTO_NUM_LOCKS]; /* = {0, 0, ... } */
 	const char *errstr = NULL;
 	int rw;
-	
+
 	rw = mode & (CRYPTO_READ|CRYPTO_WRITE);
 	if (!((rw == CRYPTO_READ) || (rw == CRYPTO_WRITE)))
 		{
@@ -191,7 +191,7 @@ static void lock_dbg_cb(int mode, int type, const char *file, int line)
 			errstr = "not locked";
 			goto err;
 			}
-		
+
 		if (modes[type] != rw)
 			{
 			errstr = (rw == CRYPTO_READ) ?
@@ -231,7 +231,7 @@ int main(int Argc, char *Argv[])
 	char **argv,*p;
 	LHASH *prog=NULL;
 	long errline;
- 
+
 	arg.data=NULL;
 	arg.count=0;
 
@@ -307,7 +307,7 @@ int main(int Argc, char *Argv[])
 		}
 
 	/* ok, lets enter the old 'OpenSSL>' mode */
-	
+
 	for (;;)
 		{
 		ret=0;
@@ -448,11 +448,11 @@ static int do_cmd(LHASH *prog, int argc, char *argv[])
 			goto end;
 
 		if (list_type == FUNC_TYPE_PKEY)
-			list_pkey(bio_stdout);	
+			list_pkey(bio_stdout);
 		if (list_type == FUNC_TYPE_MD_ALG)
-			list_md(bio_stdout);	
+			list_md(bio_stdout);
 		if (list_type == FUNC_TYPE_CIPHER_ALG)
-			list_cipher(bio_stdout);	
+			list_cipher(bio_stdout);
 		else
 			{
 			for (fp=functions; fp->name != NULL; fp++)
@@ -535,7 +535,7 @@ static void list_pkey(BIO *out)
 						&pinfo, &pem_str, ameth);
 		if (pkey_flags & ASN1_PKEY_ALIAS)
 			{
-			BIO_printf(out, "Name: %s\n", 
+			BIO_printf(out, "Name: %s\n",
 					OBJ_nid2ln(pkey_id));
 			BIO_printf(out, "\tType: Alias to %s\n",
 					OBJ_nid2ln(pkey_base_id));
@@ -543,7 +543,7 @@ static void list_pkey(BIO *out)
 		else
 			{
 			BIO_printf(out, "Name: %s\n", pinfo);
-			BIO_printf(out, "\tType: %s Algorithm\n", 
+			BIO_printf(out, "\tType: %s Algorithm\n",
 				pkey_flags & ASN1_PKEY_DYNAMIC ?
 					"External" : "Builtin");
 			BIO_printf(out, "\tOID: %s\n", OBJ_nid2ln(pkey_id));
@@ -551,7 +551,7 @@ static void list_pkey(BIO *out)
 				pem_str = "(none)";
 			BIO_printf(out, "\tPEM string: %s\n", pem_str);
 			}
-					
+
 		}
 	}
 

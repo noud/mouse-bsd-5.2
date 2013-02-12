@@ -167,7 +167,7 @@ dns_portlist_add(dns_portlist_t *portlist, int af, in_port_t port) {
 		}
 		if (portlist->list != NULL) {
 			memcpy(el, portlist->list,
-			       portlist->allocated * sizeof(*el)); 
+			       portlist->allocated * sizeof(*el));
 			isc_mem_put(portlist->mctx, portlist->list,
 				    portlist->allocated * sizeof(*el));
 		}
@@ -217,7 +217,7 @@ isc_boolean_t
 dns_portlist_match(dns_portlist_t *portlist, int af, in_port_t port) {
 	dns_element_t *el;
 	isc_boolean_t result = ISC_FALSE;
-	
+
 	REQUIRE(DNS_VALID_PORTLIST(portlist));
 	REQUIRE(af == AF_INET || af == AF_INET6);
 	LOCK(&portlist->lock);
@@ -229,7 +229,7 @@ dns_portlist_match(dns_portlist_t *portlist, int af, in_port_t port) {
 			if (af == AF_INET6 && (el->flags & DNS_PL_INET6) != 0)
 				result = ISC_TRUE;
 		}
-	}	
+	}
 	UNLOCK(&portlist->lock);
 	return (result);
 }

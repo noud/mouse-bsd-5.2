@@ -69,7 +69,7 @@ This kernel runs on Vr41xx and TX3922 CPUs only.
 .			It Pa netbsd-GENERIC.MP.gz
 A gzipped
 .Nx
-kernel containing code for everything supported in this release.  This 
+kernel containing code for everything supported in this release.  This
 kernel supports SMP on systems with more than one CPU.
 .\}
 .
@@ -79,7 +79,7 @@ A gzipped
 .Nx
 kernel containing code for all of the hardware supported in this release
 with an embedded ramdisk-based installer.  This is the same kernel
-that is present on the miniroot filesystem, but uses a newer more 
+that is present on the miniroot filesystem, but uses a newer more
 user-friendly installation program.
 .			It Pa netbsd-RAMDISK.symbols.gz
 Symbols for
@@ -176,7 +176,7 @@ A kernel for MVME177 boards.
 .\}
 .if \n[sparc] \{\
 .			It Pa netbsd-GENERIC_SCSI3.gz
-A kernel with SCSI ID 3 explicitly mapped to 
+A kernel with SCSI ID 3 explicitly mapped to
 .Li sd0 .
 .			It Pa netbsd-KRUPS.gz
 A kernel for JavaStation-NC (Krups) machines.
@@ -185,8 +185,8 @@ A kernel for JavaStation-1 (Mr. Coffee) machines using Open Boot Prom firmware.
 .			It Pa netbsd-MRCOFFEE_OFW.gz
 A kernel for JavaStation-1 (Mr. Coffee) machines using OpenFirmware.
 .			It Pa netbsd-GENERIC_SUN4U.gz
-A kernel which supports sparc64 hardware in 32-bit mode only.  See the 
-sparc64 INSTALL notes for help installing this kernel on your sparc64 
+A kernel which supports sparc64 hardware in 32-bit mode only.  See the
+sparc64 INSTALL notes for help installing this kernel on your sparc64
 hardware.
 .\}
 .if \n[sparc64] \{\
@@ -304,7 +304,7 @@ installation section below.
 .	It Pa HP-IB.geometry
 A file containing geometry for some HB-IB disk drives.
 .	It Pa SYS_INST.gz
-A gzipped copy of the SYS_INST miniroot installation program.  This is 
+A gzipped copy of the SYS_INST miniroot installation program.  This is
 only necessary if you can't use the RAMDISK based installer.
 .	It Pa SYS_UBOOT.gz
 A gzipped copy of the universal boot block.
@@ -454,15 +454,15 @@ of the
 .Nx
 \*V
 .ie \n[sparc64] \{\
-distribution tree.  
+distribution tree.
 .(Note
-If you want to install 32-bit only binaries, you will 
+If you want to install 32-bit only binaries, you will
 still need to boot using the sparc64 installation tools.  When sysinst
 asks you for the distribution set to install, provide the
 .Nx Ns /sparc
 .Pa binary/sets .
 Be sure to use the 32 bit sparc
-.Pa kern-GENERIC_SUN4U.tgz 
+.Pa kern-GENERIC_SUN4U.tgz
 kernel distribution.  Otherwise, continue to follow the \*M installation
 procedure, not the sparc instructions.
 .Note)
@@ -819,7 +819,7 @@ This set contains a
 .Nx*M
 \*V
 .Li GENERIC_SCSI3
-kernel, which will set SCSI ID 3 to 
+kernel, which will set SCSI ID 3 to
 .Li sd0 ,
 named
 .Pa /netbsd .
@@ -1242,7 +1242,7 @@ Configuration files for X which could be locally modified.
 .showsize
 .
 .It Sy xserver
-The X server. 
+The X server.
 .if \n[acorn32] \{\
 This includes Xarm32VIDC and Xprt servers.
 .\}
@@ -1358,7 +1358,7 @@ Therefore, if you want to extract the binaries into your system, i.e.
 replace the system binaries with them, you have to run the
 .Ic "tar -xzpf"
 command from the root directory (
-.Pa / 
+.Pa /
 ) of your system.
 .
 .
@@ -1829,7 +1829,7 @@ FFS disk image of the installation filesystem.
 .It Pa netboot/
 .	(tag diskimage.tgz
 .	It Pa diskimage.tgz
-Minimal file set necessary for NFS-root installations; to be extracted on the 
+Minimal file set necessary for NFS-root installations; to be extracted on the
 NFS server.
 .	tag)
 .tag)
@@ -1843,7 +1843,7 @@ directory:
 .(tag netbsd-INSTALL32_IPxx.symbols.gz
 .It Pa netbsd.ecoff-GENERIC32_IPxx.gz
 An ECOFF
-version of the 
+version of the
 .Li GENERIC32_IPxx
 kernel (gzipped).  This kernel can be used when booting machines
 whose PROMs do not understand the ELF binary format.

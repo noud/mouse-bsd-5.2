@@ -118,7 +118,7 @@ x86emu_i8254_out(struct x86emu_i8254_timer *timer, uint64_t curtick)
 	 * this should return LOW.
 	 */
 
-	/* 
+	/*
 	 * If the timer was not started yet or is disabled,
 	 * only Mode 0 is LOW
 	 */

@@ -29,7 +29,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -416,7 +416,7 @@ switch(packed.bits.f1)
 		for(i=0; i<packed.bits.f2 ; ++i)
 			if(sp->atype == mtype) {
 				if (tyint == TYLONG &&
-				    sp->rtype == TYSHORT && 
+				    sp->rtype == TYSHORT &&
 				    sp[1].atype == mtype)
 					sp++; /* use long int */
 				goto specfunct;
@@ -587,7 +587,7 @@ finline(int fno, int type, chainp args)
 		    mkexpr(OPNEG, cpexpr(t), NULL)));
 		putlabel(l1);
 		return(t);
-		
+
 	case 26:	/* dprod */
 		q = mkexpr(OPSTAR, args->chain.datap, args->chain.nextp->chain.datap);
 		q->vtype = TYDREAL;

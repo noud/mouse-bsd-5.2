@@ -46,7 +46,7 @@ __RCSID("$NetBSD: memcmp.c,v 1.2 2007/06/04 18:19:27 christos Exp $");
 #include <string.h>
 #else
 #include <lib/libkern/libkern.h>
-#endif 
+#endif
 
 /*
  * Compare memory regions.

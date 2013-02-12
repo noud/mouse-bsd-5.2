@@ -247,7 +247,7 @@ case "$host" in
  *-next-nextstep3)
     CFLAGS="$CFLAGS -posix"
     ;;
-dnl This is currently commented out by bor. 
+dnl This is currently commented out by bor.
 dnl The new versions of ReliantUNIX round adjtime() interval down
 dnl to 1/100s (system tick). This makes tickadj actually useless.
 dnl So, I'd better not use additional flags.
@@ -331,10 +331,10 @@ esac
 
 AC_CHECK_FUNC(gethostent, ,
   AC_CHECK_LIB(nsl, gethostent, , , $libxnet -lsocket))
-AC_CHECK_FUNC(openlog, , 
-  AC_CHECK_LIB(gen, openlog, , 
+AC_CHECK_FUNC(openlog, ,
+  AC_CHECK_LIB(gen, openlog, ,
   AC_CHECK_LIB(syslog, openlog, , , $libxnet -lsocket)))
-AC_CHECK_LIB(md5, MD5Init, , 
+AC_CHECK_LIB(md5, MD5Init, ,
   AC_CHECK_LIB(md, MD5Init))
 AC_CHECK_FUNCS(MD5Init)
 dnl HMS: What a hack...
@@ -625,7 +625,7 @@ AC_TYPE_SIZE_T
 AC_CHECK_TYPE(time_t, long)
 AC_CHECK_SIZEOF(time_t)
 AC_CHECK_TYPES(uintptr_t)
- 
+
 AH_VERBATIM([TYPEDEF_UINTPTR_T],
 [/* Provide a typedef for uintptr_t? */
 #ifndef HAVE_UINTPTR_T
@@ -1627,7 +1627,7 @@ case "$ac_cv_func_clock_settime$ac_cv_func_settimeofday$ac_cv_func_stime" in
     ntp_warning='Which is the worst of the three'
     ans='stime()'
     ;;
- *) 
+ *)
     case "$build" in
      $host) ntp_warning='Which leaves us with nothing to use!'
     ans=none
@@ -2321,7 +2321,7 @@ fi
 AC_MSG_RESULT($ntp_ok)
 
 AC_MSG_CHECKING(ATOM PPS interface)
-AC_ARG_ENABLE(ATOM,	
+AC_ARG_ENABLE(ATOM,
     AC_HELP_STRING([--enable-ATOM], [s ATOM PPS interface]),
     [ntp_ok=$enableval], [ntp_ok=$ntp_eac])
 case "$ac_cv_var_atom_ok" in
@@ -3521,7 +3521,7 @@ esac
 dnl The tick/tickadj sections were written by Skippy, who never learned
 dnl that it's impolite (horridly gross) to show your guts in public.
 
-dnl	tick		tickadj	
+dnl	tick		tickadj
 dnl	10000		80	    Unixware
 dnl	1000000L/hz	tick/16     (Solaris,UXPV,HPUX) && ADJTIME_IS_ACCURATE
 dnl	10000		150	    sgi IRIX
@@ -3921,7 +3921,7 @@ case "$ac_cv_var_kernel_fll_bug" in
 esac
 
 AC_CACHE_CHECK(if we should use the IRIG sawtooth filter, ac_cv_var_irig_sucks,
-[AC_ARG_ENABLE(irig-sawtooth, 
+[AC_ARG_ENABLE(irig-sawtooth,
 	AC_HELP_STRING([--enable-irig-sawtooth],
 		       [s if we should enable the IRIG sawtooth filter]),
     [ans=$enableval],
@@ -3942,7 +3942,7 @@ case "$ac_cv_var_irig_sucks" in
 esac
 
 AC_CACHE_CHECK(if we should enable NIST lockclock scheme, ac_cv_var_nist_lockclock,
-[AC_ARG_ENABLE(nist, 
+[AC_ARG_ENABLE(nist,
 	AC_HELP_STRING([--enable-nist],
 		       [- if we should enable the NIST lockclock scheme]),
     [ans=$enableval],[ans=no])
@@ -4159,7 +4159,7 @@ AC_EGREP_CPP(found_rt_iflist, [
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #include <sys/socket.h>
-#ifdef NET_RT_IFLIST  
+#ifdef NET_RT_IFLIST
 found_rt_iflist
 #endif
 ],

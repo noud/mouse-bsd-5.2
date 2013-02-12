@@ -193,7 +193,7 @@ parse_args()
 	#
 	# Note that this corresponds to the default value of PKG_DBDIR
 	# set in .../distrib/syspkg/mk/bsd.syspkg.mk.
-	# 
+	#
 	SYSPKG_DB_TOPDIR="${SYSPKG_DBDIR:-${PKG_DBDIR:-${DESTDIR}/var/db/syspkg}}"
 
 	if [ $# -ne 2 ]; then
@@ -240,7 +240,7 @@ make_PLIST()
 # init_allfiles() converts the PLIST (which contains relative filenames)
 # into a list of absolute filenames.  Directories are excluded from the
 # result.
-# 
+#
 # The result is stored in the variable ${allfiles}.
 #
 allfiles=''
@@ -666,11 +666,11 @@ EOF
 				echo "${line}"
 				print_dir_exec_lines
 				;;
-			@*)	
+			@*)
 				# just pass through all other @foo lines
 				echo "${line}"
 				;;
-			*)	
+			*)
 				# This should be a file name.  Pass it
 				# through, and append "@comment MD5:".
 				# XXX why not SHA256 ?

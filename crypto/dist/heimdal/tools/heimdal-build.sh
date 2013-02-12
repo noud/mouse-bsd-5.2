@@ -166,7 +166,7 @@ if [ "X${builddir}" != X ]; then
 	cd "${builddir}"
 fi
 
-echo "Removing old source" 
+echo "Removing old source"
 rm -rf ${hversion}
 
 echo "Fetching ${hversion} using $fetchmethod"

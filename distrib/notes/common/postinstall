@@ -252,7 +252,7 @@ Select the proper terminal devices
 .Pp
 If you are using a serial console, you will have to edit the
 .Pa /etc/ttys
-file and change 
+file and change
 .if \n[sparc] sun
 .if \n[sparc64] sun-ss5
 to the appropriate terminal type, such as vt220.
@@ -379,7 +379,7 @@ directory, which may have the same contents.
 .Pp
 The above commands will install the Tenex-csh and Bourne Again shells,
 the Perl programming language, Apache web server, KDE desktop
-environment and the Firefox web browser 
+environment and the Firefox web browser
 as well as all the packages they depend on.
 .(Note
 In some cases the

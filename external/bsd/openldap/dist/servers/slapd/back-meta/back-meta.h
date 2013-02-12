@@ -209,7 +209,7 @@ typedef struct metasingleconn_t {
 #define META_IS_RETRYING(rs)		META_CND_ISSET( (rs), META_RETRYING )
 #define META_RETRYING_SET(rs)		META_CND_SET( (rs), META_RETRYING )
 #define META_RETRYING_CLEAR(rs)		META_CND_CLEAR( (rs), META_RETRYING )
-	
+
 	LDAP            	*msc_ld;
 	time_t			msc_time;
 	struct berval          	msc_bound_ndn;
@@ -227,14 +227,14 @@ typedef struct metaconn_t {
 
 	time_t			mc_create_time;
 	time_t			mc_time;
-	
+
 	struct berval          	mc_local_ndn;
 	/* NOTE: msc_mscflags is used to recycle the #define
 	 * in metasingleconn_t */
 	unsigned		msc_mscflags;
 
 	/*
-	 * means that the connection is bound; 
+	 * means that the connection is bound;
 	 * of course only one target actually is ...
 	 */
 	int             	mc_authz_target;
@@ -356,8 +356,8 @@ typedef struct metainfo_t {
 	LDAP_URLLIST_PROC	*mi_urllist_f;
 
 	metadncache_t		mi_cache;
-	
-	/* cached connections; 
+
+	/* cached connections;
 	 * special conns are in tailq rather than in tree */
 	ldap_avl_info_t		mi_conninfo;
 	struct {

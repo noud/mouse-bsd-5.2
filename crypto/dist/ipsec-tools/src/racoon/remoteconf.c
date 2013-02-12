@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -79,7 +79,7 @@
 
 static TAILQ_HEAD(_rmtree, remoteconf) rmtree, rmtree_save, rmtree_tmp;
 
-/* 
+/*
  * Script hook names and script hook paths
  */
 char *script_names[SCRIPT_MAX + 1] = { "phase1_up", "phase1_down" };
@@ -107,7 +107,7 @@ getrmconf_strict(remote, allow_anon)
 	withport = 0;
 
 #ifndef ENABLE_NATT
-	/* 
+	/*
 	 * We never have ports set in our remote configurations, but when
 	 * NAT-T is enabled, the kernel can have policies with ports and
 	 * send us an acquire message for a destination that has a port set.
@@ -277,7 +277,7 @@ duprmconf (rmconf)
 	// FIXME: We should duplicate the proposal as well.
 	// This is now handled in the cfparse.y
 	// new->proposal = ...;
-	
+
 	/* duplicate dynamic structures */
 	if (new->etypes)
 		new->etypes=dupetypes(new->etypes);
@@ -336,11 +336,11 @@ dupetypes(orig)
 {
 	struct etypes *new;
 
-	if (!orig) 
+	if (!orig)
 		return NULL;
 
 	new = racoon_malloc(sizeof(struct etypes));
-	if (new == NULL) 
+	if (new == NULL)
 		return NULL;
 
 	new->type = orig->type;
@@ -598,11 +598,11 @@ dump_rmconf_single (struct remoteconf *p, void *data)
 			prop->lifebyte);
 		plog(LLV_INFO, LOCATION, NULL, "\t\tdh_group %s;\n",
 			alg_oakley_dhdef_name(prop->dh_group));
-		plog(LLV_INFO, LOCATION, NULL, "\t\tencryption_algorithm %s;\n", 
+		plog(LLV_INFO, LOCATION, NULL, "\t\tencryption_algorithm %s;\n",
 			alg_oakley_encdef_name(prop->enctype));
-		plog(LLV_INFO, LOCATION, NULL, "\t\thash_algorithm %s;\n", 
+		plog(LLV_INFO, LOCATION, NULL, "\t\thash_algorithm %s;\n",
 			alg_oakley_hashdef_name(prop->hashtype));
-		plog(LLV_INFO, LOCATION, NULL, "\t\tauthentication_method %s;\n", 
+		plog(LLV_INFO, LOCATION, NULL, "\t\tauthentication_method %s;\n",
 			alg_oakley_authdef_name(prop->authmethod));
 		plog(LLV_INFO, LOCATION, NULL, "\t}\n");
 		prop = prop->next;

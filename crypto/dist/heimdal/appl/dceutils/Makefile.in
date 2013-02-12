@@ -417,7 +417,7 @@ clean-libexecPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-k5dcecon$(EXEEXT): $(k5dcecon_OBJECTS) $(k5dcecon_DEPENDENCIES) 
+k5dcecon$(EXEEXT): $(k5dcecon_OBJECTS) $(k5dcecon_DEPENDENCIES)
 	@rm -f k5dcecon$(EXEEXT)
 	$(LINK) $(k5dcecon_OBJECTS) $(k5dcecon_LDADD) $(LIBS)
 

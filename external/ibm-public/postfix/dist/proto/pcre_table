@@ -22,7 +22,7 @@
 #
 #	To test lookup tables, use the "\fBpostmap -q\fR" command as
 #	described in the SYNOPSIS above.
-# COMPATIBILITY 
+# COMPATIBILITY
 # .ad
 # .fi
 #	With Postfix version 2.2 and earlier specify "\fBpostmap

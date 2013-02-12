@@ -45,7 +45,7 @@
    If you get parse errors in dhcpd.h while compiling dhcpd.conf, try
    including bitypes.h, and if that fails, use the hard-coded definitions
    shown below. */
-   
+
 #if 0
 #include <sys/bitypes.h>
 #endif
@@ -56,8 +56,8 @@
 #define int32_t		long
 
 #define u_int8_t	unsigned char
-#define u_int16_t	unsigned short 
-#define u_int32_t	unsigned long 
+#define u_int16_t	unsigned short
+#define u_int32_t	unsigned long
 #endif
 
 #include <sys/types.h>

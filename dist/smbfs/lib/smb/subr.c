@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: subr.c,v 1.12 2001/08/22 03:31:37 bp Exp 
+ * from: Id: subr.c,v 1.12 2001/08/22 03:31:37 bp Exp
  */
 
 #include <sys/cdefs.h>
@@ -190,7 +190,7 @@ smb_dumptree(void)
 	size_t len;
 	void *p;
 	int error;
-	
+
 #ifdef APPLE
 	seteuid(eff_uid); /* restore setuid root briefly */
 #endif
@@ -284,11 +284,11 @@ smb_simpledecrypt(char *dst, const char *src)
 #ifdef APPLE
 static int
 safe_execv(char *args[])
-{       
-	int	     pid;   
+{
+	int	     pid;
 	union wait      status;
-	
-	pid = fork();  
+
+	pid = fork();
 	if (pid == 0) {
 		(void)execv(args[0], args);
 		errx(EX_OSERR, "%s: execv %s failed, %s\n", __progname,
@@ -301,7 +301,7 @@ safe_execv(char *args[])
 	}
 	if (wait4(pid, (int *)&status, 0, NULL) != pid) {
 		fprintf(stderr, "%s: BUG executing %s command\n", __progname,
-			args[0]);  
+			args[0]);
 		return (1);
 	} else if (!WIFEXITED(status)) {
 		fprintf(stderr, "%s: %s command aborted by signal %d\n",
@@ -312,9 +312,9 @@ safe_execv(char *args[])
 			__progname, args[0], WEXITSTATUS(status),
 			strerror(WEXITSTATUS(status)));
 		return (1);
-	}       
+	}
 	return (0);
-}       
+}
 
 
 void
@@ -366,7 +366,7 @@ kextisloaded(char * kextname)
 
 int
 loadsmbvfs()
-{       
+{
 	const char *kextargs[] = {KEXTLOAD_COMMAND, FS_KEXT_DIR, NULL};
 	int error = 0;
 
@@ -381,5 +381,5 @@ loadsmbvfs()
 	}
 	seteuid(real_uid); /* and back to real user */
 	return (error);
-}       
+}
 #endif /* APPLE */

@@ -57,12 +57,12 @@ Unix operating systems:
 
 The following POP clients operate correctly with the Berkeley POP server:
 
-+   The Berkeley HyperMail HyperCard stack for the Apple Macintosh 
++   The Berkeley HyperMail HyperCard stack for the Apple Macintosh
     (distributed with the server).
 
 +   The Stanford University Macintosh Internet Protocol MacMH program.
 
-+   The Stanford University Personal Computer Internet Protocol MH 
++   The Stanford University Personal Computer Internet Protocol MH
     program.
 
 +   The mh version 6.0 programs for Unix.
@@ -123,7 +123,7 @@ file, usually /usr/spool/mqueue/syslog.
 
 Problems
 
-If the filesystem which holds the /usr/spool/mail fills up users will 
+If the filesystem which holds the /usr/spool/mail fills up users will
 experience difficulties.  The filesystem must have enough space to hold
 (approximately) two copies of the largest mail box.  Popper (v1.81 and
 above) is designed to be robust in the face of this problem, but you may
@@ -169,10 +169,10 @@ Installation
 
 2.  Check the Makefile for conformity with your system.
 
-3.  Issue the make command in the directory containing the popper 
+3.  Issue the make command in the directory containing the popper
     source.
 
-4.  Issue the make install command in the directory containing the 
+4.  Issue the make install command in the directory containing the
     popper source to copy the program to /usr/etc.
 
 5.  Enable syslogging:
@@ -189,7 +189,7 @@ Installation
 
     +   For systems with 4.2 syslogging:
 
-        Be sure that you are logging messages of priority 7 and higher.  
+        Be sure that you are logging messages of priority 7 and higher.
         For example:
 
             7/usr/spool/mqueue/syslog
@@ -218,19 +218,19 @@ Installation
 7.  Update the inetd daemon configuration.  Include the second line ONLY if you
     are running the server at both ports.
 
-    +   On BSD 4.3 and SunOS 4.0 systems, add the following line to the 
+    +   On BSD 4.3 and SunOS 4.0 systems, add the following line to the
         /etc/inetd.conf file:
 
         pop stream tcp nowait root /usr/etc/popper popper
         pop2 stream tcp nowait root /usr/etc/popper popper
 
-    +   On Ultrix systems, add the following line to the 
+    +   On Ultrix systems, add the following line to the
         /etc/inetd.conf file:
 
         pop stream tcp nowait /usr/etc/popper popper
         pop2 stream tcp nowait /usr/etc/popper popper
 
-    +   On SunOS 3.5 systems, add the following line to the 
+    +   On SunOS 3.5 systems, add the following line to the
         /etc/servers file:
 
         pop tcp /usr/etc/popper
@@ -258,9 +258,9 @@ Release Notes
 	than owned by root.
 
 1.81	There were two versions of 1.7 floating around, 1.7b4 and 1.7b5.
-	The difference is that 1.7b5 attempted to save disk space on 
+	The difference is that 1.7b5 attempted to save disk space on
 	/usr/spool/mail by deleting the users permanent maildrop after
-	making the temporary copy.  Unfortunately, if compiled with 
+	making the temporary copy.  Unfortunately, if compiled with
 	-DDEBUG, this version could easily wipe out a users' mail file.
 	This is now fixed.
 
@@ -272,13 +272,13 @@ Release Notes
 
 	Thanks to Steve Dorner of UIUC for pointing out the major problem.
 
-1.7     Extensive re-write of the maildrop processing code contributed by 
+1.7     Extensive re-write of the maildrop processing code contributed by
         Viktor Dukhovni <viktor@math.princeton.edu> that greatly reduces the
         possibility that the maildrop can be corrupted as the result of
         simultaneous access by two or more processes.
 
         Added "pop_dropcopy" module to create a temporary maildrop from
-        the existing, standard maildrop as root before the setuid and 
+        the existing, standard maildrop as root before the setuid and
         setgid for the user is done.  This allows the temporary maildrop
         to be created in a mail spool area that is not world read-writable.
 
@@ -348,7 +348,7 @@ Limitations
     large, or inadequate space is available in /tmp, then the
     server will refuse to continue and terminate the connection.
 
-+   Simultaneous modification of a single maildrop can result in 
++   Simultaneous modification of a single maildrop can result in
     confusing results.  For example, manipulating messages in a
     maildrop using the Unix /usr/ucb/mail command while a copy of
     it is being processed by the POP server can cause the changes
@@ -374,8 +374,8 @@ Footnotes
     a registered trademark of AT&T corporation.  HyperCard and
     Macintosh are registered trademarks of Apple Corporation.
 
-[2] M. Rose, Post Office Protocol - Version 3.  RFC  1081, NIC, 
+[2] M. Rose, Post Office Protocol - Version 3.  RFC  1081, NIC,
     November 1988.
 
-[3] M. Rose, Post Office Protocol - Version 3 Extended Service 
+[3] M. Rose, Post Office Protocol - Version 3 Extended Service
     Offerings.  RFC 1082, NIC, November 1988.

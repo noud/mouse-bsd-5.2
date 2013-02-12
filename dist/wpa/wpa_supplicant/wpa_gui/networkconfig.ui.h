@@ -36,7 +36,7 @@ void NetworkConfig::paramsFromScanResults(Q3ListViewItem *sel)
     /* SSID BSSID frequency signal flags */
     setCaption(sel->text(0));
     ssidEdit->setText(sel->text(0));
-    
+
     QString flags = sel->text(4);
     int auth, encr = 0;
     if (flags.find("[WPA2-EAP") >= 0)
@@ -49,7 +49,7 @@ void NetworkConfig::paramsFromScanResults(Q3ListViewItem *sel)
 	auth = AUTH_WPA_PSK;
     else
 	auth = AUTH_NONE;
-    
+
     if (flags.find("-CCMP") >= 0)
 	encr = 1;
     else if (flags.find("-TKIP") >= 0)
@@ -58,7 +58,7 @@ void NetworkConfig::paramsFromScanResults(Q3ListViewItem *sel)
 	encr = 1;
     else
 	encr = 0;
- 
+
     authSelect->setCurrentItem(auth);
     authChanged(auth);
     encrSelect->setCurrentItem(encr);
@@ -76,10 +76,10 @@ void NetworkConfig::authChanged(int sel)
     identityEdit->setEnabled(eap);
     passwordEdit->setEnabled(eap);
     cacertEdit->setEnabled(eap);
-   
+
     while (encrSelect->count())
 	encrSelect->removeItem(0);
-    
+
     if (sel == AUTH_NONE || sel == AUTH_IEEE8021X) {
 	encrSelect->insertItem("None");
 	encrSelect->insertItem("WEP");
@@ -90,7 +90,7 @@ void NetworkConfig::authChanged(int sel)
 	encrSelect->setCurrentItem((sel == AUTH_WPA2_PSK ||
 				    sel == AUTH_WPA2_EAP) ? 1 : 0);
     }
-    
+
     wepEnabled(sel == AUTH_IEEE8021X);
 }
 
@@ -111,13 +111,13 @@ void NetworkConfig::addNetwork()
 	    return;
 	}
     }
-        
+
     if (wpagui == NULL)
 	return;
-    
+
     memset(reply, 0, sizeof(reply));
     reply_len = sizeof(reply) - 1;
-    
+
     if (new_network) {
 	wpagui->ctrlRequest("ADD_NETWORK", reply, &reply_len);
 	if (reply[0] == 'F') {
@@ -131,7 +131,7 @@ void NetworkConfig::addNetwork()
     }
 
     setNetworkParam(id, "ssid", ssidEdit->text().ascii(), true);
-    
+
     if (idstrEdit->isEnabled())
 	setNetworkParam(id, "id_str", idstrEdit->text().ascii(), true);
 
@@ -160,7 +160,7 @@ void NetworkConfig::addNetwork()
 	proto = "WPA2";
 	break;
     }
-    
+
     if (auth == AUTH_WPA_PSK || auth == AUTH_WPA_EAP ||
 	auth == AUTH_WPA2_PSK || auth == AUTH_WPA2_EAP) {
 	int encr = encrSelect->currentItem();
@@ -169,7 +169,7 @@ void NetworkConfig::addNetwork()
 	else
 	    pairwise = "CCMP";
     }
-    
+
     if (proto)
 	setNetworkParam(id, "proto", proto, false);
     if (key_mgmt)
@@ -194,7 +194,7 @@ void NetworkConfig::addNetwork()
     writeWepKey(id, wep1Edit, 1);
     writeWepKey(id, wep2Edit, 2);
     writeWepKey(id, wep3Edit, 3);
-  
+
     if (wep0Radio->isEnabled() && wep0Radio->isChecked())
 	setNetworkParam(id, "wep_tx_keyidx", "0", false);
     else if (wep1Radio->isEnabled() && wep1Radio->isChecked())
@@ -262,10 +262,10 @@ void NetworkConfig::writeWepKey( int network_id, QLineEdit *edit, int id )
     bool hex;
     const char *txt, *pos;
     size_t len;
-  
+
     if (!edit->isEnabled() || edit->text().isEmpty())
 	return;
-    
+
     /*
         * Assume hex key if only hex characters are present and length matches
        * with 40, 104, or 128-bit key
@@ -305,10 +305,10 @@ void NetworkConfig::paramsFromConfig( int network_id )
 
     edit_network_id = network_id;
     getEapCapa();
-    
+
     char reply[1024], cmd[256], *pos;
     size_t reply_len;
-    
+
     snprintf(cmd, sizeof(cmd), "GET_NETWORK %d ssid", network_id);
     reply_len = sizeof(reply) - 1;
     if (wpagui->ctrlRequest(cmd, reply, &reply_len) >= 0 && reply_len >= 2 &&
@@ -330,7 +330,7 @@ void NetworkConfig::paramsFromConfig( int network_id )
 	    *pos = '\0';
 	idstrEdit->setText(reply + 1);
     }
-    
+
     snprintf(cmd, sizeof(cmd), "GET_NETWORK %d proto", network_id);
     reply_len = sizeof(reply) - 1;
     int wpa = 0;
@@ -503,13 +503,13 @@ void NetworkConfig::removeNetwork()
 {
     char reply[10], cmd[256];
     size_t reply_len;
-    
+
     if (QMessageBox::information(this, "wpa_gui",
 				 "This will permanently remove the network\n"
 				 "from the configuration. Do you really want\n"
 				 "to remove this network?", "Yes", "No") != 0)
 	return;
-    
+
     snprintf(cmd, sizeof(cmd), "REMOVE_NETWORK %d", edit_network_id);
     reply_len = sizeof(reply);
     wpagui->ctrlRequest(cmd, reply, &reply_len);
@@ -537,7 +537,7 @@ void NetworkConfig::getEapCapa()
 {
     char reply[256];
     size_t reply_len;
-    
+
     if (wpagui == NULL)
 	return;
 
@@ -545,7 +545,7 @@ void NetworkConfig::getEapCapa()
     if (wpagui->ctrlRequest("GET_CAPABILITY eap", reply, &reply_len) < 0)
 	return;
     reply[reply_len] = '\0';
-    
+
     QString res(reply);
     QStringList types = QStringList::split(QChar(' '), res);
     eapSelect->insertStringList(types);

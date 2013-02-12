@@ -21,7 +21,7 @@
 #define SIOCIWFIRSTPRIV								SIOCDEVPRIVATE
 #endif
 
-#define RT_PRIV_IOCTL								(SIOCIWFIRSTPRIV + 0x0E)  
+#define RT_PRIV_IOCTL								(SIOCIWFIRSTPRIV + 0x0E)
 #define RTPRIV_IOCTL_SET							(SIOCIWFIRSTPRIV + 0x02)
 
 // IEEE 802.11 OIDs  &  Ralink defined OIDs  ******
@@ -48,10 +48,10 @@
 #define OID_802_11_BSSID_LIST                       0x0609
 #define OID_802_3_CURRENT_ADDRESS                   0x060A
 #define OID_SET_COUNTERMEASURES                     0x0616
-#define OID_802_11_SET_IEEE8021X                    0x0617	// For IEEE8021x mode 
+#define OID_802_11_SET_IEEE8021X                    0x0617	// For IEEE8021x mode
 #define OID_802_11_SET_IEEE8021X_REQUIRE_KEY        0x0618  // For DynamicWEP in IEEE802.1x mode
 #define OID_802_11_PMKID                            0x0620
-#define RT_OID_WPA_SUPPLICANT_SUPPORT               0x0621  // for trigger driver enable/disable wpa_supplicant support 
+#define RT_OID_WPA_SUPPLICANT_SUPPORT               0x0621  // for trigger driver enable/disable wpa_supplicant support
 #define RT_OID_WE_VERSION_COMPILED                  0x0622
 #define RT_OID_NEW_DRIVER                           0x0623
 
@@ -77,7 +77,7 @@
 #define INT             int
 #define SHORT           int
 #define UINT            u32
-#undef  ULONG           
+#undef  ULONG
 //#define ULONG           u32
 #define ULONG           unsigned long /* 32-bit in 32-bit CPU or 64-bit in 64-bit CPU */
 #define USHORT          unsigned short
@@ -133,8 +133,8 @@ typedef UCHAR   NDIS_802_11_MAC_ADDRESS[6];
 // Added new types for OFDM 5G and 2.4G
 typedef enum _NDIS_802_11_NETWORK_TYPE
 {
-    Ndis802_11FH, 
-    Ndis802_11DS, 
+    Ndis802_11FH,
+    Ndis802_11DS,
     Ndis802_11OFDM5,
     Ndis802_11OFDM24,
     Ndis802_11Automode,
@@ -149,7 +149,7 @@ typedef LONG    NDIS_802_11_RSSI;           // in dBm
 typedef struct _NDIS_802_11_CONFIGURATION_FH
 {
    ULONG           Length;            // Length of structure
-   ULONG           HopPattern;        // As defined by 802.11, MSB set 
+   ULONG           HopPattern;        // As defined by 802.11, MSB set
    ULONG           HopSet;            // to one if non-802.11
    ULONG           DwellTime;         // units are Kusec
 } NDIS_802_11_CONFIGURATION_FH, *PNDIS_802_11_CONFIGURATION_FH;
@@ -170,7 +170,7 @@ typedef ULONGLONG   NDIS_802_11_KEY_RSC;
 typedef struct _NDIS_802_11_KEY
 {
     UINT           Length;             // Length of this structure
-    UINT           KeyIndex;           
+    UINT           KeyIndex;
     UINT           KeyLength;          // length of key in bytes
     NDIS_802_11_MAC_ADDRESS BSSID;
     NDIS_802_11_KEY_RSC KeyRSC;
@@ -180,8 +180,8 @@ typedef struct _NDIS_802_11_KEY
 typedef struct _NDIS_802_11_REMOVE_KEY
 {
     UINT                   Length;        // Length of this structure
-    UINT                   KeyIndex;           
-    NDIS_802_11_MAC_ADDRESS BSSID;      
+    UINT                   KeyIndex;
+    NDIS_802_11_MAC_ADDRESS BSSID;
 } NDIS_802_11_REMOVE_KEY, *PNDIS_802_11_REMOVE_KEY;
 
 typedef struct PACKED _NDIS_802_11_WEP
@@ -244,14 +244,14 @@ typedef enum _NDIS_802_11_AUTHENTICATION_MODE
    Ndis802_11AuthModeWPAPSK,
    Ndis802_11AuthModeWPANone,
    Ndis802_11AuthModeWPA2,
-   Ndis802_11AuthModeWPA2PSK,    
+   Ndis802_11AuthModeWPA2PSK,
    Ndis802_11AuthModeMax           // Not a real mode, defined as upper bound
 } NDIS_802_11_AUTHENTICATION_MODE, *PNDIS_802_11_AUTHENTICATION_MODE;
 
 typedef UCHAR  NDIS_802_11_RATES[NDIS_802_11_LENGTH_RATES];        // Set of 8 data rates
 typedef UCHAR  NDIS_802_11_RATES_EX[NDIS_802_11_LENGTH_RATES_EX];  // Set of 16 data rates
 
-typedef struct PACKED _NDIS_802_11_SSID 
+typedef struct PACKED _NDIS_802_11_SSID
 {
     INT   SsidLength;         // length of SSID field below, in bytes;
                                 // this can be zero.
@@ -304,7 +304,7 @@ typedef struct PACKED _NDIS_802_11_BSSID_LIST_EX
     NDIS_WLAN_BSSID_EX      Bssid[1];
 } NDIS_802_11_BSSID_LIST_EX, *PNDIS_802_11_BSSID_LIST_EX;
 
-typedef struct PACKED _NDIS_802_11_FIXED_IEs 
+typedef struct PACKED _NDIS_802_11_FIXED_IEs
 {
     UCHAR Timestamp[8];
     USHORT BeaconInterval;

@@ -1,5 +1,5 @@
 # contrib/dbus/Makefile
-# 
+#
 # This Makefile will install D-BUS support into the ISC BIND 9.3.2b1+ source,
 # necessary to support dynamic forwarding table management with D-BUS, for
 # Red Hat NetworkManager support.

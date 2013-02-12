@@ -235,7 +235,7 @@
 #	Prepend one line with the specified text, and inspect the next
 #	input line.
 # .sp
-#	Notes: 
+#	Notes:
 # .RS
 # .IP \(bu
 #	The prepended text is output on a separate line, immediately
@@ -271,7 +271,7 @@
 #	This feature is available in Postfix 2.2 and later. The
 #	description below applies to Postfix 2.2.2 and later.
 # .sp
-#	Notes: 
+#	Notes:
 # .RS
 # .IP \(bu
 #	When replacing a message header line, the replacement text

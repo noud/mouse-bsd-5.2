@@ -150,7 +150,7 @@ main(int argc, char **argv)
 	    maxblk > (MACPPC_BOOT_BLOCK_MAX_SIZE / sizeof(uint32_t)))
 		err(1, "bbinfo structure in `%s' has preposterous size `%u'",
 		    params->stage1, maxblk);
-	
+
 	blocks = malloc(sizeof(*blocks) * maxblk);
 	if (blocks == NULL) {
 		err(1, "Allocating %lu bytes for blocks",

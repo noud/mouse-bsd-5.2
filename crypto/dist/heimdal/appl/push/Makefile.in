@@ -412,7 +412,7 @@ clean-libexecPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-push$(EXEEXT): $(push_OBJECTS) $(push_DEPENDENCIES) 
+push$(EXEEXT): $(push_OBJECTS) $(push_DEPENDENCIES)
 	@rm -f push$(EXEEXT)
 	$(LINK) $(push_OBJECTS) $(push_LDADD) $(LIBS)
 install-binSCRIPTS: $(bin_SCRIPTS)

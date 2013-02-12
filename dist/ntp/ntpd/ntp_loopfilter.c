@@ -352,7 +352,7 @@ local_clock(
 	 *
 	 * Note the system poll is set to minpoll only if the clock is
 	 * stepped. Note also the kernel is disabled if step is
-	 * disabled or greater than 0.5 s. 
+	 * disabled or greater than 0.5 s.
 	 */
 	clock_frequency = flladj = plladj = 0;
 	mu = peer->epoch - sys_clocktime;
@@ -418,7 +418,7 @@ local_clock(
 		 * threshold. Note that a single spike greater than the
 		 * step threshold is always suppressed, even at the
 		 * longer poll intervals.
-		 */ 
+		 */
 		default:
 			step_systime(fp_offset);
 			msyslog(LOG_NOTICE, "time reset %+.6f s",
@@ -499,7 +499,7 @@ local_clock(
 			 * becomes ineffective above the Allan
 			 * intercept. The FLL is not used below one-half
 			 * the Allan intercept. Above that the loop gain
-			 * increases in steps to 1 / CLOCK_AVG. 
+			 * increases in steps to 1 / CLOCK_AVG.
 			 */
 			if (ULOGTOD(sys_poll) > allan_xpt / 2) {
 				dtemp = CLOCK_FLL - sys_poll;
@@ -512,7 +512,7 @@ local_clock(
 			 * (numerator) is the minimum of the update
 			 * interval and poll interval. This allows
 			 * oversampling, but not undersampling.
-			 */ 
+			 */
 			etemp = min(mu, (u_long)ULOGTOD(sys_poll));
 			dtemp = 4 * CLOCK_PLL * ULOGTOD(sys_poll);
 			plladj = fp_offset * etemp / (dtemp * dtemp);
@@ -689,7 +689,7 @@ local_clock(
 		}
 	} else {
 #endif /* KERNEL_PLL */
- 
+
 		/*
 		 * We get here if the kernel discipline is not enabled.
 		 * Adjust the clock frequency as the sum of the directly
@@ -1020,13 +1020,13 @@ loop_config(
 		break;
 
 	case LOOP_MINSTEP:		/* watchdog bark */
-		clock_minstep = freq; 
+		clock_minstep = freq;
 		break;
 
 	case LOOP_ALLAN:		/* Allan intercept */
 		allan_xpt = freq;
 		break;
-	
+
 	case LOOP_HUFFPUFF:		/* huff-n'-puff filter length */
 		if (freq < HUFFPUFF)
 			freq = HUFFPUFF;
@@ -1038,7 +1038,7 @@ loop_config(
 		sys_mindly = 1e9;
 		break;
 
-	case LOOP_FREQ:			/* initial frequency */	
+	case LOOP_FREQ:			/* initial frequency */
 		drift_comp = freq / 1e6;
 		rstclock(S_FSET, 0, 0);
 		break;

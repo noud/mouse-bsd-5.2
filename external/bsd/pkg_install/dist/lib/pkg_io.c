@@ -81,9 +81,9 @@ fetch_archive_read(struct archive *a, void *client_data,
     const void **buffer)
 {
 	struct fetch_archive *f = client_data;
-	
+
 	*buffer = f->buffer;
-	return fetchIO_read(f->fetch, f->buffer, sizeof(f->buffer));	
+	return fetchIO_read(f->fetch, f->buffer, sizeof(f->buffer));
 }
 
 static int
@@ -172,7 +172,7 @@ find_best_package_int(struct url *url, const char *pattern,
 		if ((best_match = fetchUnquoteFilename(*best_url)) == NULL)
 			return -1;
 	} else
-		best_match = NULL; 
+		best_match = NULL;
 
 	if (best_match && strip_suffix(best_match) == 0) {
 		free(best_match);
@@ -209,7 +209,7 @@ find_best_package_int(struct url *url, const char *pattern,
 		}
 		if (strip_suffix(cur_match) == 0) {
 			free(cur_match);
-			continue;	
+			continue;
 		}
 		if (pkg_order(pattern, cur_match, best_match) == 1) {
 			if (*best_url)

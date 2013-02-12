@@ -1,4 +1,4 @@
-# from: Id: Makefile,v 1.7 2001/04/16 04:34:26 bp Exp 
+# from: Id: Makefile,v 1.7 2001/04/16 04:34:26 bp Exp
 
 PROG=	mount_smbfs
 SRCS=	mount_smbfs.c getmntopts.c

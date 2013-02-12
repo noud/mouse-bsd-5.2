@@ -12,7 +12,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -228,7 +228,7 @@ bad:
 		goto end;
 	}
 
-	
+
 
 	if (infile) in = BIO_new_file(infile, "r");
 	else in = BIO_new_fp(stdin, BIO_NOCLOSE);
@@ -249,7 +249,7 @@ bad:
 	}
 
 	spkstr = NCONF_get_string(conf, spksect, spkac);
-		
+
 	if(!spkstr) {
 		BIO_printf(bio_err, "Can't find SPKAC called \"%s\"\n", spkac);
 		ERR_print_errors(bio_err);
@@ -257,7 +257,7 @@ bad:
 	}
 
 	spki = NETSCAPE_SPKI_b64_decode(spkstr, -1);
-	
+
 	if(!spki) {
 		BIO_printf(bio_err, "Error loading SPKAC\n");
 		ERR_print_errors(bio_err);

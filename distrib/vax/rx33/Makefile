@@ -10,5 +10,5 @@ all:
 	dd if=../inst/miniroot-${DISTRIBREV}.fs of=rx33-copy2-${DISTRIBREV} \
 		bs=512 skip=2400 count=2400
 
-.include <bsd.obj.mk>  
+.include <bsd.obj.mk>
 .include <bsd.subdir.mk>

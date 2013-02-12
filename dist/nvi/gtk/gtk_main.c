@@ -71,7 +71,7 @@ void win_toplevel(GtkViWindow *win)
     create_toplevel(win->vi);
 }
 
-static 
+static
 void create_toplevel(GtkVi *vi)
 {
 	GtkWidget *window;

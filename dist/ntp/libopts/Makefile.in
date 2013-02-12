@@ -302,7 +302,7 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libopts.la: $(libopts_la_OBJECTS) $(libopts_la_DEPENDENCIES) 
+libopts.la: $(libopts_la_OBJECTS) $(libopts_la_DEPENDENCIES)
 	$(LINK) $(am_libopts_la_rpath) $(libopts_la_LDFLAGS) $(libopts_la_OBJECTS) $(libopts_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:

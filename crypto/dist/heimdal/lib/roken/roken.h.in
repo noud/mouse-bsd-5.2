@@ -3,22 +3,22 @@
  * Copyright (c) 1995-2005 Kungliga Tekniska Högskolan
  * (Royal Institute of Technology, Stockholm, Sweden).
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the Institute nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -175,7 +175,7 @@ int ROKEN_LIB_FUNCTION snprintf (char *, size_t, const char *, ...)
 #endif
 
 #if !defined(HAVE_VSNPRINTF) || defined(NEED_VSNPRINTF_PROTO)
-int ROKEN_LIB_FUNCTION 
+int ROKEN_LIB_FUNCTION
      vsnprintf (char *, size_t, const char *, va_list)
      __attribute__((format (printf, 3, 0)));
 #endif
@@ -331,7 +331,7 @@ int ROKEN_LIB_FUNCTION daemon(int, int);
 #endif
 
 #ifndef HAVE_INNETGR
-int ROKEN_LIB_FUNCTION innetgr(const char *, const char *, 
+int ROKEN_LIB_FUNCTION innetgr(const char *, const char *,
 	    const char *, const char *);
 #endif
 
@@ -351,7 +351,7 @@ int ROKEN_LIB_FUNCTION innetgr(const char*, const char*,
 #endif
 
 #ifndef HAVE_IRUSEROK
-int ROKEN_LIB_FUNCTION iruserok(unsigned, int, 
+int ROKEN_LIB_FUNCTION iruserok(unsigned, int,
     const char *, const char *);
 #endif
 
@@ -564,7 +564,7 @@ getnameinfo_verified(const struct sockaddr *, socklen_t,
 		     int);
 
 int ROKEN_LIB_FUNCTION
-roken_getaddrinfo_hostspec(const char *, int, struct addrinfo **); 
+roken_getaddrinfo_hostspec(const char *, int, struct addrinfo **);
 int ROKEN_LIB_FUNCTION
 roken_getaddrinfo_hostspec2(const char *, int, int, struct addrinfo **);
 
@@ -600,7 +600,7 @@ int ROKEN_LIB_FUNCTION
 roken_gethostby_setup(const char*, const char*);
 struct hostent* ROKEN_LIB_FUNCTION
 roken_gethostbyname(const char*);
-struct hostent* ROKEN_LIB_FUNCTION 
+struct hostent* ROKEN_LIB_FUNCTION
 roken_gethostbyaddr(const void*, size_t, int);
 #else
 #ifdef GETHOSTBYNAME_PROTO_COMPATIBLE

@@ -52,7 +52,7 @@ main(
 	v = t;
 	while (1) {
 		gettimeofday(&tr, &tzp);
-		u = tr.tv_sec * 1000000 + tr.tv_usec; 
+		u = tr.tv_sec * 1000000 + tr.tv_usec;
 		if (u - v > NCNT)
 		    break;
 		w = u - t;
@@ -101,7 +101,7 @@ main(
 	}
 	if (j > 0)
 	    printf("%ld %ld\n", w, j);
- 
+
 	exit(0);
 }
 

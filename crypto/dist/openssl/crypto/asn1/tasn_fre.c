@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -152,10 +152,10 @@ static void asn1_item_combine_free(ASN1_VALUE **pval, const ASN1_ITEM *it, int c
 			i = asn1_cb(ASN1_OP_FREE_PRE, pval, it, NULL);
 			if (i == 2)
 				return;
-			}		
+			}
 		asn1_enc_free(pval, it);
 		/* If we free up as normal we will invalidate any
-		 * ANY DEFINED BY field and we wont be able to 
+		 * ANY DEFINED BY field and we wont be able to
 		 * determine the type of the field it defines. So
 		 * free up in reverse order.
 		 */

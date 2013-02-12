@@ -31,7 +31,7 @@ initialize_action(void) {
 	BOOL bSuccess;
 
 	if (bInit)
-		return;	
+		return;
 	/*
 	 * NOTE: VC++ 6.0 gets this function declaration wrong
 	 * so we compensate by casting the argument

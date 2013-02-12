@@ -305,12 +305,12 @@ in too much access permission: </p>
 
 <pre>
 1 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
-2     <a href="postconf.5.html#smtpd_recipient_restrictions">smtpd_recipient_restrictions</a> = 
+2     <a href="postconf.5.html#smtpd_recipient_restrictions">smtpd_recipient_restrictions</a> =
 3         <a href="postconf.5.html#permit_mynetworks">permit_mynetworks</a>
 4         <a href="postconf.5.html#check_helo_access">check_helo_access</a> hash:/etc/postfix/helo_access
 5         <a href="postconf.5.html#reject_unknown_helo_hostname">reject_unknown_helo_hostname</a>
 6         <a href="postconf.5.html#reject_unauth_destination">reject_unauth_destination</a>
-7 
+7
 8 /etc/postfix/helo_access:
 9     localhost.localdomain PERMIT
 </pre>

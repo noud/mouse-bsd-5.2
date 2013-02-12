@@ -511,7 +511,7 @@ iscommand(Char *name)
     hashval = 0;
     slash = any(short2str(name), '/');
     v = adrof(STRpath);
-    
+
     if (v == 0 || v->vec[0] == 0 || slash)
 	pv = justabs;
     else
@@ -682,7 +682,7 @@ tellmewhat(struct wordent *lexp, Char *str)
 	    if (str == NULL) {
 		if (aliased)
 		    prlex(cshout, lexp);
-		(void)fprintf(cshout, "%s: shell built-in command.\n", 
+		(void)fprintf(cshout, "%s: shell built-in command.\n",
 			       vis_str(sp->word));
 	    }
 	    else

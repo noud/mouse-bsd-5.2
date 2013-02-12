@@ -69,7 +69,7 @@ LDAPRDN_validate( LDAPRDN rdn )
 		slap_syntax_validate_func *validate = NULL;
 
 		assert( ava != NULL );
-		
+
 		if ( ( ad = AVA_PRIVATE( ava ) ) == NULL ) {
 			const char	*text = NULL;
 
@@ -93,7 +93,7 @@ LDAPRDN_validate( LDAPRDN rdn )
 			return LDAP_INVALID_SYNTAX;
 		}
 
-		/* 
+		/*
 		 * Replace attr oid/name with the canonical name
 		 */
 		ava->la_attr = ad->ad_cname;
@@ -106,7 +106,7 @@ LDAPRDN_validate( LDAPRDN rdn )
 			 */
 			rc = ( *validate )( ad->ad_type->sat_syntax,
 				&ava->la_value );
-			
+
 			if ( rc != LDAP_SUCCESS ) {
 				return LDAP_INVALID_SYNTAX;
 			}
@@ -255,9 +255,9 @@ AVA_Sort( LDAPRDN rdn, int nAVAs )
 
 				d = ava_i->la_value.bv_len - ava_j->la_value.bv_len;
 
-				a = memcmp( ava_i->la_value.bv_val, 
+				a = memcmp( ava_i->la_value.bv_val,
 						ava_j->la_value.bv_val,
-						d <= 0 ? ava_i->la_value.bv_len 
+						d <= 0 ? ava_i->la_value.bv_len
 							: ava_j->la_value.bv_len );
 
 				if ( a == 0 ) {
@@ -307,12 +307,12 @@ LDAPRDN_rewrite( LDAPRDN rdn, unsigned flags, void *ctx )
 					return LDAP_INVALID_SYNTAX;
 				}
 			}
-			
+
 			ava->la_private = ( void * )ad;
 			do_sort = 1;
 		}
 
-		/* 
+		/*
 		 * Replace attr oid/name with the canonical name
 		 */
 		ava->la_attr = ad->ad_cname;
@@ -363,7 +363,7 @@ LDAPRDN_rewrite( LDAPRDN rdn, unsigned flags, void *ctx )
 					? &ava->la_value
 					: (struct berval *) &slap_empty_bv,
 				&bv, ctx );
-		
+
 			if ( rc != LDAP_SUCCESS ) {
 				return LDAP_INVALID_SYNTAX;
 			}
@@ -382,7 +382,7 @@ LDAPRDN_rewrite( LDAPRDN rdn, unsigned flags, void *ctx )
 					? &ava->la_value
 					: (struct berval *) &slap_empty_bv,
 				&bv, ctx );
-		
+
 			if ( rc != LDAP_SUCCESS ) {
 				return LDAP_INVALID_SYNTAX;
 			}
@@ -669,8 +669,8 @@ dnPrettyNormalDN(
 	assert( val != NULL );
 	assert( dn != NULL );
 
-	Debug( LDAP_DEBUG_TRACE, ">>> dn%sDN: <%s>\n", 
-			flags == SLAP_LDAPDN_PRETTY ? "Pretty" : "Normal", 
+	Debug( LDAP_DEBUG_TRACE, ">>> dn%sDN: <%s>\n",
+			flags == SLAP_LDAPDN_PRETTY ? "Pretty" : "Normal",
 			val->bv_val ? val->bv_val : "", 0 );
 
 	if ( val->bv_len == 0 ) {
@@ -700,7 +700,7 @@ dnPrettyNormalDN(
 		}
 	}
 
-	Debug( LDAP_DEBUG_TRACE, "<<< dn%sDN\n", 
+	Debug( LDAP_DEBUG_TRACE, "<<< dn%sDN\n",
 			flags == SLAP_LDAPDN_PRETTY ? "Pretty" : "Normal",
 			0, 0 );
 
@@ -812,11 +812,11 @@ dnMatch(
 	assert( assertedValue != NULL );
 	assert( !BER_BVISNULL( value ) );
 	assert( !BER_BVISNULL( asserted ) );
-	
+
 	match = value->bv_len - asserted->bv_len;
 
 	if ( match == 0 ) {
-		match = memcmp( value->bv_val, asserted->bv_val, 
+		match = memcmp( value->bv_val, asserted->bv_val,
 				value->bv_len );
 	}
 
@@ -852,7 +852,7 @@ dnRelativeMatch(
 		if( asserted->bv_len > value->bv_len ) {
 			match = -1;
 		} else if ( asserted->bv_len == value->bv_len ) {
-			match = memcmp( value->bv_val, asserted->bv_val, 
+			match = memcmp( value->bv_val, asserted->bv_val,
 				value->bv_len );
 		} else {
 			if( DN_SEPARATOR(
@@ -860,7 +860,7 @@ dnRelativeMatch(
 			{
 				match = memcmp(
 					&value->bv_val[value->bv_len - asserted->bv_len],
-					asserted->bv_val, 
+					asserted->bv_val,
 					asserted->bv_len );
 			} else {
 				match = 1;
@@ -886,7 +886,7 @@ dnRelativeMatch(
 			{
 				match = memcmp(
 					&value->bv_val[value->bv_len - asserted->bv_len],
-					asserted->bv_val, 
+					asserted->bv_val,
 					asserted->bv_len );
 			} else {
 				match = 1;
@@ -906,7 +906,7 @@ dnRelativeMatch(
 			{
 				match = memcmp(
 					&value->bv_val[value->bv_len - asserted->bv_len],
-					asserted->bv_val, 
+					asserted->bv_val,
 					asserted->bv_len );
 
 				if( !match ) {
@@ -944,11 +944,11 @@ rdnMatch(
 	assert( matchp != NULL );
 	assert( value != NULL );
 	assert( assertedValue != NULL );
-	
+
 	match = value->bv_len - asserted->bv_len;
 
 	if ( match == 0 ) {
-		match = memcmp( value->bv_val, asserted->bv_val, 
+		match = memcmp( value->bv_val, asserted->bv_val,
 				value->bv_len );
 	}
 
@@ -970,8 +970,8 @@ rdnMatch(
  * will get lost.
  */
 void
-dnParent( 
-	struct berval	*dn, 
+dnParent(
+	struct berval	*dn,
 	struct berval	*pdn )
 {
 	char	*p;
@@ -1001,8 +1001,8 @@ dnParent(
  * so that escaped rdn/ava separators are in '\'+hexpair form
  */
 void
-dnRdn( 
-	struct berval	*dn, 
+dnRdn(
+	struct berval	*dn,
 	struct berval	*rdn )
 {
 	char	*p;
@@ -1023,8 +1023,8 @@ dnRdn(
 }
 
 int
-dnExtractRdn( 
-	struct berval	*dn, 
+dnExtractRdn(
+	struct berval	*dn,
 	struct berval 	*rdn,
 	void *ctx )
 {

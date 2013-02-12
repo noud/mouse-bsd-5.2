@@ -92,7 +92,7 @@ dirname_of(const char *path)
 }
 
 /*
- * Does the pkgname contain any of the special chars ("{[]?*<>")? 
+ * Does the pkgname contain any of the special chars ("{[]?*<>")?
  * If so, return 1, else 0
  */
 int

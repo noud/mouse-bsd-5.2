@@ -1523,7 +1523,7 @@ yyparse ()
 #endif
 #endif
 {
-  
+
   int yystate;
   int yyn;
   int yyresult;
@@ -2266,7 +2266,7 @@ yyreduce:
     {
 #ifdef KRB4
 			char *p;
-			
+
 			if(guest)
 				reply(500, "Can't be done as guest.");
 			else{
@@ -2556,7 +2556,7 @@ yyreduce:
 
 			sin4->sin_family = AF_INET;
 			sin4->sin_port = htons((yyvsp[(9) - (11)].i) * 256 + (yyvsp[(11) - (11)].i));
-			sin4->sin_addr.s_addr = 
+			sin4->sin_addr.s_addr =
 			    htonl(((yyvsp[(1) - (11)].i) << 24) | ((yyvsp[(3) - (11)].i) << 16) | ((yyvsp[(5) - (11)].i) << 8) | (yyvsp[(7) - (11)].i));
 		}
     break;
@@ -3086,7 +3086,7 @@ struct tab sitetab[] = {
 	{ "FIND", LOCATE, STR1, 1,	"<sp> globexpr" },
 
 	{ "URL",  URL,  ARGS, 1,	"?" },
-	
+
 	{ NULL,   0,    0,    0,	0 }
 };
 

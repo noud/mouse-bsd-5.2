@@ -417,7 +417,7 @@ addentry(
 
 #ifdef DEBUG
 	if (debug > 1)
-		msyslog(LOG_INFO, 
+		msyslog(LOG_INFO,
 		    "intres: <%s> %d %d %d %d %x %d %x %s\n", name,
 		    mode, version, minpoll, maxpoll, flags, ttl, keyid,
 		    keystr);
@@ -574,7 +574,7 @@ findhostaddr(
 			msyslog(LOG_INFO, "findhostaddr: address resolved.");
 #endif
 	}
-		   
+
 	return (1);
 }
 
@@ -671,7 +671,7 @@ request(
 
 	if (sockfd == INVALID_SOCKET)
 	    openntp();
-	
+
 #ifdef SYS_WINNT
 	hReadWriteEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
 #endif /* SYS_WINNT */
@@ -757,7 +757,7 @@ request(
 		return 0;
 	}
 #endif /* SYS_WINNT */
-    
+
 
 	/*
 	 * Wait for a response.  A weakness of the mode 7 protocol used
@@ -905,17 +905,17 @@ request(
 		    case INFO_OKAY:
 			/* success */
 			return 1;
-		
+
 		    case INFO_ERR_IMPL:
 			msyslog(LOG_ERR,
 				"ntpd reports implementation mismatch!");
 			return 0;
-		
+
 		    case INFO_ERR_REQ:
 			msyslog(LOG_ERR,
 				"ntpd says configuration request is unknown!");
 			return 0;
-		
+
 		    case INFO_ERR_FMT:
 			msyslog(LOG_ERR,
 				"ntpd indicates a format error occurred!");
@@ -925,7 +925,7 @@ request(
 			msyslog(LOG_ERR,
 				"ntpd indicates no data available!");
 			return 0;
-		
+
 		    case INFO_ERR_AUTH:
 			msyslog(LOG_ERR,
 				"ntpd returns a permission denied error!");
@@ -958,7 +958,7 @@ nexttoken(
 	 */
 	while (*cp == ' ' || *cp == '\t')
 	    cp++;
-	
+
 	/*
 	 * If this is the end of the line, return nothing.
 	 */
@@ -966,7 +966,7 @@ nexttoken(
 		*lptr = cp;
 		return NULL;
 	}
-	
+
 	/*
 	 * Must be the start of a token.  Record the pointer and look
 	 * for the end.
@@ -974,7 +974,7 @@ nexttoken(
 	tstart = cp++;
 	while (*cp != ' ' && *cp != '\t' && *cp != '\n' && *cp != '\0')
 	    cp++;
-	
+
 	/*
 	 * Terminate the token with a \0.  If this isn't the end of the
 	 * line, space to the next character.

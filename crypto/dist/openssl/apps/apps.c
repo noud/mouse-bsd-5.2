@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -63,7 +63,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -706,7 +706,7 @@ static char *app_get_pass(BIO *err, char *arg, int keepbio)
 }
 
 int add_oid_section(BIO *err, CONF *conf)
-{	
+{
 	char *p;
 	STACK_OF(CONF_VALUE) *sktmp;
 	CONF_VALUE *cnf;
@@ -742,7 +742,7 @@ static int load_pkcs12(BIO *err, BIO *in, const char *desc,
 	p12 = d2i_PKCS12_bio(in, NULL);
 	if (p12 == NULL)
 		{
-		BIO_printf(err, "Error loading PKCS12 file for %s\n", desc);	
+		BIO_printf(err, "Error loading PKCS12 file for %s\n", desc);
 		goto die;
 		}
 	/* See if an empty password will do */
@@ -753,7 +753,7 @@ static int load_pkcs12(BIO *err, BIO *in, const char *desc,
 		if (!pem_cb)
 			pem_cb = (pem_password_cb *)password_callback;
 		len = pem_cb(tpass, PEM_BUFSIZE, 0, cb_data);
-		if (len < 0) 
+		if (len < 0)
 			{
 			BIO_printf(err, "Passpharse callback error for %s\n",
 					desc);
@@ -764,7 +764,7 @@ static int load_pkcs12(BIO *err, BIO *in, const char *desc,
 		if (!PKCS12_verify_mac(p12, tpass, len))
 			{
 			BIO_printf(err,
-	"Mac verify error (wrong password?) in PKCS12 file for %s\n", desc);	
+	"Mac verify error (wrong password?) in PKCS12 file for %s\n", desc);
 			goto die;
 			}
 		pass = tpass;
@@ -1002,7 +1002,7 @@ EVP_PKEY *load_pubkey(BIO *err, const char *file, int format, int maybe_stdin,
 	else if (format == FORMAT_PEMRSA)
 		{
 		RSA *rsa;
-		rsa = PEM_read_bio_RSAPublicKey(key, NULL, 
+		rsa = PEM_read_bio_RSAPublicKey(key, NULL,
 			(pem_password_cb *)password_callback, &cb_data);
 		if (rsa)
 			{
@@ -1281,9 +1281,9 @@ int copy_extensions(X509 *x, X509_REQ *req, int copy_type)
 
 	return ret;
 }
-		
-		
-			
+
+
+
 
 static int set_multi_opts(unsigned long *flags, const char *arg, const NAME_EX_TBL *in_tbl)
 {
@@ -1362,7 +1362,7 @@ X509_STORE *setup_verify(BIO *bp, char *CAfile, char *CApath)
 			goto end;
 		}
 	} else X509_LOOKUP_load_file(lookup,NULL,X509_FILETYPE_DEFAULT);
-		
+
 	lookup=X509_STORE_add_lookup(store,X509_LOOKUP_hash_dir());
 	if (lookup == NULL) goto end;
 	if (CApath) {
@@ -1711,12 +1711,12 @@ int rand_serial(BIGNUM *b, ASN1_INTEGER *ai)
 		goto error;
 
 	ret = 1;
-	
+
 	error:
 
 	if (!b)
 		BN_free(btmp);
-	
+
 	return ret;
 	}
 
@@ -1868,7 +1868,7 @@ int save_index(const char *dbfile, const char *suffix, CA_DB *db)
 		}
 	j=TXT_DB_write(out,db->db);
 	if (j <= 0) goto err;
-			
+
 	BIO_free(out);
 
 	out = BIO_new(BIO_s_file());
@@ -2063,7 +2063,7 @@ X509_NAME *parse_name(char *subject, long chtype, int multirdn)
 		{
 		BIO_printf(bio_err, "malloc error\n");
 		goto error;
-		}	
+		}
 
 	if (*subject != '/')
 		{
@@ -2085,12 +2085,12 @@ X509_NAME *parse_name(char *subject, long chtype, int multirdn)
 				{
 				if (*++sp)
 					*bp++ = *sp++;
-				else	
+				else
 					{
 					BIO_printf(bio_err, "escape character at end of string\n");
 					goto error;
 					}
-				}	
+				}
 			else if (*sp == '=')
 				{
 				sp++;
@@ -2137,7 +2137,7 @@ X509_NAME *parse_name(char *subject, long chtype, int multirdn)
 			}
 		*bp++ = '\0';
 		ne_num++;
-		}	
+		}
 
 	if (!(n = X509_NAME_new()))
 		goto error;
@@ -2651,10 +2651,10 @@ int app_isdir(const char *name)
 #ifndef S_ISDIR
 # if defined(_S_IFMT) && defined(_S_IFDIR)
 #  define S_ISDIR(a)   (((a) & _S_IFMT) == _S_IFDIR)
-# else 
+# else
 #  define S_ISDIR(a)   (((a) & S_IFMT) == S_IFDIR)
-# endif 
-#endif 
+# endif
+#endif
 
 int app_isdir(const char *name)
 	{

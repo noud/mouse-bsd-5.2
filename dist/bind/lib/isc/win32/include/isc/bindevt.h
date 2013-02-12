@@ -56,7 +56,7 @@
  *
  * Define the facility codes
  */
- 
+
 
 /*
  * Define the severity codes

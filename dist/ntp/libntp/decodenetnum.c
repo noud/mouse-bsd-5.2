@@ -28,14 +28,14 @@ decodenetnum(
 		for (i = 0; *cp != ']'; cp++, i++)
 			name[i] = *cp;
 	name[i] = '\0';
-	num = name; 
+	num = name;
 	}
 	memset(&hints, 0, sizeof(struct addrinfo));
 	hints.ai_flags = AI_NUMERICHOST;
 	err = getaddrinfo(num, NULL, &hints, &ai);
 	if (err != 0)
 		return 0;
-	memcpy(netnum, (struct sockaddr_storage *)ai->ai_addr, ai->ai_addrlen); 
+	memcpy(netnum, (struct sockaddr_storage *)ai->ai_addr, ai->ai_addrlen);
 	freeaddrinfo(ai);
 	return 1;
 }

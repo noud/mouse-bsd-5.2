@@ -26,7 +26,7 @@ and is organized as follows:
 
 		    Makefile
 			Build the package.
-			
+
 		    dist/
 			The third-party source for a given package.
 

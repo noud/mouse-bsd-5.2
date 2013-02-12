@@ -261,7 +261,7 @@ void trace_mr_read_record (struct sockaddr_in *from, void *buf, ssize_t rv)
 	u_int32_t result;
 	int iolen = 0;
 	static char zero [4] = { 0, 0, 0, 0 };
-	
+
 	if (rv < 0)
 		result = htonl (errno);		/* XXX */
 	else

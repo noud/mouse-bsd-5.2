@@ -530,7 +530,7 @@ getconfig(
 	 * Initialize, initialize
 	 */
 	errflg = 0;
-	
+
 #ifndef SYS_WINNT
 	config_file = CONFIG_FILE;
 #else
@@ -600,7 +600,7 @@ getconfig(
 	}
 
 	for (;;) {
-		if (tok == CONFIG_END) 
+		if (tok == CONFIG_END)
 			break;
 		if (fp[includelevel])
 			tok = gettokens(fp[includelevel], line, tokens, &ntokens);
@@ -747,7 +747,7 @@ getconfig(
 					    errflg = 1;
 				    }
 				    break;
-					
+
 				case CONF_MOD_KEY:
 				    if (i >= ntokens-1) {
 					    msyslog(LOG_ERR,
@@ -816,7 +816,7 @@ getconfig(
 				    break;
 
 				case CONF_MOD_DYNAMIC:
-				    msyslog(LOG_WARNING, 
+				    msyslog(LOG_WARNING,
 				        "Warning: the \"dynamic\" keyword has been obsoleted"
 				        " and will be removed in the next release\n");
 				    break;
@@ -894,7 +894,7 @@ getconfig(
 			     stats_write_tolerance = ftemp / 100;
 			}
 			break;
-	
+
 		    case CONFIG_PIDFILE:
 			if (ntokens >= 2)
 			    stats_config(STATS_PID_FILE, tokens[1]);
@@ -907,7 +907,7 @@ getconfig(
 				fclose(fp[i]);
 			}
 			break;
-			
+
 		    case CONFIG_INCLUDEFILE:
 			if (ntokens < 2) {
 			    msyslog(LOG_ERR, "includefile needs one argument");
@@ -972,7 +972,7 @@ getconfig(
 				}
 				if (equals) {
 					ntp_syslogmask = get_logmask(s);
-				} else {				
+				} else {
 					if (add) {
 						ntp_syslogmask |= get_logmask(s);
 					} else {
@@ -1093,7 +1093,7 @@ getconfig(
 
 			    case CONF_CLOCK_FREQ:
 				loop_config(LOOP_FREQ, ftemp);
-				break;  
+				break;
 			    }
 			}
 			break;
@@ -1916,7 +1916,7 @@ getconfig(
 
 #ifdef HAVE_NETINFO
 
-/* 
+/*
  * get_netinfo_config - find the nearest NetInfo domain with an ntp
  * configuration and initialize the configuration state.
  */
@@ -2137,9 +2137,9 @@ gettokens (
      /* Heiko: Remove leading and trailing quotes around tokens */
      {
             int i,j = 0;
-	    
-		
-			for (i = 0; i < ntok; i++) {	    
+
+
+			for (i = 0; i < ntok; i++) {
 					/* Now check if the first char is a quote and remove that */
 					if ( tokenlist[ntok][0] == '"' )
 							tokenlist[ntok]++;
@@ -2149,7 +2149,7 @@ gettokens (
 					if ( tokenlist[ntok][j] == '"' )
 							tokenlist[ntok][j] = '\0';
 			}
-							
+
     }
 
 	if (ntok == MAXTOKENS) {
@@ -2263,9 +2263,9 @@ getnetnum(
 				? ", ignored"
 				: "");
 #endif
-		if (retval == 0 && 
-		    ptr->ai_family == AF_INET6 && 
-		    isc_net_probeipv6() != ISC_R_SUCCESS) 
+		if (retval == 0 &&
+		    ptr->ai_family == AF_INET6 &&
+		    isc_net_probeipv6() != ISC_R_SUCCESS)
 		{
 			return -1;
 		}

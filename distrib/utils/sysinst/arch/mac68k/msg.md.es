@@ -172,7 +172,7 @@ de Disco ha sido escrita a disco y estara disponible la proxima vez que
 NetBSD sea iniciado.  Por favor reinicie inmediatamente y vuelva a iniciar
 el Proceso de Instalacion.
 }
- 
+
 .if debug
 message mapdebug
 {Mapa de Particiones:
@@ -237,7 +237,7 @@ message parttable_fix_fixing
 
 message parttable_fix_fine
 {¡La particion %s%c ya es correcta!\n}
- 
+
 message dump_line
 {%s\n}
 

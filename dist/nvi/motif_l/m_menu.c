@@ -199,7 +199,7 @@ static	String	get_file( w, prompt )
     }
 
     /* create one? */
-    if ( db == NULL ){ 
+    if ( db == NULL ){
 	db = XmCreateFileSelectionDialog( main_widget, "file", NULL, 0 );
 	XtAddCallback( db, XmNokCallback, ok_file_name, NULL );
 	XtAddCallback( db, XmNcancelCallback, __vi_cancel_cb, NULL );

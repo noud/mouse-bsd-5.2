@@ -56,7 +56,7 @@
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OFLIABILITY, WHETHER IN CONTRACT,
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -479,7 +479,7 @@ chcheck(NODE *p, int shape, int rew)
  *	p - node (for this leg)
  *	shape - given shape for this leg
  *	cookie - cookie given for parent node
- *	rew - 
+ *	rew -
  *	go - switch key for traversing down
  *	returns register class.
  */
@@ -514,7 +514,7 @@ shswitch(int sh, NODE *p, int shape, int cookie, int rew, int go)
 /*
  * Find the best instruction to evaluate the given tree.
  * Best is to match both subnodes directly, second-best is if
- * subnodes must be evaluated into OREGs, thereafter if nodes 
+ * subnodes must be evaluated into OREGs, thereafter if nodes
  * must be put into registers.
  * Whether 2-op instructions or 3-op is preferred is depending on in
  * which order they are found in the table.
@@ -681,7 +681,7 @@ relops(NODE *p)
 
 	(void)shswitch(-1, p->n_right, q->rshape, FORCC,
 	    q->rewrite & RRIGHT, gor);
-	
+
 	F2DEBUG(("relops: node %p\n", p));
 	p->n_su = MKIDX(idx, 0);
 	SCLASS(p->n_su, CLASSA); /* XXX */
@@ -819,7 +819,7 @@ findumul(NODE *p, int cookie)
 
 		if (ttype(p->n_type, q->rtype) == 0)
 			continue; /* Types must be correct */
-		
+
 
 		F2DEBUG(("findumul got types, rshape %s\n", prcook(q->rshape)));
 		/*
@@ -829,7 +829,7 @@ findumul(NODE *p, int cookie)
 		 */
 		if ((shl = chcheck(p, q->rshape, 0)) == SRNOPE)
 			continue;
-		
+
 		shr = 0;
 
 		if (q->needs & REWRITE)

@@ -33,7 +33,7 @@
  * It appears that the target machine was big endian.  The original
  * code contained many endian aspects which are now handled in
  * machine-independent code.
- * 
+ *
  * On MIPS, the assembler does an amazing amount of work for us.
  * We don't have to worry about PIC, nor about finding the address
  * of SNAMES.  Whenever possible, we defer the work to the assembler.
@@ -169,7 +169,7 @@ struct optab table[] = {
 		NAREG,	RESC1,
 		"	lbu A1,AL	# convert oreg word to uchar (endianness problem here?)\n"
 		"	nop\n", },
-    
+
 { SCONV,	INAREG,
 	SOREG,	TWORD,
 	SAREG,	TSHORT,
@@ -213,7 +213,7 @@ struct optab table[] = {
 		NAREG,	RESC1,
 		"	lbu A1,AL	# convert oreg (u)llong to uchar (endianness problem?)\n"
 		"	nop\n", },
-    
+
 { SCONV,	INAREG,
 	SOREG,	TLONGLONG|TULONGLONG,
 	SAREG,	TSHORT,
@@ -593,7 +593,7 @@ struct optab table[] = {
 { MUL,	INCREG,
 	SCREG,	TDOUBLE|TLDOUBLE,
 	SCREG,	TDOUBLE|TLDOUBLE,
-		NCREG,	RESC1, 
+		NCREG,	RESC1,
 		"	mul.d	A1,AL,AR	# double-floating-point multiply\n", },
 
 { DIV,	INAREG,
@@ -630,7 +630,7 @@ struct optab table[] = {
 { DIV,	INCREG,
 	SCREG,	TDOUBLE|TLDOUBLE,
 	SCREG,	TDOUBLE|TLDOUBLE,
-		NCREG,	RESC1, 
+		NCREG,	RESC1,
 		"	div.d	A1,AL,AR	# double-floating-point division\n", },
 
 { MOD,  INAREG,
@@ -657,9 +657,9 @@ struct optab table[] = {
 	SBREG,	TLONGLONG|TULONGLONG,
                 NSPECIAL|NBREG,  RESC1,
                 "ZE", },
-    
+
 /*
- * Templates for unsigned values needs to come before OPSIMP 
+ * Templates for unsigned values needs to come before OPSIMP
  */
 
 { PLUS,	INBREG,
@@ -781,7 +781,7 @@ struct optab table[] = {
 		NBREG|NBSR|NBSL,	RESC1,
       		"	O A1,AL,AR\n"
       		"	O U1,UL,UR\n", },
-    
+
 { OPSIMP,	INAREG,
 	SAREG,	TWORD|TPOINT|TSHORT|TUSHORT|TUCHAR|TCHAR,
 	SAREG,	TWORD|TPOINT|TSHORT|TUSHORT|TUCHAR|TCHAR,
@@ -815,7 +815,7 @@ struct optab table[] = {
 	SCON,	TWORD|TSHORT|TUSHORT|TCHAR|TUCHAR,
 		NAREG|NASL,	RESC1,
 		"	sll A1,AL,AR	# shift left by constant\n", },
-    
+
 { RS,	INAREG,
 	SAREG,	TSWORD|TSHORT|TCHAR,
 	SAREG,	TWORD|TSHORT|TUSHORT|TCHAR|TUCHAR,
@@ -832,7 +832,7 @@ struct optab table[] = {
 	SAREG,	TWORD|TSHORT|TUSHORT|TCHAR|TUCHAR,
 	SAREG,	TWORD|TSHORT|TUSHORT|TCHAR|TUCHAR,
 		NAREG|NASL,	RESC1,
-		"	sllv A1,AL,AR	# shift left by register\n", },	
+		"	sllv A1,AL,AR	# shift left by register\n", },
 
 { RS,	INBREG,
 	SBREG,	TLONGLONG|TULONGLONG,
@@ -867,14 +867,14 @@ struct optab table[] = {
         SANY,   TANY,
                 NAREG|NASL,   RESC1,
                 "	nor A1,$zero,AL	# complement\n", },
-    
+
 { COMPL,        INBREG,
 	SBREG,	TLONGLONG|TULONGLONG,
         SANY,   TANY,
                 NBREG|NBSL,   RESC1,
                 "	nor A1,$zero,AL	# complement\n"
                 "	nor U1,$zero,UL\n", },
-    
+
 /*
  * The next rules takes care of assignments. "=".
  */
@@ -891,14 +891,14 @@ struct optab table[] = {
 	SAREG,		TSHORT|TUSHORT,
 		0,	RDEST,
         	"	sh AR,AL		# store (u)short\n"
-		"	nop\n", },	
+		"	nop\n", },
 
 { ASSIGN,	FOREFF|INAREG,
 	SOREG|SNAME,	TCHAR|TUCHAR,
 	SAREG,		TCHAR|TUCHAR,
 		0,	RDEST,
         	"	sb AR,AL		# store (u)char\n"
-		"	nop\n", },	
+		"	nop\n", },
 
 { ASSIGN,	FOREFF|INBREG,
 	SOREG|SNAME,	TLONGLONG|TULONGLONG,
@@ -915,7 +915,7 @@ struct optab table[] = {
 		0,	RDEST,
       		"	move UL,UR		# register move\n"
       		"	move AL,AR\n", },
-    
+
 { ASSIGN,	FOREFF|INAREG,
 	SAREG,	TANY,
 	SAREG,	TANY,
@@ -1070,7 +1070,7 @@ struct optab table[] = {
 		NAREG,	RESC1,
 		"	lb A1,AL	# load char to reg\n"
 		"	nop\n", },
-	
+
 { OPLTYPE,	INAREG,
 	SANY,		TANY,
 	SOREG|SNAME,	TUCHAR,
@@ -1174,7 +1174,7 @@ struct optab table[] = {
 		NCREG,	RESC1,
 		"	l.d A1,AL	# load into double floating-point reg\n"
 		"	nop\n", },
-    
+
 /*
  * Jumps.
  */
@@ -1502,7 +1502,7 @@ struct optab table[] = {
 		NCREG,	RESC1,
 		"	l.d A1,(AL)\n"
 		"	nop\n", },
-    
+
 { UMUL, INAREG,
 	SANY,	TPOINT|TWORD,
 	SNAME,	TPOINT|TWORD,

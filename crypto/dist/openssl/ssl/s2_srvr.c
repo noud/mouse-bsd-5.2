@@ -5,21 +5,21 @@
  * This package is an SSL implementation written
  * by Eric Young (eay@cryptsoft.com).
  * The implementation was written so as to conform with Netscapes SSL.
- * 
+ *
  * This library is free for commercial and non-commercial use as long as
  * the following conditions are aheared to.  The following conditions
  * apply to all code found in this distribution, be it the RC4, RSA,
  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
  * included with this distribution is covered by the same copyright terms
  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
- * 
+ *
  * Copyright remains Eric Young's, and as such any Copyright notices in
  * the code are not to be removed.
  * If this package is used in a product, Eric Young should be given attribution
  * as the author of the parts of the library used.
  * This can be in the form of a textual message at program startup or
  * in documentation (online or textual) provided with the package.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -34,10 +34,10 @@
  *     Eric Young (eay@cryptsoft.com)"
  *    The word 'cryptographic' can be left out if the rouines from the library
  *    being used are not cryptographic related :-).
- * 4. If you include any Windows specific code (or a derivative thereof) from 
+ * 4. If you include any Windows specific code (or a derivative thereof) from
  *    the apps directory (application code) you must include an acknowledgement:
  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * The licence and distribution terms for any publically available version or
  * derivative of this code cannot be changed.  i.e. this code cannot simply be
  * copied and put under another distribution licence
@@ -63,7 +63,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -120,7 +120,7 @@
 static const SSL_METHOD *ssl2_get_server_method(int ver);
 static int get_client_master_key(SSL *s);
 static int get_client_hello(SSL *s);
-static int server_hello(SSL *s); 
+static int server_hello(SSL *s);
 static int get_client_finished(SSL *s);
 static int server_verify(SSL *s);
 static int server_finish(SSL *s);
@@ -345,7 +345,7 @@ int ssl2_accept(SSL *s)
 			goto end;
 			/* BREAK; */
 			}
-		
+
 		if ((cb != NULL) && (s->state != state))
 			{
 			new_state=s->state;
@@ -450,7 +450,7 @@ static int get_client_master_key(SSL *s)
 		(s->s2->ssl2_rollback)?RSA_SSLV23_PADDING:RSA_PKCS1_PADDING);
 
 	is_export=SSL_C_IS_EXPORT(s->session->cipher);
-	
+
 	if (!ssl_cipher_get_evp(s->session,&c,&md,NULL,NULL,NULL))
 		{
 		ssl2_return_error(s,SSL2_PE_NO_CIPHER);
@@ -539,10 +539,10 @@ static int get_client_hello(SSL *s)
 	if (s->state == SSL2_ST_GET_CLIENT_HELLO_B)
 		{
 		i=ssl2_read(s,(char *)&(p[s->init_num]),9-s->init_num);
-		if (i < (9-s->init_num)) 
+		if (i < (9-s->init_num))
 			return(ssl2_part_read(s,SSL_F_GET_CLIENT_HELLO,i));
 		s->init_num = 9;
-	
+
 		if (*(p++) != SSL2_MT_CLIENT_HELLO)
 			{
 			if (p[-1] != SSL2_MT_ERROR)
@@ -588,7 +588,7 @@ static int get_client_hello(SSL *s)
 	/* get session-id before cipher stuff so we can get out session
 	 * structure if it is cached */
 	/* session-id */
-	if ((s->s2->tmp.session_id_length != 0) && 
+	if ((s->s2->tmp.session_id_length != 0) &&
 		(s->s2->tmp.session_id_length != SSL2_SSL_SESSION_ID_LENGTH))
 		{
 		ssl2_return_error(s,SSL2_PE_UNDEFINED_ERROR);
@@ -735,7 +735,7 @@ static int server_hello(SSL *s)
 			CRYPTO_add(&s->cert->references,1,CRYPTO_LOCK_SSL_CERT);
 			if (s->session->sess_cert != NULL)
 				ssl_cert_free(s->session->sess_cert);
-			s->session->sess_cert=s->cert;		
+			s->session->sess_cert=s->cert;
 			}
 		else	/* We have a session id-cache hit, if the
 			 * session-id has no certificate listed against
@@ -775,7 +775,7 @@ static int server_hello(SSL *s)
 			s2n(n,p);		/* certificate length */
 			i2d_X509(s->cert->pkeys[SSL_PKEY_RSA_ENC].x509,&d);
 			n=0;
-			
+
 			/* lets send out the ciphers we like in the
 			 * prefered order */
 			sk= s->session->ciphers;
@@ -805,7 +805,7 @@ static int server_hello(SSL *s)
  		{
 		if (!ssl_init_wbio_buffer(s,1)) return(-1);
  		}
- 
+
 	return(ssl2_do_write(s));
 	}
 
@@ -1004,7 +1004,7 @@ static int request_certificate(SSL *s)
 			SSLerr(SSL_F_REQUEST_CERTIFICATE, ERR_R_INTERNAL_ERROR);
 			goto end;
 			}
-		
+
 		/* ok we have a response */
 		/* certificate type, there is only one right now. */
 		ctype= *(p++);
@@ -1029,7 +1029,7 @@ static int request_certificate(SSL *s)
 		}
 	j = (int)len - s->init_num;
 	i = ssl2_read(s,(char *)&(p[s->init_num]),j);
-	if (i < j) 
+	if (i < j)
 		{
 		ret=ssl2_part_read(s,SSL_F_REQUEST_CERTIFICATE,i);
 		goto end;
@@ -1083,7 +1083,7 @@ static int request_certificate(SSL *s)
 		EVP_PKEY_free(pkey);
 		EVP_MD_CTX_cleanup(&ctx);
 
-		if (i > 0) 
+		if (i > 0)
 			{
 			if (s->session->peer != NULL)
 				X509_free(s->session->peer);

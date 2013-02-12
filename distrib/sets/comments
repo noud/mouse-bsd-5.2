@@ -237,8 +237,8 @@ comp-ipf-include header files for the IPfilter C API
 comp-krb5-catman formatted manual pages for Kerberos V support
 comp-krb5-include header files for Kerberos V support
 comp-krb5-lib 	libraries to support Kerberos V compilation
-comp-krb5-man 	source manual pages for Kerberos V support 
-comp-krb5-proflib 	profiling libraries for Kerberos V support 
+comp-krb5-man 	source manual pages for Kerberos V support
+comp-krb5-proflib 	profiling libraries for Kerberos V support
 comp-krb5c-catman 	pre-formatted manual pages for Kerberos V C support
 comp-objc-bin compilers and tools for the Objective C programming language
 comp-objc-lib static libraries and shared library links for the Objective C programming language
@@ -455,7 +455,7 @@ misc-netutil-examples example configuration files for network software
 misc-ntp-htmldoc HTML documentation for ntp(8) software
 misc-pf-examples
 misc-postfix-examples example configuration files for postfix
-misc-postfix-htmldoc	HTML documentation for postfix 
+misc-postfix-htmldoc	HTML documentation for postfix
 misc-psd-doc the Programmer's Supplementary Documentation for BSD
 misc-reference-share miscellaneous reference documents
 misc-router-examples example configuration files for routing daemons

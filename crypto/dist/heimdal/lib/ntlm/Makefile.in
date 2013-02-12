@@ -417,7 +417,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libheimntlm.la: $(libheimntlm_la_OBJECTS) $(libheimntlm_la_DEPENDENCIES) 
+libheimntlm.la: $(libheimntlm_la_OBJECTS) $(libheimntlm_la_DEPENDENCIES)
 	$(libheimntlm_la_LINK) -rpath $(libdir) $(libheimntlm_la_OBJECTS) $(libheimntlm_la_LIBADD) $(LIBS)
 
 clean-checkPROGRAMS:
@@ -426,7 +426,7 @@ clean-checkPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-test_ntlm$(EXEEXT): $(test_ntlm_OBJECTS) $(test_ntlm_DEPENDENCIES) 
+test_ntlm$(EXEEXT): $(test_ntlm_OBJECTS) $(test_ntlm_DEPENDENCIES)
 	@rm -f test_ntlm$(EXEEXT)
 	$(LINK) $(test_ntlm_OBJECTS) $(test_ntlm_LDADD) $(LIBS)
 

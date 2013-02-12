@@ -311,7 +311,7 @@ isc_netaddr_frompath(isc_netaddr_t *netaddr, const char *path) {
         strcpy(netaddr->type.un, path);
         netaddr->zone = 0;
         return (ISC_R_SUCCESS);
-#else 
+#else
 	UNUSED(netaddr);
 	UNUSED(path);
         return (ISC_R_NOTIMPLEMENTED);

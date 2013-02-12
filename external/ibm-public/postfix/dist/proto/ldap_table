@@ -81,14 +81,14 @@
 #	For example, NEVER do this in a map defining $mydestination:
 #
 # .nf
-#	    query_filter = domain=* 
+#	    query_filter = domain=*
 #	    result_attribute = domain
 # .fi
 #
 #	Do this instead:
 #
 # .nf
-#	    query_filter = domain=%s 
+#	    query_filter = domain=%s
 #	    result_attribute = domain
 # .fi
 # GENERAL LDAP PARAMETERS
@@ -449,13 +449,13 @@
 #	nothing do with Postfix aliases.) The permitted values are
 #	those legal for the OpenLDAP/UM LDAP implementations:
 # .RS
-# .IP 0 
+# .IP 0
 #	never
-# .IP 1 
+# .IP 1
 #	when searching
-# .IP 2 
+# .IP 2
 #	when locating the base object for the search
-# .IP 3 
+# .IP 3
 #	always
 # .RE
 # .IP
@@ -475,7 +475,7 @@
 # .fi
 #	If you're using the OpenLDAP libraries compiled with SSL
 #	support, Postfix can connect to LDAP SSL servers and can
-#	issue the STARTTLS command. 
+#	issue the STARTTLS command.
 #
 #	LDAP SSL service can be requested by using a LDAP SSL URL
 #	in the server_host parameter:
@@ -621,11 +621,11 @@
 # .fi
 #	Carsten Hoeger,
 #	Hery Rakotoarisoa,
-#	John Hensley, 
+#	John Hensley,
 #	Keith Stevenson,
 #	LaMont Jones,
 #	Liviu Daia,
-#	Manuel Guesdon, 
+#	Manuel Guesdon,
 #	Mike Mattice,
 #	Prabhat K Singh,
 #	Sami Haahtinen,

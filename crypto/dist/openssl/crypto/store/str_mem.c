@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -174,7 +174,7 @@ static STORE_OBJECT *mem_get(STORE *s, STORE_OBJECT_TYPES type,
 	OPENSSL_ITEM attributes[], OPENSSL_ITEM parameters[])
 	{
 	void *context = mem_list_start(s, type, attributes, parameters);
-	
+
 	if (context)
 		{
 		STORE_OBJECT *object = mem_list_next(s, context);
@@ -299,7 +299,7 @@ static STORE_OBJECT *mem_list_next(STORE *s, void *handle)
 		}
 	if (context->search_index < 0)
 		return NULL;
-	
+
 	key.attr_info =
 		(STORE_ATTR_INFO *)sk_value(context->search_attributes,
 			context->search_index);

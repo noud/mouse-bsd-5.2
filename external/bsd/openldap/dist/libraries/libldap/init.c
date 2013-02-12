@@ -32,7 +32,7 @@
 #include "lutil.h"
 
 struct ldapoptions ldap_int_global_options =
-	{ LDAP_UNINITIALIZED, LDAP_DEBUG_NONE };  
+	{ LDAP_UNINITIALIZED, LDAP_DEBUG_NONE };
 
 #define ATTR_NONE	0
 #define ATTR_BOOL	1
@@ -117,7 +117,7 @@ static const struct ol_attribute {
 #ifdef HAVE_GNUTLS
 	{0, ATTR_TLS,	"TLS_CRL",			NULL,	LDAP_OPT_X_TLS_CRLFILE},
 #endif
-        
+
 #endif
 
 	{0, ATTR_NONE,		NULL,		NULL,	0}
@@ -173,7 +173,7 @@ static void openldap_ldap_init_w_conf(
 
 		/* anything left? */
 		if(*start == '\0') continue;
-		
+
 
 		/* parse the command */
 		cmd=start;
@@ -183,7 +183,7 @@ static void openldap_ldap_init_w_conf(
 		if(*start == '\0') {
 			/* command has no argument */
 			continue;
-		} 
+		}
 
 		*start++ = '\0';
 
@@ -204,7 +204,7 @@ static void openldap_ldap_init_w_conf(
 
 			switch(attrs[i].type) {
 			case ATTR_BOOL:
-				if((strcasecmp(opt, "on") == 0) 
+				if((strcasecmp(opt, "on") == 0)
 					|| (strcasecmp(opt, "yes") == 0)
 					|| (strcasecmp(opt, "true") == 0))
 				{
@@ -360,7 +360,7 @@ static void openldap_ldap_init_w_env(
 
 		switch(attrs[i].type) {
 		case ATTR_BOOL:
-			if((strcasecmp(value, "on") == 0) 
+			if((strcasecmp(value, "on") == 0)
 				|| (strcasecmp(value, "yes") == 0)
 				|| (strcasecmp(value, "true") == 0))
 			{
@@ -406,12 +406,12 @@ static void openldap_ldap_init_w_env(
 		case ATTR_SASL:
 #ifdef HAVE_CYRUS_SASL
 		   	ldap_int_sasl_config( gopts, attrs[i].offset, value );
-#endif			 	
+#endif
 		   	break;
 		case ATTR_TLS:
 #ifdef HAVE_TLS
 		   	ldap_int_tls_config( NULL, attrs[i].offset, value );
-#endif			 	
+#endif
 		   	break;
 		}
 	}
@@ -463,7 +463,7 @@ ldap_int_destroy_global_options(void)
 #endif
 }
 
-/* 
+/*
  * Initialize the global options structure with default values.
  */
 void ldap_int_initialize_global_options( struct ldapoptions *gopts, int *dbglvl )
@@ -548,27 +548,27 @@ void ldap_int_initialize( struct ldapoptions *gopts, int *dbglvl )
 #ifdef HAVE_WINSOCK2
 {	WORD wVersionRequested;
 	WSADATA wsaData;
- 
+
 	wVersionRequested = MAKEWORD( 2, 0 );
 	if ( WSAStartup( wVersionRequested, &wsaData ) != 0 ) {
 		/* Tell the user that we couldn't find a usable */
 		/* WinSock DLL.                                  */
 		return;
 	}
- 
+
 	/* Confirm that the WinSock DLL supports 2.0.*/
 	/* Note that if the DLL supports versions greater    */
 	/* than 2.0 in addition to 2.0, it will still return */
 	/* 2.0 in wVersion since that is the version we      */
 	/* requested.                                        */
- 
+
 	if ( LOBYTE( wsaData.wVersion ) != 2 ||
 		HIBYTE( wsaData.wVersion ) != 0 )
 	{
 	    /* Tell the user that we couldn't find a usable */
 	    /* WinSock DLL.                                  */
 	    WSACleanup( );
-	    return; 
+	    return;
 	}
 }	/* The WinSock DLL is acceptable. Proceed. */
 #elif HAVE_WINSOCK

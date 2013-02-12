@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> <!-- -*- sgml -*- -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
      xmlns:fo="http://www.w3.org/1999/XSL/Format" version="1.0">
 
 <xsl:import href="http://docbook.sourceforge.net/release/xsl/current/fo/docbook.xsl"/>
@@ -12,14 +12,14 @@
 <xsl:param name="stylesheet.result.type" select="'fo'"/>
 <!-- fo extensions: PDF bookmarks and index terms -->
 <xsl:param name="use.extensions" select="'1'"/>
-<xsl:param name="xep.extensions" select="0"/>      
-<xsl:param name="fop.extensions" select="0"/>     
-<xsl:param name="saxon.extensions" select="0"/>   
+<xsl:param name="xep.extensions" select="0"/>
+<xsl:param name="fop.extensions" select="0"/>
+<xsl:param name="saxon.extensions" select="0"/>
 <xsl:param name="passivetex.extensions" select="1"/>
 <xsl:param name="tablecolumns.extension" select="'1'"/>
 
 <!-- ensure we are using single sided -->
-<xsl:param name="double.sided" select="'0'"/> 
+<xsl:param name="double.sided" select="'0'"/>
 
 <!-- insert cross references to page numbers -->
 <xsl:param name="insert.xref.page.number" select="1"/>
@@ -36,20 +36,20 @@
 
 <!-- make pre listings indented a bit + a bg colour -->
 <xsl:template match="programlisting | screen">
-  <fo:block start-indent="0.25in" wrap-option="no-wrap" 
-            white-space-collapse="false" text-align="start" 
+  <fo:block start-indent="0.25in" wrap-option="no-wrap"
+            white-space-collapse="false" text-align="start"
             font-family="monospace" background-color="#f2f2f9"
-            linefeed-treatment="preserve" 
+            linefeed-treatment="preserve"
             xsl:use-attribute-sets="normal.para.spacing">
     <xsl:apply-templates/>
   </fo:block>
 </xsl:template>
 <!-- make verbatim output prettier -->
 <xsl:template match="literallayout">
-  <fo:block start-indent="0.25in" wrap-option="no-wrap" 
-            white-space-collapse="false" text-align="start" 
+  <fo:block start-indent="0.25in" wrap-option="no-wrap"
+            white-space-collapse="false" text-align="start"
             font-family="monospace" background-color="#edf7f4"
-            linefeed-treatment="preserve" 
+            linefeed-treatment="preserve"
             space-before="0em" space-after="0em">
     <xsl:apply-templates/>
   </fo:block>
@@ -80,7 +80,7 @@
   </xsl:variable>
   <xsl:choose>
     <xsl:when test="parent::*/@spacing = 'compact'">
-      <fo:list-item id="{$id}" 
+      <fo:list-item id="{$id}"
           xsl:use-attribute-sets="compact.list.item.spacing">
         <xsl:copy-of select="$item.contents"/>
       </fo:list-item>
@@ -109,7 +109,7 @@
   </xsl:variable>
   <xsl:choose>
     <xsl:when test="parent::*/@spacing = 'compact'">
-      <fo:list-item id="{$id}" 
+      <fo:list-item id="{$id}"
           xsl:use-attribute-sets="compact.list.item.spacing">
         <xsl:copy-of select="$item.contents"/>
       </fo:list-item>
@@ -127,14 +127,14 @@
 <xsl:template match="varlistentry" mode="vl.as.blocks">
   <xsl:variable name="id">
     <xsl:call-template name="object.id"/></xsl:variable>
-  <fo:block id="{$id}" xsl:use-attribute-sets="list.item.spacing"  
-      keep-together.within-column="always" 
+  <fo:block id="{$id}" xsl:use-attribute-sets="list.item.spacing"
+      keep-together.within-column="always"
       keep-with-next.within-column="always">
     <xsl:apply-templates select="term"/>
   </fo:block>
-  <fo:block start-indent="0.5in" end-indent="0in" 
-            space-after.minimum="0.2em" 
-            space-after.optimum="0.4em" 
+  <fo:block start-indent="0.5in" end-indent="0in"
+            space-after.minimum="0.2em"
+            space-after.optimum="0.4em"
             space-after.maximum="0.6em">
     <fo:block>
       <xsl:apply-templates select="listitem"/>
@@ -161,7 +161,7 @@
         <fo:table-row height="14pt">
           <fo:table-cell text-align="left" display-align="after">
             <xsl:attribute name="relative-align">baseline</xsl:attribute>
-            <fo:block> 
+            <fo:block>
               <fo:block> </fo:block><!-- empty cell -->
             </fo:block>
           </fo:table-cell>

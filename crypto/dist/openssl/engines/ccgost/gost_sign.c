@@ -60,7 +60,7 @@ DSA_SIG *gost_do_sign(const unsigned char *dgst,int dlen, DSA *dsa)
 		{
 		GOSTerr(GOST_F_GOST_DO_SIGN,GOST_R_NO_MEMORY);
 		goto err;
-		}	
+		}
 	tmp=BN_CTX_get(ctx);
 	k = BN_CTX_get(ctx);
 	tmp2 = BN_CTX_get(ctx);
@@ -68,7 +68,7 @@ DSA_SIG *gost_do_sign(const unsigned char *dgst,int dlen, DSA *dsa)
 	if (BN_is_zero(tmp))
 		{
 		BN_one(md);
-		}	
+		}
 	do
 		{
 		do
@@ -87,13 +87,13 @@ DSA_SIG *gost_do_sign(const unsigned char *dgst,int dlen, DSA *dsa)
 		if (!newsig->s) newsig->s=BN_new();
 		BN_mod_add(newsig->s,tmp,tmp2,dsa->q,ctx);
 		}
-	while (BN_is_zero(newsig->s));		
+	while (BN_is_zero(newsig->s));
 	err:
 	BN_free(md);
 	BN_CTX_end(ctx);
 	BN_CTX_free(ctx);
 	return newsig;
-	}	
+	}
 
 
 /*
@@ -150,7 +150,7 @@ int gost_do_verify(const unsigned char *dgst, int dgst_len,
 		return 0;
 		}
 	md=hashsum2bn(dgst);
-	
+
 	tmp=BN_CTX_get(ctx);
 	v=BN_CTX_get(ctx);
 	q2=BN_CTX_get(ctx);
@@ -159,7 +159,7 @@ int gost_do_verify(const unsigned char *dgst, int dgst_len,
 	tmp2=BN_CTX_get(ctx);
 	tmp3=BN_CTX_get(ctx);
 	u = BN_CTX_get(ctx);
-	
+
 	BN_mod(tmp,md,dsa->q,ctx);
 	if (BN_is_zero(tmp))
 		{
@@ -176,14 +176,14 @@ int gost_do_verify(const unsigned char *dgst, int dgst_len,
 	BN_mod_mul(tmp3,tmp,tmp2,dsa->p,ctx);
 	BN_mod(u,tmp3,dsa->q,ctx);
 	ok= BN_cmp(u,sig->r);
-	
+
 	BN_free(md);
 	BN_CTX_end(ctx);
 	BN_CTX_free(ctx);
 	if (ok!=0)
 		{
 		GOSTerr(GOST_F_GOST_DO_VERIFY,GOST_R_SIGNATURE_MISMATCH);
-		}	
+		}
 	return (ok==0);
 	}
 
@@ -199,7 +199,7 @@ int gost94_compute_public(DSA *dsa)
 		{
 		GOSTerr(GOST_F_GOST94_COMPUTE_PUBLIC,GOST_R_KEY_IS_NOT_INITALIZED);
 		return 0;
-		}	
+		}
 	/* Compute public key  y = a^x mod p */
 	dsa->pub_key=BN_new();
 	BN_mod_exp(dsa->pub_key, dsa->g,dsa->priv_key,dsa->p,ctx);
@@ -220,7 +220,7 @@ int fill_GOST94_params(DSA *dsa,int nid)
 		{
 		GOSTerr(GOST_F_FILL_GOST94_PARAMS,GOST_R_UNSUPPORTED_PARAMETER_SET);
 		return 0;
-		}	
+		}
 #define dump_signature(a,b,c)
 	if (dsa->p) { BN_free(dsa->p); }
 	dsa->p=NULL;
@@ -232,7 +232,7 @@ int fill_GOST94_params(DSA *dsa,int nid)
 	dsa->g=NULL;
 	BN_dec2bn(&(dsa->g),params->a);
 	return 1;
-	}	
+	}
 
 /*
  *  Generate GOST R 34.10-94 keypair
@@ -318,4 +318,4 @@ int store_bignum(BIGNUM *bn, unsigned char *buf,int len)
 	memset(buf,0,len);
 	BN_bn2bin(bn,buf+len-bytes);
 	return 1;
-	}	
+	}

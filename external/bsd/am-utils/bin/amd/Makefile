@@ -33,7 +33,7 @@ DPADD+=	${LIBLDAP}
 .if (${MKPIC} == "no" || (defined(LDSTATIC) && ${LDSTATIC} != ""))
 LDADD+=	-llber
 DPADD+=	${LIBLBER}
-.if ${MKCRYPTO} != "no" 
+.if ${MKCRYPTO} != "no"
 DPADD+=	${LIBSSL} ${LIBCRYPTO}
 LDADD+=	-lssl -lcrypto
 .endif

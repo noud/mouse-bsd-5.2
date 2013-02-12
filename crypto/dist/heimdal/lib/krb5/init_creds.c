@@ -45,11 +45,11 @@ krb5_get_init_creds_opt_init(krb5_get_init_creds_opt *opt)
 }
 
 krb5_error_code KRB5_LIB_FUNCTION
-krb5_get_init_creds_opt_alloc(krb5_context context, 
+krb5_get_init_creds_opt_alloc(krb5_context context,
 			      krb5_get_init_creds_opt **opt)
 {
     krb5_get_init_creds_opt *o;
-    
+
     *opt = NULL;
     o = calloc(1, sizeof(*o));
     if (o == NULL) {
@@ -69,7 +69,7 @@ krb5_get_init_creds_opt_alloc(krb5_context context,
 }
 
 krb5_error_code
-_krb5_get_init_creds_opt_copy(krb5_context context, 
+_krb5_get_init_creds_opt_copy(krb5_context context,
 			      const krb5_get_init_creds_opt *in,
 			      krb5_get_init_creds_opt **out)
 {
@@ -109,7 +109,7 @@ _krb5_get_init_creds_opt_free_krb5_error(krb5_get_init_creds_opt *opt)
 
 void KRB5_LIB_FUNCTION
 _krb5_get_init_creds_opt_set_krb5_error(krb5_context context,
-					krb5_get_init_creds_opt *opt, 
+					krb5_get_init_creds_opt *opt,
 					const KRB_ERROR *error)
 {
     krb5_error_code ret;
@@ -126,7 +126,7 @@ _krb5_get_init_creds_opt_set_krb5_error(krb5_context context,
     if (ret) {
 	free(opt->opt_private->error);
 	opt->opt_private->error = NULL;
-    }	
+    }
 }
 
 
@@ -225,7 +225,7 @@ krb5_get_init_creds_opt_set_default_flags(krb5_context context,
     if(t != 0)
 	krb5_get_init_creds_opt_set_renew_life(opt, t);
 
-    krb5_appdefault_boolean(context, appname, realm, "no-addresses", 
+    krb5_appdefault_boolean(context, appname, realm, "no-addresses",
 			    KRB5_ADDRESSLESS_DEFAULT, &b);
     krb5_get_init_creds_opt_set_addressless (context, opt, b);
 

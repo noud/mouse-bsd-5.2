@@ -18,7 +18,7 @@ There are some new files as well:
 	prototype	describes the file contents of the package.
 			You might like to review its contents to
 			see whether you want to include any other
-			files or remove some. NB I've made the man 
+			files or remove some. NB I've made the man
 			pages go into 1m as they should on svr4.
 	preinstall	runs before installation takes place. It
 			ensures that ntp is down if it is up before
@@ -27,7 +27,7 @@ There are some new files as well:
 	preremove	brings down ntp before removing the package.
 
 You create a package using "make package". This creates a file
-called xntp.pkg. To install this package, you use 
+called xntp.pkg. To install this package, you use
 "pkgadd -d `pwd`/xntp.pkg xntp". This will start up ntp if
-/etc/inet/ntp.conf exists. If you don't want the package anymore, use 
+/etc/inet/ntp.conf exists. If you don't want the package anymore, use
 "pkgrm xntp". I have tested this on Solaris 2.4.

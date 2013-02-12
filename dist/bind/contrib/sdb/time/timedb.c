@@ -45,10 +45,10 @@ static dns_sdbimplementation_t *timedb = NULL;
 /*
  * This database operates on relative names.
  *
- * "time" and "@" return the time in a TXT record.  
+ * "time" and "@" return the time in a TXT record.
  * "clock" is a CNAME to "time"
  * "current" is a DNAME to "@" (try time.current.time)
- */ 
+ */
 static isc_result_t
 timedb_lookup(const char *zone, const char *name, void *dbdata,
 	      dns_sdblookup_t *lookup)

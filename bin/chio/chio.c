@@ -400,7 +400,7 @@ do_params(const char *cname, int argc, char **argv)
 		usage();
 		/* NOTREACHED */
 	}
-	
+
 	/* Get params from changer and display them. */
 	(void)memset(&data, 0, sizeof(data));
 	if (ioctl(changer_fd, CHIOGPARAMS, &data))

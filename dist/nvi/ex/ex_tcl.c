@@ -33,13 +33,13 @@ static const char sccsid[] = "Id: ex_tcl.c,v 8.11 2001/06/25 15:19:21 skimo Exp 
 #include <tcl.h>
 #endif
 
-/* 
+/*
  * ex_tcl -- :[line [,line]] tcl [command]
  *	Run a command through the tcl interpreter.
  *
  * PUBLIC: int ex_tcl __P((SCR*, EXCMD *));
  */
-int 
+int
 ex_tcl(SCR *sp, EXCMD *cmdp)
 {
 #ifdef HAVE_TCL_INTERP

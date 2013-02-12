@@ -212,7 +212,7 @@ target_alias = @target_alias@
 #AUTOMAKE_OPTIONS = util/ansi2knr foreign dist-tarZ no-dependencies
 AUTOMAKE_OPTIONS = util/ansi2knr foreign 1.8
 ACLOCAL_AMFLAGS = -I m4 -I libopts/m4
-NULL = 
+NULL =
 SUBDIRS = $(am__append_1) scripts include ElectricFence @ARLIB_DIR@ \
 	libntp libparse ntpd ntpdate ntpdc ntpq parseutil adjtimed \
 	clockstuff kernel sntp util $(NULL)
@@ -336,7 +336,7 @@ config.h: stamp-h1
 stamp-h1: $(srcdir)/config.h.in $(top_builddir)/config.status
 	@rm -f stamp-h1
 	cd $(top_builddir) && $(SHELL) ./config.status config.h
-$(srcdir)/config.h.in:  $(am__configure_deps) 
+$(srcdir)/config.h.in:  $(am__configure_deps)
 	cd $(top_srcdir) && $(AUTOHEADER)
 	rm -f stamp-h1
 	touch $@

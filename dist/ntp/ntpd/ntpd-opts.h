@@ -1,8 +1,8 @@
 /*	$NetBSD: ntpd-opts.h,v 1.1.1.3.4.1 2009/01/16 02:48:56 snj Exp $	*/
 
-/*  
+/*
  *  EDIT THIS FILE WITH CAUTION  (ntpd-opts.h)
- *  
+ *
  *  It has been AutoGen-ed  Thursday January  8, 2009 at 06:11:54 AM EST
  *  From the definitions    ntpd-opts.def
  *  and the template file   options

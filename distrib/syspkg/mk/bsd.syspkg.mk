@@ -5,7 +5,7 @@
 #	NetBSD: bsd.pkg.mk,v 1.636 2001/01/05 18:03:14 jlam Exp
 #
 #	Plus many fixes and improvements from later revisions.
-#	
+#
 #	However, it has been pared down to a minimum of targets, and
 #	adapted to the standard bsd.*.mk world order.
 #
@@ -64,10 +64,10 @@ TOUCH_FLAGS?=		-f
 # 2 == shell "set -x" operation
 PKG_DEBUG_LEVEL?=	0
 _PKG_SILENT=		@
-_PKG_DEBUG=		
+_PKG_DEBUG=
 
 .if ${PKG_DEBUG_LEVEL} > 0
-_PKG_SILENT=	
+_PKG_SILENT=
 .endif
 
 .if ${PKG_DEBUG_LEVEL} > 1
@@ -301,7 +301,7 @@ real-package:
 
 ################################################################
 # Skeleton targets start here
-# 
+#
 # You shouldn't have to change these.  Either add the pre-* or
 # post-* targets/scripts or redefine the do-* targets.  These
 # targets don't do anything other than checking for cookies and
@@ -499,8 +499,8 @@ show-pkgtools-version:
 show-var:
 	@${ECHO} "${${VARNAME}}"
 
-# Stat all the files of one pkg and sum the sizes up. 
-# 
+# Stat all the files of one pkg and sum the sizes up.
+#
 # XXX This is intended to be run before pkg_create is called, so the
 # existence of ${PLIST} can be assumed.
 print-pkg-size-this:
@@ -519,9 +519,9 @@ print-pkg-size-this:
 	| ${DC}
 
 # Sizes of required pkgs (only)
-# 
+#
 # XXX This is intended to be run before pkg_create is called, so the
-# dependencies are all installed. 
+# dependencies are all installed.
 print-pkg-size-depends:
 	@(cd ${.CURDIR} && ${MAKE} ${MAKEFLAGS} run-depends-list PACKAGE_DEPENDS_QUICK=true) \
 	| xargs -n 1 ${SETENV} ${PKG_INFO} -e				\

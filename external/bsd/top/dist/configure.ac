@@ -240,7 +240,7 @@ AC_CHECK_DECLS([tputs, tgoto, tgetent, tgetflag, tgetnum, tgetstr],,,
 #endif
 ])
 
-# The third argument to tputs is a putc-like function that takes an 
+# The third argument to tputs is a putc-like function that takes an
 # argument.  On most systems that argument is an int, but on some it
 # is a char.  Determine which.
 AC_MSG_CHECKING([argument type of tputs putc function])

@@ -18,7 +18,7 @@ SRCS+=		bind.c open.c result.c error.c compare.c search.c \
 		assertion.c
 
 .if ${MKCRYPTO} != "no"
-SRCS+=		tls.c 
+SRCS+=		tls.c
 .endif
 
 CPPFLAGS+=	-DLDAP_LIBRARY

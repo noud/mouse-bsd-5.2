@@ -126,9 +126,9 @@ more flexible "reject_rbl_client" feature instead.
 
 [Obsolete 20021209] The "check_relay_domains" restriction is going
 away.  The SMTP server logs a warning and suggests using the more
-robust "reject_unauth_destination" instead. This means that Postfix 
-by default no longer grants relay permissions on the basis of the 
-client hostname, and that relay clients must be authorized via 
+robust "reject_unauth_destination" instead. This means that Postfix
+by default no longer grants relay permissions on the basis of the
+client hostname, and that relay clients must be authorized via
 other means such as permit_mynetworks.
 
 [Obsolete 20020917] In regexp lookup tables, the form /pattern1/!/pattern2/

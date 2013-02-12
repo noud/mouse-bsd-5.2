@@ -59,7 +59,7 @@ int
 cmd_crypt(int argc, char *argv[])
 {
 	char *cp, *psw;
-    
+
 	if (argc < 2)
 		psw = getpass("Password:");
 	else
@@ -77,7 +77,7 @@ cmd_help(int argc, char *argv[])
 {
 	struct commands *cmd;
 	char *cp;
-    
+
 	if (argc < 2)
 		help_usage();
 	cp = argv[1];

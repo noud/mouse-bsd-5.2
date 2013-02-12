@@ -83,10 +83,10 @@ sub handle {
 
 	my ($packet, $err) = new Net::DNS::Packet(\$buf, 0);
 	$err and die $err;
-	
+
 	$packet->header->qr(1);
 	$packet->header->aa(1);
-	
+
 	my @questions = $packet->question;
 	my $qname = $questions[0]->qname;
 	my $qtype = $questions[0]->qtype;
@@ -105,7 +105,7 @@ sub handle {
 	}
 
 	# $packet->print;
-	
+
 	return $packet->data;
 }
 

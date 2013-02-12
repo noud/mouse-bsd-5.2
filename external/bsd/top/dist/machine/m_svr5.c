@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 1984 through 2008, William LeFebvre
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  *     * Redistributions in binary form must reproduce the above
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- * 
+ *
  *     * Neither the name of William LeFebvre nor the names of other
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -30,20 +30,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* 
+/*
  * top - a top users display for Unix
  *
  * SYNOPSIS:  For Intel based System V Release 5 (Unixware7)
- * 
+ *
  * DESCRIPTION:
  * System V release 5 for i[3456]86
  * Works for:
  * i586-sco-sysv5uw7  i386 SCO UNIX_SVR5 (UnixWare 7)
- * 
+ *
  * LIBS:  -lelf -lmas
- * 
+ *
  * CFLAGS: -DHAVE_GETOPT -DORDER
- * 
+ *
  * AUTHORS: Mike Hopkirk       <hops@sco.com>
  *          David Cutter       <dpc@grail.com>
  *          Andrew Herbert     <andrew@werple.apana.org.au>
@@ -54,7 +54,7 @@
  *  SHOW_NICE - process nice fields don't seem to be being updated so changed
  *     default to display # of threads in use instead.
  *     define this to display nice fields (values always 0)
- * #define SHOW_NICE 1 
+ * #define SHOW_NICE 1
  */
 
 #define _KMEMUSER
@@ -82,9 +82,9 @@
 #include <sys/param.h>
 #include <sys/proc.h>
 #include <sys/sysmacros.h>
-#include <vm/anon.h> 
+#include <vm/anon.h>
 #include <sys/priocntl.h>
-#include <sys/tspriocntl.h> 
+#include <sys/tspriocntl.h>
 #include <sys/var.h>
 
 #include "top.h"
@@ -163,7 +163,7 @@ int process_states[8];
 char *procstatenames[] =
 {
   " on cpu, ", " running, ", " sleeping, ", " stopped, ",
-  " idling ",  " zombie, ", 
+  " idling ",  " zombie, ",
   NULL
 };
 
@@ -178,7 +178,7 @@ char *memorynames[] =
 {"K phys, ", "K used, ", "K free, ", "K swapUsed, ", "K swapFree", NULL};
 
 /* these are names given to allowed sorting orders -- first is default */
-char *ordernames[] = 
+char *ordernames[] =
 {"state", "cpu", "size", "res", "time", "pid", "uid", "rpid", "ruid", NULL};
 
 /* forward definitions for comparison functions */
@@ -361,7 +361,7 @@ get_system_info (struct system_info *si)
   get_swapinfo(&swap_total, &swap_free);
   memory_stats[3] = pagetok(swap_total - swap_free);
   memory_stats[4] = pagetok(swap_free);
- 
+
 
   /* set arrays and strings */
   si->cpustates = cpu_states;
@@ -455,7 +455,7 @@ get_process_info (
  */
 static double percent_cpu( struct prpsinfo *pp)
 {
-    static time_t tim = 0L;   
+    static time_t tim = 0L;
     time_t starttime;
     time_t ctime;
     time_t etime;
@@ -469,13 +469,13 @@ static double percent_cpu( struct prpsinfo *pp)
     ctime = pp->pr_time.tv_sec;
     if (pp->pr_time.tv_nsec > 500000000)
     ctime++;
-    if (etime) 
+    if (etime)
     {
         /* return  (float)(ctime * 100) / (unsigned)etime; */
         /* this was ocasionally giving vals >100 for some
          * unknown reason so the below normalises it
          */
-        
+
         double pct;
         pct = (float)(ctime * 100) / (unsigned)etime;
         return (pct < 100.0) ? pct : 100.00;
@@ -517,9 +517,9 @@ format_next_process (
 #else
 	          (u_short)pp->pr_nlwp < 999 ? (u_short)pp->pr_nlwp : 999,
 #endif
-	          format_k(SIZE_K(pp)), 
-                  format_k(RSS_K(pp)),  
-	          (ZOMBIE(pp))  ? state_abbrev[sZOMB] 
+	          format_k(SIZE_K(pp)),
+                  format_k(RSS_K(pp)),
+	          (ZOMBIE(pp))  ? state_abbrev[sZOMB]
                                 : state_abbrev[pp->pr_state],
 		  format_time(cputime),
 		  /* 100.0 * */ pctcpu,
@@ -958,14 +958,14 @@ getptable (struct prpsinfo *baseptr)
 	  (void) close (fd);
 	  continue;
       }
-       
+
       numprocs++;
       currproc++;
-      
+
       (void) close (fd);
 
       /* Atypical place for growth */
-      if (numprocs >= maxprocs) 
+      if (numprocs >= maxprocs)
       {
 	    reallocproc(2 * numprocs);
 	    currproc = (struct prpsinfo *)
@@ -1107,7 +1107,7 @@ static void reallocproc(int n)
 }
 
 /* ---------------------------------------------------------------- */
-/* Access kernel Metrics 
+/* Access kernel Metrics
  * SVR5 uses metreg inteface to Kernel statistics (metrics)
  *  see /usr/include/mas.h, /usr/include/metreg.h
  */
@@ -1116,15 +1116,15 @@ static void reallocproc(int n)
 #include <sys/dl.h>
 #include <mas.h>
 #include <metreg.h>
- 
-static int md;         /* metric descriptor handle */   
+
+static int md;         /* metric descriptor handle */
 static  uint32 ncpu;   /* number of processors in system */
 
 /* fwd dcls */
 static uint32 kmet_get_cpu( int type, char *desc);
-static void kmet_verify( 
-    uint32 md,    metid_t id,  units_t units, type_t mettype, 
-    uint32 metsz, uint32 nobj, uint32 nlocs,  resource_t res_id, 
+static void kmet_verify(
+    uint32 md,    metid_t id,  units_t units, type_t mettype,
+    uint32 metsz, uint32 nobj, uint32 nlocs,  resource_t res_id,
     uint32 ressz ) ;
 
 
@@ -1143,7 +1143,7 @@ static int kmet_init()
     uint32 *ncpu_p;
 
     /*  open (and map in) the metric access file and assoc data structures */
-    if( ( md = mas_open( MAS_FILE, MAS_MMAP_ACCESS ) ) < 0 ) 
+    if( ( md = mas_open( MAS_FILE, MAS_MMAP_ACCESS ) ) < 0 )
     {
         (void)fprintf(stderr,"mas_open failed\n");
         mas_perror();
@@ -1155,9 +1155,9 @@ static int kmet_init()
                    1, 1, MAS_SYSTEM, sizeof(uint32) );
 
     /* get the number of cpu's on the system */
-    if( (ncpu_p = (uint32 *)mas_get_met( md, NCPU, 0 )) == NULL ) 
+    if( (ncpu_p = (uint32 *)mas_get_met( md, NCPU, 0 )) == NULL )
     {
-        (void)fprintf(stderr,"mas_get_met of ncpu failed\n");  
+        (void)fprintf(stderr,"mas_get_met of ncpu failed\n");
         mas_perror();
         quit(12);
     }
@@ -1216,7 +1216,7 @@ kmet_get_freemem()
     time_t          td1;
     static time_t   td0;
     static dl_t     fm_old;
-    
+
 
     td1 = time(NULL);
     if ((fm_p = (dl_t *)mas_get_met( md, FREEMEM, 0 )) == NULL )
@@ -1225,8 +1225,8 @@ kmet_get_freemem()
         mas_perror();
         quit(12);
     }
-    fm = *fm_p; 
-    
+    fm = *fm_p;
+
     denom.dl_hop = 0;
     denom.dl_lop = (long) (td1 - td0);
     td0 = td1;
@@ -1236,7 +1236,7 @@ kmet_get_freemem()
      *  (new - old) / (time_between_samples)
      */
     fmc = lsub(fm, fm_old);
-    fm_old = fm; 
+    fm_old = fm;
 
     fmc = ldivide(fmc, denom);
     return  fmc.dl_lop;
@@ -1263,12 +1263,12 @@ kmet_get_nproc()
  * Function: 	kmet_verify
  * renamed from mas_usrtime example verify_met() fm Doug Souders
  *
- * Description:	Verify the registration data associated with this metric 
- *		match what are expected.  Cautious consumer applications 
+ * Description:	Verify the registration data associated with this metric
+ *		match what are expected.  Cautious consumer applications
  *		should do this sort of verification before using metrics.
  */
 static void
-kmet_verify( 
+kmet_verify(
      uint32     md,         /* metric descriptor                */
      metid_t    id,         /* metric id number                 */
      units_t    units,      /* expected units of metric         */
@@ -1292,35 +1292,35 @@ kmet_verify(
     uint32		*resval_p;	/* pointer to resource		*/
     uint32 		*ressz_p;	/* size of the resource met	*/
 
-    if (!(name = mas_get_met_name( md, id ))) 
+    if (!(name = mas_get_met_name( md, id )))
     {
             (void)fprintf(stderr,"mas_get_met_name failed\n");
             mas_perror();
             quit(11);
     }
-    
-    if (!(status_p = mas_get_met_status( md, id ))) 
+
+    if (!(status_p = mas_get_met_status( md, id )))
     {
             (void)fprintf(stderr,"mas_get_met_status of %s failed\n",
                 name );
             mas_perror();
             quit(11);
     }
-    if ( *status_p != MAS_AVAILABLE ) 
+    if ( *status_p != MAS_AVAILABLE )
     {
         (void)fprintf(stderr,"unexpected status word for %s\n"
                                 "- expected %u got %u\n",
                 name, MAS_AVAILABLE, *status_p );
         quit(11);
     }
-    if (!(units_p = mas_get_met_units( md, id ))) 
+    if (!(units_p = mas_get_met_units( md, id )))
     {
             (void)fprintf(stderr,"mas_get_met_units of %s failed\n",
                 name );
             mas_perror();
             quit(11);
     }
-    if (units != *units_p ) 
+    if (units != *units_p )
     {
             (void)fprintf(stderr,"unexpected units for %s\n"
                                     "- expected %u got %u\n",
@@ -1328,14 +1328,14 @@ kmet_verify(
             quit(11);
     }
 
-    if (!(mettype_p = mas_get_met_type( md, id ))) 
+    if (!(mettype_p = mas_get_met_type( md, id )))
     {
             (void)fprintf(stderr,"mas_get_met_type of %s failed\n",
                 name );
             mas_perror();
             quit(11);
     }
-    if (mettype != *mettype_p ) 
+    if (mettype != *mettype_p )
     {
             (void)fprintf(stderr,"unexpected metric type for %s\n"
                                     "- expected %u got %u\n",
@@ -1343,13 +1343,13 @@ kmet_verify(
             quit(11);
     }
 
-    if (!(objsz_p = mas_get_met_objsz( md, id ))) 
+    if (!(objsz_p = mas_get_met_objsz( md, id )))
     {
             (void)fprintf(stderr,"mas_get_met_objsz of %s failed\n", name );
             mas_perror();
             quit(11);
     }
-    if (*objsz_p != metsz ) 
+    if (*objsz_p != metsz )
     {
             (void)fprintf(stderr,"unexpected object size for %s\n"
                                     "- expected %u got %u\n",
@@ -1357,13 +1357,13 @@ kmet_verify(
             quit(11);
     }
 
-    if (!(nobj_p = mas_get_met_nobj( md, id ))) 
+    if (!(nobj_p = mas_get_met_nobj( md, id )))
     {
             (void)fprintf(stderr,"mas_get_met_nobj of %s failed\n", name );
             mas_perror();
             quit(11);
     }
-    if (nobj != *nobj_p ) 
+    if (nobj != *nobj_p )
     {
         (void)fprintf(stderr,"unexpected number of objects for %s\n"
                                     "- expected %u got %u\n",
@@ -1372,7 +1372,7 @@ kmet_verify(
     }
 
     /* get the number of instances that libmas thinks it knows about  */
-    if (!(nlocs_p = mas_get_met_nlocs( md, id ))) 
+    if (!(nlocs_p = mas_get_met_nlocs( md, id )))
     {
         (void)fprintf(stderr,"mas_get_met_nlocs of %s failed\n",  name );
         mas_perror();

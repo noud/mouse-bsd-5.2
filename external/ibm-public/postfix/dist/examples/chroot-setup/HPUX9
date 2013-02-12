@@ -17,5 +17,5 @@ umask 022
 
 cd ${POSTFIX_DIR}
 
-mkdir etc 
+mkdir etc
 cp /etc/services etc

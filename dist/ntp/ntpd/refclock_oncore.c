@@ -3287,7 +3287,7 @@ record_clock_stats(&(instance->peer->srcadr), Msg);
 		 * XXX NetBSD (@20060729 all variants) defines tv_sec as a long
 		 *  -> not SUS standard and doesn't even work within the system
 		 *     without kludges like the one below
-		 */ 
+		 */
 
 		time_t help;
 		gettimeofday(&tv, 0);

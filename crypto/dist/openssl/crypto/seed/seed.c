@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 KISA(Korea Information Security Agency). All rights reserved.  
+ * Copyright (c) 2007 KISA(Korea Information Security Agency). All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -226,7 +226,7 @@ void SEED_encrypt(const unsigned char s[SEED_BLOCK_SIZE], unsigned char d[SEED_B
 	char2word(s+4,  x2);
 	char2word(s+8,  x3);
 	char2word(s+12, x4);
-	
+
 	E_SEED(t0, t1, x1, x2, x3, x4, 0);
 	E_SEED(t0, t1, x3, x4, x1, x2, 2);
 	E_SEED(t0, t1, x1, x2, x3, x4, 4);
@@ -259,7 +259,7 @@ void SEED_decrypt(const unsigned char s[SEED_BLOCK_SIZE], unsigned char d[SEED_B
 	char2word(s+4,  x2);
 	char2word(s+8,  x3);
 	char2word(s+12, x4);
-	
+
 	E_SEED(t0, t1, x1, x2, x3, x4, 30);
 	E_SEED(t0, t1, x3, x4, x1, x2, 28);
 	E_SEED(t0, t1, x1, x2, x3, x4, 26);

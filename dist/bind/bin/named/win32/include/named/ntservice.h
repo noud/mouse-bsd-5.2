@@ -31,7 +31,7 @@ void
 ntservice_init();
 void UpdateSCM(DWORD);
 void ServiceControl(DWORD dwCtrlCode);
-void 
+void
 ntservice_shutdown();
 BOOL ntservice_isservice();
 #endif

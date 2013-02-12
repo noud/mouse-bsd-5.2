@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -125,7 +125,7 @@ static int policy_cache_create(X509 *x,
 	return ret;
 	}
 
-	
+
 static int policy_cache_new(X509 *x)
 	{
 	X509_POLICY_CACHE *cache;
@@ -230,7 +230,7 @@ static int policy_cache_new(X509 *x)
 
 	return 1;
 
-	
+
 }
 
 void policy_cache_free(X509_POLICY_CACHE *cache)

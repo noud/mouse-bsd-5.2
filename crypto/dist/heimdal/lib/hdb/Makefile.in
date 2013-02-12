@@ -519,9 +519,9 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-hdb_ldap.la: $(hdb_ldap_la_OBJECTS) $(hdb_ldap_la_DEPENDENCIES) 
+hdb_ldap.la: $(hdb_ldap_la_OBJECTS) $(hdb_ldap_la_DEPENDENCIES)
 	$(hdb_ldap_la_LINK) $(am_hdb_ldap_la_rpath) $(hdb_ldap_la_OBJECTS) $(hdb_ldap_la_LIBADD) $(LIBS)
-libhdb.la: $(libhdb_la_OBJECTS) $(libhdb_la_DEPENDENCIES) 
+libhdb.la: $(libhdb_la_OBJECTS) $(libhdb_la_DEPENDENCIES)
 	$(libhdb_la_LINK) -rpath $(libdir) $(libhdb_la_OBJECTS) $(libhdb_la_LIBADD) $(LIBS)
 
 clean-noinstPROGRAMS:
@@ -530,7 +530,7 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-test_dbinfo$(EXEEXT): $(test_dbinfo_OBJECTS) $(test_dbinfo_DEPENDENCIES) 
+test_dbinfo$(EXEEXT): $(test_dbinfo_OBJECTS) $(test_dbinfo_DEPENDENCIES)
 	@rm -f test_dbinfo$(EXEEXT)
 	$(LINK) $(test_dbinfo_OBJECTS) $(test_dbinfo_LDADD) $(LIBS)
 

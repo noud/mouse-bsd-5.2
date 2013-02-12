@@ -36,7 +36,7 @@ perl_back_compare(
 
 	avastr = ch_malloc( op->orc_ava->aa_desc->ad_cname.bv_len + 1 +
 		op->orc_ava->aa_value.bv_len + 1 );
-	
+
 	lutil_strcopy( lutil_strcopy( lutil_strcopy( avastr,
 		op->orc_ava->aa_desc->ad_cname.bv_val ), "=" ),
 		op->orc_ava->aa_value.bv_val );
@@ -44,7 +44,7 @@ perl_back_compare(
 #if defined(HAVE_WIN32_ASPERL) || defined(USE_ITHREADS)
 	PERL_SET_CONTEXT( PERL_INTERPRETER );
 #endif
-	ldap_pvt_thread_mutex_lock( &perl_interpreter_mutex );	
+	ldap_pvt_thread_mutex_lock( &perl_interpreter_mutex );
 
 	{
 		dSP; ENTER; SAVETMPS;
@@ -72,7 +72,7 @@ perl_back_compare(
 		PUTBACK; FREETMPS; LEAVE;
 	}
 
-	ldap_pvt_thread_mutex_unlock( &perl_interpreter_mutex );	
+	ldap_pvt_thread_mutex_unlock( &perl_interpreter_mutex );
 
 	ch_free( avastr );
 

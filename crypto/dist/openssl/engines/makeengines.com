@@ -179,7 +179,7 @@ $ ELSE
 $   CC/OBJECT='OBJECT_FILE' 'SOURCE_FILE'
 $ ENDIF
 $!
-$! Now, there are two ways to handle this.  We can either build 
+$! Now, there are two ways to handle this.  We can either build
 $! shareable images or stick the engine object file into libcrypto.
 $! For now, the latter is NOT supported.
 $!
@@ -244,7 +244,7 @@ $!
 $     CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File To Link Agianst 
+! Default System Options File To Link Agianst
 ! The Sharable VAX C Runtime Library.
 !
 SYS$SHARE:VAXCRTL.EXE/SHARE
@@ -273,7 +273,7 @@ $!
 $     CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File To Link Agianst 
+! Default System Options File To Link Agianst
 ! The Sharable C Runtime Library.
 !
 GNU_CC:[000000]GCCLIB/LIBRARY
@@ -308,7 +308,7 @@ $!
 $       CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File To Link Agianst 
+! Default System Options File To Link Agianst
 ! The Sharable DEC C Runtime Library.
 !
 SYS$SHARE:DECC$SHR.EXE/SHARE
@@ -323,7 +323,7 @@ $!
 $       CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File For AXP To Link Agianst 
+! Default System Options File For AXP To Link Agianst
 ! The Sharable C Runtime Library.
 !
 SYS$SHARE:CMA$OPEN_LIB_SHR/SHARE
@@ -344,7 +344,7 @@ $ ENDIF
 $!
 $!  Tell The User What Linker Option File We Are Using.
 $!
-$ WRITE SYS$OUTPUT "Using Linker Option File ",OPT_FILE,"."	
+$ WRITE SYS$OUTPUT "Using Linker Option File ",OPT_FILE,"."
 $!
 $! Time To RETURN.
 $!
@@ -419,7 +419,7 @@ $!
 $!   OPT_DEBUG Is NODEBUG, So Compile Without The Debugger Information.
 $!
 $    DEBUGGER = "NODEBUG"
-$    TRACEBACK = "NOTRACEBACK" 
+$    TRACEBACK = "NOTRACEBACK"
 $    GCC_OPTIMIZE = "OPTIMIZE"
 $    CC_OPTIMIZE = "OPTIMIZE"
 $    MACRO_OPTIMIZE = "OPTIMIZE"
@@ -441,7 +441,7 @@ $     CC_OPTIMIZE = "NOOPTIMIZE"
 $     MACRO_OPTIMIZE = "NOOPTIMIZE"
 $     WRITE SYS$OUTPUT "Debugger Information Will Be Produced During Compile."
 $     WRITE SYS$OUTPUT "Compiling Without Compiler Optimization."
-$   ELSE 
+$   ELSE
 $!
 $!    They Entered An Invalid Option..
 $!
@@ -522,7 +522,7 @@ $!
 $!    Check To See If We Have VAXC Or DECC.
 $!
 $     IF (ARCH.EQS."AXP").OR.(F$TRNLNM("DECC$CC_DEFAULT").NES."")
-$     THEN 
+$     THEN
 $!
 $!      Looks Like DECC, Set To Use DECC.
 $!

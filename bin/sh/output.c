@@ -285,7 +285,7 @@ doformat(struct output *dest, const char *f, va_list ap)
 	if (s == NULL)
 		error("Could not allocate formatted output buffer");
 	outstr(s, dest);
-	free(s);     
+	free(s);
 #else	/* !HAVE_VASPRINTF */
 	static const char digit[] = "0123456789ABCDEF";
 	char c;

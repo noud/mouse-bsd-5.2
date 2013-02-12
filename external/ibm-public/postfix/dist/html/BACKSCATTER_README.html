@@ -324,11 +324,11 @@ and is very easy to stop.
     <a href="postconf.5.html#body_checks">body_checks</a> = <a href="pcre_table.5.html">pcre</a>:/etc/postfix/body_checks
 
 /etc/postfix/header_checks:
-    /^(From|Return-Path):.*\b(user@domain\.tld)\b/ 
+    /^(From|Return-Path):.*\b(user@domain\.tld)\b/
         reject forged sender address in $1: header: $2
 
 /etc/postfix/body_checks:
-    /^[&gt; ]*(From|Return-Path):.*\b(user@domain\.tld)\b/ 
+    /^[&gt; ]*(From|Return-Path):.*\b(user@domain\.tld)\b/
         reject forged sender address in $1: header: $2
 </pre>
 </blockquote>

@@ -194,7 +194,7 @@ state3:
 	state = 4;
 	if (sflag == 0 || minusc) {
 		static int sigs[] =  {
-		    SIGINT, SIGQUIT, SIGHUP, 
+		    SIGINT, SIGQUIT, SIGHUP,
 #ifdef SIGTSTP
 		    SIGTSTP,
 #endif

@@ -226,7 +226,7 @@ md_update(void)
 void
 md_cleanup_install(void)
 {
-  
+
 #ifdef notyet			/* sed is too large for ramdisk */
 	enable_rc_conf();
 #endif

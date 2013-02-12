@@ -252,7 +252,7 @@ main(int argc, char *argv[])
 		fclose(pidfp);
 		pidfp = NULL;
 	} while (1);
-	
+
 	/* whack the group list */
 	gid = getegid();
 	if (setgroups(1, &gid) == -1) {

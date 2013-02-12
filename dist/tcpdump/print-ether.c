@@ -45,7 +45,7 @@ __RCSID("$NetBSD: print-ether.c,v 1.7 2007/07/24 11:53:43 drochner Exp $");
 
 #include "ether.h"
 
-const struct tok ethertype_values[] = { 
+const struct tok ethertype_values[] = {
     { ETHERTYPE_IP,		"IPv4" },
     { ETHERTYPE_MPLS,		"MPLS unicast" },
     { ETHERTYPE_MPLS_MULTI,	"MPLS multicast" },
@@ -96,15 +96,15 @@ ether_hdr_print(register const u_char *bp, u_int length)
 	if (!qflag) {
 	        if (ntohs(ep->ether_type) <= ETHERMTU)
 		          (void)printf(", 802.3");
-                else 
+                else
 		          (void)printf(", ethertype %s (0x%04x)",
 				       tok2str(ethertype_values,"Unknown", ntohs(ep->ether_type)),
-                                       ntohs(ep->ether_type));	      
+                                       ntohs(ep->ether_type));
         } else {
                 if (ntohs(ep->ether_type) <= ETHERMTU)
                           (void)printf(", 802.3");
-                else 
-                          (void)printf(", %s", tok2str(ethertype_values,"Unknown Ethertype (0x%04x)", ntohs(ep->ether_type)));  
+                else
+                          (void)printf(", %s", tok2str(ethertype_values,"Unknown Ethertype (0x%04x)", ntohs(ep->ether_type)));
         }
 
 	(void)printf(", length %u: ", length);
@@ -154,7 +154,7 @@ ether_print(const u_char *p, u_int length, u_int caplen)
 
 		if (!suppress_default_print)
 			default_print(p, caplen);
-	} 
+	}
 }
 
 /*
@@ -262,7 +262,7 @@ ether_encap_print(u_short ether_type, const u_char *p,
         case ETHERTYPE_JUMBO:
                 ether_type = ntohs(*(u_int16_t *)(p));
                 p += 2;
-                length -= 2;      
+                length -= 2;
                 caplen -= 2;
 
                 if (ether_type > ETHERMTU) {

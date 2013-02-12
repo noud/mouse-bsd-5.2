@@ -594,7 +594,7 @@ hosts on your local LAN listed, and /etc/resolv.conf and/or
 Q: Since I installed ppp-2.3.6, dialin users to my server have been
 getting this message when they run pppd:
 
-peer authentication required but no suitable secret(s) found for 
+peer authentication required but no suitable secret(s) found for
 authenticating any peer to us (ispserver)
 
 A: In 2.3.6, the default is to let an unauthenticated peer only use IP

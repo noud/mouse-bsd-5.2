@@ -285,8 +285,8 @@ int srvr_rply(
 
 	/*
 	 * Very carefully predict the time of arrival for the received
-	 * packet. 
-	 */ 
+	 * packet.
+	 */
 	LFPTOD(&xpkt.org, etemp);
 	etemp += dtemp;
 	xvnt = event(etemp, PACKET);
@@ -321,7 +321,7 @@ netpkt(
 
 	/*
 	 * In the present incarnation, no more than one buffer can be on
-	 * the queue; 
+	 * the queue;
 	 */
 	if (obuf == NULL) {
 		n->rbuflist = rbuf;
@@ -347,7 +347,7 @@ ndbeep(
 			    "\t%4c    T    %4c\t%4c  T+ERR  %3c\t%5cT+ERR+NTP\n", ' ', ' ', ' ', ' ',' ');
 			printf("\t%s\t%s\t%s\n", dash, dash, dash);
 			first_time = 0;
-			push(event(n->bdly, BEEP), &n->events);  
+			push(event(n->bdly, BEEP), &n->events);
         		push(event(n->sim_time, BEEP), &n->events);
 			printf("\t%16.6f\t%16.6f\t%16.6f\n",
                             n->time, n->clk_time, n->ntp_time);

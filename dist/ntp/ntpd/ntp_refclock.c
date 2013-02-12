@@ -327,7 +327,7 @@ refclock_timer(
 	if (refclock_conf[clktype]->clock_timer != noentry)
 		(refclock_conf[clktype]->clock_timer)(unit, peer);
 }
-	
+
 
 /*
  * refclock_transmit - simulate the transmit procedure

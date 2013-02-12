@@ -9,13 +9,13 @@
  * /src/NTP/ntp4-dev/libparse/clk_computime.c,v 4.10 2005/04/16 17:32:10 kardel RELEASE_20050508_A
  *
  * clk_computime.c,v 4.10 2005/04/16 17:32:10 kardel RELEASE_20050508_A
- * 
+ *
  * Supports Diem's Computime Radio Clock
- * 
+ *
  * Used the Meinberg clock as a template for Diem's Computime Radio Clock
  *
  * adapted by Alois Camenzind <alois.camenzind@ubs.ch>
- * 
+ *
  * Copyright (c) 1995-2005 by Frank Kardel <kardel <AT> ntp.org>
  * Copyright (c) 1989-1994 by Frank Kardel, Friedrich-Alexander Universität Erlangen-Nürnberg, Germany
  *
@@ -61,22 +61,22 @@ extern void printf P((const char *, ...));
 
 /*
  * The Computime receiver sends a datagram in the following format every minute
- * 
- * Timestamp	T:YY:MM:MD:WD:HH:MM:SSCRLF 
+ *
+ * Timestamp	T:YY:MM:MD:WD:HH:MM:SSCRLF
  * Pos          0123456789012345678901 2 3
  *              0000000000111111111122 2 2
  * Parse        T:  :  :  :  :  :  :  rn
- * 
- * T	Startcharacter "T" specifies start of the timestamp 
- * YY	Year MM	Month 1-12 
- * MD	Day of the month 
- * WD	Day of week 
- * HH	Hour 
- * MM   Minute 
+ *
+ * T	Startcharacter "T" specifies start of the timestamp
+ * YY	Year MM	Month 1-12
+ * MD	Day of the month
+ * WD	Day of week
+ * HH	Hour
+ * MM   Minute
  * SS   Second
- * CR   Carriage return 
+ * CR   Carriage return
  * LF   Linefeed
- * 
+ *
  */
 
 static struct format computime_fmt =
@@ -106,7 +106,7 @@ clockformat_t   clock_computime =
 
 /*
  * cvt_computime
- * 
+ *
  * convert simple type format
  */
 static          u_long
@@ -119,7 +119,7 @@ cvt_computime(
 	)
 {
 
-	if (!Strok(buffer, format->fixed_string)) { 
+	if (!Strok(buffer, format->fixed_string)) {
 		return CVT_NONE;
 	} else {
 		if (Stoi(&buffer[format->field_offsets[O_DAY].offset], &clock_time->day,
@@ -133,7 +133,7 @@ cvt_computime(
 		    Stoi(&buffer[format->field_offsets[O_MIN].offset], &clock_time->minute,
 			 format->field_offsets[O_MIN].length) ||
 		    Stoi(&buffer[format->field_offsets[O_SEC].offset], &clock_time->second,
-			 format->field_offsets[O_SEC].length)) { 
+			 format->field_offsets[O_SEC].length)) {
 			return CVT_FAIL | CVT_BADFMT;
 		} else {
 
@@ -158,19 +158,19 @@ inp_computime(
 	      )
 {
 	unsigned int rtc;
-	
+
 	parseprintf(DD_PARSE, ("inp_computime(0x%lx, 0x%x, ...)\n", (long)parseio, ch));
-	
+
 	switch (ch)
 	{
 	case 'T':
 		parseprintf(DD_PARSE, ("inp_computime: START seen\n"));
-		
+
 		parseio->parse_index = 1;
 		parseio->parse_data[0] = ch;
 		parseio->parse_dtime.parse_stime = *tstamp; /* collect timestamp */
 		return PARSE_INP_SKIP;
-	  
+
 	case '\n':
 		parseprintf(DD_PARSE, ("inp_computime: END seen\n"));
 		if ((rtc = parse_addchar(parseio, ch)) == PARSE_INP_SKIP)

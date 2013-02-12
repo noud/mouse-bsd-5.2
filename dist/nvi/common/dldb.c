@@ -28,7 +28,7 @@ RELOC(db_strerror,char *,(a),(int),int a;)
     if ((nvi_##func = dlsym(handle, #func)) == NULL) \
 	    goto error;
 
-static void 
+static void
 relocate()
 {
 	void *handle = dlopen(_PATH_DB3, RTLD_LAZY);

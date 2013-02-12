@@ -56,7 +56,7 @@
 #include "strnames.h"
 #include "handler.h"
 
-/* 
+/*
  * Get the security context information from SA.
  */
 int
@@ -76,7 +76,7 @@ get_security_context(sa, p)
 	struct isakmp_pl_t *trns;
 	struct isakmp_data *d;
 	struct ipsecdoi_sa_b *sab = (struct ipsecdoi_sa_b *)sa->v;
-	
+
 	/* check SA payload size */
 	if (sa->l < sizeof(*sab)) {
 		plog(LLV_ERROR, LOCATION, NULL,
@@ -91,7 +91,7 @@ get_security_context(sa, p)
 	if (pbuf == NULL)
 		return -1;
 
-	pa = (struct isakmp_parse_t *)pbuf->v; 
+	pa = (struct isakmp_parse_t *)pbuf->v;
         /* check the value of next payload */
 	if (pa->type != ISAKMP_NPTYPE_P) {
 		plog(LLV_ERROR, LOCATION, NULL,
@@ -112,7 +112,7 @@ get_security_context(sa, p)
 
 	/* now get transform */
 	bp = (caddr_t)prop + sizeof(struct isakmp_pl_p) + prop->spi_size;
-	len = ntohs(prop->h.len) - 
+	len = ntohs(prop->h.len) -
 		(sizeof(struct isakmp_pl_p) + prop->spi_size);
 	tbuf = isakmp_parsewoh(ISAKMP_NPTYPE_T, (struct isakmp_gen *)bp, len);
 	if (tbuf == NULL)
@@ -124,7 +124,7 @@ get_security_context(sa, p)
 		     "Invalid payload type=%u\n", ta->type);
 		return -1;
 	}
-	
+
 	trns = (struct isakmp_pl_t *)ta->ptr;
 
 	len = ntohs(trns->h.len) - sizeof(struct isakmp_pl_t);
@@ -138,7 +138,7 @@ get_security_context(sa, p)
 		if (type != IPSECDOI_ATTR_SECCTX) {
 			if (flag) {
 				len -= sizeof(*d);
-				d = (struct isakmp_data *)((char *)d 
+				d = (struct isakmp_data *)((char *)d
 				     + sizeof(*d));
 			} else {
 				len -= (sizeof(*d) + lorv);
@@ -196,7 +196,7 @@ init_avc(void)
 	if (avc_init("racoon", NULL, NULL, NULL, NULL) == 0)
 		mls_ready = 1;
 	else
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		     "racoon: could not initialize avc.\n");
 }
 
@@ -232,34 +232,34 @@ within_range(security_context_t sl, security_context_t range)
 	 */
 	rtn = avc_context_to_sid(sl, &slsid);
 	if (rtn != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 				"within_range: Unable to retrieve "
 				"sid for sl context (%s).\n", sl);
 		return 0;
 	}
 	rtn = avc_context_to_sid(range, &rangesid);
 	if (rtn != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 				"within_range: Unable to retrieve "
 				"sid for range context (%s).\n", range);
 		sidput(slsid);
 		return 0;
 	}
 
-	/* 
+	/*
 	 * Straight up test between sl and range
 	 */
 	tclass = SECCLASS_ASSOCIATION;
 	av = ASSOCIATION__POLMATCH;
 	rtn = avc_has_perm(slsid, rangesid, tclass, av, NULL, &avd);
 	if (rtn != 0) {
-		plog(LLV_INFO, LOCATION, NULL, 
+		plog(LLV_INFO, LOCATION, NULL,
 			"within_range: The sl is not within range\n");
 		sidput(slsid);
 		sidput(rangesid);
 		return 0;
 	}
-	plog(LLV_DEBUG, LOCATION, NULL, 
+	plog(LLV_DEBUG, LOCATION, NULL,
 		"within_range: The sl (%s) is within range (%s)\n", sl, range);
 		return 1;
 }

@@ -43,7 +43,7 @@ foreach $_ (<IN>) {
 			} elsif ($proto eq 'ah') {
 				print " -A $aalgo $akey" if $aalgo;
 			}
-		} 
+		}
 		print ";\n";
 
 		$src = $dst = $upper = $proxy = '';

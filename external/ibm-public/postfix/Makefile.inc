@@ -41,7 +41,7 @@ DPADD+=		${LIBLDAP}
 .  if (${MKPIC} == "no" || (defined(LDSTATIC) && ${LDSTATIC} != ""))
 LDADD+=		-llber
 DPADD+=		${LIBLBER}
-.   if ${MKCRYPTO} != "no" 
+.   if ${MKCRYPTO} != "no"
 DPADD+=		${LIBSSL} ${LIBCRYPTO}
 LDADD+=		-lssl -lcrypto
 .   endif
@@ -53,7 +53,7 @@ PFIX_SRCDIR=	${NETBSDSRCDIR}/external/ibm-public/postfix
 PFIX_LIBSDIRS=	dns dns masterlib master global global util util \
 		milter milter xsasl xsasl
 
-.if ${MKCRYPTO} != "no" 
+.if ${MKCRYPTO} != "no"
 PFIX_LIBSDIRS+=	tls tls
 .endif
 

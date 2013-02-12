@@ -1,4 +1,4 @@
-/* 
+/*
  * dhcpcd - DHCP client daemon
  * Copyright (c) 2006-2008 Roy Marples <roy@marples.name>
  * All rights reserved
@@ -200,7 +200,7 @@ send_arp_announce(void *arg)
 		open_socket(iface, ETHERTYPE_ARP);
 		add_event(iface->arp_fd, handle_arp_packet, iface);
 	}
-	if (++state->claims < ANNOUNCE_NUM)	
+	if (++state->claims < ANNOUNCE_NUM)
 		syslog(LOG_DEBUG,
 		    "%s: sending ARP announce (%d of %d), "
 		    "next in %d.00 seconds",

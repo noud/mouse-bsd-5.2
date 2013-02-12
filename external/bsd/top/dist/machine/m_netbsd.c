@@ -115,7 +115,7 @@ static char Thread_header[] =
 #define Thread_format \
         "%5d %5d %-8.8s %3d %-8.8s%7s %5.2f%% %5.2f%% %-12.12s %.12s"
 
-/* 
+/*
  * Process state names for the "STATE" column of the display.
  */
 
@@ -616,7 +616,7 @@ get_proc_info(struct system_info *si, struct process_select *sel,
 			total_procs++;
 			process_states[(unsigned char) pp->p_stat]++;
 			if (pp->p_stat != LSZOMB &&
-			    (show_idle || (pp->p_pctcpu != 0) || 
+			    (show_idle || (pp->p_pctcpu != 0) ||
 			    (pp->p_stat == LSRUN || pp->p_stat == LSONPROC)) &&
 			    (!show_uid || pp->p_ruid == (uid_t)sel->uid)) {
 				*prefp++ = pp;
@@ -627,7 +627,7 @@ get_proc_info(struct system_info *si, struct process_select *sel,
 
 	/* if requested, sort the "interesting" processes */
 	if (compare != NULL) {
-		qsort((char *)pref, active_procs, sizeof(struct kinfo_proc2 *), 
+		qsort((char *)pref, active_procs, sizeof(struct kinfo_proc2 *),
 		    (int (*)(const void *, const void *))compare);
 	}
 
@@ -729,7 +729,7 @@ get_lwp_info(struct system_info *si, struct process_select *sel,
 			total_lwps++;
 			process_states[(unsigned char) lp->l_stat]++;
 			if (lp->l_stat != LSZOMB &&
-			    (show_idle || (lp->l_pctcpu != 0) || 
+			    (show_idle || (lp->l_pctcpu != 0) ||
 			    (lp->l_stat == LSRUN || lp->l_stat == LSONPROC)) &&
 			    (!show_uid || uid_from_thread(lp) == (uid_t)sel->uid)) {
 				*lrefp++ = lp;
@@ -832,7 +832,7 @@ format_next_proc(caddr_t handle, char *(*get_userid)(int))
 		case LSRUN:
 		case LSSLEEP:
 		case LSIDL:
-			(void)snprintf(state, sizeof(state), "%.6s/%d", 
+			(void)snprintf(state, sizeof(state), "%.6s/%d",
 			     statep, get_cpunum(pp->p_cpuid));
 			statep = state;
 			break;
@@ -931,9 +931,9 @@ format_next_lwp(caddr_t handle, char *(*get_userid)(int))
 		switch (pl->l_stat) {
 		case LSONPROC:
 		case LSRUN:
-		case LSSLEEP:			
+		case LSSLEEP:
 		case LSIDL:
-			(void)snprintf(state, sizeof(state), "%.6s/%d", 
+			(void)snprintf(state, sizeof(state), "%.6s/%d",
 			     statep, get_cpunum(pl->l_cpuid));
 			statep = state;
 			break;
@@ -1303,7 +1303,7 @@ proc_owner(pid)
 	prefp = pref;
 	cnt = pref_len;
 	while (--cnt >= 0) {
-		pp = *prefp++;	
+		pp = *prefp++;
 		if (pp->p_pid == (pid_t)pid)
 			return(pp->p_ruid);
 	}

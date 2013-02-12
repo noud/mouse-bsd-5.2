@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 2004 Emmanuel Dreyfus
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -79,7 +79,7 @@
 #include "isakmp_cfg.h"
 #include "strnames.h"
 
-static vchar_t *isakmp_cfg_split(struct ph1handle *, 
+static vchar_t *isakmp_cfg_split(struct ph1handle *,
     struct isakmp_data *, struct unity_netentry*,int);
 
 vchar_t *
@@ -91,7 +91,7 @@ isakmp_unity_req(iph1, attr)
 	vchar_t *reply_attr = NULL;
 
 	if ((iph1->mode_cfg->flags & ISAKMP_CFG_VENDORID_UNITY) == 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
+		plog(LLV_ERROR, LOCATION, NULL,
 		    "Unity mode config request but the peer "
 		    "did not declare itself as  unity compliant\n");
 		return NULL;
@@ -104,7 +104,7 @@ isakmp_unity_req(iph1, attr)
 		type &= ~ISAKMP_GEN_MASK;
 
 		plog(LLV_DEBUG, LOCATION, NULL,
-		     "Short attribute %s = %d\n", 
+		     "Short attribute %s = %d\n",
 		     s_isakmp_cfg_type(type), ntohs(attr->lorv));
 
 		switch (type) {
@@ -127,13 +127,13 @@ isakmp_unity_req(iph1, attr)
 		int len;
 
 		if ((fd = open(filename, O_RDONLY, 0)) == -1) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot open \"%s\"\n", filename);
 			return NULL;
 		}
 
 		if ((len = read(fd, buf, MAXMOTD)) == -1) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "Cannot read \"%s\"\n", filename);
 			close(fd);
 			return NULL;
@@ -147,12 +147,12 @@ isakmp_unity_req(iph1, attr)
 	}
 
 	case UNITY_PFS:
-		reply_attr = isakmp_cfg_short(iph1, attr, 
+		reply_attr = isakmp_cfg_short(iph1, attr,
 		    isakmp_cfg_config.pfs_group);
 		break;
 
 	case UNITY_SAVE_PASSWD:
-		reply_attr = isakmp_cfg_short(iph1, attr, 
+		reply_attr = isakmp_cfg_short(iph1, attr,
 		    isakmp_cfg_config.save_passwd);
 		break;
 
@@ -161,7 +161,7 @@ isakmp_unity_req(iph1, attr)
 		break;
 
 	case UNITY_DEF_DOMAIN:
-		reply_attr = isakmp_cfg_string(iph1, 
+		reply_attr = isakmp_cfg_string(iph1,
 		    attr, isakmp_cfg_config.default_domain);
 		break;
 

@@ -91,7 +91,7 @@
 #include "tests.h"
 
 
-int 
+int
 main(int argc, char **argv)
 {
 	struct sigaction	act;

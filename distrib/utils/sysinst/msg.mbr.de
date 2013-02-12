@@ -72,7 +72,7 @@ message part_header
    Start(%3s) Größe(%3s) Flag Typ                    Bootmenü
    ---------- ---------- ---- ---------------------- --------
 .else
-   Start(%3s) Größe(%3s) Flag Typ 
+   Start(%3s) Größe(%3s) Flag Typ
    ---------- ---------- ---- ----------------
 .endif
 }
@@ -147,12 +147,12 @@ message No_free_space {Kein freier Speicherplatz}
 message Only_one_extended_ptn {Hier ist nur eine erweiterte Partition möglich}
 
 message editparttable
-{Die aktuelle MBR-Partition wird unten angezeigt. 
+{Die aktuelle MBR-Partition wird unten angezeigt.
 Flgs: a => Aktive Startpartition,
 .if BOOTSEL
-d => 'Bootselect' (Bootauswahl) Vorgabe, 
+d => 'Bootselect' (Bootauswahl) Vorgabe,
 .endif
-I => hier installieren. 
+I => hier installieren.
 Wählen Sie die Partition, die Sie verändern möchten:
 
 }

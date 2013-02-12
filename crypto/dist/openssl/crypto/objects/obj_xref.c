@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -196,7 +196,7 @@ void OBJ_sigid_free(void)
 		sigx_app = NULL;
 		}
 	}
-		
+
 #ifdef OBJ_XREF_TEST
 
 main()
@@ -224,5 +224,5 @@ main()
 			OBJ_nid2ln(n1), OBJ_nid2ln(n2), OBJ_nid2ln(n3));
 		}
 	}
-	
+
 #endif

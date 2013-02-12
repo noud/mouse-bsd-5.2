@@ -165,7 +165,7 @@ Version 1.18	Postfix releases 2.0.14 - 2.0.15
 	randomization is on (default).
 	File: smtp/smtp_addr.c
 
-	Compliance: write IPv6 address literals in mail headers 
+	Compliance: write IPv6 address literals in mail headers
 	as [IPv6:addr] instead of [addr] as per RFC 2821:4.1.3
 	tagging requirement, for example [IPv6:fec0:10:20::1].
 	Pointed out by Dr. Peter Bieringer.

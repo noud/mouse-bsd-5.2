@@ -226,7 +226,7 @@ sub update_database {
 sub sigsegv_handler {
     my $backup = $database_name . "." . time();
 
-    rename $database_name, $backup || 
+    rename $database_name, $backup ||
 	fatal_exit "Can't save %s as %s: $!", $database_name, $backup;
     fatal_exit "Caught signal 11; the corrupted database is saved as $backup";
 }

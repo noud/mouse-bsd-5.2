@@ -141,7 +141,7 @@ passthrough(const char *target)
 	/*
 	 * Use cpio passthrough mode to copy files to another directory.
 	 */
-	r = systemf("%s -p -W quiet %s <filelist >%s/stdout 2>%s/stderr", 
+	r = systemf("%s -p -W quiet %s <filelist >%s/stdout 2>%s/stderr",
 	    testprog, target, target, target);
 	failure("Error invoking %s -p", testprog);
 	assertEqualInt(r, 0);

@@ -229,7 +229,7 @@ T}
 .h "Counts before vi commands"
 .TS
 lw(1.5i) lw(1.7i)b.
-line/column number	z  G  |	
+line/column number	z  G  |
 scroll amount	^D  ^U
 replicate insert	a  i  A  I
 repeat effect	\fRmost rest\fP

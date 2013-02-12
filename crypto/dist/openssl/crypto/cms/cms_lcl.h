@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -119,7 +119,7 @@ struct CMS_SignedData_st
 	STACK_OF(CMS_RevocationInfoChoice) *crls;
 	STACK_OF(CMS_SignerInfo) *signerInfos;
 	};
- 
+
 struct CMS_EncapsulatedContentInfo_st
 	{
 	ASN1_OBJECT *eContentType;
@@ -445,7 +445,7 @@ int cms_DigestAlgorithm_find_ctx(EVP_MD_CTX *mctx, BIO *chain,
 
 BIO *cms_EncryptedContent_init_bio(CMS_EncryptedContentInfo *ec);
 BIO *cms_EncryptedData_init_bio(CMS_ContentInfo *cms);
-int cms_EncryptedContent_init(CMS_EncryptedContentInfo *ec, 
+int cms_EncryptedContent_init(CMS_EncryptedContentInfo *ec,
 				const EVP_CIPHER *cipher,
 				const unsigned char *key, size_t keylen);
 
@@ -454,7 +454,7 @@ int cms_msgSigDigest_add1(CMS_SignerInfo *dest, CMS_SignerInfo *src);
 ASN1_OCTET_STRING *cms_encode_Receipt(CMS_SignerInfo *si);
 
 BIO *cms_EnvelopedData_init_bio(CMS_ContentInfo *cms);
-	
+
 #ifdef  __cplusplus
 }
 #endif

@@ -10,7 +10,7 @@ MKBOOT = ${TOOLDIR}/bin/${_TOOL_PREFIX}hp700-mkboot
 KERN=	${KERNOBJDIR}/GENERIC/netbsd
 LIF=	SYSNBSD
 
-release: check_RELEASEDIR 
+release: check_RELEASEDIR
 	${MKBOOT} ${DESTDIR}/usr/mdec/boot ${KERN} ${.OBJDIR}/${LIF}
 	${RELEASE_INSTALL} ${.OBJDIR}/${LIF} \
 	    ${RELEASEDIR}/${RELEASEMACHINEDIR}/installation

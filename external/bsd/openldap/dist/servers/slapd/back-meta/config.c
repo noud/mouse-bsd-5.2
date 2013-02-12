@@ -35,7 +35,7 @@
 #include "back-meta.h"
 
 static int
-meta_back_new_target( 
+meta_back_new_target(
 	metatarget_t	**mtp )
 {
 	char			*rargv[ 3 ];
@@ -119,7 +119,7 @@ meta_back_db_config(
 		metatarget_t	*mt;
 
 		char		**uris = NULL;
-		
+
 		if ( argc == 1 ) {
 			Debug( LDAP_DEBUG_ANY,
 	"%s: line %d: missing URI "
@@ -134,10 +134,10 @@ meta_back_db_config(
 				fname, lineno, 0 );
 			return 1;
 		}
-		
+
 		++mi->mi_ntargets;
 
-		mi->mi_targets = ( metatarget_t ** )ch_realloc( mi->mi_targets, 
+		mi->mi_targets = ( metatarget_t ** )ch_realloc( mi->mi_targets,
 			sizeof( metatarget_t * ) * mi->mi_ntargets );
 		if ( mi->mi_targets == NULL ) {
 			Debug( LDAP_DEBUG_ANY,
@@ -296,7 +296,7 @@ meta_back_db_config(
 				fname, lineno, 0 );
 			return( 1 );
 		}
-		
+
 		/*
 		 * uri MUST be a branch of suffix!
 		 */
@@ -324,7 +324,7 @@ meta_back_db_config(
 				fname, lineno, 0 );
 			return 1;
 		}
-		
+
 		switch ( argc ) {
 		case 1:
 			Debug( LDAP_DEBUG_ANY,
@@ -392,7 +392,7 @@ meta_back_db_config(
 	/* default target directive */
 	} else if ( strcasecmp( argv[ 0 ], "default-target" ) == 0 ) {
 		int 		i = mi->mi_ntargets - 1;
-		
+
 		if ( argc == 1 ) {
  			if ( i < 0 ) {
 				Debug( LDAP_DEBUG_ANY,
@@ -414,7 +414,7 @@ meta_back_db_config(
 				mi->mi_defaulttarget = META_DEFAULT_TARGET_NONE;
 
 			} else {
-				
+
 				if ( lutil_atoi( &mi->mi_defaulttarget, argv[ 1 ] ) != 0
 					|| mi->mi_defaulttarget < 0
 					|| mi->mi_defaulttarget >= i - 1 )
@@ -426,7 +426,7 @@ meta_back_db_config(
 				}
 			}
 		}
-		
+
 	/* ttl of dn cache */
 	} else if ( strcasecmp( argv[ 0 ], "dncache-ttl" ) == 0 ) {
 		if ( argc != 2 ) {
@@ -435,7 +435,7 @@ meta_back_db_config(
 				fname, lineno, 0 );
 			return 1;
 		}
-		
+
 		if ( strcasecmp( argv[ 1 ], "forever" ) == 0 ) {
 			mi->mi_cache.ttl = META_DNCACHE_FOREVER;
 
@@ -582,7 +582,7 @@ meta_back_db_config(
 				fname, lineno, 0 );
 			return 1;
 		}
-		
+
 		if ( argc != 2 ) {
 			Debug( LDAP_DEBUG_ANY,
 	"%s: line %d: missing name in \"binddn <name>\" line\n",
@@ -620,7 +620,7 @@ meta_back_db_config(
 				fname, lineno, 0 );
 			return 1;
 		}
-		
+
 		if ( argc != 2 ) {
 			Debug( LDAP_DEBUG_ANY,
 	"%s: line %d: missing password in \"bindpw <password>\" line\n",
@@ -637,7 +637,7 @@ meta_back_db_config(
 		}
 
 		ber_str2bv( argv[ 1 ], 0L, 1, &mi->mi_targets[ i ]->mt_bindpw );
-		
+
 	/* save bind creds for referral rebinds? */
 	} else if ( strcasecmp( argv[ 0 ], "rebind-as-user" ) == 0 ) {
 		if ( argc > 2 ) {
@@ -699,7 +699,7 @@ meta_back_db_config(
 				fname, lineno, argv[ 1 ] );
 			return( 1 );
 		}
-	
+
 	} else if ( strcasecmp( argv[ 0 ], "tls" ) == 0 ) {
 		unsigned	*flagsp = mi->mi_ntargets ?
 				&mi->mi_targets[ mi->mi_ntargets - 1 ]->mt_flags
@@ -715,16 +715,16 @@ meta_back_db_config(
 		/* start */
 		if ( strcasecmp( argv[ 1 ], "start" ) == 0 ) {
 			*flagsp |= ( LDAP_BACK_F_USE_TLS | LDAP_BACK_F_TLS_CRITICAL );
-	
+
 		/* try start tls */
 		} else if ( strcasecmp( argv[ 1 ], "try-start" ) == 0 ) {
 			*flagsp &= ~LDAP_BACK_F_TLS_CRITICAL;
 			*flagsp |= LDAP_BACK_F_USE_TLS;
-	
+
 		/* propagate start tls */
 		} else if ( strcasecmp( argv[ 1 ], "propagate" ) == 0 ) {
 			*flagsp |= ( LDAP_BACK_F_PROPAGATE_TLS | LDAP_BACK_F_TLS_CRITICAL );
-		
+
 		/* try start tls */
 		} else if ( strcasecmp( argv[ 1 ], "try-propagate" ) == 0 ) {
 			*flagsp &= ~LDAP_BACK_F_TLS_CRITICAL;
@@ -1001,30 +1001,30 @@ meta_back_db_config(
 					return 1;
 				}
 				sep++;
-	
+
 			} else {
 				sep = argv[ c ];
 			}
-	
+
 			if ( lutil_parse_time( sep, &val ) != 0 ) {
 				Debug( LDAP_DEBUG_ANY,
 		"%s: line %d: unable to parse value \"%s\" for timeout.\n",
 					fname, lineno, sep );
 				return 1;
 			}
-		
+
 			if ( t ) {
 				*t = (time_t)val;
-	
+
 			} else {
 				int	i;
-	
+
 				for ( i = 0; i < SLAP_OP_LAST; i++ ) {
 					tv[ i ] = (time_t)val;
 				}
 			}
 		}
-	
+
 	/* name to use as pseudo-root dn */
 	} else if ( strcasecmp( argv[ 0 ], "pseudorootdn" ) == 0 ) {
 		int 		i = mi->mi_ntargets - 1;
@@ -1035,7 +1035,7 @@ meta_back_db_config(
 				fname, lineno, 0 );
 			return 1;
 		}
-		
+
 		if ( argc != 2 ) {
 			Debug( LDAP_DEBUG_ANY,
 	"%s: line %d: missing name in \"pseudorootdn <name>\" line\n",
@@ -1123,7 +1123,7 @@ idassert-authzFrom	"dn:<rootdn>"
 				fname, lineno, 0 );
 			return 1;
 		}
-		
+
 		if ( argc != 2 ) {
 			Debug( LDAP_DEBUG_ANY,
 	"%s: line %d: missing password in \"pseudorootpw <password>\" line\n",
@@ -1277,7 +1277,7 @@ idassert-authzFrom	"dn:<rootdn>"
 			return( 1 );
 		}
 #endif /* SLAP_CONTROL_X_SESSION_TRACKING */
-	
+
 	/* dn massaging */
 	} else if ( strcasecmp( argv[ 0 ], "suffixmassage" ) == 0 ) {
 		BackendDB 	*tmp_bd;
@@ -1290,16 +1290,16 @@ idassert-authzFrom	"dn:<rootdn>"
 				fname, lineno, 0 );
 			return 1;
 		}
-		
+
 		/*
 		 * syntax:
-		 * 
+		 *
 		 * 	suffixmassage <suffix> <massaged suffix>
 		 *
 		 * the <suffix> field must be defined as a valid suffix
 		 * (or suffixAlias?) for the current database;
 		 * the <massaged suffix> shouldn't have already been
-		 * defined as a valid suffix or suffixAlias for the 
+		 * defined as a valid suffix or suffixAlias for the
 		 * current server
 		 */
 		if ( argc != 3 ) {
@@ -1330,7 +1330,7 @@ idassert-authzFrom	"dn:<rootdn>"
 				fname, lineno, pvnc.bv_val );
 			free( pvnc.bv_val );
 			free( nvnc.bv_val );
-			return 1;						
+			return 1;
 		}
 
 		ber_str2bv( argv[ 2 ], 0, 0, &dn );
@@ -1342,10 +1342,10 @@ idassert-authzFrom	"dn:<rootdn>"
 			free( nvnc.bv_val );
 			return 1;
 		}
-	
+
 		tmp_bd = select_backend( &nrnc, 0 );
 		if ( tmp_bd != NULL && tmp_bd->be_private == be->be_private ) {
-			Debug( LDAP_DEBUG_ANY, 
+			Debug( LDAP_DEBUG_ANY,
 	"%s: line %d: warning: <massaged suffix> \"%s\" resolves to this database, in "
 	"\"suffixMassage <suffix> <massaged suffix>\"\n",
 				fname, lineno, prnc.bv_val );
@@ -1364,7 +1364,7 @@ idassert-authzFrom	"dn:<rootdn>"
 		free( nrnc.bv_val );
 
 		return rc;
-		
+
 	/* rewrite stuff ... */
  	} else if ( strncasecmp( argv[ 0 ], "rewrite", 7 ) == 0 ) {
 		int 		i = mi->mi_ntargets - 1;
@@ -1375,7 +1375,7 @@ idassert-authzFrom	"dn:<rootdn>"
 				fname, lineno, 0 );
 			return 1;
 		}
-		
+
  		return rewrite_parse( mi->mi_targets[ i ]->mt_rwmap.rwm_rw,
 				fname, lineno, argc, argv );
 
@@ -1390,7 +1390,7 @@ idassert-authzFrom	"dn:<rootdn>"
 			return 1;
 		}
 
-		return ldap_back_map_config( &mi->mi_targets[ i ]->mt_rwmap.rwm_oc, 
+		return ldap_back_map_config( &mi->mi_targets[ i ]->mt_rwmap.rwm_oc,
 				&mi->mi_targets[ i ]->mt_rwmap.rwm_at,
 				fname, lineno, argc, argv );
 
@@ -1605,7 +1605,7 @@ ldap_back_map_config(
 				 * FIXME: this should become an err
 				 */
 				/*
-				 * we create a fake "proxied" ad 
+				 * we create a fake "proxied" ad
 				 * and add it here.
 				 */
 
@@ -1635,7 +1635,7 @@ ldap_back_map_config(
 				fname, lineno, dst );
 
 			/*
-			 * we create a fake "proxied" ad 
+			 * we create a fake "proxied" ad
 			 * and add it here.
 			 */
 
@@ -1702,8 +1702,8 @@ suffix_massage_regexize( const char *s )
 		return ch_strdup( "^(.+)$" );
 	}
 
-	for ( i = 0, p = s; 
-			( r = strchr( p, ',' ) ) != NULL; 
+	for ( i = 0, p = s;
+			( r = strchr( p, ',' ) ) != NULL;
 			p = r + 1, i++ )
 		;
 
@@ -1760,7 +1760,7 @@ suffix_massage_patternize( const char *s, const char *p )
 }
 
 int
-suffix_massage_config( 
+suffix_massage_config(
 		struct rewrite_info *info,
 		struct berval *pvnc,
 		struct berval *nvnc,
@@ -1798,7 +1798,7 @@ suffix_massage_config(
 		rargv[ 4 ] = NULL;
 		rewrite_parse( info, "<suffix massage>", ++line, 4, rargv );
 	}
-	
+
 	rargv[ 0 ] = "rewriteContext";
 	rargv[ 1 ] = "searchEntryDN";
 	rargv[ 2 ] = NULL;
@@ -1821,7 +1821,7 @@ suffix_massage_config(
 		rargv[ 4 ] = NULL;
 		rewrite_parse( info, "<suffix massage>", ++line, 4, rargv );
 	}
-	
+
 	/* backward compatibility */
 	rargv[ 0 ] = "rewriteContext";
 	rargv[ 1 ] = "searchResult";
@@ -1829,7 +1829,7 @@ suffix_massage_config(
 	rargv[ 3 ] = "searchEntryDN";
 	rargv[ 4 ] = NULL;
 	rewrite_parse( info, "<suffix massage>", ++line, 4, rargv );
-	
+
 	rargv[ 0 ] = "rewriteContext";
 	rargv[ 1 ] = "matchedDN";
 	rargv[ 2 ] = "alias";
@@ -1855,7 +1855,7 @@ suffix_massage_config(
 	rargv[ 1 ] = "referralDN";
 	rargv[ 2 ] = NULL;
 	rewrite_parse( info, "<suffix massage>", ++line, 2, rargv );
-	
+
 	return 0;
 }
 #endif /* ENABLE_REWRITE */

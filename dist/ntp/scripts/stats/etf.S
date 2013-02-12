@@ -5,7 +5,7 @@ r <- lsfit(etf$sec, etf$offset)
 count<-length(etf$sec)
 mean<-r$coef[[1]]
 std<-sqrt(var(r$residuals))
-slope<-r$coef[[2]] * 1000 
+slope<-r$coef[[2]] * 1000
 cat("\n", file=file2 , append=TRUE, fill=FALSE, sep="")
 cat(file1, "\n", file=file2, append=TRUE, fill=FALSE, sep="")
 cat("etf1 ",  count, ", T ", mean, " ns, R ", slope, " ps/s, std ", std, " us\n", file=file2, append=TRUE, fill=FALSE, sep="")

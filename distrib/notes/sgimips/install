@@ -207,7 +207,7 @@ If the kernel has a
 suffix, you must first uncompress it using the
 .Pa gunzip
 program.
-As above, you must choose either the netbsd-INSTALL32_IP2x, 
+As above, you must choose either the netbsd-INSTALL32_IP2x,
 netbsd-INSTALL32_IP2x.ecoff, or netbsd-INSTALL32_IP3x kernel.
 .Pp
 Note that your DHCP server must be configured to specify

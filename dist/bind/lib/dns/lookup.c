@@ -358,7 +358,7 @@ static void
 levent_destroy(isc_event_t *event) {
 	dns_lookupevent_t *levent;
 	isc_mem_t *mctx;
- 
+
 	REQUIRE(event->ev_type == DNS_EVENT_LOOKUPDONE);
 	mctx = event->ev_destroy_arg;
 	levent = (dns_lookupevent_t *)event;

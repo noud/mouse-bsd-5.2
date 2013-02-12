@@ -13,7 +13,7 @@ lookup_hostname()
 		fi
 	elif type host >/dev/null 2>&1; then
 		h=$(host $new_ip_address)
-		if [ $? = 0 ]; then 
+		if [ $? = 0 ]; then
 			echo "$h" \
 			| sed 's/.* domain name pointer \(.*\)./\1/'
 			return 0

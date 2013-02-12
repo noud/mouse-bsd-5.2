@@ -9489,7 +9489,7 @@ Apologies for any names omitted.
 	Files: smtp/smtp_session.c, smtp/smtp_reuse.c.
 
 	Refinement: smtp_cache_reuse_limit parameter to bound the
-	number of times a session may be reused.  
+	number of times a session may be reused.
 
 	Refinements: when a session comes from the cache, give it
 	back to the cache anyway (even when it will not be listed
@@ -10652,7 +10652,7 @@ Apologies for any names omitted.
 	Bugfix: while updating the cleanup_flush() infrastructure
 	eliminated a portability problem that was introduced when
 	"REJECT text" support was added. File: cleanup/cleanup.c.
-	
+
 20050413
 
 	Portability: don't mix socket message send/receive calls
@@ -10977,7 +10977,7 @@ Apologies for any names omitted.
 	now waits for an ACK from the connection cache client before
 	closing the socket that it just sent. Files: scache/scache.c,
 	global/scache_clnt.c.
-	 
+
 20050708
 
 	Bugfix: missing returns in 20050706 caching disabling code
@@ -11123,7 +11123,7 @@ Apologies for any names omitted.
 	nulls or that are execessively long. Patch by Victor Duchovni.
 	Files: tls_client.c, tls_server.c, tls_session.c, tls_misc.c,
 	tls_verify.c.
-	
+
 20050922
 
 	Bugfix: the *SQL clients did not uniformly choose the
@@ -11197,7 +11197,7 @@ Apologies for any names omitted.
 	in the anvil server, TLS request rate error message in the
 	smtp server, and documentation, but no changes in code.
 	Files: anvil/anvil.c, smtpd/smtpd.c.
- 
+
 20051013
 
 	Horror: some systems have basename() and dirname() and some
@@ -11542,7 +11542,7 @@ Apologies for any names omitted.
 	defer logfile record when the target delivery agent was
 	broken.  This the analog of queue manager bugfix 20051119.
 	Files: global/deliver_pass.c.
-	
+
 20051210
 
 	Cleanup: simplified the SMTP/LMTP connection management
@@ -11559,7 +11559,7 @@ Apologies for any names omitted.
 	was Ralf Hildebrandt, detectives Victor Duchovni and Wietse.
 	File: smtp/smtp_proto.c.
 
-20051213 
+20051213
 
 	Bugfix: *SQL, proxy and LDAP map types were not defined in
 	user-land commands such as postqueue. Leandro Santi. File:
@@ -12174,7 +12174,7 @@ Apologies for any names omitted.
 	cleanup/cleanup_milter.c, milter/milter.c, milter/milter8.c.
 
 	That's 89 lines in smtpd, 1010 lines in cleanup, and 2449
-	lines of library support, comments not included.  
+	lines of library support, comments not included.
 
 	A simple test Milter application for use in regression tests
 	is in src/milter/test-milter.c. Queue file modifications are
@@ -12754,7 +12754,7 @@ Apologies for any names omitted.
 	no information on how subjectAltNames are managed.  Sam
 	Rushing, ironport.  File: tls/tls_client.c.
 
-	Bugfix (introduced with Postfix 2.2): smtp_generic_maps 
+	Bugfix (introduced with Postfix 2.2): smtp_generic_maps
 	turned on MIME conversion. File: smtp/smtp_proto.c.
 
 	Workaround: don't send SIZE information in the MAIL FROM
@@ -13397,7 +13397,7 @@ Apologies for any names omitted.
 	low-level *roff .in or .ti controls. We now use .nf and .fi
 	instead. Files: many.
 
-20070331 
+20070331
 
 	Bugfix (introduced Postfix 2.3): segfault with HOLD action
 	in access/header_checks/body_checks on 64-bit platforms.
@@ -13730,7 +13730,7 @@ Apologies for any names omitted.
 
 20070923
 
-	Cleanup: don't complain when a "corrupt" queue file is 
+	Cleanup: don't complain when a "corrupt" queue file is
 	deleted before it can be saved to the "corrupt" queue.
 	Files: *qmgr/qmgr_active.c.
 
@@ -14655,7 +14655,7 @@ Apologies for any names omitted.
 
 	Workaround: don't loop forever when write() fails with a
 	persistent EAGAIN error on a writable file descriptor.
-	File: util/write_buf.c.  
+	File: util/write_buf.c.
 
 20081003
 
@@ -14995,7 +14995,7 @@ Apologies for any names omitted.
 20090215
 
 	Feature: the Postfix SMTP server hangs up after replying
-	with "521". This makes overload handling more effective. 
+	with "521". This makes overload handling more effective.
 	See also RFC 1846.  File: smtpd/smtpd.c.
 
 	Feature: postmulti mult-instance manager command, very

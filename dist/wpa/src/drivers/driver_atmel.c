@@ -15,9 +15,9 @@
 
 /******************************************************************************
 	Copyright 2000-2001 ATMEL Corporation.
-	
+
     WPA Supplicant - driver interaction with Atmel Wireless lan drivers.
-    
+
     This is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
@@ -96,8 +96,8 @@ struct atmel_param{
     u8          key_mgmt_suite;
 };
 
-    
-    
+
+
 static int atmel_ioctl(struct wpa_driver_atmel_data *drv,
 		       struct atmel_param *param,
 		       int len, int show_err)
@@ -112,7 +112,7 @@ static int atmel_ioctl(struct wpa_driver_atmel_data *drv,
 	if (ioctl(drv->sock, ATMEL_WPA_IOCTL, &iwr) < 0) {
 		int ret;
 		ret = errno;
-		if (show_err) 
+		if (show_err)
 			perror("ioctl[ATMEL_WPA_IOCTL]");
 		return ret;
 	}
@@ -170,7 +170,7 @@ static int wpa_driver_atmel_set_wpa(void *priv, int enabled)
 {
 	struct wpa_driver_atmel_data *drv = priv;
         int ret = 0;
-	
+
         printf("wpa_driver_atmel_set_wpa %s\n", drv->ifname);
 
 	wpa_printf(MSG_DEBUG, "%s: enabled=%d", __FUNCTION__, enabled);
@@ -198,7 +198,7 @@ static int wpa_driver_atmel_set_key(void *priv, wpa_alg alg,
         struct atmel_param *param;
 	u8 *buf;
         u8 alg_type;
-        
+
 	size_t blen;
 	char *alg_name;
 
@@ -236,14 +236,14 @@ static int wpa_driver_atmel_set_key(void *priv, wpa_alg alg,
 		return -1;
 
 	param = (struct atmel_param *) buf;
-        
-        param->cmd = SET_WPA_ENCRYPTION; 
-        
+
+        param->cmd = SET_WPA_ENCRYPTION;
+
         if (addr == NULL)
 		os_memset(param->sta_addr, 0xff, ETH_ALEN);
 	else
 		os_memcpy(param->sta_addr, addr, ETH_ALEN);
-        
+
         param->alg = alg_type;
         param->key_idx = key_idx;
         param->set_tx = set_tx;
@@ -251,7 +251,7 @@ static int wpa_driver_atmel_set_key(void *priv, wpa_alg alg,
         param->seq_len = seq_len;
         param->key_len = key_len;
 	os_memcpy((u8 *)param->key, key, key_len);
-	
+
         if (atmel_ioctl(drv, param, blen, 1)) {
 		wpa_printf(MSG_WARNING, "Failed to set encryption.");
 		/* TODO: show key error*/
@@ -290,7 +290,7 @@ static int wpa_driver_atmel_mlme(void *priv, const u8 *addr, int cmd,
 	struct atmel_param param;
 	int ret;
         int mgmt_error = 0xaa;
-        
+
 	os_memset(&param, 0, sizeof(param));
 	os_memcpy(param.sta_addr, addr, ETH_ALEN);
 	param.cmd = cmd;
@@ -308,13 +308,13 @@ static int wpa_driver_atmel_set_suites(struct wpa_driver_atmel_data *drv,
 {
 	struct atmel_param param;
 	int ret;
-        
+
 	os_memset(&param, 0, sizeof(param));
         param.cmd = SET_CIPHER_SUITES;
         param.pairwise_suite = pairwise_suite;
         param.group_suite = group_suite;
         param.key_mgmt_suite = key_mgmt_suite;
-	        
+
 	ret = atmel_ioctl(drv, &param, sizeof(param), 1);
 	return ret;
 }
@@ -350,7 +350,7 @@ static int wpa_driver_atmel_disassociate(void *priv, const u8 *addr,
 static int convertSuiteToDriver(wpa_cipher suite)
 {
     u8 suite_type;
-    
+
     switch(suite) {
         case CIPHER_NONE:
                 suite_type =  0;
@@ -370,12 +370,12 @@ static int convertSuiteToDriver(wpa_cipher suite)
         default:
                 suite_type = 2;
     }
-    
+
     return suite_type;
 
 }
 #endif
-    
+
 static int
 wpa_driver_atmel_associate(void *priv,
 			   struct wpa_driver_associate_params *params)

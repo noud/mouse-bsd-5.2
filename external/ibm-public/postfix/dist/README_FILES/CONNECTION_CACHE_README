@@ -63,11 +63,11 @@ to access this cache.
 
             /-- smtp(8) --> Internet
 
-    qmgr(8)       |  
+    qmgr(8)       |
                   |
             \--   | smtp(8) --> Internet
                   |
-                  ^          
+                  ^
                   |
 
                   scache(8)

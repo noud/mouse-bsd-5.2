@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -316,7 +316,7 @@ static int dynamic_ctrl(ENGINE *e, int cmd, long i, void *p, void (*f)(void))
 	{
 	dynamic_data_ctx *ctx = dynamic_get_data_ctx(e);
 	int initialised;
-	
+
 	if(!ctx)
 		{
 		ENGINEerr(ENGINE_F_DYNAMIC_CTRL,ENGINE_R_NOT_LOADED);

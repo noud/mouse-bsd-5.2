@@ -9,7 +9,7 @@ Category: BCP                                     Amaranth Networks Inc.
 Expires in six months                                          July 2005
 
                Encouraging the use of DNS IN-ADDR Mapping
-		    draft-ietf-dnsop-inaddr-required-07.txt 
+		    draft-ietf-dnsop-inaddr-required-07.txt
 
 Status of this Memo
 

@@ -241,7 +241,7 @@ ldap_pvt_thread_pool_init (
 	 * slapd forks in order to daemonize, and does so after
 	 * calling ldap_pvt_thread_pool_init.  On some systems,
 	 * this initial thread does not run in the child process,
-	 * but ltp_open_count == 1, so two things happen: 
+	 * but ltp_open_count == 1, so two things happen:
 	 * 1) the first client connection fails, and 2) when
 	 * slapd is kill'ed, it never terminates since it waits
 	 * for all worker threads to exit. */
@@ -258,7 +258,7 @@ ldap_pvt_thread_pool_init (
 	if( rc != 0) {
 		/* couldn't start one?  then don't start any */
 		ldap_pvt_thread_mutex_lock(&ldap_pvt_thread_pool_mutex);
-		LDAP_STAILQ_REMOVE(ldap_int_thread_pool_list, pool, 
+		LDAP_STAILQ_REMOVE(ldap_int_thread_pool_list, pool,
 			ldap_int_thread_pool_s, ltp_next);
 		ldap_int_has_thread_pool = 0;
 		ldap_pvt_thread_mutex_unlock(&ldap_pvt_thread_pool_mutex);
@@ -588,7 +588,7 @@ ldap_pvt_thread_pool_destroy ( ldap_pvt_thread_pool_t *tpool, int run_pending )
 
 /* Thread loop.  Accept and handle submitted tasks. */
 static void *
-ldap_int_thread_pool_wrapper ( 
+ldap_int_thread_pool_wrapper (
 	void *xpool )
 {
 	struct ldap_int_thread_pool_s *pool = xpool;
@@ -763,7 +763,7 @@ ldap_pvt_thread_pool_pause( ldap_pvt_thread_pool_t *tpool )
 
 /* End a pause */
 int
-ldap_pvt_thread_pool_resume ( 
+ldap_pvt_thread_pool_resume (
 	ldap_pvt_thread_pool_t *tpool )
 {
 	struct ldap_int_thread_pool_s *pool;

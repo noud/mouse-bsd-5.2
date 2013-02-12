@@ -64,7 +64,7 @@
 #define ALSHORT		16
 #define ALPOINT		16
 #define ALSTRUCT	16
-#define ALSTACK		16 
+#define ALSTACK		16
 
 /*
  * Min/max values.
@@ -140,7 +140,7 @@ typedef long OFFSZ;
 	 (t) == LONG || (t) == ULONG) ? 2 : 1)
 
 /*
- * The Nova has three register classes.  Note that the space used in 
+ * The Nova has three register classes.  Note that the space used in
  * zero page is considered registers.
  * Register 28 and 29 are FP and SP.
  *

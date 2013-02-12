@@ -7,8 +7,8 @@ $!               byer@mail.all-net.net
 $!
 $!  Changes by Richard Levitte <richard@levitte.org>
 $!
-$!  This command files compiles and creates the 
-$!  "[.xxx.EXE.CRYPTO.DES]LIBDES.OLB" library.  The "xxx" denotes the machine 
+$!  This command files compiles and creates the
+$!  "[.xxx.EXE.CRYPTO.DES]LIBDES.OLB" library.  The "xxx" denotes the machine
 $!  architecture of AXP or VAX.
 $!
 $!  It was re-written to try to determine which "C" compiler to try to use
@@ -510,7 +510,7 @@ $!
 $     CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File To Link Agianst 
+! Default System Options File To Link Agianst
 ! The Sharable VAX C Runtime Library.
 !
 SYS$SHARE:VAXCRTL.EXE/SHARE
@@ -539,7 +539,7 @@ $!
 $     CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File To Link Agianst 
+! Default System Options File To Link Agianst
 ! The Sharable C Runtime Library.
 !
 GNU_CC:[000000]GCCLIB/LIBRARY
@@ -574,7 +574,7 @@ $!
 $       CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File To Link Agianst 
+! Default System Options File To Link Agianst
 ! The Sharable DEC C Runtime Library.
 !
 SYS$SHARE:DECC$SHR.EXE/SHARE
@@ -589,7 +589,7 @@ $!
 $       CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File For AXP To Link Agianst 
+! Default System Options File For AXP To Link Agianst
 ! The Sharable C Runtime Library.
 !
 SYS$SHARE:CMA$OPEN_LIB_SHR/SHARE
@@ -610,7 +610,7 @@ $ ENDIF
 $!
 $!  Tell The User What Linker Option File We Are Using.
 $!
-$ WRITE SYS$OUTPUT "Using Linker Option File ",OPT_FILE,"."	
+$ WRITE SYS$OUTPUT "Using Linker Option File ",OPT_FILE,"."
 $!
 $! Time To RETURN.
 $!
@@ -711,7 +711,7 @@ $!
 $!   P2 Is Blank, So Compile Without Debugger Information.
 $!
 $    DEBUGGER  = "NODEBUG"
-$    TRACEBACK = "NOTRACEBACK" 
+$    TRACEBACK = "NOTRACEBACK"
 $    GCC_OPTIMIZE = "OPTIMIZE"
 $    CC_OPTIMIZE = "OPTIMIZE"
 $    WRITE SYS$OUTPUT "No Debugger Information Will Be Produced During Compile."
@@ -818,7 +818,7 @@ $!
 $!    Check To See If We Have VAXC Or DECC.
 $!
 $     IF (ARCH.EQS."AXP").OR.(F$TRNLNM("DECC$CC_DEFAULT").NES."")
-$     THEN 
+$     THEN
 $!
 $!      Looks Like DECC, Set To Use DECC.
 $!

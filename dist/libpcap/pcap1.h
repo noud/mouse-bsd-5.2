@@ -129,8 +129,8 @@ struct pcap1_info_timestamp {
 	bpf_u_int32    seconds;       /* seconds since Unix epoch - GMT */
 	bpf_u_int16    macroseconds;  /* 16 bits more of MSB of time */
 	bpf_u_int16    sigfigs;	      /* accuracy of timestamps - LSB bits */
-};	
-	
+};
+
 struct pcap1_info_packet {
 	struct pcap1_info_container pic;
 	bpf_u_int32 caplen;	/* length of portion present */
@@ -138,7 +138,7 @@ struct pcap1_info_packet {
 	bpf_u_int32 linktype;	/* data link type (LINKTYPE_*) */
 	bpf_u_int32 ifIndex;	/* abstracted interface index */
 	unsigned char packet_data[0];
-};	
+};
 
 enum pcap1_probe {
 	INBOUND  =1,
@@ -153,12 +153,12 @@ struct pcap1_info_probe {
 	bpf_u_int32                 probeloc;   /* enum pcap1_probe */
         unsigned char               probe_desc[0];
 };
-	
+
 struct pcap1_info_comment {
 	struct pcap1_info_container pic;
         unsigned char               comment[0];
 };
-	
+
 struct pcap1_packet_header {
 	bpf_u_int32 magic;
 	u_short     version_major;

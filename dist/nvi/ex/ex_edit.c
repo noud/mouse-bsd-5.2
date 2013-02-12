@@ -74,7 +74,7 @@ ex_edit(SCR *sp, EXCMD *cmdp)
 		setalt = 0;
 		break;
 	case 1:
-		INT2CHAR(sp, cmdp->argv[0]->bp, cmdp->argv[0]->len + 1, 
+		INT2CHAR(sp, cmdp->argv[0]->bp, cmdp->argv[0]->len + 1,
 			 np, nlen);
 		if ((frp = file_add(sp, np)) == NULL)
 			return (1);

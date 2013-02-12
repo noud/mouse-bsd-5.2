@@ -70,7 +70,7 @@ main(int argc, char **argv)
 	/* create output boot-hfs-file */
 	if ((ofd = open(boothfs, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
 		err(1, "create output boot-hfs-file `%s'", boothfs);
-	
+
 	/*
 	 * Populate 18 byte driver map header in the first 512 byte block
 	 */
@@ -138,7 +138,7 @@ main(int argc, char **argv)
 	buf[1] = 0x4b;
 	if (write(ofd, buf, BSIZE * 2) != BSIZE * 2)
 		err(1, "write boot-hfs-file `%s'", boothfs);
- 
+
 	free(buf);
 	close(ofd);
 	return 0;

@@ -30,7 +30,7 @@ extern IPSIOPS ipsi_ops_motif;
 #if 0
 #ifdef __STDC__
 Widget	vi_create_editor(String, Widget, void (*)(void));
-Widget	vi_create_menubar(Widget);  
+Widget	vi_create_menubar(Widget);
 void	vi_input_func(XtPointer, int *, XtInputId *);
 int	vi_run(int, char *[], int *, int *, pid_t *);
 int	vi_send(char *, IP_BUF *);

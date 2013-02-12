@@ -29,26 +29,26 @@ AC_TRY_LINK([#include <sys/types.h>
              #include <resolv.h>
              union
              {
-                HEADER hdr;	
+                HEADER hdr;
                 u_char buf[4096]; /* With RFC 2671, otherwise 512 is enough */
              }
              response;
              char *domain;
-             int requested_type;	], 
+             int requested_type;	],
 	[res_query(domain,
-		  C_IN,		
-		  requested_type,	
-		  (u_char *) & response,	
+		  C_IN,
+		  requested_type,
+		  (u_char *) & response,
 		  sizeof (response)) ], dnl
 	[AC_MSG_RESULT(no)], dnl
-	[AC_MSG_RESULT(yes); LIBS="${LIBS} -lnsl"]) 
+	[AC_MSG_RESULT(yes); LIBS="${LIBS} -lnsl"])
 
 dnl Check for the loc_ntoa macro/function
 AC_MSG_CHECKING(loc_ntoa)
 AC_TRY_LINK([#include <resolv.h>], dnl
 	[u_char *cp; char *result; loc_ntoa(cp, result)], dnl
 	[AC_MSG_RESULT(yes); AC_DEFINE(HAVE_LOC_NTOA)], dnl
-	[AC_MSG_RESULT([no, using the alternative]); LOC_NTOA=loc_ntoa.o]) 
+	[AC_MSG_RESULT([no, using the alternative]); LOC_NTOA=loc_ntoa.o])
 AC_SUBST(LOC_NTOA)
 
 dnl Checks for typedefs, structures, and compiler characteristics.

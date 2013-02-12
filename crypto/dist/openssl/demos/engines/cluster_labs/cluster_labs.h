@@ -9,10 +9,10 @@ typedef int cl_rsa_pub_enc(int flen, const unsigned char *from,
 	     unsigned char *to, RSA *rsa, int padding);
 typedef int cl_rsa_pub_dec(int flen, const unsigned char *from,
 	     unsigned char *to, RSA *rsa, int padding);
-typedef int cl_rsa_priv_enc(int flen, const unsigned char *from, 
+typedef int cl_rsa_priv_enc(int flen, const unsigned char *from,
 		unsigned char *to, RSA *rsa, int padding);
-typedef int cl_rsa_priv_dec(int flen, const unsigned char *from, 
-		unsigned char *to, RSA *rsa, int padding);		
+typedef int cl_rsa_priv_dec(int flen, const unsigned char *from,
+		unsigned char *to, RSA *rsa, int padding);
 typedef int cl_rand_bytes(unsigned char *buf, int num);
 typedef DSA_SIG *cl_dsa_sign(const unsigned char *dgst, int dlen, DSA *dsa);
 typedef int cl_dsa_verify(const unsigned char *dgst, int dgst_len,

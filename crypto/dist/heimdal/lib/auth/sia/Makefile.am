@@ -70,7 +70,7 @@ endif
 foodir = $(libdir)
 foo_DATA = $(MOD)
 
-LDFLAGS = @LDFLAGS@ -rpath $(libdir) -Wl,-hidden -Wl,-exported_symbol -Wl,siad_\* 
+LDFLAGS = @LDFLAGS@ -rpath $(libdir) -Wl,-hidden -Wl,-exported_symbol -Wl,siad_\*
 
 SRCS = sia.c posix_getpw.c sia_locl.h
 OBJS = sia.o posix_getpw.o

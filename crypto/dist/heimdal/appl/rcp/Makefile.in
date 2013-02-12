@@ -398,7 +398,7 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-rcp$(EXEEXT): $(rcp_OBJECTS) $(rcp_DEPENDENCIES) 
+rcp$(EXEEXT): $(rcp_OBJECTS) $(rcp_DEPENDENCIES)
 	@rm -f rcp$(EXEEXT)
 	$(LINK) $(rcp_OBJECTS) $(rcp_LDADD) $(LIBS)
 

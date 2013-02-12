@@ -77,7 +77,7 @@ exit
 # SYNOPSIS
 #	mansect [-|-a|-c|-f|-m|-m|-n|-p|-t|-r|-C] file(s)
 # DESCRIPTION
-#	\fImansect\fR extracts the manual chapter number from 
+#	\fImansect\fR extracts the manual chapter number from
 #	source file comments in the style of \fInewsrc(1)\fR.
 #	Typically, \fImansect\fR is integrated with \fImake(1)\fR scripts.
 #
@@ -107,7 +107,7 @@ exit
 # SEE ALSO
 #	newsrc(1), xman(1)
 #	The earlier commands new(1), mod(1), mkman(1) and dssman(1)
-#	by Ruud Zwart and Ben Noordzij (Erasmus University, Rotterdam) 
+#	by Ruud Zwart and Ben Noordzij (Erasmus University, Rotterdam)
 # DIAGNOSTICS
 #	The program complaints if an unknown language is specified
 #	of if the language cannot be deduced from the file suffix.

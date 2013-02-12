@@ -262,7 +262,7 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-libefence.a: $(libefence_a_OBJECTS) $(libefence_a_DEPENDENCIES) 
+libefence.a: $(libefence_a_OBJECTS) $(libefence_a_DEPENDENCIES)
 	-rm -f libefence.a
 	$(libefence_a_AR) libefence.a $(libefence_a_OBJECTS) $(libefence_a_LIBADD)
 	$(RANLIB) libefence.a
@@ -273,10 +273,10 @@ clean-checkPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-eftest$(EXEEXT): $(eftest_OBJECTS) $(eftest_DEPENDENCIES) 
+eftest$(EXEEXT): $(eftest_OBJECTS) $(eftest_DEPENDENCIES)
 	@rm -f eftest$(EXEEXT)
 	$(LINK) $(eftest_LDFLAGS) $(eftest_OBJECTS) $(eftest_LDADD) $(LIBS)
-tstheap$(EXEEXT): $(tstheap_OBJECTS) $(tstheap_DEPENDENCIES) 
+tstheap$(EXEEXT): $(tstheap_OBJECTS) $(tstheap_DEPENDENCIES)
 	@rm -f tstheap$(EXEEXT)
 	$(LINK) $(tstheap_LDFLAGS) $(tstheap_OBJECTS) $(tstheap_LDADD) $(LIBS)
 

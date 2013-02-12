@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -210,7 +210,7 @@ out2:
 	case ADMIN_SHOW_EVT:
 		/* It's not really an error, don't force racoonctl to quit */
 		if ((buf = evt_dump()) == NULL)
-			com->ac_errno = 0; 
+			com->ac_errno = 0;
 		break;
 
 	case ADMIN_SHOW_SA:
@@ -290,7 +290,7 @@ out2:
 		STRDUP_FATAL(rem);
 
 		if ((iph1 = getph1byaddrwop(src, dst)) == NULL) {
-			plog(LLV_ERROR, LOCATION, NULL, 
+			plog(LLV_ERROR, LOCATION, NULL,
 			    "phase 1 for %s -> %s not found\n", loc, rem);
 		} else {
 			if (iph1->status == PHASE1ST_ESTABLISHED)
@@ -318,7 +318,7 @@ out2:
 
 		user = (char *)(com + 1);
 		found = purgeph1bylogin(user);
-		plog(LLV_INFO, LOCATION, NULL, 
+		plog(LLV_INFO, LOCATION, NULL,
 		    "deleted %d SA for user \"%s\"\n", found, user);
 
 		break;
@@ -337,7 +337,7 @@ out2:
 		rem = racoon_strdup(saddrwop2str(dst));
 		STRDUP_FATAL(rem);
 
-		plog(LLV_INFO, LOCATION, NULL, 
+		plog(LLV_INFO, LOCATION, NULL,
 		    "Flushing all SAs for peer %s\n", rem);
 
 		while ((iph1 = getph1bydstaddrwop(dst)) != NULL) {
@@ -350,7 +350,7 @@ out2:
 
 			racoon_free(loc);
 		}
-		
+
 		racoon_free(rem);
 
 		break;
@@ -363,14 +363,14 @@ out2:
 		com->ac_cmd = ADMIN_ESTABLISH_SA;
 
 		acp = (struct admin_com_psk *)
-		    ((char *)com + sizeof(*com) + 
+		    ((char *)com + sizeof(*com) +
 		    sizeof(struct admin_com_indexes));
 
 		idtype = acp->id_type;
 
 		if ((id = vmalloc(acp->id_len)) == NULL) {
 			plog(LLV_ERROR, LOCATION, NULL,
-			    "cannot allocate memory: %s\n", 
+			    "cannot allocate memory: %s\n",
 			    strerror(errno));
 			break;
 		}
@@ -379,7 +379,7 @@ out2:
 
 		if ((key = vmalloc(acp->key_len)) == NULL) {
 			plog(LLV_ERROR, LOCATION, NULL,
-			    "cannot allocate memory: %s\n", 
+			    "cannot allocate memory: %s\n",
 			    strerror(errno));
 			vfree(id);
 			id = NULL;
@@ -453,7 +453,7 @@ out2:
 				rmconf->xauth->pass = key;
 			}
 #endif
- 
+
 			plog(LLV_INFO, LOCATION, NULL,
 				"accept a request to establish IKE-SA: "
 				"%s\n", saddrwop2str(remote));
@@ -587,17 +587,17 @@ admin_init()
 	}
 
 	if (chown(sunaddr.sun_path, adminsock_owner, adminsock_group) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
-		    "chown(%s, %d, %d): %s\n", 
-		    sunaddr.sun_path, adminsock_owner, 
+		plog(LLV_ERROR, LOCATION, NULL,
+		    "chown(%s, %d, %d): %s\n",
+		    sunaddr.sun_path, adminsock_owner,
 		    adminsock_group, strerror(errno));
 		(void)close(lcconf->sock_admin);
 		return -1;
 	}
 
 	if (chmod(sunaddr.sun_path, adminsock_mode) != 0) {
-		plog(LLV_ERROR, LOCATION, NULL, 
-		    "chmod(%s, 0%03o): %s\n", 
+		plog(LLV_ERROR, LOCATION, NULL,
+		    "chmod(%s, 0%03o): %s\n",
 		    sunaddr.sun_path, adminsock_mode, strerror(errno));
 		(void)close(lcconf->sock_admin);
 		return -1;

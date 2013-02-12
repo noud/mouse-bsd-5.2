@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -89,7 +89,7 @@ int i2d_CMS_bio(BIO *bp, CMS_ContentInfo *cms)
 
 IMPLEMENT_PEM_rw_const(CMS, CMS_ContentInfo, PEM_STRING_CMS, CMS_ContentInfo)
 
-BIO *BIO_new_CMS(BIO *out, CMS_ContentInfo *cms) 
+BIO *BIO_new_CMS(BIO *out, CMS_ContentInfo *cms)
 	{
 	return BIO_new_NDEF(out, (ASN1_VALUE *)cms,
 				ASN1_ITEM_rptr(CMS_ContentInfo));
@@ -122,7 +122,7 @@ int SMIME_write_CMS(BIO *bio, CMS_ContentInfo *cms, BIO *data, int flags)
 
 	return SMIME_write_ASN1(bio, (ASN1_VALUE *)cms, data, flags,
 					ctype_nid, econt_nid, mdalgs,
-					ASN1_ITEM_rptr(CMS_ContentInfo));	
+					ASN1_ITEM_rptr(CMS_ContentInfo));
 	}
 
 CMS_ContentInfo *SMIME_read_CMS(BIO *bio, BIO **bcont)

@@ -1,11 +1,11 @@
 <!--
  - Copyright (C) 2004-2009 Internet Systems Consortium, Inc. ("ISC")
  - Copyright (C) 2000-2003 Internet Software Consortium.
- - 
+ -
  - Permission to use, copy, modify, and/or distribute this software for any
  - purpose with or without fee is hereby granted, provided that the above
  - copyright notice and this permission notice appear in all copies.
- - 
+ -
  - THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH
  - REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
  - AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT,
@@ -74,7 +74,7 @@
 <p>
       The IN and CH class names overlap with the IN and CH top level
       domains names.  Either use the <code class="option">-t</code> and
-      <code class="option">-c</code> options to specify the type and class, 
+      <code class="option">-c</code> options to specify the type and class,
       use the <code class="option">-q</code> the specify the domain name, or
       use "IN." and "CH." when looking up these top level domains.
     </p>
@@ -153,7 +153,7 @@
     </p>
 <p>
       The <code class="option">-m</code> option enables memory usage debugging.
-      
+
     </p>
 <p>
       If a non-standard port number is to be queried, the
@@ -184,7 +184,7 @@
       <em class="parameter"><code>N</code></em>.
     </p>
 <p>
-      The <code class="option">-q</code> option sets the query name to 
+      The <code class="option">-q</code> option sets the query name to
       <em class="parameter"><code>name</code></em>.  This useful do distinguish the
       <em class="parameter"><code>name</code></em> from other arguments.
     </p>
@@ -482,7 +482,7 @@
               Set the UDP message buffer size advertised using EDNS0 to
               <em class="parameter"><code>B</code></em> bytes.  The maximum and minimum sizes
 	      of this buffer are 65535 and 0 respectively.  Values outside
-	      this range are rounded up or down appropriately.  
+	      this range are rounded up or down appropriately.
 	      Values other than zero will cause a EDNS query to be sent.
             </p></dd>
 <dt><span class="term"><code class="option">+edns=#</code></span></dt>
@@ -610,7 +610,7 @@ dig +qr www.isc.org any -x 127.0.0.1 isc.org ns +noqr
       reply from the server.
       If you'd like to turn off the IDN support for some reason, defines
       the <code class="envar">IDN_DISABLE</code> environment variable.
-      The IDN support is disabled if the variable is set when 
+      The IDN support is disabled if the variable is set when
       <span><strong class="command">dig</strong></span> runs.
     </p>
 </div>

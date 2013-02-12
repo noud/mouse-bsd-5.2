@@ -36,7 +36,7 @@
 	lib/tests/api-init5-3.tsy, lib/tests/api.tsy, lib/tests/converter.tsy,
 	lib/tests/res.tsy, lib/tests/punycode.c: Change ACE prefix of Punycode
 	from `zq--' to `xn--'.
-	
+
 2003-02-13
 	* lib/make.wnt: remove dependencies on obsolete files.
 
@@ -68,7 +68,7 @@
 
 2003-01-16
 	* lib/checker.c, lib/idn.conf.sample.in, lib/mapper.c, lib/nameprep.c,
-	lib/normalizer.c, lib/unicode.c, lib/tests/checker.tsy, 
+	lib/normalizer.c, lib/unicode.c, lib/tests/checker.tsy,
 	lib/tests/mapper.tsy, lib/tests/nameprep.tsy, lib/tests/normalizer.tsy,
 	man/idn.conf.5.in, tools/idnconv/idnconv.1:
 	delete support for nameprep-03 and nameprep-09.
@@ -93,7 +93,7 @@
 	* lib/mapper.c, lib/normalize.c: Don't check whether an input string
 	is STD3 ASCII label.
 	lib/res.c: Skip localmap if the string is STD3 ASCII label.
-	
+
 2002-12-02
 	* lib/tests/iconvchk.c, lib/tests/Makefile.in: enable to check
 	whether codeset names "eucJP" and "SJIS" are available in iconv.
@@ -107,10 +107,10 @@
 2002-11-25
 	* lib/tests/codeset.h: define character encoding names here.
 	* lib/tests/api-init1.tsy, lib/tests/api-init2.tsy,
-	lib/tests/api-init3.tsy, lib/tests/api-init4-3.tsy, 
+	lib/tests/api-init3.tsy, lib/tests/api-init4-3.tsy,
 	lib/tests/api-init5-3.tsy, lib/tests/converter.tsy,
 	lib/tests/mapselector.tsy, lib/tests/resconf.tsy: include `codeset.h'.
-	lib/tests/api-init4-1.tsy, lib/tests/api-init4-2.tsy, 
+	lib/tests/api-init4-1.tsy, lib/tests/api-init4-2.tsy,
 	lib/tests/api-init5-1.tsy, lib/tests/api-init5-2.tsy,
 	lib/tests/mapselector.tsy, lib/tests/resconf.tsy:
 	Delete the unused cpp macro EUCJP_ENCODING_NAME.
@@ -127,7 +127,7 @@
 	* lib/resconf.c: enable the IDN_CONVERTER_RTCHECK flag when it
 	calls idn_converter_create().
 	* tools/idnconv/util.c: enable the IDN_CONVERTER_RTCHECK flag
-	when it calls idn_converter_setlocalconvertername() or 
+	when it calls idn_converter_setlocalconvertername() or
 	idn_converter_setidnconvertername().
 
 2002-09-20
@@ -227,7 +227,7 @@
 	that ctx->nschems is 0 to idn_mapper_map() and
 	idn_normalizer_normalize().
 
-	* lib/delimitermap.c: idn_delimitermap_add() and 
+	* lib/delimitermap.c: idn_delimitermap_add() and
 	idn_delimitermap_addall() reject a request to add an invalid
 	codepoint.
 
@@ -259,7 +259,7 @@
 	It provides create_conf_file().
 
 2002-08-19
-	* lib/resconf.c: if application calls idn_resconf_create() before 
+	* lib/resconf.c: if application calls idn_resconf_create() before
 	idn_resconf_initialize(), idnkit returns `idn_failure'.
 
 2002-08-15
@@ -360,7 +360,7 @@
 	* lib/res.c: call idn_delimitermap_destroy() after
 	idn_resconf_getdelimitermap() in idn_res_encodename() and
 	idn_res_decodename().
-	
+
 2002-08-02
 	* lib/res.c: fix mismatched pointer type in idn_res_decodename2().
 	* lib/res.c: fix a bug in handling of `auxencoding', in
@@ -538,12 +538,12 @@
 	lib/checker.c, lib/idn.conf.sample.in, man/idn.conf.5.in,
 	tools/idnconv/idnconv.1: support NAMEPREP-09.
 
-	* lib/mapper.c, lib/normalizer.c, lib/checker.c, lib/mapselector.c, 
+	* lib/mapper.c, lib/normalizer.c, lib/checker.c, lib/mapselector.c,
 	* lib/res.c, lib/race.c: spmplify local buffer managements.
 
 	* tools/idnconv/idnconv.c, tools/idnconv/util.c, tools/idnconv/util.h:
 	fix a bug that wrong local encoding is set to a resconf context.
-	
+
 2002-05-07
 	* tools/idnconv/util.c: delete set_reverse_context().
 	* tools/idnconv/idnconv.c: fix a serious bug in -reverse conversion.
@@ -559,7 +559,7 @@
 	* wsock/common/jpnicmdn.def, wsock/common/jpnicmdn.h,
 	wsock/config/mdnconf.tcl: removed.
 	* DISTFILES: add new files, remove obsolete files.
-	
+
 2002-05-02
 	* tools/idnconv/util.c: create a new function set_reverse_context().
 	* tools/idnconv/idnconv.c: fix a bug in handing of reference count
@@ -610,7 +610,7 @@
 	in include/mdn/api.h and include/mdn/res.h.
 
 	* include/idn/checker.h, include/idn/converter.h,
-	include/idn/delimitermap.h, include/idn/filechecker.h, 
+	include/idn/delimitermap.h, include/idn/filechecker.h,
 	include/idn/filemapper.h, include/idn/mapper.h,
 	include/idn/mapselector.h, include/idn/nameprep.h,
 	include/idn/normalizer.h, include/idn/unormalize.h:
@@ -618,7 +618,7 @@
 
 2002-04-17
 	* idnkit 1.0beta2 release.
-	
+
 2002-04-16
 	* configure.in: check AC_FIND_SYSTEM_SHOBJ(libnsl),
 	AC_CHECK_LIB(socket, socket) and AC_CHECK_LIB(nsl, inet_addr)
@@ -689,7 +689,7 @@
 	`-normalize', `-prohibit' and `-unassigned' options.
 	* tools/idnconv/idnconv.c: use default configuration if `-noconf'
 	is specified.
-	
+
 2002-04-04
 	* tools/idnconv/idnconv.1: fix obsolete description.
 	* tools/runidn/runidn.1: likewise.
@@ -795,7 +795,7 @@
 	(const unsigned long []) to (const unsigned long *).
 
 	* DISTFILES: syncronize current source structure.
-	
+
 2002-03-14
 	* configure, configure.in, include/config.h.in: add
 	`--enable-runidn' option to configure script.  Unless the value
@@ -836,7 +836,7 @@
 2002-03-04
 	* include/mdn/aliaslist.h, include/mdn/amcacez.h, include/mdn/assert.h,
 	include/mdn/checker.h, include/mdn/converter.h, include/mdn/debug.h,
-	include/mdn/delimitermap.h, include/mdn/dude.h, 
+	include/mdn/delimitermap.h, include/mdn/dude.h,
 	include/mdn/filechecker.h, include/mdn/filemapper.h,
 	include/mdn/localencoding.h, include/mdn/log.h, include/mdn/logmacro.h,
 	include/mdn/mapper.h, include/mdn/mapselector.h,

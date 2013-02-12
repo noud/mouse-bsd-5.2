@@ -127,7 +127,7 @@ slapd_opt_slp( const char *val, void *arg )
 	}
 
 	return 0;
-		
+
 #else
 	fputs( "slapd: SLP support is not available\n", stderr );
 	return 0;
@@ -136,7 +136,7 @@ slapd_opt_slp( const char *val, void *arg )
 
 /*
  * Option helper structure:
- * 
+ *
  * oh_nam	is left-hand part of <option>[=<value>]
  * oh_fnc	is handler function
  * oh_arg	is an optional arg to oh_fnc
@@ -215,7 +215,7 @@ parse_syslog_level( const char *arg, int *levelp )
 			arg, 0, 0 );
 		return 1;
 	}
-	
+
 	*levelp = str2syslog_level[ i ].mask;
 
 	return 0;
@@ -320,7 +320,7 @@ usage( char *name )
 	} else {
 		fprintf( stderr, "\n" );
 	}
-	fprintf( stderr,	
+	fprintf( stderr,
 #ifdef HAVE_CHROOT
 		"\t-r directory\tSandbox directory to chroot to\n"
 #endif
@@ -351,7 +351,7 @@ int main( int argc, char **argv )
 #ifdef SLAP_DEFAULT_SYSLOG_USER
 	int syslogUser = SLAP_DEFAULT_SYSLOG_USER;
 #endif
-	
+
 	int g_argc = argc;
 	char **g_argv = argv;
 
@@ -476,7 +476,7 @@ int main( int argc, char **argv )
 			scp = (struct sync_cookie *) ch_calloc( 1,
 										sizeof( struct sync_cookie ));
 			ber_str2bv( optarg, 0, 1, &scp->octet_str );
-			
+
 			/* This only parses out the rid at this point */
 			slap_parse_sync_cookie( scp, NULL );
 
@@ -534,11 +534,11 @@ int main( int argc, char **argv )
 			struct berval	opt;
 
 			opt.bv_val = optarg;
-			
+
 			if ( val ) {
 				opt.bv_len = ( val - optarg );
 				val++;
-			
+
 			} else {
 				opt.bv_len = strlen( optarg );
 			}
@@ -646,7 +646,7 @@ int main( int argc, char **argv )
 					MAIN_RETURN( rc );
 				}
 			}
-			
+
 			/* issue error */
 			serverName = optarg;
 			serverNamePrefix = "slap";
@@ -775,7 +775,7 @@ unhandled_option:;
 		syslog_unknowns = NULL;
 		if ( rc )
 			goto destroy;
-	}	
+	}
 
 	if ( check & CHECK_LOGLEVEL ) {
 		rc = 0;

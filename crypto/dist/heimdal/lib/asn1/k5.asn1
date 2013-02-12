@@ -72,11 +72,11 @@ PADATA-TYPE ::= INTEGER {
 	KRB5-PADATA-TD-REQ-SEQ(108),		-- INTEGER
 	KRB5-PADATA-PA-PAC-REQUEST(128),	-- jbrezak@exchange.microsoft.com
 	KRB5-PADATA-S4U2SELF(129),
-	KRB5-PADATA-PK-AS-09-BINDING(132),	-- client send this to 
-						-- tell KDC that is supports 
+	KRB5-PADATA-PK-AS-09-BINDING(132),	-- client send this to
+						-- tell KDC that is supports
 						-- the asCheckSum in the
 						--  PK-AS-REP
-	KRB5-PADATA-CLIENT-CANONICALIZED(133)	-- 
+	KRB5-PADATA-CLIENT-CANONICALIZED(133)	--
 }
 
 AUTHDATA-TYPE ::= INTEGER {
@@ -385,7 +385,7 @@ PA-ENC-TS-ENC ::= SEQUENCE {
 
 -- draft-brezak-win2k-krb-authz-01
 PA-PAC-REQUEST ::= SEQUENCE {
-	include-pac[0]		BOOLEAN -- Indicates whether a PAC 
+	include-pac[0]		BOOLEAN -- Indicates whether a PAC
 					-- should be included or not
 }
 
@@ -626,7 +626,7 @@ KRB5SignedPathData ::= SEQUENCE {
 
 KRB5SignedPath ::= SEQUENCE {
 	-- DERcoded KRB5SignedPathData
-	-- krbtgt key (etype), KeyUsage = XXX 
+	-- krbtgt key (etype), KeyUsage = XXX
 	etype[0]	ENCTYPE,
 	cksum[1]	Checksum,
 	-- srvs delegated though

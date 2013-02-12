@@ -37,7 +37,7 @@ CVersionInfo::CVersionInfo(CString filename)
 	}
 	FindClose(hFile);
 
-	// Extract the file info 
+	// Extract the file info
 	DWORD handle;
 	DWORD viSize = GetFileVersionInfoSize((LPTSTR)(LPCTSTR)filename, &handle);
 	m_versionInfo = NULL;
@@ -168,7 +168,7 @@ BOOL CVersionInfo::CopyFileCheckVersion(CVersionInfo &originalFile)
 		if(query == IDNO)
 			return(TRUE);
 	}
-	
+
 	return(CopyFileNoVersion(originalFile));
 }
 #endif
@@ -183,7 +183,7 @@ BOOL CVersionInfo::CopyFileNoVersion(CVersionInfo &originalFile)
 _int64 CVersionInfo::GetFileVersion()
 {
 	_int64 ver = 0;
-	
+
 	if(m_versionInfo)
 	{
 		ver = m_fixedInfo->dwFileVersionMS;
@@ -281,6 +281,6 @@ CString CVersionInfo::QueryStringValue(CString value)
 
 		if(VerQueryValue(m_versionInfo, queryString, &viBlob, &blobLen))
 			return((char *)viBlob);
-	}	
+	}
 	return("Not Available");
 }

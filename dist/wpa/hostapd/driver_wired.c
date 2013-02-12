@@ -141,7 +141,7 @@ static void handle_read(int sock, void *eloop_ctx, void *sock_ctx)
 		perror("recv");
 		return;
 	}
-	
+
 	handle_data(hapd, buf, len);
 }
 
@@ -156,7 +156,7 @@ static void handle_dhcp(int sock, void *eloop_ctx, void *sock_ctx)
 
 	len = recv(sock, buf, sizeof(buf), 0);
 	if (len < 0) {
-		perror("recv"); 
+		perror("recv");
 		return;
 	}
 
@@ -165,10 +165,10 @@ static void handle_dhcp(int sock, void *eloop_ctx, void *sock_ctx)
 		wpa_printf(MSG_MSGDUMP, "handle_dhcp: too short (%d)", len);
 		return;
 	}
-	
+
 	msg = (struct dhcp_message *) buf;
 	mac_address = (u8 *) &(msg->chaddr);
-	
+
 	wpa_printf(MSG_MSGDUMP, "Got DHCP broadcast packet from " MACSTR,
 		   MAC2STR(mac_address));
 
@@ -204,7 +204,7 @@ static int wired_init_sockets(struct wired_driver_data *drv)
 		return -1;
 	}
 
-	
+
 	memset(&addr, 0, sizeof(addr));
 	addr.sll_family = AF_PACKET;
 	addr.sll_ifindex = ifr.ifr_ifindex;
@@ -254,7 +254,7 @@ static int wired_init_sockets(struct wired_driver_data *drv)
 		printf("Could not register read socket\n");
 		return -1;
 	}
-	
+
 	memset(&addr2, 0, sizeof(addr2));
 	addr2.sin_family = AF_INET;
 	addr2.sin_port = htons(67);
@@ -357,7 +357,7 @@ static void wired_driver_deinit(void *priv)
 
 	if (drv->sock >= 0)
 		close(drv->sock);
-	
+
 	if (drv->dhcp_sock >= 0)
 		close(drv->dhcp_sock);
 

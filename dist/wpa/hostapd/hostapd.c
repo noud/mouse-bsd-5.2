@@ -1435,7 +1435,7 @@ static int setup_interface_finalize(struct hostapd_iface *iface, int status)
 
 	if (!iface->setup_cb)
 		return -1;
-	
+
 	eloop_cancel_timeout(setup_interface_start, iface, NULL);
 	eloop_cancel_timeout(setup_interface2_handler, iface, NULL);
 	hostapd_select_hw_mode_stop(iface);
@@ -1529,7 +1529,7 @@ static int hostapd_radius_get_eap_user(void *ctx, const u8 *identity,
  * Initializes the driver interface, validates the configuration,
  * and sets driver parameters based on the configuration.
  * Schedules setup_interface2() to be called immediately or after
- * hardware mode setup takes place. 
+ * hardware mode setup takes place.
  */
 static int setup_interface1(struct hostapd_iface *iface)
 {

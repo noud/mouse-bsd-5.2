@@ -95,7 +95,7 @@ int	quiet, verbose;
 static void set_unset_variable(char **, Boolean);
 
 /* print usage message and exit */
-void 
+void
 usage(void)
 {
 	(void) fprintf(stderr, "usage: %s [-bqSVv] [-C config] [-d lsdir] [-K pkg_dbdir] [-s sfx] command [args ...]\n"
@@ -229,7 +229,7 @@ delete1pkg(const char *pkgdir)
 	pkgdb_close();
 }
 
-static void 
+static void
 rebuild(void)
 {
 	char *cachename;
@@ -305,7 +305,7 @@ add_required_by(const char *pattern, const char *required_by)
 	if ((fd = open(path, O_WRONLY | O_APPEND | O_CREAT, 0644)) == -1)
 		errx(EXIT_FAILURE, "Cannot write to %s", path);
 	free(path);
-	
+
 	len = strlen(required_by);
 	if (write(fd, required_by, len) != (ssize_t)len ||
 	    write(fd, "\n", 1) != 1 ||
@@ -335,7 +335,7 @@ add_depends_of(const char *pkgname, void *cookie)
 			add_required_by(p->name, pkgname);
 	}
 
-	free_plist(&plist);	
+	free_plist(&plist);
 
 	return 0;
 }
@@ -349,7 +349,7 @@ rebuild_tree(void)
 		errx(EXIT_FAILURE, "cannot iterate pkgdb");
 }
 
-int 
+int
 main(int argc, char *argv[])
 {
 	Boolean		 use_default_sfx = TRUE;
@@ -430,7 +430,7 @@ main(int argc, char *argv[])
 	if (strcasecmp(argv[0], "pmatch") == 0) {
 
 		char *pattern, *pkg;
-		
+
 		argv++;		/* "pmatch" */
 
 		if (argv[0] == NULL || argv[1] == NULL) {
@@ -445,13 +445,13 @@ main(int argc, char *argv[])
 		} else {
 			return 1;
 		}
-	  
+
 	} else if (strcasecmp(argv[0], "rebuild") == 0) {
 
 		rebuild();
 		printf("Done.\n");
 
-	  
+
 	} else if (strcasecmp(argv[0], "rebuild-tree") == 0) {
 
 		rebuild_tree();
@@ -508,7 +508,7 @@ main(int argc, char *argv[])
 					printf("%s/%s\n", dir, p);
 				free(p);
 			}
-			
+
 			argv++;
 		}
 	} else if (strcasecmp(argv[0], "list") == 0 ||
@@ -593,7 +593,7 @@ main(int argc, char *argv[])
 			puts(output);
 			fetchFreeURL(url);
 			free(output);
-		}		
+		}
 
 		return rc;
 	} else if (strcasecmp(argv[0], "fetch-pkg-vulnerabilities") == 0) {
@@ -683,23 +683,23 @@ set_unset_variable(char **argv, Boolean unset)
 
 	if (argv[0] == NULL || argv[1] == NULL)
 		usage();
-	
+
 	variable = NULL;
 
 	if (unset) {
 		arg.variable = argv[0];
 		arg.value = NULL;
-	} else {	
+	} else {
 		eq = NULL;
 		if ((eq=strchr(argv[0], '=')) == NULL)
 			usage();
-		
+
 		variable = xmalloc(eq-argv[0]+1);
 		strlcpy(variable, argv[0], eq-argv[0]+1);
-		
+
 		arg.variable = variable;
 		arg.value = eq+1;
-		
+
 		if (strcmp(variable, AUTOMATIC_VARNAME) == 0 &&
 		    strcasecmp(arg.value, "yes") != 0 &&
 		    strcasecmp(arg.value, "no") != 0) {

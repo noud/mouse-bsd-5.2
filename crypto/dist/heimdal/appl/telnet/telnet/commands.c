@@ -1352,7 +1352,7 @@ bye(int argc, char **argv)
 	/* reset options */
 	tninit();
     }
-    if ((argc != 2) || (strcmp(argv[1], "fromquit") != 0)) 
+    if ((argc != 2) || (strcmp(argv[1], "fromquit") != 0))
 	longjmp(toplevel, 1);
     return 0;	/* NOTREACHED */
 }
@@ -1620,7 +1620,7 @@ env_init(void)
 	 * USER with the value from LOGNAME.  By default, we
 	 * don't export the USER variable.
 	 */
-	if ((env_find((unsigned char*)"USER") == NULL) && 
+	if ((env_find((unsigned char*)"USER") == NULL) &&
 	    (ep = env_find((unsigned char*)"LOGNAME"))) {
 		env_define((unsigned char *)"USER", ep->value);
 		env_unexport((unsigned char *)"USER");
@@ -2203,7 +2203,7 @@ tn(int argc, char **argv)
 			     addrstr, sizeof(addrstr),
 			     NULL, 0, NI_NUMERICHOST) != 0)
 		strlcpy (addrstr, "unknown address", sizeof(addrstr));
-			     
+
 	    printf("Trying %s...\r\n", addrstr);
 
 	    net = socket (a->ai_family, a->ai_socktype, a->ai_protocol);

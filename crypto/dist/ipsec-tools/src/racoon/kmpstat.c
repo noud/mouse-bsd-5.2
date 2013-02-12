@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -61,7 +61,7 @@
 #include <unistd.h>
 #endif
 #include <err.h>
-#include <sys/ioctl.h> 
+#include <sys/ioctl.h>
 #include <resolv.h>
 
 #include "libpfkey.h"
@@ -133,7 +133,7 @@ com_send(combuf)
 }
 
 int
-com_recv(combufp) 
+com_recv(combufp)
 	vchar_t **combufp;
 {
 	struct admin_com h, *com;
@@ -145,7 +145,7 @@ com_recv(combufp)
 	if (combufp == NULL)
 		return -1;
 
-	/* receive by PEEK */ 
+	/* receive by PEEK */
 	if ((len = recv(so, &h, sizeof(h), MSG_PEEK)) == -1)
 		goto bad1;
 
@@ -172,7 +172,7 @@ com_recv(combufp)
 		l += len;
 		p += len;
 	}
-	
+
 	return 0;
 
 bad2:
@@ -183,7 +183,7 @@ bad1:
 }
 
 /*
- * Dumb plog functions (used by sockmisc.c) 
+ * Dumb plog functions (used by sockmisc.c)
  */
 void
 _plog(int pri, const char *func, struct sockaddr *sa, const char *fmt, ...)
@@ -196,7 +196,7 @@ _plog(int pri, const char *func, struct sockaddr *sa, const char *fmt, ...)
 }
 
 void
-plogdump(pri, data, len) 
+plogdump(pri, data, len)
 	int pri;
 	void *data;
 	size_t len;

@@ -1,34 +1,34 @@
 /*
  * Copyright (c) 1997 - 2007 Kungliga Tekniska Högskolan
- * (Royal Institute of Technology, Stockholm, Sweden). 
- * All rights reserved. 
+ * (Royal Institute of Technology, Stockholm, Sweden).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */
 
 #include "krb5_locl.h"
@@ -60,7 +60,7 @@ typedef struct krb5_get_init_creds_ctx {
 } krb5_get_init_creds_ctx;
 
 static krb5_error_code
-default_s2k_func(krb5_context context, krb5_enctype type, 
+default_s2k_func(krb5_context context, krb5_enctype type,
 		 krb5_const_pointer keyseed,
 		 krb5_salt salt, krb5_data *s2kparms,
 		 krb5_keyblock **key)
@@ -75,7 +75,7 @@ default_s2k_func(krb5_context context, krb5_enctype type,
 	opaque = *s2kparms;
     else
 	krb5_data_zero(&opaque);
-	
+
     *key = malloc(sizeof(**key));
     if (*key == NULL)
 	return ENOMEM;
@@ -139,7 +139,7 @@ init_cred (krb5_context context,
     krb5_timeofday (context, &now);
 
     memset (cred, 0, sizeof(*cred));
-    
+
     if (client)
 	krb5_copy_principal(context, client, &cred->client);
     else {
@@ -175,7 +175,7 @@ init_cred (krb5_context context,
 	free (*krb5_princ_realm(context, cred->server));
 	krb5_princ_set_realm (context, cred->server, &server_realm);
     } else {
-	ret = krb5_make_principal(context, &cred->server, 
+	ret = krb5_make_principal(context, &cred->server,
 				  client_realm, KRB5_TGS_NAME, client_realm,
 				  NULL);
 	if (ret)
@@ -200,7 +200,7 @@ report_expiration (krb5_context context,
 		   time_t now)
 {
     char *p;
-	    
+
     asprintf (&p, "%s%s", str, ctime(&now));
     (*prompter) (context, data, NULL, p, 0, NULL);
     free (p);
@@ -398,7 +398,7 @@ change_password (krb5_context context,
     if (old_options && old_options->flags & KRB5_GET_INIT_CREDS_OPT_PREAUTH_LIST)
 	krb5_get_init_creds_opt_set_preauth_list (&options,
 						  old_options->preauth_list,
-						  old_options->preauth_list_length);					      
+						  old_options->preauth_list_length);
 
     krb5_data_zero (&result_code_string);
     krb5_data_zero (&result_string);
@@ -445,7 +445,7 @@ change_password (krb5_context context,
 	memset (buf1, 0, sizeof(buf1));
 	memset (buf2, 0, sizeof(buf2));
     }
-    
+
     ret = krb5_change_password (context,
 				&cpw_cred,
 				buf1,
@@ -500,7 +500,7 @@ krb5_get_init_creds_keytab(krb5_context context,
     krb5_get_init_creds_ctx ctx;
     krb5_error_code ret;
     krb5_keytab_key_proc_args *a;
-    
+
     ret = get_init_creds_common(context, client, start_time,
 				in_tkt_service, options, &ctx);
     if (ret)
@@ -699,9 +699,9 @@ set_paid(struct pa_info_data *paid, krb5_context context,
 
 static struct pa_info_data *
 pa_etype_info2(krb5_context context,
-	       const krb5_principal client, 
+	       const krb5_principal client,
 	       const AS_REQ *asreq,
-	       struct pa_info_data *paid, 
+	       struct pa_info_data *paid,
 	       heim_octet_string *data)
 {
     krb5_error_code ret;
@@ -729,7 +729,7 @@ pa_etype_info2(krb5_context context,
 		if (ret == 0)
 		    ret = set_paid(paid, context, e.val[i].etype,
 				   KRB5_PW_SALT,
-				   salt.saltvalue.data, 
+				   salt.saltvalue.data,
 				   salt.saltvalue.length,
 				   e.val[i].s2kparams);
 		if (e.val[i].salt == NULL)
@@ -748,7 +748,7 @@ pa_etype_info2(krb5_context context,
 
 static struct pa_info_data *
 pa_etype_info(krb5_context context,
-	      const krb5_principal client, 
+	      const krb5_principal client,
 	      const AS_REQ *asreq,
 	      struct pa_info_data *paid,
 	      heim_octet_string *data)
@@ -780,7 +780,7 @@ pa_etype_info(krb5_context context,
 		if (ret == 0) {
 		    ret = set_paid(paid, context, e.val[i].etype,
 				   salt.salttype,
-				   salt.saltvalue.data, 
+				   salt.saltvalue.data,
 				   salt.saltvalue.length,
 				   NULL);
 		    if (e.val[i].salt == NULL)
@@ -800,7 +800,7 @@ pa_etype_info(krb5_context context,
 
 static struct pa_info_data *
 pa_pw_or_afs3_salt(krb5_context context,
-		   const krb5_principal client, 
+		   const krb5_principal client,
 		   const AS_REQ *asreq,
 		   struct pa_info_data *paid,
 		   heim_octet_string *data)
@@ -808,10 +808,10 @@ pa_pw_or_afs3_salt(krb5_context context,
     krb5_error_code ret;
     if (paid->etype == ENCTYPE_NULL)
 	return NULL;
-    ret = set_paid(paid, context, 
+    ret = set_paid(paid, context,
 		   paid->etype,
 		   paid->salt.salttype,
-		   data->data, 
+		   data->data,
 		   data->length,
 		   NULL);
     if (ret)
@@ -823,9 +823,9 @@ pa_pw_or_afs3_salt(krb5_context context,
 struct pa_info {
     krb5_preauthtype type;
     struct pa_info_data *(*salt_info)(krb5_context,
-				      const krb5_principal, 
+				      const krb5_principal,
 				      const AS_REQ *,
-				      struct pa_info_data *, 
+				      struct pa_info_data *,
 				      heim_octet_string *);
 };
 
@@ -835,7 +835,7 @@ static struct pa_info pa_prefs[] = {
     { KRB5_PADATA_PW_SALT, pa_pw_or_afs3_salt },
     { KRB5_PADATA_AFS3_SALT, pa_pw_or_afs3_salt }
 };
-    
+
 static PA_DATA *
 find_pa_data(const METHOD_DATA *md, int type)
 {
@@ -849,8 +849,8 @@ find_pa_data(const METHOD_DATA *md, int type)
 }
 
 static struct pa_info_data *
-process_pa_info(krb5_context context, 
-		const krb5_principal client, 
+process_pa_info(krb5_context context,
+		const krb5_principal client,
 		const AS_REQ *asreq,
 		struct pa_info_data *paid,
 		METHOD_DATA *md)
@@ -870,7 +870,7 @@ process_pa_info(krb5_context context,
 }
 
 static krb5_error_code
-make_pa_enc_timestamp(krb5_context context, METHOD_DATA *md, 
+make_pa_enc_timestamp(krb5_context context, METHOD_DATA *md,
 		      krb5_enctype etype, krb5_keyblock *key)
 {
     PA_ENC_TS_ENC p;
@@ -882,7 +882,7 @@ make_pa_enc_timestamp(krb5_context context, METHOD_DATA *md,
     int32_t usec;
     int usec2;
     krb5_crypto crypto;
-    
+
     krb5_us_timeofday (context, &p.patimestamp, &usec);
     usec2         = usec;
     p.pausec      = &usec2;
@@ -898,7 +898,7 @@ make_pa_enc_timestamp(krb5_context context, METHOD_DATA *md,
 	free(buf);
 	return ret;
     }
-    ret = krb5_encrypt_EncryptedData(context, 
+    ret = krb5_encrypt_EncryptedData(context,
 				     crypto,
 				     KRB5_KU_PA_ENC_TIMESTAMP,
 				     buf,
@@ -909,7 +909,7 @@ make_pa_enc_timestamp(krb5_context context, METHOD_DATA *md,
     krb5_crypto_destroy(context, crypto);
     if (ret)
 	return ret;
-		    
+
     ASN1_MALLOC_ENCODE(EncryptedData, buf, buf_size, &encdata, &len, ret);
     free_EncryptedData(&encdata);
     if (ret)
@@ -925,7 +925,7 @@ make_pa_enc_timestamp(krb5_context context, METHOD_DATA *md,
 
 static krb5_error_code
 add_enc_ts_padata(krb5_context context,
-		  METHOD_DATA *md, 
+		  METHOD_DATA *md,
 		  krb5_principal client,
 		  krb5_s2k_proc key_proc,
 		  krb5_const_pointer keyseed,
@@ -938,7 +938,7 @@ add_enc_ts_padata(krb5_context context,
     krb5_salt salt2;
     krb5_enctype *ep;
     int i;
-    
+
     if(salt == NULL) {
 	/* default to standard salt */
 	ret = krb5_get_pw_salt (context, client, &salt2);
@@ -980,25 +980,25 @@ pa_data_to_md_ts_enc(krb5_context context,
 	return 0;
 
     if (ppaid) {
-	add_enc_ts_padata(context, md, client, 
+	add_enc_ts_padata(context, md, client,
 			  ctx->key_proc, ctx->password,
 			  &ppaid->etype, 1,
 			  &ppaid->salt, ppaid->s2kparams);
     } else {
 	krb5_salt salt;
-	
+
 	/* make a v5 salted pa-data */
-	add_enc_ts_padata(context, md, client, 
+	add_enc_ts_padata(context, md, client,
 			  ctx->key_proc, ctx->password,
-			  a->req_body.etype.val, a->req_body.etype.len, 
+			  a->req_body.etype.val, a->req_body.etype.len,
 			  NULL, NULL);
-	
+
 	/* make a v4 salted pa-data */
 	salt.salttype = KRB5_PW_SALT;
 	krb5_data_zero(&salt.saltvalue);
-	add_enc_ts_padata(context, md, client, 
-			  ctx->key_proc, ctx->password, 
-			  a->req_body.etype.val, a->req_body.etype.len, 
+	add_enc_ts_padata(context, md, client,
+			  ctx->key_proc, ctx->password,
+			  a->req_body.etype.val, a->req_body.etype.len,
 			  &salt, NULL);
     }
     return 0;
@@ -1051,7 +1051,7 @@ pa_data_add_pac_request(krb5_context context,
     krb5_error_code ret;
     PA_PAC_REQUEST req;
     void *buf;
-    
+
     switch (ctx->req_pac) {
     case KRB5_INIT_CREDS_TRISTATE_UNSET:
 	return 0; /* don't bother */
@@ -1060,9 +1060,9 @@ pa_data_add_pac_request(krb5_context context,
 	break;
     case KRB5_INIT_CREDS_TRISTATE_FALSE:
 	req.include_pac = 0;
-    }	
+    }
 
-    ASN1_MALLOC_ENCODE(PA_PAC_REQUEST, buf, length, 
+    ASN1_MALLOC_ENCODE(PA_PAC_REQUEST, buf, length,
 		       &req, &len, ret);
     if (ret)
 	return ret;
@@ -1099,7 +1099,7 @@ process_pa_data_to_md(krb5_context context,
     }
     (*out_md)->len = 0;
     (*out_md)->val = NULL;
-    
+
     /*
      * Make sure we don't sent both ENC-TS and PK-INIT pa data, no
      * need to expose our password protecting our PKCS12 key.
@@ -1113,12 +1113,12 @@ process_pa_data_to_md(krb5_context context,
 
     } else if (in_md->len != 0) {
 	struct pa_info_data paid, *ppaid;
-	
+
 	memset(&paid, 0, sizeof(paid));
-	
+
 	paid.etype = ENCTYPE_NULL;
 	ppaid = process_pa_info(context, creds->client, a, &paid, in_md);
-	
+
 	pa_data_to_md_ts_enc(context, a, creds->client, ctx, ppaid, *out_md);
 	if (ppaid)
 	    free_paid(context, ppaid);
@@ -1154,7 +1154,7 @@ process_pa_data_to_key(krb5_context context,
 
     if (rep->kdc_rep.padata) {
 	paid.etype = etype;
-	ppaid = process_pa_info(context, creds->client, a, &paid, 
+	ppaid = process_pa_info(context, creds->client, a, &paid,
 				rep->kdc_rep.padata);
     }
     if (ppaid == NULL) {
@@ -1168,13 +1168,13 @@ process_pa_data_to_key(krb5_context context,
     pa = NULL;
     if (rep->kdc_rep.padata) {
 	int idx = 0;
-	pa = krb5_find_padata(rep->kdc_rep.padata->val, 
+	pa = krb5_find_padata(rep->kdc_rep.padata->val,
 			      rep->kdc_rep.padata->len,
 			      KRB5_PADATA_PK_AS_REP,
 			      &idx);
 	if (pa == NULL) {
 	    idx = 0;
-	    pa = krb5_find_padata(rep->kdc_rep.padata->val, 
+	    pa = krb5_find_padata(rep->kdc_rep.padata->val,
 				  rep->kdc_rep.padata->len,
 				  KRB5_PADATA_PK_AS_REP_19,
 				  &idx);
@@ -1196,7 +1196,7 @@ process_pa_data_to_key(krb5_context context,
 	ret = EINVAL;
 #endif
     } else if (ctx->password)
-	ret = pa_data_to_key_plain(context, creds->client, ctx, 
+	ret = pa_data_to_key_plain(context, creds->client, ctx,
 				   paid.salt, paid.s2kparams, etype, key);
     else {
 	krb5_set_error_string(context, "No usable pa data type");
@@ -1254,7 +1254,7 @@ init_cred_loop(krb5_context context,
      * Increase counter when we want other pre-auth types then
      * KRB5_PA_ENC_TIMESTAMP.
      */
-#define MAX_PA_COUNTER 3 
+#define MAX_PA_COUNTER 3
 
     ctx->pa_counter = 0;
     while (ctx->pa_counter < MAX_PA_COUNTER) {
@@ -1279,8 +1279,8 @@ init_cred_loop(krb5_context context,
 
 	krb5_data_free(&ctx->req_buffer);
 
-	ASN1_MALLOC_ENCODE(AS_REQ, 
-			   ctx->req_buffer.data, ctx->req_buffer.length, 
+	ASN1_MALLOC_ENCODE(AS_REQ,
+			   ctx->req_buffer.data, ctx->req_buffer.length,
 			   &ctx->as_req, &len, ret);
 	if (ret)
 	    goto out;
@@ -1321,9 +1321,9 @@ init_cred_loop(krb5_context context,
 		memset(&md, 0, sizeof(md));
 
 		if (error.e_data) {
-		    ret = decode_METHOD_DATA(error.e_data->data, 
-					     error.e_data->length, 
-					     &md, 
+		    ret = decode_METHOD_DATA(error.e_data->data,
+					     error.e_data->length,
+					     &md,
 					     NULL);
 		    if (ret)
 			krb5_set_error_string(context,
@@ -1359,11 +1359,11 @@ init_cred_loop(krb5_context context,
 	    flags |= EXTRACT_TICKET_MATCH_REALM;
 	}
 
-	ret = process_pa_data_to_key(context, ctx, creds, 
+	ret = process_pa_data_to_key(context, ctx, creds,
 				     &ctx->as_req, &rep, hi, &key);
 	if (ret)
 	    goto out;
-	
+
 	ret = _krb5_extract_ticket(context,
 				   &rep,
 				   creds,
@@ -1395,8 +1395,8 @@ init_cred_loop(krb5_context context,
 	    krb5_set_error_string(context, "Client canonicalizion not signed");
 	    goto out;
 	}
-	
-	ret = decode_PA_ClientCanonicalized(pa->padata_value.data, 
+
+	ret = decode_PA_ClientCanonicalized(pa->padata_value.data,
 					    pa->padata_value.length,
 					    &canon, &len);
 	if (ret) {
@@ -1407,7 +1407,7 @@ init_cred_loop(krb5_context context,
 
 	ASN1_MALLOC_ENCODE(PA_ClientCanonicalizedNames, data.data, data.length,
 			   &canon.names, &len, ret);
-	if (ret) 
+	if (ret)
 	    goto out;
 	if (data.length != len)
 	    krb5_abortx(context, "internal asn.1 error");
@@ -1440,7 +1440,7 @@ out:
 
     if (ret == 0 && ret_as_reply)
 	*ret_as_reply = rep;
-    else 
+    else
 	krb5_free_kdc_rep (context, &rep);
     return ret;
 }
@@ -1479,7 +1479,7 @@ krb5_get_init_creds(krb5_context context,
 			     &ctx,
 			     &ctx.cred,
 			     &kdc_reply);
-	
+
 	switch (ret) {
 	case 0 :
 	    done = 1;
@@ -1552,9 +1552,9 @@ krb5_get_init_creds_password(krb5_context context,
 	const char *realm = krb5_principal_get_realm(context, client);
 	ret = krb5_get_init_creds_opt_alloc(context, &options);
 	if (ret == 0)
-	    krb5_get_init_creds_opt_set_default_flags(context, 
-						      NULL, 
-						      realm, 
+	    krb5_get_init_creds_opt_set_default_flags(context,
+						      NULL,
+						      realm,
 						      options);
     } else
 	ret = _krb5_get_init_creds_opt_copy(context, in_options, &options);
@@ -1629,7 +1629,7 @@ krb5_get_init_creds_keyblock(krb5_context context,
 {
     struct krb5_get_init_creds_ctx ctx;
     krb5_error_code ret;
-    
+
     ret = get_init_creds_common(context, client, start_time,
 				in_tkt_service, options, &ctx);
     if (ret)

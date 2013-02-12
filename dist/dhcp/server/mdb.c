@@ -680,7 +680,7 @@ void enter_subnet (subnet)
 	}
 	subnet_reference (&subnets, subnet, MDL);
 }
-	
+
 /* Enter a new shared network into the shared network list. */
 
 void enter_shared_network (share)
@@ -693,7 +693,7 @@ void enter_shared_network (share)
 	}
 	shared_network_reference (&shared_networks, share, MDL);
 }
-	
+
 void new_shared_network_interface (cfile, share, name)
 	struct parse *cfile;
 	struct shared_network *share;
@@ -703,12 +703,12 @@ void new_shared_network_interface (cfile, share, name)
 	isc_result_t status;
 
 	if (share -> interface) {
-		parse_warn (cfile, 
+		parse_warn (cfile,
 			    "A subnet or shared network can't be connected %s",
 			    "to two interfaces.");
 		return;
 	}
-	
+
 	for (ip = interfaces; ip; ip = ip -> next)
 		if (!strcmp (ip -> name, name))
 			break;
@@ -848,7 +848,7 @@ int supersede_lease (comp, lease, commit, propogate, pimmediate)
 		comp -> uid = (unsigned char *)0;
 	} else
 		enter_uid = 1;
-	
+
 	if (comp -> hardware_addr.hlen &&
 	    ((comp -> hardware_addr.hlen !=
 	      lease -> hardware_addr.hlen) ||
@@ -859,7 +859,7 @@ int supersede_lease (comp, lease, commit, propogate, pimmediate)
 		enter_hwaddr = 1;
 	} else if (!comp -> hardware_addr.hlen)
 		enter_hwaddr = 1;
-	
+
 	/* If the lease has been billed to a class, remove the billing. */
 	if (comp -> billing_class != lease -> billing_class) {
 		if (comp -> billing_class)
@@ -946,17 +946,17 @@ int supersede_lease (comp, lease, commit, propogate, pimmediate)
 		executable_statement_reference (&comp -> on_release,
 						lease -> on_release, MDL);
 	}
-	
+
 	/* Record the lease in the uid hash if necessary. */
 	if (enter_uid && comp -> uid) {
 		uid_hash_add (comp);
 	}
-	
+
 	/* Record it in the hardware address hash if necessary. */
 	if (enter_hwaddr && lease -> hardware_addr.hlen) {
 		hw_hash_add (comp);
 	}
-	
+
 #if defined (FAILOVER_PROTOCOL)
 	comp -> cltt = lease -> cltt;
 	comp -> tstp = lease -> tstp;
@@ -1024,7 +1024,7 @@ int supersede_lease (comp, lease, commit, propogate, pimmediate)
 			   : binding_state_names [comp -> binding_state - 1]);
 		return 0;
 	}
-	
+
 	if (prev) {
 		lease_dereference (&prev -> next, MDL);
 		if (comp -> next) {
@@ -1051,7 +1051,7 @@ int supersede_lease (comp, lease, commit, propogate, pimmediate)
 	/* If this is the next lease that will timeout on the pool,
 	   zap the old timeout and set the timeout on this pool to the
 	   time that the lease's next event will happen.
-		   
+
 	   We do not actually set the timeout unless commit is true -
 	   we don't want to thrash the timer queue when reading the
 	   lease database.  Instead, the database code calls the
@@ -1140,7 +1140,7 @@ void make_binding_state_transition (struct lease *lease)
 				executable_statement_dereference
 					(&lease -> on_expiry, MDL);
 		}
-		
+
 		/* No sense releasing a lease after it's expired. */
 		if (lease -> on_release)
 			executable_statement_dereference (&lease -> on_release,
@@ -1190,7 +1190,7 @@ void make_binding_state_transition (struct lease *lease)
 			executable_statement_dereference (&lease -> on_release,
 							  MDL);
 		}
-		
+
 		/* A released lease can't expire. */
 		if (lease -> on_expiry)
 			executable_statement_dereference (&lease -> on_expiry,
@@ -1493,7 +1493,7 @@ void pool_timer (vpool)
 			if (i == EXPIRED_LEASES)
 				continue;
 		}
-#endif		
+#endif
 		lease_reference (&lease, *(lptr [i]), MDL);
 
 		while (lease) {
@@ -1921,7 +1921,7 @@ void lease_instantiate (const unsigned char *val, unsigned len,
 				   lease -> ip_addr.len, MDL);
 		return;
 	}
-		
+
 	/* Put the lease on the right queue. */
 	lease_enqueue (lease);
 
@@ -1929,12 +1929,12 @@ void lease_instantiate (const unsigned char *val, unsigned len,
 	if (lease -> uid) {
 		uid_hash_add (lease);
 	}
-	
+
 	/* Record it in the hardware address hash if possible. */
 	if (lease -> hardware_addr.hlen) {
 		hw_hash_add (lease);
 	}
-	
+
 	/* If the lease has a billing class, set up the billing. */
 	if (lease -> billing_class) {
 		class = (struct class *)0;
@@ -1978,7 +1978,7 @@ void expire_all_pools ()
 		p -> lease_count = 0;
 		p -> free_leases = 0;
 		p -> backup_leases = 0;
-		
+
 		lptr [FREE_LEASES] = &p -> free;
 		lptr [ACTIVE_LEASES] = &p -> active;
 		lptr [EXPIRED_LEASES] = &p -> expired;
@@ -2212,7 +2212,7 @@ void free_everything ()
 		    pool_reference (&pn, nc -> pools, MDL);
 		    do {
 			struct lease **lptr [5];
-			
+
 			if (pn) {
 			    pool_reference (&pc, pn, MDL);
 			    pool_dereference (&pn, MDL);
@@ -2221,7 +2221,7 @@ void free_everything ()
 			    pool_reference (&pn, pc -> next, MDL);
 			    pool_dereference (&pc -> next, MDL);
 			}
-			
+
 			lptr [FREE_LEASES] = &pc -> free;
 			lptr [ACTIVE_LEASES] = &pc -> active;
 			lptr [EXPIRED_LEASES] = &pc -> expired;

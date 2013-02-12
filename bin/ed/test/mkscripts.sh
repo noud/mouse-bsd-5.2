@@ -20,7 +20,7 @@ for i in *.t; do
 #	echo EOT
 #	) >$base.ed
 #	chmod +x $base.ed
-# The following is pretty ugly way of doing the above, and not appropriate 
+# The following is pretty ugly way of doing the above, and not appropriate
 # use of ed  but the point is that it can be done...
 	base=`$ED - \!"echo $i" <<-EOF
 		s/\..*
@@ -54,7 +54,7 @@ for i in *.err; do
 #	echo EOT
 #	) >$base-err.ed
 #	chmod +x $base-err.ed
-# The following is pretty ugly way of doing the above, and not appropriate 
+# The following is pretty ugly way of doing the above, and not appropriate
 # use of ed  but the point is that it can be done...
 	base=`$ED - \!"echo $i" <<-EOF
 		s/\..*

@@ -657,7 +657,7 @@ If \-2 is returned from
 .B pcap_dispatch()
 or
 .BR pcap_loop() ,
-the flag is cleared, so a subsequent call will resume reading packets. 
+the flag is cleared, so a subsequent call will resume reading packets.
 If a positive number is returned, the flag is not cleared, so a
 subsequent call will return \-2 and clear the flag.
 .PP
@@ -711,9 +711,9 @@ Note that its calling arguments are suitable for use with
 .B pcap_dispatch()
 or
 .BR pcap_loop() .
-If called directly, the 
+If called directly, the
 .I user
-parameter is of type 
+parameter is of type
 .I pcap_dumper_t
 as returned by
 .BR pcap_dump_open() .
@@ -785,11 +785,11 @@ has been made the filter program for a pcap structure by a call to
 .PP
 .B pcap_setdirection()
 is used to specify a direction that packets will be captured.
-.I pcap_direction_t 
+.I pcap_direction_t
 is one of the constants
 .BR PCAP_D_IN ,
 .B PCAP_D_OUT
-or 
+or
 .BR PCAP_D_INOUT .
 .B PCAP_D_IN
 will only capture packets received by the device,
@@ -1105,7 +1105,7 @@ translates a data link type name, which is a
 name with the
 .B DLT_
 removed, to the corresponding data link type value.  The translation
-is case-insensitive.  
+is case-insensitive.
 .B \-1
 is returned on failure.
 .PP

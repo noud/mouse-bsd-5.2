@@ -73,9 +73,9 @@ ap1394_hdr_print(register const u_char *bp, u_int length)
 	if (!qflag) {
 		(void)printf(", ethertype %s (0x%04x)",
 			       tok2str(ethertype_values,"Unknown", ntohs(fp->firewire_type)),
-                               ntohs(fp->firewire_type));	      
+                               ntohs(fp->firewire_type));
         } else {
-                (void)printf(", %s", tok2str(ethertype_values,"Unknown Ethertype (0x%04x)", ntohs(fp->firewire_type)));  
+                (void)printf(", %s", tok2str(ethertype_values,"Unknown Ethertype (0x%04x)", ntohs(fp->firewire_type)));
         }
 
 	(void)printf(", length %u: ", length);
@@ -120,7 +120,7 @@ ap1394_if_print(const struct pcap_pkthdr *h, const u_char *p)
 
 		if (!suppress_default_print)
 			default_print(p, caplen);
-	} 
+	}
 
 	return FIREWIRE_HDRLEN;
 }

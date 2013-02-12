@@ -721,7 +721,7 @@ struct optab table[] = {
 		"	move AL,[ .long AR]\n", },
 
 /*
- * DIV/MOD/MUL 
+ * DIV/MOD/MUL
  * These can be done way more efficient.
  */
 /* long long div. XXX - work only with unsigned */
@@ -924,7 +924,7 @@ struct optab table[] = {
 		0, 	RESCC,
 		"ZR", },
 
-{ OPLOG,	FORCC,  
+{ OPLOG,	FORCC,
 	SAREG|SAREG,	TLL|TDOUBLE, /* XXX - does double work here? */
 	SAREG|SAREG|SOREG|SNAME,	TLL|TDOUBLE,
 		0,	RESCC,
@@ -1027,7 +1027,7 @@ struct optab table[] = {
 		"	ldb A1,[ .long AL ]\n"
 		"	ash A1,033\n"
 		"	ash A1,-033\n", },
-		
+
 { OPLTYPE,	INAREG,
 	SANY,	TANY,
 	SNAME,	TSHORT|TUSHORT,
@@ -1114,9 +1114,9 @@ struct optab table[] = {
 		"	push 017,AL\n	push 017,UL\n", },
 
 { STARG,	FOREFF,
-	SAREG|SOREG|SNAME|SCON, TANY, 
+	SAREG|SOREG|SNAME|SCON, TANY,
 	SANY,   TSTRUCT,
-		0, 0, 
+		0, 0,
 		"ZG", },
 
 

@@ -636,7 +636,7 @@ wpa_supplicant \
 	using ap_scan=0 option in configuration file.</para>
 	</listitem>
       </varlistentry>
-      
+
       <varlistentry>
 	<term>Wired Ethernet drivers</term>
 	<listitem>
@@ -661,7 +661,7 @@ wpa_supplicant \
       </varlistentry>
     </variablelist>
 
-	
+
     <para>wpa_supplicant was designed to be portable for different
     drivers and operating systems. Hopefully, support for more wlan
     cards and OSes will be added in the future. See developer.txt for

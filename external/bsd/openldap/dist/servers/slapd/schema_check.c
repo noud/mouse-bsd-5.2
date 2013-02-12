@@ -43,7 +43,7 @@ static int entry_naming_check(
  */
 
 int
-entry_schema_check( 
+entry_schema_check(
 	Operation *op,
 	Entry *e,
 	Attribute *oldattrs,
@@ -85,7 +85,7 @@ entry_schema_check(
 
 		/* there should be at least one value */
 		assert( a->a_vals != NULL );
-		assert( a->a_vals[0].bv_val != NULL ); 
+		assert( a->a_vals[0].bv_val != NULL );
 
 		if( a->a_desc->ad_type->sat_check ) {
 			rc = (a->a_desc->ad_type->sat_check)(
@@ -111,7 +111,7 @@ entry_schema_check(
 		if( is_at_single_value( a->a_desc->ad_type ) &&
 			a->a_vals[1].bv_val != NULL )
 		{
-			snprintf( textbuf, textlen, 
+			snprintf( textbuf, textlen,
 				"attribute '%s' cannot have multiple values",
 				type );
 
@@ -164,7 +164,7 @@ entry_schema_check(
 
 	sc = oc_bvfind( &asc->a_vals[0] );
 	if( sc == NULL ) {
-		snprintf( textbuf, textlen, 
+		snprintf( textbuf, textlen,
 			"unrecognized structuralObjectClass '%s'",
 			asc->a_vals[0].bv_val );
 
@@ -177,7 +177,7 @@ entry_schema_check(
 	}
 
 	if( sc->soc_kind != LDAP_SCHEMA_STRUCTURAL ) {
-		snprintf( textbuf, textlen, 
+		snprintf( textbuf, textlen,
 			"structuralObjectClass '%s' is not STRUCTURAL",
 			asc->a_vals[0].bv_val );
 
@@ -191,7 +191,7 @@ entry_schema_check(
 
 got_soc:
 	if( !manage && sc->soc_obsolete ) {
-		snprintf( textbuf, textlen, 
+		snprintf( textbuf, textlen,
 			"structuralObjectClass '%s' is OBSOLETE",
 			asc->a_vals[0].bv_val );
 
@@ -206,14 +206,14 @@ got_soc:
 	*text = textbuf;
 
 	if ( oc == NULL ) {
-		snprintf( textbuf, textlen, 
+		snprintf( textbuf, textlen,
 			"unrecognized objectClass '%s'",
 			aoc->a_vals[0].bv_val );
 		rc = LDAP_OBJECT_CLASS_VIOLATION;
 		goto done;
 
 	} else if ( sc != slap_schema.si_oc_glue && sc != oc ) {
-		snprintf( textbuf, textlen, 
+		snprintf( textbuf, textlen,
 			"structural object class modification "
 			"from '%s' to '%s' not allowed",
 			asc->a_vals[0].bv_val, oc->soc_cname.bv_val );
@@ -242,7 +242,7 @@ got_soc:
 	/* check that the entry has required attrs of the content rule */
 	if( cr ) {
 		if( !manage && cr->scr_obsolete ) {
-			snprintf( textbuf, textlen, 
+			snprintf( textbuf, textlen,
 				"content rule '%s' is obsolete",
 				ldap_contentrule2name( &cr->scr_crule ));
 
@@ -265,7 +265,7 @@ got_soc:
 
 			/* not there => schema violation */
 			if ( a == NULL ) {
-				snprintf( textbuf, textlen, 
+				snprintf( textbuf, textlen,
 					"content rule '%s' requires attribute '%s'",
 					ldap_contentrule2name( &cr->scr_crule ),
 					at->sat_cname.bv_val );
@@ -290,7 +290,7 @@ got_soc:
 
 			/* there => schema violation */
 			if ( a != NULL ) {
-				snprintf( textbuf, textlen, 
+				snprintf( textbuf, textlen,
 					"content rule '%s' precluded attribute '%s'",
 					ldap_contentrule2name( &cr->scr_crule ),
 					at->sat_cname.bv_val );
@@ -310,7 +310,7 @@ got_soc:
 		oc = socs[i];
 		if ( !manage && oc->soc_obsolete ) {
 			/* disallow obsolete classes */
-			snprintf( textbuf, textlen, 
+			snprintf( textbuf, textlen,
 				"objectClass '%s' is OBSOLETE",
 				aoc->a_vals[i].bv_val );
 
@@ -389,18 +389,18 @@ got_soc:
 						}
 					}
 					if ( k ) {
-						snprintf( textbuf, textlen, 
+						snprintf( textbuf, textlen,
 							"class '%s' not allowed by content rule '%s'",
 							oc->soc_cname.bv_val,
 							ldap_contentrule2name( &cr->scr_crule ) );
 					}
 				} else if ( global_disallows & SLAP_DISALLOW_AUX_WO_CR ) {
 					k = -1;
-					snprintf( textbuf, textlen, 
+					snprintf( textbuf, textlen,
 						"class '%s' not allowed by any content rule",
 						oc->soc_cname.bv_val );
 				} else {
-					k = 0;	
+					k = 0;
 				}
 
 				if( k == -1 ) {
@@ -415,7 +415,7 @@ got_soc:
 
 			s = oc_check_required( e, oc, &aoc->a_vals[i] );
 			if (s != NULL) {
-				snprintf( textbuf, textlen, 
+				snprintf( textbuf, textlen,
 					"object class '%s' requires attribute '%s'",
 					aoc->a_vals[i].bv_val, s );
 
@@ -461,7 +461,7 @@ got_soc:
 			}
 		}
 
-		if( rc != LDAP_SUCCESS ) 
+		if( rc != LDAP_SUCCESS )
 		{
 			rc = oc_check_allowed( a->a_desc->ad_type, socs, sc );
 		}
@@ -469,7 +469,7 @@ got_soc:
 		if ( rc != LDAP_SUCCESS ) {
 			char *type = a->a_desc->ad_cname.bv_val;
 
-			snprintf( textbuf, textlen, 
+			snprintf( textbuf, textlen,
 				"attribute '%s' not allowed",
 				type );
 
@@ -551,7 +551,7 @@ int oc_check_allowed(
 	/* check to see if its allowed by the structuralObjectClass */
 	if( sc ) {
 		/* does it require the type? */
-		for ( j = 0; sc->soc_required != NULL && 
+		for ( j = 0; sc->soc_required != NULL &&
 			sc->soc_required[j] != NULL; j++ )
 		{
 			if( at == sc->soc_required[j] ) {
@@ -560,7 +560,7 @@ int oc_check_allowed(
 		}
 
 		/* does it allow the type? */
-		for ( j = 0; sc->soc_allowed != NULL && 
+		for ( j = 0; sc->soc_allowed != NULL &&
 			sc->soc_allowed[j] != NULL; j++ )
 		{
 			if( at == sc->soc_allowed[j] ) {
@@ -581,7 +581,7 @@ int oc_check_allowed(
 			( sc == NULL || oc->soc_kind == LDAP_SCHEMA_AUXILIARY ))
 		{
 			/* does it require the type? */
-			for ( j = 0; oc->soc_required != NULL && 
+			for ( j = 0; oc->soc_required != NULL &&
 				oc->soc_required[j] != NULL; j++ )
 			{
 				if( at == oc->soc_required[j] ) {
@@ -589,7 +589,7 @@ int oc_check_allowed(
 				}
 			}
 			/* does it allow the type? */
-			for ( j = 0; oc->soc_allowed != NULL && 
+			for ( j = 0; oc->soc_allowed != NULL &&
 				oc->soc_allowed[j] != NULL; j++ )
 			{
 				if( at == oc->soc_allowed[j] ) {
@@ -624,7 +624,7 @@ int structural_class(
 	/* count them */
 	for( i=0; ocs[i].bv_val; i++ ) ;
 	nocs = i;
-	
+
 	socs = slap_sl_malloc( (nocs+1) * sizeof(ObjectClass *), ctx );
 
 	for( i=0; ocs[i].bv_val; i++ ) {
@@ -797,7 +797,7 @@ entry_naming_check(
 		int add = 0;
 
 		if( ava->la_flags & LDAP_AVA_BINARY ) {
-			snprintf( textbuf, textlen, 
+			snprintf( textbuf, textlen,
 				"value of naming attribute '%s' in unsupported BER form",
 				ava->la_attr.bv_val );
 			rc = LDAP_NAMING_VIOLATION;
@@ -810,15 +810,15 @@ entry_naming_check(
 		}
 
 		if( desc->ad_type->sat_usage ) {
-			snprintf( textbuf, textlen, 
+			snprintf( textbuf, textlen,
 				"naming attribute '%s' is operational",
 				ava->la_attr.bv_val );
 			rc = LDAP_NAMING_VIOLATION;
 			break;
 		}
- 
+
 		if( desc->ad_type->sat_collective ) {
-			snprintf( textbuf, textlen, 
+			snprintf( textbuf, textlen,
 				"naming attribute '%s' is collective",
 				ava->la_attr.bv_val );
 			rc = LDAP_NAMING_VIOLATION;
@@ -826,7 +826,7 @@ entry_naming_check(
 		}
 
 		if( !manage && desc->ad_type->sat_obsolete ) {
-			snprintf( textbuf, textlen, 
+			snprintf( textbuf, textlen,
 				"naming attribute '%s' is obsolete",
 				ava->la_attr.bv_val );
 			rc = LDAP_NAMING_VIOLATION;
@@ -834,7 +834,7 @@ entry_naming_check(
 		}
 
 		if( !desc->ad_type->sat_equality ) {
-			snprintf( textbuf, textlen, 
+			snprintf( textbuf, textlen,
 				"naming attribute '%s' has no equality matching rule",
 				ava->la_attr.bv_val );
 			rc = LDAP_NAMING_VIOLATION;
@@ -842,7 +842,7 @@ entry_naming_check(
 		}
 
 		if( !desc->ad_type->sat_equality->smr_match ) {
-			snprintf( textbuf, textlen, 
+			snprintf( textbuf, textlen,
 				"naming attribute '%s' has unsupported equality matching rule",
 				ava->la_attr.bv_val );
 			rc = LDAP_NAMING_VIOLATION;
@@ -852,7 +852,7 @@ entry_naming_check(
 		/* find the naming attribute */
 		attr = attr_find( e->e_attrs, desc );
 		if ( attr == NULL ) {
-			snprintf( textbuf, textlen, 
+			snprintf( textbuf, textlen,
 				"naming attribute '%s' is not present in entry",
 				ava->la_attr.bv_val );
 			if ( add_naming ) {
@@ -870,17 +870,17 @@ entry_naming_check(
 			if( rc != 0 ) {
 				switch( rc ) {
 				case LDAP_INAPPROPRIATE_MATCHING:
-					snprintf( textbuf, textlen, 
+					snprintf( textbuf, textlen,
 						"inappropriate matching for naming attribute '%s'",
 						ava->la_attr.bv_val );
 					break;
 				case LDAP_INVALID_SYNTAX:
-					snprintf( textbuf, textlen, 
+					snprintf( textbuf, textlen,
 						"value of naming attribute '%s' is invalid",
 						ava->la_attr.bv_val );
 					break;
 				case LDAP_NO_SUCH_ATTRIBUTE:
-					snprintf( textbuf, textlen, 
+					snprintf( textbuf, textlen,
 						"value of naming attribute '%s' is not present in entry",
 						ava->la_attr.bv_val );
 					if ( add_naming ) {
@@ -888,7 +888,7 @@ entry_naming_check(
 					}
 					break;
 				default:
-					snprintf( textbuf, textlen, 
+					snprintf( textbuf, textlen,
 						"naming attribute '%s' is inappropriate",
 						ava->la_attr.bv_val );
 				}

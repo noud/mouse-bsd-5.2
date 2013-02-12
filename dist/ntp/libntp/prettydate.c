@@ -21,7 +21,7 @@ static const char *days[] = {
 
 /* Helper function to handle possible wraparound of the ntp epoch.
 
-   Works by assuming that the localtime/gmtime library functions 
+   Works by assuming that the localtime/gmtime library functions
    have been updated so that they work
 */
 
@@ -84,7 +84,7 @@ prettydate(
 	u_long msec;
 
 	LIB_GETBUF(bp);
-	
+
 	sec = ts->l_ui;
 	msec = ts->l_uf / 4294967;	/* fract / (2 ** 32 / 1000) */
 
@@ -99,7 +99,7 @@ prettydate(
 		       months[tm->tm_mon], tm->tm_mday, 1900 + tm->tm_year,
 		       tm->tm_hour,tm->tm_min, tm->tm_sec, msec);
 	}
-	
+
 	return bp;
 }
 
@@ -114,7 +114,7 @@ gmprettydate(
 	u_long msec;
 
 	LIB_GETBUF(bp);
-	
+
 	sec = ts->l_ui;
 	msec = ts->l_uf / 4294967;	/* fract / (2 ** 32 / 1000) */
 

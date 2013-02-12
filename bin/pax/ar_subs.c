@@ -249,7 +249,7 @@ list(void)
 				break;
 			if (res == 0) {
 				if (arcn->name[0] == '/' && !check_Aflag()) {
-					memmove(arcn->name, arcn->name + 1, 
+					memmove(arcn->name, arcn->name + 1,
 					    strlen(arcn->name));
 				}
 				ls_list(arcn, now, stdout);
@@ -449,7 +449,7 @@ extract(void)
 			continue;
 		}
 
-			
+
 		/*
 		 * all ok, extract this member based on type
 		 */

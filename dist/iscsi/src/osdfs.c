@@ -1,24 +1,24 @@
 /*
  * IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING. By downloading, copying, installing or
  * using the software you agree to this license. If you do not agree to this license, do not download, install,
- * copy or use the software. 
+ * copy or use the software.
  *
- * Intel License Agreement 
+ * Intel License Agreement
  *
  * Copyright (c) 2002, Intel Corporation
- * All rights reserved. 
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that
- * the following conditions are met: 
+ * the following conditions are met:
  *
  * -Redistributions of source code must retain the above copyright notice, this list of conditions and the
- *  following disclaimer. 
+ *  following disclaimer.
  *
  * -Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
- *  following disclaimer in the documentation and/or other materials provided with the distribution. 
+ *  following disclaimer in the documentation and/or other materials provided with the distribution.
  *
  * -The name of Intel Corporation may not be used to endorse or promote products derived from this software
- *  without specific prior written permission. 
+ *  without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -27,7 +27,7 @@
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE. 
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
 /*
@@ -122,7 +122,7 @@ int osd_exec_via_scsi(void *dev, osd_args_t *args, OSD_OPS_MEM *m) {
   }
 
   SDpnt = blk_dev[MAJOR(kdev)].queue(kdev)->queuedata;
-  SRpnt = scsi_allocate_request(SDpnt); 
+  SRpnt = scsi_allocate_request(SDpnt);
   SRpnt->sr_cmd_len = CONFIG_OSD_CDB_LEN;
   SRpnt->sr_sense_buffer[0] = 0;
   SRpnt->sr_sense_buffer[2] = 0;
@@ -159,14 +159,14 @@ int osd_exec_via_scsi(void *dev, osd_args_t *args, OSD_OPS_MEM *m) {
     scsi_release_request(SRpnt);
     SRpnt = NULL;
     return -1;
-  } 
+  }
   scsi_release_request(SRpnt);
   SRpnt = NULL;
 
   return 0;
 }
 
-/* 
+/*
  * Internal OSDFS functions
  */
 
@@ -181,7 +181,7 @@ static int entries_get(kdev_t dev, uint64_t uid, char **entries, uint32_t *num, 
     iscsi_trace_error("osd_get_one_attr() failed\n");
     return -1;
   }
-  *num = 0; 
+  *num = 0;
   if ((*size=inode.i_size)) {
     char *ptr, *ptr2;
     int n = 0;
@@ -217,7 +217,7 @@ static int entries_get(kdev_t dev, uint64_t uid, char **entries, uint32_t *num, 
   return 0;
 }
 
-static int entry_add(kdev_t dev, ino_t dir_ino, ino_t entry_ino, 
+static int entry_add(kdev_t dev, ino_t dir_ino, ino_t entry_ino,
                      const char *name, uint64_t *new_size) {
   char entry[MAX_NAME_LEN+16];
   uint64_t uid = dir_ino;
@@ -232,7 +232,7 @@ static int entry_add(kdev_t dev, ino_t dir_ino, ino_t entry_ino,
   }
 
   /*  Write entry at end */
-  
+
   sprintf(entry, "%s\n", name);
   sprintf(entry+strlen(entry), "%li\n", entry_ino);
   if (osd_write((void *)&dev, root_gid, uid, inode.i_size, strlen(entry), entry, 0, &osd_exec_via_scsi)!=0) {
@@ -274,7 +274,7 @@ static int entry_del(kdev_t dev, ino_t dir_ino, ino_t ino, const char *name, uin
       *nl = 0x0;
       if (!strcmp(ptr, name)) {
         tmp = ptr;
-      } 
+      }
       *nl = '\n';
       n++;
       if ((ptr=strchr(nl+1, '\n'))==NULL) {
@@ -289,14 +289,14 @@ static int entry_del(kdev_t dev, ino_t dir_ino, ino_t ino, const char *name, uin
       return -1;
     }
     if (entries+size-ptr) {
-      iscsi_trace(TRACE_OSDFS, "writing remaining %u directory bytes at offset %u\n", 
+      iscsi_trace(TRACE_OSDFS, "writing remaining %u directory bytes at offset %u\n",
             entries+size-ptr, tmp-entries);
       if (osd_write((void *)&dev, root_gid, dir_uid, tmp-entries, entries+size-ptr, ptr, 0, &osd_exec_via_scsi)!=0) {
         iscsi_trace_error("osd_write() failed\n");
         return -1;
       }
     }
-    *new_size = size-(ptr-tmp); 
+    *new_size = size-(ptr-tmp);
     vfree(entries);
   } else {
     iscsi_trace_error("dir 0x%llx has no entries\n", dir_uid);
@@ -307,7 +307,7 @@ static int entry_del(kdev_t dev, ino_t dir_ino, ino_t ino, const char *name, uin
 }
 
 static int entry_num(kdev_t dev, ino_t ino) {
-  char *entries; 
+  char *entries;
   uint32_t num_entries;
   uint64_t size;
 
@@ -340,7 +340,7 @@ static void osdfs_set_ops(struct inode *inode) {
   inode->i_mapping->a_ops = &osdfs_aops;
 }
 
-static struct inode *osdfs_get_inode(struct super_block *sb, int mode, int dev, const char *name, 
+static struct inode *osdfs_get_inode(struct super_block *sb, int mode, int dev, const char *name,
                               uint64_t ObjectID) {
   struct inode *inode;
   ino_t ino = ObjectID;
@@ -497,7 +497,7 @@ static int osdfs_create(struct inode *dir, struct dentry *dentry, int mode) {
   if (osdfs_mknod(dir, dentry, mode | S_IFREG, 0)!=0) {
     iscsi_trace_error("osdfs_mknod() failed\n");
     return -1;
-  } 
+  }
   iscsi_trace(TRACE_OSDFS, "file \"%s\" is inode 0x%x\n", dentry->d_name.name, (unsigned) dentry->d_inode->i_ino);
 
   return 0;
@@ -543,11 +543,11 @@ static struct dentry * osdfs_lookup(struct inode *dir, struct dentry *dentry) {
             iscsi_trace_error("iget() failed\n");
             return NULL;
           }
-        } 
+        }
       }
     } while (ptr2&&(ptr=ptr2+1));
     vfree(entries);
-  } 
+  }
   if (!inode) {
     iscsi_trace(TRACE_OSDFS, "\"%s\" not found\n", name);
   }
@@ -570,14 +570,14 @@ static int osdfs_link(struct dentry *old_dentry, struct inode * dir, struct dent
     iscsi_trace_error("entry_add() failed\n");
     return -1;
   }
-  inode->i_nlink++; 
-  atomic_inc(&inode->i_count); 
+  inode->i_nlink++;
+  atomic_inc(&inode->i_count);
   osdfs_write_inode(inode, 0);
   osdfs_write_inode(dir, 0);
   d_instantiate(dentry, inode);
   ISCSI_UNLOCK(&g_mutex, return -1);
 
-  return 0; 
+  return 0;
 }
 
 static int osdfs_unlink(struct inode * dir, struct dentry *dentry) {
@@ -595,7 +595,7 @@ static int osdfs_unlink(struct inode * dir, struct dentry *dentry) {
       break;
     case S_IFDIR:
       if (entry_num(dev, ino)) {
-        iscsi_trace_error("directory 0x%x still has %i entries\n", 
+        iscsi_trace_error("directory 0x%x still has %i entries\n",
                     (unsigned) ino, entry_num(dev, ino));
         ISCSI_UNLOCK(&g_mutex, return -1);
         return -ENOTEMPTY;
@@ -629,7 +629,7 @@ static int osdfs_symlink(struct inode * dir, struct dentry *dentry, const char *
   if (osdfs_mknod(dir, dentry,  S_IRWXUGO | S_IFLNK, 0)!=0) {
     iscsi_trace_error("osdfs_mknod() failed\n");
     return -1;
-  } 
+  }
   inode = dentry->d_inode;
   if (block_symlink(inode, symname, strlen(symname)+1)!=0) {
     iscsi_trace_error("block_symlink() failed\n");
@@ -637,7 +637,7 @@ static int osdfs_symlink(struct inode * dir, struct dentry *dentry, const char *
   }
   iscsi_trace(TRACE_OSDFS, "symbolic link \"%s\" is inode %lu\n", dentry->d_name.name, inode->i_ino);
 
-  return 0; 
+  return 0;
 }
 
 static int osdfs_mkdir(struct inode * dir, struct dentry * dentry, int mode) {
@@ -645,7 +645,7 @@ static int osdfs_mkdir(struct inode * dir, struct dentry * dentry, int mode) {
   iscsi_trace(TRACE_OSDFS, "osdfs_mkdir(\"%s\")\n", dentry->d_name.name);
   if (osdfs_mknod(dir, dentry, mode | S_IFDIR, 0)!=0) {
     iscsi_trace_error("osdfs_mkdir() failed\n");
-  } 
+  }
 
   return 0;
 }
@@ -676,7 +676,7 @@ static int osdfs_mknod(struct inode *dir, struct dentry *dentry, int mode, int d
   attr.i_atime = CURRENT_TIME;
   attr.i_mtime = CURRENT_TIME;
   attr.i_nlink = 1;
-  if (osd_set_one_attr((void *)&dir->i_sb->s_dev, root_gid, uid, 0x30000000, 0x1, sizeof(struct inode), 
+  if (osd_set_one_attr((void *)&dir->i_sb->s_dev, root_gid, uid, 0x30000000, 0x1, sizeof(struct inode),
                         &attr, &osd_exec_via_scsi)!=0) {
     iscsi_trace_error("osd_set_one_attr() failed\n");
     return -1;
@@ -720,8 +720,8 @@ static int osdfs_rename(struct inode *old_dir, struct dentry *old_dentry, struct
   iscsi_trace(TRACE_OSDFS, "new_dentry = 0x%p (ino 0x%x)\n", new_dentry, (unsigned) new_ino);
 
   /*
-   * If we return -1, the VFS will implement a rename with a combination 
-   * of osdfs_unlink() and osdfs_create(). 
+   * If we return -1, the VFS will implement a rename with a combination
+   * of osdfs_unlink() and osdfs_create().
    */
 
   /*  Delete entry from old directory */
@@ -807,7 +807,7 @@ static int osdfs_readdir(struct file * filp, void * dirent, filldir_t filldir) {
   uint64_t uid = ino;
 
   name = dentry->d_name.name;
-  iscsi_trace(TRACE_OSDFS, "osdfs_readdir(\"%s\", ino 0x%x, offset %i)\n", 
+  iscsi_trace(TRACE_OSDFS, "osdfs_readdir(\"%s\", ino 0x%x, offset %i)\n",
         name, (unsigned) ino, offset);
   ISCSI_LOCK(&g_mutex, return -1);
   if (entries_get(dev, uid, &entries, &num_entries, &size)!=0) {
@@ -840,7 +840,7 @@ static int osdfs_readdir(struct file * filp, void * dirent, filldir_t filldir) {
         vfree(entries);
         return -1;
       }
-   
+
     case 1:
 
       iscsi_trace(TRACE_OSDFS, "adding \"..\" (ino 0x%x)\n", (unsigned) dentry->d_parent->d_inode->i_ino);
@@ -857,7 +857,7 @@ static int osdfs_readdir(struct file * filp, void * dirent, filldir_t filldir) {
       offset -= 2;
       do {
         if ((ptr2=strchr(ptr, '\n'))!=NULL) {
-          *ptr2 = 0x0; 
+          *ptr2 = 0x0;
           ptr2 = strchr(ptr2+1, '\n');
           if (offset>0) {
             offset--;
@@ -869,7 +869,7 @@ static int osdfs_readdir(struct file * filp, void * dirent, filldir_t filldir) {
               return 0;
             }
           }
-        } 
+        }
       } while (ptr2&&(ptr=ptr2+1));
   }
   if (num_entries) vfree(entries);
@@ -897,7 +897,7 @@ static int osdfs_readpage(struct file *file, struct page * page) {
   ino_t ino = inode->i_ino;
   uint64_t len;
   uint64_t uid = ino;
- 
+
   iscsi_trace(TRACE_OSDFS, "osdfs_readpage(ino %lu, Offset %llu, Length %llu)\n", ino, Offset, Length);
   if (Offset+Length>inode->i_size) {
     len =  inode->i_size-Offset;
@@ -942,7 +942,7 @@ static int osdfs_commit_write(struct file *file, struct page *page, unsigned off
     return -1;
   }
   if (Offset+Length>inode->i_size) {
-    inode->i_size = Offset+Length;  
+    inode->i_size = Offset+Length;
   }
   osdfs_write_inode(inode, 0);
 
@@ -999,7 +999,7 @@ static struct super_block *osdfs_read_super(struct super_block *sb, void *data, 
       return NULL;
     }
   }
- 
+
   /*  Initialize superblock */
 
   sb->s_blocksize      = PAGE_CACHE_SIZE;
@@ -1035,10 +1035,10 @@ static struct super_block *osdfs_read_super(struct super_block *sb, void *data, 
     }
   } else {
     iscsi_trace(TRACE_OSDFS, "using root directory in 0x%x:0x%llx\n", root_gid, root_uid);
-  } 
+  }
 
   /*  Create inode for root directory */
-    
+
   if ((inode=osdfs_get_inode(sb, S_IFDIR | 0755, 0, "/", root_uid))==NULL) {
     iscsi_trace_error("osdfs_get_inode() failed\n");
     return NULL;

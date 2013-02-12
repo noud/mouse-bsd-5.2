@@ -6,7 +6,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -69,19 +69,19 @@ typedef struct
 
 IMPLEMENT_BLOCK_CIPHER(aes_128, ks, AES, EVP_AES_KEY,
 		       NID_aes_128, 16, 16, 16, 128,
-		       0, aes_init_key, NULL, 
+		       0, aes_init_key, NULL,
 		       EVP_CIPHER_set_asn1_iv,
 		       EVP_CIPHER_get_asn1_iv,
 		       NULL)
 IMPLEMENT_BLOCK_CIPHER(aes_192, ks, AES, EVP_AES_KEY,
 		       NID_aes_192, 16, 24, 16, 128,
-		       0, aes_init_key, NULL, 
+		       0, aes_init_key, NULL,
 		       EVP_CIPHER_set_asn1_iv,
 		       EVP_CIPHER_get_asn1_iv,
 		       NULL)
 IMPLEMENT_BLOCK_CIPHER(aes_256, ks, AES, EVP_AES_KEY,
 		       NID_aes_256, 16, 32, 16, 128,
-		       0, aes_init_key, NULL, 
+		       0, aes_init_key, NULL,
 		       EVP_CIPHER_set_asn1_iv,
 		       EVP_CIPHER_get_asn1_iv,
 		       NULL)
@@ -103,7 +103,7 @@ static int aes_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
 
 	if ((ctx->cipher->flags & EVP_CIPH_MODE) == EVP_CIPH_CFB_MODE
 	    || (ctx->cipher->flags & EVP_CIPH_MODE) == EVP_CIPH_OFB_MODE
-	    || enc) 
+	    || enc)
 		ret=AES_set_encrypt_key(key, ctx->key_len * 8, ctx->cipher_data);
 	else
 		ret=AES_set_decrypt_key(key, ctx->key_len * 8, ctx->cipher_data);

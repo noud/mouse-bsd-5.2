@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: nb_net.c,v 1.4 2001/02/16 02:46:12 bp Exp 
+ * from: Id: nb_net.c,v 1.4 2001/02/16 02:46:12 bp Exp
  */
 
 #include <sys/cdefs.h>
@@ -101,7 +101,7 @@ nb_resolvehost_in(const char *name, struct sockaddr **dest)
 
 int
 nb_enum_if(struct nb_ifdesc **iflist, int maxif)
-{  
+{
 	struct nb_ifdesc *ifd;
 	struct ifaddrs *ifp, *p;
 	int i;

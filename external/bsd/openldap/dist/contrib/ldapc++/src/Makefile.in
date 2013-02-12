@@ -248,7 +248,7 @@ libldapcpp_la_SOURCES = LDAPAddRequest.cpp \
 			LdifWriter.cpp \
 			SaslInteraction.cpp \
 			SaslInteractionHandler.cpp \
-			StringList.cpp 
+			StringList.cpp
 
 include_HEADERS = LDAPAsynConnection.h \
 			LDAPAttribute.h \
@@ -282,7 +282,7 @@ include_HEADERS = LDAPAsynConnection.h \
 			LdifWriter.h \
 			SaslInteraction.h \
 			SaslInteractionHandler.h \
-			StringList.h 
+			StringList.h
 
 noinst_HEADERS = ac/time.h \
 		debug.h \
@@ -342,7 +342,7 @@ config.h: stamp-h1
 stamp-h1: $(srcdir)/config.h.in $(top_builddir)/config.status
 	@rm -f stamp-h1
 	cd $(top_builddir) && $(SHELL) ./config.status src/config.h
-$(srcdir)/config.h.in:  $(am__configure_deps) 
+$(srcdir)/config.h.in:  $(am__configure_deps)
 	cd $(top_srcdir) && $(AUTOHEADER)
 	rm -f stamp-h1
 	touch $@
@@ -376,7 +376,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libldapcpp.la: $(libldapcpp_la_OBJECTS) $(libldapcpp_la_DEPENDENCIES) 
+libldapcpp.la: $(libldapcpp_la_OBJECTS) $(libldapcpp_la_DEPENDENCIES)
 	$(libldapcpp_la_LINK) -rpath $(libdir) $(libldapcpp_la_OBJECTS) $(libldapcpp_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:

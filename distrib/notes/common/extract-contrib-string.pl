@@ -5,7 +5,7 @@
 #
 # This code is derived from software contributed to The NetBSD Foundation
 # by Hubert Feyrer <hubert@feyrer.de>.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
 # are met:
@@ -14,7 +14,7 @@
 # 2. Redistributions in binary form must reproduce the above copyright
 #    notice, this list of conditions and the following disclaimer in the
 #    documentation and/or other materials provided with the distribution.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
 # ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 # TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -77,7 +77,7 @@ $known_bad_clause_3_wording=
     .'|usr.sbin/traceroute/ifaddrlist.h'	#
     .'|usr.sbin/traceroute/traceroute.c'	#
     .'|usr.sbin/hilinfo/hilinfo.c'	   	# CSS @ Utah
-    ;	
+    ;
 
 sub warning {
     local($fn,$msg) = @_;
@@ -109,20 +109,20 @@ file:
 while(<>) {
     chomp();
     $fn=$_;
-    
+
     open(F, "$fn") || die "cannot read $fn: $!\n";
 
   line:
     while(<F>) {
 	if (0 and /$ack_line2/i){
 	    print "?> $_" if $debug;
-	    
+
 	    if ($fn !~ m,$known_bad_clause_3_wording,) {
 		warning($fn, "clause 3 start not caught");
 	    }
 	    last line;
 	}
-	
+
 	print "0> $_" if $debug;
 
 	# special case perl script generating a license (openssl's
@@ -137,21 +137,21 @@ while(<>) {
 
 	if (/$ack_line1/i
 	    or (/$ack_line2/ and $fn =~ m,$known_bad_clause_3_wording,)) {
-	    
+
 	    print "1> $_" if $debug;
 
 	    $_=<F>
 		unless $fn =~ m,$known_bad_clause_3_wording,;
 	    if (/$ack_line2/i or $fn =~ m,$known_bad_clause_3_wording,){
-		
+
 		print "2> $_" if $debug;
-		
+
 		$msg="";
 		$msg = $_ if ($fn =~ m,$known_bad_clause_3_wording, and /``/);
 		$cnt=0;
 		$_=<F>;
 		while(!/$ack_endline/i) {
-		    
+
 		    print "C> $_" if $debug;
 
 		    $msg .= $_;
@@ -164,7 +164,7 @@ while(<>) {
 		}
 
 		print "E> $_" if $debug;
-		
+
 		# post-process
 
 		if ($fn =~ m,$known_bad_clause_3_wording,) {
@@ -252,9 +252,9 @@ while(<>) {
 			print "$msg";
 			print "\n\n";
 		    }
-		    
+
 		    # Figure out if there's a version w/ or w/o trailing dot
-		    # 
+		    #
 		    if ($msg =~ /\.$/) {
 			# check if there's a version of the same msg
 			# w/o a trailing dot
@@ -266,7 +266,7 @@ while(<>) {
 				if $debug;
 			    next msg;
 			}
-			
+
 			# ... maybe with other case?
 			$lc_msg2=lc($msg2);
 			if ($lc_copyrights{$lc_msg2}) {
@@ -285,7 +285,7 @@ while(<>) {
 				if $debug;
 			    next msg;
 			}
-			
+
 			# ... maybe with other case?
 			$lc_msg2=lc($msg2);
 			if ($lc_copyrights{$lc_msg2}) {
@@ -297,7 +297,7 @@ while(<>) {
 
 		    $copyrights{$msg} = 1;
 		    $lc_copyrights{$lc_msg} = 1;
-		}		 
+		}
 
 	    } else {
 		print "?> $_" if $debug;

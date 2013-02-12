@@ -61,7 +61,7 @@ CFLAGS="$RPM_OPT_FLAGS" \
 	--libexecdir=%{_libdir} --sysconfdir=/etc/racoon \
 	--sharedstatedir=/var/run --localstatedir=/var \
 	--enable-dpd --enable-hybrid --enable-frag
-make 
+make
 make check
 
 %install

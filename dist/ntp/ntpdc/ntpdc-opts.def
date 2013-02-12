@@ -101,7 +101,7 @@ flag = {
     descrip   = "numeric host addresses";
     doc = <<-  _EndOfDoc_
 	Output all host addresses in dotted-quad numeric format rather than
-	converting to the canonical host names. 
+	converting to the canonical host names.
 	_EndOfDoc_;
 };
 

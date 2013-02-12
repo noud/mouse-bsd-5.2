@@ -25,14 +25,14 @@ Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1)
 protocols as well as a full-strength general purpose cryptography library.
 The project is managed by a worldwide community of volunteers that use the
 Internet to communicate, plan, and develop the OpenSSL tookit and its related
-documentation. 
+documentation.
 
 OpenSSL is based on the excellent SSLeay library developed from Eric A.
 Young and Tim J. Hudson.  The OpenSSL toolkit is licensed under an
 Apache-style licence, which basically means that you are free to get and
-use it for commercial and non-commercial purposes. 
+use it for commercial and non-commercial purposes.
 
-This package contains the base OpenSSL cryptography and SSL/TLS 
+This package contains the base OpenSSL cryptography and SSL/TLS
 libraries and tools.
 
 %package devel
@@ -46,14 +46,14 @@ Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1)
 protocols as well as a full-strength general purpose cryptography library.
 The project is managed by a worldwide community of volunteers that use the
 Internet to communicate, plan, and develop the OpenSSL tookit and its related
-documentation. 
+documentation.
 
 OpenSSL is based on the excellent SSLeay library developed from Eric A.
 Young and Tim J. Hudson.  The OpenSSL toolkit is licensed under an
 Apache-style licence, which basically means that you are free to get and
-use it for commercial and non-commercial purposes. 
+use it for commercial and non-commercial purposes.
 
-This package contains the the OpenSSL cryptography and SSL/TLS 
+This package contains the the OpenSSL cryptography and SSL/TLS
 static libraries and header files required when developing applications.
 
 %package doc
@@ -67,12 +67,12 @@ Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1)
 protocols as well as a full-strength general purpose cryptography library.
 The project is managed by a worldwide community of volunteers that use the
 Internet to communicate, plan, and develop the OpenSSL tookit and its related
-documentation. 
+documentation.
 
 OpenSSL is based on the excellent SSLeay library developed from Eric A.
 Young and Tim J. Hudson.  The OpenSSL toolkit is licensed under an
 Apache-style licence, which basically means that you are free to get and
-use it for commercial and non-commercial purposes. 
+use it for commercial and non-commercial purposes.
 
 This package contains the the OpenSSL cryptography and SSL/TLS extra
 documentation and POD files from which the man pages were produced.
@@ -81,7 +81,7 @@ documentation and POD files from which the man pages were produced.
 
 %setup -q
 
-%build 
+%build
 
 %define CONFIG_FLAGS -DSSL_ALLOW_ADH --prefix=/usr --openssldir=%{openssldir}
 
@@ -110,7 +110,7 @@ ln -sf /usr/bin/openssl $RPM_BUILD_ROOT/usr/bin/ssleay
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files 
+%files
 %defattr(0644,root,root,0755)
 %doc CHANGES CHANGES.SSLeay LICENSE NEWS README
 
@@ -119,7 +119,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{openssldir}/misc/*
 %attr(0644,root,root) /usr/man/man[157]/*
 
-%config %attr(0644,root,root) %{openssldir}/openssl.cnf 
+%config %attr(0644,root,root) %{openssldir}/openssl.cnf
 %dir %attr(0755,root,root) %{openssldir}/certs
 %dir %attr(0755,root,root) %{openssldir}/misc
 %dir %attr(0750,root,root) %{openssldir}/private

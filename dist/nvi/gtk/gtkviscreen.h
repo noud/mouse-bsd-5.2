@@ -38,7 +38,7 @@ struct _GtkViScreen
   GdkGC *reverse_gc;
 
   CHAR_T  *chars;
-  guchar  *endcol;	    
+  guchar  *endcol;
   guchar  *reverse;
   guchar  color;
 

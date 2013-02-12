@@ -8,7 +8,7 @@
 __RCSID("$Heimdal: pop_rset.c 4794 1998-04-23 17:41:49Z joda $"
         "$NetBSD: pop_rset.c,v 1.2 2008/03/22 08:36:55 mlelstv Exp $");
 
-/* 
+/*
  *  rset:   Unflag all messages flagged for deletion in a POP maildrop
  */
 
@@ -21,11 +21,11 @@ pop_rset (POP *p)
     /*  Unmark all the messages */
     for (i = p->msg_count, mp = p->mlp; i > 0; i--, mp++)
         mp->flags &= ~DEL_FLAG;
-    
+
     /*  Reset the messages-deleted and bytes-deleted counters */
     p->msgs_deleted = 0;
     p->bytes_deleted = 0;
-    
+
     /*  Reset the last-message-access flag */
     p->last_msg = 0;
 

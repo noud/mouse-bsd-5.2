@@ -120,7 +120,7 @@ LTCOMPILE_MOD = $(LIBTOOL) $(LTONLY_MOD) --mode=compile \
 LTLINK_MOD = $(LIBTOOL) $(LTONLY_MOD) --mode=link \
 	$(CC) $(LT_CFLAGS) $(LDFLAGS) $(LTFLAGS_MOD)
 
-LTINSTALL = $(LIBTOOL) --mode=install $(INSTALL) 
+LTINSTALL = $(LIBTOOL) --mode=install $(INSTALL)
 LTFINISH = $(LIBTOOL) --mode=finish
 
 # Misc UNIX commands used in build environment
@@ -174,7 +174,7 @@ SLAPD_L = $(LDAP_LIBLUNICODE_A) $(LDAP_LIBREWRITE_A) \
 	$(LDAP_LIBLUTIL_A) $(LDAP_LIBLDAP_R_LA) $(LDAP_LIBLBER_LA)
 
 WRAP_LIBS = @WRAP_LIBS@
-# AutoConfig generated 
+# AutoConfig generated
 AC_CC	= @CC@
 AC_CFLAGS = @CFLAGS@
 AC_DEFS = @CPPFLAGS@ # @DEFS@

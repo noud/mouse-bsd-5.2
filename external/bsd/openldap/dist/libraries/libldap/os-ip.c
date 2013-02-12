@@ -100,7 +100,7 @@ ldap_pvt_ndelay_on(LDAP *ld, int fd)
 	osip_debug(ld, "ldap_ndelay_on: %d\n",fd,0,0);
 	return ber_pvt_socket_set_nonblock( fd, 1 );
 }
-   
+
 static int
 ldap_pvt_ndelay_off(LDAP *ld, int fd)
 {
@@ -228,7 +228,7 @@ ldap_int_poll(
 	struct timeval *tvp )
 {
 	int		rc;
-		
+
 
 	osip_debug(ld, "ldap_int_poll: fd: %d tm: %ld\n",
 		s, tvp ? tvp->tv_sec : -1L, 0);
@@ -247,7 +247,7 @@ ldap_int_poll(
 		do {
 			fd.revents = 0;
 			rc = poll( &fd, 1, timeout );
-		
+
 		} while ( rc == AC_SOCKET_ERROR && errno == EINTR &&
 			LDAP_BOOL_GET( &ld->ld_options, LDAP_BOOL_RESTART ) );
 
@@ -395,7 +395,7 @@ ldap_pvt_connect(LDAP *ld, ber_socket_t s,
 	if ( err != EINPROGRESS && err != EWOULDBLOCK ) {
 		return ( -1 );
 	}
-	
+
 	if ( async ) {
 		/* caller will call ldap_int_poll() as appropriate? */
 		return ( -2 );
@@ -449,7 +449,7 @@ ldap_connect_to_host(LDAP *ld, Sockbuf *sb,
 #endif
 
 	if( host == NULL ) host = "localhost";
-	
+
 	switch(proto) {
 	case LDAP_PROTO_TCP: socktype = SOCK_STREAM;
 		osip_debug( ld,
@@ -520,7 +520,7 @@ ldap_connect_to_host(LDAP *ld, Sockbuf *sb,
 				inet_ntop( AF_INET6,
 					&((struct sockaddr_in6 *)sai->ai_addr)->sin6_addr,
 					addr, sizeof addr);
-				osip_debug(ld, "ldap_connect_to_host: Trying %s %s\n", 
+				osip_debug(ld, "ldap_connect_to_host: Trying %s %s\n",
 					addr, serv, 0);
 			} break;
 #endif
@@ -529,7 +529,7 @@ ldap_connect_to_host(LDAP *ld, Sockbuf *sb,
 				inet_ntop( AF_INET,
 					&((struct sockaddr_in *)sai->ai_addr)->sin_addr,
 					addr, sizeof addr);
-				osip_debug(ld, "ldap_connect_to_host: Trying %s:%s\n", 
+				osip_debug(ld, "ldap_connect_to_host: Trying %s:%s\n",
 					addr, serv, 0);
 			} break;
 		}
@@ -573,7 +573,7 @@ ldap_connect_to_host(LDAP *ld, Sockbuf *sb,
 			/* use_hp ? continue : break; */
 			break;
 		}
-	   
+
 		if ( ldap_int_prepare_socket( ld, s, proto ) == -1 ) {
 			ldap_pvt_close_socket(ld, s);
 			break;
@@ -596,18 +596,18 @@ ldap_connect_to_host(LDAP *ld, Sockbuf *sb,
 			/* for VxWorks */
 			char address[INET_ADDR_LEN];
 			inet_ntoa_b(sin.sin_address, address);
-			osip_debug(ld, "ldap_connect_to_host: Trying %s:%d\n", 
+			osip_debug(ld, "ldap_connect_to_host: Trying %s:%d\n",
 				address, port, 0);
 		}
 #else
-		osip_debug(ld, "ldap_connect_to_host: Trying %s:%d\n", 
+		osip_debug(ld, "ldap_connect_to_host: Trying %s:%d\n",
 			inet_ntoa(sin.sin_addr), port, 0);
 #endif
 
 		rc = ldap_pvt_connect(ld, s,
 			(struct sockaddr *)&sin, sizeof(sin),
 			async);
-   
+
 		if ( (rc == 0) || (rc == -2) ) {
 			ber_sockbuf_ctrl( sb, LBER_SB_OPT_SET_FD, &s );
 			break;
@@ -707,9 +707,9 @@ ldap_host_connected_to( Sockbuf *sb, const char *host )
 		hbuf[0] = 0;
 
 		if (ldap_pvt_get_hname( sa, len, hbuf, sizeof(hbuf), &herr ) == 0
-			&& hbuf[0] ) 
+			&& hbuf[0] )
 		{
-			return LDAP_STRDUP( hbuf );   
+			return LDAP_STRDUP( hbuf );
 		}
 	}
 
@@ -739,7 +739,7 @@ ldap_mark_select_write( LDAP *ld, Sockbuf *sb )
 	ber_socket_t		sd;
 
 	sip = (struct selectinfo *)ld->ld_selectinfo;
-	
+
 	ber_sockbuf_ctrl( sb, LBER_SB_OPT_GET_FD, &sd );
 
 #ifdef HAVE_POLL
@@ -985,7 +985,7 @@ ldap_int_select( LDAP *ld, struct timeval *timeout )
 #else
 	sip->si_use_readfds = sip->si_readfds;
 	sip->si_use_writefds = sip->si_writefds;
-	
+
 	rc = select( ldap_int_tblsize,
 		&sip->si_use_readfds, &sip->si_use_writefds,
 		NULL, timeout );

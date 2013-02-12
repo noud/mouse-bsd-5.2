@@ -57,7 +57,7 @@
     and finally result will passed to the application.
 
     idn wrapper provides wrapper DLLs for WINSOCK,
-    
+
         WSOCK32.DLL     WINSOCK V1.1
 	WS2_32.DLL      WINSOCK V2.0
 
@@ -69,14 +69,14 @@
     WINSOCK, listed below.
 
     both WINSOCK 1.1, WINSOCK 2.0
-    
+
         gethostbyaddr
 	gethostbyname
 	WSAAsyncGetHostByAddr
 	WSAAsyncGetHostByName
-	
+
     only in WINSOCK 2.0
-    
+
 	getaddrinfo
 	freeaddrinfo
 	getnameinfo
@@ -84,11 +84,11 @@
 	WSALookupServiceNextA
 	WSALookupServiceEnd
 
-    Some applications do not use these APIs to resolve domain names. 
+    Some applications do not use these APIs to resolve domain names.
     `nslookup' is one of those programs. `nslookup' builds and parse DNS
     messages internally and does not use WINSOCK's name resolver APIs.
     idn wrapper cannot make those programs IDN-aware.
-    
+
     NOTE:
       WINSOCK 2.0 also contains WIDE-CHARACTER based name resolution
       APIs,
@@ -99,7 +99,7 @@
       idn wrapper does not wrap these APIs.  These APIs are used in
       Microsoft's own internationalization framework.  It is dangerous
       to convert to another internationalization framework.
-    
+
 2.3. Other APIs in WINSOCK
 
     For other APIs in WINSOCK, idn wrapper does nothing, only calls
@@ -117,12 +117,12 @@
         wsock32.dll         idn wrapper for WINSOCK V1.1
 	ws2_32.dll          idn wrapper for WINSOCK V2.0
 	wsock32o.dll        Original WINSOCK V1.1 DLL
-	ws2_32o.dll         Original WINSOCK V2.0 DLL 
+	ws2_32o.dll         Original WINSOCK V2.0 DLL
 
 2.4. Asynchronous API
 
     Domain name conversion take place on
-    
+
         request to DNS
 
             convert from local encoding to DNS compatible encoding
@@ -143,12 +143,12 @@
     In these APIs, completion is notified with windows message.  To
     perform DNS to local conversion, wrapper should hook target window
     procedure to capture those completion messages.
-    
+
     So, if asynchronous API was called, idn wrapper set hook to target
     window procedure (passed with API parameter).  If hook found
     notify message (also given with API parameter), then convert
     resulting name (in DNS encoding) to local encoding.
-    
+
 2.5. Installing Wrapper DLLs
 
     WINSOCK DLLs are placed at Windows's system directory.  To wrap
@@ -181,7 +181,7 @@
     each indivisual application's directory.
 
     In Windows, DLL will be searched in the following places:
-    
+
         Application's Load Directory
 	%SystemRoot%\System32
 	%SystemRoot%
@@ -233,21 +233,21 @@
     will passed to original DLL (in system directory) and never passed
     to wrapper DLL in application's directory.  So in this case, both
     1.1 and 2.0 DLLs should coonvert domain name encodings.
-    
+
     These DLL binding is not documented.  It may be change on OS
     versions or DLL versions.  So, mDn wrapper determines place of
     conversion on registry value.  With this registry value, idn
     wrappper absolb OS/DLL variations.
-    
+
     Registry values for idn wrapper will placed under
 
         HKEY_LOCAL_MACHINE\SOFTWARE\JPNIC\IDN
 	HKEY_CURRENT_USER\SOFTWARE\JPNIC\IDN
 
     Place of conversion is determined with registry value "Where",
-    
+
         Registry Value "Where"   REG_DWORD
-	    
+
 	    0       both on WINSOCK 1.1 and WINSOCK 2.0
 	    1       if WINSOCK 2.0 exist, only in WINSOCK 2.0
 	            otherwise, convert on WINSOCK 1.1
@@ -264,13 +264,13 @@
     Wrapper DLL convert resolving domain name encoded with local code to
     DNS server's encoding.  Also, wrapper DLL convert resulting name (
     encoded with DNS's encoding) back to local encoding.
-    
+
     There are several proposals for DNS encodings to handle multi-lingual
     domain names.  Wrapper DLL should be configured to convert to one of
     those encodings.  This DNS side encoding will specified with
     registry.  When installing idn wrapper, this registry will set to
     some (yet undefined) DNS encoding.
-    
+
     Registry values for idn wrapper will placed under
 
         HKEY_LOCAL_MACHINE\SOFTWARE\JPNIC\IDN
@@ -280,9 +280,9 @@
     this name must be one of encoding names which 'libmdn' recognize.
 
         Registry Value "Encoding"   REG_SZ
-	
+
 	    Encoding name of DNS server accepts.
-    
+
     Local encodings (Windows Apllication Encodings) is generally
     acquired from process's code page.  'iconv' library, used for idn
     wrapper, generally accepts MS's codepage names.
@@ -291,28 +291,28 @@
     lingual encoding. For example, if you configured IE to use UTF-8,
     then domain names are encoded with UTF-8. UTF-8 is one of proposed
     DNS encoding, but DNS server may expect another encoding.
-    
+
     For those cases, idn wrapper accept program specific encoding as
     local encoding.  These program specific local encoding should be
     marked in registry.
-    
+
     Program specific registry setting will placed under
 
         HKEY_LOCAL_MACHINE\SOFTWARE\JPNIC\IDN\PerProg
 	HKEY_CURRENT_USER\SOFTWARE\JPNIC\IDN\PerProg
-    
+
     using program name (executable file name) as key.  For example,
-    setting specific to Internet Explore, it executable name is 
+    setting specific to Internet Explore, it executable name is
     "IEXPLORE", will plcaed at
 
         HKEY_LOCAL_MACHINE\SOFTWARE\JPNIC\IDN\PerProg\IEXPLORE
 
-    Local encoding name will specified with registry value (REG_SZ) of 
+    Local encoding name will specified with registry value (REG_SZ) of
     "Encoding".  This name must be one of encoding names which '
     recognize.libmdn'
 
         Registry Value "Encoding"   REG_SZ
-	
+
 	    Encoding name of application program encodes, if it is not
             system's default encoding.
 
@@ -330,11 +330,11 @@
 3.1. Setup Program
 
     To install idn wrapper, run "setup.exe".  Setup program will do:
-    
+
     Installing Files
-    
+
         Copy idn wrapper files (DLL, Program EXE, etc) into diretory
-	
+
 	    "\Program Files\JPNIC\idn wrapper"
 
         This directory may be changed on setup sequence.
@@ -342,7 +342,7 @@
     Setting registry entries
 
         Setup program will create keys and values under registry:
-	
+
 	    "HKEY_LOCAL_MACHINES\Software\JPNIC\IDN"
 
 	InstallDir	REG_SZ	"<installation directory>"
@@ -350,7 +350,7 @@
 	    The installer makes copies of the original WINSOCK DLLs
 	    in that directory, which is referenced by the idn wrapper's
 	    fake DLLs.
-    
+
         ConfFile        REG_SZ  "<installation directory>\idn.conf"
 	    Name of the idnkit's configuration file, which defines
 	    various parameter regarding multilingual domain name
@@ -369,11 +369,11 @@
 	    Program or the registry editor.
 
         PerProg         KEY
-	
+
 	    Under this key, idn wrapper set program specific values. idn
             wrapper uses program's executable name as key, and put
             values under that key.
-	    
+
 	    PerProg\<progname>\Where    REG_DWORD Encoding Position
 	    PerProg\>progname>\Encoding REG_SZ    Local Encoding Name
 
@@ -383,11 +383,11 @@
             "Where" values to fit your environment.
 
     Creating ICON
-    
+
         Setup program will create program icon for idn wrapper's
         configuration program, and put it into "Start Menu".  You can
         start configuration program with it.
-	   
+
 3.2. Configuration Program
 
     Configuration program is a tool for wrap specific program, or unwrap
@@ -423,10 +423,10 @@
     +-----------------------------------------------------------------+
 
     Listbox contains list of current wrapped programs.  Initially it is
-    empty.  
-    
+    empty.
+
     To wrap a program, press button "wrap".  You'll get following dialog.
-    
+
     +---+-------------------------------------------------+---+---+---+
     |   | idn wrapper - Wrap Executable                   | _ | O | X |
     +---+-------------------------------------------------+---+---+---+
@@ -446,7 +446,7 @@
     First, enter program (executable name with full path) or browse
     wrapping exectable from file browser. Then set local encoding of
     that program.  Usually use "Default" as local encoding. If target
-    program uses internationalized encoding, then specify "UFT-8". 
+    program uses internationalized encoding, then specify "UFT-8".
 
     The "Force local DLL reference" button controls the DLL search
     order of the program to be wrapped (Windows95 does not have this
@@ -466,9 +466,9 @@
     all" button is provided for this purpose.  Just press the button,
     and all the currently wrapped programs will be re-wrapped.
 
-    To unwrap a program, press button "unwrap".  You'll get following 
+    To unwrap a program, press button "unwrap".  You'll get following
     confirmating dialog.
-    
+
     +---+-------------------------------------------------+---+---+---+
     |   | idn wrapper - Unwrap Executable                 | _ | O | X |
     +---+-------------------------------------------------+---+---+---+
@@ -573,7 +573,7 @@
     If WINSOCK DLL version changed, idn wrapper may not work correctly.
 
     Current idn wrapper is tested on
-    
+
         Win2000         (WINSOCK 1.1 + 2.0)
         WinME           (WINSOCK 1.1 + 2.0)
 
@@ -582,8 +582,8 @@
 4.2. DNS, WINS, LMHOSTS
 
     There are three name resolving methods in windows, DNS, WINS and
-    LMHOSTS. Using idn wrapper, domain name conversion will performed 
-    on all of thoses methods.  It may cause some trouble if windows 
+    LMHOSTS. Using idn wrapper, domain name conversion will performed
+    on all of thoses methods.  It may cause some trouble if windows
     using WINS or LMHOSTS.  We recommend use DNS oly if you want to use
     idn wrapper.
 
@@ -591,7 +591,7 @@
 
     In WINSOCK 2.0, there are generic name resolution APIs are
     introduced.
-    
+
         WSALookupServiceBeginA
 	WSALookupServiceNextA
 	WSALookupServiceEnd
@@ -613,7 +613,7 @@
     standard DLL search path. Netscape Communicator seems to be one of
     such programs.  idn wrapper in standard installation cannot wrap
     such programs.
-    
+
     If you want to wrap those programs, you may use installation into
     system directory.  But this installation is very dangerous, for
     it is possible that your system cannot boot again.
@@ -622,10 +622,10 @@
 
 5.1. Priority of Setting
 
-    Settings of idn wrapper is placed on registry 
-    
+    Settings of idn wrapper is placed on registry
+
         Software\JPNIC\IDN
-	
+
     under HKEY_LOCAL_MACHINE or HKEY_CURRENT_USER.  idn wrapper first
     read HKEY_LOCAL_MACHINE, and if HKEY_CURRENT_USER exist, overwrite
     with this one.  Usually set HKEY_LOCAL_MACHINE only.  But if you
@@ -637,7 +637,7 @@
 5.2. Registry Key
 
     There's common settings and per program settings.
-    
+
 _Common Settings
 
 	Software\JPNIC\IDN\InstallDir	 Installation directory
@@ -660,6 +660,6 @@ _Per Program Settings
         Software\JPNIC\IDN\PerProg\<name>\Encoding
 
     If not specified, the following values are assumed.
-    
+
         Where       0 (both 1.1 DLL and 2.0 DLL)
 	Encoding    [process's code page]

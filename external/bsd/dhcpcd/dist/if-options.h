@@ -1,4 +1,4 @@
-/* 
+/*
  * dhcpcd - DHCP client daemon
  * Copyright (c) 2006-2009 Roy Marples <roy@marples.name>
  * All rights reserved
@@ -67,7 +67,7 @@
 #define DHCPCD_HOSTNAME		(1 << 18)
 #define DHCPCD_CLIENTID		(1 << 19)
 #define DHCPCD_LINK		(1 << 20)
-#define DHCPCD_QUIET		(1 << 21) 
+#define DHCPCD_QUIET		(1 << 21)
 #define DHCPCD_BACKGROUND	(1 << 22)
 #define DHCPCD_VENDORRAW	(1 << 23)
 #define DHCPCD_TIMEOUT_IPV4LL	(1 << 24)
@@ -93,7 +93,7 @@ struct if_options {
 
 	char **environ;
 	char script[PATH_MAX];
-	
+
 	char hostname[HOSTNAME_MAX_LEN + 1]; /* We don't store the length */
 	int fqdn;
 	uint8_t vendorclassid[VENDORCLASSID_MAX_LEN + 2];

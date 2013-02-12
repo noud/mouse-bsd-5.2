@@ -5,7 +5,7 @@ and preparation that is required beforehand.  First and foremost,
 before beginning the installation process, make sure you have a
 reliable backup of any data on your hard disk that you wish to keep.
 .Em "Mistakes in partitioning your hard disk may lead to data loss."
-.Pp 
+.Pp
 .Nx*M
 uses the same disk mapping scheme as Mac OS: the Apple Disk Partition Map.
 This permits both systems to reside on the same disk, but introduces some
@@ -92,7 +92,7 @@ Repartitioning your hard drive is an excellent way to destroy important data.
 Second, decide how you want to set up your partitions. At minimum, you
 need a partition to hold the
 .Nx
-installation (the root partition \(em 
+installation (the root partition \(em
 .Pa / )
 and a
 partition to serve as swap space. You may choose to use more than one partition

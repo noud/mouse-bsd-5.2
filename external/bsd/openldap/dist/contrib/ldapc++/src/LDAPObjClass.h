@@ -25,17 +25,17 @@ class LDAPObjClass{
 	StringList names, must, may, sup;
 	string desc, oid;
 	int kind;
-	
+
     public :
 
         /**
          * Constructs an empty object.
-         */   
+         */
         LDAPObjClass();
 
         /**
          * Copy constructor
-	 */   
+	 */
 	LDAPObjClass (const LDAPObjClass& oc);
 
         /**
@@ -45,19 +45,19 @@ class LDAPObjClass{
 	 * by the search command. It is in the form:
 	 * "( SuSE.YaST.OC:5 NAME 'userTemplate' SUP objectTemplate STRUCTURAL
 	 *    DESC 'User object template' MUST ( cn ) MAY ( secondaryGroup ))"
-         */   
+         */
         LDAPObjClass (string oc_item);
 
         /**
          * Destructor
          */
         virtual ~LDAPObjClass();
-	
+
 	/**
 	 * Returns object class description
 	 */
 	string getDesc() const;
-	
+
 	/**
 	 * Returns object class oid
 	 */
@@ -77,17 +77,17 @@ class LDAPObjClass{
 	 * Returns all object class names
 	 */
 	StringList getNames() const;
-	
+
 	/**
 	 * Returns list of required attributes
 	 */
 	StringList getMust() const;
-	
+
 	/**
 	 * Returns list of allowed (and not required) attributes
 	 */
 	StringList getMay() const;
-	
+
         /**
 	 * Returns list of the OIDs of the superior ObjectClasses
 	 */
@@ -100,7 +100,7 @@ class LDAPObjClass{
 	void setOid (char *oc_oid);
 	void setKind (int oc_kind);
 	void setSup (char **oc_sup);
-	
+
 };
 
 #endif // LDAP_OBJCLASS_H

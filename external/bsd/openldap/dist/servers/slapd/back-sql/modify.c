@@ -51,10 +51,10 @@ backsql_modify( Operation *op, SlapReply *rs )
 	rs->sr_err = backsql_get_db_conn( op, &dbh );
 	if ( rs->sr_err != LDAP_SUCCESS ) {
 		Debug( LDAP_DEBUG_TRACE, "   backsql_modify(): "
-			"could not get connection handle - exiting\n", 
+			"could not get connection handle - exiting\n",
 			0, 0, 0 );
 		/*
-		 * FIXME: we don't want to send back 
+		 * FIXME: we don't want to send back
 		 * excessively detailed messages
 		 */
 		rs->sr_text = ( rs->sr_err == LDAP_OTHER )
@@ -64,7 +64,7 @@ backsql_modify( Operation *op, SlapReply *rs )
 
 	bsi.bsi_e = &m;
 	rs->sr_err = backsql_init_search( &bsi, &op->o_req_ndn,
-			LDAP_SCOPE_BASE, 
+			LDAP_SCOPE_BASE,
 			(time_t)(-1), NULL, dbh, op, rs,
 			slap_anlist_all_attributes,
 			( BACKSQL_ISF_MATCHED | BACKSQL_ISF_GET_ENTRY | BACKSQL_ISF_GET_OC ) );
@@ -90,7 +90,7 @@ backsql_modify( Operation *op, SlapReply *rs )
 
 	default:
 		Debug( LDAP_DEBUG_TRACE, "backsql_modify(): "
-			"could not retrieve modifyDN ID - no such entry\n", 
+			"could not retrieve modifyDN ID - no such entry\n",
 			0, 0, 0 );
 		if ( !BER_BVISNULL( &m.e_nname ) ) {
 			/* FIXME: should always be true! */
@@ -104,12 +104,12 @@ backsql_modify( Operation *op, SlapReply *rs )
 
 #ifdef BACKSQL_ARBITRARY_KEY
 	Debug( LDAP_DEBUG_TRACE, "   backsql_modify(): "
-		"modifying entry \"%s\" (id=%s)\n", 
+		"modifying entry \"%s\" (id=%s)\n",
 		bsi.bsi_base_id.eid_dn.bv_val,
 		bsi.bsi_base_id.eid_id.bv_val, 0 );
 #else /* ! BACKSQL_ARBITRARY_KEY */
 	Debug( LDAP_DEBUG_TRACE, "   backsql_modify(): "
-		"modifying entry \"%s\" (id=%ld)\n", 
+		"modifying entry \"%s\" (id=%ld)\n",
 		bsi.bsi_base_id.eid_dn.bv_val, bsi.bsi_base_id.eid_id, 0 );
 #endif /* ! BACKSQL_ARBITRARY_KEY */
 

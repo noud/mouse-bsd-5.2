@@ -323,7 +323,7 @@ ex_buildargv(SCR *sp, EXCMD *cmdp, char *name)
 		++ap;
 	} else
 		for (argv = cmdp->argv; argv[0]->len != 0; ++ap, ++argv) {
-			INT2CHAR(sp, cmdp->argv[0]->bp, cmdp->argv[0]->len, 
+			INT2CHAR(sp, cmdp->argv[0]->bp, cmdp->argv[0]->len,
 				 np, nlen);
 			if ((*ap = v_strdup(sp, np, nlen)) == NULL)
 				return (NULL);

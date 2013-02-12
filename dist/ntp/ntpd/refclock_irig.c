@@ -445,7 +445,7 @@ irig_receive(
 
 		/*
 		 * Clip noise spikes greater than MAXAMP. If no clips,
-		 * increase the gain a tad; if the clips are too high, 
+		 * increase the gain a tad; if the clips are too high,
 		 * decrease a tad.
 		 */
 		if (sample > MAXAMP) {
@@ -626,7 +626,7 @@ irig_base(
 	 * baud interval. Cycle phase is determined from these
 	 * amplitudes using an eight-sample cyclic buffer. A phase
 	 * change of 360 degrees produces an output change of one unit.
-	 */ 
+	 */
 	if (up->lastsig > 0 && lope <= 0) {
 		xxing = lope / (up->lastsig - lope);
 		up->zxing += (up->carphase - 4 + xxing) / CYCLE;
@@ -976,7 +976,7 @@ irig_decode(
  * This routine sweeps up the timecode updates since the last poll. For
  * IRIG-B there should be at least 60 updates; for IRIG-E there should
  * be at least 6. If nothing is heard, a timeout event is declared and
- * any orphaned timecode updates are sent to foster care. 
+ * any orphaned timecode updates are sent to foster care.
  */
 static void
 irig_poll(
@@ -1003,7 +1003,7 @@ irig_poll(
 #endif /* DEBUG */
 	}
 	pp->polls++;
-	
+
 }
 
 

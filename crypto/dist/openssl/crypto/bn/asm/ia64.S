@@ -41,7 +41,7 @@
 // on Itanium2! What to do? Reschedule loops for Itanium2? But then
 // Itanium would exhibit anti-scalability. So I've chosen to reschedule
 // for worst latency for every instruction aiming for best *all-round*
-// performance.  
+// performance.
 
 // Q.	How much faster does it get?
 // A.	Here is the output from 'openssl speed rsa dsa' for vanilla
@@ -68,7 +68,7 @@
 //	                  sign    verify    sign/s verify/s
 //	dsa  512 bits   0.0012s   0.0013s    891.9    756.6
 //	dsa 1024 bits   0.0023s   0.0028s    440.4    376.2
-//	
+//
 //	Yes, you may argue that it's not fair comparison as it's
 //	possible to craft the C implementation with BN_UMULT_HIGH
 //	inline assembler macro. But of course! Here is the output
@@ -462,7 +462,7 @@ bn_mul_add_words:
 .global	bn_sqr_words#
 .proc	bn_sqr_words#
 .align	64
-.skip	32	// makes the loop body aligned at 64-byte boundary 
+.skip	32	// makes the loop body aligned at 64-byte boundary
 bn_sqr_words:
 	.prologue
 	.save	ar.pfs,r2
@@ -766,7 +766,7 @@ bn_mul_comba8:
 { .mfi;	getf.sig	r27=f43
 		xma.hu	f45=f36,f120,f44
 	cmp.ltu		p6,p0=r25,r24		}
-{ .mfi;		xma.lu	f44=f36,f120,f44	
+{ .mfi;		xma.lu	f44=f36,f120,f44
 	add		r26=r26,r25		};;
 { .mfi;	getf.sig	r16=f80
 		xma.hu	f55=f36,f121,f54
@@ -1070,7 +1070,7 @@ bn_mul_comba8:
 { .mii;	(p7)	add		carry3=1,carry3
 		cmp.ltu		p7,p0=r21,r20
 		add		r21=r21,carry1	};;
-{ .mib;	getf.sig	r28=f78			
+{ .mib;	getf.sig	r28=f78
 	add		r25=r25,r24		}
 { .mib;	(p7)	add		carry3=1,carry3
 		cmp.ltu		p7,p8=r21,carry1};;
@@ -1302,7 +1302,7 @@ bn_mul_comba4:
 { .mii;		getf.sig	r16=f71
 	add		r25=r25,r24
 	mov		carry1=0		};;
-{ .mii;		getf.sig	r17=f62	
+{ .mii;		getf.sig	r17=f62
 	cmp.ltu		p6,p0=r25,r24
 	add		r26=r26,r25		};;
 { .mii;
@@ -1354,7 +1354,7 @@ bn_mul_comba4:
 (p6)	add		carry1=1,carry1		}
 
 { .mii;	getf.sig	r24=f74
-		add		r17=r17,r16	
+		add		r17=r17,r16
 		mov		carry2=0	};;
 { .mii;		cmp.ltu		p7,p0=r17,r16
 		add		r17=r17,carry1	};;

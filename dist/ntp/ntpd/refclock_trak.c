@@ -3,7 +3,7 @@
 /*
  * refclock_trak - clock driver for the TRAK 8810 GPS Station Clock
  *
- * Tomoaki TSURUOKA <tsuruoka@nc.fukuoka-u.ac.jp> 
+ * Tomoaki TSURUOKA <tsuruoka@nc.fukuoka-u.ac.jp>
  *	original version  Dec, 1993
  *	revised  version  Sep, 1994 for ntp3.4e or later
  */

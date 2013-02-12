@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -118,7 +118,7 @@ int OCSP_basic_verify(OCSP_BASICRESP *bs, STACK_OF(X509) *certs,
 		X509_STORE_CTX_cleanup(&ctx);
                 if (ret <= 0)
 			{
-			i = X509_STORE_CTX_get_error(&ctx);	
+			i = X509_STORE_CTX_get_error(&ctx);
 			OCSPerr(OCSP_F_OCSP_BASIC_VERIFY,OCSP_R_CERTIFICATE_VERIFY_ERROR);
 			ERR_add_error_data(2, "Verify error:",
 					X509_verify_cert_error_string(i));
@@ -253,7 +253,7 @@ static int ocsp_check_issuer(OCSP_BASICRESP *bs, STACK_OF(X509) *chain, unsigned
  * algorithm then there's no point trying to match any certificates against the issuer.
  * If the issuer IDs all match then we just need to check equality against one of them.
  */
-	
+
 static int ocsp_check_ids(STACK_OF(OCSP_SINGLERESP) *sresp, OCSP_CERTID **ret)
 	{
 	OCSP_CERTID *tmpid, *cid;
@@ -336,7 +336,7 @@ static int ocsp_match_issuerid(X509 *cert, OCSP_CERTID *cid,
 			}
 		return 1;
 		}
-			
+
 	}
 
 static int ocsp_check_delegated(X509 *x, int flags)
@@ -361,7 +361,7 @@ int OCSP_request_verify(OCSP_REQUEST *req, STACK_OF(X509) *certs, X509_STORE *st
 	GENERAL_NAME *gen;
 	int ret;
 	X509_STORE_CTX ctx;
-	if (!req->optionalSignature) 
+	if (!req->optionalSignature)
 		{
 		OCSPerr(OCSP_F_OCSP_REQUEST_VERIFY, OCSP_R_REQUEST_NOT_SIGNED);
 		return 0;
@@ -413,7 +413,7 @@ int OCSP_request_verify(OCSP_REQUEST *req, STACK_OF(X509) *certs, X509_STORE *st
 		X509_STORE_CTX_cleanup(&ctx);
                 if (ret <= 0)
 			{
-			ret = X509_STORE_CTX_get_error(&ctx);	
+			ret = X509_STORE_CTX_get_error(&ctx);
 			OCSPerr(OCSP_F_OCSP_REQUEST_VERIFY,OCSP_R_CERTIFICATE_VERIFY_ERROR);
 			ERR_add_error_data(2, "Verify error:",
 					X509_verify_cert_error_string(ret));

@@ -46,10 +46,10 @@ __RCSID("$NetBSD: print-sunatm.c,v 1.2 2007/07/24 11:53:48 drochner Exp $");
 #endif
 
 #include <tcpdump-stdinc.h>
- 
+
 struct mbuf;
 struct rtentry;
- 
+
 #include <stdio.h>
 #include <pcap.h>
 

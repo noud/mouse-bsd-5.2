@@ -362,7 +362,7 @@ include_HEADERS = otp.h
 lib_LTLIBRARIES = libotp.la
 libotp_la_LDFLAGS = -version-info 1:5:1
 libotp_la_LIBADD = $(LIB_hcrypto) $(LIB_roken) $(LIB_NDBM)
-@HAVE_DB3_FALSE@ndbm_wrap = 
+@HAVE_DB3_FALSE@ndbm_wrap =
 @HAVE_DB3_TRUE@ndbm_wrap = ndbm_wrap.c ndbm_wrap.h
 dist_libotp_la_SOURCES = \
 	otp.c \
@@ -438,7 +438,7 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libotp.la: $(libotp_la_OBJECTS) $(libotp_la_DEPENDENCIES) 
+libotp.la: $(libotp_la_OBJECTS) $(libotp_la_DEPENDENCIES)
 	$(libotp_la_LINK) -rpath $(libdir) $(libotp_la_OBJECTS) $(libotp_la_LIBADD) $(LIBS)
 
 clean-checkPROGRAMS:
@@ -454,7 +454,7 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-otptest$(EXEEXT): $(otptest_OBJECTS) $(otptest_DEPENDENCIES) 
+otptest$(EXEEXT): $(otptest_OBJECTS) $(otptest_DEPENDENCIES)
 	@rm -f otptest$(EXEEXT)
 	$(LINK) $(otptest_OBJECTS) $(otptest_LDADD) $(LIBS)
 

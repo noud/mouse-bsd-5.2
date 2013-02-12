@@ -57,7 +57,7 @@ that the ALT and CTRL keys can be detected quickly. However, currently
 the actually bootloader cannot be run at this point unless a lot of
 memory is available in the module area (~1Meg) as currently the
 module area is used for temporary storage of the kernel being
-booted. 
+booted.
 This means that the actual boot is prosponed until the start of
 the Desktop file. At this point the desktop has been started and
 the task manager is running so it will be possible to allocate

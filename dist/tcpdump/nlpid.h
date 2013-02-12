@@ -1,7 +1,7 @@
 /*	$NetBSD: nlpid.h,v 1.2 2007/07/24 11:53:41 drochner Exp $	*/
 
 /* @(#) Header: /tcpdump/master/tcpdump/nlpid.h,v 1.4 2004/10/19 15:27:55 hannes Exp (LBL) */
-/* 
+/*
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that: (1) source code
  * distributions retain the above copyright notice and this paragraph

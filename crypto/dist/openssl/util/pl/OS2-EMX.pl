@@ -16,8 +16,8 @@ $cflags="-DL_ENDIAN -O3 -fomit-frame-pointer -m486 -Zmtd -Wall ";
 $cflags.="-Zomf " if $shlib;
 $shl_cflag="-Zdll";
 
-if ($debug) { 
-	$cflags.="-g "; 
+if ($debug) {
+	$cflags.="-g ";
 }
 
 $obj=$shlib ? '.obj' : '.o';
@@ -89,7 +89,7 @@ sub do_lib_rule
 	($Name=$name) =~ tr/a-z/A-Z/;
 
 	$ret.="$target: \$(${Name}OBJ)\n";
-	if (!$shlib) 
+	if (!$shlib)
 		{
 		$ret.="\t\$(RM) $target\n";
 		$ret.="\t\$(MKLIB) $target \$(${Name}OBJ)\n";
@@ -109,7 +109,7 @@ sub do_link_rule
 	{
 	local($target,$files,$dep_libs,$libs)=@_;
 	local($ret,$_);
-	
+
 	$file =~ s/\//$o/g if $o ne '/';
 	$n=&bname($target);
 	$ret.="$target: $files $dep_libs\n";

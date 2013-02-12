@@ -43,7 +43,7 @@
 /*
  * A simple database driver that interfaces to a SQLite database.
  *
- * The table must contain the fields "name", "rdtype", and "rdata", and 
+ * The table must contain the fields "name", "rdtype", and "rdata", and
  * is expected to contain a properly constructed zone.  The program "zonetodb"
  * creates such a table.
  */

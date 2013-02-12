@@ -52,7 +52,7 @@ mm_send_fd(int sock, int fd)
 	ssize_t n;
 
 	if (sizeof(cmsgbuf.buf) < CMSG_SPACE(sizeof(int))) {
-		error("%s: %zu < %zu, recompile", __func__, 
+		error("%s: %zu < %zu, recompile", __func__,
 		    sizeof(cmsgbuf.buf), CMSG_SPACE(sizeof(int)));
 		return -1;
 	}
@@ -101,7 +101,7 @@ mm_receive_fd(int sock)
 	int fd;
 
 	if (sizeof(cmsgbuf.buf) < CMSG_SPACE(sizeof(int))) {
-		error("%s: %zu < %zu, recompile", __func__, 
+		error("%s: %zu < %zu, recompile", __func__,
 		    sizeof(cmsgbuf.buf), CMSG_SPACE(sizeof(int)));
 		return -1;
 	}

@@ -103,7 +103,7 @@ extern	int	mkstemp		P((char *));
 #endif
 
 #ifdef DECL_MKTEMP_0
-extern	char   *mktemp		P((char *));	
+extern	char   *mktemp		P((char *));
 #endif
 
 #ifdef DECL_NLIST_0
@@ -279,7 +279,7 @@ extern	void	bzero		P((char *, int));
 extern	int	bcmp		P((char *, char *, int));
 extern	void	bcopy		P((const char *, char *, int));
 #endif
-extern	char   *mktemp		P((char *));	
+extern	char   *mktemp		P((char *));
 
 extern	int	tolower		P((int));
 
@@ -422,7 +422,7 @@ extern	int	close		P((int));
 extern	char *	getpass		P((char *));
 extern	int	getpid		P((void));
 extern	int	ioctl		P((int, int, char *));
-extern	char   *mktemp		P((char *));	
+extern	char   *mktemp		P((char *));
 extern	int	unlink		P((const char *));
 extern	int	link		P((const char *, const char *));
 

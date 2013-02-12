@@ -28,17 +28,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "config.h"
-   
+
 #ifdef HAVE_INTTYPES_H
 #include <inttypes.h>
 #endif
- 
+
 #include <sys/types.h>
- 
+
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
 #endif
-  
+
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif

@@ -48,7 +48,7 @@ Now comes the fun part:
 
     i.) modify sysinst to allow `zooming in' on a set and picking
 	what to install at pkg granularity, with dependencies
-	enforced and so on. 
+	enforced and so on.
 
 ------------------------------------------------------------------------
 $Id: WORKPLAN,v 1.1.1.1 2002/01/07 22:46:17 jwise Exp $

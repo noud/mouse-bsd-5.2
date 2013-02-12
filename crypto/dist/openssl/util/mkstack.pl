@@ -61,7 +61,7 @@ while(<IN>) {
 	}
 	next if($inside_block != 1);
 	$new_stackfile .= "/* This block of defines is updated by util/mkstack.pl, please do not touch! */";
-		
+
 	foreach $type_thing (sort @stacklst) {
 		$new_stackfile .= <<EOF;
 
@@ -92,7 +92,7 @@ EOF
 		$new_stackfile .= <<EOF;
 
 #define d2i_ASN1_SET_OF_${type_thing}(st, pp, length, d2i_func, free_func, ex_tag, ex_class) \\
-	SKM_ASN1_SET_OF_d2i($type_thing, (st), (pp), (length), (d2i_func), (free_func), (ex_tag), (ex_class)) 
+	SKM_ASN1_SET_OF_d2i($type_thing, (st), (pp), (length), (d2i_func), (free_func), (ex_tag), (ex_class))
 #define i2d_ASN1_SET_OF_${type_thing}(st, pp, i2d_func, ex_tag, ex_class, is_set) \\
 	SKM_ASN1_SET_OF_i2d($type_thing, (st), (pp), (i2d_func), (ex_tag), (ex_class), (is_set))
 #define ASN1_seq_pack_${type_thing}(st, i2d_func, buf, len) \\

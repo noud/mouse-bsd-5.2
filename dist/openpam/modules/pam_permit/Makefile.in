@@ -257,7 +257,7 @@ clean-pkglibLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-pam_permit.la: $(pam_permit_la_OBJECTS) $(pam_permit_la_DEPENDENCIES) 
+pam_permit.la: $(pam_permit_la_OBJECTS) $(pam_permit_la_DEPENDENCIES)
 	$(LINK) -rpath $(pkglibdir) $(pam_permit_la_LDFLAGS) $(pam_permit_la_OBJECTS) $(pam_permit_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:

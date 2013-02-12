@@ -21,28 +21,28 @@
 /* This is an altered version */
 /*
  * Copyright 1999, Howard Chu, All rights reserved. <hyc@highlandsun.com>
- * 
+ *
  * Permission is granted to anyone to use this software for any purpose
  * on any computer system, and to alter it and redistribute it, subject
  * to the following restrictions:
- * 
+ *
  * 1. The author is not responsible for the consequences of use of this
  *    software, no matter how awful, even if they arise from flaws in it.
- * 
+ *
  * 2. The origin of this software must not be misrepresented, either by
  *    explicit claim or by omission.  Since few users ever read sources,
  *    credits should appear in the documentation.
- * 
+ *
  * 3. Altered versions must be plainly marked as such, and must not be
  *    misrepresented as being the original software.  Since few users
  *    ever read sources, credits should appear in the documentation.
- * 
+ *
  * 4. This notice may not be removed or altered.
  *
  *
  *
  * Copyright 2000, Pierangelo Masarati, All rights reserved. <ando@sys-net.it>
- * 
+ *
  * This software is being modified by Pierangelo Masarati.
  * The previously reported conditions apply to the modified code as well.
  * Changes in the original code are highlighted where required.
@@ -92,7 +92,7 @@ ldap_back_map_init ( struct ldapmap *lm, struct ldapmapping **m )
 
 	*m = NULL;
 
-	mapping = (struct ldapmapping *)ch_calloc( 2, 
+	mapping = (struct ldapmapping *)ch_calloc( 2,
 			sizeof( struct ldapmapping ) );
 	if ( mapping == NULL ) {
 		return;
@@ -103,9 +103,9 @@ ldap_back_map_init ( struct ldapmap *lm, struct ldapmapping **m )
 	mapping[1].src = mapping[0].src;
 	mapping[1].dst = mapping[0].dst;
 
-	avl_insert( &lm->map, (caddr_t)&mapping[0], 
+	avl_insert( &lm->map, (caddr_t)&mapping[0],
 			mapping_cmp, mapping_dup );
-	avl_insert( &lm->remap, (caddr_t)&mapping[1], 
+	avl_insert( &lm->remap, (caddr_t)&mapping[1],
 			mapping_cmp, mapping_dup );
 	*m = mapping;
 }
@@ -251,7 +251,7 @@ map_attr_value(
 				freeval = 1;
 			}
 			break;
-		
+
 		case LDAP_UNWILLING_TO_PERFORM:
 			return -1;
 
@@ -273,7 +273,7 @@ map_attr_value(
 		if ( BER_BVISNULL( &vtmp ) || BER_BVISEMPTY( &vtmp ) ) {
 			vtmp = *value;
 		}
-		
+
 	} else {
 		vtmp = *value;
 	}
@@ -283,7 +283,7 @@ map_attr_value(
 	if ( freeval ) {
 		ber_memfree( vtmp.bv_val );
 	}
-	
+
 	return 0;
 }
 
@@ -487,11 +487,11 @@ ldap_back_int_filter_map_rewrite(
 			if ( rc != LDAP_SUCCESS ) {
 				return rc;
 			}
-			
+
 			fstr->bv_len += vtmp.bv_len;
 			fstr->bv_val = ch_realloc( fstr->bv_val, fstr->bv_len + 1 );
 
-			snprintf( &fstr->bv_val[len-1], vtmp.bv_len + 2, 
+			snprintf( &fstr->bv_val[len-1], vtmp.bv_len + 2,
 				/*"("*/ "%s)", vtmp.bv_len ? vtmp.bv_val : "" );
 
 			ch_free( vtmp.bv_val );
@@ -589,7 +589,7 @@ ldap_back_filter_map_rewrite(
 	ftmp = *fstr;
 
 	fdc.ctx = "searchFilter";
-	
+
 	switch ( rewrite_session( fdc.target->mt_rwmap.rwm_rw, fdc.ctx,
 				( !BER_BVISEMPTY( &ftmp ) ? ftmp.bv_val : dmy ),
 				fdc.conn, &fstr->bv_val ) )
@@ -604,10 +604,10 @@ ldap_back_filter_map_rewrite(
 		Debug( LDAP_DEBUG_ARGS,
 			"[rw] %s: \"%s\" -> \"%s\"\n",
 			fdc.ctx, BER_BVISNULL( &ftmp ) ? "" : ftmp.bv_val,
-			BER_BVISNULL( fstr ) ? "" : fstr->bv_val );		
+			BER_BVISNULL( fstr ) ? "" : fstr->bv_val );
 		rc = LDAP_SUCCESS;
 		break;
- 		
+
  	case REWRITE_REGEXEC_UNWILLING:
 		if ( fdc.rs ) {
 			fdc.rs->sr_err = LDAP_UNWILLING_TO_PERFORM;
@@ -615,7 +615,7 @@ ldap_back_filter_map_rewrite(
 		}
 		rc = LDAP_UNWILLING_TO_PERFORM;
 		break;
-	       	
+
 	case REWRITE_REGEXEC_ERR:
 		if ( fdc.rs ) {
 			fdc.rs->sr_err = LDAP_OTHER;
@@ -669,12 +669,12 @@ ldap_back_referral_result_rewrite(
 		}
 
 		ber_str2bv( ludp->lud_dn, 0, 0, &olddn );
-		
+
 		rc = ldap_back_dn_massage( dc, &olddn, &dn );
 		switch ( rc ) {
 		case LDAP_UNWILLING_TO_PERFORM:
 			/*
-			 * FIXME: need to check if it may be considered 
+			 * FIXME: need to check if it may be considered
 			 * legal to trim values when adding/modifying;
 			 * it should be when searching (e.g. ACLs).
 			 */
@@ -743,7 +743,7 @@ ldap_dnattr_rewrite(
 		switch ( ldap_back_dn_massage( dc, &a_vals[i], &bv ) ) {
 		case LDAP_UNWILLING_TO_PERFORM:
 			/*
-			 * FIXME: need to check if it may be considered 
+			 * FIXME: need to check if it may be considered
 			 * legal to trim values when adding/modifying;
 			 * it should be when searching (e.g. ACLs).
 			 */
@@ -764,7 +764,7 @@ ldap_dnattr_rewrite(
 			break;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -787,7 +787,7 @@ ldap_dnattr_result_rewrite(
 		switch ( ldap_back_dn_massage( dc, &a_vals[i], &bv ) ) {
 		case LDAP_UNWILLING_TO_PERFORM:
 			/*
-			 * FIXME: need to check if it may be considered 
+			 * FIXME: need to check if it may be considered
 			 * legal to trim values when adding/modifying;
 			 * it should be when searching (e.g. ACLs).
 			 */

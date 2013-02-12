@@ -47,7 +47,7 @@
 @lwresdirlist = ("lwres/include/lwres");
 @lwresprefixlist = ("lwres");
 
-# Run the changes for each directory in the directory list 
+# Run the changes for each directory in the directory list
 
 $ind = 0;
 createoutfile($iscprefixlist[0]);

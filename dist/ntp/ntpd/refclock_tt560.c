@@ -22,7 +22,7 @@
 
 /*
  * This driver supports the TrueTime 560 IRIG-B decoder for the PCI bus.
- */ 
+ */
 
 /*
  * TT560 interface definitions
@@ -215,7 +215,7 @@ tt560_poll(
 		   ulfptoa(&pp->lastrec, 6), pp->lencode,
 		   pp->a_lastcode);
 #endif
-	if (sscanf(pp->a_lastcode, "%3d %2d:%2d:%2d.%6ld", 
+	if (sscanf(pp->a_lastcode, "%3d %2d:%2d:%2d.%6ld",
                   &pp->day, &pp->hour, &pp->minute, &pp->second, &pp->usec)
 	    != 5) {
 		refclock_report(peer, CEVNT_BADTIME);

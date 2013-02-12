@@ -1545,7 +1545,7 @@ int x509_certificate_chain_validate(struct x509_certificate *trusted,
 	os_get_time(&now);
 
 	for (cert = chain, idx = 0; cert; cert = cert->next, idx++) {
-		x509_name_string(&cert->subject, buf, sizeof(buf)); 
+		x509_name_string(&cert->subject, buf, sizeof(buf));
 		wpa_printf(MSG_DEBUG, "X509: %lu: %s", idx, buf);
 
 		if (chain_trusted)
@@ -1568,11 +1568,11 @@ int x509_certificate_chain_validate(struct x509_certificate *trusted,
 				wpa_printf(MSG_DEBUG, "X509: Certificate "
 					   "chain issuer name mismatch");
 				x509_name_string(&cert->issuer, buf,
-						 sizeof(buf)); 
+						 sizeof(buf));
 				wpa_printf(MSG_DEBUG, "X509: cert issuer: %s",
 					   buf);
 				x509_name_string(&cert->next->subject, buf,
-						 sizeof(buf)); 
+						 sizeof(buf));
 				wpa_printf(MSG_DEBUG, "X509: next cert "
 					   "subject: %s", buf);
 				*reason = X509_VALIDATE_CERTIFICATE_UNKNOWN;

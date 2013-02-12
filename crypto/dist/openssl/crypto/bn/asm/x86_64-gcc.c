@@ -117,9 +117,9 @@ BN_ULONG bn_mul_add_words(BN_ULONG *rp, BN_ULONG *ap, int num, BN_ULONG w)
 		mul_add(rp[1],ap[1],w,c1); if (--num==0) return c1;
 		mul_add(rp[2],ap[2],w,c1); return c1;
 		}
-	
+
 	return(c1);
-	} 
+	}
 
 BN_ULONG bn_mul_words(BN_ULONG *rp, BN_ULONG *ap, int num, BN_ULONG w)
 	{
@@ -142,7 +142,7 @@ BN_ULONG bn_mul_words(BN_ULONG *rp, BN_ULONG *ap, int num, BN_ULONG w)
 		mul(rp[2],ap[2],w,c1);
 		}
 	return(c1);
-	} 
+	}
 
 void bn_sqr_words(BN_ULONG *r, BN_ULONG *a, int n)
         {

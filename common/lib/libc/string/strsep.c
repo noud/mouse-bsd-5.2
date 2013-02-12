@@ -56,7 +56,7 @@ __weak_alias(strsep,_strsep)
 #if !HAVE_STRSEP
 /*
  * Get next token from string *stringp, where tokens are possibly-empty
- * strings separated by characters from delim.  
+ * strings separated by characters from delim.
  *
  * Writes NULs into the string at *stringp to end tokens.
  * delim need not remain constant from call to call.

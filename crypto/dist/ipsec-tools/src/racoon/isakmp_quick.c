@@ -5,7 +5,7 @@
 /*
  * Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -17,7 +17,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -572,7 +572,7 @@ quick_i2send(iph2, msg0)
 	plog(LLV_DEBUG, LOCATION, NULL, "HASH(3) generate\n");
 
 	tmp = vmalloc(iph2->nonce->l + iph2->nonce_p->l);
-	if (tmp == NULL) { 
+	if (tmp == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get hash buffer.\n");
 		goto end;
@@ -591,7 +591,7 @@ quick_i2send(iph2, msg0)
 	tlen = sizeof(struct isakmp)
 		+ sizeof(struct isakmp_gen) + hash->l;
 	buf = vmalloc(tlen);
-	if (buf == NULL) { 
+	if (buf == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get buffer to send.\n");
 		goto end;
@@ -1239,14 +1239,14 @@ quick_r2send(iph2, msg)
 			+ sizeof(*gen) + iph2->id->l);
 
 	body = vmalloc(tlen);
-	if (body == NULL) { 
+	if (body == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get buffer to send.\n");
 		goto end;
 	}
 	p = body->v;
 
-	/* make SA payload */ 
+	/* make SA payload */
 	p = set_isakmp_payload(body->v, iph2->sa_ret, ISAKMP_NPTYPE_NONCE);
 
 	/* add NONCE payload */
@@ -1327,7 +1327,7 @@ quick_r2send(iph2, msg)
 	vchar_t *tmp;
 
 	tmp = vmalloc(iph2->nonce_p->l + body->l);
-	if (tmp == NULL) { 
+	if (tmp == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get hash buffer.\n");
 		goto end;
@@ -1452,7 +1452,7 @@ quick_r3recv(iph2, msg0)
 	plogdump(LLV_DEBUG, r_hash, ntohs(hash->h.len) - sizeof(*hash));
 
 	tmp = vmalloc(iph2->nonce_p->l + iph2->nonce->l);
-	if (tmp == NULL) { 
+	if (tmp == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get hash buffer.\n");
 		goto end;
@@ -1524,7 +1524,7 @@ quick_r3send(iph2, msg0)
 	/* XXX What should I do if there are multiple SAs ? */
 	tlen = sizeof(struct isakmp_pl_n) + iph2->approval->head->spisize;
 	notify = vmalloc(tlen);
-	if (notify == NULL) { 
+	if (notify == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get notify buffer.\n");
 		goto end;
@@ -1547,7 +1547,7 @@ quick_r3send(iph2, msg0)
 		+ sizeof(struct isakmp_gen) + myhash->l
 		+ notify->l;
 	buf = vmalloc(tlen);
-	if (buf == NULL) { 
+	if (buf == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get buffer to send.\n");
 		goto end;
@@ -1746,7 +1746,7 @@ quick_ir1mx(iph2, body, hash)
 		+ sizeof(*gen) + hash->l
 		+ body->l;
 	buf = vmalloc(tlen);
-	if (buf == NULL) { 
+	if (buf == NULL) {
 		plog(LLV_ERROR, LOCATION, NULL,
 			"failed to get buffer to send.\n");
 		goto end;
@@ -1773,7 +1773,7 @@ quick_ir1mx(iph2, body, hash)
 
 	/* encoding */
 	new = oakley_do_encrypt(iph2->ph1, buf, iph2->ivm->ive, iph2->ivm->iv);
-	
+
 	if (new == NULL)
 		goto end;
 
@@ -1862,7 +1862,7 @@ get_sainfo_r(iph2)
 			plog(LLV_DEBUG, LOCATION, NULL, "Warning: no valid rmconf !\n");
 			remoteid=0;
 		}
-		
+
 	}
 
 	iph2->sainfo = getsainfo(idsrc, iddst, iph2->ph1->id_p, remoteid);

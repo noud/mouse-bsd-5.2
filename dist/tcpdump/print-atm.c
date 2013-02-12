@@ -232,7 +232,7 @@ sig_print(const u_char *p, int caplen)
 	}
 	if (p[PROTO_POS] == Q2931) {
 		/*
-		 * protocol:Q.2931 for User to Network Interface 
+		 * protocol:Q.2931 for User to Network Interface
 		 * (UNI 3.1) signalling
 		 */
 		printf("Q.2931");
@@ -308,7 +308,7 @@ atm_print(u_int vpi, u_int vci, u_int traftype, const u_char *p, u_int length,
 	}
 }
 
-int 
+int
 oam_print (const u_char *p, u_int length, u_int hec) {
 
     u_int32_t cell_header;

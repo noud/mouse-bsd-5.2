@@ -57,7 +57,7 @@ isc___errno2result(int posixerrno, const char *file, unsigned int line) {
 		return (ISC_R_IOERROR);
 	case ENOMEM:
 		return (ISC_R_NOMEMORY);
-	case ENFILE:	
+	case ENFILE:
 	case EMFILE:
 		return (ISC_R_TOOMANYOPENFILES);
 	case EPIPE:

@@ -11,10 +11,10 @@ with the bsd compiler by changing "COMP= cc" to "COMP= bsdcc" and
 and removing the "-DSTUPID_SIGNAL" option from the "DEFS" option.
 
 xntp and tickadj was also modified  so that the value of tickadj is read
-form the kernel and can be set by tickadj.  For now I would not set 
-tickadj below 40 us.   
+form the kernel and can be set by tickadj.  For now I would not set
+tickadj below 40 us.
 
-Bill Jones 
+Bill Jones
 jones@chpc.utexas.edu
 -------------------------------------------------------------------------------
 

@@ -12,7 +12,7 @@ CertificationRequestInfo ::= SEQUENCE {
     version       INTEGER { pkcs10-v1(0) },
     subject       Name,
     subjectPKInfo SubjectPublicKeyInfo,
-    attributes    [0] IMPLICIT SET OF Attribute OPTIONAL 
+    attributes    [0] IMPLICIT SET OF Attribute OPTIONAL
 }
 
 CertificationRequest ::= SEQUENCE {

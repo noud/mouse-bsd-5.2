@@ -10,7 +10,7 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
+ *    notice, this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in
@@ -101,7 +101,7 @@ const EC_METHOD *EC_GFp_nist_method(void)
 		ec_GFp_simple_points_make_affine,
 		0 /* mul */,
 		0 /* precompute_mult */,
-		0 /* have_precompute_mult */,	
+		0 /* have_precompute_mult */,
 		ec_GFp_nist_field_mul,
 		ec_GFp_nist_field_sqr,
 		0 /* field_div */,
@@ -125,7 +125,7 @@ int ec_GFp_nist_group_set_curve(EC_GROUP *group, const BIGNUM *p,
 	int ret = 0;
 	BN_CTX *new_ctx = NULL;
 	BIGNUM *tmp_bn;
-	
+
 	if (ctx == NULL)
 		if ((ctx = new_ctx = BN_CTX_new()) == NULL) return 0;
 

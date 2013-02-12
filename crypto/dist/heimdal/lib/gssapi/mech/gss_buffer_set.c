@@ -34,7 +34,7 @@
 __RCSID("$Heimdal: gss_buffer_set.c 18885 2006-10-24 21:53:02Z lha $"
         "$NetBSD: gss_buffer_set.c,v 1.1 2008/03/22 09:39:22 mlelstv Exp $");
 
-OM_uint32 
+OM_uint32
 gss_create_empty_buffer_set
 	   (OM_uint32 * minor_status,
 	    gss_buffer_set_t *buffer_set)

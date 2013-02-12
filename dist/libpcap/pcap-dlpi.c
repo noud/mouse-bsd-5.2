@@ -422,7 +422,7 @@ pcap_inject_dlpi(pcap_t *p, const void *buf, size_t size)
 	ret = -1;
 #endif /* raw mode */
 	return (ret);
-}   
+}
 
 #ifndef DL_IPATM
 #define DL_IPATM	0x12	/* ATM Classical IP interface */
@@ -812,7 +812,7 @@ pcap_open_live(const char *device, int snaplen, int promisc, int to_ms,
 	case DL_TPR:
 		/*
 		 * XXX - what about DL_TPB?  Is that Token Bus?
-		 */	
+		 */
 		p->linktype = DLT_IEEE802;
 		p->offset = 2;
 		break;

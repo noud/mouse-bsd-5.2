@@ -473,9 +473,9 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libsl.la: $(libsl_la_OBJECTS) $(libsl_la_DEPENDENCIES) 
+libsl.la: $(libsl_la_OBJECTS) $(libsl_la_DEPENDENCIES)
 	$(libsl_la_LINK) -rpath $(libdir) $(libsl_la_OBJECTS) $(libsl_la_LIBADD) $(LIBS)
-libss.la: $(libss_la_OBJECTS) $(libss_la_DEPENDENCIES) 
+libss.la: $(libss_la_OBJECTS) $(libss_la_DEPENDENCIES)
 	$(libss_la_LINK) -rpath $(libdir) $(libss_la_OBJECTS) $(libss_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -524,7 +524,7 @@ parse.h: parse.c
 	  rm -f parse.c; \
 	  $(MAKE) $(AM_MAKEFLAGS) parse.c; \
 	else :; fi
-mk_cmds$(EXEEXT): $(mk_cmds_OBJECTS) $(mk_cmds_DEPENDENCIES) 
+mk_cmds$(EXEEXT): $(mk_cmds_OBJECTS) $(mk_cmds_DEPENDENCIES)
 	@rm -f mk_cmds$(EXEEXT)
 	$(LINK) $(mk_cmds_OBJECTS) $(mk_cmds_LDADD) $(LIBS)
 slc-gram.h: slc-gram.c
@@ -532,10 +532,10 @@ slc-gram.h: slc-gram.c
 	  rm -f slc-gram.c; \
 	  $(MAKE) $(AM_MAKEFLAGS) slc-gram.c; \
 	else :; fi
-slc$(EXEEXT): $(slc_OBJECTS) $(slc_DEPENDENCIES) 
+slc$(EXEEXT): $(slc_OBJECTS) $(slc_DEPENDENCIES)
 	@rm -f slc$(EXEEXT)
 	$(LINK) $(slc_OBJECTS) $(slc_LDADD) $(LIBS)
-test_sl$(EXEEXT): $(test_sl_OBJECTS) $(test_sl_DEPENDENCIES) 
+test_sl$(EXEEXT): $(test_sl_OBJECTS) $(test_sl_DEPENDENCIES)
 	@rm -f test_sl$(EXEEXT)
 	$(LINK) $(test_sl_OBJECTS) $(test_sl_LDADD) $(LIBS)
 

@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: cfopt.c,v 1.3 2000/07/11 01:51:49 bp Exp 
+ * from: Id: cfopt.c,v 1.3 2000/07/11 01:51:49 bp Exp
  */
 
 #include <sys/cdefs.h>

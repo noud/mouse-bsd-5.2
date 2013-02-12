@@ -7,11 +7,11 @@ $!               byer@mail.all-net.net
 $!
 $!  Changes by Richard Levitte <richard@levitte.org>
 $!
-$!  This command files compiles and creates the "[.xxx.EXE.CRYPTO]LIBCRYPTO.OLB" 
+$!  This command files compiles and creates the "[.xxx.EXE.CRYPTO]LIBCRYPTO.OLB"
 $!  library for OpenSSL.  The "xxx" denotes the machine architecture of AXP
 $!  or VAX.
 $!
-$!  It was re-written so it would try to determine what "C" compiler to use 
+$!  It was re-written so it would try to determine what "C" compiler to use
 $!  or you can specify which "C" compiler to use.
 $!
 $!  Specify the following as P1 to build just that part or ALL to just
@@ -321,8 +321,8 @@ $ MODULE_NAME1 = MODULE_NAME
 $!
 $! Check To See If We Are At The End Of The Module List.
 $!
-$ IF (MODULE_NAME.EQS.",") 
-$ THEN 
+$ IF (MODULE_NAME.EQS.",")
+$ THEN
 $!
 $!  We Are At The End Of The Module List, Go To MODULE_DONE.
 $!
@@ -370,7 +370,7 @@ $ MODULE_AGAIN:
 $!
 $! Tell The User What Module We Are Building.
 $!
-$ IF (MODULE_NAME1.NES."") 
+$ IF (MODULE_NAME1.NES."")
 $ THEN
 $   IF STATE .EQS. "LIB"
 $   THEN
@@ -438,8 +438,8 @@ $ ENDIF
 $!
 $! Check To See If We Are At The End Of The File List.
 $!
-$ IF (FILE_NAME.EQS.",") 
-$ THEN 
+$ IF (FILE_NAME.EQS.",")
+$ THEN
 $!
 $!  We Are At The End Of The File List, Change State Or Goto FILE_DONE.
 $!
@@ -504,7 +504,7 @@ $ THEN
 $   WRITE SYS$OUTPUT "Compiling The ",FILE_NAME," File.  (",BUILDALL,",",STATE,")"
 $ ENDIF
 $ IF (MODULE_NAME.NES."")
-$ THEN 
+$ THEN
 $   WRITE SYS$OUTPUT "	",FILE_NAME,""
 $ ENDIF
 $!
@@ -539,7 +539,7 @@ $     ENDIF
 $   ENDIF
 $ ENDIF
 $ IF STATE .EQS. "LIB"
-$ THEN 
+$ THEN
 $!
 $!   Add It To The Library.
 $!
@@ -646,7 +646,7 @@ $!
 $     CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File To Link Agianst 
+! Default System Options File To Link Agianst
 ! The Sharable VAX C Runtime Library.
 !
 SYS$SHARE:VAXCRTL.EXE/SHARE
@@ -675,7 +675,7 @@ $!
 $     CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File To Link Agianst 
+! Default System Options File To Link Agianst
 ! The Sharable C Runtime Library.
 !
 GNU_CC:[000000]GCCLIB/LIBRARY
@@ -710,7 +710,7 @@ $!
 $       CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File To Link Agianst 
+! Default System Options File To Link Agianst
 ! The Sharable DEC C Runtime Library.
 !
 SYS$SHARE:DECC$SHR.EXE/SHARE
@@ -725,7 +725,7 @@ $!
 $       CREATE 'OPT_FILE'
 $DECK
 !
-! Default System Options File For AXP To Link Agianst 
+! Default System Options File For AXP To Link Agianst
 ! The Sharable C Runtime Library.
 !
 SYS$SHARE:CMA$OPEN_LIB_SHR/SHARE
@@ -746,7 +746,7 @@ $ ENDIF
 $!
 $!  Tell The User What Linker Option File We Are Using.
 $!
-$ WRITE SYS$OUTPUT "Using Linker Option File ",OPT_FILE,"."	
+$ WRITE SYS$OUTPUT "Using Linker Option File ",OPT_FILE,"."
 $!
 $! Time To RETURN.
 $!
@@ -817,7 +817,7 @@ $!
 $!   P2 Is NODEBUG, So Compile Without The Debugger Information.
 $!
 $    DEBUGGER = "NODEBUG"
-$    TRACEBACK = "NOTRACEBACK" 
+$    TRACEBACK = "NOTRACEBACK"
 $    GCC_OPTIMIZE = "OPTIMIZE"
 $    CC_OPTIMIZE = "OPTIMIZE"
 $    MACRO_OPTIMIZE = "OPTIMIZE"
@@ -839,7 +839,7 @@ $     CC_OPTIMIZE = "NOOPTIMIZE"
 $     MACRO_OPTIMIZE = "NOOPTIMIZE"
 $     WRITE SYS$OUTPUT "Debugger Information Will Be Produced During Compile."
 $     WRITE SYS$OUTPUT "Compiling Without Compiler Optimization."
-$   ELSE 
+$   ELSE
 $!
 $!    They Entered An Invalid Option..
 $!
@@ -920,7 +920,7 @@ $!
 $!    Check To See If We Have VAXC Or DECC.
 $!
 $     IF (ARCH.EQS."AXP").OR.(F$TRNLNM("DECC$CC_DEFAULT").NES."")
-$     THEN 
+$     THEN
 $!
 $!      Looks Like DECC, Set To Use DECC.
 $!

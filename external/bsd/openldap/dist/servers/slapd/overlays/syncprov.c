@@ -1374,7 +1374,7 @@ syncprov_add_slog( Operation *op )
 	sl = si->si_logs;
 	{
 		/* Allocate a record. UUIDs are not NUL-terminated. */
-		se = ch_malloc( sizeof( slog_entry ) + opc->suuid.bv_len + 
+		se = ch_malloc( sizeof( slog_entry ) + opc->suuid.bv_len +
 			op->o_csn.bv_len + 1 );
 		se->se_next = NULL;
 		se->se_tag = op->o_tag;
@@ -1647,7 +1647,7 @@ syncprov_op_response( Operation *op, SlapReply *rs )
 		}
 
 		/* Don't do any processing for consumer contextCSN updates */
-		if ( SLAP_SYNC_SHADOW( op->o_bd ) && 
+		if ( SLAP_SYNC_SHADOW( op->o_bd ) &&
 			op->o_msgid == SLAP_SYNC_UPDATE_MSGID ) {
 			ldap_pvt_thread_rdwr_wunlock( &si->si_csn_rwlock );
 			return SLAP_CB_CONTINUE;
@@ -2220,7 +2220,7 @@ syncprov_op_search( Operation *op, SlapReply *rs )
 		sids = NULL;
 	}
 	ldap_pvt_thread_rdwr_runlock( &si->si_csn_rwlock );
-	
+
 	/* If we have a cookie, handle the PRESENT lookups */
 	if ( srs->sr_state.ctxcsn ) {
 		sessionlog *sl;
@@ -2851,7 +2851,7 @@ syncprov_db_destroy(
 				ch_free( se );
 				se = se_next;
 			}
-				
+
 			ch_free( si->si_logs );
 		}
 		if ( si->si_ctxcsn )

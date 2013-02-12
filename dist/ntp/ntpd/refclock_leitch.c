@@ -49,7 +49,7 @@
 #define LEITCHREFID	"ATOM"	/* reference id */
 #define LEITCH_DESCRIPTION "Leitch: CSD 5300 Master Clock System Driver"
 #define LEITCH232 "/dev/leitch%d"	/* name of radio device */
-#define SPEED232 B300		/* uart speed (300 baud) */ 
+#define SPEED232 B300		/* uart speed (300 baud) */
 #ifdef DEBUG
 #define leitch_send(A,M) \
 if (debug) fprintf(stderr,"write leitch %s\n",M); \
@@ -297,7 +297,7 @@ leitch_start(
 	/*
 	 * POSIX serial line parameters (termios interface)
 	 *
-	 * The LEITCHCLK option provides timestamping at the driver level. 
+	 * The LEITCHCLK option provides timestamping at the driver level.
 	 * It requires the tty_clk streams module.
 	 */
 	{	struct termios ttyb, *ttyp;
@@ -339,7 +339,7 @@ leitch_start(
 	/*
 	 * 4.3bsd serial line parameters (sgttyb interface)
 	 *
-	 * The LEITCHCLK option provides timestamping at the driver level. 
+	 * The LEITCHCLK option provides timestamping at the driver level.
 	 * It requires the tty_clk line discipline and 4.3bsd or later.
 	 */
 	{	struct sgttyb ttyb;
@@ -422,7 +422,7 @@ leitch_receive(
 
 #ifdef DEBUG
 	if (debug)
-	    fprintf(stderr, "leitch_recieve(%*.*s)\n", 
+	    fprintf(stderr, "leitch_recieve(%*.*s)\n",
 		    rbufp->recv_length, rbufp->recv_length,
 		    rbufp->recv_buffer);
 #endif
@@ -552,7 +552,7 @@ days_per_year(
 	} else {
 		if (year % 100) {	/* is a leap year */
 			return (366);
-		} else {	
+		} else {
 			if (year % 400) {
 				return (365);
 			} else {
@@ -594,7 +594,7 @@ leitch_get_date(
 	while ( i < (leitch->month-1) )
 	    leitch->yearday += days_in_month[i++];
 
-	if ((days_per_year((leitch->year>90?1900:2000)+leitch->year)==365) && 
+	if ((days_per_year((leitch->year>90?1900:2000)+leitch->year)==365) &&
 	    leitch->month > 2)
 	    leitch->yearday--;
 

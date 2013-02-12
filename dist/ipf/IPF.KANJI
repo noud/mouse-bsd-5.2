@@ -124,7 +124,7 @@ block in log quick from 172.16.0.0/12 to any group 100
 #
 ===================== ここまで ====================
 
-IP アドレスを改竄したパケットを即座に拒否しています。末尾の 
+IP アドレスを改竄したパケットを即座に拒否しています。末尾の
 group 100 というのは head 100 で分類されたパケットにのみマッチす
 るルールという意味です。
 
@@ -214,7 +214,7 @@ pass in quick proto tcp from any port = ftp-data to any port > 1023 flags S/SA k
   この行を加えずに、passive mode (ftp で pasv コマンドで入れる)
   で FTP をすることを勧めます。なお、最近の FTP client は最初
   から passive mode に無条件でしてしまうものが多いようです。
-  
+
 * sendmailやftpdに繋ぐと、相手がidentポートへアクセスしてくるこ
   とがあるので、ident portを開けます。ident は通常は起動されてい
   ない daemon なので、素通ししてもセキュリティホールになることはあ

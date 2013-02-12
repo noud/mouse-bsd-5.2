@@ -1,4 +1,4 @@
-/* 
+/*
  * tclAppInit.c --
  *
  *	Provides a default version of the main program and Tcl_AppInit
@@ -102,7 +102,7 @@ Tcl_AppInit(interp)
 #ifdef USE_TCLX
     if (Tclx_Init (interp) == TCL_ERROR) {
 	return TCL_ERROR;
-    }   
+    }
     Tcl_StaticPackage (interp, "Tclx", Tclx_Init, NULL);
 #endif
 

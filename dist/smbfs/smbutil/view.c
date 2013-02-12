@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: view.c,v 1.9 2002/02/20 09:26:42 bp Exp 
+ * from: Id: view.c,v 1.9 2002/02/20 09:26:42 bp Exp
  */
 #include <sys/param.h>
 #include <sys/errno.h>
@@ -68,7 +68,7 @@ cmd_view(int argc, char *argv[])
 	char *cp;
 	u_int16_t type;
 	int error, opt, bufsize, i, entries, total;
-	
+
 
 	if (argc < 2)
 		view_usage();

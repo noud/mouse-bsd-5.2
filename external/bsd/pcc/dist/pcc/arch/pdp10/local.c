@@ -84,7 +84,7 @@ clocal(NODE *p)
 				break;
 			} else
 				q->soffset -= 7*SZINT;
-				
+
 		case AUTO:
 			/* fake up a structure reference */
 			if (q->stype == CHAR || q->stype == UCHAR ||
@@ -135,7 +135,7 @@ rmpc:			l->n_type = p->n_type;
 		}
 		/* Convert ICON with name to new type */
 		if (l->n_op == ICON && l->n_sp != NULL &&
-		    l->n_type == INCREF(STRTY) && 
+		    l->n_type == INCREF(STRTY) &&
 		    (p->n_type == INCREF(CHAR) ||
 		    p->n_type == INCREF(UCHAR) ||
 		    p->n_type == INCREF(SHORT) ||
@@ -181,7 +181,7 @@ rmpc:			l->n_type = p->n_type;
 			p->n_right = bcon(2);
 			break;
 		}
-		
+
 		/* Check for cast integral -> pointer */
 		if (BTYPE(l->n_type) == l->n_type)
 			break;
@@ -587,7 +587,7 @@ offcon(OFFSZ off, TWORD t, union dimfun *d, struct suedef *sue)
  * Allocate off bits on the stack.  p is a tree that when evaluated
  * is the multiply count for off, t is a NAME node where to write
  * the allocated address.
- * Be aware that a pointer conversion may be needed when saving 
+ * Be aware that a pointer conversion may be needed when saving
  * to node t!
  */
 void
@@ -785,7 +785,7 @@ instring(struct symtab *sp)
 	printf("\\0\"\n");
 }
 
-/*		
+/*
  * Print out a wide string by calling ninval().
  */
 void
@@ -818,7 +818,7 @@ noinit()
 }
 
 void
-calldec(NODE *p, NODE *q) 
+calldec(NODE *p, NODE *q)
 {
 }
 
@@ -832,7 +832,7 @@ void
 defzero(struct symtab *sp)
 {
 	int off;
- 
+
 	off = tsize(sp->stype, sp->sdf, sp->ssue);
 	off = (off+(SZINT-1))/SZINT;
 	printf("        .%scomm ", sp->sclass == STATIC ? "l" : "");

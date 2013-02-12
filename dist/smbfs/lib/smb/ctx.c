@@ -29,7 +29,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * from: Id: ctx.c,v 1.24 2002/04/13 14:35:28 bp Exp 
+ * from: Id: ctx.c,v 1.24 2002/04/13 14:35:28 bp Exp
  */
 
 #include <sys/cdefs.h>
@@ -292,7 +292,7 @@ smb_ctx_setserver(struct smb_ctx *ctx, const char *name)
 		error = smb_ctx_setsrvaddr(ctx, name);
 		if (error)
 			return (error);
-		
+
 		/* cut name to MAXSRVNAMELEN */
 		if (strlen(name) >= sizeof(ctx->ct_ssn.ioc_srvname)) {
 			snprintf(nm, sizeof(nm), "%.*s",
@@ -502,7 +502,7 @@ smb_ctx_resolve(struct smb_ctx *ctx)
 	u_char cstbl[256];
 	u_int i;
 	int error = 0;
-	
+
 	ctx->ct_flags &= ~SMBCF_RESOLVED;
 	if (ssn->ioc_srvname[0] == 0) {
 		smb_error("no server name specified", 0);

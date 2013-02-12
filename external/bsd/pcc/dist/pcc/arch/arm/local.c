@@ -158,7 +158,7 @@ clocal(NODE *p)
                 p->n_op = ASSIGN;
                 p->n_right = p->n_left;
                 p->n_left = block(REG, NIL, NIL, p->n_type, 0, MKSUE(INT));
-                p->n_left->n_rval = p->n_left->n_type == BOOL ? 
+                p->n_left->n_rval = p->n_left->n_type == BOOL ?
                     RETREG(BOOL_TYPE) : RETREG(p->n_type);
                 break;
 
@@ -313,7 +313,7 @@ myp2tree(NODE *p)
 	ninval(0, sp->ssue->suesize, p);
 
 	p->n_op = NAME;
-	p->n_lval = 0;	
+	p->n_lval = 0;
 	p->n_sp = sp;
 
 }
@@ -633,7 +633,7 @@ ctype(TWORD type)
  * 'q' is the CM-separated list of arguments.
  */
 void
-calldec(NODE *p, NODE *q) 
+calldec(NODE *p, NODE *q)
 {
 }
 
@@ -764,7 +764,7 @@ arm_builtin_va_end(NODE *f, NODE *a)
 {
 	tfree(f);
 	tfree(a);
- 
+
 	return bcon(0);
 }
 
@@ -793,10 +793,10 @@ static int destructor;
 int
 mypragma(char **ary)
 {
-	if (strcmp(ary[1], "tls") == 0) { 
+	if (strcmp(ary[1], "tls") == 0) {
 		uerror("thread-local storage not supported for this target");
 		return 1;
-	} 
+	}
 	if (strcmp(ary[1], "constructor") == 0 || strcmp(ary[1], "init") == 0) {
 		constructor = 1;
 		return 1;

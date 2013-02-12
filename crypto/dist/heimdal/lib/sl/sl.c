@@ -2,22 +2,22 @@
  * Copyright (c) 1995 - 2006 Kungliga Tekniska Högskolan
  * (Royal Institute of Technology, Stockholm, Sweden).
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the Institute nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -62,7 +62,7 @@ mandoc_template(SL_cmd *cmds,
     strncpy(cmd, p, sizeof(cmd));
     cmd[sizeof(cmd)-1] = '\0';
     strupr(cmd);
-       
+
     printf(".Dt %s SECTION\n", cmd);
     printf(".Os OPERATING_SYSTEM\n");
     printf(".Sh NAME\n");
@@ -76,7 +76,7 @@ mandoc_template(SL_cmd *cmds,
 	    continue; */
 	printf(".Op Fl %s", c->name);
 	printf("\n");
-	
+
     }
     if (extra_string && *extra_string)
 	printf (".Ar %s\n", extra_string);
@@ -157,7 +157,7 @@ sl_help (SL_cmd *cmds, int argc, char **argv)
 	if(prev_c)
 	    printf ("\n\t%s%s", prev_c->usage ? prev_c->usage : "",
 		    prev_c->usage ? "\n" : "");
-    } else { 
+    } else {
 	c = sl_match (cmds, argv[1], 0);
 	if (c == NULL)
 	    printf ("No such command: %s. "
@@ -225,7 +225,7 @@ sl_make_argv(char *line, int *ret_argc, char ***ret_argv)
     int argc, nargv;
     char **argv;
     int quote = 0;
-    
+
     nargv = 10;
     argv = malloc(nargv * sizeof(*argv));
     if(argv == NULL)
@@ -303,7 +303,7 @@ static char *sl_readline(const char *prompt)
     return s;
 }
 
-/* return values: 
+/* return values:
  * 0 on success,
  * -1 on fatal error,
  * -2 if EOF, or
@@ -315,7 +315,7 @@ sl_command_loop(SL_cmd *cmds, const char *prompt, void **data)
     char *buf;
     int argc;
     char **argv;
-	
+
     ret = 0;
     buf = sl_readline(prompt);
     if(buf == NULL)
@@ -341,7 +341,7 @@ sl_command_loop(SL_cmd *cmds, const char *prompt, void **data)
     return ret;
 }
 
-int 
+int
 sl_loop(SL_cmd *cmds, const char *prompt)
 {
     void *data = NULL;

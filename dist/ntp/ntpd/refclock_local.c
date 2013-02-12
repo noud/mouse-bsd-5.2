@@ -128,7 +128,7 @@ static	void	local_poll	P((int, struct peer *));
  * Local variables
  */
 static	u_long poll_time;	/* last time polled */
-	
+
 /*
  * Transfer vector
  */

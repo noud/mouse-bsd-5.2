@@ -53,26 +53,26 @@ then
 	db_input medium heimdal/realm || true
 	db_go
 	db_get heimdal/realm; REALM="$RET"
-	
+
 	# get password
 	db_input medium heimdal-kdc/password || true
 	db_go
 	db_get heimdal-kdc/password; PASSWORD="$RET"
 	db_set heimdal-kdc/password ""
-	
+
 	DST=/etc/heimdal-kdc/kdc.conf
 	cp -a /usr/share/doc/heimdal-kdc/examples/kdc.conf "$DST"
 #	/usr/lib/heimdal-kdc/setconfig --file "$DST" --section realms::REALM.ORG "=$REALM"
-	
+
 	DST=/etc/heimdal-kdc/kadmind.acl
 	cp -a /usr/share/doc/heimdal-kdc/examples/kadmind.acl "$DST"
-	
+
 	kstash --master-key-fd=0 <<EOF
 $PASSWORD
 EOF
-	
+
 	echo -e "\n\n" | kadmin -l init "$REALM" > /dev/null
-	
+
 	touch /etc/heimdal-kdc/.configured
 fi
 
@@ -94,5 +94,5 @@ configure)
 	;;
 esac
 
-	
+
 #DEBHELPER#

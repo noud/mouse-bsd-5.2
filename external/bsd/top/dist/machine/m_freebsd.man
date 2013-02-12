@@ -1,6 +1,6 @@
 .SH "FreeBSD NOTES"
 Priorities are shown the same as they exist in process data structures,
-ranging from 0 to 255.  Note that this is not the same as the ps(1) 
+ranging from 0 to 255.  Note that this is not the same as the ps(1)
 \*(lqpri\*(rq column, which subtracts 84 from each number before displaying
 it. Priority numbers fall in to priority classes as follows:
 .TP 15
@@ -30,7 +30,7 @@ for each individual thread.  Other information is identical for all
 threads in the same process.
 
 .SH "FreeBSD ALTERNATE DISPLAY"
-FreeBSD supports an alternate process display which shows i/o 
+FreeBSD supports an alternate process display which shows i/o
 information.  Since this information is tracked per process and not
 per thread, the per-thread display is not supported in this mode.
 All fields calculate the number of operations observed since the
@@ -91,38 +91,38 @@ Total number of pages freed.
 .SH "FreeBSD MEMORY SUMMARY"
 Memory: 10M Act 1208K Inact 3220K Wired 132K Free 25% Swap, 2924Kin 2604Kout
 .TP
-.B K: 
+.B K:
 Kilobyte
 .TP
-.B M: 
+.B M:
 Megabyte
 .TP
 .B G:
 Gigabyte
 .TP
-.B %: 
+.B %:
 1/100
 
 .TP
-.B Act: 
+.B Act:
 number of pages active
 .TP
-.B Inact: 
+.B Inact:
 number of pages inactive
 .TP
-.B Wired: 
+.B Wired:
 number of pages wired down
 .TP
-.B Free: 
+.B Free:
 number of pages free
 .TP
-.B Swap: 
+.B Swap:
 swap usage
-.TP 
-.B Kin: 
+.TP
+.B Kin:
 kilobytes swap pager pages paged in (last interval)
 .TP
-.B Kout: 
+.B Kout:
 kilobytes swap pager pages paged out  (last interval)
 .PP
 

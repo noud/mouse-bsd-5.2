@@ -129,7 +129,7 @@ server ( <replaceable>ipv4_address<optional>/prefixlen</optional></replaceable> 
     <title>TRUSTED-KEYS</title>
     <literallayout>
 trusted-keys {
-	<replaceable>domain_name</replaceable> <replaceable>flags</replaceable> <replaceable>protocol</replaceable> <replaceable>algorithm</replaceable> <replaceable>key</replaceable>; ... 
+	<replaceable>domain_name</replaceable> <replaceable>flags</replaceable> <replaceable>protocol</replaceable> <replaceable>algorithm</replaceable> <replaceable>key</replaceable>; ...
 };
 </literallayout>
   </refsect1>

@@ -144,7 +144,7 @@ NROFF_MAN = groff -mandoc -Tascii
 .8.cat8:
 	$(NROFF_MAN) $< > $@
 
-## MAINTAINERCLEANFILES += 
+## MAINTAINERCLEANFILES +=
 
 dist-cat1-mans:
 	@foo='$(man1_MANS)'; \

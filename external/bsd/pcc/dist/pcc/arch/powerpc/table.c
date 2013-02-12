@@ -322,7 +322,7 @@ struct optab table[] = {
 	SAREG,	TWORD,
 		NSPECIAL|NAREG,	RESC1,
 		"ZF", },
-	
+
 { SCONV,	INCREG | FEATURE_HARDFLOAT,
 	SBREG,	TLONGLONG|TULONGLONG,
 	SCREG,	TFLOAT|TDOUBLE|TLDOUBLE,
@@ -1108,7 +1108,7 @@ struct optab table[] = {
 		"	mr UL,UR\n", },
 
 /*
- * DIV/MOD/MUL 
+ * DIV/MOD/MUL
  */
 
 { DIV,	INAREG,

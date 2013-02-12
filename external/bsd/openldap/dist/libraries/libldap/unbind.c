@@ -103,7 +103,7 @@ ldap_ld_free(
 		next = lm->lm_next;
 		ldap_msgfree( lm );
 	}
-    
+
 	if ( ld->ld_abandoned != NULL ) {
 		LDAP_FREE( ld->ld_abandoned );
 		ld->ld_abandoned = NULL;
@@ -125,8 +125,8 @@ ldap_ld_free(
 	if( ld->ld_referrals != NULL) {
 		LDAP_VFREE(ld->ld_referrals);
 		ld->ld_referrals = NULL;
-	}  
-    
+	}
+
 	if ( ld->ld_selectinfo != NULL ) {
 		ldap_free_select_info( ld->ld_selectinfo );
 		ld->ld_selectinfo = NULL;
@@ -180,8 +180,8 @@ ldap_ld_free(
 		ld->ld_options.ldo_cctrls = NULL;
 	}
 
-	ber_sockbuf_free( ld->ld_sb );   
-   
+	ber_sockbuf_free( ld->ld_sb );
+
 #ifdef LDAP_R_COMPILE
 	ldap_pvt_thread_mutex_destroy( &ld->ld_req_mutex );
 	ldap_pvt_thread_mutex_destroy( &ld->ld_res_mutex );
@@ -191,7 +191,7 @@ ldap_ld_free(
 	LDAP_TRASH(ld);
 #endif
 	LDAP_FREE( (char *) ld );
-   
+
 	return( err );
 }
 

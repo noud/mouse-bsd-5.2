@@ -60,7 +60,7 @@ __RCSID("$NetBSD: kill.c,v 1.25.4.1 2009/10/03 23:20:05 snj Exp $");
 #ifdef SHELL            /* sh (aka ash) builtin */
 #define main killcmd
 #include "../../bin/sh/bltin/bltin.h"
-#endif /* SHELL */ 
+#endif /* SHELL */
 
 static void nosig(char *);
 static void printsignals(FILE *);
@@ -155,7 +155,7 @@ main(int argc, char *argv[])
 				errors = 1;
 				continue;
 			}
-		} else 
+		} else
 #endif
 		{
 			pid = strtoimax(*argv, &ep, 10);

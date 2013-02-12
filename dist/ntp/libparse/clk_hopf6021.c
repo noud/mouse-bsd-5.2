@@ -39,10 +39,10 @@
 extern void printf P((const char *, ...));
 #endif
 
-/* 
- * hopf Funkuhr 6021 
+/*
+ * hopf Funkuhr 6021
  *      used with 9600,8N1,
- *      UTC ueber serielle Schnittstelle 
+ *      UTC ueber serielle Schnittstelle
  *      Sekundenvorlauf ON
  *      ETX zum Sekundenvorlauf ON
  *      Datenstring 6021
@@ -73,7 +73,7 @@ extern void printf P((const char *, ...));
  *      x x 0 x  - Wintertime
  *      x x 1 x  - Summertime
  *      0 0 x x  - Time/Date invalid
- *      0 1 x x  - Internal clock used 
+ *      0 1 x x  - Internal clock used
  *      1 0 x x  - Radio clock
  *      1 1 x x  - Radio clock highprecision
  *
@@ -92,10 +92,10 @@ extern void printf P((const char *, ...));
 #define HOPF_DSTWARN	0x01	/* DST switch warning */
 #define HOPF_DST	0x02	/* DST in effect */
 
-#define HOPF_MODE	0x0C	/* operation mode mask */	
+#define HOPF_MODE	0x0C	/* operation mode mask */
 #define  HOPF_INVALID	0x00	/* no time code available */
 #define  HOPF_INTERNAL	0x04	/* internal clock */
-#define  HOPF_RADIO	0x08	/* radio clock */	
+#define  HOPF_RADIO	0x08	/* radio clock */
 #define  HOPF_RADIOHP	0x0C	/* high precision radio clock */
 
 #define HOPF_UTC	0x08	/* time code in UTC */
@@ -104,13 +104,13 @@ extern void printf P((const char *, ...));
 static struct format hopf6021_fmt =
 {
 	{
-		{  9, 2 }, {11, 2}, { 13, 2}, /* Day, Month, Year */ 
-		{  3, 2 }, { 5, 2}, {  7, 2}, /* Hour, Minute, Second */ 
+		{  9, 2 }, {11, 2}, { 13, 2}, /* Day, Month, Year */
+		{  3, 2 }, { 5, 2}, {  7, 2}, /* Hour, Minute, Second */
 		{  2, 1 }, { 1, 1}, {  0, 0}, /* Weekday, Flags, Zone */
 		/* ... */
 	},
 	(const unsigned char *)"\002              \n\r\003",
-	0 
+	0
 };
 
 #define OFFS(x) format->field_offsets[(x)].offset
@@ -227,9 +227,9 @@ inp_hopf6021(
 	  )
 {
 	unsigned int rtc;
-	
+
 	parseprintf(DD_PARSE, ("inp_hopf6021(0x%lx, 0x%x, ...)\n", (long)parseio, ch));
-	
+
 	switch (ch)
 	{
 	case ETX:

@@ -308,7 +308,7 @@ Changes from NetBSD 0.8 to NetBSD 0.9:
 		patch #139. (cgd)
 	tip(1), getty(8), kernel: patch from David Greenman and Rod Grimes
 		(davidg@implode.rain.com and rgrimes@agora.rain.com) to support
-		57600 and 115200 baud in the kernel, tip, and getty. 
+		57600 and 115200 baud in the kernel, tip, and getty.
 		pk patch #150 (cgd)
 	patch from <bob@speakez.com> so rlogin understands higher
 		baud rates (deraadt)
@@ -2034,7 +2034,7 @@ Changes from NetBSD 1.0 to NetBSD 1.1:
 		Improves recognition of more oddball cards and provides
 		better frame for later work. [briggs 19950429]
 	m68k: Added sig{set,long}jmp from Henric Jungheim
-		(uhenric@mcl.ucsb.edu) as an outgrowth from PR #1009. 
+		(uhenric@mcl.ucsb.edu) as an outgrowth from PR #1009.
 		[briggs 19950502]
 	i386: added a machine-independent <dev/ic/mc146818.h> for MC146818A RTC
 		chips (and compatibles).  Made the i386 use it.	 [cgd 19950504]
@@ -2054,7 +2054,7 @@ Changes from NetBSD 1.0 to NetBSD 1.1:
 	syslogd(8): fixed to report correct priorities when sending to remote
 		loghosts.  From Jarle Greipsland in PR #1039.  [cgd 19950514]
 	net, netstat(1): drop malformed IP fragments, and have netstat print
-		out the number of malformed IP fragments dropped. 
+		out the number of malformed IP fragments dropped.
 		[cgd 19950514]
 	atari:	- Fixed TT-HIGH video mode, so 19'' screens are supported.
 		- removed double mapping of kstack.
@@ -2841,7 +2841,7 @@ Changes from NetBSD 1.2 to NetBSD 1.3:
 		time (for now). [is 19960930]
 	Fix p_nice vs. NZERO code and make p_nice explicitly unsigned.
 		[ws 19961002]
-	dhcpd(8): Import the ISC dhcpd backage, version BETA 5.13. 
+	dhcpd(8): Import the ISC dhcpd backage, version BETA 5.13.
 		[mrg 19961003]
 	Wrote and added rdsetimage(8), a program to set kernel RAM disk
 		images.	 [cgd 19961003]
@@ -3424,7 +3424,7 @@ Changes from NetBSD 1.2 to NetBSD 1.3:
 	libc: Added finnish language libc message catalog contributed by
 		Jukka Marin <jmarin@pyy.jmp.fi>. [is 19970417]
 	xntp: Import xntp3-5.90 from louie.udel.edu. [christos 19970418]
-	libc: Add strptime(3) to libc.  From Powerdog Industries. 
+	libc: Add strptime(3) to libc.  From Powerdog Industries.
 		[mrg 19970421]
 	Fixed many possible buffer overruns in libraries and programs.
 		[mrg 19970422]
@@ -3834,7 +3834,7 @@ Changes from NetBSD 1.2 to NetBSD 1.3:
 		These changes also simplified audio_hw_if. [augustss 19971019]
 	x68k: add support for MK-HA1 Mankai Mach-2 SCSI host adapter.
 		[oki 19971019]
-	ethernet: Update the "fxp" driver from FreeBSD-current. 
+	ethernet: Update the "fxp" driver from FreeBSD-current.
 		[thorpej 19971019]
 	amiga: new graphics driver for the CyberVision64/3D. [veego 19971019]
 	ipfilter: updated to version 3.2.  [mrg 19971031]
@@ -3844,7 +3844,7 @@ Changes from NetBSD 1.2 to NetBSD 1.3:
 	ethernet: Break the 3Com 3c503 support out of the ISA "ed" driver, and
 		create an "ec" driver, front-end to the MI dp8390
 		driver.	 [thorpej 19971101]
-	ethernet: Add ifmedia support to the MI dp8390 driver. 
+	ethernet: Add ifmedia support to the MI dp8390 driver.
 		[thorpej 19971101]
 	ethernet: Break the WD/SMC 80x3, SMC Elite Ultra, and SMC EtherEZ
 		support out of the ISA "ed" driver, and create a "we" driver,
@@ -3950,7 +3950,7 @@ Changes from NetBSD 1.3 to NetBSD 1.4:
 		define their own use the libkern definition, with
 		the exception of genassym and 3rd party packages
 		(IP-Filter and the PDQ driver).	 [thorpej 19980127]
-	ethernet, bus_dma(9): Convert fxp driver to use bus_dma. 
+	ethernet, bus_dma(9): Convert fxp driver to use bus_dma.
 		[thorpej 19980128]
 	alpha: Initial platform support in arch/alpha for the Avalon A12
 		scalable parallel processor. [ross 19980129]
@@ -4153,7 +4153,7 @@ Changes from NetBSD 1.3 to NetBSD 1.4:
 	fddi, bus_dma(9): switch pdq (fpa,fta,fea) driver to bus_dma(9)
 		framework.  [matt 19980521]
 	pmax, bus_dma(9): Completely rewrite bus_space back-end and write a
-		first-cut bus_dma back-end for the DECstation. 
+		first-cut bus_dma back-end for the DECstation.
 		[thorpej 19980522]
 	toolchain: Changed most toolchain bits present in GNU binutils
 		(ar, nm, ranlib, size, strings) to use GNU binutils instead
@@ -4311,14 +4311,14 @@ Changes from NetBSD 1.3 to NetBSD 1.4:
 		support. Modify ftp(1) to honour this.	[lukem 19980729]
 	tftpd(8): add support for -u user and -g group, which specify the user
 		and group to run as. Fixes PR #4218.  [lukem 19980729]
-	ccd(4): use the pool allocator for component buffers. 
+	ccd(4): use the pool allocator for component buffers.
 		[thorpej 19980730]
 	vnd(4): use the pool allocator for vndxfer and vndbuf structures.
 		[thorpej 19980730]
 	scsipi: use the pool allocator for scsipi_xfers. [thorpej 19980730]
 	isapnp: Use config_defer(), and add support for all of the
 		platforms that support ISA.  [thorpej 19980730]
-	kernel: Use the pool allocator for mbufs and mbuf clusters. 
+	kernel: Use the pool allocator for mbufs and mbuf clusters.
 		[thorpej 19980731]
 	alpha: implement isa_intr_disestablish() and pci_intr_disestablish().
 		[thorpej 19980801]
@@ -4480,7 +4480,7 @@ Changes from NetBSD 1.3 to NetBSD 1.4:
 	libz: updated to 1.1.3 [tron 19981101]
 	ethernet: Add a driver for 3Com 90xB cards, which also will drive 90x
 		cards using DMA. [fvdl 19981103]
-	send-pr(1): added support for GNATS `install' category. 
+	send-pr(1): added support for GNATS `install' category.
 		[lukem 19981110]
 	i386: pciide is now enabled in GENERIC and INSTALL kernels.
 		[bouyer 19981110]
@@ -4849,7 +4849,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	mips:	reduce TLBmod exception cost by skipping unnecessary code
 		path.  MIPS1 only this moment [nisimura 19990529]
 	amiga:	support Amiga partition tables that fake >1 sectors per fs
-		block (for Adosfs) by using a bigger sector size in the 
+		block (for Adosfs) by using a bigger sector size in the
 		PART block than for the disk geometry in the RDSK block.
 		By Matthias Scheler via PR 2559. [is 19990530]
 	m68k:   Apply FPE fixes from Ken Nakata in PR#7220 [briggs 19990530]
@@ -4863,7 +4863,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 		Netstation.  [thorpej 19990602]
 	arm32:	Added Xarm32VIDC server to xsrc for RiscPC and ARM7500 based
 		systems [mark 19990603]
-	disklabel(8): Print and parse filesystem fragment, block size and 
+	disklabel(8): Print and parse filesystem fragment, block size and
 		the cpg field also for ADOS partitions, and fragment and block
 		size for BSDLFS partitions in the text format i/o.
 		Print the block and fragment size in the disktab(5)-formatted
@@ -4887,13 +4887,13 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	bus_space(9): Remove old, deprecated definitions provided by
 		__BUS_SPACE_COMPAT_OLDDEFS (bus_space_copy_[1248] and
 		BUS_BARRIER_{READ,WRITE}).  [cgd 19990617]
-	ping(8): add -a option to ping (beep on receipt of packet), 
+	ping(8): add -a option to ping (beep on receipt of packet),
 		from andrew@untraceable.net [sommerfeld 19990617]
 	x68k: Add memswitch(8) utility. [minoura 19990622]
-	net: add HOSTZEROBROADCAST option and sysctl to control whether 
-		the .0 address on a subnet is considered a broadcast 
+	net: add HOSTZEROBROADCAST option and sysctl to control whether
+		the .0 address on a subnet is considered a broadcast
 		address.  The default setting retains current behavior
-		(host zero considered a broadcast) but at least you can 
+		(host zero considered a broadcast) but at least you can
 		turn it off now. [sommerfeld 19990626]
 	mac68k: Allow serial console on Q900/Q950 to work. [briggs 19990626]
 	cap_mkdb(1): Add -b and -l options to generate big- or little-endian
@@ -5024,8 +5024,8 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	usb: Handle detachment of devices much better,  Use a kernel thread
 		instead of a daemon.  Support suspend/resume to some extent.
 		[augustss 19990714]
-	wi(4): ported Bill Paul's FreeBSD driver for the Lucent 
-		WaveLan IEEE 802.11DS PCMCIA wireless LAN card while 
+	wi(4): ported Bill Paul's FreeBSD driver for the Lucent
+		WaveLan IEEE 802.11DS PCMCIA wireless LAN card while
 		watching the sun set over Oslo in the bar at the IETF meeting
 		[sommerfeld 19990714]
 	layered filesystems: Added new vnode flag VLAYER which is set for
@@ -5082,7 +5082,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 		Addresses the problem in PR #7494. [oster 19990810]
 	vax: Add support for built-int LANCE chip on VAX 3300/3400.
 		[ragge 19990815]
-	locate(1): added support for multiple locate databases as per 
+	locate(1): added support for multiple locate databases as per
 		PR #8176 [sjg 19990816]
 	compat/linux: Emulate the Linux stime(2) system call.
 		[tron 19990816]
@@ -5105,13 +5105,13 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	installation: Added UNPRIVILEGED make variable to allow users
 		to "make install" or "make build" without needing to
 		be root.  [simonb 19990821]
-	m68k: added infrastructure to create Motorola 68060 Floating Point 
+	m68k: added infrastructure to create Motorola 68060 Floating Point
 		Library Support Package based libm. Still use 68060-effective
 		routines from libm/arch/mc68881 on 68060, and 68040-effective
-		on 68040 (for the others, the generic C code). This is 
+		on 68040 (for the others, the generic C code). This is
 		currently switched at compile time by adding M68060=1 or
 		M68040=1 to /etc/mk.conf.
-		More work needs to be done to actually create all three 
+		More work needs to be done to actually create all three
 		versions in binary packages, so that they can be chosen
 		at installation time or even later. (If we switch to ELF,
 		the init function can patch the jump table at run time.)
@@ -5119,7 +5119,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	supfilesrv(8): added libwrap support [bouyer 19990824]
 	SVID IPC: overhaul to match Single UNIX Specification, v2.
 		[thorpej 19990824]
-	amiga: /etc/ttys: switch individual ttye* off, and switch /dev/console 
+	amiga: /etc/ttys: switch individual ttye* off, and switch /dev/console
 		on. This way, screenblank will work with an out of the box
 		/etc/ttys. [is 19990825]
 	amiga: /etc/ttys: Add entries for serial plug-in boards and the DraCo
@@ -5161,7 +5161,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	cy(4): add support for Risc II based serial controller [tron 19990909]
 	sh3: add kernel code for NetBSD/sh3 port. [itojun 19990913]
 	arm32: ie: fixed Berkeley Packet Filter support [tron 19990913]
-	netstat(1): add -L option, which suppresses ARP entries in 
+	netstat(1): add -L option, which suppresses ARP entries in
 		routing table (-r) display. [is 19990915]
 	libc: add strlcpy(3) and strlcat(3), which are safer versions of the
 		equivalent strcpy/strcat functions by Todd C. Miller
@@ -5191,7 +5191,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 		place of process core dumps [bouyer 19990928]
 	Add a driver for Megahertz PCMCIA Ethernet/Modem combo cards,
 		with some help from Chuck Cranor [thorpej 19990928]
-	tcpdump(8): add hex/ascii dumps and printing of telnet options. 
+	tcpdump(8): add hex/ascii dumps and printing of telnet options.
 		[sjg 19990930]
 	compat/linux: Emulate the Linux sched_setparam(2), sched_getparamm(2),
 		sched_setscheduler(2), sched_getscheduler(2), sched_yield(2),
@@ -5210,10 +5210,10 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 		situation described in private EMail. [wrstuden 19991016]
 	libpcap: teach it to match on ARCnet "system codes" (payload types)
 		for types of IPv4 and ARP (old-style and current), RARP, IPv6
-		and Appletalk. Also, matching inside first fragments of 
+		and Appletalk. Also, matching inside first fragments of
 		newstyle protocols (all but oldstyle IPv4 and ARP) will work
 		if it isn't an exceptional length packet. [is 19991015]
-	amiga: add a branch of the reboot code working on Phase5 68040+PPC 
+	amiga: add a branch of the reboot code working on Phase5 68040+PPC
 		boards. [is 19991018]
 	kernel: support detaching of wdc/aic pcmcia card.  [enami 19991021]
 	pax(1): support extraction of GNU tar long filenames (././@LongLink).
@@ -5236,11 +5236,11 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	pax(1): add new -p subflag `f' that preserves 4.4BSD file flags.
 		[mrg 19991101]
 	file(1): import file-3.28 [christos 19991101]
-	audio: add FM801 audio device driver.  From Witold J. Wnuk, 
+	audio: add FM801 audio device driver.  From Witold J. Wnuk,
 		ww181302@zodiac.mimuw.edu.pl [augustss 19991101]
 	atari: add support for ESS Technology Inc. Solo-1 PCI Soundcard on
 		the Hades. [leo 19991104]
-	pcmcia: add the new awi driver, which supports AMD 79c930-based 
+	pcmcia: add the new awi driver, which supports AMD 79c930-based
 		802.11FH cards such as the BayStack 650. [sommerfeld 19991104]
 	editline(3): add support for displaying right-side prompt, controlled
 		with EL_RPROMPT. [lukem 19991112]
@@ -5251,7 +5251,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 		filesystem.  [simonb 19991115]
 	kernel: Bring in Kirk McKusick's FFS soft updates + trickle sync code
 		into the kernel. [fvdl 19991115]
-	mips: add support for kernel softfloat emulation. 
+	mips: add support for kernel softfloat emulation.
 		 From Shuichiro URATA ur@a-r.org [jun 19991118]
 	bind: update to 8.2.2-P5 to fix the recent exploits. [veego 19991120]
 	kernel: bring in IPv6-related defs into GENERIC kernel config.
@@ -5288,7 +5288,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	ftpd(8): /etc/ftpusers: added host matching and optional class
 		specification. /etc/ftpd.conf: added configurable motd file,
 		rate limiting, disabling of uploads. support for % escapes in
-		message file output. added `SITE RATE{GET,PUT}'. 
+		message file output. added `SITE RATE{GET,PUT}'.
 		[lukem 19991213]
 	ld.elf_so: Enhancement to be able to parse ld.so.conf for hardware
 		dependent libraries based on sysctl variables
@@ -5559,7 +5559,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	kernel: added a PCI_CONFIG_DUMP option to cause PCI devices'
 		configuration space headers to be verbosely printed.
 		[cgd 20000321]
-	pcmcia: update the awi driver, which now supports AMD 79c930-based 
+	pcmcia: update the awi driver, which now supports AMD 79c930-based
 		802.11DS cards as well as 802.11FH cards, and can operate
 		in infrastructure mode, adhoc mode, and wi(4) compatible
 		adhoc mode. [onoe 20000322]
@@ -5601,7 +5601,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	uvm: Add UVM_PGA_ZERO which instructs uvm_pagealloc{,_strat}()
 		to return a page as if it had been uvm_pagezero()'d.
 		[thorpej 20000409]
-	vax: add driver for the VS4000/60 and VS4000/VLC NCR53C94 SCSI 
+	vax: add driver for the VS4000/60 and VS4000/VLC NCR53C94 SCSI
 		controller. [matt 20000409]
 	sysinst: on i386, enable wscons by default in etc/rc.conf and
 		etc/ttys. [hubertf 20000410]
@@ -5630,7 +5630,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	uvm: implement pre-zero'ing of pages in the idle loop.
 		[thorpej 20000424]
 	i386: utilize uvm_pagezeroidle.  [thorpej 20000424]
-	poweroff: Powers down the system equivalent to "halt -p", but 
+	poweroff: Powers down the system equivalent to "halt -p", but
 		allows powering down the system from an exec(2) call, e.g.
 		via a user which has "poweroff" as login shell. The command
 		name is modeled after Solaris. [hubertf 20000425]
@@ -5644,7 +5644,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 		[augustss 20000430]
 	postfix: imported and integrated Wietse Venema's Postfix mailer.
 		[perry 20000430]
-	audio: add a driver for old Creative Music System.  
+	audio: add a driver for old Creative Music System.
 		From Gregory McGarry.  [augustss 20000502]
 	pmax: add Am7930 audio driver for the MAXINE family of machines.
 		From Gregory McGarry.  [augustss 20000502]
@@ -5709,7 +5709,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	ps(1), w(1), top(1): use new sysctls and kvm routines to remove "proc
 		size mismatch" errors and the setgid kmem mode bit.
 		[simonb 20000526]
-	cd9660: add a way to disable the mapping of filenames to lowercase 
+	cd9660: add a way to disable the mapping of filenames to lowercase
 		on non-Rock Ridge cdroms via new option 'nomaplcase'
 		for mount_cd9660(8) [jdolecek 20000527]
 	pciide: Add support for the OPTi 82c621 PCIIDE controller and
@@ -5745,7 +5745,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 	vax: Add eventt counting to port. [matt 20000604]
 	kernel: Do not stop saving kernel messages to the message buffer
 		when writing a kernel crash dump. [jhawk 20000605]
-	rnd(4): allow ports to supply a high-resolution counter through 
+	rnd(4): allow ports to supply a high-resolution counter through
 		<machine/rnd.h> for /dev/random to sample.
 		[sommerfeld 20000605]
 	i386: supply <machine/rnd.h> for better rnd(4) randomness.
@@ -5810,7 +5810,7 @@ Changes from NetBSD 1.4 to NetBSD 1.5:
 		gets X going e.g. on Toshiba Tecra 8100 (S3 Savage MX). Use
 		Chipset "s3_savage", ChipID 0x8a20 in the "Device" section
 		of the XF86Config file to enable. [hubertf 20000620]
-	amiga: custom chip console no longer needs one extra column for 
+	amiga: custom chip console no longer needs one extra column for
 		bold characters. [is 20000621]
 	at(1)/atrun(8): add support for usernames > 8 characters.
 		[simonb 20000625]
@@ -5928,7 +5928,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 	misc: add passwd.conf: allows selection of password encryption
 		scheme. may be different for local and yp passwords, thus
 		improving NIS inter-operability. [ad 20000706]
-	newsyslog(8): completely overhaul this. add a new flag, `C' 
+	newsyslog(8): completely overhaul this. add a new flag, `C'
 		(create log file). [ad 20000708]
 	vax: ld.elf_so can now load and run dynamically linked VAX ELF
 		programs. [matt 20000714]
@@ -5938,7 +5938,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		either keep (-k) or skip (-s) files which have the matching
 		keyword. [mrg 20000717]
 	rc(8): in rc.shutdown only run scripts with a 'KEYWORD: shutdown' in
-		them at shutdown, making the process faster and more robust. 
+		them at shutdown, making the process faster and more robust.
 		[lukem 20000717]
 	ftp(1): add support for FEAT & OPTS (from RFC 2389), and MLSD & MLST
 		(from draft-ietf-ftpext-mlst-11). other fixes and cleanups.
@@ -6031,7 +6031,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		an arbitrary number of filtering points. [thorpej 20001110]
 	usb: add the uscanner device driver for USB scanners.  From
 		FreeBSD. [augustss 20001114]
-	openfirm: add a MI /dev/openfirm to interrogate OpenFirmware 
+	openfirm: add a MI /dev/openfirm to interrogate OpenFirmware
 		about the device tree (currently works on arm32(SHARK)
 		and macppc). [matt 20001114]
 	ftp(1): implement `mreget'. allow choosing of alternate .netrc
@@ -6113,8 +6113,8 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		as size unit. [hubertf 20001230]
 	df(1): Add -m option. Similar to -k, use megabyte (1024*1024 bytes)
 		as size unit. [hubertf 20001230]
-	make(1): support for use of -j (spawn jobs in parallel) in recursive 
-		builds; all make processes in a build cooperate to limit 
+	make(1): support for use of -j (spawn jobs in parallel) in recursive
+		builds; all make processes in a build cooperate to limit
 		the total number of compile jobs.
 		[sommerfeld 20001230]
 	bktr(4): Merge with bktr driver v2.18 (from FreeBSD). [wiz 20001230]
@@ -6157,7 +6157,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		to ifa->ifa_rtrequest is now rt_addrinfo *. [itojun 20010117]
 	amiga: the machine-independent wdc is now the default driver for
 		the A1200 IDE connector. [is 20010122]
-	amiga: pcmcia support is now in standard kernel configurations 
+	amiga: pcmcia support is now in standard kernel configurations
 		(GENERIC, AMIGA, INSTALL). [is 20010122]
 	net: integrated isdn4bsd userland, kernel stack and drivers for
 		pci/isa/isapnp/pcmcia/zbus boards. [martin,is 20010122]
@@ -6181,7 +6181,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		to upgrade.  [itojun 20010127]
 	usb: update uplcom(4) driver. support I/O DATA USB-RSAQ.
 		[ichiro 20010128]
-	amiga: add ZEUS ISDN-link and Individual Computers ISDN surfer 
+	amiga: add ZEUS ISDN-link and Individual Computers ISDN surfer
 		support [is 20010128]
 	usb: add umidi(4) driver. [tshiozak 20010131]
 	netbsd32: clean up, fix several bugs, prepare for sunos32.
@@ -6227,7 +6227,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		and derivatives including RiscPC,A7000,RC7500 featuring
 		RISC OS version independence and relocating before running
 		the kernel. [reinoud 20010218]
-	amigappc: Integrated Adam Ciarcinskis first version of interrupt 
+	amigappc: Integrated Adam Ciarcinskis first version of interrupt
 		support.  [is 20010218]
 	libc: Add getprogname(3) and setprogname(3).  [cgd 20010219]
 	ssh: upgrade OpenBSD-based Secure Shell, based on OpenSSH 2.5.1 around
@@ -6305,7 +6305,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 	vi(1): upgrade to nvi 1.79. [aymeric 20010331]
 	arm32: ea(4) and eb(4) now use MI seeq8005 driver. [bjh21 20010405]
 	seeq8005: support multicast and the 80C04. [bjh21 20010405]
-	powerpc: add compat_linux(8) to macppc, ofppc, prep, bebox, 
+	powerpc: add compat_linux(8) to macppc, ofppc, prep, bebox,
 		sandpoint and amigappc. [manu 20010407]
 	ssh: upgrade OpenBSD-based Secure Shell, based on OpenSSH 2.5.4 around
 		20010410.  NOTE: ssh(1) now defaults to SSH protocol version 2.
@@ -6366,7 +6366,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 	gsip(4): Added driver for National Semiconductor DP83820
 		Gigabit Ethernet chip, found on NetGear GA-622 and
 		Asante FriendlyNet GigaNIX.  [thorpej 20010517]
-        ndbootd(8): Imported ndbootd(8), used to netboot Sun2s. 
+        ndbootd(8): Imported ndbootd(8), used to netboot Sun2s.
 		[fredette 20010517]
 	bind: upgrade to BIND 8.2.4 from ISC.  [itojun 20010517]
 	hpcarm: Add support for PCIC of JORNADA720 [toshii 20010523]
@@ -6414,7 +6414,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 	kernel: John S. Dyson's FreeBSD high performance pipe implementation
 		ported, optionally available with 'options NEW_PIPE'.
 		[jdolecek 20010616]
-	fsck(8): don't check file systems which are mounted read-write. 
+	fsck(8): don't check file systems which are mounted read-write.
 		[lukem 20010618]
 	bsd.*.mk, libc:  Add a MKSOFTFLOAT make variable to control soft/hard
 		float userland builds.  [simonb 20010618]
@@ -6585,7 +6585,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		dptmgr, raidutil, dptelog and friends under NetBSD.
 		[ad 20010921]
 	mtree(8): add -l to perform "loose" permission checks. [perry 20010922]
-	sgimips: If `OSLoadOptions' variable in ARCS is set to `auto', boot 
+	sgimips: If `OSLoadOptions' variable in ARCS is set to `auto', boot
 		 straight to multiuser mode.  [rafal 20010922]
 	sparc: Add support for the generic softintr(9) API.  [mrg 20010927]
 	ssh: upgrade OpenBSD-based Secure Shell, based on OpenSSH 2.9.9 around
@@ -6596,7 +6596,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		implementation.  [thorpej 20010927]
 	libc: add wcstod(3), wcstol(3) and wcstoul(3).  [yamt 20010927]
 	ksh(1): sync'd with latest version (pdksh-5.2.14-patches.2).
-		[wiz 20010929] 
+		[wiz 20010929]
 	audio: add the esl(4) driver which supports the Eiger Labs audio
 		PCMCIA card.  From Jared D. McNeill.  [augustss 20010929]
 	/etc/security: add check_pkgs option to police the installed pkgs
@@ -6695,7 +6695,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 	audio: add autri(4) driver for Trident 4DWAVE based PCI audio.
 		[someya 20011118]
 	kernel: options(4) to control kgdb are now more orthogonal, and are:
-		KGDB, KGDB_DEV, KGDB_DEVADDR, KGDB_DEVMODE, KGDB_DEVNAME, 
+		KGDB, KGDB_DEV, KGDB_DEVADDR, KGDB_DEVMODE, KGDB_DEVNAME,
 		KGDB_DEVRATE.  [lukem 20011120]
 	install(1): handle links and the -r flag correctly.  [simonb 20011123]
 	mca: IBM PS/2 MCA DMA controller access bus_dma'fied, uses i386
@@ -6732,7 +6732,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		platform provides more than one.  [thorpej 20011129]
 	atapi: Add support for ATAPI tape drives. [bouyer 20011130]
 	curses(3): The curses library now supports the resizeterm
-		function which allows the curses screen to be resized 
+		function which allows the curses screen to be resized
 		dynamically.  Also added newterm and set_term to allow
 		multi-screen applications.  [blymn 20011202]
 	ftpd(8): new ftpd.conf(5) directives: `denyquick' - prevent denied
@@ -6824,7 +6824,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		[wiz 20020115]
 	audioplay(1): better WAV support.  [mrg 20020115]
 	audiorecord(1): WAV output support.  [mrg 20020115]
-	kernel: RAIDFrame+autoconfig is now the default in a number of 
+	kernel: RAIDFrame+autoconfig is now the default in a number of
 		GENERIC configs.  Little-used RAID types are no longer
 		enabled by default.  8 RAID devices is now the default.
 		[oster 20020119]
@@ -6871,7 +6871,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		the running system for processes with a particular set of
 		characteristics, and then print or signal the matching set.
 		[ad 20020304]
-	ipip(4): removed, as redundant with gif(4); it's been rotting in-tree 
+	ipip(4): removed, as redundant with gif(4); it's been rotting in-tree
 		for a while. [sommerfeld 20020304]
 	less(1):  updated to less-374.  [mrg 20020305]
 	makewhatis(8): whatis entries are prefixed with appropriate subdirectory
@@ -6954,7 +6954,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		[chs 20020403]
 	compat_linux(8): The default Linux kernel version on the i386 port
 		is now 2.4.18. [tron 20020404]
-	sysinst: Added polish language translation to sysinst. Compile 
+	sysinst: Added polish language translation to sysinst. Compile
 		with "make release SYSINSTLANG=pl". [hubertf 20020409]
 	tlp(4): add support for built-in NWay autonegotiation on 2114[23],
 		Macronix 98713A, 98715, 98715A, 98725, and Lite-On 82C115.
@@ -6988,9 +6988,9 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 		top level of the NetBSD source tree.  [lukem 20020427]
 	stat(1): Added to tree.  Provides a simple formatted interface
 		to the data returned by stat(2).  [atatat 20020427]
-	ssh(1): configuration file renamed from /etc/ssh/ssh.conf to 
+	ssh(1): configuration file renamed from /etc/ssh/ssh.conf to
 		/etc/ssh/ssh_config.  [lukem 20020429]
-	sshd(8): configuration file renamed from /etc/ssh/sshd.conf to 
+	sshd(8): configuration file renamed from /etc/ssh/sshd.conf to
 		/etc/ssh/sshd_config.  [lukem 20020429]
 	mbufs: Changed semantics of ext_free to make them more useful
 		for arbitrary kinds of external storage. [thorpej 20020502]
@@ -7032,7 +7032,7 @@ Changes from NetBSD 1.5 to NetBSD 1.6:
 	mac68k: move to sysinst as the preferred method of installation.
 		[scottr 20020629]
 	openssl: Update to 0.9.6e for security fixes.  [itojun 20020731]
-	ntpd(8): chrootable ntpd with out of the box configuration from 
+	ntpd(8): chrootable ntpd with out of the box configuration from
 		rc.conf [manu 20020801]
 	openssl: update to 0.9.6f for security fixes. [itojun 20020808]
 	openssl: update to 0.9.6g. [itojun 20020809]
@@ -7246,7 +7246,7 @@ Changes from NetBSD 1.6 to NetBSD 2.0:
 	build system: Users and groups for the build are now obtained from
 		src/etc instead of the host systems' passwd(5) and group(5)
 		databases.  [lukem 20021219]
-	sunlabel(8): Now enabled by default.  Manipulates SunOS disklabels. 
+	sunlabel(8): Now enabled by default.  Manipulates SunOS disklabels.
 		[lukem 20021221]
 	vis(1): Add `-e extra', to provide a list of extra characters to
 		encode (per svis(3)).  [lukem 20021223]
@@ -7322,7 +7322,7 @@ Changes from NetBSD 1.6 to NetBSD 2.0:
 	kernel: Add LFSv2 support to libsa [simonb 20030224]
 	i386: Add LFS support to bootblocks [simonb 20030224]
 	kernel: Add MBUFTRACE kernel option.  Change all MGET*(...M_WAIT,...)
-		to m_get*(M_WAIT, ...) to shrink kernel.  Add m_clget 
+		to m_get*(M_WAIT, ...) to shrink kernel.  Add m_clget
 		analogue to MCLGET and use it if M_WAIT is passed.  Adapt
 		netinet, if_loop, gem, tulip, fxp driver to MBUFTRACE.  Bump
 		version to 1.6P.  [matt 20030226]
@@ -7550,10 +7550,10 @@ Changes from NetBSD 1.6 to NetBSD 2.0:
 		for better performance. [provos 20031023]
 	MAKEDEV(8): platform device creation script is now generated from
 		unified template driven by platform config file and
-		MD device major lists. [jdolecek 20031024] 
+		MD device major lists. [jdolecek 20031024]
 	build.sh: Add '-N noisyness', to control how "noisy" the build is.
 		[lukem 20031025]
-	amiga: Add polish wscons keymaps. From Pawel Chwalowski in PR 22961. 
+	amiga: Add polish wscons keymaps. From Pawel Chwalowski in PR 22961.
 		[jandberg 20031025]
 	arm: Enable alignment faults on arm32. Misaligned loads/stores
 		will now cause an exception instead of silently failing.
@@ -7567,7 +7567,7 @@ Changes from NetBSD 1.6 to NetBSD 2.0:
 	libcrypto: upgrade to 0.9.7c. [itojun 20031104]
 	hp300: Switch DCA and APCI serial devices to use MI com(4) driver.
 		[tsutsui 20031108]
-	amiga: Add screen types suitable for PAL displays to amidisplaycc(4) 
+	amiga: Add screen types suitable for PAL displays to amidisplaycc(4)
 		[jandberg 20031112]
 	named(8): Upgrade to BIND 8.3.7. [itojun 20031126]
 	binutils: updated to FSF binutils 2.14 release.  [mrg 20031126]
@@ -7626,7 +7626,7 @@ Changes from NetBSD 1.6 to NetBSD 2.0:
 		from netbsd-ppbus port done by Gary Thorpe for evaluation.
 		ppbus separates the physical parallel port access and
 		the specific connected device access, allowing clean support
-		for PLIP and non-printer devices using parallel port. 
+		for PLIP and non-printer devices using parallel port.
 		The port drivers in ppbus also support advanced modes such as
 		Fast Centronics, EPP, and ECP (including DMA). This code will
 		replace historical lpt(4) eventually [jdolecek 20040119]
@@ -7806,8 +7806,8 @@ Changes from NetBSD 2.0 to NetBSD 3.0:
 	compat_darwin(8): Support for MacOS X.3 binaries. [manu 20040825]
 	crtstuff: Switch to GCC-supplied crtbegin.o / crtend.o on GCC 3.3
 		platforms.  [thorpej 20040827]
-	kernel: Add IPv4 PIM support from Pavlin Radoslavov and Hitoshi 
-		Asaeda. Part of this work has been supported by the XORP 
+	kernel: Add IPv4 PIM support from Pavlin Radoslavov and Hitoshi
+		Asaeda. Part of this work has been supported by the XORP
 		project http://www.xorp.org [manu 20040905]
 	libc: Add UUID manipulation routines, adapted from FreeBSD.
 		[thorpej 20040913]
@@ -7965,7 +7965,7 @@ Changes from NetBSD 2.0 to NetBSD 3.0:
 		filesystem/disk images from "normal" into cloop2-format
 		compressed images and back (written by Florian Stoehr).
 		Compressed disk images can be used with the vnd(4) driver when
-		compiled with VND_COMPRESSION and "vnconfig -z". 
+		compiled with VND_COMPRESSION and "vnconfig -z".
 		Useful for creation of Live CDs/DVDs. [hubertf 20050725]
 	racoon(8): ipsec-tools updated to 0.6.1 [manu 20050820]
 	sysinst: Added Spanish language translation. [xtraeme 20050826]
@@ -8424,7 +8424,7 @@ Changes from NetBSD 3.0 to NetBSD 4.0:
 	gcc(1): Switch m68k to GCC4 [tsutsui 20060917]
 	gcc(1): Switch mips to GCC4 [simonb 20060919]
 	x68k: Add timecounter support.  [gdamore 20060919]
-	who(1): Change -u behaviour to also print PID of process on 
+	who(1): Change -u behaviour to also print PID of process on
 		terminal, and add -d to print more information from
 		utmpx. [hubertf 20060919]
 	init(8): Add system boot, login process, runlevel, system down
@@ -8602,7 +8602,7 @@ Changes from NetBSD 3.0 to NetBSD 4.0:
 	mfi(4): added bio(4) and envsys(4) support. [bouyer 20070501]
 	bind: import 9.4.1 [christos 20070501]
 	ug(4): Driver split in three parts to support the new ACPI
-		attachment (ug* at acpi?). Patch from Mihai Chelaru. 
+		attachment (ug* at acpi?). Patch from Mihai Chelaru.
 		[xtraeme 20070508]
 	xen: Add timecounter support. [jld 20070512]
 	ipf(8): Updated to version 4.1.22. [martin 20070515]
@@ -8632,7 +8632,7 @@ Changes from NetBSD 3.0 to NetBSD 4.0:
 		added to the CD-ROM image. [jnemeth 20070901]
 	build.sh: Convert iso-dir=directory option to -C cddir.
 		[jnemeth 20070901]
-	msk(4): Add support for Marvell 88CO55 gigabit ethernet, which 
+	msk(4): Add support for Marvell 88CO55 gigabit ethernet, which
 		is used by newer iMacs [manu 20071022]
 	cobalt: Add netboot support via tlp0 to bootloader.  [tsutsui 20071030]
 	aac(4): Added IBM ServeRAID 8k support. [sborrill 20080508]

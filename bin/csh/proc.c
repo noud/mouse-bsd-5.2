@@ -1000,7 +1000,7 @@ pkill(Char **v, int signum)
     char *ep;
 
     jobflags = 0;
-    err1 = 0;    
+    err1 = 0;
     sigemptyset(&nsigset);
     (void)sigaddset(&nsigset, SIGCHLD);
     if (setintr)

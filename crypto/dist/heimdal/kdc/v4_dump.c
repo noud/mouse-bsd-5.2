@@ -2,22 +2,22 @@
  * Copyright (c) 2000 - 2001, 2003 Kungliga Tekniska Högskolan
  * (Royal Institute of Technology, Stockholm, Sweden).
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the Institute nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -44,7 +44,7 @@ time_parse(const char *cp)
     int local;
 
     memset(&tp, 0, sizeof(tp));	/* clear out the struct */
-    
+
     /* new format is YYYYMMDDHHMM UTC,
        old format is YYMMDDHHMM local time */
     if (strlen(cp) > 10) {		/* new format */
@@ -70,15 +70,15 @@ time_parse(const char *cp)
     wbuf[0] = *cp++;
     wbuf[1] = *cp++;
     tp.tm_mday = atoi(wbuf);
-    
+
     wbuf[0] = *cp++;
     wbuf[1] = *cp++;
     tp.tm_hour = atoi(wbuf);
-    
+
     wbuf[0] = *cp++;
     wbuf[1] = *cp++;
     tp.tm_min = atoi(wbuf);
-    
+
     return(tm2time(tp, local));
 }
 
@@ -93,14 +93,14 @@ v4_prop_dump(void *arg, const char *file)
     f = fopen(file, "r");
     if(f == NULL)
 	return errno;
-    
+
     while(fgets(buf, sizeof(buf), f)) {
 	int ret;
 	unsigned long key[2]; /* yes, long */
 	char exp_date[64], mod_date[64];
 	struct v4_principal pr;
 	int attributes;
-    
+
 	memset(&pr, 0, sizeof(pr));
 	errno = 0;
 	lineno++;
@@ -116,7 +116,7 @@ v4_prop_dump(void *arg, const char *file)
 	    continue;
 	}
 	if(attributes != 0) {
-	    warnx("Line %d (%s.%s) has non-zero attributes - skipping", 
+	    warnx("Line %d (%s.%s) has non-zero attributes - skipping",
 		  lineno, pr.name, pr.instance);
 	    continue;
 	}

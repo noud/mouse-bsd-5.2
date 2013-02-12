@@ -54,7 +54,7 @@ def usage():
     sys.stdout.write("Usage: " + sys.argv[0] + " [-n number] " + \
                      "[-p percent-random] [-t TLD]\n")
     sys.stdout.write("       [-m MAXSIZE] [-f zone-file]\n")
-    
+
 try:
     optlist, args = getopt.getopt(sys.argv[1:], "hp:f:n:t:m:",
                                   ["help", "percentrandom=", "zonefile=",
@@ -80,7 +80,7 @@ except getopt.error, reason:
     sys.stderr.write(sys.argv[0] + ": " + str(reason) + "\n")
     usage()
     sys.exit(1)
-    
+
 if len(args) <> 0:
     usage()
     sys.exit(1)
