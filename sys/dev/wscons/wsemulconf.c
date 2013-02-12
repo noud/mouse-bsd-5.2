@@ -55,23 +55,31 @@ static const struct wsemul_ops *wsemul_conf[] = {
 	NULL
 };
 
+/*
+ * If name is not nil, this may fail (by returning nil), but if name is
+ *  nil, this means "return the default", and must not fail (or the
+ *  rest of the system will indirect through a nil pointer, leading, if
+ *  you are lucky, to a crash very early in booting).
+ */
 const struct wsemul_ops *
 wsemul_pick(const char *name)
 {
 	const struct wsemul_ops **ops;
+	const char *lookup;
 
 	if (name == NULL) {
 		/* default */
 #ifdef WSEMUL_DEFAULT
-		name = WSEMUL_DEFAULT;
+		lookup = WSEMUL_DEFAULT;
 #else
 		return (wsemul_conf[0]);
 #endif
-	}
+	} else
+		lookup = name;
 
 	for (ops = &wsemul_conf[0]; *ops != NULL; ops++)
-		if (strcmp(name, (*ops)->name) == 0)
-			break;
+		if (strcmp(lookup, (*ops)->name) == 0)
+			return(*ops);
 
-	return (*ops);
+	return(name?0:wsemul_conf[0]);
 }
