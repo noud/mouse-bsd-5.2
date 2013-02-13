@@ -2157,7 +2157,7 @@ shorten_compare (tree *op0_ptr, tree *op1_ptr, tree *restype_ptr,
 	  type = c_common_unsigned_type (type);
 	}
 
-      if (TREE_CODE (primop0) != INTEGER_CST)
+      if ((TREE_CODE (primop0) != INTEGER_CST) && warn_limited_range)
 	{
 	  if (val == truthvalue_false_node)
 	    warning (0, "comparison is always false due to limited range of data type");

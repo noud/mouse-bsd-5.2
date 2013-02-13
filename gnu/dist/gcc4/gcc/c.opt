@@ -247,6 +247,10 @@ Winvalid-pch
 C ObjC C++ ObjC++
 Warn about PCH files that are found but not used
 
+Wlimited-range
+C ObjC C++ ObjC++ Var(warn_limited_range)
+Warn about comparisons which are always true or false because of limited data-type range
+
 Wlong-long
 C ObjC C++ ObjC++ Var(warn_long_long) Init(1)
 Do not warn about using \"long long\" when -pedantic
