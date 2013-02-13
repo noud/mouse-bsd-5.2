@@ -1861,7 +1861,7 @@ ggc_collect (void)
 
   timevar_push (TV_GC);
   if (!quiet_flag)
-    fprintf (stderr, " {GC %luk -> ", (unsigned long) G.allocated / 1024);
+    fprintf (stderr, " {GC %luk -> "/*}*/, (unsigned long) G.allocated / 1024);
   if (GGC_DEBUG_LEVEL >= 2)
     fprintf (G.debug_file, "BEGIN COLLECTING\n");
 
@@ -1890,7 +1890,7 @@ ggc_collect (void)
   timevar_pop (TV_GC);
 
   if (!quiet_flag)
-    fprintf (stderr, "%luk}", (unsigned long) G.allocated / 1024);
+    fprintf (stderr, /*{*/"%luk}", (unsigned long) G.allocated / 1024);
   if (GGC_DEBUG_LEVEL >= 2)
     fprintf (G.debug_file, "END COLLECTING\n");
 }

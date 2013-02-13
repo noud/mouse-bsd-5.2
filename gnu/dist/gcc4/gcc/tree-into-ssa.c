@@ -2070,7 +2070,7 @@ dump_names_replaced_by (FILE *file, tree name)
   bitmap_iterator bi;
 
   print_generic_expr (file, name, 0);
-  fprintf (file, " -> { ");
+  fprintf (file, " -> { "/*}*/);
 
   old_set = names_replaced_by (name);
   EXECUTE_IF_SET_IN_BITMAP (old_set, 0, i, bi)
@@ -2079,7 +2079,7 @@ dump_names_replaced_by (FILE *file, tree name)
       fprintf (file, " ");
     }
 
-  fprintf (file, "}\n");
+  fprintf (file, /*{*/"}\n");
 }
 
 

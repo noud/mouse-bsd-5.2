@@ -756,13 +756,13 @@ calc_wider_mode (void)
 } while (0)
 
 #define print_decl(TYPE, NAME, ASIZE) \
-  puts ("\nconst " TYPE " " NAME "[" ASIZE "] =\n{");
+  puts ("\nconst " TYPE " " NAME "[" ASIZE "] =\n{"/*}*/);
 
 #define print_maybe_const_decl(TYPE, NAME, ASIZE, CATEGORY)	\
-  printf ("\n" TYPE " " NAME "[" ASIZE "] = \n{\n",		\
+  printf ("\n" TYPE " " NAME "[" ASIZE "] = \n{\n"/*}*/,	\
 	  adj_##CATEGORY ? "" : "const ")
 
-#define print_closer() puts ("};")
+#define print_closer() puts (/*{*/"};")
 
 static void
 emit_insn_modes_h (void)
@@ -1182,7 +1182,7 @@ emit_mode_adjustments (void)
     printf ("\n  /* %s:%d */\n  REAL_MODE_FORMAT (%smode) = %s;\n",
 	    a->file, a->line, a->mode->name, a->adjustment);
 
-  puts ("}");
+  puts (/*{*/"}");
 }
 
 static void

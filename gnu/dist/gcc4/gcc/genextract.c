@@ -380,7 +380,7 @@ from the machine description file `md'.  */\n\n");
   printf ("static rtx junk ATTRIBUTE_UNUSED;\n");
 
   printf ("void\ninsn_extract (rtx insn)\n");
-  printf ("{\n");
+  printf ("{\n"/*}*/);
   printf ("  rtx *ro = recog_data.operand;\n");
   printf ("  rtx **ro_loc = recog_data.operand_loc;\n");
   printf ("  rtx pat = PATTERN (insn);\n");
@@ -390,7 +390,7 @@ from the machine description file `md'.  */\n\n");
   printf ("  memset (ro_loc, 0xab, sizeof (*ro_loc) * MAX_RECOG_OPERANDS);\n");
 #endif
   printf ("  switch (INSN_CODE (insn))\n");
-  printf ("    {\n");
+  printf ("    {\n"/*}*/);
   printf ("    case -1:\n");
   printf ("      fatal_insn_not_found (insn);\n\n");
 
@@ -481,7 +481,7 @@ from the machine description file `md'.  */\n\n");
      DEFINE_EXPAND or DEFINE_SPLIT, but that is correct.  */
   printf ("    default:\n      gcc_unreachable ();\n");
 
-  printf ("    }\n}\n");
+  printf (/*{{*/"    }\n}\n");
 
   fflush (stdout);
   return (ferror (stdout) != 0 ? FATAL_EXIT_CODE : SUCCESS_EXIT_CODE);

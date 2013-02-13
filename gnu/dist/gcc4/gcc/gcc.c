@@ -1615,11 +1615,11 @@ init_gcc_specs (struct obstack *obstack, const char *shared_name,
 		"%{!shared-libgcc:", static_name,
 		" --as-needed ", shared_name, " --no-as-needed}"
 		"%{shared-libgcc:", shared_name, "%{!shared: ", static_name,
-		"}",
+		"}", /*}*/
 #else
 		"%{!shared:%{!shared-libgcc:", static_name, " ",
 		eh_name, "}%{shared-libgcc:", shared_name, " ",
-		static_name, "}}%{shared:",
+		static_name, "}}%{shared:", /*}*/
 #ifdef LINK_EH_SPEC
 		"%{shared-libgcc:", shared_name,
 		"}%{!shared-libgcc:", static_name,
@@ -1632,7 +1632,7 @@ NO NO NO!!!!
 		shared_name,
 #endif
 #endif
-		"}}}", NULL);
+		/*{*/"}}}", NULL);
 
   obstack_grow (obstack, buf, strlen (buf));
   free (buf);
@@ -4970,7 +4970,7 @@ do_spec_1 (const char *spec, int inswitch, const char *soft_matched_part)
 	    {
 	      int cur_index = argbuf_index;
 	      /* Handle the {...} following the %W.  */
-	      if (*p != '{')
+	      if (*p != '{'/*}*/)
 		fatal ("spec '%s' has invalid '%%W%c", spec, *p);
 	      p = handle_braces (p + 1);
 	      if (p == 0)
@@ -5001,9 +5001,9 @@ do_spec_1 (const char *spec, int inswitch, const char *soft_matched_part)
 	      char *string;
 
 	      /* Skip past the option value and make a copy.  */
-	      if (*p != '{')
+	      if (*p != '{'/*}*/)
 		fatal ("spec '%s' has invalid '%%x%c'", spec, *p);
-	      while (*p++ != '}')
+	      while (*p++ != /*{*/'}')
 		;
 	      string = save_string (p1 + 1, p - p1 - 2);
 
@@ -5134,7 +5134,7 @@ do_spec_1 (const char *spec, int inswitch, const char *soft_matched_part)
 
 	    /* Here we define characters other than letters and digits.  */
 
-	  case '{':
+	  case '{'/*}*/:
 	    p = handle_braces (p);
 	    if (p == 0)
 	      return -1;
@@ -5261,7 +5261,7 @@ do_spec_1 (const char *spec, int inswitch, const char *soft_matched_part)
 			    }
 			  else if (flag
 				   && (*y == ' ' || *y == '\t' || *y == '='
-				       || *y == '}' || *y == 0))
+				       || *y == /*{*/'}' || *y == 0))
 			    {
 			      *x++ = '_';
 			      *x++ = '_';
@@ -5605,7 +5605,7 @@ handle_braces (const char *p)
       SKIP_WHITE();
       switch (*p)
 	{
-	case '&': case '}':
+	case '&': case /*{*/'}':
 	  /* Substitute the switch(es) indicated by the current atom.  */
 	  ordered_set = true;
 	  if (disjunct_set || n_way_choice || a_is_negated || a_is_suffix
@@ -5614,7 +5614,7 @@ handle_braces (const char *p)
 
 	  mark_matching_switches (atom, end_atom, a_is_starred);
 
-	  if (*p == '}')
+	  if (*p == /*{*/'}')
 	    process_marked_switches ();
 	  break;
 
@@ -5689,7 +5689,7 @@ handle_braces (const char *p)
 	  goto invalid;
 	}
     }
-  while (*p++ != '}');
+  while (*p++ != /*{*/'}');
 
   return p;
 
@@ -5723,9 +5723,9 @@ process_brace_body (const char *p, const char *atom, const char *end_atom,
   nesting_level = 1;
   for (;;)
     {
-      if (*p == '{')
+      if (*p == '{'/*}*/)
 	nesting_level++;
-      else if (*p == '}')
+      else if (*p == /*{*/'}')
 	{
 	  if (!--nesting_level)
 	    break;
@@ -6859,7 +6859,7 @@ validate_switches_from_spec (const char *spec)
   const char *p = spec;
   char c;
   while ((c = *p++))
-    if (c == '%' && (*p == '{' || *p == '<' || (*p == 'W' && *++p == '{')))
+    if (c == '%' && (*p == '{'/*}*/ || *p == '<' || (*p == 'W' && *++p == '{'/*}*/)))
       /* We have a switch spec.  */
       p = validate_switches (p + 1);
 }
@@ -6931,14 +6931,14 @@ next_member:
 
   if (*p && p[-1] == ':')
     {
-      while (*p && *p != ';' && *p != '}')
+      while (*p && *p != ';' && *p != /*{*/'}')
 	{
 	  if (*p == '%')
 	    {
 	      p++;
-	      if (*p == '{' || *p == '<')
+	      if (*p == '{'/*}*/ || *p == '<')
 		p = validate_switches (p+1);
-	      else if (p[0] == 'W' && p[1] == '{')
+	      else if (p[0] == 'W' && p[1] == '{'/*}*/)
 		p = validate_switches (p+2);
 	    }
 	  else

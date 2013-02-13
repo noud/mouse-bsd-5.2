@@ -346,13 +346,13 @@ print_exp (char *buf, rtx x, int verbose)
 	}
       break;
     case IF_THEN_ELSE:
-      st[0] = "{(";
+      st[0] = "{("/*}*/;
       op[0] = XEXP (x, 0);
       st[1] = ")?";
       op[1] = XEXP (x, 1);
       st[2] = ":";
       op[2] = XEXP (x, 2);
-      st[3] = "}";
+      st[3] = /*{*/"}";
       break;
     case TRAP_IF:
       fun = "trap_if";
@@ -554,14 +554,14 @@ print_pattern (char *buf, rtx x, int verbose)
       {
 	int i;
 
-	sprintf (t1, "{");
+	sprintf (t1, "{"/*}*/);
 	for (i = 0; i < XVECLEN (x, 0); i++)
 	  {
 	    print_pattern (t2, XVECEXP (x, 0, i), verbose);
 	    sprintf (t3, "%s%s;", t1, t2);
 	    strcpy (t1, t3);
 	  }
-	sprintf (buf, "%s}", t1);
+	sprintf (buf, /*{*/"%s}", t1);
       }
       break;
     case SEQUENCE:
@@ -583,28 +583,28 @@ print_pattern (char *buf, rtx x, int verbose)
       {
 	int i;
 
-	sprintf (t1, "unspec{");
+	sprintf (t1, "unspec{"/*}*/);
 	for (i = 0; i < XVECLEN (x, 0); i++)
 	  {
 	    print_pattern (t2, XVECEXP (x, 0, i), verbose);
 	    sprintf (t3, "%s%s;", t1, t2);
 	    strcpy (t1, t3);
 	  }
-	sprintf (buf, "%s}", t1);
+	sprintf (buf, /*{*/"%s}", t1);
       }
       break;
     case UNSPEC_VOLATILE:
       {
 	int i;
 
-	sprintf (t1, "unspec/v{");
+	sprintf (t1, "unspec/v{"/*}*/);
 	for (i = 0; i < XVECLEN (x, 0); i++)
 	  {
 	    print_pattern (t2, XVECEXP (x, 0, i), verbose);
 	    sprintf (t3, "%s%s;", t1, t2);
 	    strcpy (t1, t3);
 	  }
-	sprintf (buf, "%s}", t1);
+	sprintf (buf, /*{*/"%s}", t1);
       }
       break;
     default:

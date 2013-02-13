@@ -2059,7 +2059,7 @@ dump_value_range (FILE *file, value_range_t *vr)
 	  bitmap_iterator bi;
 	  unsigned i, c = 0;
 
-	  fprintf (file, "  EQUIVALENCES: { ");
+	  fprintf (file, "  EQUIVALENCES: { "/*}*/);
 
 	  EXECUTE_IF_SET_IN_BITMAP (vr->equiv, 0, i, bi)
 	    {
@@ -2068,7 +2068,7 @@ dump_value_range (FILE *file, value_range_t *vr)
 	      c++;
 	    }
 
-	  fprintf (file, "} (%u elements)", c);
+	  fprintf (file, /*{*/"} (%u elements)", c);
 	}
     }
   else if (vr->type == VR_VARYING)

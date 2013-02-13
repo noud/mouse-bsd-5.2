@@ -1797,7 +1797,7 @@ ggc_collect_1 (struct alloc_zone *zone, bool need_marking)
 #endif
 
   if (!quiet_flag)
-    fprintf (stderr, " {%s GC %luk -> ",
+    fprintf (stderr, " {%s GC %luk -> "/*}*/,
 	     zone->name, (unsigned long) zone->allocated / 1024);
 
   /* Zero the total allocated bytes.  This will be recalculated in the
@@ -1822,7 +1822,7 @@ ggc_collect_1 (struct alloc_zone *zone, bool need_marking)
   zone->allocated_last_gc = zone->allocated;
 
   if (!quiet_flag)
-    fprintf (stderr, "%luk}", (unsigned long) zone->allocated / 1024);
+    fprintf (stderr, /*{*/"%luk}", (unsigned long) zone->allocated / 1024);
   return true;
 }
 

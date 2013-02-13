@@ -144,7 +144,7 @@ main (int argc ATTRIBUTE_UNUSED, char **argv)
 
   INIT_SSTRING (&linebuf);
 
-  fprintf (outf, "struct fn_decl std_protos[] = {\n");
+  fprintf (outf, "struct fn_decl std_protos[] = {\n"/*}*/);
 
   /* A hash table entry of 0 means "unused" so reserve it.  */
   fprintf (outf, "  {\"\", \"\", \"\", 0},\n");
@@ -175,14 +175,14 @@ main (int argc ATTRIBUTE_UNUSED, char **argv)
       if (c == EOF)
 	break;
     }
-  fprintf (outf, "  {0, 0, 0, 0}\n};\n");
+  fprintf (outf, /*{*/"  {0, 0, 0, 0}\n};\n");
 
 
   fprintf (outf, "#define HASH_SIZE %d\n", HASH_SIZE);
-  fprintf (outf, "short hash_tab[HASH_SIZE] = {\n");
+  fprintf (outf, "short hash_tab[HASH_SIZE] = {\n"/*}*/);
   for (i = 0; i < HASH_SIZE; i++)
     fprintf (outf, "  %d,\n", hash_tab[i]);
-  fprintf (outf, "};\n");
+  fprintf (outf, /*{*/"};\n");
 
   fprintf (stderr, "gen-protos: %d entries %d collisions\n",
 	   next_index, collisions);

@@ -756,7 +756,7 @@ dump_sbitmap_file (FILE *file, sbitmap bmap)
 {
   unsigned int i, pos;
 
-  fprintf (file, "n_bits = %d, set = {", bmap->n_bits);
+  fprintf (file, "n_bits = %d, set = {"/*}*/, bmap->n_bits);
 
   for (pos = 30, i = 0; i < bmap->n_bits; i++)
     if (TEST_BIT (bmap, i))
@@ -771,7 +771,7 @@ dump_sbitmap_file (FILE *file, sbitmap bmap)
 	pos += 2 + (i >= 10) + (i >= 100) + (i >= 1000);
       }
 
-  fprintf (file, "}\n");
+  fprintf (file, /*{*/"}\n");
 }
 
 void

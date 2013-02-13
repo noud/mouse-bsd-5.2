@@ -3244,9 +3244,9 @@ find_rightmost_formals_list (const char *clean_text_p)
     /* Since we are unprotoizing an ANSI-style (prototyped) function
        definition, there had better not be anything (except whitespace)
        between the end of the ANSI formals list and the beginning of the
-       function body (i.e. the '{').  */
+       function body (i.e. the '{').  *//*}*/
 
-    check_source (ch == '{', l_brace_p);
+    check_source (ch == '{'/*}*/, l_brace_p);
   }
 
 #else /* !defined (UNPROTOIZE) */
@@ -3280,9 +3280,9 @@ find_rightmost_formals_list (const char *clean_text_p)
 
 	 The one we were looking for *must* be followed by either a '{' or
 	 by an alphabetic character, while others *cannot* validly be followed
-	 by such characters.  */
+	 by such characters.  *//*}}*/
 
-      if ((ch == '{') || ISALPHA ((unsigned char) ch))
+      if ((ch == '{'/*}*/) || ISALPHA ((unsigned char) ch))
 	break;
 
       /* At this point, we have found a right paren, but we know that it is
@@ -3342,7 +3342,7 @@ add_local_decl (const def_dec_info *def_dec_p, const char *clean_text_p)
      with the leftmost one no matter what.  */
 
   start_of_block = clean_text_p;
-  while (*start_of_block != '{' && *start_of_block != '\n')
+  while (*start_of_block != '{'/*}*/ && *start_of_block != '\n')
     check_source (++start_of_block < clean_text_limit, 0);
 
   /* Note that the line from the original source could possibly
@@ -3351,7 +3351,7 @@ add_local_decl (const def_dec_info *def_dec_p, const char *clean_text_p)
      block (and that block's associated open and close curly braces).
      In cases like this, we give up, issue a warning, and do nothing.  */
 
-  if (*start_of_block != '{')
+  if (*start_of_block != '{'/*}*/)
     {
       if (!quiet_flag)
 	notice ("\n%s: %d: warning: can't add declaration of '%s' into macro call\n",
@@ -3363,7 +3363,7 @@ add_local_decl (const def_dec_info *def_dec_p, const char *clean_text_p)
   /* Figure out what a nice (pretty) indentation would be for the new
      declaration we are adding.  In order to do this, we must scan forward
      from the '{' until we find the first line which starts with some
-     non-whitespace characters (i.e. real "token" material).  */
+     non-whitespace characters (i.e. real "token" material).  *//*}*/
 
   {
     const char *ep = forward_to_next_token_char (start_of_block) - 1;
@@ -3579,7 +3579,7 @@ edit_fn_definition (const def_dec_info *def_dec_p, const char *clean_text_p)
     /* If there are no newlines between the end of the formals list and the
        start of the body, we should insert one now.  */
 
-    for (scan_p = end_formals+1; *scan_p != '{'; )
+    for (scan_p = end_formals+1; *scan_p != '{'/*}*/; )
       {
 	if (*scan_p == '\n')
 	  {
@@ -3608,7 +3608,7 @@ edit_fn_definition (const def_dec_info *def_dec_p, const char *clean_text_p)
     int have_flotsam = 0;
     int have_newlines = 0;
 
-    for (start_body = end_formals + 1; *start_body != '{';)
+    for (start_body = end_formals + 1; *start_body != '{'/*}*/;)
       check_source (++start_body < clean_text_limit, 0);
 
     end_formals_orig = orig_text_base + (end_formals - clean_text_base);
@@ -3809,7 +3809,7 @@ scan_for_missed_items (const file_info *file_p)
 
 	  scan_p = ahead_p - 1;
 
-	  if (ISALPHA ((const unsigned char)*ahead_p) || *ahead_p == '{')
+	  if (ISALPHA ((const unsigned char)*ahead_p) || *ahead_p == '{'/*}*/)
 	    {
 	      const char *last_l_paren;
 	      const int lineno = identify_lineno (ahead_p);

@@ -2379,14 +2379,14 @@ tree_cfg2vcg (FILE *file)
     = lang_hooks.decl_printable_name (current_function_decl, 2);
 
   /* Write the file header.  */
-  fprintf (file, "graph: { title: \"%s\"\n", funcname);
+  fprintf (file, "graph: { title: \"%s\"\n"/*}*/, funcname);
   fprintf (file, "node: { title: \"ENTRY\" label: \"ENTRY\" }\n");
   fprintf (file, "node: { title: \"EXIT\" label: \"EXIT\" }\n");
 
   /* Write blocks and edges.  */
   FOR_EACH_EDGE (e, ei, ENTRY_BLOCK_PTR->succs)
     {
-      fprintf (file, "edge: { sourcename: \"ENTRY\" targetname: \"%d\"",
+      fprintf (file, "edge: { sourcename: \"ENTRY\" targetname: \"%d\""/*}*/,
 	       e->dest->index);
 
       if (e->flags & EDGE_FAKE)
@@ -2394,7 +2394,7 @@ tree_cfg2vcg (FILE *file)
       else
 	fprintf (file, " linestyle: solid priority: 100");
 
-      fprintf (file, " }\n");
+      fprintf (file, /*{*/" }\n");
     }
   fputc ('\n', file);
 
@@ -2432,23 +2432,23 @@ tree_cfg2vcg (FILE *file)
       FOR_EACH_EDGE (e, ei, bb->succs)
 	{
 	  if (e->dest == EXIT_BLOCK_PTR)
-	    fprintf (file, "edge: { sourcename: \"%d\" targetname: \"EXIT\"", bb->index);
+	    fprintf (file, "edge: { sourcename: \"%d\" targetname: \"EXIT\""/*}*/, bb->index);
 	  else
-	    fprintf (file, "edge: { sourcename: \"%d\" targetname: \"%d\"", bb->index, e->dest->index);
+	    fprintf (file, "edge: { sourcename: \"%d\" targetname: \"%d\""/*}*/, bb->index, e->dest->index);
 
 	  if (e->flags & EDGE_FAKE)
 	    fprintf (file, " priority: 10 linestyle: dotted");
 	  else
 	    fprintf (file, " priority: 100 linestyle: solid");
 
-	  fprintf (file, " }\n");
+	  fprintf (file, /*{*/" }\n");
 	}
 
       if (bb->next_bb != EXIT_BLOCK_PTR)
 	fputc ('\n', file);
     }
 
-  fputs ("}\n\n", file);
+  fputs (/*{*/"}\n\n", file);
 }
 
 
@@ -4505,7 +4505,7 @@ dump_function_to_file (tree fn, FILE *file, int flags)
     {
       ignore_topmost_bind = true;
 
-      fprintf (file, "{\n");
+      fprintf (file, "{\n"/*}*/);
       for (vars = cfun->unexpanded_var_list; vars; vars = TREE_CHAIN (vars))
 	{
 	  var = TREE_VALUE (vars);
@@ -4522,7 +4522,7 @@ dump_function_to_file (tree fn, FILE *file, int flags)
       /* Make a CFG based dump.  */
       check_bb_profile (ENTRY_BLOCK_PTR, file);
       if (!ignore_topmost_bind)
-	fprintf (file, "{\n");
+	fprintf (file, "{\n"/*}*/);
 
       if (any_var && n_basic_blocks)
 	fprintf (file, "\n");
@@ -4530,7 +4530,7 @@ dump_function_to_file (tree fn, FILE *file, int flags)
       FOR_EACH_BB (bb)
 	dump_generic_bb (file, bb, 2, flags);
 
-      fprintf (file, "}\n");
+      fprintf (file, /*{*/"}\n");
       check_bb_profile (EXIT_BLOCK_PTR, file);
     }
   else
@@ -4553,7 +4553,7 @@ dump_function_to_file (tree fn, FILE *file, int flags)
       else
 	{
 	  if (!ignore_topmost_bind)
-	    fprintf (file, "{\n");
+	    fprintf (file, "{\n"/*}*/);
 	  indent = 2;
 	}
 
@@ -4562,7 +4562,7 @@ dump_function_to_file (tree fn, FILE *file, int flags)
 
       print_generic_stmt_indented (file, chain, flags, indent);
       if (ignore_topmost_bind)
-	fprintf (file, "}\n");
+	fprintf (file, /*{*/"}\n");
     }
 
   fprintf (file, "\n\n");
@@ -4620,25 +4620,25 @@ print_loop (FILE *file, struct loop *loop, int indent)
   fprintf (file, "%sloop_%d\n", s_indent, loop->num);
 
   /* Print the loop's body.  */
-  fprintf (file, "%s{\n", s_indent);
+  fprintf (file, "%s{\n"/*}*/, s_indent);
   FOR_EACH_BB (bb)
     if (bb->loop_father == loop)
       {
 	/* Print the basic_block's header.  */
-	fprintf (file, "%s  bb_%d (preds = {", s_indent, bb->index);
+	fprintf (file, "%s  bb_%d (preds = {"/*}*/, s_indent, bb->index);
 	print_pred_bbs (file, bb);
-	fprintf (file, "}, succs = {");
+	fprintf (file, /*{*/"}, succs = {"/*}*/);
 	print_succ_bbs (file, bb);
-	fprintf (file, "})\n");
+	fprintf (file, /*{*/"})\n");
 
 	/* Print the basic_block's body.  */
-	fprintf (file, "%s  {\n", s_indent);
+	fprintf (file, "%s  {\n"/*}*/, s_indent);
 	tree_dump_bb (bb, file, indent + 4);
-	fprintf (file, "%s  }\n", s_indent);
+	fprintf (file, /*{*/"%s  }\n", s_indent);
       }
 
   print_loop (file, loop->inner, indent + 2);
-  fprintf (file, "%s}\n", s_indent);
+  fprintf (file, /*{*/"%s}\n", s_indent);
   print_loop (file, loop->next, indent);
 }
 

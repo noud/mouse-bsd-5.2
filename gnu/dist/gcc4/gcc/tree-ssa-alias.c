@@ -2046,13 +2046,13 @@ dump_points_to_info_for (FILE *file, tree ptr)
 	  unsigned ix;
 	  bitmap_iterator bi;
 
-	  fprintf (file, ", points-to vars: { ");
+	  fprintf (file, ", points-to vars: { "/*}*/);
 	  EXECUTE_IF_SET_IN_BITMAP (pi->pt_vars, 0, ix, bi)
 	    {
 	      print_generic_expr (file, referenced_var (ix), dump_flags);
 	      fprintf (file, " ");
 	    }
-	  fprintf (file, "}");
+	  fprintf (file, /*{*/"}");
 	}
     }
 
@@ -2146,13 +2146,13 @@ dump_may_aliases_for (FILE *file, tree var)
   if (aliases)
     {
       size_t i;
-      fprintf (file, "{ ");
+      fprintf (file, "{ "/*}*/);
       for (i = 0; i < VARRAY_ACTIVE_SIZE (aliases); i++)
 	{
 	  print_generic_expr (file, VARRAY_TREE (aliases, i), dump_flags);
 	  fprintf (file, " ");
 	}
-      fprintf (file, "}");
+      fprintf (file, /*{*/"}");
     }
 }
 

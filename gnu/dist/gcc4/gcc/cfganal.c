@@ -527,10 +527,10 @@ flow_nodes_print (const char *str, const sbitmap nodes, FILE *file)
   if (! nodes)
     return;
 
-  fprintf (file, "%s { ", str);
+  fprintf (file, "%s { "/*}*/, str);
   EXECUTE_IF_SET_IN_SBITMAP (nodes, 0, node, sbi)
     fprintf (file, "%d ", node);
-  fputs ("}\n", file);
+  fputs (/*{*/"}\n", file);
 }
 
 /* Dump the list of edges in the array EDGE_LIST.  */
@@ -543,12 +543,12 @@ flow_edge_list_print (const char *str, const edge *edge_list, int num_edges, FIL
   if (! edge_list)
     return;
 
-  fprintf (file, "%s { ", str);
+  fprintf (file, "%s { "/*}*/, str);
   for (i = 0; i < num_edges; i++)
     fprintf (file, "%d->%d ", edge_list[i]->src->index,
 	     edge_list[i]->dest->index);
 
-  fputs ("}\n", file);
+  fputs (/*{*/"}\n", file);
 }
 
 

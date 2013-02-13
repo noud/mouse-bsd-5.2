@@ -266,7 +266,7 @@ gendef (const char *format)
 
   /* Now write out the body of the function itself, which allocates
      the memory and initializes it.  */
-  puts ("{");
+  puts ("{"/*}*/);
   puts ("  rtx rt;");
   puts ("  rt = rtx_alloc (code);\n");
 
@@ -278,7 +278,7 @@ gendef (const char *format)
     else
       printf ("  X0EXP (rt, %d) = NULL_RTX;\n", i);
 
-  puts ("\n  return rt;\n}\n");
+  puts (/*{*/"\n  return rt;\n}\n");
 }
 
 /* Generate the documentation header for files we write.  */

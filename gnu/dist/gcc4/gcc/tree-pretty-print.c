@@ -495,10 +495,10 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
 	pp_string (buffer, "]");
 	if (flags & TDF_DETAILS)
 	  {
-	    pp_string (buffer, "{");
+	    pp_string (buffer, "{"/*}*/);
 	    dump_generic_node (buffer, TMR_ORIGINAL (node), spc, flags,
 			       false);
-	    pp_string (buffer, "}");
+	    pp_string (buffer, /*{*/"}");
 	  }
       }
       break;
@@ -640,14 +640,14 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
     case VECTOR_CST:
       {
 	tree elt;
-	pp_string (buffer, "{ ");
+	pp_string (buffer, "{ "/*}*/);
 	for (elt = TREE_VECTOR_CST_ELTS (node); elt; elt = TREE_CHAIN (elt))
 	  {
 	    dump_generic_node (buffer, TREE_VALUE (elt), spc, flags, false);
 	    if (TREE_CHAIN (elt))
 	      pp_string (buffer, ", ");
 	  }
-	pp_string (buffer, " }");
+	pp_string (buffer, /*{*/" }");
       }
       break;
 
@@ -730,9 +730,9 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
 	  op0 = component_ref_field_offset (node);
 	  if (op0 && TREE_CODE (op0) != INTEGER_CST)
 	    {
-	      pp_string (buffer, "{off: ");
+	      pp_string (buffer, "{off: "/*}*/);
 	      dump_generic_node (buffer, op0, spc, flags, false);
-	      pp_character (buffer, '}');
+	      pp_character (buffer, /*{*/'}');
 	    }
 	}
       break;
@@ -768,11 +768,11 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
 	  || (TYPE_SIZE_UNIT (TREE_TYPE (node))
 	      && !operand_equal_p (op1, TYPE_SIZE_UNIT (TREE_TYPE (node)), 0)))
 	{
-	  pp_string (buffer, "{lb: ");
+	  pp_string (buffer, "{lb: "/*}*/);
 	  dump_generic_node (buffer, op0, spc, flags, false);
 	  pp_string (buffer, " sz: ");
 	  dump_generic_node (buffer, op1, spc, flags, false);
-	  pp_character (buffer, '}');
+	  pp_character (buffer, /*{*/'}');
 	}
       break;
 
@@ -781,7 +781,7 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
 	unsigned HOST_WIDE_INT ix;
 	tree field, val;
 	bool is_struct_init = FALSE;
-	pp_character (buffer, '{');
+	pp_character (buffer, '{'/*}*/);
 	if (TREE_CODE (TREE_TYPE (node)) == RECORD_TYPE
 	    || TREE_CODE (TREE_TYPE (node)) == UNION_TYPE)
 	  is_struct_init = TRUE;
@@ -806,7 +806,7 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
 		pp_space (buffer);
 	      }
 	  }
-	pp_character (buffer, '}');
+	pp_character (buffer, /*{*/'}');
       }
       break;
 
@@ -918,12 +918,12 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
 	      if (COND_EXPR_THEN (node))
 		{
 		  newline_and_indent (buffer, spc+2);
-		  pp_character (buffer, '{');
+		  pp_character (buffer, '{'/*}*/);
 		  newline_and_indent (buffer, spc+4);
 		  dump_generic_node (buffer, COND_EXPR_THEN (node), spc+4,
 				     flags, true);
 		  newline_and_indent (buffer, spc+2);
-		  pp_character (buffer, '}');
+		  pp_character (buffer, /*{*/'}');
 		}
 
 	      /* Output COND_EXPR_ELSE.  */
@@ -932,12 +932,12 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
 		  newline_and_indent (buffer, spc);
 		  pp_string (buffer, "else");
 		  newline_and_indent (buffer, spc+2);
-		  pp_character (buffer, '{');
+		  pp_character (buffer, '{'/*}*/);
 		  newline_and_indent (buffer, spc+4);
 		  dump_generic_node (buffer, COND_EXPR_ELSE (node), spc+4,
 			             flags, true);
 		  newline_and_indent (buffer, spc+2);
-		  pp_character (buffer, '}');
+		  pp_character (buffer, /*{*/'}');
 		}
 	    }
 	  is_expr = false;
@@ -957,7 +957,7 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
       break;
 
     case BIND_EXPR:
-      pp_character (buffer, '{');
+      pp_character (buffer, '{'/*}*/);
       if (!(flags & TDF_SLIM))
 	{
 	  if (BIND_EXPR_VARS (node))
@@ -974,7 +974,7 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
 	  newline_and_indent (buffer, spc+2);
 	  dump_generic_node (buffer, BIND_EXPR_BODY (node), spc+2, flags, true);
 	  newline_and_indent (buffer, spc);
-	  pp_character (buffer, '}');
+	  pp_character (buffer, /*{*/'}');
 	}
       is_expr = false;
       break;
@@ -1123,9 +1123,9 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
 
       if (TREE_CODE (node) == MISALIGNED_INDIRECT_REF)
         {
-          pp_string (buffer, "{misalignment: ");
+          pp_string (buffer, "{misalignment: "/*}*/);
           dump_generic_node (buffer, TREE_OPERAND (node, 1), spc, flags, false);
-          pp_character (buffer, '}');
+          pp_character (buffer, /*{*/'}');
         }
       break;
 
@@ -1246,20 +1246,20 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
     case TRY_CATCH_EXPR:
       pp_string (buffer, "try");
       newline_and_indent (buffer, spc+2);
-      pp_string (buffer, "{");
+      pp_string (buffer, "{"/*}*/);
       newline_and_indent (buffer, spc+4);
       dump_generic_node (buffer, TREE_OPERAND (node, 0), spc+4, flags, true);
       newline_and_indent (buffer, spc+2);
-      pp_string (buffer, "}");
+      pp_string (buffer, /*{*/"}");
       newline_and_indent (buffer, spc);
       pp_string (buffer,
 			 (TREE_CODE (node) == TRY_CATCH_EXPR) ? "catch" : "finally");
       newline_and_indent (buffer, spc+2);
-      pp_string (buffer, "{");
+      pp_string (buffer, "{"/*}*/);
       newline_and_indent (buffer, spc+4);
       dump_generic_node (buffer, TREE_OPERAND (node, 1), spc+4, flags, true);
       newline_and_indent (buffer, spc+2);
-      pp_string (buffer, "}");
+      pp_string (buffer, /*{*/"}");
       is_expr = false;
       break;
 
@@ -1268,11 +1268,11 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
       dump_generic_node (buffer, CATCH_TYPES (node), spc+2, flags, false);
       pp_string (buffer, ")");
       newline_and_indent (buffer, spc+2);
-      pp_string (buffer, "{");
+      pp_string (buffer, "{"/*}*/);
       newline_and_indent (buffer, spc+4);
       dump_generic_node (buffer, CATCH_BODY (node), spc+4, flags, true);
       newline_and_indent (buffer, spc+2);
-      pp_string (buffer, "}");
+      pp_string (buffer, /*{*/"}");
       is_expr = false;
       break;
 
@@ -1281,11 +1281,11 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
       dump_generic_node (buffer, EH_FILTER_TYPES (node), spc+2, flags, false);
       pp_string (buffer, ")>>>");
       newline_and_indent (buffer, spc+2);
-      pp_string (buffer, "{");
+      pp_string (buffer, "{"/*}*/);
       newline_and_indent (buffer, spc+4);
       dump_generic_node (buffer, EH_FILTER_FAILURE (node), spc+4, flags, true);
       newline_and_indent (buffer, spc+2);
-      pp_string (buffer, "}");
+      pp_string (buffer, /*{*/"}");
       is_expr = false;
       break;
 
@@ -1318,11 +1318,11 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
       if (!(flags & TDF_SLIM))
 	{
 	  newline_and_indent (buffer, spc+2);
-	  pp_character (buffer, '{');
+	  pp_character (buffer, '{'/*}*/);
 	  newline_and_indent (buffer, spc+4);
 	  dump_generic_node (buffer, LOOP_EXPR_BODY (node), spc+4, flags, true);
 	  newline_and_indent (buffer, spc+2);
-	  pp_character (buffer, '}');
+	  pp_character (buffer, /*{*/'}');
 	}
       is_expr = false;
       break;
@@ -1353,7 +1353,7 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
       if (!(flags & TDF_SLIM))
 	{
 	  newline_and_indent (buffer, spc+2);
-	  pp_character (buffer, '{');
+	  pp_character (buffer, '{'/*}*/);
 	  if (SWITCH_BODY (node))
 	    {
 	      newline_and_indent (buffer, spc+4);
@@ -1374,7 +1374,7 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
 		}
 	    }
 	  newline_and_indent (buffer, spc+2);
-	  pp_character (buffer, '}');
+	  pp_character (buffer, /*{*/'}');
 	}
       is_expr = false;
       break;
@@ -1503,11 +1503,11 @@ dump_generic_node (pretty_printer *buffer, tree node, int spc, int flags,
       break;
 
     case POLYNOMIAL_CHREC:
-      pp_string (buffer, "{");
+      pp_string (buffer, "{"/*}*/);
       dump_generic_node (buffer, CHREC_LEFT (node), spc, flags, false);
       pp_string (buffer, ", +, ");
       dump_generic_node (buffer, CHREC_RIGHT (node), spc, flags, false);
-      pp_string (buffer, "}_");
+      pp_string (buffer, /*{*/"}_");
       dump_generic_node (buffer, CHREC_VAR (node), spc, flags, false);
       is_stmt = false;
       break;
@@ -1668,7 +1668,7 @@ print_struct_decl (pretty_printer *buffer, tree node, int spc, int flags)
   /* Print the contents of the structure.  */
   pp_newline (buffer);
   INDENT (spc);
-  pp_character (buffer, '{');
+  pp_character (buffer, '{'/*}*/);
   pp_newline (buffer);
 
   /* Print the fields of the structure.  */
@@ -1693,7 +1693,7 @@ print_struct_decl (pretty_printer *buffer, tree node, int spc, int flags)
       }
   }
   INDENT (spc);
-  pp_character (buffer, '}');
+  pp_character (buffer, /*{*/'}');
 }
 
 /* Return the priority of the operator OP.

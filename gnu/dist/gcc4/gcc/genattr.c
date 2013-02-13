@@ -55,7 +55,7 @@ gen_attr (rtx attr)
 	    (is_const ? "void" : "rtx"));
   else
     {
-      printf ("enum attr_%s {", XSTR (attr, 0));
+      printf ("enum attr_%s {"/*}*/, XSTR (attr, 0));
 
       while ((tag = scan_comma_elt (&p)) != 0)
 	{
@@ -67,7 +67,7 @@ gen_attr (rtx attr)
 	    fputs (", ", stdout);
 	}
 
-      fputs ("};\n", stdout);
+      fputs (/*{*/"};\n", stdout);
       printf ("extern enum attr_%s get_attr_%s (%s);\n\n",
 	      XSTR (attr, 0), XSTR (attr, 0), (is_const ? "void" : "rtx"));
     }

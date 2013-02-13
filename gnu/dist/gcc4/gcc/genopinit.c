@@ -410,7 +410,7 @@ from the machine description file `md'.  */\n\n");
   printf ("#include \"optabs.h\"\n");
   printf ("#include \"reload.h\"\n\n");
 
-  printf ("void\ninit_all_optabs (void)\n{\n");
+  printf ("void\ninit_all_optabs (void)\n{\n"/*}*/);
 
   puts ("\
 #ifdef FIXUNS_TRUNC_LIKE_FIX_TRUNC\n\

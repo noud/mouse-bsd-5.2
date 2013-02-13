@@ -591,15 +591,15 @@ vcg_print_ddg (FILE *dump_file, ddg_ptr g)
 {
   int src_cuid;
 
-  fprintf (dump_file, "graph: {\n");
+  fprintf (dump_file, "graph: {\n"/*}*/);
   for (src_cuid = 0; src_cuid < g->num_nodes; src_cuid++)
     {
       ddg_edge_ptr e;
       int src_uid = INSN_UID (g->nodes[src_cuid].insn);
 
-      fprintf (dump_file, "node: {title: \"%d_%d\" info1: \"", src_cuid, src_uid);
+      fprintf (dump_file, "node: {title: \"%d_%d\" info1: \""/*}*/, src_cuid, src_uid);
       print_rtl_single (dump_file, g->nodes[src_cuid].insn);
-      fprintf (dump_file, "\"}\n");
+      fprintf (dump_file, /*{*/"\"}\n");
       for (e = g->nodes[src_cuid].out; e; e = e->next_out)
 	{
 	  int dst_uid = INSN_UID (e->dest->insn);
@@ -607,16 +607,16 @@ vcg_print_ddg (FILE *dump_file, ddg_ptr g)
 
 	  /* Give the backarcs a different color.  */
 	  if (e->distance > 0)
-	    fprintf (dump_file, "backedge: {color: red ");
+	    fprintf (dump_file, "backedge: {color: red "/*}*/);
 	  else
-	    fprintf (dump_file, "edge: { ");
+	    fprintf (dump_file, "edge: { "/*}*/);
 
 	  fprintf (dump_file, "sourcename: \"%d_%d\" ", src_cuid, src_uid);
 	  fprintf (dump_file, "targetname: \"%d_%d\" ", dst_cuid, dst_uid);
-	  fprintf (dump_file, "label: \"%d_%d\"}\n", e->latency, e->distance);
+	  fprintf (dump_file, /*{*/"label: \"%d_%d\"}\n", e->latency, e->distance);
 	}
     }
-  fprintf (dump_file, "}\n");
+  fprintf (dump_file, /*{*/"}\n");
 }
 
 /* Create an edge and initialize it with given values.  */

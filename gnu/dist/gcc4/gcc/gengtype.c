@@ -409,7 +409,7 @@ write_rtx_next (void)
   int i;
 
   oprintf (f, "\n/* Used to implement the RTX_NEXT macro.  */\n");
-  oprintf (f, "const unsigned char rtx_next[NUM_RTX_CODE] = {\n");
+  oprintf (f, "const unsigned char rtx_next[NUM_RTX_CODE] = {\n"/*}*/);
   for (i = 0; i < NUM_RTX_CODE; i++)
     if (rtx_next_new[i] == -1)
       oprintf (f, "  0,\n");
@@ -417,7 +417,7 @@ write_rtx_next (void)
       oprintf (f,
 	       "  RTX_HDR_SIZE + %d * sizeof (rtunion),\n",
 	       rtx_next_new[i]);
-  oprintf (f, "};\n");
+  oprintf (f, /*{*/"};\n");
 }
 
 /* Handle `special("rtx_def")'.  This is a special case for field
@@ -1638,7 +1638,7 @@ walk_type (type_p t, struct walk_type_data *d)
 		  }
 
 		d->prev_val[2] = d->val;
-		oprintf (d->of, "%*s{\n", d->indent, "");
+		oprintf (d->of, "%*s{\n"/*}*/, d->indent, "");
 		d->indent += 2;
 		d->val = xasprintf ("x%d", d->counter++);
 		oprintf (d->of, "%*s%s %s * %s%s =\n", d->indent, "",
@@ -1665,7 +1665,7 @@ walk_type (type_p t, struct walk_type_data *d)
 		  }
 
 		d->indent -= 2;
-		oprintf (d->of, "%*s}\n", d->indent, "");
+		oprintf (d->of, /*{*/"%*s}\n", d->indent, "");
 		d->val = d->prev_val[2];
 		d->prev_val[2] = oldprevval2;
 	      }
@@ -1679,13 +1679,13 @@ walk_type (type_p t, struct walk_type_data *d)
 	    const char *oldprevval3 = d->prev_val[3];
 	    char *newval;
 
-	    oprintf (d->of, "%*sif (%s != NULL) {\n", d->indent, "", d->val);
+	    oprintf (d->of, "%*sif (%s != NULL) {\n"/*}*/, d->indent, "", d->val);
 	    d->indent += 2;
 	    oprintf (d->of, "%*ssize_t i%d;\n", d->indent, "", loopcounter);
 	    oprintf (d->of, "%*sfor (i%d = 0; i%d != (size_t)(", d->indent, "",
 		     loopcounter, loopcounter);
 	    output_escaped_param (d, length, "length");
-	    oprintf (d->of, "); i%d++) {\n", loopcounter);
+	    oprintf (d->of, "); i%d++) {\n"/*}*/, loopcounter);
 	    d->indent += 2;
 	    d->val = newval = xasprintf ("%s[i%d]", oldval, loopcounter);
 	    d->used_length = 1;
@@ -1696,10 +1696,10 @@ walk_type (type_p t, struct walk_type_data *d)
 	    d->prev_val[3] = oldprevval3;
 	    d->used_length = 0;
 	    d->indent -= 2;
-	    oprintf (d->of, "%*s}\n", d->indent, "");
+	    oprintf (d->of, /*{*/"%*s}\n", d->indent, "");
 	    d->process_field(t, d);
 	    d->indent -= 2;
-	    oprintf (d->of, "%*s}\n", d->indent, "");
+	    oprintf (d->of, /*{*/"%*s}\n", d->indent, "");
 	  }
       }
       break;
@@ -1715,7 +1715,7 @@ walk_type (type_p t, struct walk_type_data *d)
 	if (t->u.a.p->kind == TYPE_SCALAR)
 	  break;
 
-	oprintf (d->of, "%*s{\n", d->indent, "");
+	oprintf (d->of, "%*s{\n"/*}*/, d->indent, "");
 	d->indent += 2;
 	oprintf (d->of, "%*ssize_t i%d;\n", d->indent, "", loopcounter);
 	oprintf (d->of, "%*sfor (i%d = 0; i%d != (size_t)(", d->indent, "",
@@ -1724,7 +1724,7 @@ walk_type (type_p t, struct walk_type_data *d)
 	  output_escaped_param (d, length, "length");
 	else
 	  oprintf (d->of, "%s", t->u.a.len);
-	oprintf (d->of, "); i%d++) {\n", loopcounter);
+	oprintf (d->of, "); i%d++) {\n"/*}*/, loopcounter);
 	d->indent += 2;
 	d->val = newval = xasprintf ("%s[i%d]", oldval, loopcounter);
 	d->used_length = 1;
@@ -1733,9 +1733,9 @@ walk_type (type_p t, struct walk_type_data *d)
 	d->used_length = 0;
 	d->val = oldval;
 	d->indent -= 2;
-	oprintf (d->of, "%*s}\n", d->indent, "");
+	oprintf (d->of, /*{*/"%*s}\n", d->indent, "");
 	d->indent -= 2;
-	oprintf (d->of, "%*s}\n", d->indent, "");
+	oprintf (d->of, /*{*/"%*s}\n", d->indent, "");
       }
       break;
 
@@ -1780,7 +1780,7 @@ walk_type (type_p t, struct walk_type_data *d)
 	    output_escaped_param (d, desc, "desc");
 	    oprintf (d->of, ")\n");
 	    d->indent += 2;
-	    oprintf (d->of, "%*s{\n", d->indent, "");
+	    oprintf (d->of, "%*s{\n"/*}*/, d->indent, "");
 	  }
 	for (f = t->u.s.fields; f; f = f->next)
 	  {
@@ -1870,7 +1870,7 @@ walk_type (type_p t, struct walk_type_data *d)
 	  }
 	if (union_p)
 	  {
-	    oprintf (d->of, "%*s}\n", d->indent, "");
+	    oprintf (d->of, /*{*/"%*s}\n", d->indent, "");
 	    d->indent -= 2;
 	  }
       }
@@ -2055,7 +2055,7 @@ write_func_for_structure (type_p orig_s, type_p s, type_p *param,
       output_mangled_typename (d.of, orig_s);
     }
   oprintf (d.of, " (void *x_p)\n");
-  oprintf (d.of, "{\n");
+  oprintf (d.of, "{\n"/*}*/);
   oprintf (d.of, "  %s %s * %sx = (%s %s *)x_p;\n",
 	   s->kind == TYPE_UNION ? "union" : "struct", s->u.s.tag,
 	   chain_next == NULL ? "const " : "",
@@ -2092,7 +2092,7 @@ write_func_for_structure (type_p orig_s, type_p s, type_p *param,
 	{
 	  oprintf (d.of, "  if (x != xlimit)\n");
 	  oprintf (d.of, "    for (;;)\n");
-	  oprintf (d.of, "      {\n");
+	  oprintf (d.of, "      {\n"/*}*/);
 	  oprintf (d.of, "        %s %s * const xprev = (",
 		   s->kind == TYPE_UNION ? "union" : "struct", s->u.s.tag);
 
@@ -2110,11 +2110,11 @@ write_func_for_structure (type_p orig_s, type_p s, type_p *param,
 	      output_type_enum (d.of, orig_s);
 	    }
 	  oprintf (d.of, ");\n");
-	  oprintf (d.of, "      }\n");
+	  oprintf (d.of, /*{*/"      }\n");
 	}
       oprintf (d.of, "  while (x != xlimit)\n");
     }
-  oprintf (d.of, "    {\n");
+  oprintf (d.of, "    {\n"/*}*/);
 
   d.prev_val[2] = "*x";
   d.indent = 6;
@@ -2127,8 +2127,8 @@ write_func_for_structure (type_p orig_s, type_p s, type_p *param,
       oprintf (d.of, ");\n");
     }
 
-  oprintf (d.of, "    }\n");
-  oprintf (d.of, "}\n");
+  oprintf (d.of, /*{*/"    }\n");
+  oprintf (d.of, /*{*/"}\n");
 }
 
 /* Write out marker routines for STRUCTURES and PARAM_STRUCTS.  */
@@ -2152,12 +2152,12 @@ write_types (type_p structures, type_p param_structs,
 
 	oprintf (header_file, "#define gt_%s_", wtd->prefix);
 	output_mangled_typename (header_file, s);
-	oprintf (header_file, "(X) do { \\\n");
+	oprintf (header_file, "(X) do { \\\n"/*}*/);
 	oprintf (header_file,
 		 "  if (X != NULL) gt_%sx_%s (X);\\\n", wtd->prefix,
 		 s->u.s.tag);
 	oprintf (header_file,
-		 "  } while (0)\n");
+		 /*{*/"  } while (0)\n");
 
 	for (opt = s->u.s.opt; opt; opt = opt->next)
 	  if (strcmp (opt->name, "ptr_alias") == 0)
@@ -2310,13 +2310,13 @@ write_local_func_for_structure (type_p orig_s, type_p s, type_p *param)
 	   "\tvoid *x_p,\n"
 	   "\tATTRIBUTE_UNUSED gt_pointer_operator op,\n"
 	   "\tATTRIBUTE_UNUSED void *cookie)\n");
-  oprintf (d.of, "{\n");
+  oprintf (d.of, "{\n"/*}*/);
   oprintf (d.of, "  %s %s * const x ATTRIBUTE_UNUSED = (%s %s *)x_p;\n",
 	   s->kind == TYPE_UNION ? "union" : "struct", s->u.s.tag,
 	   s->kind == TYPE_UNION ? "union" : "struct", s->u.s.tag);
   d.indent = 2;
   walk_type (s, &d);
-  oprintf (d.of, "}\n");
+  oprintf (d.of, /*{*/"}\n");
 }
 
 /* Write out local marker routines for STRUCTURES and PARAM_STRUCTS.  */
@@ -2412,7 +2412,7 @@ write_enum_defn (type_p structures, type_p param_structs)
   type_p s;
 
   oprintf (header_file, "\n/* Enumeration of types known.  */\n");
-  oprintf (header_file, "enum gt_types_enum {\n");
+  oprintf (header_file, "enum gt_types_enum {\n"/*}*/);
   for (s = structures; s; s = s->next)
     if (s->gc_used == GC_POINTED_TO
 	|| s->gc_used == GC_MAYBE_POINTED_TO)
@@ -2433,7 +2433,7 @@ write_enum_defn (type_p structures, type_p param_structs)
 	oprintf (header_file, ", \n");
       }
   oprintf (header_file, " gt_types_enum_last\n");
-  oprintf (header_file, "};\n");
+  oprintf (header_file, /*{*/"};\n");
 }
 
 /* Might T contain any non-pointer elements?  */
@@ -2482,7 +2482,7 @@ finish_root_table (struct flist *flp, const char *pfx, const char *lastname,
     if (fli2->started_p)
       {
 	oprintf (fli2->f, "  %s\n", lastname);
-	oprintf (fli2->f, "};\n\n");
+	oprintf (fli2->f, /*{*/"};\n\n");
       }
 
   for (fli2 = flp; fli2; fli2 = fli2->next)
@@ -2506,7 +2506,7 @@ finish_root_table (struct flist *flp, const char *pfx, const char *lastname,
     size_t fnum;
     for (fnum = 0; fnum < NUM_BASE_FILES; fnum++)
       oprintf (base_files [fnum],
-	       "const struct %s * const %s[] = {\n",
+	       "const struct %s * const %s[] = {\n"/*}*/,
 	       tname, name);
   }
 
@@ -2533,7 +2533,7 @@ finish_root_table (struct flist *flp, const char *pfx, const char *lastname,
     for (fnum = 0; fnum < NUM_BASE_FILES; fnum++)
       {
 	oprintf (base_files[fnum], "  NULL\n");
-	oprintf (base_files[fnum], "};\n");
+	oprintf (base_files[fnum], /*{*/"};\n");
       }
   }
 }
@@ -2631,7 +2631,7 @@ write_root (outf_p f, pair_p v, type_p type, const char *name, int has_length,
       {
 	type_p ap, tp;
 
-	oprintf (f, "  {\n");
+	oprintf (f, "  {\n"/*}*/);
 	oprintf (f, "    &%s,\n", name);
 	oprintf (f, "    1");
 
@@ -2674,19 +2674,19 @@ write_root (outf_p f, pair_p v, type_p type, const char *name, int has_length,
 	  }
 	if (if_marked)
 	  oprintf (f, ",\n    &%s", if_marked);
-	oprintf (f, "\n  },\n");
+	oprintf (f, /*{*/"\n  },\n");
       }
       break;
 
     case TYPE_STRING:
       {
-	oprintf (f, "  {\n");
+	oprintf (f, "  {\n"/*}*/);
 	oprintf (f, "    &%s,\n", name);
 	oprintf (f, "    1, \n");
 	oprintf (f, "    sizeof (%s),\n", v->name);
 	oprintf (f, "    &gt_ggc_m_S,\n");
 	oprintf (f, "    (gt_pointer_walker) &gt_pch_n_S\n");
-	oprintf (f, "  },\n");
+	oprintf (f, /*{*/"  },\n");
       }
       break;
 
@@ -2730,11 +2730,11 @@ write_array (outf_p f, pair_p v, const struct write_types_data *wtd)
 	       "      ATTRIBUTE_UNUSED void *x_p,\n"
 	       "      ATTRIBUTE_UNUSED gt_pointer_operator op,\n"
 	       "      ATTRIBUTE_UNUSED void * cookie)\n");
-      oprintf (d.of, "{\n");
+      oprintf (d.of, "{\n"/*}*/);
       d.prev_val[0] = d.prev_val[1] = d.prev_val[2] = d.val = v->name;
       d.process_field = write_types_local_process_field;
       walk_type (v->type, &d);
-      oprintf (f, "}\n\n");
+      oprintf (f, /*{*/"}\n\n");
     }
 
   d.opt = v->opt;
@@ -2742,12 +2742,12 @@ write_array (outf_p f, pair_p v, const struct write_types_data *wtd)
 	   wtd->prefix, v->name);
   oprintf (f, "static void\ngt_%sa_%s (ATTRIBUTE_UNUSED void *x_p)\n",
 	   wtd->prefix, v->name);
-  oprintf (f, "{\n");
+  oprintf (f, "{\n"/*}*/);
   d.prev_val[0] = d.prev_val[1] = d.prev_val[2] = d.val = v->name;
   d.process_field = write_types_process_field;
   walk_type (v->type, &d);
   free (prevval3);
-  oprintf (f, "}\n\n");
+  oprintf (f, /*{*/"}\n\n");
 }
 
 /* Output a table describing the locations and types of VARIABLES.  */
@@ -2837,7 +2837,7 @@ write_roots (pair_p variables)
 
 	  oprintf (f, "const struct ggc_root_tab gt_ggc_r_");
 	  put_mangled_filename (f, v->line.file);
-	  oprintf (f, "[] = {\n");
+	  oprintf (f, "[] = {\n"/*}*/);
 	}
 
       write_root (f, v, v->type, v->name, length_p, &v->line, NULL);
@@ -2871,7 +2871,7 @@ write_roots (pair_p variables)
 
 	  oprintf (f, "const struct ggc_root_tab gt_ggc_rd_");
 	  put_mangled_filename (f, v->line.file);
-	  oprintf (f, "[] = {\n");
+	  oprintf (f, "[] = {\n"/*}*/);
 	}
 
       oprintf (f, "  { &%s, 1, sizeof (%s), NULL, NULL },\n",
@@ -2915,7 +2915,7 @@ write_roots (pair_p variables)
 
 	  oprintf (f, "const struct ggc_cache_tab gt_ggc_rc_");
 	  put_mangled_filename (f, v->line.file);
-	  oprintf (f, "[] = {\n");
+	  oprintf (f, "[] = {\n"/*}*/);
 	}
 
       write_root (f, v, v->type->u.p->u.param_struct.param[0],
@@ -2951,7 +2951,7 @@ write_roots (pair_p variables)
 
 	  oprintf (f, "const struct ggc_root_tab gt_pch_rc_");
 	  put_mangled_filename (f, v->line.file);
-	  oprintf (f, "[] = {\n");
+	  oprintf (f, "[] = {\n"/*}*/);
 	}
 
       write_root (f, v, v->type, v->name, length_p, &v->line, NULL);
@@ -2987,7 +2987,7 @@ write_roots (pair_p variables)
 
 	  oprintf (f, "const struct ggc_root_tab gt_pch_rs_");
 	  put_mangled_filename (f, v->line.file);
-	  oprintf (f, "[] = {\n");
+	  oprintf (f, "[] = {\n"/*}*/);
 	}
 
       oprintf (f, "  { &%s, 1, sizeof (%s), NULL, NULL },\n",

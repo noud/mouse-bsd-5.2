@@ -248,11 +248,11 @@ output_operand_data (void)
 {
   struct operand_data *d;
 
-  printf ("\nstatic const struct insn_operand_data operand_data[] = \n{\n");
+  printf ("\nstatic const struct insn_operand_data operand_data[] = \n{\n"/*}*/);
 
   for (d = odata; d; d = d->next)
     {
-      printf ("  {\n");
+      printf ("  {\n"/*}*/);
 
       printf ("    %s,\n",
 	      d->predicate && d->predicate[0] ? d->predicate : "0");
@@ -265,9 +265,9 @@ output_operand_data (void)
 
       printf ("    %d\n", d->eliminable);
 
-      printf("  },\n");
+      printf(/*{*/"  },\n");
     }
-  printf("};\n\n\n");
+  printf(/*{*/"};\n\n\n");
 }
 
 static void
@@ -288,12 +288,12 @@ output_insn_data (void)
       }
 
   printf ("#if GCC_VERSION >= 2007\n__extension__\n#endif\n");
-  printf ("\nconst struct insn_data insn_data[] = \n{\n");
+  printf ("\nconst struct insn_data insn_data[] = \n{\n"/*}*/);
 
   for (d = idata; d; d = d->next)
     {
       printf ("  /* %s:%d */\n", d->filename, d->lineno);
-      printf ("  {\n");
+      printf ("  {\n"/*}*/);
 
       if (d->name)
 	{
@@ -337,9 +337,9 @@ output_insn_data (void)
 	    char prev = 0;
 
 	    printf ("#if HAVE_DESIGNATED_INITIALIZERS\n");
-	    printf ("    { .single =\n");
+	    printf ("    { .single =\n"/*}*/);
 	    printf ("#else\n");
-	    printf ("    {\n");
+	    printf ("    {\n"/*}*/);
 	    printf ("#endif\n");
 	    printf ("    \"");
 	    while (*p)
@@ -358,9 +358,9 @@ output_insn_data (void)
 	      }
 	    printf ("\",\n");
 	    printf ("#if HAVE_DESIGNATED_INITIALIZERS\n");
-	    printf ("    },\n");
+	    printf (/*{*/"    },\n");
 	    printf ("#else\n");
-	    printf ("    0, 0 },\n");
+	    printf (/*{*/"    0, 0 },\n");
 	    printf ("#endif\n");
 	  }
 	  break;
@@ -393,9 +393,9 @@ output_insn_data (void)
       printf ("    %d,\n", d->n_alternatives);
       printf ("    %d\n", d->output_format);
 
-      printf("  },\n");
+      printf(/*{*/"  },\n");
     }
-  printf ("};\n\n\n");
+  printf (/*{*/"};\n\n\n");
 }
 
 static void
@@ -403,12 +403,12 @@ output_get_insn_name (void)
 {
   printf ("const char *\n");
   printf ("get_insn_name (int code)\n");
-  printf ("{\n");
+  printf ("{\n"/*}*/);
   printf ("  if (code == NOOP_MOVE_INSN_CODE)\n");
   printf ("    return \"NOOP_MOVE\";\n");
   printf ("  else\n");
   printf ("    return insn_data[code].name;\n");
-  printf ("}\n");
+  printf (/*{*/"}\n");
 }
 
 
@@ -667,10 +667,10 @@ process_template (struct data *d, const char *template)
       puts ("\nstatic const char *");
       printf ("output_%d (rtx *operands ATTRIBUTE_UNUSED, rtx insn ATTRIBUTE_UNUSED)\n",
 	      d->code_number);
-      puts ("{");
+      puts ("{"/*}*/);
       print_rtx_ptr_loc (template);
       puts (template + 1);
-      puts ("}");
+      puts (/*{*/"}");
     }
 
   /* If the assembler code template starts with a @ it is a newline-separated
@@ -680,7 +680,7 @@ process_template (struct data *d, const char *template)
       d->template = 0;
       d->output_format = INSN_OUTPUT_FORMAT_MULTI;
 
-      printf ("\nstatic const char * const output_%d[] = {\n", d->code_number);
+      printf ("\nstatic const char * const output_%d[] = {\n"/*}*/, d->code_number);
 
       for (i = 0, cp = &template[1]; *cp; )
 	{
@@ -718,7 +718,7 @@ process_template (struct data *d, const char *template)
 	  have_error = 1;
 	}
 
-      printf ("};\n");
+      printf (/*{*/"};\n");
     }
   else
     {

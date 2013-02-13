@@ -63,10 +63,10 @@ flow_loops_cfg_dump (const struct loops *loops, FILE *file)
       edge succ;
       edge_iterator ei;
 
-      fprintf (file, ";; %d succs { ", bb->index);
+      fprintf (file, ";; %d succs { "/*}*/, bb->index);
       FOR_EACH_EDGE (succ, ei, bb->succs)
 	fprintf (file, "%d ", succ->dest->index);
-      fprintf (file, "}\n");
+      fprintf (file, /*{*/"}\n");
     }
 
   /* Dump the DFS node order.  */

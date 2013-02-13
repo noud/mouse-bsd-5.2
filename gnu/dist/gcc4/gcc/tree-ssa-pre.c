@@ -768,7 +768,7 @@ static void
 bitmap_print_value_set (FILE *outfile, bitmap_set_t set,
 			const char *setname, int blockindex)
 {
-  fprintf (outfile, "%s[%d] := { ", setname, blockindex);
+  fprintf (outfile, "%s[%d] := { "/*}*/, setname, blockindex);
   if (set)
     {
       bool first = true;
@@ -787,7 +787,7 @@ bitmap_print_value_set (FILE *outfile, bitmap_set_t set,
 	  fprintf (outfile, ") ");
 	}
     }
-  fprintf (outfile, " }\n");
+  fprintf (outfile, /*{*/" }\n");
 }
 /* Print out the value_set SET to OUTFILE.  */
 
@@ -796,7 +796,7 @@ print_value_set (FILE *outfile, value_set_t set,
 		 const char *setname, int blockindex)
 {
   value_set_node_t node;
-  fprintf (outfile, "%s[%d] := { ", setname, blockindex);
+  fprintf (outfile, "%s[%d] := { "/*}*/, setname, blockindex);
   if (set)
     {
       for (node = set->head;
@@ -814,7 +814,7 @@ print_value_set (FILE *outfile, value_set_t set,
 	}
     }
 
-  fprintf (outfile, " }\n");
+  fprintf (outfile, /*{*/" }\n");
 }
 
 /* Print out the expressions that have VAL to OUTFILE.  */

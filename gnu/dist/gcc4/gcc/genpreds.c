@@ -139,7 +139,7 @@ write_predicate_subfunction (struct pred_data *p)
 	  "%s_1 (rtx op, enum machine_mode mode ATTRIBUTE_UNUSED)\n",
 	  p->name);
   print_rtx_ptr_loc (p->c_block);
-  if (p->c_block[0] == '{')
+  if (p->c_block[0] == '{'/*}*/)
     fputs (p->c_block, stdout);
   else
     printf ("{\n  %s\n}", p->c_block);
@@ -401,10 +401,10 @@ write_one_predicate_function (struct pred_data *p)
   /* A normal predicate can legitimately not look at enum machine_mode
      if it accepts only CONST_INTs and/or CONST_DOUBLEs.  */
   printf ("int\n%s (rtx op, enum machine_mode mode ATTRIBUTE_UNUSED)\n"
-	  "{\n  return ",
+	  "{\n  return "/*}*/,
 	  p->name);
   write_predicate_expr (p->name, p->exp);
-  fputs (";\n}\n\n", stdout);
+  fputs (/*{*/";\n}\n\n", stdout);
 }
 
 /* Write insn-preds.c.

@@ -253,7 +253,7 @@ dump_subvars_for (FILE *file, tree var)
   if (!sv)
     return;
 
-  fprintf (file, "{ ");
+  fprintf (file, "{ "/*}*/);
 
   for (; sv; sv = sv->next)
     {
@@ -261,7 +261,7 @@ dump_subvars_for (FILE *file, tree var)
       fprintf (file, " ");
     }
 
-  fprintf (file, "}");
+  fprintf (file, /*{*/"}");
 }
 
 

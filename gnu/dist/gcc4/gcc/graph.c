@@ -55,7 +55,7 @@ start_fct (FILE *fp)
     {
     case vcg:
       fprintf (fp, "\
-graph: { title: \"%s\"\nfolding: 1\nhidden: 2\nnode: { title: \"%s.0\" }\n",
+graph: { title: \"%s\"\nfolding: 1\nhidden: 2\nnode: { title: \"%s.0\" }\n"/*}*/,
 	       current_function_name (), current_function_name ());
       break;
     case no_graph:
@@ -129,7 +129,7 @@ edge: { sourcename: \"%s.0\" targetname: \"%s.%d\" }\n",
     {
     case vcg:
       fprintf (fp, "node: {\n  title: \"%s.%d\"\n  color: %s\n  \
-label: \"%s %d\n",
+label: \"%s %d\n"/*}*/,
 	       current_function_name (), XINT (tmp_rtx, 0),
 	       NOTE_P (tmp_rtx) ? "lightgrey"
 	       : NONJUMP_INSN_P (tmp_rtx) ? "green"
@@ -159,7 +159,7 @@ darkgrey\n  shape: ellipse" : "white",
   switch (graph_dump_format)
     {
     case vcg:
-      fputs ("\"\n}\n", fp);
+      fputs (/*{*/"\"\n}\n", fp);
       break;
     case no_graph:
       break;
@@ -181,12 +181,12 @@ draw_edge (FILE *fp, int from, int to, int bb_edge, int class)
       else if (class == 3)
 	color = "color: green ";
       fprintf (fp,
-	       "edge: { sourcename: \"%s.%d\" targetname: \"%s.%d\" %s",
+	       "edge: { sourcename: \"%s.%d\" targetname: \"%s.%d\" %s"/*}*/,
 	       current_function_name (), from,
 	       current_function_name (), to, color);
       if (class)
 	fprintf (fp, "class: %d ", class);
-      fputs ("}\n", fp);
+      fputs (/*{*/"}\n", fp);
       break;
     case no_graph:
       break;
@@ -199,7 +199,7 @@ end_bb (FILE *fp)
   switch (graph_dump_format)
     {
     case vcg:
-      fputs ("}\n", fp);
+      fputs (/*{*/"}\n", fp);
       break;
     case no_graph:
       break;
@@ -212,7 +212,7 @@ end_fct (FILE *fp)
   switch (graph_dump_format)
     {
     case vcg:
-      fprintf (fp, "node: { title: \"%s.999999\" label: \"END\" }\n}\n",
+      fprintf (fp, /*{*/"node: { title: \"%s.999999\" label: \"END\" }\n}\n",
 	       current_function_name ());
       break;
     case no_graph:
@@ -403,7 +403,7 @@ clean_graph_dump_file (const char *base)
     fatal_error ("can't open %s: %m", buf);
 
   gcc_assert (graph_dump_format == vcg);
-  fputs ("graph: {\nport_sharing: no\n", fp);
+  fputs ("graph: {\nport_sharing: no\n"/*}*/, fp);
 
   fclose (fp);
 }
@@ -425,7 +425,7 @@ finish_graph_dump_file (const char *base)
   if (fp != NULL)
     {
       gcc_assert (graph_dump_format == vcg);
-      fputs ("}\n", fp);
+      fputs (/*{*/"}\n", fp);
       fclose (fp);
     }
 }

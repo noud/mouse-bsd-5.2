@@ -72,8 +72,8 @@ gen_peephole (rtx peep)
     {
       if (i > 0)
 	{
-	  printf ("  do { insn = NEXT_INSN (insn);\n");
-	  printf ("       if (insn == 0) goto L%d; }\n",
+	  printf ("  do { insn = NEXT_INSN (insn);\n"/*}*/);
+	  printf (/*{*/"       if (insn == 0) goto L%d; }\n",
 		  insn_code_number);
 	  printf ("  while (NOTE_P (insn)\n");
 	  printf ("\t || (NONJUMP_INSN_P (insn)\n");
@@ -383,7 +383,7 @@ from the machine description file `md'.  */\n\n");
   printf ("extern rtx peep_operand[];\n\n");
   printf ("#define operands peep_operand\n\n");
 
-  printf ("rtx\npeephole (rtx ins1)\n{\n");
+  printf ("rtx\npeephole (rtx ins1)\n{\n"/*}*/);
   printf ("  rtx insn ATTRIBUTE_UNUSED, x ATTRIBUTE_UNUSED, pat ATTRIBUTE_UNUSED;\n\n");
 
   /* Early out: no peepholes for insns followed by barriers.  */
@@ -415,7 +415,7 @@ from the machine description file `md'.  */\n\n");
 	}
     }
 
-  printf ("  return 0;\n}\n\n");
+  printf (/*{*/"  return 0;\n}\n\n");
 
   if (max_opno == -1)
     max_opno = 1;

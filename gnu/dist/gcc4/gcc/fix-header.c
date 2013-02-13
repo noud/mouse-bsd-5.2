@@ -753,7 +753,7 @@ write_rbrac (void)
   if (required_unseen_count)
     {
 #ifdef NO_IMPLICIT_EXTERN_C
-      fprintf (outf, "#ifdef __cplusplus\nextern \"C\" {\n#endif\n");
+      fprintf (outf, "#ifdef __cplusplus\nextern \"C\" {\n#endif\n"/*}*/);
 #endif
     }
 
@@ -830,7 +830,7 @@ write_rbrac (void)
   if (required_unseen_count)
     {
 #ifdef NO_IMPLICIT_EXTERN_C
-      fprintf (outf, "#ifdef __cplusplus\n}\n#endif\n");
+      fprintf (outf, /*{*/"#ifdef __cplusplus\n}\n#endif\n");
 #endif
     }
 

@@ -3318,12 +3318,12 @@ dump_solution_for_var (FILE *file, unsigned int var)
   unsigned int i;
   bitmap_iterator bi;
 
-  fprintf (file, "%s = { ", vi->name);
+  fprintf (file, "%s = { "/*}*/, vi->name);
   EXECUTE_IF_SET_IN_BITMAP (get_varinfo (vi->node)->solution, 0, i, bi)
     {
       fprintf (file, "%s ", get_varinfo (i)->name);
     }
-  fprintf (file, "}\n");
+  fprintf (file, /*{*/"}\n");
 }
 
 /* Print the points-to solution for VAR to stdout.  */

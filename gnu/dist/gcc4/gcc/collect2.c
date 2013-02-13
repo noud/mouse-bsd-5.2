@@ -1830,41 +1830,41 @@ write_c_file_stat (FILE *stream, const char *name ATTRIBUTE_UNUSED)
     {
       write_list_with_asm (stream, "extern void *", frame_tables.first);
 
-      fprintf (stream, "\tstatic void *frame_table[] = {\n");
+      fprintf (stream, "\tstatic void *frame_table[] = {\n"/*}*/);
       write_list (stream, "\t\t&", frame_tables.first);
-      fprintf (stream, "\t0\n};\n");
+      fprintf (stream, /*{*/"\t0\n};\n");
 
       /* This must match what's in frame.h.  */
-      fprintf (stream, "struct object {\n");
+      fprintf (stream, "struct object {\n"/*}*/);
       fprintf (stream, "  void *pc_begin;\n");
       fprintf (stream, "  void *pc_end;\n");
       fprintf (stream, "  void *fde_begin;\n");
       fprintf (stream, "  void *fde_array;\n");
       fprintf (stream, "  __SIZE_TYPE__ count;\n");
       fprintf (stream, "  struct object *next;\n");
-      fprintf (stream, "};\n");
+      fprintf (stream, /*{*/"};\n");
 
       fprintf (stream, "extern void __register_frame_info_table (void *, struct object *);\n");
       fprintf (stream, "extern void *__deregister_frame_info (void *);\n");
 
-      fprintf (stream, "static void reg_frame () {\n");
+      fprintf (stream, "static void reg_frame () {\n"/*}*/);
       fprintf (stream, "\tstatic struct object ob;\n");
       fprintf (stream, "\t__register_frame_info_table (frame_table, &ob);\n");
-      fprintf (stream, "\t}\n");
+      fprintf (stream, /*{*/"\t}\n");
 
-      fprintf (stream, "static void dereg_frame () {\n");
+      fprintf (stream, "static void dereg_frame () {\n"/*}*/);
       fprintf (stream, "\t__deregister_frame_info (frame_table);\n");
-      fprintf (stream, "\t}\n");
+      fprintf (stream, /*{*/"\t}\n");
     }
 
-  fprintf (stream, "void %s() {\n", initname);
+  fprintf (stream, "void %s() {\n"/*}*/, initname);
   if (constructors.number > 0 || frames)
     {
-      fprintf (stream, "\tstatic entry_pt *ctors[] = {\n");
+      fprintf (stream, "\tstatic entry_pt *ctors[] = {\n"/*}*/);
       write_list (stream, "\t\t", constructors.first);
       if (frames)
 	fprintf (stream, "\treg_frame,\n");
-      fprintf (stream, "\t};\n");
+      fprintf (stream, /*{*/"\t};\n");
       fprintf (stream, "\tentry_pt **p;\n");
       fprintf (stream, "\tif (count++ != 0) return;\n");
       fprintf (stream, "\tp = ctors + %d;\n", constructors.number + frames);
@@ -1872,23 +1872,23 @@ write_c_file_stat (FILE *stream, const char *name ATTRIBUTE_UNUSED)
     }
   else
     fprintf (stream, "\t++count;\n");
-  fprintf (stream, "}\n");
+  fprintf (stream, /*{*/"}\n");
   write_list_with_asm (stream, "extern entry_pt ", destructors.first);
-  fprintf (stream, "void %s() {\n", fininame);
+  fprintf (stream, "void %s() {\n"/*}*/, fininame);
   if (destructors.number > 0 || frames)
     {
-      fprintf (stream, "\tstatic entry_pt *dtors[] = {\n");
+      fprintf (stream, "\tstatic entry_pt *dtors[] = {\n"/*}*/);
       write_list (stream, "\t\t", destructors.first);
       if (frames)
 	fprintf (stream, "\tdereg_frame,\n");
-      fprintf (stream, "\t};\n");
+      fprintf (stream, /*{*/"\t};\n");
       fprintf (stream, "\tentry_pt **p;\n");
       fprintf (stream, "\tif (--count != 0) return;\n");
       fprintf (stream, "\tp = dtors;\n");
       fprintf (stream, "\twhile (p < dtors + %d) (*p++)();\n",
 	       destructors.number + frames);
     }
-  fprintf (stream, "}\n");
+  fprintf (stream, /*{*/"}\n");
 
   if (shared_obj)
     {
@@ -1915,48 +1915,48 @@ write_c_file_glob (FILE *stream, const char *name ATTRIBUTE_UNUSED)
     {
       write_list_with_asm (stream, "extern void *", frame_tables.first);
 
-      fprintf (stream, "\tstatic void *frame_table[] = {\n");
+      fprintf (stream, "\tstatic void *frame_table[] = {\n"/*}*/);
       write_list (stream, "\t\t&", frame_tables.first);
-      fprintf (stream, "\t0\n};\n");
+      fprintf (stream, /*{*/"\t0\n};\n");
 
       /* This must match what's in frame.h.  */
-      fprintf (stream, "struct object {\n");
+      fprintf (stream, "struct object {\n"/*}*/);
       fprintf (stream, "  void *pc_begin;\n");
       fprintf (stream, "  void *pc_end;\n");
       fprintf (stream, "  void *fde_begin;\n");
       fprintf (stream, "  void *fde_array;\n");
       fprintf (stream, "  __SIZE_TYPE__ count;\n");
       fprintf (stream, "  struct object *next;\n");
-      fprintf (stream, "};\n");
+      fprintf (stream, /*{*/"};\n");
 
       fprintf (stream, "extern void __register_frame_info_table (void *, struct object *);\n");
       fprintf (stream, "extern void *__deregister_frame_info (void *);\n");
 
-      fprintf (stream, "static void reg_frame () {\n");
+      fprintf (stream, "static void reg_frame () {\n"/*}*/);
       fprintf (stream, "\tstatic struct object ob;\n");
       fprintf (stream, "\t__register_frame_info_table (frame_table, &ob);\n");
-      fprintf (stream, "\t}\n");
+      fprintf (stream, /*{*/"\t}\n");
 
-      fprintf (stream, "static void dereg_frame () {\n");
+      fprintf (stream, "static void dereg_frame () {\n"/*}*/);
       fprintf (stream, "\t__deregister_frame_info (frame_table);\n");
-      fprintf (stream, "\t}\n");
+      fprintf (stream, /*{*/"\t}\n");
     }
 
-  fprintf (stream, "\nentry_pt * __CTOR_LIST__[] = {\n");
+  fprintf (stream, "\nentry_pt * __CTOR_LIST__[] = {\n"/*}*/);
   fprintf (stream, "\t(entry_pt *) %d,\n", constructors.number + frames);
   write_list (stream, "\t", constructors.first);
   if (frames)
     fprintf (stream, "\treg_frame,\n");
-  fprintf (stream, "\t0\n};\n\n");
+  fprintf (stream, /*{*/"\t0\n};\n\n");
 
   write_list_with_asm (stream, "extern entry_pt ", destructors.first);
 
-  fprintf (stream, "\nentry_pt * __DTOR_LIST__[] = {\n");
+  fprintf (stream, "\nentry_pt * __DTOR_LIST__[] = {\n"/*}*/);
   fprintf (stream, "\t(entry_pt *) %d,\n", destructors.number + frames);
   write_list (stream, "\t", destructors.first);
   if (frames)
     fprintf (stream, "\tdereg_frame,\n");
-  fprintf (stream, "\t0\n};\n\n");
+  fprintf (stream, /*{*/"\t0\n};\n\n");
 
   fprintf (stream, "extern entry_pt %s;\n", NAME__MAIN);
   fprintf (stream, "entry_pt *__main_reference = %s;\n\n", NAME__MAIN);
@@ -1966,14 +1966,14 @@ write_c_file_glob (FILE *stream, const char *name ATTRIBUTE_UNUSED)
 static void
 write_c_file (FILE *stream, const char *name)
 {
-  fprintf (stream, "#ifdef __cplusplus\nextern \"C\" {\n#endif\n");
+  fprintf (stream, "#ifdef __cplusplus\nextern \"C\" {\n#endif\n"/*}*/);
 #ifndef LD_INIT_SWITCH
   if (! shared_obj)
     write_c_file_glob (stream, name);
   else
 #endif
     write_c_file_stat (stream, name);
-  fprintf (stream, "#ifdef __cplusplus\n}\n#endif\n");
+  fprintf (stream, /*{*/"#ifdef __cplusplus\n}\n#endif\n");
 }
 
 #ifdef COLLECT_EXPORT_LIST

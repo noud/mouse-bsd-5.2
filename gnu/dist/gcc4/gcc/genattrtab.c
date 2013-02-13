@@ -3727,7 +3727,7 @@ write_attr_get (struct attr_desc *attr)
   else
     {
       printf ("get_attr_%s (void)\n", attr->name);
-      printf ("{\n");
+      printf ("{\n"/*}*/);
 
       for (av = attr->first_value; av; av = av->next)
 	if (av->num_insns == 1)
@@ -3738,20 +3738,20 @@ write_attr_get (struct attr_desc *attr)
 	  write_attr_set (attr, 2, av->value, "return", ";",
 			  true_rtx, -2, 0);
 
-      printf ("}\n\n");
+      printf (/*{*/"}\n\n");
       return;
     }
 
-  printf ("{\n");
+  printf ("{\n"/*}*/);
   printf ("  switch (recog_memoized (insn))\n");
-  printf ("    {\n");
+  printf ("    {\n"/*}*/);
 
   for (av = attr->first_value; av; av = av->next)
     if (av != common_av)
       write_attr_case (attr, av, 1, "return", ";", 4, true_rtx);
 
   write_attr_case (attr, common_av, 0, "return", ";", 4, true_rtx);
-  printf ("    }\n}\n\n");
+  printf (/*{{*/"    }\n}\n\n");
 }
 
 /* Given an AND tree of known true terms (because we are inside an `if' with
@@ -3838,13 +3838,13 @@ write_attr_set (struct attr_desc *attr, int indent, rtx value,
 	  write_test_expr (testexp, 0);
 	  printf ("\n");
 	  write_indent (indent + 2);
-	  printf ("{\n");
+	  printf ("{\n"/*}*/);
 
 	  write_attr_set (attr, indent + 4,
 			  XVECEXP (value, 0, i + 1), prefix, suffix,
 			  inner_true, insn_code, insn_index);
 	  write_indent (indent + 2);
-	  printf ("}\n");
+	  printf (/*{*/"}\n");
 	  our_known_true = newexp;
 	}
 
@@ -3853,7 +3853,7 @@ write_attr_set (struct attr_desc *attr, int indent, rtx value,
 	  write_indent (indent);
 	  printf ("else\n");
 	  write_indent (indent + 2);
-	  printf ("{\n");
+	  printf ("{\n"/*}*/);
 	}
 
       write_attr_set (attr, first_if ? indent : indent + 4, default_val,
@@ -3862,7 +3862,7 @@ write_attr_set (struct attr_desc *attr, int indent, rtx value,
       if (! first_if)
 	{
 	  write_indent (indent + 2);
-	  printf ("}\n");
+	  printf (/*{*/"}\n");
 	}
     }
   else
@@ -4134,7 +4134,7 @@ write_eligible_delay (const char *kind)
   printf ("int\n");
   printf ("eligible_for_%s (rtx delay_insn ATTRIBUTE_UNUSED, int slot, rtx candidate_insn, int flags ATTRIBUTE_UNUSED)\n",
 	  kind);
-  printf ("{\n");
+  printf ("{\n"/*}*/);
   printf ("  rtx insn;\n");
   printf ("\n");
   printf ("  gcc_assert (slot < %d);\n", max_slots);
@@ -4155,7 +4155,7 @@ write_eligible_delay (const char *kind)
 
       printf ("  insn = delay_insn;\n");
       printf ("  switch (recog_memoized (insn))\n");
-      printf ("    {\n");
+      printf ("    {\n"/*}*/);
 
       sprintf (str, " * %d;\n      break;", max_slots);
       for (av = attr->first_value; av; av = av->next)
@@ -4163,7 +4163,7 @@ write_eligible_delay (const char *kind)
 	  write_attr_case (attr, av, 1, "slot +=", str, 4, true_rtx);
 
       write_attr_case (attr, common_av, 0, "slot +=", str, 4, true_rtx);
-      printf ("    }\n\n");
+      printf (/*{*/"    }\n\n");
 
       /* Ensure matched.  Otherwise, shouldn't have been called.  */
       printf ("  gcc_assert (slot >= %d);\n\n", max_slots);
@@ -4174,7 +4174,7 @@ write_eligible_delay (const char *kind)
     {
       printf ("  insn = candidate_insn;\n");
       printf ("  switch (recog_memoized (insn))\n");
-      printf ("    {\n");
+      printf ("    {\n"/*}*/);
 
       attr = find_attr (&delay_1_0_str, 0);
       gcc_assert (attr);
@@ -4185,7 +4185,7 @@ write_eligible_delay (const char *kind)
 	  write_attr_case (attr, av, 1, "return", ";", 4, true_rtx);
 
       write_attr_case (attr, common_av, 0, "return", ";", 4, true_rtx);
-      printf ("    }\n");
+      printf (/*{*/"    }\n");
     }
 
   else
@@ -4194,7 +4194,7 @@ write_eligible_delay (const char *kind)
 	 test, and the inner CASE tests the condition.  */
       printf ("  insn = candidate_insn;\n");
       printf ("  switch (slot)\n");
-      printf ("    {\n");
+      printf ("    {\n"/*}*/);
 
       for (delay = delays; delay; delay = delay->next)
 	for (i = 0; i < XVECLEN (delay->def, 1); i += 3)
@@ -4202,7 +4202,7 @@ write_eligible_delay (const char *kind)
 	    printf ("    case %d:\n",
 		    (i / 3) + (num_delays == 1 ? 0 : delay->num * max_slots));
 	    printf ("      switch (recog_memoized (insn))\n");
-	    printf ("\t{\n");
+	    printf ("\t{\n"/*}*/);
 
 	    sprintf (str, "*%s_%d_%d", kind, delay->num, i / 3);
 	    pstr = str;
@@ -4215,15 +4215,15 @@ write_eligible_delay (const char *kind)
 		write_attr_case (attr, av, 1, "return", ";", 8, true_rtx);
 
 	    write_attr_case (attr, common_av, 0, "return", ";", 8, true_rtx);
-	    printf ("      }\n");
+	    printf (/*{*/"      }\n");
 	  }
 
       printf ("    default:\n");
       printf ("      gcc_unreachable ();\n");
-      printf ("    }\n");
+      printf (/*{*/"    }\n");
     }
 
-  printf ("}\n\n");
+  printf (/*{*/"}\n\n");
 }
 
 /* This page contains miscellaneous utility routines.  */
@@ -4371,9 +4371,9 @@ write_const_num_delay_slots (void)
   if (attr)
     {
       printf ("int\nconst_num_delay_slots (rtx insn)\n");
-      printf ("{\n");
+      printf ("{\n"/*}*/);
       printf ("  switch (recog_memoized (insn))\n");
-      printf ("    {\n");
+      printf ("    {\n"/*}*/);
 
       for (av = attr->first_value; av; av = av->next)
 	{
@@ -4385,7 +4385,7 @@ write_const_num_delay_slots (void)
 
       printf ("    default:\n");
       printf ("      return 1;\n");
-      printf ("    }\n}\n\n");
+      printf (/*{{*/"    }\n}\n\n");
     }
 }
 

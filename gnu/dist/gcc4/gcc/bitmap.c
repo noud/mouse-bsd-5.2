@@ -1224,7 +1224,7 @@ debug_bitmap_file (FILE *file, bitmap head)
     {
       unsigned int i, j, col = 26;
 
-      fprintf (file, "\t%p next = %p prev = %p indx = %u\n\t\tbits = {",
+      fprintf (file, "\t%p next = %p prev = %p indx = %u\n\t\tbits = {"/*}*/,
 	       (void*) ptr, (void*) ptr->next, (void*) ptr->prev, ptr->indx);
 
       for (i = 0; i < BITMAP_ELEMENT_WORDS; i++)
@@ -1242,7 +1242,7 @@ debug_bitmap_file (FILE *file, bitmap head)
 	      col += 4;
 	    }
 
-      fprintf (file, " }\n");
+      fprintf (file, /*{*/" }\n");
     }
 }
 

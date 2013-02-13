@@ -1903,7 +1903,7 @@ write_switch (struct decision *start, int depth)
 
       memset (codemap, 0, sizeof(codemap));
 
-      printf ("  switch (GET_CODE (x%d))\n    {\n", depth);
+      printf ("  switch (GET_CODE (x%d))\n    {\n"/*}*/, depth);
       code = p->tests->u.code;
       do
 	{
@@ -1976,7 +1976,7 @@ write_switch (struct decision *start, int depth)
 	}
       else
 	printf ("     break;\n");
-      printf ("   }\n");
+      printf (/*{*/"   }\n");
 
       return ret;
     }
@@ -2018,7 +2018,7 @@ write_switch (struct decision *start, int depth)
 	default:
 	  gcc_unreachable ();
 	}
-      printf (")\n%s    {\n", indent);
+      printf (")\n%s    {\n"/*}*/, indent);
 
       do
 	{
@@ -2059,7 +2059,7 @@ write_switch (struct decision *start, int depth)
       while (p && p->tests->type == type && !p->tests->next);
 
     case_done:
-      printf ("%s    default:\n%s      break;\n%s    }\n",
+      printf (/*{*/"%s    default:\n%s      break;\n%s    }\n",
 	      indent, indent, indent);
 
       return needs_label != NULL ? needs_label : p;
@@ -2159,7 +2159,7 @@ write_action (struct decision *p, struct decision_test *test,
     indent = "  ";
   else if (test->type == DT_accept_op || test->type == DT_accept_insn)
     {
-      fputs ("    {\n", stdout);
+      fputs ("    {\n"/*}*/, stdout);
       indent = "      ";
       want_close = 1;
     }
@@ -2227,7 +2227,7 @@ write_action (struct decision *p, struct decision_test *test,
     }
 
   if (want_close)
-    fputs ("    }\n", stdout);
+    fputs (/*{*/"    }\n", stdout);
 }
 
 /* Return 1 if the test is always true and has no fallthru path.  Return -1
@@ -2439,7 +2439,7 @@ peephole2%s (rtx x0 ATTRIBUTE_UNUSED,\n\trtx insn ATTRIBUTE_UNUSED,\n\tint *_pma
       break;
     }
 
-  printf ("{\n  rtx * const operands ATTRIBUTE_UNUSED = &recog_data.operand[0];\n");
+  printf ("{\n  rtx * const operands ATTRIBUTE_UNUSED = &recog_data.operand[0];\n"/*}*/);
   for (i = 1; i <= max_depth; i++)
     printf ("  rtx x%d ATTRIBUTE_UNUSED;\n", i);
 
@@ -2453,7 +2453,7 @@ peephole2%s (rtx x0 ATTRIBUTE_UNUSED,\n\trtx insn ATTRIBUTE_UNUSED,\n\tint *_pma
   else
     printf ("  goto ret0;\n");
 
-  printf (" ret0:\n  return %d;\n}\n\n", IS_SPLIT (type) ? 0 : -1);
+  printf (/*{*/" ret0:\n  return %d;\n}\n\n", IS_SPLIT (type) ? 0 : -1);
 }
 
 /* In break_out_subroutines, we discovered the boundaries for the
@@ -2918,7 +2918,7 @@ debug_decision_1 (struct decision *d, int indent)
   for (i = 0; i < indent; ++i)
     putc (' ', stderr);
 
-  putc ('{', stderr);
+  putc ('{'/*}*/, stderr);
   test = d->tests;
   if (test)
     {
@@ -2929,7 +2929,7 @@ debug_decision_1 (struct decision *d, int indent)
 	  debug_decision_2 (test);
 	}
     }
-  fprintf (stderr, "} %d n %d a %d\n", d->number,
+  fprintf (stderr, /*{*/"} %d n %d a %d\n", d->number,
 	   (d->next ? d->next->number : -1),
 	   (d->afterward ? d->afterward->number : -1));
 }

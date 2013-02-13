@@ -1011,16 +1011,16 @@ read_braced_string (FILE *infile)
   int brace_depth = 1;  /* caller-processed */
   unsigned long starting_read_rtx_lineno = read_rtx_lineno;
 
-  obstack_1grow (&string_obstack, '{');
+  obstack_1grow (&string_obstack, '{'/*}*/);
   while (brace_depth)
     {
       c = getc (infile); /* Read the string  */
 
       if (c == '\n')
 	read_rtx_lineno++;
-      else if (c == '{')
+      else if (c == '{'/*}*/)
 	brace_depth++;
-      else if (c == '}')
+      else if (c == /*{*/'}')
 	brace_depth--;
       else if (c == '\\')
 	{
@@ -1029,7 +1029,7 @@ read_braced_string (FILE *infile)
 	}
       else if (c == EOF)
 	fatal_with_file_and_line
-	  (infile, "missing closing } for opening brace on line %lu",
+	  (infile, /*{*/"missing closing } for opening brace on line %lu",
 	   starting_read_rtx_lineno);
 
       obstack_1grow (&string_obstack, c);
@@ -1060,14 +1060,14 @@ read_string (FILE *infile, int star_if_braced)
   old_lineno = read_rtx_lineno;
   if (c == '"')
     stringbuf = read_quoted_string (infile);
-  else if (c == '{')
+  else if (c == '{'/*}*/)
     {
       if (star_if_braced)
 	obstack_1grow (&string_obstack, '*');
       stringbuf = read_braced_string (infile);
     }
   else
-    fatal_with_file_and_line (infile, "expected `\"' or `{', found `%c'", c);
+    fatal_with_file_and_line (infile, "expected `\"' or `{', found `%c'"/*}*/, c);
 
   if (saw_paren)
     {

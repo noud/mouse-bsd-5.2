@@ -143,7 +143,7 @@ write_one_condition (void **slot, void * ARG_UNUSED (dummy))
   const char *p;
 
   print_rtx_ptr_loc (test->expr);
-  fputs ("  { \"", stdout);
+  fputs ("  { \""/*}*/, stdout);
   for (p = test->expr; *p; p++)
     {
       if (*p == '\n')
@@ -158,7 +158,7 @@ write_one_condition (void **slot, void * ARG_UNUSED (dummy))
   print_c_condition (test->expr);
   printf ("\n    ? (int) ");
   print_c_condition (test->expr);
-  printf ("\n    : -1 },\n");
+  printf (/*{*/"\n    : -1 },\n");
   return 1;
 }
 
@@ -176,7 +176,7 @@ const struct c_test insn_conditions[] = {");
 
   htab_traverse (condition_table, write_one_condition, 0);
 
-  puts ("};\n");
+  puts (/*{*/"};\n");
 
   printf ("const size_t n_insn_conditions = %lu;\n",
 	  (unsigned long) htab_elements (condition_table));

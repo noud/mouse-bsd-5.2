@@ -416,7 +416,7 @@ gen_insn (rtx insn, int lineno)
   else
     printf ("void");
   printf (")\n");
-  printf ("{\n");
+  printf ("{\n"/*}*/);
 
   /* Output code to construct and return the rtl for the instruction body.  */
 
@@ -424,7 +424,7 @@ gen_insn (rtx insn, int lineno)
     {
       printf ("  return ");
       gen_exp (XVECEXP (insn, 1, 0), DEFINE_INSN, NULL);
-      printf (";\n}\n\n");
+      printf (/*{*/";\n}\n\n");
     }
   else
     {
@@ -436,7 +436,7 @@ gen_insn (rtx insn, int lineno)
 	  printf (",\n\t\t");
 	  gen_exp (XVECEXP (insn, 1, i), DEFINE_INSN, NULL);
 	}
-      printf ("));\n}\n\n");
+      printf (/*{*/"));\n}\n\n");
     }
 }
 
@@ -467,7 +467,7 @@ gen_expand (rtx expand)
   else
     printf ("void");
   printf (")\n");
-  printf ("{\n");
+  printf ("{\n"/*}*/);
 
   /* If we don't have any C code to write, only one insn is being written,
      and no MATCH_DUPs are present, we can just return the desired insn
@@ -478,7 +478,7 @@ gen_expand (rtx expand)
     {
       printf ("  return ");
       gen_exp (XVECEXP (expand, 1, 0), DEFINE_EXPAND, NULL);
-      printf (";\n}\n\n");
+      printf (/*{*/";\n}\n\n");
       return;
     }
 
@@ -499,7 +499,7 @@ gen_expand (rtx expand)
      So copy the operand values there before executing it.  */
   if (XSTR (expand, 3) && *XSTR (expand, 3))
     {
-      printf ("  {\n");
+      printf ("  {\n"/*}*/);
       if (operands > 0 || max_dup_opno >= 0 || max_scratch_opno >= 0)
 	printf ("    rtx operands[%d];\n",
 	    MAX (operands, MAX (max_scratch_opno, max_dup_opno) + 1));
@@ -523,7 +523,7 @@ gen_expand (rtx expand)
 	  for (; i <= max_scratch_opno; i++)
 	    printf ("    operand%d = operands[%d];\n", i, i);
 	}
-      printf ("  }\n");
+      printf (/*{*/"  }\n");
     }
 
   /* Output code to construct the rtl for the instruction bodies.
@@ -572,7 +572,7 @@ gen_expand (rtx expand)
 
   printf ("  _val = get_insns ();\n");
   printf ("  end_sequence ();\n");
-  printf ("  return _val;\n}\n\n");
+  printf (/*{*/"  return _val;\n}\n\n");
 }
 
 /* Like gen_expand, but generates insns resulting from splitting SPLIT.  */
@@ -615,7 +615,7 @@ gen_split (rtx split)
       printf ("rtx\ngen_split_%d (rtx curr_insn ATTRIBUTE_UNUSED, rtx *operands%s)\n",
 	      insn_code_number, unused);
     }
-  printf ("{\n");
+  printf ("{\n"/*}*/);
 
   /* Declare all local variables.  */
   for (i = 0; i < operands; i++)
@@ -684,7 +684,7 @@ gen_split (rtx split)
 
   printf ("  _val = get_insns ();\n");
   printf ("  end_sequence ();\n");
-  printf ("  return _val;\n}\n\n");
+  printf (/*{*/"  return _val;\n}\n\n");
 
   free (used);
 }
@@ -701,9 +701,9 @@ output_add_clobbers (void)
   int i;
 
   printf ("\n\nvoid\nadd_clobbers (rtx pattern ATTRIBUTE_UNUSED, int insn_code_number)\n");
-  printf ("{\n");
+  printf ("{\n"/*}*/);
   printf ("  switch (insn_code_number)\n");
-  printf ("    {\n");
+  printf ("    {\n"/*}*/);
 
   for (clobber = clobber_list; clobber; clobber = clobber->next)
     {
@@ -723,8 +723,8 @@ output_add_clobbers (void)
 
   printf ("    default:\n");
   printf ("      gcc_unreachable ();\n");
-  printf ("    }\n");
-  printf ("}\n");
+  printf (/*{*/"    }\n");
+  printf (/*{*/"}\n");
 }
 
 /* Write a function, `added_clobbers_hard_reg_p' that is given an insn_code
@@ -740,9 +740,9 @@ output_added_clobbers_hard_reg_p (void)
   int clobber_p, used;
 
   printf ("\n\nint\nadded_clobbers_hard_reg_p (int insn_code_number)\n");
-  printf ("{\n");
+  printf ("{\n"/*}*/);
   printf ("  switch (insn_code_number)\n");
-  printf ("    {\n");
+  printf ("    {\n"/*}*/);
 
   for (clobber_p = 0; clobber_p <= 1; clobber_p++)
     {
@@ -761,8 +761,8 @@ output_added_clobbers_hard_reg_p (void)
 
   printf ("    default:\n");
   printf ("      gcc_unreachable ();\n");
-  printf ("    }\n");
-  printf ("}\n");
+  printf (/*{*/"    }\n");
+  printf (/*{*/"}\n");
 }
 
 /* Generate code to invoke find_free_register () as needed for the

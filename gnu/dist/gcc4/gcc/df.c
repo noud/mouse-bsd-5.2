@@ -3446,14 +3446,14 @@ df_bb_single_def_use_insn_find (struct df *df, basic_block bb, rtx insn, rtx reg
 static void
 df_chain_dump (struct df_link *link, FILE *file)
 {
-  fprintf (file, "{ ");
+  fprintf (file, "{ "/*}*/);
   for (; link; link = link->next)
     {
       fprintf (file, "%c%d ",
 	       DF_REF_REG_DEF_P (link->ref) ? 'd' : 'u',
 	       DF_REF_ID (link->ref));
     }
-  fprintf (file, "}");
+  fprintf (file, /*{*/"}");
 }
 
 
@@ -3461,7 +3461,7 @@ df_chain_dump (struct df_link *link, FILE *file)
 static void
 df_chain_dump_regno (struct df_link *link, FILE *file)
 {
-  fprintf (file, "{ ");
+  fprintf (file, "{ "/*}*/);
   for (; link; link = link->next)
     {
       fprintf (file, "%c%d(%d) ",
@@ -3469,7 +3469,7 @@ df_chain_dump_regno (struct df_link *link, FILE *file)
 	       DF_REF_ID (link->ref),
 	       DF_REF_REGNO (link->ref));
     }
-  fprintf (file, "}");
+  fprintf (file, /*{*/"}");
 }
 
 

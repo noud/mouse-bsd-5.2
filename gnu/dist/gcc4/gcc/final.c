@@ -3003,7 +3003,7 @@ output_asm_insn (const char *template, rtx *operands)
 	break;
 
 #ifdef ASSEMBLER_DIALECT
-      case '{':
+      case '{':/*}*/
 	{
 	  int i;
 
@@ -3016,9 +3016,9 @@ output_asm_insn (const char *template, rtx *operands)
 	     DIALECT_NUMBER of strings ending with '|'.  */
 	  for (i = 0; i < dialect_number; i++)
 	    {
-	      while (*p && *p != '}' && *p++ != '|')
+	      while (*p && *p != /*{*/'}' && *p++ != '|')
 		;
-	      if (*p == '}')
+	      if (*p == /*{*/'}')
 		break;
 	      if (*p == '|')
 		p++;
@@ -3041,14 +3041,14 @@ output_asm_insn (const char *template, rtx *operands)
 		    break;
 		  }
 	      }
-	    while (*p++ != '}');
+	    while (*p++ != /*{*/'}');
 	    dialect = 0;
 	  }
 	else
 	  putc (c, asm_out_file);
 	break;
 
-      case '}':
+      case /*{*/'}':
 	if (! dialect)
 	  putc (c, asm_out_file);
 	dialect = 0;
@@ -3363,7 +3363,7 @@ asm_fprintf (FILE *file, const char *p, ...)
     switch (c)
       {
 #ifdef ASSEMBLER_DIALECT
-      case '{':
+      case '{'/*}*/:
 	{
 	  int i;
 
@@ -3382,11 +3382,11 @@ asm_fprintf (FILE *file, const char *p, ...)
 
       case '|':
 	/* Skip to close brace.  */
-	while (*p && *p++ != '}')
+	while (*p && *p++ != /*{*/'}')
 	  ;
 	break;
 
-      case '}':
+      case /*{*/'}':
 	break;
 #endif
 
