@@ -19,6 +19,9 @@
 
 /* When to make backup files. */
 enum backup_type {
+	/* Noet yet set. */
+	not_set,
+
 	/* Never make backups. */
 	none,
 

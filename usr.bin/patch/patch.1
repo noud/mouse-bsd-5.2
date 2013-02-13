@@ -318,7 +318,8 @@ environment variables and the argument to the
 .Fl V
 option are like the GNU Emacs
 .Dq version-control
-variable; they also recognize synonyms that are more descriptive.
+variable; they also recognize synonyms that are more descriptive, and
+provide one additional option.
 The valid values are (unique abbreviations are accepted):
 .Bl -tag -width Ds -offset indent
 .It Cm t , numbered
@@ -328,6 +329,8 @@ Make numbered backups of files that already have them,
 simple backups of the others.
 .It Cm never , simple
 Always make simple backups.
+.It Cm none
+Don't make backups at all.
 .El
 .It Fl v , Fl Fl version
 Causes
@@ -347,6 +350,9 @@ patchers.
 Causes the next argument to be interpreted as the backup extension, to be
 used in place of
 .Qq .orig .
+However, if the argument is zero-length, suppress backups entirely,
+like
+.Fl V Ar none .
 .It Fl Fl posix
 Enables strict
 .St -p1003.1-2004
@@ -529,6 +535,11 @@ options.
 The extension used for making backup files may also be specified in the
 .Ev SIMPLE_BACKUP_SUFFIX
 environment variable, which is overridden by the options above.
+.Ev SIMPLE_BACKUP_SUFFIX
+may also have a zero-length value, which works like a zero-lnegth
+argument to
+.Fl z
+(see below).
 .Pp
 If the backup file is a symbolic or hard link to the original file,
 .Nm

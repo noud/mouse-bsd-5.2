@@ -193,7 +193,13 @@ main(int argc, char *argv[])
 
 	v = getenv("SIMPLE_BACKUP_SUFFIX");
 	if (v)
-		simple_backup_suffix = v;
+  { if (! *v)
+     { backup_type = none;
+     }
+    else
+     { simple_backup_suffix = v;
+     }
+  }
 	else
 		simple_backup_suffix = ORIGEXT;
 
@@ -202,7 +208,7 @@ main(int argc, char *argv[])
 	Argv = argv;
 	get_some_switches();
 
-	if (backup_type == none) {
+	if (backup_type == not_set) {
 		if ((v = getenv("PATCH_VERSION_CONTROL")) == NULL)
 			v = getenv("VERSION_CONTROL");
 		if (v != NULL || !posix)
@@ -493,7 +499,7 @@ get_some_switches(void)
 	while ((ch = getopt_long(Argc, Argv, options, longopts, NULL)) != -1) {
 		switch (ch) {
 		case 'b':
-			if (backup_type == none)
+			if (backup_type == not_set)
 				backup_type = numbered_existing;
 			if (optarg == NULL)
 				break;
@@ -503,6 +509,10 @@ get_some_switches(void)
 			/* FALLTHROUGH */
 		case 'z':
 			/* must directly follow 'b' case for backwards compat */
+			      if (! *optarg)
+			       { backup_type = none;
+			       }
+			      else
 			simple_backup_suffix = savestr(optarg);
 			break;
 		case 'B':
