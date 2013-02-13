@@ -67,6 +67,9 @@ extern const struct wsemul_ops wsemul_sun_ops;
 #ifdef WSEMUL_VT100
 extern const struct wsemul_ops wsemul_vt100_ops;
 #endif
+#ifdef WSEMUL_MTERM
+extern const struct wsemul_ops wsemul_mterm_ops;
+#endif
 
 const struct wsemul_ops *wsemul_pick(const char *);
 

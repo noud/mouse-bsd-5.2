@@ -43,6 +43,9 @@ __KERNEL_RCSID(0, "$NetBSD: wsemulconf.c,v 1.7 2005/12/11 12:24:12 christos Exp 
 #include <dev/wscons/wscons_callbacks.h>
 
 static const struct wsemul_ops *wsemul_conf[] = {
+#ifdef WSEMUL_MTERM
+	&wsemul_mterm_ops,
+#endif
 #ifdef WSEMUL_SUN
 	&wsemul_sun_ops,
 #endif

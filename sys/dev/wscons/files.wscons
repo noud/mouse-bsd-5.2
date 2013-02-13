@@ -13,7 +13,7 @@
 #
 
 defparam opt_wsemul.h		WSEMUL_DEFAULT
-defflag	opt_wsemul.h		WSEMUL_NO_DUMB WSEMUL_SUN WSEMUL_VT100
+defflag	opt_wsemul.h		WSEMUL_NO_DUMB WSEMUL_SUN WSEMUL_VT100 WSEMUL_MTERM
 defflag opt_wsdisplay_border.h	WSDISPLAY_CUSTOM_BORDER
 defparam opt_wsdisplay_border.h	WSDISPLAY_BORDER_COLOR
 defflag opt_wsmsgattrs.h	WSDISPLAY_CUSTOM_OUTPUT
@@ -49,6 +49,7 @@ file	dev/wscons/wsdisplay_compat_usl.c wsdisplay & wsdisplay_compat_usl
 file	dev/wscons/wsemulconf.c		wsdisplay
 file	dev/wscons/wsemul_dumb.c	wsdisplay & !wsemul_no_dumb
 file	dev/wscons/wsemul_sun.c		wsdisplay & wsemul_sun
+file	dev/wscons/wsemul_mterm.c	wsdisplay & wsemul_mterm
 file	dev/wscons/wsemul_vt100.c	wsdisplay & wsemul_vt100
 file	dev/wscons/wsemul_vt100_subr.c	wsdisplay & wsemul_vt100
 file	dev/wscons/wsemul_vt100_chars.c	wsdisplay & wsemul_vt100
