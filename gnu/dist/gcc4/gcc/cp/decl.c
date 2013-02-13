@@ -2521,7 +2521,7 @@ finish_case_label (tree low_value, tree high_value)
     cond = TREE_VALUE (cond);
 
   r = c_add_case_label (switch_stack->cases, cond, TREE_TYPE (cond),
-			low_value, high_value);
+			low_value, high_value, 1);
 
   check_switch_goto (switch_stack->level);
 

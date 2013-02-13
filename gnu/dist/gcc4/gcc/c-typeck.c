@@ -6914,6 +6914,15 @@ c_finish_return (tree retval)
   return add_stmt (ret_stmt);
 }
 
+/* Used to store pending nested CASE_LABEL_EXPRs.  See the comment
+     before do_case for more. */
+typedef struct pending_case pending_case;
+struct pending_case {
+  pending_case *link;
+  tree c_l_e; /* the CASE_LABEL_EXPR */
+  tree target; /* the inner label's LABEL_EXPR */
+  } ;
+
 struct c_switch {
   /* The SWITCH_EXPR being built.  */
   tree switch_expr;
@@ -6941,6 +6950,13 @@ struct c_switch {
 
   /* The next node on the stack.  */
   struct c_switch *next;
+
+  /* The list of pending nested CASE_LABEL_EXPRs.  See the comment
+     before do_case for more. */
+  pending_case *pending_cases;
+
+  /* The tag this switch was labeled with, nil if none */
+  tree tag;
 };
 
 /* A stack of the currently active switch statements.  The innermost
@@ -6955,7 +6971,7 @@ struct c_switch *c_switch_stack;
    SWITCH_EXPR.  */
 
 tree
-c_start_case (tree exp)
+c_start_case (tree exp, tree tag)
 {
   enum tree_code code;
   tree type, orig_type = error_mark_node;
@@ -6996,52 +7012,126 @@ c_start_case (tree exp)
   cs->blocked_stmt_expr = 0;
   cs->blocked_vm = 0;
   cs->next = c_switch_stack;
+ cs->pending_cases = 0;
+ cs->tag = tag;
   c_switch_stack = cs;
 
   return add_stmt (cs->switch_expr);
 }
 
-/* Process a case label.  */
+int lcs_tagmatch(tree cstag, tree reftag)
+{
+ if ( (TREE_CODE(cstag) != STRING_CST) ||
+      (TREE_CODE(reftag) != STRING_CST) ) return(0);
+ if (TREE_STRING_LENGTH(cstag) != TREE_STRING_LENGTH(reftag)) return(0);
+ return(!memcmp( TREE_STRING_POINTER(cstag),
+		 TREE_STRING_POINTER(reftag),
+		 TREE_STRING_LENGTH(cstag) ));
+}
+
+/* Process a case label.
+   There is a bit of an issue here.  It's not hard to add the case to
+   the appropriate switch, but if we do this naïvely, the case will
+   end up implemented as belonging to the innermost containing switch,
+   because CASE_LABEL_EXPRs do not know which switch they belong to;
+   they are simply compiled into the innermost switch containing them.
+   So if the case does not go with the innermost switch, instead of
+   doing a simple c_add_case_label, we tell c_add_case_label to *not*
+   call add_stmt; instead, we generate a plain label here, and save
+   the CASE_LABEL_EXPR, and the plain label, for generation when the
+   switch the case does go with is closed.  At that point we generate
+   the equivalent of a case label with a goto to the actual target. */
 
 tree
-do_case (tree low_value, tree high_value)
+do_case (tree low_value, tree high_value, tree tag)
 {
-  tree label = NULL_TREE;
+ tree label;
+ struct c_switch *sw;
+ int block_sx;
+ int block_vm;
 
-  if (c_switch_stack && !c_switch_stack->blocked_stmt_expr
-      && !c_switch_stack->blocked_vm)
-    {
-      label = c_add_case_label (c_switch_stack->cases,
-				SWITCH_COND (c_switch_stack->switch_expr),
-				c_switch_stack->orig_type,
-				low_value, high_value);
-      if (label == error_mark_node)
-	label = NULL_TREE;
-    }
-  else if (c_switch_stack && c_switch_stack->blocked_stmt_expr)
-    {
-      if (low_value)
-	error ("case label in statement expression not containing "
-	       "enclosing switch statement");
-      else
-	error ("%<default%> label in statement expression not containing "
-	       "enclosing switch statement");
-    }
-  else if (c_switch_stack && c_switch_stack->blocked_vm)
-    {
-      if (low_value)
-	error ("case label in scope of identifier with variably modified "
-	       "type not containing enclosing switch statement");
-      else
-	error ("%<default%> label in scope of identifier with variably "
-	       "modified type not containing enclosing switch statement");
-    }
-  else if (low_value)
-    error ("case label not within a switch statement");
-  else
-    error ("%<default%> label not within a switch statement");
-
-  return label;
+ label = NULL_TREE;
+ sw = c_switch_stack;
+ if (! sw)
+  { if (low_value)
+     { error("case label not within a switch statement");
+     }
+    else
+     { error("%<default%> label not within a switch statement");
+     }
+    return(NULL_TREE);
+  }
+ if (tag)
+  { block_sx = 0;
+    block_vm = 0;
+    while (sw && (!sw->tag || !lcs_tagmatch(sw->tag,tag)))
+     { if (sw->blocked_stmt_expr) block_sx = 1;
+       if (sw->blocked_vm) block_vm = 1;
+       sw = sw->next;
+     }
+    if (! sw)
+     { if (low_value)
+	{ error("labeled case label with no matching switch");
+	}
+       else
+	{ error("labeled %<default%> label with no matching switch");
+	}
+       return(NULL_TREE);
+     }
+  }
+ else
+  { block_sx = sw->blocked_stmt_expr;
+    block_vm = sw->blocked_vm;
+  }
+ if (block_sx)
+  { if (low_value)
+     { error("case label in statement expression not containing "
+		"matching switch statement");
+     }
+    else
+     { error("%<default%> label in statement expression not containing "
+		"matching switch statement");
+     }
+    return(NULL_TREE);
+  }
+ if (block_vm)
+  { if (low_value)
+     { error("case label in scope of identifier with variably modified "
+		"type not containing matching switch statement");
+     }
+    else
+     { error("%<default%> label in scope of identifier with variably "
+		"modified type not containing matching switch statement");
+     }
+    return(NULL_TREE);
+  }
+ if (sw == c_switch_stack)
+  { /* Easy case. */
+    label = c_add_case_label( sw->cases,
+			      SWITCH_COND (sw->switch_expr),
+			      sw->orig_type,
+			      low_value, high_value, 1 );
+    if (label == error_mark_node) return(NULL_TREE);
+  }
+ else
+  { /* Nested case.  First, create the CASE_LABEL_EXPR, sans add_stmt(). */
+    tree target;
+    pending_case *pc;
+    label = c_add_case_label( sw->cases,
+			      SWITCH_COND (sw->switch_expr),
+			      sw->orig_type,
+			      low_value, high_value, 0 );
+    if (label == error_mark_node) return(NULL_TREE);
+    /* Now generate the inline goto target. */
+    target = add_stmt(build(LABEL_EXPR,void_type_node,create_artificial_label()));
+    /* Save all this stuff for when we close sw. */
+    pc = XNEW(pending_case);
+    pc->c_l_e = label;
+    pc->target = target;
+    pc->link = sw->pending_cases;
+    sw->pending_cases = pc;
+  }
+ return(label);
 }
 
 /* Finish the switch statement.  */
@@ -7051,6 +7141,37 @@ c_finish_case (tree body)
 {
   struct c_switch *cs = c_switch_stack;
   location_t switch_location;
+ pending_case *pc;
+ tree target;
+
+ /* Emit any pending cases.  There is a difficulty here: the resulting
+    statements have to be inside the switch body.  However, the body is
+    no longer cur_stmt_list.  So we make it so long enough to append
+    all the pending case goop, with a branch around in case the body
+    falls through (typically meaning, it doesn't end with a break).  If
+    the body _does_ end with an unconditional branch such as a break,
+    this branch around is dead code; we count on the rest of the compiler
+    to eliminate it before it produces dead code in the output. */
+ if (cs->pending_cases)
+  { tree save_cur_stmt_list;
+    tree target_skip;
+    save_cur_stmt_list = cur_stmt_list;
+    cur_stmt_list = body;
+    target_skip = create_artificial_label();
+    add_stmt(build1(GOTO_EXPR,void_type_node,target_skip));
+    while (cs->pending_cases)
+     { pc = cs->pending_cases;
+       cs->pending_cases = pc->link;
+       add_stmt(pc->c_l_e);
+       gcc_assert(TREE_CODE(pc->target)==LABEL_EXPR);
+       target = LABEL_EXPR_LABEL(pc->target);
+       TREE_USED(target) = 1;
+       add_stmt(build1(GOTO_EXPR,void_type_node,target));
+       XDELETE(pc);
+     }
+    add_stmt(build(LABEL_EXPR,void_type_node,target_skip));
+    cur_stmt_list = save_cur_stmt_list;
+  }
 
   SWITCH_BODY (cs->switch_expr) = body;
 

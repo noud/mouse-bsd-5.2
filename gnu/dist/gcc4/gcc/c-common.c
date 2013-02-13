@@ -3613,7 +3613,7 @@ case_compare (splay_tree_key k1, splay_tree_key k2)
 
 tree
 c_add_case_label (splay_tree cases, tree cond, tree orig_type,
-		  tree low_value, tree high_value)
+		  tree low_value, tree high_value, int gen_stmt)
 {
   tree type;
   tree label;
@@ -3741,8 +3741,11 @@ c_add_case_label (splay_tree cases, tree cond, tree orig_type,
       goto error_out;
     }
 
-  /* Add a CASE_LABEL to the statement-tree.  */
-  case_label = add_stmt (build_case_label (low_value, high_value, label));
+  /* Build the CASE_LABEL. */
+  case_label = build_case_label (low_value, high_value, label);
+  /* Add it to the statement-tree, if we should. */
+  if (gen_stmt)
+     case_label = add_stmt (case_label);
   /* Register this case label in the splay tree.  */
   splay_tree_insert (cases,
 		     (splay_tree_key) low_value,

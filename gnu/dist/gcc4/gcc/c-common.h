@@ -743,9 +743,10 @@ extern int anon_aggr_type_p (tree);
   (DECL_LANG_FLAG_4 (FIELD_DECL_CHECK (NODE)) = 0)
 
 extern void emit_local_var (tree);
-extern tree do_case (tree, tree);
+extern tree do_case (tree, tree, tree);
 extern tree build_stmt (enum tree_code, ...);
 extern tree build_case_label (tree, tree, tree);
+extern int lcs_tagmatch(tree, tree);
 
 /* These functions must be defined by each front-end which implements
    a variant of the C language.  They are used in c-common.c.  */
@@ -766,7 +767,7 @@ extern tree boolean_increment (enum tree_code, tree);
 
 extern int case_compare (splay_tree_key, splay_tree_key);
 
-extern tree c_add_case_label (splay_tree, tree, tree, tree, tree);
+extern tree c_add_case_label (splay_tree, tree, tree, tree, tree, int);
 
 extern void c_do_switch_warnings (splay_tree, location_t, tree, tree);
 

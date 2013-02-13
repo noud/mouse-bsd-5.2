@@ -554,7 +554,7 @@ extern void set_init_index (tree, tree);
 extern void set_init_label (tree);
 extern void process_init_element (struct c_expr);
 extern tree build_compound_literal (tree, tree);
-extern tree c_start_case (tree);
+extern tree c_start_case (tree, tree);
 extern void c_finish_case (tree);
 extern tree build_asm_expr (tree, tree, tree, tree, bool);
 extern tree build_asm_stmt (tree, tree);

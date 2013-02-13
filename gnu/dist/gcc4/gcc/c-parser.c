@@ -271,6 +271,17 @@ typedef struct c_token GTY (())
   location_t location;
 } c_token;
 
+/* A structure recording the labeled control structure stack. */
+typedef struct c_lcs c_lcs;
+struct c_lcs
+{
+ c_lcs *link;
+ c_lcs *back;
+ tree tag;
+ tree *breakp;
+ tree *contp;
+};
+
 /* A parser structure recording information about the state and
    context of parsing.  Includes lexer information with up to two
    tokens of look-ahead; more are not needed for C.  */
@@ -280,6 +291,11 @@ typedef struct c_parser GTY(())
   c_token tokens[2];
   /* How many look-ahead tokens are available (0, 1 or 2).  */
   short tokens_avail;
+ /* The labeled control structure tag stack. */
+ /* This field should be c_lcs *, but gengtype is buggy (or doc/gty.texi
+    is severely incomplete); doing that breaks builds, with gengtype
+    complaining that c_lcs is an unknown type. */
+ void * GTY((skip)) lcs;
   /* True if a syntax error is being recovered from; false otherwise.
      c_parser_error sets this flag.  It should clear this flag when
      enough tokens have been consumed to recover from the error.  */
@@ -615,6 +631,7 @@ c_parser_new (void)
   c_parser tparser;
   c_parser *ret;
   memset (&tparser, 0, sizeof tparser);
+ tparser.lcs = 0;
   c_lex_one_token (&tparser.tokens[0]);
   tparser.tokens_avail = 1;
   ret = GGC_NEW (c_parser);
@@ -3322,12 +3339,139 @@ c_parser_compound_statement_nostart (c_parser *parser)
   c_parser_consume_token (parser);
 }
 
+/*
+ * These maintain the stack of labeled control structure.  Because of
+ *  the ugly way nested break/continue scopes work in this parser (the
+ *  implementation of each control structure statement has auto
+ *  variables which save the break and continue global label
+ *  variables), the frame we create contains its own tag, but the
+ *  pointers for the next enclosing structure using the appropriate
+ *  type of (pseudo)label.  This means that the functions to find the
+ *  label given a tag have to first find the frame with the tag, then
+ *  figure out where that frame's global value is stored - in the next
+ *  innermost frame having the appropriate type of label, or the global
+ *  if there is no such next frame.
+ *
+ * This is also why lcs frames are created for unlabeled control
+ *  structure: we have to be able to capture the function-local
+ *  locations where the label values are stored for enclosing labeled
+ *  structure.
+ *
+ * This is also why backlinks exist: to make it possible to walk the
+ *  list in the other direction to find the appropriate frame.
+ *
+ * The general impression is that this nesting scheme was designed to
+ *  make labeled control structure difficult to implement, though I
+ *  don't flatter myself anyone at the FSF has actually even noticed
+ *  it, much less cared enough to bother making it difficult for me to
+ *  roll forward.
+ */
+
+static void c_parser_lcs_push(c_parser *parser, tree tag, tree *breakp, tree *contp)
+{
+ c_lcs *new;
+
+ new = XNEW(c_lcs);
+ new->tag = tag;
+ new->breakp = breakp;
+ new->contp = contp;
+ new->link = parser->lcs;
+ new->back = 0;
+ if (new->link) new->link->back = new;
+ parser->lcs = new;
+}
+
+static void c_parser_lcs_pop(c_parser *parser)
+{
+ c_lcs *old;
+
+ old = parser->lcs;
+ parser->lcs = old->link;
+ if (old->link) old->link->back = 0;
+ XDELETE(old);
+}
+
+static tree *c_parser_lcs_find_cont(c_parser *parser, tree tag)
+{
+ c_lcs *s;
+
+ if (! tag) return(&c_cont_label);
+ for (s=parser->lcs;s;s=s->link)
+  { if (s->tag && lcs_tagmatch(s->tag,tag))
+     { if (! s->contp)
+	{ if (! parser->error) error("tagged control structure type wrong");
+	  parser->error = true;
+	  return(0);
+	}
+       do s = s->back; while (s && !s->contp);
+       return(s?s->contp:&c_cont_label);
+     }
+  }
+ error("tagged `continue' not within a matching control structure");
+ return(0);
+}
+
+static tree *c_parser_lcs_find_break(c_parser *parser, tree tag)
+{
+ c_lcs *s;
+
+ if (! tag) return(&c_break_label);
+ for (s=parser->lcs;s;s=s->link)
+  { if (s->tag && lcs_tagmatch(s->tag,tag))
+     { if (! s->breakp)
+	{ if (! parser->error) error("tagged control structure type wrong");
+	  parser->error = true;
+	  return(0);
+	}
+       do s = s->back; while (s && !s->breakp);
+       return(s?s->breakp:&c_break_label);
+     }
+  }
+ error("tagged `break' not within a matching control structure");
+ return(0);
+}
+
+/* Parse a <"..."> control-statement label (Mouse extension).
+
+   label-construct:
+     < string > | nothing
+
+   Returns the tree for string, or NULL_TREE if nothing or error.
+*/
+
+static tree c_parser_label_construct(c_parser *parser)
+{
+ tree rv;
+
+ if (! c_parser_next_token_is(parser,CPP_LESS)) return(NULL_TREE);
+ if (c_parser_peek_2nd_token(parser)->type != CPP_STRING) return(NULL_TREE);
+ c_parser_consume_token(parser);
+ rv = c_parser_peek_token(parser)->value;
+ c_parser_consume_token(parser);
+ if (c_parser_next_token_is(parser,CPP_GREATER))
+  { c_parser_consume_token(parser);
+    if (TREE_CODE(rv) != STRING_CST)
+     { error("Non-STRING_CST CPP_STRING");
+       rv = NULL_TREE;
+     }
+    return(rv);
+  }
+ else if (c_parser_next_token_is(parser,CPP_STRING))
+  { c_parser_error(parser,"tags may not use string concatenation");
+    c_parser_skip_until_found(parser,CPP_GREATER,0);
+  }
+ else
+  { c_parser_skip_until_found(parser,CPP_GREATER,"expected %<>%>");
+  }
+ return(NULL_TREE);
+}
+
 /* Parse a label (C90 6.6.1, C99 6.8.1).
 
    label:
      identifier : attributes[opt]
-     case constant-expression :
-     default :
+     case label-construct constant-expression :
+     default label-construct :
 
    GNU extensions:
 
@@ -3343,22 +3487,24 @@ c_parser_label (c_parser *parser)
 {
   location_t loc1 = c_parser_peek_token (parser)->location;
   tree label = NULL_TREE;
+ tree lcs;
   if (c_parser_next_token_is_keyword (parser, RID_CASE))
     {
       tree exp1, exp2;
       c_parser_consume_token (parser);
+      lcs = c_parser_label_construct(parser);
       exp1 = c_parser_expr_no_commas (parser, NULL).value;
       if (c_parser_next_token_is (parser, CPP_COLON))
 	{
 	  c_parser_consume_token (parser);
-	  label = do_case (exp1, NULL_TREE);
+	  label = do_case (exp1, NULL_TREE, lcs);
 	}
       else if (c_parser_next_token_is (parser, CPP_ELLIPSIS))
 	{
 	  c_parser_consume_token (parser);
 	  exp2 = c_parser_expr_no_commas (parser, NULL).value;
 	  if (c_parser_require (parser, CPP_COLON, "expected %<:%>"))
-	    label = do_case (exp1, exp2);
+	    label = do_case (exp1, exp2, lcs);
 	}
       else
 	c_parser_error (parser, "expected %<:%> or %<...%>");
@@ -3366,8 +3512,9 @@ c_parser_label (c_parser *parser)
   else if (c_parser_next_token_is_keyword (parser, RID_DEFAULT))
     {
       c_parser_consume_token (parser);
+      lcs = c_parser_label_construct(parser);
       if (c_parser_require (parser, CPP_COLON, "expected %<:%>"))
-	label = do_case (NULL_TREE, NULL_TREE);
+	label = do_case (NULL_TREE, NULL_TREE, lcs);
     }
   else
     {
@@ -3461,6 +3608,8 @@ c_parser_statement_after_labels (c_parser *parser)
 {
   location_t loc = c_parser_peek_token (parser)->location;
   tree stmt = NULL_TREE;
+ tree lcs;
+ tree *lcs_label;
   switch (c_parser_peek_token (parser)->type)
     {
     case CPP_OPEN_BRACE:
@@ -3501,11 +3650,23 @@ c_parser_statement_after_labels (c_parser *parser)
 	  goto expect_semicolon;
 	case RID_CONTINUE:
 	  c_parser_consume_token (parser);
-	  stmt = c_finish_bc_stmt (&c_cont_label, false);
+	     lcs = c_parser_label_construct(parser);
+	     lcs_label = c_parser_lcs_find_cont(parser,lcs);
+	     if (! lcs_label)
+	      { c_parser_skip_until_found(parser,CPP_SEMICOLON,0);
+		break;
+	      }
+	  stmt = c_finish_bc_stmt (lcs_label, false);
 	  goto expect_semicolon;
 	case RID_BREAK:
 	  c_parser_consume_token (parser);
-	  stmt = c_finish_bc_stmt (&c_break_label, true);
+	     lcs = c_parser_label_construct(parser);
+	     lcs_label = c_parser_lcs_find_break(parser,lcs);
+	     if (! lcs_label)
+	      { c_parser_skip_until_found(parser,CPP_SEMICOLON,0);
+		break;
+	      }
+	  stmt = c_finish_bc_stmt (lcs_label, true);
 	  goto expect_semicolon;
 	case RID_RETURN:
 	  c_parser_consume_token (parser);
@@ -3677,9 +3838,10 @@ c_parser_if_statement (c_parser *parser)
 static void
 c_parser_switch_statement (c_parser *parser)
 {
-  tree block, expr, body, save_break;
+  tree block, expr, body, save_break, lcs;
   gcc_assert (c_parser_next_token_is_keyword (parser, RID_SWITCH));
   c_parser_consume_token (parser);
+ lcs = c_parser_label_construct(parser);
   block = c_begin_compound_stmt (flag_isoc99);
   if (c_parser_require (parser, CPP_OPEN_PAREN, "expected %<(%>"))
     {
@@ -3688,10 +3850,12 @@ c_parser_switch_statement (c_parser *parser)
     }
   else
     expr = error_mark_node;
-  c_start_case (expr);
+  c_start_case (expr, lcs);
   save_break = c_break_label;
   c_break_label = NULL_TREE;
+ c_parser_lcs_push(parser,lcs,&save_break,0);
   body = c_parser_c99_block_statement (parser);
+ c_parser_lcs_pop(parser);
   c_finish_case (body);
   if (c_break_label)
     add_stmt (build (LABEL_EXPR, void_type_node, c_break_label));
@@ -3708,10 +3872,11 @@ c_parser_switch_statement (c_parser *parser)
 static void
 c_parser_while_statement (c_parser *parser)
 {
-  tree block, cond, body, save_break, save_cont;
+  tree block, cond, body, save_break, save_cont, lcs;
   location_t loc;
   gcc_assert (c_parser_next_token_is_keyword (parser, RID_WHILE));
   c_parser_consume_token (parser);
+ lcs = c_parser_label_construct(parser);
   block = c_begin_compound_stmt (flag_isoc99);
   loc = c_parser_peek_token (parser)->location;
   cond = c_parser_paren_condition (parser);
@@ -3719,7 +3884,9 @@ c_parser_while_statement (c_parser *parser)
   c_break_label = NULL_TREE;
   save_cont = c_cont_label;
   c_cont_label = NULL_TREE;
+ c_parser_lcs_push(parser,lcs,&save_break,&save_cont);
   body = c_parser_c99_block_statement (parser);
+ c_parser_lcs_pop(parser);
   c_finish_loop (loc, cond, NULL, body, c_break_label, c_cont_label, true);
   add_stmt (c_end_compound_stmt (block, flag_isoc99));
   c_break_label = save_break;
@@ -3735,17 +3902,20 @@ c_parser_while_statement (c_parser *parser)
 static void
 c_parser_do_statement (c_parser *parser)
 {
-  tree block, cond, body, save_break, save_cont, new_break, new_cont;
+  tree block, cond, body, save_break, save_cont, new_break, new_cont, lcs;
   location_t loc;
   gcc_assert (c_parser_next_token_is_keyword (parser, RID_DO));
   c_parser_consume_token (parser);
+ lcs = c_parser_label_construct(parser);
   block = c_begin_compound_stmt (flag_isoc99);
   loc = c_parser_peek_token (parser)->location;
   save_break = c_break_label;
   c_break_label = NULL_TREE;
   save_cont = c_cont_label;
   c_cont_label = NULL_TREE;
+ c_parser_lcs_push(parser,lcs,&save_break,&save_cont);
   body = c_parser_c99_block_statement (parser);
+ c_parser_lcs_pop(parser);
   c_parser_require_keyword (parser, RID_WHILE, "expected %<while%>");
   new_break = c_break_label;
   c_break_label = save_break;
@@ -3777,11 +3947,12 @@ c_parser_do_statement (c_parser *parser)
 static void
 c_parser_for_statement (c_parser *parser)
 {
-  tree block, cond, incr, save_break, save_cont, body;
+  tree block, cond, incr, save_break, save_cont, body, lcs;
   location_t loc;
   gcc_assert (c_parser_next_token_is_keyword (parser, RID_FOR));
   loc = c_parser_peek_token (parser)->location;
   c_parser_consume_token (parser);
+ lcs = c_parser_label_construct(parser);
   block = c_begin_compound_stmt (flag_isoc99);
   if (c_parser_require (parser, CPP_OPEN_PAREN, "expected %<(%>"))
     {
@@ -3855,7 +4026,9 @@ c_parser_for_statement (c_parser *parser)
   c_break_label = NULL_TREE;
   save_cont = c_cont_label;
   c_cont_label = NULL_TREE;
+ c_parser_lcs_push(parser,lcs,&save_break,&save_cont);
   body = c_parser_c99_block_statement (parser);
+ c_parser_lcs_pop(parser);
   c_finish_loop (loc, cond, incr, body, c_break_label, c_cont_label, true);
   add_stmt (c_end_compound_stmt (block, flag_isoc99));
   c_break_label = save_break;
