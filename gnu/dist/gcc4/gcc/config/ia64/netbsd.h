@@ -49,8 +49,4 @@ Boston, MA 02111-1307, USA.  */
 #undef CPP_SPEC
 #define CPP_SPEC "%(netbsd_cpp_spec)"
 
-
-/* Attempt to enable execute permissions on the stack.  */
-#define TRANSFER_FROM_TRAMPOLINE NETBSD_ENABLE_EXECUTE_STACK
-
 #define TARGET_VERSION fprintf (stderr, " (NetBSD/ia64 ELF)");

@@ -67,7 +67,4 @@ Boston, MA 02110-1301, USA.  */
     fprintf (FILE, "\tcall __mcount\n");				\
 }
 
-/* Attempt to enable execute permissions on the stack.  */
-#define ENABLE_EXECUTE_STACK NETBSD_ENABLE_EXECUTE_STACK
-
 #define TARGET_VERSION fprintf (stderr, " (NetBSD/x86_64 ELF)");

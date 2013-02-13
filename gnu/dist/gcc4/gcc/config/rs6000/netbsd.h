@@ -121,17 +121,12 @@
 #undef TARGET_DEFAULT
 #define TARGET_DEFAULT (MASK_POWERPC | MASK_NEW_MNEMONICS | MASK_STRICT_ALIGN)
 
-/* Attempt to enable execute permissions on the stack.  */
-#define TRANSFER_FROM_TRAMPOLINE NETBSD_ENABLE_EXECUTE_STACK
 #ifdef L_trampoline
 #undef TRAMPOLINE_SIZE
 #define TRAMPOLINE_SIZE 48
 #endif
 
-/* Make sure _enable_execute_stack() isn't the empty function in libgcc2.c.
-   It gets defined in _trampoline.o via NETBSD_ENABLE_EXECUTE_STACK.  */
 #undef ENABLE_EXECUTE_STACK
-#define ENABLE_EXECUTE_STACK
 
 /* Override STACK_BOUNDARY to use Altivec compliant one.  */
 #undef STACK_BOUNDARY
