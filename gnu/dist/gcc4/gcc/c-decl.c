@@ -4077,6 +4077,11 @@ grokdeclarator (const struct c_declarator *declarator,
 	}
     }
 
+    /* Any function definition not at top level gets set `auto',
+       that being the easiest way to shut up -Wmissing-prototypes. */
+    if (funcdef_flag && (current_scope != file_scope))
+      storage_class = csc_auto;
+
   /* Now figure out the structure of the declarator proper.
      Descend through it, creating more complex types, until we reach
      the declared identifier (or NULL_TREE, in an absolute declarator).
