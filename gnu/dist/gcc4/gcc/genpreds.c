@@ -108,7 +108,7 @@ write_tm_preds_h (void)
    The only wart is that there's no way to insist on a { } string in
    an RTL template, so we have to handle "" strings.  */
 
-   
+
 static void
 write_predicate_subfunction (struct pred_data *p)
 {
@@ -191,7 +191,7 @@ mark_mode_tests (rtx exp)
       NO_MODE_TEST (exp) = (NO_MODE_TEST (XEXP (exp, 0))
 			    && NO_MODE_TEST (XEXP (exp, 1)));
       break;
-      
+
     case IOR:
       mark_mode_tests (XEXP (exp, 0));
       mark_mode_tests (XEXP (exp, 1));
@@ -267,23 +267,23 @@ add_mode_tests (struct pred_data *p)
 	  {
 	    int test0 = NO_MODE_TEST (XEXP (subexp, 0));
 	    int test1 = NO_MODE_TEST (XEXP (subexp, 1));
-	    
+
 	    gcc_assert (test0 || test1);
-	    
+
 	    if (test0 && test1)
 	      goto break_loop;
 	    pos = test0 ? &XEXP (subexp, 0) : &XEXP (subexp, 1);
 	  }
 	  break;
-	  
+
 	case IF_THEN_ELSE:
 	  {
 	    int test0 = NO_MODE_TEST (XEXP (subexp, 0));
 	    int test1 = NO_MODE_TEST (XEXP (subexp, 1));
 	    int test2 = NO_MODE_TEST (XEXP (subexp, 2));
-	    
+
 	    gcc_assert ((test0 && test1) || test2);
-	    
+
 	    if (test0 && test1 && test2)
 	      goto break_loop;
 	    if (test0 && test1)
@@ -295,7 +295,7 @@ add_mode_tests (struct pred_data *p)
 	      pos = &XEXP (subexp, 2);
 	  }
 	  break;
-	  
+
 	default:
 	  goto break_loop;
 	}
@@ -321,7 +321,7 @@ write_match_code (const char *codes)
 	  putchar (TOUPPER (*code));
 	  code++;
 	}
-      
+
       if (*codes == ',')
 	fputs (" || ", stdout);
     }
@@ -341,7 +341,7 @@ write_predicate_expr (const char *name, rtx exp)
       write_predicate_expr (name, XEXP (exp, 1));
       putchar (')');
       break;
-  
+
     case IOR:
       putchar ('(');
       write_predicate_expr (name, XEXP (exp, 0));
@@ -407,7 +407,7 @@ write_one_predicate_function (struct pred_data *p)
   fputs (";\n}\n\n", stdout);
 }
 
-/* Write insn-preds.c.  
+/* Write insn-preds.c.
    N.B. the list of headers to include was copied from genrecog; it
    may not be ideal.
 
