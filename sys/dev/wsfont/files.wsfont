@@ -20,5 +20,6 @@ defflag	opt_wsfont.h		FONT_BOLD8x16
 				FONT_SONY8x16
 				FONT_SONY12x24
 				FONT_OMRON12x20
+				FONT_FIXED6x13
 
 file	dev/wsfont/wsfontdev.c	wsfont needs-flag
