@@ -1847,6 +1847,7 @@ ip_forward(struct mbuf *m, int srcrt)
 		struct sockaddr		dst;
 		struct sockaddr_in	dst4;
 	} u;
+	int rmtu;
 
 	/*
 	 * We are now in the output path.
@@ -1926,8 +1927,8 @@ ip_forward(struct mbuf *m, int srcrt)
 	}
 
 	error = ip_output(m, NULL, &ipforward_rt,
-	    (IP_FORWARDING | (ip_directedbcast ? IP_ALLOWBROADCAST : 0)),
-	    (struct ip_moptions *)NULL, (struct socket *)NULL);
+	    (IP_FORWARDING | IP_RETURNMTU | (ip_directedbcast ? IP_ALLOWBROADCAST : 0)),
+	    (struct ip_moptions *)NULL, (struct socket *)NULL, &rmtu);
 
 	if (error)
 		IP_STATINC(IP_STAT_CANTFORWARD);
@@ -1973,6 +1974,8 @@ ip_forward(struct mbuf *m, int srcrt)
 
 		if ((rt = rtcache_validate(&ipforward_rt)) != NULL)
 			destmtu = rt->rt_ifp->if_mtu;
+
+		if (rmtu && (rmtu < destmtu)) destmtu = rmtu;
 
 #if defined(IPSEC) || defined(FAST_IPSEC)
 		{
