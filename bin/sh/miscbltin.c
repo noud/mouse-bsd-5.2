@@ -90,6 +90,7 @@ readcmd(int argc, char **argv)
 {
 	char **ap;
 	char c;
+	int zeroflag;
 	int rflag;
 	char *prompt;
 	const char *ifs;
@@ -100,13 +101,21 @@ readcmd(int argc, char **argv)
 	int is_ifs;
 	int saveall = 0;
 
+	zeroflag = 0;
 	rflag = 0;
 	prompt = NULL;
-	while ((i = nextopt("p:r")) != '\0') {
-		if (i == 'p')
+	while ((i = nextopt("0p:r")) != '\0') {
+		switch (i) {
+		case '0':
+			zeroflag = 1;
+			break;
+		case 'p':
 			prompt = optionarg;
-		else
+			break;
+		case 'r':
 			rflag = 1;
+			break;
+		}
 	}
 
 	if (prompt && isatty(0)) {
@@ -120,6 +129,14 @@ readcmd(int argc, char **argv)
 	if ((ifs = bltinlookup("IFS", 1)) == NULL)
 		ifs = " \t\n";
 
+	if (zeroflag) {
+		if (ap[1])
+			error("too many variables with -0");
+		rflag = 1;
+		ifs = "";
+		saveall = 1;
+	}
+
 	status = 0;
 	startword = 2;
 	STARTSTACKSTR(p);
@@ -128,8 +145,11 @@ readcmd(int argc, char **argv)
 			status = 1;
 			break;
 		}
-		if (c == '\0')
+		if (c == '\0') {
+			if (zeroflag)
+				break;
 			continue;
+		}
 		if (c == '\\' && !rflag) {
 			if (read(0, &c, 1) != 1) {
 				status = 1;
@@ -139,7 +159,7 @@ readcmd(int argc, char **argv)
 				STPUTC(c, p);
 			continue;
 		}
-		if (c == '\n')
+		if ((c == '\n') && !zeroflag)
 			break;
 		if (strchr(ifs, c))
 			is_ifs = strchr(" \t\n", c) ? 1 : 2;
@@ -190,15 +210,17 @@ readcmd(int argc, char **argv)
 	STACKSTRNUL(p);
 
 	/* Remove trailing IFS chars */
-	for (; stackblock() <= --p; *p = 0) {
-		if (!strchr(ifs, *p))
-			break;
-		if (strchr(" \t\n", *p))
-			/* Always remove whitespace */
-			continue;
-		if (saveall > 1)
-			/* Don't remove non-whitespace unless it was naked */
-			break;
+	if (! zeroflag) {
+		for (; stackblock() <= --p; *p = 0) {
+			if (!strchr(ifs, *p))
+				break;
+			if (strchr(" \t\n", *p))
+				/* Always remove whitespace */
+				continue;
+			if (saveall > 1)
+				/* Don't remove non-whitespace unless it was naked */
+				break;
+		}
 	}
 	setvar(*ap, stackblock(), 0);
 

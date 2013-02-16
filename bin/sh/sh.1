@@ -1576,6 +1576,7 @@ the program will use
 and the built-in uses a separately cached value.
 .It Xo read Op Fl p Ar prompt
 .Op Fl r
+.Op Fl 0
 .Ar variable
 .Op Ar ...
 .Xc
@@ -1605,6 +1606,26 @@ acts as an escape character, causing the following character to be treated
 literally.
 If a backslash is followed by a newline, the backslash and the
 newline will be deleted.
+.Pp
+If
+.Fl 0
+is specified, exactly one variable must be named, the
+.Sq line
+extends up to the next NUL (instead of newline), and nothing is ever
+stripped from the string before assigning it to the variable,
+regardless of
+.Ev IFS .
+In particular,
+.Fl r
+is implicitly supplied.
+.Fl p
+is not incompatible with
+.Fl 0 ,
+but is of questionable value.
+This is designed for use in scripts with things such as
+.Xr find 1 Ap s
+.Fl print0
+operation.
 .It readonly Ar name ...
 .It readonly Fl p
 The specified names are marked as read only, so that they cannot be
