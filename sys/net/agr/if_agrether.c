@@ -165,7 +165,7 @@ agrether_portinit(struct agr_softc *sc, struct agr_port *port)
 	}
 
 	/* Enable vlan support */
-	if ((ec->ec_nvlans > 0) && 
+	if ((ec->ec_nvlans > 0) &&
 	     ec_port->ec_nvlans++ == 0 &&
 	    (ec_port->ec_capabilities & ETHERCAP_VLAN_MTU) != 0) {
 		struct ifnet *p = port->port_ifp;
@@ -200,7 +200,7 @@ agrether_portinit(struct agr_softc *sc, struct agr_port *port)
 	KASSERT(sizeof(ifr.ifr_addr) >=
 	    sizeof(ethermulticastaddr_slowprotocols));
 	memcpy(&ifr.ifr_addr.sa_data,
-	    &ethermulticastaddr_slowprotocols, 
+	    &ethermulticastaddr_slowprotocols,
 	    sizeof(ethermulticastaddr_slowprotocols));
 	error = agrport_ioctl(port, SIOCADDMULTI, (void *)&ifr);
 	if (error) {
@@ -245,7 +245,7 @@ agrether_portfini(struct agr_softc *sc, struct agr_port *port)
 	KASSERT(sizeof(ifr.ifr_addr) >=
 	    sizeof(ethermulticastaddr_slowprotocols));
 	memcpy(&ifr.ifr_addr.sa_data,
-	    &ethermulticastaddr_slowprotocols, 
+	    &ethermulticastaddr_slowprotocols,
 	    sizeof(ethermulticastaddr_slowprotocols));
 	error = agrport_ioctl(port, SIOCDELMULTI, (void *)&ifr);
 	if (error) {

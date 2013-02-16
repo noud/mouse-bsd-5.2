@@ -563,7 +563,7 @@ tun_output(struct ifnet *ifp, struct mbuf *m0, const struct sockaddr *dst,
 			af = mtod(m0,uint32_t *);
 			*af = htonl(dst->sa_family);
 		} else {
-#ifdef INET     
+#ifdef INET
 			if (dst->sa_family != AF_INET)
 #endif
 			{

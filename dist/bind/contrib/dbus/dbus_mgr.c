@@ -917,13 +917,13 @@ dbus_mgr_get_name_list
 
 	result= dns_name_fromtext
 	        (  dnsName, &buffer, ( *(endp-1) != '.') ? dns_rootname : NULL, 0, NULL
-		); 
+		);
 
 	if( result != ISC_R_SUCCESS )
 	{
 	    sprintf(error_name, "com.redhat.named.InvalidArgument");
 	    sprintf(error_message,"Invalid DNS name initial argument: %s", name);
-	    
+
 	    isc_mem_put( mgr->mctx, fixedname, sizeof( dns_fixedname_t ) );
 
 	    for( dnsName = ISC_LIST_HEAD( *nameList );
@@ -1552,47 +1552,47 @@ dbus_mgr_handle_get_forwarders
 	sprintf(error_name,"com.redhat.dbus.InvalidArguments");
 	sprintf(error_message,"domain name argument expected");
 	dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-		       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
-	             );	    
+		       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
+	             );
 	return;
     }
-    
+
     length = strlen( domain );
 
-    isc_buffer_init( &buffer, domain, length); 
+    isc_buffer_init( &buffer, domain, length);
 
-    isc_buffer_add(&buffer, length);		
-    
+    isc_buffer_add(&buffer, length);
+
     dns_fixedname_init(&fixedname);
 
     dnsName = dns_fixedname_name(&fixedname);
 
     result = dns_name_fromtext
 	     (  dnsName, &buffer, dns_rootname, 0, NULL
-	     ); 
+	     );
 
     if( result != ISC_R_SUCCESS )
-    {	
+    {
 	sprintf(error_name,"com.redhat.dbus.InvalidArguments");
 	sprintf(error_message,"invalid domain name argument: %s", domain);
 	dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-		       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
-	             );	    
+		       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
+	             );
 	return;
     }
 
     msg = dbus_svc_new_message( dbus, RETURN, serial, sender, path, interface, member);
-    
+
     if( msg == 0L )
     {
 	sprintf(error_name,"com.redhat.dbus.OutOfMemory");
 	sprintf(error_message,"out of memory");
 	dbus_svc_send( dbus, ERROR, serial, &new_serial, sender, path, interface, member,
-		       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID 
-	             );	
+		       TYPE_STRING, error_name, TYPE_STRING, error_message, TYPE_INVALID
+	             );
 	return;
-    }	
-    
+    }
+
     fwdtable = dbus_mgr_get_fwdtable();
 
     if( fwdtable == 0L )
@@ -1743,7 +1743,7 @@ dns_name_t *dbus_mgr_if_reverse_ip_name
 
 	result= dns_name_fromtext
 	        (  dns_name, &buffer, dns_rootname, 0, NULL
-		); 
+		);
 
 	ISC_LINK_INIT(dns_name, link);
 	if( result == ISC_R_SUCCESS )

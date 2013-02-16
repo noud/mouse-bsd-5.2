@@ -569,7 +569,7 @@ pppoe_dispatch_disc_pkt(struct mbuf *m, int off)
 				n = m_pulldown(m, off + sizeof(*pt), len,
 				    &noff);
 				if (n && error) {
-					strncpy(error, 
+					strncpy(error,
 					    mtod(n, char *) + noff, len);
 					error[len] = '\0';
 				}

@@ -144,7 +144,7 @@ link_control(struct socket *so, unsigned long cmd, void *data,
 				}
 			}
 			if (ifa == NULL) {
-				error = EADDRNOTAVAIL; 
+				error = EADDRNOTAVAIL;
 				break;
 			}
 

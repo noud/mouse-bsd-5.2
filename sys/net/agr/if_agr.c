@@ -878,7 +878,7 @@ static int
 agrreq_copyin(const void *ubuf, struct agrreq *ar)
 {
 	int error;
-			
+
 	error = copyin(ubuf, ar, sizeof(*ar));
 	if (error) {
 		return error;
@@ -895,7 +895,7 @@ static int
 agrreq_copyout(void *ubuf, struct agrreq *ar)
 {
 	int error;
-			
+
 	KASSERT(ar->ar_version == AGRREQ_VERSION);
 
 	error = copyout(ar, ubuf, sizeof(*ar));
@@ -952,7 +952,7 @@ agr_ioctl(struct ifnet *ifp, u_long cmd, void *data)
 	case SIOCSIFFLAGS:
 		agr_config_promisc(sc);
 
-		/* Check for a change in vlan status.  This ioctl is the 
+		/* Check for a change in vlan status.  This ioctl is the
 		 * only way we can tell that a vlan has attached or detached.
 		 * Note the agr interface must be up.
 		 */

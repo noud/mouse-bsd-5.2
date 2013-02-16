@@ -496,7 +496,7 @@
           </para>
           <para>
             If the key is being created as an explicit successor to another
-            key, then the default prepublication interval is 30 days; 
+            key, then the default prepublication interval is 30 days;
             otherwise it is zero.
           </para>
           <para>

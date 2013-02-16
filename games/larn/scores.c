@@ -2,9 +2,9 @@
 
 /*
  * scores.c			 Larn is copyrighted 1986 by Noah Morgan.
- * 
+ *
  * Functions in this file are:
- * 
+ *
  * readboard() 	Function to read in the scoreboard into a static buffer
  * writeboard()	Function to write the scoreboard from readboard()'s buffer
  * makeboard() 	Function to create a new scoreboard (wipe out old one)
@@ -22,7 +22,7 @@
  * line showing player when he is killed diedlog() 	Subroutine to read a
  * log file and print it out in ascii format getplid(name)
  * on to get players id # from id file
- * 
+ *
  */
 #include <sys/cdefs.h>
 #ifndef lint
@@ -212,7 +212,7 @@ hashewon()
  * Enter with the amount (in gp) to pay on the taxes.
  * Returns amount actually paid.
  */
-long 
+long
 paytaxes(x)
 	long            x;
 {

@@ -2,7 +2,7 @@
 
 /*
  * global.c 		Larn is copyrighted 1986 by Noah Morgan.
- * 
+ *
  * raiselevel()		subroutine to raise the player one level
  * loselevel()		subroutine to lower the player by one level
  * raiseexperience(x)	subroutine to increase experience points

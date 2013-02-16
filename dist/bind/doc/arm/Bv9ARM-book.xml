@@ -646,7 +646,7 @@
       <para>
         ISC <acronym>BIND</acronym> 9 compiles and runs on a large
         number
-        of Unix-like operating systems and on 
+        of Unix-like operating systems and on
         Microsoft Windows Server 2003 and 2008, and Windows XP and Vista.
         For an up-to-date
         list of supported systems, see the README file in the top level
@@ -1809,7 +1809,7 @@ controls {
 	<command>allow-update</command> or an <command>update-policy</command>
 	clause in the <command>zone</command> statement.
       </para>
-      
+
       <para>
 	If the zone's <command>update-policy</command> is set to
 	<userinput>local</userinput>, updates to the zone
@@ -2758,7 +2758,7 @@ options {
 	  including missing, expired, or invalid signatures, a key which
 	  does not match the DS RRset in the parent zone, or an insecure
 	  response from a zone which, according to its parent, should have
-	  been secure.  
+	  been secure.
 	</para>
 
 	<note>
@@ -4970,7 +4970,7 @@ badresp:1,adberr:0,findfail:0,valfail:0]
         <title><command>masters</command> Statement Grammar</title>
 
 <programlisting>
-<command>masters</command> <replaceable>name</replaceable> <optional>port <replaceable>ip_port</replaceable></optional> { ( <replaceable>masters_list</replaceable> | 
+<command>masters</command> <replaceable>name</replaceable> <optional>port <replaceable>ip_port</replaceable></optional> { ( <replaceable>masters_list</replaceable> |
       <replaceable>ip_addr</replaceable> <optional>port <replaceable>ip_port</replaceable></optional> <optional>key <replaceable>key</replaceable></optional> ) ; <optional>...</optional> };
 </programlisting>
 
@@ -5037,7 +5037,7 @@ badresp:1,adberr:0,findfail:0,valfail:0]
     <optional> ixfr-from-differences (<replaceable>yes_or_no</replaceable> | <constant>master</constant> | <constant>slave</constant>); </optional>
     <optional> dnssec-enable <replaceable>yes_or_no</replaceable>; </optional>
     <optional> dnssec-validation <replaceable>yes_or_no</replaceable>; </optional>
-    <optional> dnssec-lookaside ( <replaceable>auto</replaceable> | 
+    <optional> dnssec-lookaside ( <replaceable>auto</replaceable> |
 			<replaceable>no</replaceable> |
                         <replaceable>domain</replaceable> trust-anchor <replaceable>domain</replaceable> ); </optional>
     <optional> dnssec-must-be-secure <replaceable>domain yes_or_no</replaceable>; </optional>
@@ -5085,8 +5085,8 @@ badresp:1,adberr:0,findfail:0,valfail:0]
         <optional> address ( <replaceable>ip4_addr</replaceable> | <replaceable>*</replaceable> ) </optional>
         <optional> port ( <replaceable>ip_port</replaceable> | <replaceable>*</replaceable> ) </optional> ) ; </optional>
     <optional> query-source-v6 ( ( <replaceable>ip6_addr</replaceable> | <replaceable>*</replaceable> )
-        <optional> port ( <replaceable>ip_port</replaceable> | <replaceable>*</replaceable> ) </optional> | 
-        <optional> address ( <replaceable>ip6_addr</replaceable> | <replaceable>*</replaceable> ) </optional> 
+        <optional> port ( <replaceable>ip_port</replaceable> | <replaceable>*</replaceable> ) </optional> |
+        <optional> address ( <replaceable>ip6_addr</replaceable> | <replaceable>*</replaceable> ) </optional>
         <optional> port ( <replaceable>ip_port</replaceable> | <replaceable>*</replaceable> ) </optional> ) ; </optional>
     <optional> use-queryport-pool <replaceable>yes_or_no</replaceable>; </optional>
     <optional> queryport-pool-ports <replaceable>number</replaceable>; </optional>
@@ -6436,7 +6436,7 @@ options {
                 <para>
                   If <userinput>yes</userinput>,
                   the DNS client is at an IPv4 address, in <command>filter-aaaa</command>,
-                  and if the response does not include DNSSEC signatures, 
+                  and if the response does not include DNSSEC signatures,
                   then all AAAA records are deleted from the response.
                   This filtering applies to all responses and not only
                   authoritative responses.
@@ -6448,8 +6448,8 @@ options {
                   because the DNSSEC protocol is designed detect deletions.
                 </para>
                 <para>
-                  This mechanism can erroneously cause other servers to 
-		  not give AAAA records to their clients.  
+                  This mechanism can erroneously cause other servers to
+		  not give AAAA records to their clients.
 		  A recursing server with both IPv6 and IPv4 network connections
 		  that queries an authoritative server using this mechanism
 		  via IPv4 will be denied AAAA records even if its client is
@@ -9453,7 +9453,7 @@ deny-answer-aliases { "example.net"; };
 	  <title><command>managed-keys</command> Statement Definition
 	    and Usage</title>
 	  <para>
-	    The <command>managed-keys</command> statement, like 
+	    The <command>managed-keys</command> statement, like
             <command>trusted-keys</command>, defines DNSSEC
             security roots.  The difference is that
             <command>managed-keys</command> can be kept up to date
@@ -9499,7 +9499,7 @@ deny-answer-aliases { "example.net"; };
             <literal>initial-key</literal>.  The difference is, whereas the
             keys listed in a <command>trusted-keys</command> continue to be
             trusted until they are removed from
-            <filename>named.conf</filename>, an initializing key listed 
+            <filename>named.conf</filename>, an initializing key listed
             in a <command>managed-keys</command> statement is only trusted
             <emphasis>once</emphasis>: for as long as it takes to load the
             managed key database and start the RFC 5011 key maintenance
@@ -10693,7 +10693,7 @@ zone <replaceable>zone_name</replaceable> <optional><replaceable>class</replacea
                     <replaceable>zonename</replaceable></command> causes
                     <command>named</command> to load keys from the key
                     repository and sign the zone with all keys that are
-                    active. 
+                    active.
                     <command>rndc loadkeys
                     <replaceable>zonename</replaceable></command> causes
                     <command>named</command> to load keys from the key
@@ -11004,7 +11004,7 @@ zone <replaceable>zone_name</replaceable> <optional><replaceable>class</replacea
 		      <para>
 			This rule takes a Windows machine principal
 			(machine$@REALM) for machine in REALM and
-			and converts it machine.realm allowing the machine 
+			and converts it machine.realm allowing the machine
                         to update machine.realm.  The REALM to be matched
 			is specified in the <replacable>identity</replacable>
 			field.
@@ -11018,7 +11018,7 @@ zone <replaceable>zone_name</replaceable> <optional><replaceable>class</replacea
 		      </para>
 		    </entry> <entry colname="2">
 		      <para>
-			This rule takes a Windows machine principal 
+			This rule takes a Windows machine principal
 			(machine$@REALM) for machine in REALM and
 			converts it to machine.realm allowing the machine
 			to update subdomains of machine.realm.  The REALM
@@ -11036,7 +11036,7 @@ zone <replaceable>zone_name</replaceable> <optional><replaceable>class</replacea
 		      <para>
 			This rule takes a Kerberos machine principal
 			(host/machine@REALM) for machine in REALM and
-			and converts it machine.realm allowing the machine 
+			and converts it machine.realm allowing the machine
                         to update machine.realm.  The REALM to be matched
 			is specified in the <replacable>identity</replacable>
 			field.
@@ -11050,7 +11050,7 @@ zone <replaceable>zone_name</replaceable> <optional><replaceable>class</replacea
 		      </para>
 		    </entry> <entry colname="2">
 		      <para>
-			This rule takes a Kerberos machine principal 
+			This rule takes a Kerberos machine principal
 			(host/machine@REALM) for machine in REALM and
 			converts it to machine.realm allowing the machine
 			to update subdomains of machine.realm.  The REALM
@@ -12405,7 +12405,7 @@ zone <replaceable>zone_name</replaceable> <optional><replaceable>class</replacea
             <para>
               When used in the label (or name) field, the asperand or
               at-sign (@) symbol represents the current origin.
-              At the start of the zone file, it is the 
+              At the start of the zone file, it is the
               &lt;<varname>zone_name</varname>&gt; (followed by
               trailing dot).
             </para>

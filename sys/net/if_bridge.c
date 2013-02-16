@@ -265,41 +265,41 @@ struct bridge_control {
 
 static const struct bridge_control bridge_control_table[] = {
 [BRDGADD] = {bridge_ioctl_add, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_SUSER},
-[BRDGDEL] = {bridge_ioctl_del, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_SUSER}, 
+[BRDGDEL] = {bridge_ioctl_del, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_SUSER},
 
-[BRDGGIFFLGS] = {bridge_ioctl_gifflags, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_COPYOUT}, 
-[BRDGSIFFLGS] = {bridge_ioctl_sifflags, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_SUSER}, 
+[BRDGGIFFLGS] = {bridge_ioctl_gifflags, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_COPYOUT},
+[BRDGSIFFLGS] = {bridge_ioctl_sifflags, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_SUSER},
 
-[BRDGSCACHE] = {bridge_ioctl_scache, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER}, 
-[BRDGGCACHE] = {bridge_ioctl_gcache, sizeof(struct ifbrparam), BC_F_COPYOUT}, 
+[BRDGSCACHE] = {bridge_ioctl_scache, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER},
+[BRDGGCACHE] = {bridge_ioctl_gcache, sizeof(struct ifbrparam), BC_F_COPYOUT},
 
-[BRDGGIFS] = {bridge_ioctl_gifs, sizeof(struct ifbifconf), BC_F_COPYIN|BC_F_COPYOUT}, 
-[BRDGRTS] = {bridge_ioctl_rts, sizeof(struct ifbaconf), BC_F_COPYIN|BC_F_COPYOUT}, 
+[BRDGGIFS] = {bridge_ioctl_gifs, sizeof(struct ifbifconf), BC_F_COPYIN|BC_F_COPYOUT},
+[BRDGRTS] = {bridge_ioctl_rts, sizeof(struct ifbaconf), BC_F_COPYIN|BC_F_COPYOUT},
 
-[BRDGSADDR] = {bridge_ioctl_saddr, sizeof(struct ifbareq), BC_F_COPYIN|BC_F_SUSER}, 
+[BRDGSADDR] = {bridge_ioctl_saddr, sizeof(struct ifbareq), BC_F_COPYIN|BC_F_SUSER},
 
-[BRDGSTO] = {bridge_ioctl_sto, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER}, 
-[BRDGGTO] = {bridge_ioctl_gto, sizeof(struct ifbrparam), BC_F_COPYOUT}, 
+[BRDGSTO] = {bridge_ioctl_sto, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER},
+[BRDGGTO] = {bridge_ioctl_gto, sizeof(struct ifbrparam), BC_F_COPYOUT},
 
-[BRDGDADDR] = {bridge_ioctl_daddr, sizeof(struct ifbareq), BC_F_COPYIN|BC_F_SUSER}, 
+[BRDGDADDR] = {bridge_ioctl_daddr, sizeof(struct ifbareq), BC_F_COPYIN|BC_F_SUSER},
 
-[BRDGFLUSH] = {bridge_ioctl_flush, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_SUSER}, 
+[BRDGFLUSH] = {bridge_ioctl_flush, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_SUSER},
 
-[BRDGGPRI] = {bridge_ioctl_gpri, sizeof(struct ifbrparam), BC_F_COPYOUT}, 
-[BRDGSPRI] = {bridge_ioctl_spri, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER}, 
+[BRDGGPRI] = {bridge_ioctl_gpri, sizeof(struct ifbrparam), BC_F_COPYOUT},
+[BRDGSPRI] = {bridge_ioctl_spri, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER},
 
-[BRDGGHT] = {bridge_ioctl_ght, sizeof(struct ifbrparam), BC_F_COPYOUT}, 
-[BRDGSHT] = {bridge_ioctl_sht, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER}, 
+[BRDGGHT] = {bridge_ioctl_ght, sizeof(struct ifbrparam), BC_F_COPYOUT},
+[BRDGSHT] = {bridge_ioctl_sht, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER},
 
-[BRDGGFD] = {bridge_ioctl_gfd, sizeof(struct ifbrparam), BC_F_COPYOUT}, 
-[BRDGSFD] = {bridge_ioctl_sfd, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER}, 
+[BRDGGFD] = {bridge_ioctl_gfd, sizeof(struct ifbrparam), BC_F_COPYOUT},
+[BRDGSFD] = {bridge_ioctl_sfd, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER},
 
-[BRDGGMA] = {bridge_ioctl_gma, sizeof(struct ifbrparam), BC_F_COPYOUT}, 
-[BRDGSMA] = {bridge_ioctl_sma, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER}, 
+[BRDGGMA] = {bridge_ioctl_gma, sizeof(struct ifbrparam), BC_F_COPYOUT},
+[BRDGSMA] = {bridge_ioctl_sma, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER},
 
-[BRDGSIFPRIO] = {bridge_ioctl_sifprio, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_SUSER}, 
+[BRDGSIFPRIO] = {bridge_ioctl_sifprio, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_SUSER},
 
-[BRDGSIFCOST] = {bridge_ioctl_sifcost, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_SUSER}, 
+[BRDGSIFCOST] = {bridge_ioctl_sifcost, sizeof(struct ifbreq), BC_F_COPYIN|BC_F_SUSER},
 #if defined(BRIDGE_IPF) && defined(PFIL_HOOKS)
 [BRDGGFILT] = {bridge_ioctl_gfilt, sizeof(struct ifbrparam), BC_F_COPYOUT},
 [BRDGSFILT] = {bridge_ioctl_sfilt, sizeof(struct ifbrparam), BC_F_COPYIN|BC_F_SUSER},

@@ -51,7 +51,7 @@ OPENSSLLINKOBJS = openssl_link.@O@ openssldh_link.@O@ openssldsa_link.@O@ \
 
 DSTOBJS =	@DST_EXTRA_OBJS@ @OPENSSLLINKOBJS@ \
 		dst_api.@O@ dst_lib.@O@ dst_parse.@O@ dst_result.@O@ \
-		gssapi_link.@O@ gssapictx.@O@ hmac_link.@O@ key.@O@ 
+		gssapi_link.@O@ gssapictx.@O@ hmac_link.@O@ key.@O@
 
 # Alphabetically
 DNSOBJS =	acache.@O@ acl.@O@ adb.@O@ byaddr.@O@ \

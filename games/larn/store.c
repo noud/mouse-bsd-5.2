@@ -223,7 +223,7 @@ outofstock()
 	nap(2200);
 }
 
-static void 
+static void
 nogold()
 {
 	lprcat("\nYou don't have enough gold to pay for that!");

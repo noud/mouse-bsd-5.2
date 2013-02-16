@@ -126,8 +126,8 @@ grep ";" dig.out.ns3
 $PERL ../digcomp.pl dig2.good dig.out.ns3 || tmp=1
 
 # ns3 has a journal iff it received an IXFR.
-test -f ns3/example.bk || tmp=1 
-test -f ns3/example.bk.jnl || tmp=1 
+test -f ns3/example.bk || tmp=1
+test -f ns3/example.bk.jnl || tmp=1
 
 if test $tmp != 0 ; then echo "I:failed"; fi
 status=`expr $status + $tmp`
@@ -146,8 +146,8 @@ grep ";" dig.out.ns3 && cat dig.out.ns3
 $PERL ../digcomp.pl dig.out.ns6 dig.out.ns3 || tmp=1
 
 # ns3 has a journal iff it received an IXFR.
-test -f ns3/master.bk || tmp=1 
-test -f ns3/master.bk.jnl || tmp=1 
+test -f ns3/master.bk || tmp=1
+test -f ns3/master.bk.jnl || tmp=1
 
 if test $tmp != 0 ; then echo "I:failed"; fi
 status=`expr $status + $tmp`
@@ -166,8 +166,8 @@ grep ";" dig.out.ns1
 $PERL ../digcomp.pl dig.out.ns6 dig.out.ns1 || tmp=1
 
 # ns6 has a journal iff it received an IXFR.
-test -f ns6/slave.bk || tmp=1 
-test -f ns6/slave.bk.jnl && tmp=1 
+test -f ns6/slave.bk || tmp=1
+test -f ns6/slave.bk.jnl && tmp=1
 
 if test $tmp != 0 ; then echo "I:failed"; fi
 status=`expr $status + $tmp`
@@ -176,8 +176,8 @@ echo "I:testing ixfr-from-differences slave; (master zone)"
 tmp=0
 
 # ns7 has a journal iff it generates an IXFR.
-test -f ns7/master2.db || tmp=1 
-test -f ns7/master2.db.jnl && tmp=1 
+test -f ns7/master2.db || tmp=1
+test -f ns7/master2.db.jnl && tmp=1
 
 if test $tmp != 0 ; then echo "I:failed"; fi
 status=`expr $status + $tmp`
@@ -195,8 +195,8 @@ grep ";" dig.out.ns1
 $PERL ../digcomp.pl dig.out.ns7 dig.out.ns1 || tmp=1
 
 # ns7 has a journal iff it generates an IXFR.
-test -f ns7/slave.bk || tmp=1 
-test -f ns7/slave.bk.jnl || tmp=1 
+test -f ns7/slave.bk || tmp=1
+test -f ns7/slave.bk.jnl || tmp=1
 
 if test $tmp != 0 ; then echo "I:failed"; fi
 status=`expr $status + $tmp`

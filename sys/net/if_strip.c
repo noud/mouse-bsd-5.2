@@ -520,7 +520,7 @@ stripopen(dev_t dev, struct tty *tp)
 					return (ENOMEM);
 				}
 				mutex_spin_enter(&tty_lock);
-			} else 
+			} else
 				sc->sc_oldbufsize = sc->sc_oldbufquot = 0;
 			strip_resetradio(sc, tp);
 			mutex_spin_exit(&tty_lock);

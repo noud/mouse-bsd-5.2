@@ -883,7 +883,7 @@ ether_input(struct ifnet *ifp, struct mbuf *m)
 #endif
 #ifdef INET6
 		case ETHERTYPE_IPV6:
-#ifdef GATEWAY  
+#ifdef GATEWAY
 			if (ip6flow_fastforward(m))
 				return;
 #endif
@@ -961,7 +961,7 @@ ether_input(struct ifnet *ifp, struct mbuf *m)
 					/* XXX length computation?? */
 					if (m->m_pkthdr.len > etype + sizeof(struct ether_header))
 						m_adj(m, etype - m->m_pkthdr.len);
-					
+
 #ifdef ARGO_DEBUG
 					if (argo_debug[D_ETHER])
 						printf("clnp packet");

@@ -56,7 +56,7 @@ MANPAGES =	dnssec-dsfromkey.8 dnssec-keyfromlabel.8 dnssec-keygen.8 \
 
 HTMLPAGES =	dnssec-dsfromkey.html dnssec-keyfromlabel.html \
 		dnssec-keygen.html dnssec-revoke.html \
-		dnssec-settime.html dnssec-signzone.html 
+		dnssec-settime.html dnssec-signzone.html
 
 MANOBJS =	${MANPAGES} ${HTMLPAGES}
 

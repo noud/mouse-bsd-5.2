@@ -2050,7 +2050,7 @@ badresp:1,adberr:0,findfail:0,valfail:0]
 <div class="titlepage"><div><div><h3 class="title">
 <a name="id2578070"></a><span><strong class="command">masters</strong></span> Statement Grammar</h3></div></div></div>
 <pre class="programlisting">
-<span><strong class="command">masters</strong></span> <em class="replaceable"><code>name</code></em> [<span class="optional">port <em class="replaceable"><code>ip_port</code></em></span>] { ( <em class="replaceable"><code>masters_list</code></em> | 
+<span><strong class="command">masters</strong></span> <em class="replaceable"><code>name</code></em> [<span class="optional">port <em class="replaceable"><code>ip_port</code></em></span>] { ( <em class="replaceable"><code>masters_list</code></em> |
       <em class="replaceable"><code>ip_addr</code></em> [<span class="optional">port <em class="replaceable"><code>ip_port</code></em></span>] [<span class="optional">key <em class="replaceable"><code>key</code></em></span>] ) ; [<span class="optional">...</span>] };
 </pre>
 </div>
@@ -2114,7 +2114,7 @@ badresp:1,adberr:0,findfail:0,valfail:0]
     [<span class="optional"> ixfr-from-differences (<em class="replaceable"><code>yes_or_no</code></em> | <code class="constant">master</code> | <code class="constant">slave</code>); </span>]
     [<span class="optional"> dnssec-enable <em class="replaceable"><code>yes_or_no</code></em>; </span>]
     [<span class="optional"> dnssec-validation <em class="replaceable"><code>yes_or_no</code></em>; </span>]
-    [<span class="optional"> dnssec-lookaside ( <em class="replaceable"><code>auto</code></em> | 
+    [<span class="optional"> dnssec-lookaside ( <em class="replaceable"><code>auto</code></em> |
                         <em class="replaceable"><code>no</code></em> |
                         <em class="replaceable"><code>domain</code></em> trust-anchor <em class="replaceable"><code>domain</code></em> ); </span>]
     [<span class="optional"> dnssec-must-be-secure <em class="replaceable"><code>domain yes_or_no</code></em>; </span>]
@@ -3257,7 +3257,7 @@ options {
 <p>
                   If <strong class="userinput"><code>yes</code></strong>,
                   the DNS client is at an IPv4 address, in <span><strong class="command">filter-aaaa</strong></span>,
-                  and if the response does not include DNSSEC signatures, 
+                  and if the response does not include DNSSEC signatures,
                   then all AAAA records are deleted from the response.
                   This filtering applies to all responses and not only
                   authoritative responses.
@@ -3269,8 +3269,8 @@ options {
                   because the DNSSEC protocol is designed detect deletions.
                 </p>
 <p>
-                  This mechanism can erroneously cause other servers to 
-                  not give AAAA records to their clients.  
+                  This mechanism can erroneously cause other servers to
+                  not give AAAA records to their clients.
                   A recursing server with both IPv6 and IPv4 network connections
                   that queries an authoritative server using this mechanism
                   via IPv4 will be denied AAAA records even if its client is
@@ -5730,7 +5730,7 @@ deny-answer-aliases { "example.net"; };
 <a name="managed-keys"></a><span><strong class="command">managed-keys</strong></span> Statement Definition
             and Usage</h3></div></div></div>
 <p>
-            The <span><strong class="command">managed-keys</strong></span> statement, like 
+            The <span><strong class="command">managed-keys</strong></span> statement, like
             <span><strong class="command">trusted-keys</strong></span>, defines DNSSEC
             security roots.  The difference is that
             <span><strong class="command">managed-keys</strong></span> can be kept up to date
@@ -5776,7 +5776,7 @@ deny-answer-aliases { "example.net"; };
             <code class="literal">initial-key</code>.  The difference is, whereas the
             keys listed in a <span><strong class="command">trusted-keys</strong></span> continue to be
             trusted until they are removed from
-            <code class="filename">named.conf</code>, an initializing key listed 
+            <code class="filename">named.conf</code>, an initializing key listed
             in a <span><strong class="command">managed-keys</strong></span> statement is only trusted
             <span class="emphasis"><em>once</em></span>: for as long as it takes to load the
             managed key database and start the RFC 5011 key maintenance
@@ -6715,7 +6715,7 @@ zone <em class="replaceable"><code>zone_name</code></em> [<span class="optional"
                     <em class="replaceable"><code>zonename</code></em></strong></span> causes
                     <span><strong class="command">named</strong></span> to load keys from the key
                     repository and sign the zone with all keys that are
-                    active. 
+                    active.
                     <span><strong class="command">rndc loadkeys
                     <em class="replaceable"><code>zonename</code></em></strong></span> causes
                     <span><strong class="command">named</strong></span> to load keys from the key
@@ -7012,7 +7012,7 @@ zone <em class="replaceable"><code>zone_name</code></em> [<span class="optional"
                       <p>
                         This rule takes a Windows machine principal
                         (machine$@REALM) for machine in REALM and
-                        and converts it machine.realm allowing the machine 
+                        and converts it machine.realm allowing the machine
                         to update machine.realm.  The REALM to be matched
                         is specified in the <font color="red">&lt;replacable&gt;identity&lt;/replacable&gt;</font>
                         field.
@@ -7027,7 +7027,7 @@ zone <em class="replaceable"><code>zone_name</code></em> [<span class="optional"
                     </td>
 <td>
                       <p>
-                        This rule takes a Windows machine principal 
+                        This rule takes a Windows machine principal
                         (machine$@REALM) for machine in REALM and
                         converts it to machine.realm allowing the machine
                         to update subdomains of machine.realm.  The REALM
@@ -7046,7 +7046,7 @@ zone <em class="replaceable"><code>zone_name</code></em> [<span class="optional"
                       <p>
                         This rule takes a Kerberos machine principal
                         (host/machine@REALM) for machine in REALM and
-                        and converts it machine.realm allowing the machine 
+                        and converts it machine.realm allowing the machine
                         to update machine.realm.  The REALM to be matched
                         is specified in the <font color="red">&lt;replacable&gt;identity&lt;/replacable&gt;</font>
                         field.
@@ -7061,7 +7061,7 @@ zone <em class="replaceable"><code>zone_name</code></em> [<span class="optional"
                     </td>
 <td>
                       <p>
-                        This rule takes a Kerberos machine principal 
+                        This rule takes a Kerberos machine principal
                         (host/machine@REALM) for machine in REALM and
                         converts it to machine.realm allowing the machine
                         to update subdomains of machine.realm.  The REALM
@@ -8421,7 +8421,7 @@ zone <em class="replaceable"><code>zone_name</code></em> [<span class="optional"
 <p>
               When used in the label (or name) field, the asperand or
               at-sign (@) symbol represents the current origin.
-              At the start of the zone file, it is the 
+              At the start of the zone file, it is the
               &lt;<code class="varname">zone_name</code>&gt; (followed by
               trailing dot).
             </p>

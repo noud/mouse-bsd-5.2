@@ -173,7 +173,7 @@ createmonster(mon)
  * 		  if monst==TRUE check for no monster at this location
  * This routine will return FALSE if at a wall or the dungeon exit on level 1
  */
-static int 
+static int
 cgood(int x, int y, int theitem, int monst)
 {
 #define itm __lose

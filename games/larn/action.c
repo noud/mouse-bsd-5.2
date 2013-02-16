@@ -2,9 +2,9 @@
 
 /*
  * action.c 		Larn is copyrighted 1986 by Noah Morgan.
- * 
+ *
  * Routines in this file:
- * 
+ *
  * ...
  */
 #include <sys/cdefs.h>
@@ -256,7 +256,7 @@ act_ignore_altar(void)
 }
 
 /*
- * Performs the act of opening a chest.  
+ * Performs the act of opening a chest.
  *
  * Parameters:   x,y location of the chest to open.
  * Assumptions:  cursors() has been called previously

@@ -2,9 +2,9 @@
 
 /*
  * moreobj.c 		Larn is copyrighted 1986 by Noah Morgan.
- * 
+ *
  * Routines in this file:
- * 
+ *
  * oaltar() othrone() ochest() ofountain()
  */
 #include <sys/cdefs.h>

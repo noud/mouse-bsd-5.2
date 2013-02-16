@@ -480,7 +480,7 @@ bpf_validate(struct bpf_insn *f, int signed_len)
 #if defined(KERNEL) || defined(_KERNEL)
 	if (len > BPF_MAXINSNS)
 		return 0;
-#endif 
+#endif
 	if (BPF_CLASS(f[len - 1].code) != BPF_RET)
 		return 0;
 
@@ -598,7 +598,7 @@ bpf_validate(struct bpf_insn *f, int signed_len)
 			case BPF_JGT:
 			case BPF_JGE:
 			case BPF_JSET:
-				if (from + p->jt >= len || from + p->jf >= len) 
+				if (from + p->jt >= len || from + p->jf >= len)
 					goto out;
 #if defined(KERNEL) || defined(_KERNEL)
 				/*

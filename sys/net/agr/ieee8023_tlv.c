@@ -54,7 +54,7 @@ tlv_check(const void *p, size_t size, const struct tlvhdr *tlv,
 		    ((const char *)tlv + tlv->tlv_length);
 		tmpl++;
 	}
-	
+
 	return 0;
 }
 

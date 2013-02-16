@@ -15,7 +15,7 @@
 # OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 # PERFORMANCE OF THIS SOFTWARE.
 
-# Id 
+# Id
 
 # ns1 = stealth master
 # ns2 = slave with update forwarding disabled; not currently used
@@ -105,7 +105,7 @@ ret=0
 while [ $count -lt 5 -a $ret -eq 0 ]
 do
 (
-$NSUPDATE -- - <<EOF 
+$NSUPDATE -- - <<EOF
 server 10.53.0.3 5300
 zone nomaster
 update add unsigned.nomaster. 600 A 10.10.10.1

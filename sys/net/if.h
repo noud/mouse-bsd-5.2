@@ -415,7 +415,7 @@ struct ifnet {				/* and the entries */
 		(m)->m_nextpkt = 0; \
 		(ifq)->ifq_len--; \
 	} \
-} while (/*CONSTCOND*/0) 
+} while (/*CONSTCOND*/0)
 #define	IF_POLL(ifq, m)		((m) = (ifq)->ifq_head)
 #define	IF_PURGE(ifq)							\
 do {									\

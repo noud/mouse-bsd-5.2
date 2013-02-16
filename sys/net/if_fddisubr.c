@@ -653,7 +653,7 @@ fddi_input(struct ifnet *ifp, struct mbuf *m)
 #endif
 #ifdef INET6
 		case ETHERTYPE_IPV6:
-#ifdef GATEWAY  
+#ifdef GATEWAY
 			if (ip6flow_fastforward(m))
 				return;
 #endif

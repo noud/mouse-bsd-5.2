@@ -85,7 +85,7 @@ isc_taskpool_create(isc_taskmgr_t *tmgr, isc_mem_t *mctx,
  *\li	#ISC_R_UNEXPECTED
  */
 
-void 
+void
 isc_taskpool_gettask(isc_taskpool_t *pool, isc_task_t **targetp);
 /*%<
  * Attach to a task from the pool.  Currently the next task is chosen

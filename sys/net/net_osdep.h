@@ -81,7 +81,7 @@
  * - privileged process
  *	NetBSD
  *		struct lwp *l;
- *		if (l != NULL && kauth_authorize_generic(l->l_cred, 
+ *		if (l != NULL && kauth_authorize_generic(l->l_cred,
  *		    KAUTH_GENERIC_ISSUSER, NULL) == 0)
  *			privileged;
  *	FreeBSD 3

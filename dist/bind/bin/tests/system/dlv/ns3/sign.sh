@@ -34,7 +34,7 @@ zonefile=child1.utld.db
 outfile=child1.signed
 dlvsets="$dlvsets dlvset-$zone"
 
-keyname1=`$KEYGEN -r $RANDFILE -a DSA -b 768 -n zone $zone 2> /dev/null` 
+keyname1=`$KEYGEN -r $RANDFILE -a DSA -b 768 -n zone $zone 2> /dev/null`
 keyname2=`$KEYGEN -f KSK -r $RANDFILE -a DSA -b 768 -n zone $zone 2> /dev/null`
 
 cat $infile $keyname1.key $keyname2.key ../ns6/dsset-grand.$zone >$zonefile
@@ -151,7 +151,7 @@ outfile=child1.druz.signed
 dlvsets="$dlvsets dlvset-$zone"
 dssets="$dssets dsset-$zone"
 
-keyname1=`$KEYGEN -r $RANDFILE -a DSA -b 768 -n zone $zone 2> /dev/null` 
+keyname1=`$KEYGEN -r $RANDFILE -a DSA -b 768 -n zone $zone 2> /dev/null`
 keyname2=`$KEYGEN -f KSK -r $RANDFILE -a DSA -b 768 -n zone $zone 2> /dev/null`
 
 cat $infile $keyname1.key $keyname2.key ../ns6/dsset-grand.$zone >$zonefile

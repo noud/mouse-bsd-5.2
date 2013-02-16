@@ -233,7 +233,7 @@ int pkey_GOST94cp_decrypt(EVP_PKEY_CTX *ctx, unsigned char *key, size_t *key_len
 		}
 		/* Increment reference count of peer key */
 		CRYPTO_add(&(eph_key->references),1 ,CRYPTO_LOCK_EVP_PKEY);
-	}	
+	}
 
 
 	param = get_encryption_params(gkt->key_agreement_info->cipher);
@@ -241,21 +241,21 @@ int pkey_GOST94cp_decrypt(EVP_PKEY_CTX *ctx, unsigned char *key, size_t *key_len
 	    goto err;
 	}
 
-	gost_init(&cctx,param->sblock);	
+	gost_init(&cctx,param->sblock);
 	OPENSSL_assert(gkt->key_agreement_info->eph_iv->length==8);
 	memcpy(wrappedKey,gkt->key_agreement_info->eph_iv->data,8);
 	OPENSSL_assert(gkt->key_info->encrypted_key->length==32);
 	memcpy(wrappedKey+8,gkt->key_info->encrypted_key->data,32);
 	OPENSSL_assert(gkt->key_info->imit->length==4);
-	memcpy(wrappedKey+40,gkt->key_info->imit->data,4);	
+	memcpy(wrappedKey+40,gkt->key_info->imit->data,4);
 	make_cp_exchange_key(gost_get0_priv_key(priv),eph_key,sharedKey);
 	if (!keyUnwrapCryptoPro(&cctx,sharedKey,wrappedKey,key))
 		{
 		GOSTerr(GOST_F_PKEY_GOST94CP_DECRYPT,
 			GOST_R_ERROR_COMPUTING_SHARED_KEY);
 		goto err;
-		}	
-				
+		}
+
 	EVP_PKEY_free(eph_key);
 	GOST_KEY_TRANSPORT_free(gkt);
 	return 1;

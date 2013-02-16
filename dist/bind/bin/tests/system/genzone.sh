@@ -192,7 +192,7 @@ srv01			SRV 0 0 0 .
 srv02			SRV 65535 65535 65535  old-slow-box
 
 ; type 35
-naptr01			NAPTR   0 0 "" "" "" . 
+naptr01			NAPTR   0 0 "" "" "" .
 naptr02			NAPTR   65535 65535 blurgh blorf blllbb foo.
 naptr02			NAPTR   65535 65535 "blurgh" "blorf" "blllbb" foo.
 

@@ -650,23 +650,23 @@ int ssl_parse_clienthello_tlsext(SSL *s, unsigned char **p, unsigned char *d, in
 							*al = TLS1_AD_UNRECOGNIZED_NAME;
 							return 0;
 						}
-						s->servername_done = 1; 
+						s->servername_done = 1;
 
 						}
-					else 
+					else
 						s->servername_done = s->session->tlsext_hostname
-							&& strlen(s->session->tlsext_hostname) == len 
+							&& strlen(s->session->tlsext_hostname) == len
 							&& strncmp(s->session->tlsext_hostname, (char *)sdata, len) == 0;
-					
+
 					break;
 
 				default:
 					break;
 					}
-				 
+
 				dsize -= len;
 				}
-			if (dsize != 0) 
+			if (dsize != 0)
 				{
 				*al = SSL_AD_DECODE_ERROR;
 				return 0;
@@ -856,7 +856,7 @@ int ssl_parse_clienthello_tlsext(SSL *s, unsigned char **p, unsigned char *d, in
 					}
 				n2s(data,dsize);
 				size -= 2;
-				if (dsize != size) 
+				if (dsize != size)
 					{
 					*al = SSL_AD_DECODE_ERROR;
 					return 0;

@@ -1077,7 +1077,7 @@ tap_dev_ioctl(int unit, u_long cmd, void *data, struct lwp *l)
 				*(int *)data = m->m_pkthdr.len;
 			splx(s);
 			return 0;
-		} 
+		}
 	case TIOCSPGRP:
 	case FIOSETOWN:
 		return fsetown(&sc->sc_pgid, cmd, data);

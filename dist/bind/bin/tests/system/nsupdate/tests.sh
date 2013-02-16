@@ -416,7 +416,7 @@ $DIG +tcp +noadd +nosea +nostat +noquest +nocomm +nocmd dnskey.test. \
         @10.53.0.3 -p 5300 dnskey | \
 	sed -n 's/\(.*\)10.IN/update add \1600 IN/p' |
 	(echo server 10.53.0.3 5300; cat - ; echo send ) |
-$NSUPDATE 
+$NSUPDATE
 
 $DIG +tcp +noadd +nosea +nostat +noquest +nocomm +nocmd dnskey.test. \
 	@10.53.0.3 -p 5300 any > dig.out.ns3.$n

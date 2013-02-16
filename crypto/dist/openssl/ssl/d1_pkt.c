@@ -441,7 +441,7 @@ printf("\n");
 			goto f_err;
 #else
 			decryption_failed_or_bad_record_mac = 1;
-#endif			
+#endif
 			}
 		/* check the MAC for rr->input (it's in mac_size bytes at the tail) */
 		if (rr->length >= mac_size)

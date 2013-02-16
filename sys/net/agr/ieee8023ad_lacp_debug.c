@@ -160,11 +160,11 @@ lacp_dump_lacpdu(const struct lacpdu *du)
 
 	printf("actor=%s\n",
 	    lacp_format_partner(&du->ldu_actor, buf, sizeof(buf)));
-	printf("actor.state=%s\n", 
+	printf("actor.state=%s\n",
 	    lacp_format_state(du->ldu_actor.lip_state, buf2, sizeof(buf2)));
 	printf("partner=%s\n",
 	    lacp_format_partner(&du->ldu_partner, buf, sizeof(buf)));
-	printf("partner.state=%s\n", 
+	printf("partner.state=%s\n",
 	    lacp_format_state(du->ldu_partner.lip_state, buf2, sizeof(buf2)));
 
 	printf("maxdelay=%d\n", be16toh(du->ldu_collector.lci_maxdelay));

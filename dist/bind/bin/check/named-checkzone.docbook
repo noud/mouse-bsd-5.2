@@ -326,7 +326,7 @@
         <listitem>
 	  <para>
             Check for records that are treated as different by DNSSEC but
-	    are semantically equal in plain DNS.  
+	    are semantically equal in plain DNS.
             Possible modes are <command>"fail"</command>,
             <command>"warn"</command> (default) and
             <command>"ignore"</command>.

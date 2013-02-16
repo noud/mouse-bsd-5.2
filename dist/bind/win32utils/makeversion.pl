@@ -15,7 +15,7 @@
 # OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 # PERFORMANCE OF THIS SOFTWARE.
 
-# Id 
+# Id
 
 # This script takes the version information from the version file located
 # at the root of the source tree and the api files in each library directory

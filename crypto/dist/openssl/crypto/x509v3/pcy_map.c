@@ -149,14 +149,14 @@ int policy_cache_set_mapping(X509 *x, POLICY_MAPPINGS *maps)
 		else
 			data->flags |= POLICY_DATA_FLAG_MAPPED;
 
-		if (!sk_ASN1_OBJECT_push(data->expected_policy_set, 
+		if (!sk_ASN1_OBJECT_push(data->expected_policy_set,
 						map->subjectDomainPolicy))
 			goto bad_mapping;
 		/* map->subjectDomainPolicy will be freed when
 		 * cache->data is freed. Set it to NULL to avoid double-free. */
 		subjectDomainPolicyRef = map->subjectDomainPolicy;
 		map->subjectDomainPolicy = NULL;
-		
+
 		ref = OPENSSL_malloc(sizeof(X509_POLICY_REF));
 		if (!ref)
 			goto bad_mapping;

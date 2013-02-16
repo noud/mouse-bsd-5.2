@@ -1287,7 +1287,7 @@ whatitem(const char *str)
 	subroutine to get a number from the player
 	and allow * to mean return amt, else return the number entered
  */
-unsigned long 
+unsigned long
 readnum(mx)
 	long            mx;
 {

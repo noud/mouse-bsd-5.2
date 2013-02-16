@@ -455,7 +455,7 @@ send:
 
 #if NCARP > 0
 	if (ifp0 != ifp && ifp0->if_type == IFT_CARP) {
-		bcopy(CLLADDR(ifp0->if_sadl), (void *)trh->token_shost,	    
+		bcopy(CLLADDR(ifp0->if_sadl), (void *)trh->token_shost,
 		    sizeof(trh->token_shost));
 	}
 #endif /* NCARP > 0 */

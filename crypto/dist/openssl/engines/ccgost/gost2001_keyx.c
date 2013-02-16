@@ -250,20 +250,20 @@ int pkey_GOST01cp_decrypt(EVP_PKEY_CTX *pctx, unsigned char *key, size_t * key_l
 		}
 		/* Increment reference count of peer key */
 		CRYPTO_add(&(eph_key->references),1 ,CRYPTO_LOCK_EVP_PKEY);
-	}	
-		
+	}
+
 	param = get_encryption_params(gkt->key_agreement_info->cipher);
 	if(!param){
 	    goto err;
 	}
 
-	gost_init(&ctx,param->sblock);	
+	gost_init(&ctx,param->sblock);
 	OPENSSL_assert(gkt->key_agreement_info->eph_iv->length==8);
 	memcpy(wrappedKey,gkt->key_agreement_info->eph_iv->data,8);
 	OPENSSL_assert(gkt->key_info->encrypted_key->length==32);
 	memcpy(wrappedKey+8,gkt->key_info->encrypted_key->data,32);
 	OPENSSL_assert(gkt->key_info->imit->length==4);
-	memcpy(wrappedKey+40,gkt->key_info->imit->data,4);	
+	memcpy(wrappedKey+40,gkt->key_info->imit->data,4);
 	VKO_compute_key(sharedKey,32,EC_KEY_get0_public_key(EVP_PKEY_get0(eph_key)),
 		EVP_PKEY_get0(priv),wrappedKey);
 	if (!keyUnwrapCryptoPro(&ctx,sharedKey,wrappedKey,key))

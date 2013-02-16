@@ -137,7 +137,7 @@ BIND 9.7.0
 	  and update your configuration in a timely manner when keys
 	  roll over.
 
-	- In rare cases, DNSSEC validation can leak memory.  When this 
+	- In rare cases, DNSSEC validation can leak memory.  When this
 	  happens, it will cause an assertion failure when named exits,
 	  but is otherwise harmless.  A fix exists, but was too late for
 	  this release; it will be included in BIND 9.7.1.
@@ -367,7 +367,7 @@ Documentation
 
 Change Log
 
-	A detailed list of all changes to BIND 9 is included in the 
+	A detailed list of all changes to BIND 9 is included in the
 	file CHANGES, with the most recent changes listed first.
 	Change notes include tags indicating the category of the
 	change that was made; these categories are:
