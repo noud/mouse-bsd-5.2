@@ -307,8 +307,6 @@ network_start()
 		echo "."
 	fi
 
-	echo -n "Adding interface aliases:"
-
 	# Check if each configured interface xxN has an $ifaliases_xxN variable
 	# associated, then configure additional IP addresses for that interface.
 	# The variable contains a list of "address netmask" pairs, with
@@ -318,6 +316,10 @@ network_start()
 	# use is not recommended.  Use /etc/ifconfig.xxN or multiple
 	# commands in $ifconfig_xxN instead.
 	#
+	if [ -n "$configured_interfaces" ]; then
+		echo -n "Adding interface aliases:"
+		done_aliases_messages=yes
+	fi
 	for int in lo0 $configured_interfaces; do
 		eval args=\$ifaliases_$int
 		if [ -n "$args" ]; then
@@ -334,6 +336,17 @@ network_start()
 				echo -n " $int:$addr"
 			done
 		fi
+		n=1
+		while :; do
+			eval args=\"\$ifalias_$int\_$n\"
+			if [ -n "$args" ]; then
+				ifconfig $int $args alias
+				echo -n \ $int\#$n
+				n=$(($n+1))
+			else
+				break
+			fi
+		done
 	done
 
 	# /etc/ifaliases, if it exists, contains the names of additional IP
@@ -346,7 +359,12 @@ network_start()
 	# commands in $ifconfig_xxN instead.
 	#
 	if [ -f /etc/ifaliases ]; then
+		if [ -n "$done_aliases_messages" != yes ]; then
+			echo -n "Adding interface aliases:"
+			done_aliases_messages=yes
+		fi
 		while read addr int net; do
+			echo -n " $int"
 			if [ -z "$net" ]; then
 				# for compatibility only, obsolete
 				/sbin/ifconfig $int inet alias $addr
@@ -356,7 +374,9 @@ network_start()
 		done < /etc/ifaliases
 	fi
 
-	echo "." # for "Adding interface aliases:"
+	if [ -n "$done_aliases_messages" = yes ]; then
+		echo "." # for "Adding interface aliases:"
+	fi
 
 	# Check $defaultroute, then /etc/mygate, for the name or address
 	# of my IPv4 gateway host. If using a name, that name must be in
