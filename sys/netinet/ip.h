@@ -34,6 +34,10 @@
 #ifndef _NETINET_IP_H_
 #define _NETINET_IP_H_
 
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <netinet/in_systm.h>
+
 /*
  * Definitions for internet protocol version 4.
  * Per RFC 791, September 1981.
