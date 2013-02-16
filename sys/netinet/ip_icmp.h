@@ -34,6 +34,10 @@
 #ifndef _NETINET_IP_ICMP_H_
 #define _NETINET_IP_ICMP_H_
 
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#include <netinet/in_systm.h>
 
 /*
  * Interface Control Message Protocol Definitions.
