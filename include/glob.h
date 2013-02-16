@@ -59,7 +59,7 @@ typedef struct {
 	int (*gl_errfunc)(const char *, int);
 
 	/*
-	 * Alternate filesystem access methods for glob; replacement
+	 * Alternative filesystem access methods for glob; replacement
 	 * versions of closedir(3), readdir(3), opendir(3), stat(2)
 	 * and lstat(2).
 	 */
