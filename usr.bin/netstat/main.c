@@ -413,7 +413,7 @@ main(argc, argv)
 	pcbaddr = 0;
 
 	while ((ch = getopt(argc, argv,
-	    "AabBdf:ghI:LliM:mN:nP:p:qrsStuvw:")) != -1)
+	    "AabBdf:ghI:LliM:mN:nP:p:qQrsStTuvw:")) != -1)
 		switch (ch) {
 		case 'A':
 			Aflag = 1;
@@ -497,6 +497,9 @@ main(argc, argv)
 		case 'q':
 			qflag = 1;
 			break;
+		case 'Q':
+			Qflag = 1;
+			break;
 		case 'r':
 			rflag = 1;
 			break;
@@ -508,6 +511,9 @@ main(argc, argv)
 			break;
 		case 't':
 			tflag = 1;
+			break;
+		case 'T':
+			Tflag = 1;
 			break;
 		case 'u':
 			af = AF_LOCAL;

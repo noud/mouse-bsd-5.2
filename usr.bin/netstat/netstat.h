@@ -51,9 +51,11 @@ int	nflag;		/* same as above, for show.c compat */
 int	Pflag;		/* dump a PCB */
 int	pflag;		/* show given protocol */
 int	qflag;		/* show softintrq */
+int	Qflag;		/* show softintrq */
 int	rflag;		/* show routing tables (or routing stats) */
 int	sflag;		/* show protocol statistics */
 int	tflag;		/* show i/f watchdog timers */
+int	Tflag;		/* show softintrq */
 int	vflag;		/* verbose route information or don't truncate names */
 
 int	interval;	/* repeat interval for i/f stats */

@@ -244,6 +244,13 @@ The program will complain if
 is unknown or if there is no statistics routine for it.
 .It Fl q
 Show software interrupt queue setting/statistics for all protocols.
+.It Fl Q
+Don't print headers or other commentary; just show the data.  (This
+presently works only for
+.Fl i
+or
+.Fl I
+output.)
 .It Fl r
 Show the routing tables.
 When
@@ -256,6 +263,15 @@ but show ports symbolically).
 .It Fl s
 Show per-protocol statistics.
 If this option is repeated, counters with a value of zero are suppressed.
+.It Fl T
+Print all traffic stats for an interface and nothing else.  This is
+ignored except for
+.Fl i
+or
+.Fl I
+output; for them, it omits the MTU and addressing information, printing
+eight numbers: packets, bytes, and errors, for input and output, plus
+collisions and dropped packets.
 .It Fl v
 Show extra (verbose) detail for the routing tables
 .Pq Fl r ,
