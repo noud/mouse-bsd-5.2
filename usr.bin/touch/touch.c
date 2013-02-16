@@ -58,31 +58,145 @@ __RCSID("$NetBSD: touch.c,v 1.27 2008/07/21 14:19:27 lukem Exp $");
 #include <unistd.h>
 
 int	main __P((int, char **));
-int	rw __P((char *, struct stat *, int));
+int	rw __P((const char *, struct stat *, int));
 void	stime_arg1 __P((char *, struct timeval *));
 void	stime_arg2 __P((char *, int, struct timeval *));
 void	stime_file __P((char *, struct timeval *));
 void	usage __P((void));
+
+static int (*change_file_times) __P((const char *, const struct timeval *));
+static int (*get_file_status) __P((const char *, struct stat *));
+static struct timeval tv[2];
+static int aflag;
+static int cflag;
+static int fflag;
+static int mflag;
+static int rval;
+static int timeset;
+static long int inc;
+
+static void touch_it(const char *fn)
+{
+	struct stat sb;
+	int fd;
+
+	/* See if the file exists. */
+	if ((*get_file_status)(fn, &sb)) {
+		if (cflag)
+			return;
+		/* Create the file. */
+		fd = open(fn, O_WRONLY | O_CREAT, DEFFILEMODE);
+		if (fd == -1 || fstat(fd, &sb) || close(fd)) {
+			/* XXX this leaks the fd if fstat() fails;
+			   is this possible enough we should care? */
+			rval = 1;
+			warn("%s", fn);
+			return;
+		}
+
+		/* If using the current time, we're done. */
+		if (!timeset)
+			return;
+	}
+	if (!aflag)
+		TIMESPEC_TO_TIMEVAL(&tv[0], &sb.st_atimespec);
+	if (!mflag)
+		TIMESPEC_TO_TIMEVAL(&tv[1], &sb.st_mtimespec);
+
+	/* Try utimes(2). */
+	if (!(*change_file_times)(fn, tv))
+		return;
+
+	/* If the user specified a time, nothing else we can do. */
+	if (timeset) {
+		rval = 1;
+		warn("%s", fn);
+		return;
+	}
+
+	/*
+	 * System V and POSIX 1003.1 require that a NULL argument
+	 * set the access/modification times to the current time.
+	 * The permission checks are different, too, in that the
+	 * ability to write the file is sufficient.  Take a shot.
+	 */
+	 if (!(*change_file_times)(fn, NULL))
+		return;
+
+	/* Try reading/writing. */
+	if (!S_ISLNK(sb.st_mode) && rw(fn, &sb, fflag))
+		rval = 1;
+}
+
+static void touch_file(const char *fn)
+{
+ touch_it(fn);
+ tv[0].tv_sec += inc;
+ tv[1].tv_sec += inc;
+}
+
+/* XXX Wouldn't normally use warn()/err(), but this program
+   *already* depends on them, so little harm in this case. */
+/* XXX Since this is for external consumption, we avoid lcs even
+   though it would be the natural way to handle the control flow. */
+static void touch_indirect(const char *fn)
+{
+ FILE *f;
+ char *b;
+ int a;
+ int l;
+ int c;
+
+ f = strcmp(fn,"-") ? fopen(fn,"r") : stdin;
+ if (! f)
+  { warn("%s",fn);
+    return;
+  }
+ b = 0;
+ a = 0;
+ l = 0;
+ while /*<"read">*/ (1)
+  { c = getc(f);
+    if (a >= l)
+     { b = realloc(b,a=l+16);
+       if (! b) err(1,"realloc");
+     }
+    b[l++] = c; /* unnecessary but harmless if c==EOF */
+    switch (c)
+     { case EOF:
+	  if (l > 1) warnx("%s: partial line ignored at end of input",fn);
+	  /*break <"read">;*/goto break_read;
+	  break;
+       case '\n':
+	  b[l-1] = '\0';
+	  touch_file(b);
+	  l = 0;
+	  break;
+     }
+  }
+break_read:;
+ if (f != stdin) fclose(f);
+ free(b);
+ return;
+}
 
 int
 main(argc, argv)
 	int argc;
 	char *argv[];
 {
-	struct stat sb;
-	struct timeval tv[2];
-	int aflag, cflag, fflag, hflag, mflag, ch, fd, len, rval, timeset;
+	int hflag, iflag, ch, len;
 	char *p;
-	int (*change_file_times) __P((const char *, const struct timeval *));
-	int (*get_file_status) __P((const char *, struct stat *));
 
 	setlocale(LC_ALL, "");
 
 	aflag = cflag = fflag = hflag = mflag = timeset = 0;
+	iflag = 0;
+	inc = 0;
 	if (gettimeofday(&tv[0], NULL))
 		err(1, "gettimeofday");
 
-	while ((ch = getopt(argc, argv, "acfhmr:t:")) != -1)
+	while ((ch = getopt(argc, argv, "acd:fhimr:t:")) != -1)
 		switch(ch) {
 		case 'a':
 			aflag = 1;
@@ -90,11 +204,17 @@ main(argc, argv)
 		case 'c':
 			cflag = 1;
 			break;
+		case 'd':
+			inc = atol(optarg);
+			break;
 		case 'f':
 			fflag = 1;
 			break;
 		case 'h':
 			hflag = 1;
+			break;
+		case 'i':
+			iflag = 1;
 			break;
 		case 'm':
 			mflag = 1;
@@ -148,51 +268,10 @@ main(argc, argv)
 		usage();
 
 	for (rval = 0; *argv; ++argv) {
-		/* See if the file exists. */
-		if ((*get_file_status)(*argv, &sb)) {
-			if (!cflag) {
-				/* Create the file. */
-				fd = open(*argv,
-				    O_WRONLY | O_CREAT, DEFFILEMODE);
-				if (fd == -1 || fstat(fd, &sb) || close(fd)) {
-					rval = 1;
-					warn("%s", *argv);
-					continue;
-				}
-
-				/* If using the current time, we're done. */
-				if (!timeset)
-					continue;
-			} else
-				continue;
-		}
-		if (!aflag)
-			TIMESPEC_TO_TIMEVAL(&tv[0], &sb.st_atimespec);
-		if (!mflag)
-			TIMESPEC_TO_TIMEVAL(&tv[1], &sb.st_mtimespec);
-
-		/* Try utimes(2). */
-		if (!(*change_file_times)(*argv, tv))
-			continue;
-
-		/* If the user specified a time, nothing else we can do. */
-		if (timeset) {
-			rval = 1;
-			warn("%s", *argv);
-		}
-
-		/*
-		 * System V and POSIX 1003.1 require that a NULL argument
-		 * set the access/modification times to the current time.
-		 * The permission checks are different, too, in that the
-		 * ability to write the file is sufficient.  Take a shot.
-		 */
-		 if (!(*change_file_times)(*argv, NULL))
-			continue;
-
-		/* Try reading/writing. */
-		if (!S_ISLNK(sb.st_mode) && rw(*argv, &sb, fflag))
-			rval = 1;
+		if (iflag)
+			touch_indirect(*argv);
+		else
+			touch_file(*argv);
 	}
 	exit(rval);
 }
@@ -316,7 +395,7 @@ stime_file(fname, tvp)
 
 int
 rw(fname, sbp, force)
-	char *fname;
+	const char *fname;
 	struct stat *sbp;
 	int force;
 {
@@ -370,6 +449,6 @@ __dead void
 usage()
 {
 	(void)fprintf(stderr,
-	    "usage: touch [-acfhm] [-r file] [-t time] file ...\n");
+	    "usage: touch [-acfhim] [-r file] [-t time] [-d delta] file ...\n");
 	exit(1);
 }

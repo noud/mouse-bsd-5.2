@@ -40,9 +40,10 @@
 .Nd change file access and modification times
 .Sh SYNOPSIS
 .Nm
-.Op Fl acfhm
+.Op Fl acfhim
 .Op Fl r Ar file
 .Op Fl t Ar [[CC]YY]MMDDhhmm[.SS]
+.Op Fl d Ar inc
 .Ar file ...
 .Sh DESCRIPTION
 The
@@ -64,6 +65,18 @@ The
 .Nm
 utility does not treat this as an error.
 No error messages are displayed and the exit value is not affected.
+.It Fl d Ar inc
+Specify
+.Ar inc ,
+a time increment
+.Pf ( Sq d Ns
+elta) in seconds, which is added to the time used for each file to give
+the time used for the next file; other options which control the
+timestamp to be used specify the time for the first-affected file.
+This has no effect unless multiple files are affected.
+.Ar inc
+must be an integer, and may be negative (producing progressively
+earlier times).
 .It Fl f
 Attempt to force the update, even if the file permissions do not
 currently permit it.
@@ -73,6 +86,26 @@ If
 is a symbolic link, access and/or modification time of the link is changed.
 This option implies
 .Fl c .
+.It Fl i
+Indirect: any
+.Ar file
+arguments are not files to be manipulated; rather, they name files
+containing filenames, one per line, which are to be manipulated.  As a
+special case, an argument of
+.Sq \&\-
+causes names to be read from the standard input.  (This special case
+does not apply unless
+.Fl i
+is given.)
+This is somewhat like using
+.Xr xargs 1
+with
+.Nm ;
+this option exists because (a) it is necessary to allow
+.Fl d
+to operate properly even on very long lists of files and (b)
+.Xr xargs 1
+considers space and tab, as well as newline, to delimit arguments.
 .It Fl m
 Change the modification time of the file.
 The access time of the file is not changed unless the
@@ -163,11 +196,49 @@ The
 .Nm
 utility is expected to be a superset of the
 .St -p1003.2
-specification.
+specification.  The
+.Fl i
+and
+.Fl d
+options are
+.Nx
+extensions.
 .Sh HISTORY
 A
 .Nm
 utility appeared in
 .At v7 .
 .Sh BUGS
-A symbolic link can't be a reference file of access and/or modification time.
+A symbolic link can't be a reference file of access and/or modification
+time.
+.Pp
+There is no way to get a newline into an indirect filename when using
+.Fl i .
+(Something analogous to
+.Xr xargs 1 Ap s
+.Fl 0
+option would make sense here, but is of no real use in the anticipated
+use case for
+.Fl i ,
+which involves using line-based text tools to process lists of
+filenames.)
+.Pp
+Invalid arguments to
+.Fl d
+(eg, non-numbers) do not produce warning messages, instead silently
+using whatever
+.Xr atol 3
+returns.
+.Pp
+NULs in
+.Fl i
+input will both terminate the pathname and cause the rest of the line
+to be ignored.  The first part is not fixable unless and until we have
+filesystem interfaces that do not depend on NUL-terminated strings; the
+second part does not strike me as worth fixing.
+.Pp
+A partial line at the end of input (ie, if there is input but it does
+not end with a newline) is ignored (with a warning message) when
+reading filenames for
+.Fl i .
+Whether effectively supplying a newline is better is debatable.
