@@ -81,6 +81,14 @@ device number that the special device refers to rather than the filename
 in
 .Pa /dev ;
 and print the mode of the file in octal instead of symbolic form.
+.It Fl o
+Print the offset instead of the size, for descriptors open on files.
+This does not affect the display for files that are printed for reasons
+other than an open file descriptor.  To help visually distinguish the
+two, when
+.Fl o
+is given and a size is printed nevertheless, it is prefixed with a
+.Sq \&* .
 .It Fl p
 Report all files open by the specified process.
 .It Fl u
