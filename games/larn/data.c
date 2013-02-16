@@ -121,7 +121,7 @@ short           hitp[MAXX][MAXY];	/* monster hp on level		 */
 short           iarg[MAXX][MAXY];	/* arg for the item array	 */
 u_char          item[MAXX][MAXY];	/* objects in maze if any	 */
 u_char          know[MAXX][MAXY];	/* 1 or 0 if here before	 */
-u_char          mitem[MAXX][MAXY];	/* monster item array 		 */
+u_char          mitem[MAXX][MAXY];	/* monster item array		 */
 u_char          moved[MAXX][MAXY];	/* monster movement flags  */
 u_char          stealth[MAXX][MAXY];	/* 0=sleeping 1=awake monst */
 u_char          iven[26];	/* inventory for player			 */
@@ -149,25 +149,25 @@ u_char          cheat = 0;	/* 1 if the player has fudged save file			 */
 short           level = 0;	/* cavelevel player is on = c[CAVELEVEL]			 */
 u_char          wizard = 0;	/* the wizard mode flag							 */
 short           lastnum = 0;	/* the number of the monster last hitting
-				 * player 	 */
+				 * player */
 short           hitflag = 0;	/* flag for if player has been hit when
-				 * running 	 */
+				 * running */
 short           hit2flag = 0;	/* flag for if player has been hit when
-				 * running 	 */
+				 * running */
 short           hit3flag = 0;	/* flag for if player has been hit flush
-				 * input 	 */
+				 * input */
 short           playerx, playery;	/* the room on the present level of
 					 * the player		 */
 short           lastpx, lastpy;	/* 0 --- MAXX-1  or  0 --- MAXY-1					 */
 short           oldx, oldy;
 short           lasthx = 0, lasthy = 0;	/* location of monster last hit by
 					 * player		 */
-short           nobeep = 0;	/* true if program is not to beep  					 */
-unsigned long   randx = 33601;	/* the random number seed						 */
-time_t          initialtime = 0;/* time playing began 							 */
-long            gltime = 0;	/* the clock for the game						 */
-long            outstanding_taxes = 0;	/* present tax bill from score file 			 */
-long            c[100], cbak[100];	/* the character description arrays			 */
+short           nobeep = 0;	/* true if program is not to beep */
+unsigned long   randx = 33601;	/* the random number seed */
+time_t          initialtime = 0;/* time playing began */
+long            gltime = 0;	/* the clock for the game */
+long            outstanding_taxes = 0;	/* present tax bill from score file */
+long            c[100], cbak[100];	/* the character description arrays */
 int             enable_scroll = 0;	/* constant for enabled/disabled
 					 * scrolling regn */
 char            aborted[] = " aborted";
@@ -361,7 +361,7 @@ const char     *scrollhide[] = {
 	" annihilation",
 	" pulverization",
 	" life protection",
-	"  ",
+	" trap detection",
 	"  ",
 	"  ",
 	"  "
@@ -626,36 +626,67 @@ const char     *spelmes[] = {"",
 /*
  *	function to create scroll numbers with appropriate probability of
  *	occurrence
- *
- *	0 - armor			1 - weapon		2 - enlightenment	3 - paper
- *	4 - create monster	5 - create item	6 - aggravate		7 - time warp
- *	8 - teleportation	9 - expanded awareness				10 - haste monst
- *	11 - heal monster	12 - spirit protection		13 - undead protection
- *	14 - stealth		15 - magic mapping			16 - hold monster
- *	17 - gem perfection 18 - spell extension		19 - identify
- *	20 - remove curse	21 - annihilation			22 - pulverization
- *  23 - life protection
  */
-u_char          scprob[] = {0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3,
-	3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 9, 9,
-	9, 9, 10, 10, 10, 10, 11, 11, 11, 12, 12, 12, 13, 13, 13, 13, 14, 14,
-	15, 15, 16, 16, 16, 17, 17, 18, 18, 19, 19, 19, 20, 20, 20, 20, 21, 22,
-22, 22, 23};
+u_char scprob[]
+ = { 0, 0, 0, 0,		/* enchant armor */
+     1, 1, 1, 1, 1,		/* enchant weapon */
+     2, 2, 2, 2, 2, 2,		/* enlightenment */
+     3, 3, 3, 3, 3,		/* blank paper */
+     4, 4, 4,			/* create monster */
+     5, 5, 5, 5, 5,		/* create artifact */
+     6, 6, 6, 6, 6,		/* aggravate monsters */
+     7, 7, 7, 7,		/* time warp */
+     8, 8, 8,			/* teleportation */
+     9, 9, 9, 9,		/* expanded awareness */
+     10, 10, 10, 10,		/* haste monsters */
+     11, 11, 11,		/* monster healing */
+     12, 12, 12,		/* spirit protection */
+     13, 13, 13, 13,		/* undead protection */
+     14, 14,			/* stealth */
+     15, 15,			/* magic mapping */
+     16, 16, 16,		/* hold monster */
+     17, 17,			/* gem perfection */
+     18, 18,			/* spell extension */
+     19, 19, 19,		/* identify */
+     20, 20, 20, 20,		/* remove curse */
+     21,			/* annihilation */
+     22, 22, 22,		/* pulverization */
+     23,			/* life protection */
+     24, 24,			/* trap detection */
+     };
+unsigned int scprobn = sizeof(scprob) / sizeof(scprob[0]);
 
 /*
  *	function to return a potion number created with appropriate probability
  *	of occurrence
- *
- *	0 - sleep				1 - healing					2 - raise level
- *	3 - increase ability	4 - gain wisdom				5 - gain strength
- *	6 - charismatic character	7 - dizziness			8 - learning
- *	9 - gold detection		10 - monster detection		11 - forgetfulness
- *	12 - water				13 - blindness				14 - confusion
- *	15 - heroism			16 - sturdiness				17 - giant strength
- *	18 - fire resistance	19 - treasure finding		20 - instant healing
- *	21 - cure dianthroritis	22 - poison					23 - see invisible
  */
-u_char          potprob[] = {0, 0, 1, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 9, 9, 9, 10, 10, 10, 11, 11, 12, 12, 13, 14, 15, 16, 17, 18, 19, 19, 20, 20, 22, 22, 23, 23};
+u_char potprob[]
+ = { 0, 0,			/* sleep */
+     1, 1, 1,			/* healing */
+     2,				/* raise level */
+     3, 3,			/* increase ability */
+     4, 4,			/* wisdom */
+     5, 5,			/* strength */
+     6, 6,			/* raise charisma */
+     7, 7,			/* dizziness */
+     8,				/* learning */
+     9, 9, 9,			/* gold detection */
+     10, 10, 10,		/* monster detection */
+     11, 11,			/* forgetfulness */
+     12, 12,			/* water */
+     13,			/* blindness */
+     14,			/* confusion */
+     15,			/* heroism */
+     16,			/* studli...er, sturdiness */
+     17,			/* giant strength */
+     18,			/* fire resistance */
+     19, 19,			/* treasure finding */
+     20, 20,			/* instant healing */
+				/* cure dianthroritis */
+     22, 22,			/* poison */
+     23, 23,			/* see invisible */
+     };
+unsigned int potprobn = sizeof(potprob) / sizeof(potprob[0]);
 
 u_char          nlpts[] = {0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 5, 6, 7};
 u_char          nch[] = {0, 0, 0, 1, 1, 1, 2, 2, 3, 4};

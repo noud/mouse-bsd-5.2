@@ -41,8 +41,7 @@ extern char    *password;
 	uses the skill[] array to find level boundarys
 	uses c[EXPERIENCE]  c[LEVEL]
  */
-void
-raiselevel()
+void raiselevel(void)
 {
 	if (c[LEVEL] < MAXPLEVEL)
 		raiseexperience((long) (skill[c[LEVEL]] - c[EXPERIENCE]));
@@ -53,8 +52,7 @@ raiselevel()
 
 	subroutine to lower the players character level by one
  */
-void
-loselevel()
+void loselevel(void)
 {
 	if (c[LEVEL] > 1)
 		loseexperience((long) (c[EXPERIENCE] - skill[c[LEVEL] - 1] + 1));
@@ -65,11 +63,10 @@ loselevel()
 
 	subroutine to increase experience points
  */
-void
-raiseexperience(x)
-	long   x;
+void raiseexperience(long int x)
 {
 	int    i, tmp;
+
 	i = c[LEVEL];
 	c[EXPERIENCE] += x;
 	while (c[EXPERIENCE] >= skill[c[LEVEL]] && (c[LEVEL] < MAXPLEVEL)) {
@@ -93,11 +90,10 @@ raiseexperience(x)
 
 	subroutine to lose experience points
  */
-void
-loseexperience(x)
-	long   x;
+void loseexperience(long int x)
 {
 	int    i, tmp;
+
 	i = c[LEVEL];
 	c[EXPERIENCE] -= x;
 	if (c[EXPERIENCE] < 0)
@@ -126,9 +122,7 @@ loseexperience(x)
 	subroutine to remove hit points from the player
 	warning -- will kill player if hp goes to zero
  */
-void
-losehp(x)
-	int    x;
+void losehp(int x)
 {
 	if ((c[HP] -= x) <= 0) {
 		beep();
@@ -138,9 +132,7 @@ losehp(x)
 	}
 }
 
-void
-losemhp(x)
-	int    x;
+void losemhp(int x)
 {
 	c[HP] -= x;
 	if (c[HP] < 1)
@@ -156,17 +148,13 @@ losemhp(x)
 
 	subroutine to gain maximum hit points
  */
-void
-raisehp(x)
-	int    x;
+void raisehp(int x)
 {
 	if ((c[HP] += x) > c[HPMAX])
 		c[HP] = c[HPMAX];
 }
 
-void
-raisemhp(x)
-	int    x;
+void raisemhp(int x)
 {
 	c[HPMAX] += x;
 	c[HP] += x;
@@ -177,9 +165,7 @@ raisemhp(x)
 
 	subroutine to gain maximum spells
  */
-void
-raisemspells(x)
-	int    x;
+void raisemspells(int x)
 {
 	c[SPELLMAX] += x;
 	c[SPELLS] += x;
@@ -190,9 +176,7 @@ raisemspells(x)
 
 	subroutine to lose maximum spells
  */
-void
-losemspells(x)
-	int    x;
+void losemspells(int x)
 {
 	if ((c[SPELLMAX] -= x) < 0)
 		c[SPELLMAX] = 0;
@@ -207,11 +191,10 @@ losemspells(x)
 	function to return monster number for a randomly selected monster
 		for the given cave level
  */
-int
-makemonst(lev)
-	int    lev;
+int makemonst(int lev)
 {
 	int    tmp, x;
+
 	if (lev < 1)
 		lev = 1;
 	if (lev > 12)
@@ -234,10 +217,10 @@ makemonst(lev)
 
 	function to be sure player is not in a wall
  */
-void
-positionplayer()
+void positionplayer(void)
 {
 	int             try;
+
 	try = 2;
 	while ((item[playerx][playery] || mitem[playerx][playery]) && (try))
 		if (++playerx >= MAXX - 1) {
@@ -254,10 +237,10 @@ positionplayer()
 /*
 	recalc()	function to recalculate the armor class of the player
  */
-void
-recalc()
+void recalc(void)
 {
 	int    i, j, k;
+
 	c[AC] = c[MOREDEFENSES];
 	if (c[WEAR] >= 0)
 		switch (iven[c[WEAR]]) {
@@ -340,7 +323,7 @@ recalc()
 	}
 	c[WCLASS] += c[MOREDAM];
 
-	/* now for regeneration abilities based on rings	 */
+	/* now for regeneration abilities based on rings */
 	c[REGEN] = 1;
 	c[ENERGY] = 0;
 	j = 0;
@@ -374,16 +357,16 @@ recalc()
 	}
 }
 
-
 /*
 	quit()
 
 	subroutine to ask if the player really wants to quit
  */
-void
-quit()
+void quit(void)
 {
 	int    i;
+
+	if (autoflag) died(300);
 	cursors();
 	strcpy(lastmonst, "");
 	lprcat("\n\nDo you really want to quit?");
@@ -413,8 +396,7 @@ quit()
 /*
 	function to ask --more-- then the user must enter a space
  */
-void
-more()
+void more(void)
 {
 	lprcat("\n  --- press ");
 	standout("space");
@@ -426,10 +408,10 @@ more()
 	function to put something in the players inventory
 	returns 0 if success, 1 if a failure
  */
-int
-take(int theitem, int arg)
+int take(int theitem, int arg)
 {
 	int    i, limit;
+
 	/* cursors(); */
 	if ((limit = 15 + (c[LEVEL] >> 1)) > 26)
 		limit = 26;
@@ -479,7 +461,7 @@ take(int theitem, int arg)
 				c[DEXTERITY] += 5;
 				limit = 1;
 				break;
-			};
+			}
 			lprcat("\nYou pick up:");
 			srcount = 0;
 			show3(i);
@@ -495,11 +477,10 @@ take(int theitem, int arg)
 	subroutine to drop an object
 	returns 1 if something there already else 0
  */
-int
-drop_object(k)
-	int             k;
+int drop_object(int k)
 {
 	int             theitem;
+
 	if ((k < 0) || (k > 25))
 		return (0);
 	theitem = iven[k];
@@ -537,10 +518,10 @@ drop_object(k)
 /*
 	function to enchant armor player is currently wearing
  */
-void
-enchantarmor()
+void enchantarmor(void)
 {
 	int    tmp;
+
 	if (c[WEAR] < 0) {
 		if (c[SHIELD] < 0) {
 			cursors();
@@ -567,10 +548,10 @@ enchantarmor()
 /*
 	function to enchant a weapon presently being wielded
  */
-void
-enchweapon()
+void enchweapon(void)
 {
 	int    tmp;
+
 	if (c[WIELD] < 0) {
 		cursors();
 		beep();
@@ -595,10 +576,10 @@ enchweapon()
 	routine to tell if player can carry one more thing
 	returns 1 if pockets are full, else 0
  */
-int
-pocketfull()
+int pocketfull(void)
 {
 	int    i, limit;
+
 	if ((limit = 15 + (c[LEVEL] >> 1)) > 26)
 		limit = 26;
 	for (i = 0; i < limit; i++)
@@ -610,10 +591,10 @@ pocketfull()
 /*
 	function to return 1 if a monster is next to the player else returns 0
  */
-int
-nearbymonst()
+int nearbymonst(void)
 {
 	int    tmp, tmp2;
+
 	for (tmp = playerx - 1; tmp < playerx + 2; tmp++)
 		for (tmp2 = playery - 1; tmp2 < playery + 2; tmp2++)
 			if (mitem[tmp][tmp2])
@@ -625,10 +606,10 @@ nearbymonst()
 	function to steal an item from the players pockets
 	returns 1 if steals something else returns 0
  */
-int
-stealsomething()
+int stealsomething(void)
 {
 	int    i, j;
+
 	j = 100;
 	while (1) {
 		i = rund(26);
@@ -650,10 +631,10 @@ stealsomething()
 /*
 	function to return 1 is player carrys nothing else return 0
  */
-int
-emptyhanded()
+int emptyhanded(void)
 {
 	int    i;
+
 	for (i = 0; i < 26; i++)
 		if (iven[i])
 			if (i != c[WIELD])
@@ -666,10 +647,10 @@ emptyhanded()
 /*
 	function to create a gem on a square near the player
  */
-void
-creategem()
+void creategem(void)
 {
 	int    i, j;
+
 	switch (rnd(4)) {
 	case 1:
 		i = ODIAMOND;
@@ -687,7 +668,7 @@ creategem()
 		i = OSAPPHIRE;
 		j = 20;
 		break;
-	};
+	}
 	createitem(i, rnd(j) + j / 10);
 }
 
@@ -695,10 +676,10 @@ creategem()
 	function to change character levels as needed when dropping an object
 	that affects these characteristics
  */
-void
-adjustcvalues(int theitem, int arg)
+void adjustcvalues(int theitem, int arg)
 {
 	int    flag;
+
 	flag = 0;
 	switch (theitem) {
 	case ODEXRING:
@@ -744,7 +725,7 @@ adjustcvalues(int theitem, int arg)
 
 	default:
 		flag = 1;
-	};
+	}
 	if (flag)
 		bottomline();
 }
@@ -754,11 +735,12 @@ adjustcvalues(int theitem, int arg)
 	returns 1 if entered correctly, 0 if not
  */
 static char     gpwbuf[33];
-int
-getpassword()
+int getpassword(void)
 {
 	int    i, j;
 	char  *gpwp;
+
+	if (autoflag) return(0);
 	scbr();			/* system("stty -echo cbreak"); */
 	gpwp = gpwbuf;
 	lprcat("\nEnter Password: ");
@@ -780,10 +762,10 @@ getpassword()
 	subroutine to get a yes or no response from the user
 	returns y or n
  */
-int
-getyn()
+int getyn(void)
 {
 	int    i;
+
 	i = 0;
 	while (i != 'y' && i != 'n' && i != '\33')
 		i = ttgetch();
@@ -794,10 +776,10 @@ getyn()
 	function to calculate the pack weight of the player
 	returns the number of pounds the player is carrying
  */
-int
-packweight()
+int packweight(void)
 {
 	int    i, j, k;
+
 	k = c[GOLD] / 1000;
 	j = 25;
 	while ((iven[j] == 0) && (j > 0))
@@ -851,22 +833,18 @@ packweight()
 			break;
 		default:
 			k++;
-		};
+		}
 	return (k);
 }
 
 #ifndef MACRORND
 /* macros to generate random numbers   1<=rnd(N)<=N   0<=rund(N)<=N-1 */
-int
-rnd(x)
-	int             x;
+int rnd(int x)
 {
 	return ((((randx = randx * 1103515245 + 12345) >> 7) % (x)) + 1);
 }
 
-int
-rund(x)
-	int             x;
+int rund(int x)
 {
 	return ((((randx = randx * 1103515245 + 12345) >> 7) % (x)));
 }

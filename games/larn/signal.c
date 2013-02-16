@@ -22,10 +22,8 @@ static void sigpanic(int);
 
 #define BIT(a) (1<<((a)-1))
 
-static void
-s2choose()
-{				/* text to be displayed if ^C during intro
-				 * screen */
+static void s2choose(void)
+{		/* text to be displayed if ^C during intro screen */
 	cursor(1, 24);
 	lprcat("Press ");
 	setbold();
@@ -35,9 +33,7 @@ s2choose()
 	lflush();
 }
 
-static void
-cntlc(n)
-	int n;
+static void cntlc(int n)
 {				/* what to do for a ^C */
 	if (nosignal)
 		return;		/* don't do anything if inhibited */
@@ -56,9 +52,7 @@ cntlc(n)
 /*
  *	subroutine to save the game if a hangup signal
  */
-static void
-sgam(n)
-	int n;
+static void sgam(int n)
 {
 	savegame(savefilename);
 	wizard = 1;
@@ -66,9 +60,7 @@ sgam(n)
 }
 
 #ifdef SIGTSTP
-static void
-tstop(n)
-	int n;
+static void tstop(int n)
 {				/* control Y	 */
 	if (nosignal)
 		return;		/* nothing if inhibited */
@@ -99,9 +91,9 @@ tstop(n)
 /*
  *	subroutine to issue the needed signal traps  called from main()
  */
-void
-sigsetup()
+void sigsetup(void)
 {
+	if (autoflag) return;
 	signal(SIGQUIT, cntlc);
 	signal(SIGINT, cntlc);
 	signal(SIGKILL, SIG_IGN);
@@ -118,18 +110,17 @@ sigsetup()
 	signal(SIGTERM, sigpanic);
 #ifdef SIGTSTP
 	signal(SIGTSTP, tstop);
+#endif
 	signal(SIGSTOP, tstop);
-#endif	/* SIGTSTP */
 }
 
 /*
  *	routine to process a fatal error signal
  */
-static void
-sigpanic(sig)
-	int             sig;
+static void sigpanic(int sig)
 {
 	char            buf[128];
+
 	signal(sig, SIG_DFL);
 	snprintf(buf, sizeof(buf),
 	    "\nLarn - Panic! Signal %d received [SIG%s]", sig,

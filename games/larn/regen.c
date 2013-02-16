@@ -16,11 +16,11 @@ __RCSID("$NetBSD: regen.c,v 1.5 1997/10/18 20:03:43 christos Exp $");
 
 	subroutine to regenerate player hp and spells
  */
-void
-regen()
+void regen(void)
 {
 	int    i, flag;
 	long  *d;
+
 	d = c;
 #ifdef EXTRA
 	d[MOVESMADE]++;

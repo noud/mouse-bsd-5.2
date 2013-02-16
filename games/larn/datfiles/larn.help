@@ -127,14 +127,3 @@ then his game at diff 1 and a score of 4112 would replace his previous
 entry on the scoreboard.  Note that when a player dies, his inventory is
 stored in the scoreboard so that everyone can see what items the player had
 at the time of his death.
-
-
-
-
-
-
-
-
-
-
-

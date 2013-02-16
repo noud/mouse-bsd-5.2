@@ -116,6 +116,8 @@ void welcome(void);
 void retcont(void);
 
 /* io.c */
+int autoread(int, void *);
+void auto_report_score(int);
 void setupvt100(void);
 void clearvt100(void);
 int ttgetch(void);
@@ -186,7 +188,7 @@ int isconfuse(void);
 int nospell(int, int);
 int fullhit(int);
 void direct(int, int, const char *, int);
-void godirect(int, int, const char *, int, int);
+void godirect(int, int, const char *, int, char);
 void ifblind(int, int);
 void tdirect(int);
 void omnidirect(int, int, const char *);

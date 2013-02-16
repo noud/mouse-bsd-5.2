@@ -34,11 +34,11 @@ static u_char     usermpoint = 0;	/* the user monster pointer */
 /*
 	lexical analyzer for larn
  */
-int
-yylex()
+int yylex(void)
 {
 	char            cc;
 	int             ic;
+
 	if (hit2flag) {
 		hit2flag = 0;
 		yrepcount = 0;
@@ -70,23 +70,24 @@ yylex()
 				}
 #endif
 			}
-		do {		/* if keyboard input buffer is too big, flush
-				 * some of it */
-			ioctl(0, FIONREAD, &ic);
-			if (ic > flushno)
-				read(0, &cc, 1);
-		}
-		while (ic > flushno);
+		if (! autoflag)
+			do {		/* if keyboard input buffer is too
+					 * big, flush some of it */
+				ioctl(0, FIONREAD, &ic);
+				if (ic > flushno)
+					read(0, &cc, 1);
+			} while (ic > flushno);
 
-		if (read(0, &cc, 1) != 1)
+		if (autoread(0, &cc) != 1)
 			return (lastok = -1);
 
-		if (cc == 'Y' - 64) {	/* control Y -- shell escape */
+		if (!autoflag && (cc == 'Y' - 64)) {
+			/* control Y -- shell escape */
 			resetscroll();
 			clear();/* scrolling region, home, clear, no
 				 * attributes */
 			if ((ic = fork()) == 0) {	/* child */
-				execl("/bin/csh", "/bin/csh", NULL);
+				execl("/bin/csh", "/bin/csh", (char *)0);
 				exit(1);
 			}
 			wait(0);
@@ -110,11 +111,12 @@ yylex()
 /*
  *	flushall()		Function to flush all type-ahead in the input buffer
  */
-void
-flushall()
+void flushall(void)
 {
 	char            cc;
 	int             ic;
+
+	if (autoflag) return;
 	for (;;) {		/* if keyboard input buffer is too big, flush
 				 * some of it */
 		ioctl(0, FIONREAD, &ic);
@@ -131,9 +133,7 @@ flushall()
 	function to set the desired hardness
 	enter with hard= -1 for default hardness, else any desired hardness
  */
-void
-sethard(hard)
-	int             hard;
+void sethard(int hard)
 {
 	int    j, k, i;
 	struct monst *mp;
@@ -166,13 +166,16 @@ sethard(hard)
 /*
 	function to read and process the larn options file
  */
-void
-readopts()
+void readopts(void)
 {
 	const char  *i;
 	int    j, k;
 	int             flag;
 
+	if (autoflag) {
+		strcpy(&logname[0],"Autolarn");
+		return;
+	}
 	flag = 1;		/* set to 0 if a name is specified */
 
 	if (lopen(optsfile) < 0) {
@@ -181,7 +184,7 @@ readopts()
 	}
 	i = " ";
 	while (*i) {
-		if ((i = lgetw()) == NULL)
+		if ((i = lgetw()) == 0)
 			break;	/* check for EOF */
 		while ((*i == ' ') || (*i == '\t'))
 			i++;	/* eat leading whitespace */
@@ -192,7 +195,15 @@ readopts()
 			ckpflag = 1;
 		else if (strcmp(i, "inverse-objects") == 0)
 			boldon = 0;
-		else if (strcmp(i, "female") == 0)
+		else if (strcmp(i, "inventory-sort") == 0) {
+			if ((i = lgetw()) == 0)
+				break;
+			if (! strcmp(i,"alpha")) {
+				invsort = INVSORT_ALPHA;
+			} else if (! strcmp(i,"type")) {
+				invsort = INVSORT_TYPE;
+			}
+		} else if (strcmp(i, "female") == 0)
 			sex = 0;	/* male or female */
 		else if (strcmp(i, "monster:") == 0) {	/* name favorite monster */
 			if ((i = lgetw()) == 0)

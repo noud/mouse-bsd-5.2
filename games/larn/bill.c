@@ -50,6 +50,7 @@ __RCSID("$NetBSD: bill.c,v 1.9 2008/02/03 03:49:15 dholland Exp $");
 
 /* bill.c		 Larn is copyrighted 1986 by Noah Morgan. */
 
+#if SEND_WIN_EMAIL
 const char *mail[] = {
 	"From: the LRS (Larn Revenue Service)\n",
 	"~s undeclared income\n",
@@ -63,7 +64,7 @@ const char *mail[] = {
 	"\nof this notice, and is due within 5 days.  Failure to pay will",
 	"\nmean penalties.  Once again, congratulations, We look forward",
 	"\nto your future successful expeditions.\n",
-	NULL,
+	0,
 	"From: His Majesty King Wilfred of Larndom\n",
 	"~s a noble deed\n",
 	"\n   I have heard of your magnificent feat, and I, King Wilfred,",
@@ -72,14 +73,14 @@ const char *mail[] = {
 	"\nhonour of Knight of the realm.  Upon thy name shall it be written...",
 	"\n\nBravery and courage be yours.",
 	"\n\nMay you live in happiness forevermore...\n",
-	NULL,
+	0,
 	"From: Count Endelford\n",
 	"~s You Bastard!\n",
 	"\n   I have heard (from sources) of your journey.  Congratulations!",
 	"\nYou Bastard!  With several attempts I have yet to endure the",
 	" caves,\nand you, a nobody, makes the journey!  From this time",
 	" onward, bewarned\nupon our meeting you shall pay the price!\n",
-	NULL,
+	0,
 	"From: Mainair, Duke of Larnty\n",
 	"~s High Praise\n",
 	"\n   With certainty, a hero I declare to be amongst us!  A nod of",
@@ -88,7 +89,7 @@ const char *mail[] = {
 	"\nyearn to behold his anger and jealously.  Should ye choose to",
 	"\nunleash some of thy wealth upon those who be unfortunate, I,",
 	"\nDuke Mainair, shall equal thy gift also.\n",
-	NULL,
+	0,
 	"From: St. Mary's Children's Home\n",
 	"~s these poor children\n",
 	"\n   News of your great conquests has spread to all of Larndom.",
@@ -98,7 +99,7 @@ const char *mail[] = {
 	"\ngood food.  Could you possibly find it in your heart to help us",
 	"\nin our plight?  Whatever you could give will help much.",
 	"\n(your gift is tax deductible)\n",
-	NULL,
+	0,
 	"From: The National Cancer Society of Larn\n",
 	"~s hope\n",
 	"\nCongratulations on your successful expedition.  We are sure much",
@@ -111,22 +112,24 @@ const char *mail[] = {
 	"\ndreaded disease, and you can help today.  Could you please see it",
 	"\nin your heart to give generously?  Your continued good health",
 	"\ncan be your everlasting reward.\n",
-	NULL
+	0
 };
+#endif
 
 /*
  * function to mail the letters to the player if a winner
  */
 
-void
-mailbill()
+void mailbill(void)
 {
+#if SEND_WIN_EMAIL
 	int    i;
 	char   fname[32];
 	char   buf[128];
 	const char **cp;
 	int    fd;
 
+	if (autoflag) abort();
 	wait(0);
 	if (fork() == 0) {
 		resetscroll();
@@ -135,7 +138,7 @@ mailbill()
 		for (i = 0; i < 6; i++) {
 			if ((fd = mkstemp(fname)) == -1)
 				exit(0);
-			while (*cp != NULL) {
+			while (*cp != 0) {
 				if (*cp[0] == '1') {
 					snprintf(buf, sizeof(buf),
 		"\n%ld gold pieces back with you from your journey.  As the",
@@ -160,4 +163,5 @@ mailbill()
 		}
 	}
 	exit(0);
+#endif
 }

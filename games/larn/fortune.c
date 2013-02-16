@@ -48,7 +48,7 @@ __RCSID("$NetBSD: fortune.c,v 1.6 2008/01/28 05:38:53 dholland Exp $");
  * function to return a random fortune from the fortune file
  */
 
-const char     *flines[] = {
+const char *flines[] = {
 	"gem value = gem * 2 ^ perfection",
 	"sitting down can have unexpected results",
 	"don't pry into the affairs of others",
@@ -64,7 +64,7 @@ const char     *flines[] = {
 	"be sure to pay your taxes",
 	"are Vampires afraid of something?",
 	"some dragons can fly",
-	"dos thou strive for perfection?",
+	"dost thou strive for perfection?",
 	"patience is a virtue, unless your daughter dies",
 	"what does the Eye of Larn see in its guardian?",
 	"a level 25 player casts like crazy!",
@@ -77,18 +77,16 @@ const char     *flines[] = {
 	"never enter the dungeon naked!  the monsters will laugh at you!",
 	"did someone put itching powder in your armor?",
 	"you klutz!",
-	"avoid opening doors.  you never know whats on the other side.",
+	"avoid opening doors.  you never know what's on the other side.",
 	"infinite regeneration ---> temptation",
 	"the greatest weapon in the game has not the highest Weapon Class",
 	"you can't buy the most powerful scroll",
 	"identify things before you use them",
 	"there's more than one way through a wall"
 };
+#define NFORTUNES (sizeof(flines)/sizeof(flines[0]))
 
-#define NFORTUNES	34
-
-const char *
-fortune(void)
+const char *fortune(void)
 {
 	return (flines[random() % NFORTUNES]);
 }

@@ -21,10 +21,8 @@ static void fch(int, long *);
 /*
  *	subroutine to process an altar object
  */
-void
-oaltar()
+void oaltar(void)
 {
-
 	lprcat("\nDo you (p) pray  (d) desecrate");
 	iopts();
 	while (1) {
@@ -44,7 +42,7 @@ oaltar()
 
 					case '\33':
 						return;
-					};
+					}
 
 			case 'd':
 				lprcat(" desecrate");
@@ -56,18 +54,15 @@ oaltar()
 				ignore();
 				act_ignore_altar();
 				return;
-			};
+			}
 	}
 }
 
 /*
 	subroutine to process a throne object
  */
-void
-othrone(arg)
-	int             arg;
+void othrone(int arg)
 {
-
 	lprcat("\nDo you (p) pry off jewels, (s) sit down");
 	iopts();
 	while (1) {
@@ -87,12 +82,11 @@ othrone(arg)
 			case '\33':
 				ignore();
 				return;
-			};
+			}
 	}
 }
 
-void
-odeadthrone()
+void odeadthrone(void)
 {
 	int    k;
 
@@ -116,17 +110,15 @@ odeadthrone()
 			case '\33':
 				ignore();
 				return;
-			};
+			}
 	}
 }
 
 /*
 	subroutine to process a throne object
  */
-void
-ochest()
+void ochest(void)
 {
-
 	lprcat("\nDo you (t) take it, (o) try to open it");
 	iopts();
 	while (1) {
@@ -147,17 +139,15 @@ ochest()
 			case '\33':
 				ignore();
 				return;
-			};
+			}
 	}
 }
 
 /*
 	process a fountain object
  */
-void
-ofountain()
+void ofountain(void)
 {
-
 	cursors();
 	lprcat("\nDo you (d) drink, (w) wash yourself");
 	iopts();
@@ -187,10 +177,7 @@ ofountain()
 
 	subroutine to process an up/down of a character attribute for ofountain
  */
-static void
-fch(how, x)
-	int             how;
-	long           *x;
+static void fch(int how, long *x)
 {
 	if (how < 0) {
 		lprcat(" went down by one!");
@@ -206,11 +193,10 @@ fch(how, x)
 	a subroutine to raise or lower character levels
 	if x > 0 they are raised   if x < 0 they are lowered
  */
-void
-fntchange(how)
-	int             how;
+void fntchange(int how)
 {
 	long   j;
+
 	lprc('\n');
 	switch (rnd(9)) {
 	case 1:

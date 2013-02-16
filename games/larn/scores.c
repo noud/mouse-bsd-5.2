@@ -8,21 +8,23 @@
  * readboard() 	Function to read in the scoreboard into a static buffer
  * writeboard()	Function to write the scoreboard from readboard()'s buffer
  * makeboard() 	Function to create a new scoreboard (wipe out old one)
- * hashewon()	 Function to return 1 if player has won a game before, else 0
- * long paytaxes(x)	 Function to pay taxes if any are due winshou()
- * ubroutine to print out the winning scoreboard shou(x)
- * ubroutine to print out the non-winners scoreboard showscores()
- * unction to show the scoreboard on the terminal showallscores()
- * Function to show scores and the iven lists that go with them sortboard()
- * unction to sort the scoreboard newscore(score, whoo, whyded, winner)
- * Function to add entry to scoreboard new1sub(score,i,whoo,taxes)
- * Subroutine to put player into a new2sub(score,i,whoo,whyded)
- * Subroutine to put player into a died(x) 	Subroutine to record who
- * played larn, and what the score was diedsub(x) Subroutine to print out a
- * line showing player when he is killed diedlog() 	Subroutine to read a
- * log file and print it out in ascii format getplid(name)
- * on to get players id # from id file
- *
+ * hashewon()	Function to return 1 if player has won a game before, else 0
+ * paytaxes(x)	Function to pay taxes if any are due
+ * winshou()	Subroutine to print out the winning scoreboard
+ * shou(x)	Subroutine to print out the non-winners scoreboard
+ * showscores()	Function to show the scoreboard on the terminal
+ * showallscores() Function to show scores and the iven lists that go with them
+ * sortboard()	Function to sort the scoreboard
+ * newscore(score, whoo, whyded, winner)
+ *		Function to add entry to scoreboard
+ * new1sub(score,i,whoo,taxes)
+ *		Subroutine to put player into a
+ * new2sub(score,i,whoo,whyded)
+ *		Subroutine to put player into a
+ * died(x) 	Subroutine to record who played larn, and what the score was
+ * diedsub(x)	Subroutine to print out a line showing player when he is killed
+ * diedlog()	Subroutine to read a log file and print it out in ascii format
+ * getplid(name) Function to get player's id # from id file
  */
 #include <sys/cdefs.h>
 #ifndef lint
@@ -38,56 +40,56 @@ __RCSID("$NetBSD: scores.c,v 1.17 2008/02/03 20:41:53 dholland Exp $");
 #include "header.h"
 #include "extern.h"
 
-struct scofmt {			/* This is the structure for the scoreboard 		 */
-	long            score;	/* the score of the player 							 */
-	long            suid;	/* the user id number of the player 				 */
+struct scofmt {			/* This is the structure for the scoreboard */
+	long            score;	/* the score of the player */
+	long            suid;	/* the user id number of the player */
 	short           what;	/* the number of the monster that killed
-				 * player 	 */
-	short           level;	/* the level player was on when he died 			 */
-	short           hardlev;/* the level of difficulty player played at 		 */
-	short           order;	/* the relative ordering place of this entry 		 */
-	char            who[40];/* the name of the character 						 */
+				 * player */
+	short           level;	/* the level player was on when he died */
+	short           hardlev;/* the level of difficulty player played at */
+	short           order;	/* the relative ordering place of this entry */
+	char            who[40];/* the name of the character */
 	char            sciv[26][2];	/* this is the inventory list of the
-					 * character 		 */
+					 * character */
 };
 struct wscofmt {		/* This is the structure for the winning
 				 * scoreboard */
-	long            score;	/* the score of the player 							 */
+	long            score;	/* the score of the player */
 	long            timeused;	/* the time used in mobuls to win the
-					 * game 			 */
-	long            taxes;	/* taxes he owes to LRS 							 */
-	long            suid;	/* the user id number of the player 				 */
-	short           hardlev;/* the level of difficulty player played at 		 */
-	short           order;	/* the relative ordering place of this entry 		 */
-	char            who[40];/* the name of the character 						 */
+					 * game */
+	long            taxes;	/* taxes he owes to LRS */
+	long            suid;	/* the user id number of the player */
+	short           hardlev;/* the level of difficulty player played at */
+	short           order;	/* the relative ordering place of this entry */
+	char            who[40];/* the name of the character */
 };
 
-struct log_fmt {		/* 102 bytes struct for the log file 				 */
-	long            score;	/* the players score 								 */
-	time_t          diedtime;	/* time when game was over 							 */
-	short           cavelev;/* level in caves 									 */
-	short           diff;	/* difficulty player played at 						 */
+struct log_fmt {		/* 102 bytes struct for the log file */
+	long            score;	/* the players score */
+	time_t          diedtime;	/* time when game was over */
+	short           cavelev;/* level in caves */
+	short           diff;	/* difficulty player played at */
 #ifdef EXTRA
-	long            elapsedtime;	/* real time of game in seconds 					 */
-	long            bytout;	/* bytes input and output 							 */
+	long            elapsedtime;	/* real time of game in seconds */
+	long            bytout;	/* bytes input and output */
 	long            bytin;
-	long            moves;	/* number of moves made by player 					 */
-	short           ac;	/* armor class of player 							 */
-	short           hp, hpmax;	/* players hitpoints 								 */
-	short           cputime;/* CPU time needed in seconds 						 */
-	short           killed, spused;	/* monsters killed and spells cast 					 */
-	short           usage;	/* usage of the CPU in % 							 */
-	short           lev;	/* player level 									 */
+	long            moves;	/* number of moves made by player */
+	short           ac;	/* armor class of player */
+	short           hp, hpmax;	/* players hitpoints */
+	short           cputime;/* CPU time needed in seconds */
+	short           killed, spused;	/* monsters killed and spells cast */
+	short           usage;	/* usage of the CPU in % */
+	short           lev;	/* player level */
 #endif
-	char            who[12];/* player name 										 */
-	char            what[46];	/* what happened to player 							 */
+	char            who[12];/* player name */
+	char            what[46];/* what happened to player */
 };
 
-static struct scofmt sco[SCORESIZE];	/* the structure for the scoreboard  */
+static struct scofmt sco[SCORESIZE];	/* the structure for the scoreboard */
 static struct wscofmt winr[SCORESIZE];	/* struct for the winning scoreboard */
-static struct log_fmt logg;	/* structure for the log file 		 */
+static struct log_fmt logg;	/* structure for the log file */
 static const char *whydead[] = {
-	"quit", "suspended", "self - annihilated", "shot by an arrow",
+	"quit", "suspended", "self-annihilated", "shot by an arrow",
 	"hit by a dart", "fell into a pit", "fell into a bottomless pit",
 	"a winner", "trapped in solid rock", "killed by a missing save file",
 	"killed by an old save file", "caught by the greedy cheater checker trap",
@@ -102,21 +104,31 @@ static const char *whydead[] = {
 	"died a post mortem death", "wasted by a malloc() failure"
 };
 
+static void effective_id(void)
+{
+ if (uid != euid) seteuid(euid);
+ if (gid != egid) setegid(egid);
+}
+
+static void real_id(void)
+{
+ if (uid != euid) seteuid(uid);
+ if (gid != egid) setegid(gid);
+}
+
 /*
  * readboard() 	Function to read in the scoreboard into a static buffer
  *
  * returns -1 if unable to read in the scoreboard, returns 0 if all is OK
  */
-int
-readboard()
+int readboard(void)
 {
 	int             i;
 
-	if (gid != egid)
-		setegid(egid);
+	if (autoflag) abort();
+	effective_id();
 	i = lopen(scorefile);
-	if (gid != egid)
-		setegid(gid);
+	real_id();
 	if (i < 0) {
 		lprcat("Can't read scoreboard\n");
 		lflush();
@@ -134,17 +146,15 @@ readboard()
  *
  * returns -1 if unable to write the scoreboard, returns 0 if all is OK
  */
-int
-writeboard()
+int writeboard(void)
 {
 	int             i;
 
+	if (autoflag) abort();
 	set_score_output();
-	if (gid != egid)
-		setegid(egid);
+	effective_id();
 	i = lcreat(scorefile);
-	if (gid != egid)
-		setegid(gid);
+	real_id();
 	if (i < 0) {
 		lprcat("Can't write scoreboard\n");
 		lflush();
@@ -162,22 +172,25 @@ writeboard()
  *
  * returns -1 if unable to write the scoreboard, returns 0 if all is OK
  */
-int
-makeboard()
+int makeboard(void)
 {
 	int    i;
+
+	if (autoflag) abort();
+	set_score_output();
 	set_score_output();
 	for (i = 0; i < SCORESIZE; i++) {
-		winr[i].taxes = winr[i].score = sco[i].score = 0;
-		winr[i].order = sco[i].order = i;
+		winr[i].taxes = 0;
+		winr[i].score = -1;
+		sco[i].score = -1;
+		winr[i].order = i;
+		sco[i].order = i;
 	}
 	if (writeboard())
 		return (-1);
-	if (gid != egid)
-		setegid(egid);
+	effective_id();
 	chmod(scorefile, 0660);
-	if (gid != egid)
-		setegid(gid);
+	real_id();
 	return (0);
 }
 
@@ -189,16 +202,17 @@ makeboard()
  * scoreboard.  This function also sets outstanding_taxes to the value in
  * the winners scoreboard.
  */
-int
-hashewon()
+int hashewon(void)
 {
 	int    i;
+
 	c[HARDGAME] = 0;
+	if (autoflag) return(0);
 	if (readboard() < 0)
 		return (0);	/* can't find scoreboard */
 	for (i = 0; i < SCORESIZE; i++)	/* search through winners scoreboard */
 		if (winr[i].suid == userid)
-			if (winr[i].score > 0) {
+			if (winr[i].score >= 0) {
 				c[HARDGAME] = winr[i].hardlev + 1;
 				outstanding_taxes = winr[i].taxes;
 				return (1);
@@ -212,12 +226,12 @@ hashewon()
  * Enter with the amount (in gp) to pay on the taxes.
  * Returns amount actually paid.
  */
-long
-paytaxes(x)
-	long            x;
+long paytaxes(long int x)
 {
 	int    i;
 	long   amt;
+
+	if (autoflag) abort();
 	if (x < 0)
 		return (0L);
 	if (readboard() < 0)
@@ -225,7 +239,7 @@ paytaxes(x)
 	for (i = 0; i < SCORESIZE; i++)
 		if (winr[i].suid == userid)	/* look for players winning
 						 * entry */
-			if (winr[i].score > 0) {	/* search for a winning
+			if (winr[i].score >= 0) {	/* search for a winning
 							 * entry for the player */
 				amt = winr[i].taxes;
 				if (x < amt)
@@ -246,14 +260,15 @@ paytaxes(x)
  *
  * Returns the number of players on scoreboard that were shown
  */
-int
-winshou()
+int winshou(void)
 {
 	struct wscofmt *p;
 	int    i, j, count;
+
+	if (autoflag) abort();
 	for (count = j = i = 0; i < SCORESIZE; i++)	/* is there anyone on
 							 * the scoreboard? */
-		if (winr[i].score != 0) {
+		if (winr[i].score >= 0) {
 			j++;
 			break;
 		}
@@ -266,7 +281,7 @@ winshou()
 				p = &winr[j];	/* pointer to the scoreboard
 						 * entry */
 				if (p->order == i) {
-					if (p->score) {
+					if (p->score >= 0) {
 						count++;
 						lprintf("%10ld     %2ld      %5ld Mobuls   %s \n",
 							(long) p->score, (long) p->hardlev, (long) p->timeused, p->who);
@@ -285,15 +300,14 @@ winshou()
  * Enter with 0 to list the scores, enter with 1 to list inventories too
  * Returns the number of players on scoreboard that were shown
  */
-int
-shou(x)
-	int             x;
+int shou(int x)
 {
 	int    i, j, n, k;
 	int             count;
+
 	for (count = j = i = 0; i < SCORESIZE; i++)	/* is the scoreboard
 							 * empty? */
-		if (sco[i].score != 0) {
+		if (sco[i].score >= 0) {
 			j++;
 			break;
 		}
@@ -303,7 +317,7 @@ shou(x)
 						 * in order */
 			for (j = 0; j < SCORESIZE; j++)
 				if (sco[j].order == i) {
-					if (sco[j].score) {
+					if (sco[j].score >= 0) {
 						count++;
 						lprintf("%10ld     %2ld       %s ",
 							(long) sco[j].score, (long) sco[j].hardlev, sco[j].who);
@@ -340,10 +354,11 @@ shou(x)
  * Returns nothing of value
  */
 static char     esb[] = "The scoreboard is empty.\n";
-void
-showscores()
+void showscores(void)
 {
 	int    i, j;
+
+	if (autoflag) abort();
 	lflush();
 	lcreat((char *) 0);
 	if (readboard() < 0)
@@ -362,10 +377,11 @@ showscores()
  *
  * Returns nothing of value
  */
-void
-showallscores()
+void showallscores(void)
 {
 	int    i, j;
+
+	if (autoflag) abort();
 	lflush();
 	lcreat((char *) 0);
 	if (readboard() < 0)
@@ -390,16 +406,17 @@ showallscores()
  *
  * Returns 0 if no sorting done, else returns 1
  */
-int
-sortboard()
+int sortboard(void)
 {
 	int    i, j = 0, pos;
 	long            jdat;
+
+	if (autoflag) abort();
 	for (i = 0; i < SCORESIZE; i++)
 		sco[i].order = winr[i].order = -1;
 	pos = 0;
 	while (pos < SCORESIZE) {
-		jdat = 0;
+		jdat = -1;
 		for (i = 0; i < SCORESIZE; i++)
 			if ((sco[i].order < 0) && (sco[i].score >= jdat)) {
 				j = i;
@@ -409,7 +426,7 @@ sortboard()
 	}
 	pos = 0;
 	while (pos < SCORESIZE) {
-		jdat = 0;
+		jdat = -1;
 		for (i = 0; i < SCORESIZE; i++)
 			if ((winr[i].order < 0) && (winr[i].score >= jdat)) {
 				j = i;
@@ -429,14 +446,12 @@ sortboard()
  * 	died() reason # in whyded, and TRUE/FALSE in winner if a winner
  * ex.		newscore(1000, "player 1", 32, 0);
  */
-void
-newscore(score, whoo, whyded, winner)
-	long            score;
-	int             winner, whyded;
-	char           *whoo;
+void newscore(long int score, char *whoo, int whyded, int winner)
 {
 	int    i;
 	long            taxes;
+
+	if (autoflag) abort();
 	if (readboard() < 0)
 		return;		/* do the scoreboard	 */
 	/* if a winner then delete all non-winning scores */
@@ -445,7 +460,7 @@ newscore(score, whoo, whyded, winner)
 	if (winner) {
 		for (i = 0; i < SCORESIZE; i++)
 			if (sco[i].suid == userid)
-				sco[i].score = 0;
+				sco[i].score = -1;
 		taxes = score * TAXRATE;
 		score += 100000 * c[HARDGAME];	/* bonus for winning */
 		/*
@@ -498,13 +513,11 @@ newscore(score, whoo, whyded, winner)
  * 	slot in scoreboard in i, and the tax bill in taxes.
  * Returns nothing of value
  */
-void
-new1sub(score, i, whoo, taxes)
-	long            score, taxes;
-	int             i;
-	char           *whoo;
+void new1sub(long int score, int i, char *whoo, long int taxes)
 {
 	struct wscofmt *p;
+
+	if (autoflag) abort();
 	p = &winr[i];
 	p->taxes += taxes;
 	if ((score >= p->score) || (c[HARDGAME] > p->hardlev)) {
@@ -526,13 +539,12 @@ new1sub(score, i, whoo, taxes)
  * Returns nothing of value
  */
 void
-new2sub(score, i, whoo, whyded)
-	long            score;
-	int             i, whyded;
-	char           *whoo;
+new2sub(long int score, int i, char *whoo, int whyded)
 {
 	int    j;
 	struct scofmt *p;
+
+	if (autoflag) abort();
 	p = &sco[i];
 	if ((score >= p->score) || (c[HARDGAME] > p->hardlev)) {
 		strcpy(p->who, whoo);
@@ -590,14 +602,13 @@ new2sub(score, i, whoo, whyded)
  */
 
 static int      scorerror;
-void
-died(x)
-	int             x;
+void died(int x)
 {
 	int    f, win;
 	char            ch;
 	const char     *mod;
 	time_t          zzz;
+
 	if (c[LIFEPROT] > 0) {	/* if life protection */
 		switch ((x > 0) ? x : -x) {
 		case 256:
@@ -615,7 +626,7 @@ died(x)
 		case 285:
 		case 300:
 			goto invalid;	/* can't be saved */
-		};
+		}
 		--c[LIFEPROT];
 		c[HP] = 1;
 		--c[CONSTITUTION];
@@ -627,6 +638,11 @@ died(x)
 		return;		/* only case where died() returns */
 	}
 invalid:
+	if (autoflag) {
+		auto_report_score(c[GOLD]+c[BANKACCOUNT]);
+		lflush();
+		exit(0);
+	}
 	clearvt100();
 	lflush();
 	f = 0;
@@ -652,8 +668,7 @@ invalid:
 	set_score_output();
 	if ((wizard == 0) && (c[GOLD] > 0)) {	/* wizards can't score		 */
 #ifndef NOLOG
-		if (gid != egid)
-			setegid(egid);
+		effective_id();
 		if (lappend(logfile) < 0) {	/* append to file */
 			if (lcreat(logfile) < 0) {	/* and can't create new
 							 * log file */
@@ -664,14 +679,9 @@ invalid:
 				lflush();
 				exit(0);
 			}
-			if (gid != egid)
-				setegid(egid);
 			chmod(logfile, 0660);
-			if (gid != egid)
-				setegid(gid);
 		}
-		if (gid != egid)
-			setegid(gid);
+		real_id();
 		strcpy(logg.who, loginname);
 		logg.score = c[GOLD];
 		logg.diff = c[HARDGAME];
@@ -732,12 +742,12 @@ invalid:
  * diedsub(x) Subroutine to print out the line showing the player when he is killed
  * 	int x;
  */
-void
-diedsub(int x)
+void diedsub(int x)
 {
 	char   ch;
 	const char *mod;
 
+	if (autoflag) abort();
 	lprintf("Score: %ld, Diff: %ld,  %s ", (long) c[GOLD], (long) c[HARDGAME], logname);
 	if (x < 256) {
 		ch = *monster[x].name;
@@ -757,12 +767,13 @@ diedsub(int x)
 /*
  * diedlog() 	Subroutine to read a log file and print it out in ascii format
  */
-void
-diedlog()
+void diedlog(void)
 {
 	int    n;
 	char  *p;
 	struct stat     stbuf;
+
+	if (autoflag) abort();
 	lcreat((char *) 0);
 	if (lopen(logfile) < 0) {
 		lprintf("Can't locate log file <%s>\n", logfile);
@@ -805,13 +816,13 @@ diedlog()
  * 		Id # in ascii     \n     character name     \n
  */
 static int      havepid = -1;	/* playerid # if previously done */
-int
-getplid(nam)
-	char           *nam;
+int getplid(char *nam)
 {
 	int             fd7, high = 999, no;
 	char  *p, *p2;
 	char            name[80];
+
+	if (autoflag) abort();
 	if (havepid != -1)
 		return (havepid);	/* already did it */
 	lflush();		/* flush any pending I/O */
@@ -825,11 +836,11 @@ getplid(nam)
 	for (;;) {		/* now search for the name in the player id
 				 * file */
 		p = lgetl();
-		if (p == NULL)
+		if (p == 0)
 			break;	/* EOF? */
 		no = atoi(p);	/* the id # */
 		p2 = lgetl();
-		if (p2 == NULL)
+		if (p2 == 0)
 			break;	/* EOF? */
 		if (no > high)
 			high = no;	/* accumulate highest id # */

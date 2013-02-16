@@ -52,10 +52,9 @@ static void otradhead(void);
 static int      dndcount = 0, dnditm = 0;
 
 /* number of items in the dnd inventory table	 */
-#define MAXITM 83
 
 /* this is the data for the stuff in the dnd store	 */
-struct _itm     itm[90] = {
+struct _itm     itm[] = {
 	/*
 	 * cost 		iven name		iven arg   how gp
 	 * iven[]		ivenarg[]  many
@@ -183,58 +182,56 @@ struct _itm     itm[90] = {
 	{220, OSCROLL, 20, 3},
 	{3900, OSCROLL, 21, 0},
 	{610, OSCROLL, 22, 1},
-	{3000, OSCROLL, 23, 0}
+	{3000, OSCROLL, 23, 0},
+	{30, OSCROLL, 23, 2},
 };
+int maxitm = sizeof(itm) / sizeof(itm[0]);
 
 /*
 	function for the dnd store
  */
-void
-dnd_2hed()
+void dnd_2hed(void)
 {
 	lprcat("Welcome to the Larn Thrift Shoppe.  We stock many items explorers find useful\n");
 	lprcat(" in their adventures.  Feel free to browse to your hearts content.\n");
 	lprcat("Also be advised, if you break 'em, you pay for 'em.");
 }
 
-void
-dnd_hed()
+void dnd_hed(void)
 {
 	int    i;
+
 	for (i = dnditm; i < 26 + dnditm; i++)
 		dnditem(i);
 	cursor(50, 18);
 	lprcat("You have ");
 }
 
-static void
-handsfull()
+static void handsfull(void)
 {
 	lprcat("\nYou can't carry anything more!");
 	lflush();
 	nap(2200);
 }
 
-static void
-outofstock()
+static void outofstock(void)
 {
 	lprcat("\nSorry, but we are out of that item.");
 	lflush();
 	nap(2200);
 }
 
-static void
-nogold()
+static void nogold(void)
 {
 	lprcat("\nYou don't have enough gold to pay for that!");
 	lflush();
 	nap(2200);
 }
 
-void
-dndstore()
+void dndstore(void)
 {
 	int    i;
+
 	dnditm = 0;
 	nosignal = 1;		/* disable signals */
 	clear();
@@ -280,13 +277,13 @@ dndstore()
 			return;
 		} else if (i == ' ') {
 			cl_dn(1, 4);
-			if ((dnditm += 26) >= MAXITM)
+			if ((dnditm += 26) >= maxitm)
 				dnditm = 0;
 			dnd_hed();
 		} else {	/* buy something */
 			lprc(i);/* echo the byte */
 			i += dnditm - 'a';
-			if (i >= MAXITM)
+			if (i >= maxitm)
 				outofstock();
 			else if (itm[i].qty <= 0)
 				outofstock();
@@ -305,7 +302,7 @@ dndstore()
 				take(itm[i].obj, itm[i].arg);
 				if (itm[i].qty == 0)
 					dnditem(i);
-				nap(1001);
+				nap(200);
 			}
 		}
 
@@ -317,12 +314,11 @@ dndstore()
 
 	to print the item list;  used in dndstore() enter with the index into itm
  */
-static void
-dnditem(i)
-	int    i;
+static void dnditem(int i)
 {
 	int    j, k;
-	if (i >= MAXITM)
+
+	if (i >= maxitm)
 		return;
 	cursor((j = (i & 1) * 40 + 1), (k = ((i % 26) >> 1) + 5));
 	if (itm[i].qty == 0) {
@@ -340,8 +336,6 @@ dnditem(i)
 	lprintf("%6ld", (long) (itm[i].price * 10));
 }
 
-
-
 /*
 	for the college of larn
  */
@@ -350,8 +344,7 @@ char            coursetime[] = {10, 15, 10, 20, 10, 10, 10, 5};
 /*
 	function to display the header info for the school
  */
-void
-sch_hed()
+void sch_hed(void)
 {
 	clear();
 	lprcat("The College of Larn offers the exciting opportunity of higher education to\n");
@@ -359,7 +352,7 @@ sch_hed()
 	lprcat("\t\t    Course Name \t       Time Needed\n\n");
 
 	if (course[0] == 0)
-		lprcat("\t\ta)  Fighters Training I         10 mobuls");	/* line 7 of crt */
+		lprcat("\t\ta)  Fighters Training I         10 mobuls");
 	lprc('\n');
 	if (course[1] == 0)
 		lprcat("\t\tb)  Fighters Training II        15 mobuls");
@@ -387,11 +380,11 @@ sch_hed()
 	lprcat("You are presently carrying ");
 }
 
-void
-oschool()
+void oschool(void)
 {
 	int    i;
 	long            time_used;
+
 	nosignal = 1;		/* disable signals */
 	sch_hed();
 	while (1) {
@@ -506,29 +499,26 @@ oschool()
 	}
 }
 
-
 /*
  *	for the first national bank of Larn
  */
 int             lasttime = 0;	/* last time he was in bank */
 
-void
-obank()
+void obank(void)
 {
 	banktitle("    Welcome to the First National Bank of Larn.");
 }
-void
-obank2()
+void obank2(void)
 {
 	banktitle("Welcome to the 5th level branch office of the First National Bank of Larn.");
 }
 
-static void
-banktitle(const char *str)
+static void banktitle(const char *str)
 {
-	nosignal = 1;		/* disable signals */
+	nosignal = 1;
 	clear();
 	lprcat(str);
+	c[TELEFLAG] = 0;
 	if (outstanding_taxes > 0) {
 		int    i;
 		lprcat("\n\nThe Larn Revenue Service has ordered that your account be frozen until all\n");
@@ -557,10 +547,10 @@ banktitle(const char *str)
 /*
  *	function to put interest on your bank account
  */
-void
-ointerest()
+void ointerest(void)
 {
 	int    i;
+
 	if (c[BANKACCOUNT] < 0)
 		c[BANKACCOUNT] = 0;
 	else if ((c[BANKACCOUNT] > 0) && (c[BANKACCOUNT] < 500000)) {
@@ -576,11 +566,11 @@ ointerest()
 static short    gemorder[26] = {0};	/* the reference to screen location
 					 * for each */
 static long     gemvalue[26] = {0};	/* the appraisal of the gems */
-void
-obanksub()
+void obanksub(void)
 {
 	long   amt;
 	int    i, k;
+
 	ointerest();		/* credit any needed interest */
 
 	for (k = i = 0; i < 26; i++)
@@ -603,7 +593,7 @@ obanksub()
 			cursor((k % 2) * 40 + 33, (k >> 1) + 4);
 			lprintf("%5ld", (long) gemvalue[i]);
 			k++;
-		};
+		}
 	cursor(31, 17);
 	lprintf("You have %8ld gold pieces in the bank.", (long) c[BANKACCOUNT]);
 	cursor(40, 18);
@@ -691,7 +681,7 @@ obanksub()
 
 		case '\33':
 			return;
-		};
+		}
 		cursor(40, 17);
 		lprintf("%8ld", (long) c[BANKACCOUNT]);
 		cursor(49, 18);
@@ -700,49 +690,9 @@ obanksub()
 }
 
 /*
-	subroutine to appraise any stone for the bank
- */
-void
-appraise(gemstone)
-	int    gemstone;
-{
-	int    j, amt;
-	for (j = 0; j < 26; j++)
-		if (iven[j] == gemstone) {
-			lprintf("\nI see you have %s", objectname[gemstone]);
-			if (gemstone == OLARNEYE)
-				lprcat("  I must commend you.  I didn't think\nyou could get it.");
-			lprcat("  Shall I appraise it for you? ");
-			yrepcount = 0;
-			if (getyn() == 'y') {
-				lprcat("yes.\n  Just one moment please \n");
-				nap(1000);
-				if (gemstone == OLARNEYE) {
-					amt = 250000 - ((gltime * 7) / 100) * 100;
-					if (amt < 50000)
-						amt = 50000;
-				} else
-					amt = (255 & ivenarg[j]) * 100;
-				lprintf("\nI can see this is an excellent stone, It is worth %ld", (long) amt);
-				lprcat("\nWould you like to sell it to us? ");
-				yrepcount = 0;
-				if (getyn() == 'y') {
-					lprcat("yes\n");
-					c[GOLD] += amt;
-					iven[j] = 0;
-				} else
-					lprcat("no thank you.\n");
-				if (gemstone == OLARNEYE)
-					lprcat("It is, of course, your privilege to keep the stone\n");
-			} else
-				lprcat("no\nO. K.\n");
-		}
-}
-/*
 	function for the trading post
  */
-static void
-otradhead()
+static void otradhead(void)
 {
 	clear();
 	lprcat("Welcome to the Larn Trading Post.  We buy items that explorers no longer find\n");
@@ -752,12 +702,13 @@ otradhead()
 	lprcat("damaged, we will pay only 10% of their new value.\n\n");
 }
 
-void
-otradepost()
+void otradepost(void)
 {
 	int    i, j, value, isub, izarg;
-	dnditm = dndcount = 0;
-	nosignal = 1;		/* disable signals */
+
+	dnditm = 0;
+	dndcount = 0;
+	nosignal = 1;
 	resetscroll();
 	otradhead();
 	while (1) {
@@ -796,7 +747,7 @@ otradepost()
 			} else if (iven[isub] == 0)
 				lprintf("\nYou don't have item %c!", isub + 'a');
 			else {
-				for (j = 0; j < MAXITM; j++)
+				for (j = 0; j < maxitm; j++)
 					if ((itm[j].obj == iven[isub]) || (iven[isub] == ODIAMOND) || (iven[isub] == ORUBY) || (iven[isub] == OEMERALD) || (iven[isub] == OSAPPHIRE)) {
 						srcount = 0;
 						show3(isub);	/* show what the item
@@ -829,18 +780,17 @@ otradepost()
 							iven[isub] = 0;
 						} else
 							lprcat("no thanks.\n");
-						j = MAXITM + 100;	/* get out of the inner
+						j = maxitm + 100;	/* get out of the inner
 									 * loop */
 					}
-				if (j <= MAXITM + 2)
+				if (j <= maxitm + 2)
 					lprcat("\nSo sorry, but we are not authorized to accept that item.");
 			}
 		}
 	}
 }
 
-void
-cnsitm()
+void cnsitm(void)
 {
 	lprcat("\nSorry, we can't accept unidentified objects.");
 }
@@ -848,23 +798,32 @@ cnsitm()
 /*
  *	for the Larn Revenue Service
  */
-void
-olrs()
+void olrs(void)
 {
-	int    i, first;
+	int i;
 	long   amt;
-	first = nosignal = 1;	/* disable signals */
-	clear();
-	resetscroll();
-	cursor(1, 4);
-	lprcat("Welcome to the Larn Revenue Service district office.  How can we help you?");
+
+	nosignal = 1;
+	enable_scroll = -1;
 	while (1) {
-		if (first) {
-			first = 0;
-			goto nxt;
+		if (enable_scroll < 0) {
+			clear();
+			setscroll();
+			cursor(1,4);
+			lprcat("Welcome to the Larn Revenue Service district office.  How can we help you?");
 		}
+		cursor(1,6);
+		if (outstanding_taxes > 0)
+			lprintf("You presently owe %ld gp in taxes.  ", (long int) outstanding_taxes);
+		else
+			lprcat("You do not owe us any taxes.               ");
+		cursor(1,8);
+		if (c[GOLD] > 0)
+			lprintf("You have %6ld gp.    ", (long) c[GOLD]);
+		else
+			lprcat("You have no gold pieces.  ");
 		cursors();
-		lprcat("\n\nYour wish? [(");
+		lprcat("\nYour wish? [(");
 		standout("p");
 		lprcat(") pay taxes, or ");
 		standout("escape");
@@ -878,7 +837,7 @@ olrs()
 			lprcat("pay taxes\nHow much? ");
 			amt = readnum((long) c[GOLD]);
 			if (amt < 0) {
-				lprcat("\nSorry, but we can't take negative gold\n");
+				lprcat("\nSorry, we can't take negative gold\n");
 				amt = 0;
 			} else if (amt > c[GOLD])
 				lprcat("  You don't have that much.\n");
@@ -891,17 +850,6 @@ olrs()
 			setscroll();
 			drawscreen();
 			return;
-		};
-
-nxt:		cursor(1, 6);
-		if (outstanding_taxes > 0)
-			lprintf("You presently owe %ld gp in taxes.  ", (long) outstanding_taxes);
-		else
-			lprcat("You do not owe us any taxes.           ");
-		cursor(1, 8);
-		if (c[GOLD] > 0)
-			lprintf("You have %6ld gp.    ", (long) c[GOLD]);
-		else
-			lprcat("You have no gold pieces.  ");
+		}
 	}
 }

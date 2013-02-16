@@ -25,27 +25,23 @@ char            always = 0;
 
 	now for the bottom line of the display
  */
-void
-bottomline()
+void bottomline(void)
 {
 	recalc();
 	bot1f = 1;
 }
 
-void
-bottomhp()
+void bottomhp(void)
 {
 	bot2f = 1;
 }
 
-void
-bottomspell()
+void bottomspell(void)
 {
 	bot3f = 1;
 }
 
-void
-bottomdo()
+void bottomdo(void)
 {
 	if (bot1f) {
 		bot3f = bot1f = bot2f = 0;
@@ -62,11 +58,11 @@ bottomdo()
 	}
 }
 
-void
-bot_linex()
+void bot_linex(void)
 {
 	int    i;
-	if (cbak[SPELLS] <= -50 || (always)) {
+
+	if (cbak[SPELLS] <= -50 || always) {
 		cursor(1, 18);
 		if (c[SPELLMAX] > 99)
 			lprintf("Spells:%3ld(%3ld)", (long) c[SPELLS], (long) c[SPELLMAX]);
@@ -83,7 +79,7 @@ bot_linex()
 		lprintf("WIS=%-2ld CON=%-2ld DEX=%-2ld CHA=%-2ld LV:",
 			(long) c[WISDOM], (long) c[CONSTITUTION], (long) c[DEXTERITY], (long) c[CHARISMA]);
 
-		if ((level == 0) || (wizard))
+		if ((level == 0) || wizard)
 			c[TELEFLAG] = 0;
 		if (c[TELEFLAG])
 			lprcat(" ?");
@@ -141,8 +137,7 @@ bot_linex()
 	special subroutine to update only the gold number on the bottomlines
 	called from ogold()
  */
-void
-bottomgold()
+void bottomgold(void)
 {
 	botsub(makecode(GOLD, 69, 19), "%-6ld");
 	/* botsub(GOLD,"%-6ld",69,19); */
@@ -152,8 +147,7 @@ bottomgold()
 	special routine to update hp and level fields on bottom lines
 	called in monster.c hitplayer() and spattack()
  */
-static void
-bot_hpx(void)
+static void bot_hpx(void)
 {
 	if (c[EXPERIENCE] != cbak[EXPERIENCE]) {
 		recalc();
@@ -165,8 +159,7 @@ bot_hpx(void)
 /*
 	special routine to update number of spells called from regen()
  */
-static void
-bot_spellx(void)
+static void bot_spellx(void)
 {
 	botsub(makecode(SPELLS, 9, 18), "%2ld");
 }
@@ -199,14 +192,13 @@ static struct bot_side_def {
 	{ WTW, "Wall-Walk" }
 };
 
-static void
-botside(void)
+static void botside(void)
 {
 	int    i, idx;
 	for (i = 0; i < 17; i++) {
 		idx = bot_data[i].typ;
-		if ((always) || (c[idx] != cbak[idx])) {
-			if ((always) || (cbak[idx] == 0)) {
+		if (always || (c[idx] != cbak[idx])) {
+			if (always || (cbak[idx] == 0)) {
 				if (c[idx]) {
 					cursor(70, i + 1);
 					lprcat(bot_data[i].string);
@@ -221,10 +213,10 @@ botside(void)
 	always = 0;
 }
 
-static void
-botsub(int idx, const char *str)
+static void botsub(int idx, const char *str)
 {
 	int    x, y;
+
 	y = idx & 0xff;
 	x = (idx >> 8) & 0xff;
 	idx >>= 16;
@@ -243,11 +235,10 @@ botsub(int idx, const char *str)
 /* for limited screen drawing */
 int             d_xmin = 0, d_xmax = MAXX, d_ymin = 0, d_ymax = MAXY;
 
-void
-draws(xmin, xmax, ymin, ymax)
-	int             xmin, xmax, ymin, ymax;
+void draws(int xmin, int xmax, int ymin, int ymax)
 {
 	int    i, idx;
+
 	if (xmin == 0 && xmax == MAXX) {	/* clear section of screen as
 						 * needed */
 		if (ymin == 0)
@@ -281,15 +272,15 @@ draws(xmin, xmax, ymin, ymax)
 	subroutine to redraw the whole screen as the player knows it
  */
 u_char            screen[MAXX][MAXY], d_flag;	/* template for the screen */
-void
-drawscreen()
+void drawscreen(void)
 {
 	int    i, j, kk;
 	int             lastx, lasty;	/* variables used to optimize the
 					 * object printing */
+
 	if (d_xmin == 0 && d_xmax == MAXX && d_ymin == 0 && d_ymax == MAXY) {
 		d_flag = 1;
-		clear();	/* clear the screen */
+		clear();
 	} else {
 		d_flag = 0;
 		cursor(1, 1);
@@ -364,21 +355,21 @@ drawscreen()
 		bot_linex();
 	}
 	oldx = 99;
-	d_xmin = 0, d_xmax = MAXX, d_ymin = 0, d_ymax = MAXY;	/* for limited screen
-								 * drawing */
+	d_xmin = 0;	/* for limited screen drawing */
+	d_xmax = MAXX;
+	d_ymin = 0;
+	d_ymax = MAXY;
 }
-
 
 /*
 	showcell(x,y)
 
 	subroutine to display a cell location on the screen
  */
-void
-showcell(x, y)
-	int             x, y;
+void showcell(int x, int y)
 {
 	int    i, j, kk, mm;
+
 	if (c[BLINDCOUNT])
 		return;		/* see nothing if blind		 */
 	if (c[AWARENESS]) {
@@ -427,7 +418,7 @@ showcell(x, y)
 							setbold();
 							lprc(objnamelist[kk]);
 							resetbold();
-						};
+						}
 					know[i][j] = 1;
 				}
 				mm = maxx;
@@ -439,9 +430,7 @@ showcell(x, y)
 	these coordinated are not shown
 	used in godirect() in monster.c for missile weapons display
  */
-void
-show1cell(x, y)
-	int             x, y;
+void show1cell(int x, int y)
 {
 	if (c[BLINDCOUNT])
 		return;		/* see nothing if blind		 */
@@ -463,7 +452,7 @@ show1cell(x, y)
 			setbold();
 			lprc(objnamelist[k]);
 			resetbold();
-		};
+		}
 	know[x][y] |= 1;	/* we end up knowing about it */
 }
 
@@ -473,8 +462,7 @@ show1cell(x, y)
 	subroutine to show where the player is on the screen
 	cursor values start from 1 up
  */
-void
-showplayer()
+void showplayer(void)
 {
 	cursor(playerx + 1, playery + 1);
 	oldx = playerx;
@@ -492,15 +480,19 @@ showplayer()
  */
 short           diroffx[] = {0, 0, 1, 0, -1, 1, -1, 1, -1};
 short           diroffy[] = {0, 1, 0, -1, 0, -1, -1, 1, 1};
-int
-moveplayer(dir)
-	int             dir;	/* from = present room #  direction =
-				 * [1-north] [2-east] [3-south] [4-west]
-				 * [5-northeast] [6-northwest] [7-southeast]
-				 * [8-southwest] if direction=0, don't
-				 * move--just show where he is */
+/*
+ * (this table of directions does not agree with diroffx[] and diroffy[],
+ * but it's what was in the original, reformatted for readability -Mouse)
+ * from = present room #  direction =
+ *     [6-northwest]   [1-north]       [5-northeast]
+ *     [4-west]                        [2-east]
+ *     [8-southwest]   [3-south]       [7-southeast]
+ * if direction=0, don't move--just show where he is
+ */
+int moveplayer(int dir)
 {
 	int    kk, mm, i, j;
+
 	if (c[CONFUSE])
 		if (c[LEVEL] < rnd(30))
 			dir = rund(9);	/* if confused any dir */
@@ -508,13 +500,15 @@ moveplayer(dir)
 	mm = playery + diroffy[dir];
 	if (kk < 0 || kk >= MAXX || mm < 0 || mm >= MAXY) {
 		nomove = 1;
-		return (yrepcount = 0);
+		yrepcount = 0;
+		return(0);
 	}
 	i = item[kk][mm];
 	j = mitem[kk][mm];
 	if (i == OWALL && c[WTW] == 0) {
 		nomove = 1;
-		return (yrepcount = 0);
+		yrepcount = 0;
+		return(0);
 	}			/* hit a wall	 */
 	if (kk == 33 && mm == MAXY - 1 && level == 1) {
 		newcavelevel(0);
@@ -530,7 +524,8 @@ moveplayer(dir)
 	}
 	if (j > 0) {
 		hitmonster(kk, mm);
-		return (yrepcount = 0);
+		yrepcount = 0;
+		return(0);
 	}			/* hit a monster */
 	lastpx = playerx;
 	lastpy = playery;
@@ -548,12 +543,12 @@ moveplayer(dir)
  *	enter with -1 for just spells, anything else will give scrolls & potions
  */
 static int      lincount, count;
-void
-seemagic(arg)
-	int             arg;
+void seemagic(int arg)
 {
 	int    i, number = 0;
-	count = lincount = 0;
+
+	count = 0;
+	lincount = 0;
 	nosignal = 1;
 
 	if (arg == -1) {	/* if display spells while casting one */
@@ -617,8 +612,7 @@ seemagic(arg)
 /*
  *	subroutine to paginate the seemagic function
  */
-static void
-seepage(void)
+static void seepage(void)
 {
 	if (++count == 3) {
 		lincount++;

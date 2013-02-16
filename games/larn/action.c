@@ -28,16 +28,14 @@ static void ohear(void);
  * Assumes that cursors() has been called previously, and that a check
  * has been made that the throne actually has gems.
  */
-void
-act_remove_gems(int arg)
+void act_remove_gems(int arg)
 {
 	int i, k;
 
 	k = rnd(101);
 	if (k < 25) {
 		for (i = 0; i < rnd(4); i++)
-			creategem();	/* gems pop off the
-					 * throne */
+			creategem();	/* gems pop off the throne */
 		item[playerx][playery] = ODEADTHRONE;
 		know[playerx][playery] = 0;
 	} else if (k < 40 && arg == 0) {
@@ -57,8 +55,7 @@ act_remove_gems(int arg)
  *
  * Assumes that cursors() has been called previously.
  */
-void
-act_sit_throne(int arg)
+void act_sit_throne(int arg)
 {
 	int k;
 
@@ -80,8 +77,7 @@ act_sit_throne(int arg)
  * cursors() has already been called, and that a check has been made
  * that the player is actually standing at a live fountain.
  */
-void
-act_drink_fountain(void)
+void act_drink_fountain(void)
 {
 	int x;
 
@@ -107,7 +103,7 @@ act_drink_fountain(void)
 		fntchange(-1);	/* change char levels
 				 * downward	 */
 	if (rnd(12) < 3) {
-		lprcat("\nThe fountains bubbling slowly quiets");
+		lprcat("\nThe fountain's bubbling slowly quiets");
 		item[playerx][playery] = ODEADFOUNTAIN;	/* dead fountain */
 		know[playerx][playery] = 0;
 	}
@@ -118,8 +114,7 @@ act_drink_fountain(void)
  * cursors() has already been called and that a check has been made
  * that the player is actually standing at a live fountain.
  */
-void
-act_wash_fountain(void)
+void act_wash_fountain(void)
 {
 	int x;
 
@@ -143,16 +138,14 @@ act_wash_fountain(void)
 /*
  * Perform the actions associated with altar desecration.
  */
-void
-act_desecrate_altar(void)
+void act_desecrate_altar(void)
 {
 	if (rnd(100) < 60) {
 		createmonster(makemonst(level + 2) + 8);
 		c[AGGRAVATE] += 2500;
 	} else if (rnd(101) < 30) {
 		lprcat("\nThe altar crumbles into a pile of dust before your eyes");
-		forget();	/* remember to destroy
-				 * the altar	 */
+		forget();	/* remember to destroy the altar */
 	} else
 		lprcat("\nnothing happens");
 }
@@ -161,8 +154,7 @@ act_desecrate_altar(void)
  * Perform the actions associated with praying at an altar and giving
  * a donation.
  */
-void
-act_donation_pray(void)
+void act_donation_pray(void)
 {
 	long amt;
 
@@ -206,8 +198,7 @@ act_donation_pray(void)
  *
  *  Assumes cursors(), and that any leading \n have been printed.
  */
-void
-act_just_pray(void)
+void act_just_pray(void)
 {
 	if (rnd(100) < 75)
 		lprcat("\nnothing happens");
@@ -245,8 +236,7 @@ ohear(void)
  *
  * Assumptions:  cursors() has been called.
  */
-void
-act_ignore_altar(void)
+void act_ignore_altar(void)
 {
 	if (rnd(100) < 30) {
 		createmonster(makemonst(level + 1));
@@ -261,8 +251,7 @@ act_ignore_altar(void)
  * Parameters:   x,y location of the chest to open.
  * Assumptions:  cursors() has been called previously
  */
-void
-act_open_chest(int x, int y)
+void act_open_chest(int x, int y)
 {
 	int i, k;
 
@@ -274,8 +263,7 @@ act_open_chest(int x, int y)
 		lastnum = 281;	/* in case he dies */
 		lprintf("\nYou suffer %ld hit points damage!", (long) i);
 		checkloss(i);
-		switch (rnd(10)) {	/* see if he gets a
-					 * curse */
+		switch (rnd(10)) {	/* see if he gets a curse */
 		case 1:
 			c[ITCHING] += rnd(1000) + 100;
 			lprcat("\nYou feel an irritation spread over your skin!");

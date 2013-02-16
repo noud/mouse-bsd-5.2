@@ -18,11 +18,14 @@ __RCSID("$NetBSD: main.c,v 1.23 2008/02/03 21:24:58 dholland Exp $");
 static int whatitem(const char *);
 
 static char     copyright[] = "\nLarn is copyrighted 1986 by Noah Morgan.\n";
+int		autoflag =0;	/* autolarn mode: use stdin/stdout, no tty */
 int             srcount = 0;	/* line counter for showstr()	 */
 int             dropflag = 0;	/* if 1 then don't lookforobject() next round */
 int             rmst = 80;	/* random monster creation counter		 */
 int             userid;		/* the players login user id number */
-gid_t           gid, egid;	/* used for security */
+uid_t		uid, euid;	/* used for security */
+gid_t		gid, egid;	/* used for security */
+INVSORT invsort = INVSORT_TYPE;
 u_char          nowelcome = 0, nomove = 0;	/* if (nomove) then don't
 						 * count next iteration as a
 						 * move */
@@ -34,6 +37,7 @@ static char     viewflag = 0;
 u_char          restorflag = 0;	/* 1 means restore has been done	 */
 static char     cmdhelp[] = "\
 Cmd line format: larn [-slicnh] [-o<optsfile>] [-##] [++]\n\
+  -A   autolarn mode\n\
   -s   show the scoreboard\n\
   -l   show the logfile (wizard id only)\n\
   -i   show scoreboard with inventories of dead characters\n\
@@ -54,20 +58,29 @@ static char    *termtypes[] = {"vt100", "vt101", "vt102", "vt103", "vt125",
 	MAIN PROGRAM
 	************
  */
-int
-main(argc, argv)
-	int             argc;
-	char          **argv;
+int main(int argc, char **argv)
 {
 	int    i;
 	int             hard;
 	const char     *ptr = 0;
 	struct passwd  *pwe;
 
-	i = 0;
-	egid = getegid();
-	gid = getgid();
-	setegid(gid);		/* give up "games" if we have it */
+ /* Prepass to check for autolarn mode */
+ for (i=1;i<argc;i++)
+  { if (! strcmp(argv[i],"-A"))
+     { autoflag = 1;
+       break;
+     }
+  }
+ if (! autoflag)
+  { euid = geteuid();
+    uid = getuid();
+    egid = getegid();
+    gid = getgid();
+    /* give up any set-id we may have */
+    if (euid != uid) seteuid(uid);
+    if (egid != gid) setegid(gid);
+  }
 	/*
 	 *	first task is to identify the player
 	 */
@@ -76,9 +89,10 @@ main(argc, argv)
 				 * for termcap */
 #endif	/* VT100 */
 	/* try to get login name */
-	if (((ptr = getlogin()) == 0) || (*ptr == 0)) {
+ if (! autoflag)
+  {	if (((ptr = getlogin()) == 0) || (*ptr == 0)) {
 		/* can we get it from /etc/passwd? */
-		if ((pwe = getpwuid(getuid())) != NULL)
+		if ((pwe = getpwuid(getuid())) != 0)
 			ptr = pwe->pw_name;
 		else if ((ptr = getenv("USER")) == 0)
 			if ((ptr = getenv("LOGNAME")) == 0) {
@@ -97,13 +111,14 @@ main(argc, argv)
 				 * purposes */
 	strcpy(logname, ptr);	/* this will be overwritten with the players
 				 * name */
-	if ((ptr = getenv("HOME")) == NULL)
+	if ((ptr = getenv("HOME")) == 0)
 		ptr = ".";
 	strcpy(savefilename, ptr);
 	strcat(savefilename, "/Larn.sav");	/* save file name in home
 						 * directory */
 	snprintf(optsfile, sizeof(optsfile), "%s/.larnopts", ptr);
 	/* the .larnopts filename */
+  }
 
 	/*
 	 *	now malloc the memory for the dungeon
@@ -118,8 +133,10 @@ main(argc, argv)
 
 	lcreat((char *) 0);
 	newgame();		/* set the initial clock  */
+ if (! rund(10)) potionhide[16] = " studliness"; /* hi opus! */
 	hard = -1;
 
+ if (! autoflag) {
 #ifdef VT100
 	/*
 	 *	check terminal type to avoid users who have not vt100 type terminals
@@ -142,6 +159,7 @@ main(argc, argv)
 	 */
 	if (access(scorefile, 0) == -1)	/* not there */
 		makeboard();
+  }
 
 	/*
 	 *	now process the command line arguments
@@ -149,6 +167,10 @@ main(argc, argv)
 	for (i = 1; i < argc; i++) {
 		if (argv[i][0] == '-')
 			switch (argv[i][1]) {
+			case 'A':
+				/* Already handled - ignore here */
+				break;
+
 			case 's':
 				showscores();
 				exit(0);	/* show scoreboard   */
@@ -200,7 +222,7 @@ main(argc, argv)
 			default:
 				printf("Unknown option <%s>\n", argv[i]);
 				exit(1);
-			};
+			}
 
 		if (argv[i][0] == '+') {
 			clear();
@@ -214,8 +236,8 @@ main(argc, argv)
 		}
 	}
 
+ if (! autoflag) {
 	readopts();		/* read the options file if there is one */
-
 
 #ifdef UIDSCORE
 	userid = geteuid();	/* obtain the user's effective id number */
@@ -250,6 +272,7 @@ main(argc, argv)
 		hitflag = 1;
 		restoregame(savefilename);	/* restore last game	 */
 	}
+  }
 	sigsetup();		/* trap all needed signals	 */
 	sethard(hard);		/* set up the desired difficulty				 */
 	setupvt100();		/* setup the terminal special mode				 */
@@ -309,10 +332,10 @@ main(argc, argv)
 
 	show character's inventory
  */
-void
-showstr()
+void showstr(void)
 {
 	int    i, number;
+
 	for (number = 3, i = 0; i < 26; i++)
 		if (iven[i])
 			number++;	/* count items in inventory */
@@ -321,36 +344,46 @@ showstr()
 	t_endup(number);
 }
 
-void
-qshowstr()
+void qshowstr(void)
 {
-	int    i, j, k, sigsav;
-	srcount = 0;
-	sigsav = nosignal;
-	nosignal = 1;		/* don't allow ^c etc */
-	if (c[GOLD]) {
-		lprintf(".)   %ld gold pieces", (long) c[GOLD]);
-		srcount++;
-	}
+ int i;
+ int j;
+ int k;
+ int sigsav;
+
+ srcount = 0;
+ sigsav = nosignal;
+ nosignal = 1;
+ if (c[GOLD])
+  { lprintf(".)   %ld gold pieces",(long)c[GOLD]);
+    srcount ++;
+  }
+ switch (invsort)
+  { case INVSORT_TYPE:
 	for (k = 26; k >= 0; k--)
 		if (iven[k]) {
 			for (i = 22; i < 84; i++)
 				for (j = 0; j <= k; j++)
 					if (i == iven[j])
 						show3(j);
-			k = 0;
+			break;
 		}
-	lprintf("\nElapsed time is %ld.  You have %ld mobuls left", (long) ((gltime + 99) / 100 + 1), (long) ((TIMELIMIT - gltime) / 100));
-	more();
-	nosignal = sigsav;
+       break;
+    case INVSORT_ALPHA:
+       for (i=0;i<26;i++)
+	{ if (iven[i]) show3(i);
+	}
+       break;
+  }
+ lprintf("\nElapsed time is %ld.  You have %ld mobuls left", (long) ((gltime + 99) / 100 + 1), (long) ((TIMELIMIT - gltime) / 100));
+ more();
+ nosignal = sigsav;
 }
 
 /*
  *	subroutine to clear screen depending on # lines to display
  */
-void
-t_setup(count)
-	int    count;
+void t_setup(int count)
 {
 	if (count < 20) {	/* how do we clear the screen? */
 		cl_up(79, count);
@@ -364,9 +397,7 @@ t_setup(count)
 /*
  *	subroutine to restore normal display screen depending on t_setup()
  */
-void
-t_endup(count)
-	int    count;
+void t_endup(int count)
 {
 	if (count < 18)		/* how did we clear the screen? */
 		draws(0, MAXX, 0, (count > MAXY) ? MAXY : count);
@@ -379,10 +410,10 @@ t_endup(count)
 /*
 	function to show the things player is wearing only
  */
-void
-showwear()
+void showwear(void)
 {
 	int    i, j, sigsav, count;
+
 	sigsav = nosignal;
 	nosignal = 1;		/* don't allow ^c etc */
 	srcount = 0;
@@ -401,7 +432,7 @@ showwear()
 			case OSSPLATE:
 			case OSHIELD:
 				count++;
-			};
+			}
 
 	t_setup(count);
 
@@ -419,7 +450,7 @@ showwear()
 				case OSSPLATE:
 				case OSHIELD:
 					show3(j);
-				};
+				}
 	more();
 	nosignal = sigsav;
 	t_endup(count);
@@ -428,10 +459,10 @@ showwear()
 /*
 	function to show the things player can wield only
  */
-void
-showwield()
+void showwield(void)
 {
 	int    i, j, sigsav, count;
+
 	sigsav = nosignal;
 	nosignal = 1;		/* don't allow ^c etc */
 	srcount = 0;
@@ -454,7 +485,7 @@ showwield()
 				break;
 			default:
 				count++;
-			};
+			}
 
 	t_setup(count);
 
@@ -477,7 +508,7 @@ showwield()
 					break;
 				default:
 					show3(j);
-				};
+				}
 	more();
 	nosignal = sigsav;
 	t_endup(count);
@@ -486,10 +517,10 @@ showwield()
 /*
  *	function to show the things player can read only
  */
-void
-showread()
+void showread(void)
 {
 	int    i, j, sigsav, count;
+
 	sigsav = nosignal;
 	nosignal = 1;		/* don't allow ^c etc */
 	srcount = 0;
@@ -509,7 +540,7 @@ showread()
 				case OBOOK:
 				case OSCROLL:
 					show3(j);
-				};
+				}
 	more();
 	nosignal = sigsav;
 	t_endup(count);
@@ -518,10 +549,10 @@ showread()
 /*
  *	function to show the things player can eat only
  */
-void
-showeat()
+void showeat(void)
 {
 	int    i, j, sigsav, count;
+
 	sigsav = nosignal;
 	nosignal = 1;		/* don't allow ^c etc */
 	srcount = 0;
@@ -530,7 +561,7 @@ showeat()
 		switch (iven[j]) {
 		case OCOOKIE:
 			count++;
-		};
+		}
 	t_setup(count);
 
 	for (i = 22; i < 84; i++)
@@ -539,7 +570,7 @@ showeat()
 				switch (i) {
 				case OCOOKIE:
 					show3(j);
-				};
+				}
 	more();
 	nosignal = sigsav;
 	t_endup(count);
@@ -548,10 +579,10 @@ showeat()
 /*
 	function to show the things player can quaff only
  */
-void
-showquaff()
+void showquaff(void)
 {
 	int    i, j, sigsav, count;
+
 	sigsav = nosignal;
 	nosignal = 1;		/* don't allow ^c etc */
 	srcount = 0;
@@ -560,7 +591,7 @@ showquaff()
 		switch (iven[j]) {
 		case OPOTION:
 			count++;
-		};
+		}
 	t_setup(count);
 
 	for (i = 22; i < 84; i++)
@@ -569,24 +600,20 @@ showquaff()
 				switch (i) {
 				case OPOTION:
 					show3(j);
-				};
+				}
 	more();
 	nosignal = sigsav;
 	t_endup(count);
 }
 
-void
-show1(idx, str2)
-	int    idx;
-	const char  *str2[];
+void show1(int idx, const char **str2)
 {
 	lprintf("\n%c)   %s", idx + 'a', objectname[iven[idx]]);
 	if (str2 != 0 && str2[ivenarg[idx]][0] != 0)
 		lprintf(" of%s", str2[ivenarg[idx]]);
 }
 
-void
-show3(int indx)
+void show3(int indx)
 {
 	switch (iven[indx]) {
 	case OPOTION:
@@ -607,7 +634,7 @@ show3(int indx)
 	case OCOOKIE:
 	case OSAPPHIRE:
 	case ONOTHEFT:
-		show1(indx, NULL);
+		show1(indx, 0);
 		break;
 
 	default:
@@ -632,8 +659,7 @@ show3(int indx)
 /*
 	subroutine to randomly create monsters if needed
  */
-void
-randmonst()
+void randmonst(void)
 {
 	if (c[TIMESTOP])
 		return;		/* don't make monsters if time is stopped	 */
@@ -643,17 +669,15 @@ randmonst()
 	}
 }
 
-
-
 /*
 	parse()
 
 	get and execute a command
  */
-void
-parse()
+void parse(void)
 {
 	int    i, j, k, flag;
+
 	while (1) {
 		k = yylex();
 		switch (k) {	/* get the token from the input and switch on
@@ -773,6 +797,13 @@ parse()
 			return;	/* give the help screen */
 
 		case 'S':
+			if (autoflag) {
+		case 'Q':
+				yrepcount =0;
+				quit();
+				nomove =1;
+				return;
+			}
 			clear();
 			lprcat("Saving . . .");
 			lflush();
@@ -812,7 +843,7 @@ parse()
 						lprcat("\nIt's ");
 						lprcat(objectname[item[i][j]]);
 						flag++;
-					};
+					}
 				}
 			}
 			if (flag == 0)
@@ -825,7 +856,8 @@ parse()
 			yrepcount = 0;
 			cursors();
 			nomove = 1;
-			if (userid != wisid) {
+			if (autoflag) return;
+			if ((wisid >= 0) && (userid != wisid)) {
 				lprcat("Sorry, you are not empowered to be a wizard.\n");
 				scbr();	/* system("stty -echo cbreak"); */
 				lflush();
@@ -923,12 +955,6 @@ parse()
 			lprcat(copyright);
 			return;
 
-		case 'Q':
-			yrepcount = 0;
-			quit();
-			nomove = 1;
-			return;	/* quit		 */
-
 		case 'L' - 64:
 			yrepcount = 0;
 			drawscreen();
@@ -955,25 +981,23 @@ parse()
 			else
 				lprcat("\nYou do not owe any taxes.");
 			return;
-		};
+		}
 	}
 }
 
-void
-parse2()
+void parse2(void)
 {
 	if (c[HASTEMONST])
 		movemonst();
-	movemonst();		/* move the monsters		 */
+	movemonst();
 	randmonst();
 	regen();
 }
 
-void
-run(dir)
-	int             dir;
+void run(int dir)
 {
 	int    i;
+
 	i = 1;
 	while (i) {
 		i = moveplayer(dir);
@@ -994,10 +1018,10 @@ run(dir)
 /*
 	function to wield a weapon
  */
-void
-wield()
+void wield(void)
 {
 	int    i;
+
 	while (1) {
 		if ((i = whatitem("wield")) == '\33')
 			return;
@@ -1032,16 +1056,12 @@ wield()
 /*
 	common routine to say you don't have an item
  */
-void
-ydhi(x)
-	int             x;
+void ydhi(int x)
 {
 	cursors();
 	lprintf("\nYou don't have item %c!", x);
 }
-void
-ycwi(x)
-	int             x;
+void ycwi(int x)
 {
 	cursors();
 	lprintf("\nYou can't wield item %c!", x);
@@ -1050,10 +1070,10 @@ ycwi(x)
 /*
 	function to wear armor
  */
-void
-wear()
+void wear(void)
 {
 	int    i;
+
 	while (1) {
 		if ((i = whatitem("wear")) == '\33')
 			return;
@@ -1094,7 +1114,7 @@ wear()
 					return;
 				default:
 					lprcat("\nYou can't wear that!");
-				};
+				}
 		}
 	}
 }
@@ -1102,12 +1122,12 @@ wear()
 /*
 	function to drop an object
  */
-void
-dropobj()
+void dropobj(void)
 {
 	int    i;
 	unsigned char  *p;
 	long            amt;
+
 	p = &item[playerx][playery];
 	while (1) {
 		if ((i = whatitem("drop")) == '\33')
@@ -1166,10 +1186,10 @@ dropobj()
 /*
  *	readscr()		Subroutine to read a scroll one is carrying
  */
-void
-readscr()
+void readscr(void)
 {
 	int    i;
+
 	while (1) {
 		if ((i = whatitem("read")) == '\33')
 			return;
@@ -1201,8 +1221,7 @@ readscr()
 /*
  *	subroutine to eat a cookie one is carrying
  */
-void
-eatcookie(void)
+void eatcookie(void)
 {
 	const char *p;
 	int i;
@@ -1218,7 +1237,7 @@ eatcookie(void)
 					lprcat("\nThe cookie was delicious.");
 					iven[i - 'a'] = 0;
 					if (!c[BLINDCOUNT]) {
-						if ((p = fortune()) != NULL) {
+						if ((p = fortune()) != 0) {
 							lprcat("  Inside you find a scrap of paper that says:\n");
 							lprcat(p);
 						}
@@ -1239,10 +1258,10 @@ eatcookie(void)
 /*
  *	subroutine to quaff a potion one is carrying
  */
-void
-quaff()
+void quaff(void)
 {
 	int    i;
+
 	while (1) {
 		if ((i = whatitem("quaff")) == '\33')
 			return;
@@ -1269,10 +1288,10 @@ quaff()
 /*
 	function to ask what player wants to do
  */
-static int
-whatitem(const char *str)
+static int whatitem(const char *str)
 {
 	int             i;
+
 	cursors();
 	lprintf("\nWhat do you want to %s [* for all] ? ", str);
 	i = 0;
@@ -1287,37 +1306,98 @@ whatitem(const char *str)
 	subroutine to get a number from the player
 	and allow * to mean return amt, else return the number entered
  */
-unsigned long
-readnum(mx)
-	long            mx;
+unsigned long int readnum(long int mx)
 {
 	int    i;
-	unsigned long amt = 0;
-	sncbr();
-	if ((i = ttgetch()) == '*')
-		amt = mx;	/* allow him to say * for all gold */
-	else
-		while (i != '\n') {
-			if (i == '\033') {
-				scbr();
-				lprcat(" aborted");
-				return (0);
+	unsigned long amt;
+	unsigned long int newamt;
+	int star;
+	int neg;
+	int nbf;
+	int dv;
+
+	star = 0;
+	neg = 0;
+	nbf = 0;
+	amt = 0;
+	while (1) {
+		i = ttgetch();
+		if (star) {
+			switch (i) {
+			case '\n':
+				lprc('\n');
+				return(mx);
+			case '\b':
+			case '\177':
+				lprcat("\b \b");
+				star = 0;
+				break;
+			default:
+				lprc(7);
+				break;
 			}
-			if ((i <= '9') && (i >= '0') && (amt < 99999999))
-				amt = amt * 10 + i - '0';
-			i = ttgetch();
+		} else {
+			switch (i) {
+			case '\n':
+				lprc('\n');
+				return(neg?-amt:amt);
+			case '\b':
+			case '\177':
+				if (nbf > 0) {
+					lprcat("\b \b");
+					nbf --;
+					if (nbf == 0)
+						neg = 0;
+					amt /= 10;
+				}
+				break;
+			case '-':
+				if (nbf > 0) {
+					lprc(7);
+					break;
+				}
+				neg = 1;
+				if (0) {
+			case '0': dv = 0;   if (0) {
+			case '1': dv = 1; } if (0) {
+			case '2': dv = 2; } if (0) {
+			case '3': dv = 3; } if (0) {
+			case '4': dv = 4; } if (0) {
+			case '5': dv = 5; } if (0) {
+			case '6': dv = 6; } if (0) {
+			case '7': dv = 7; } if (0) {
+			case '8': dv = 8; } if (0) {
+			case '9': dv = 9; }
+				newamt = amt * 10;
+				if (neg) newamt -= dv; else newamt += dv;
+				if (newamt/10 != amt) {
+					lprc(7);
+					break;
+				}
+				amt = newamt;
+				}
+				lprc(i);
+				nbf ++;
+				break;
+			case '*':
+				if (nbf == 0) {
+					lprc('*');
+					star = 1;
+					break;
+				}
+				/* fall through */
+			default:
+				lprc(7);
+			}
 		}
-	scbr();
-	return (amt);
+	}
 }
 
 #ifdef HIDEBYLINK
 /*
  *	routine to zero every byte in a string
  */
-void
-szero(str)
-	char  *str;
+void szero(char *str)
 {
 	while (*str)
 		*str++ = 0;

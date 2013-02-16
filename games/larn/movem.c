@@ -27,10 +27,10 @@ __RCSID("$NetBSD: movem.c,v 1.6 2008/01/28 05:38:54 dholland Exp $");
  */
 static short    w1[9], w1x[9], w1y[9];
 static int      tmp1, tmp2, tmp3, tmp4, distance;
-void
-movemonst()
+void movemonst(void)
 {
 	int    i, j;
+
 	if (c[TIMESTOP])
 		return;		/* no action if time is stopped */
 	if (c[HASTESELF])
@@ -127,11 +127,10 @@ movemonst()
  * Returns no value.
  */
 static int      tmpitem, xl, xh, yl, yh;
-void
-movemt(i, j)
-	int             i, j;
+void movemt(int i, int j)
 {
 	int    k, m, z, tmp, xtmp, ytmp, monst;
+
 	switch (monst = mitem[i][j]) {	/* for half speed monsters */
 	case TROGLODYTE:
 	case HOBGOBLIN:
@@ -141,7 +140,7 @@ movemt(i, j)
 	case ICELIZARD:
 		if ((gltime & 1) == 1)
 			return;
-	};
+	}
 
 	if (c[SCAREMONST]) {	/* choose destination randomly if scared */
 		if ((xl = i + rnd(3) - 2) < 0)
@@ -185,7 +184,7 @@ movemt(i, j)
 				default:
 					screen[m][k] = 0;
 					break;
-				};
+				}
 			}
 		screen[playerx][playery] = 1;
 
@@ -269,12 +268,10 @@ out:		if (tmp < distance)	/* did find connectivity */
  * Enter with the from coordinates in (x,y) and the destination coordinates
  * in (xd,yd).
  */
-void
-mmove(aa, bb, cc, dd)
-	int             aa, bb, cc, dd;
+void mmove(int aa, int bb, int cc, int dd)
 {
 	int    tmp, i, flag;
-	const char *who = NULL, *p;
+	const char *who = 0, *p;
 
 	flag = 0;		/* set to 1 if monster hit by arrow trap */
 	if ((cc == playerx) && (dd == playery)) {
@@ -303,7 +300,7 @@ mmove(aa, bb, cc, dd)
 
 		default:
 			mitem[aa][bb] = 0;	/* fell in a pit or trapdoor */
-		};
+		}
 	tmp = mitem[cc][dd] = mitem[aa][bb];
 	if (i == OANNIHILATION) {
 		if (tmp >= DEMONLORD + 3) {	/* demons dispel spheres */
@@ -329,7 +326,7 @@ mmove(aa, bb, cc, dd)
 		case OEMERALD:
 		case OSAPPHIRE:
 			item[cc][dd] = 0;	/* leprechaun takes gold */
-		};
+		}
 
 	if (tmp == TROLL)	/* if a troll regenerate him */
 		if ((gltime & 1) == 0)
@@ -374,7 +371,7 @@ mmove(aa, bb, cc, dd)
 			p = "\nThe %s%s gets teleported";
 			who = "";
 			break;
-		};
+		}
 		if (p) {
 			lprintf(p, who, monster[tmp].name);
 			beep();
@@ -402,8 +399,7 @@ mmove(aa, bb, cc, dd)
  */
 #define SPHMAX 20		/* maximum number of spheres movsphere can
 				 * handle */
-void
-movsphere()
+void movsphere(void)
 {
 	int    x, y, dir, len;
 	struct sphere *sp, *sp2;
@@ -442,6 +438,6 @@ movsphere()
 			len = sp->lifetime;
 			rmsphere(x, y);
 			newsphere(x + diroffx[dir], y + diroffy[dir], dir, len);
-		};
+		}
 	}
 }
