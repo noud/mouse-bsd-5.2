@@ -231,6 +231,12 @@ network_start()
 				/sbin/ipf -y >/dev/null
 			fi
 
+			# Run the pre command(s), if any.
+			eval precmd=\"\$ifsetup_pre_$int\"
+			if [ -n "$precmd" ]; then
+				eval "$precmd"
+			fi
+
 			# If $ifconfig_xxN is empty, then use
 			# /etc/ifconfig.xxN, which we know exists due to
 			# an earlier test.
@@ -291,6 +297,12 @@ network_start()
 				esac
 			done
 			configured_interfaces="$configured_interfaces $int"
+
+			# Run the post command(s), if any.
+			eval postcmd=\"\$ifsetup_post_$int\"
+			if [ -n "$postcmd" ]; then
+				eval "$postcmd"
+			fi
 		done
 		echo "."
 	fi
