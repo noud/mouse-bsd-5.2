@@ -359,7 +359,7 @@ network_start()
 	# commands in $ifconfig_xxN instead.
 	#
 	if [ -f /etc/ifaliases ]; then
-		if [ -n "$done_aliases_messages" != yes ]; then
+		if [ "$done_aliases_messages" != yes ]; then
 			echo -n "Adding interface aliases:"
 			done_aliases_messages=yes
 		fi
@@ -374,7 +374,7 @@ network_start()
 		done < /etc/ifaliases
 	fi
 
-	if [ -n "$done_aliases_messages" = yes ]; then
+	if [ "$done_aliases_messages" = yes ]; then
 		echo "." # for "Adding interface aliases:"
 	fi
 
