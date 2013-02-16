@@ -310,7 +310,7 @@ udf_calculate_disc_layout(int format_flags, int min_udf,
 		printf("\tsparable\t\t%d\n", layout.sparable_area);
 	}
 	printf("\tpartition start lba\t%d\n", layout.part_start_lba);
-	printf("\tpartition size\t\t%d KiB, %d MiB\n",
+	printf("\tpartition size\t\t%d KB, %d MB\n",
 		(layout.part_size_lba * sector_size) / 1024,
 		(layout.part_size_lba * sector_size) / (1024*1024));
 	if ((format_flags & FORMAT_SEQUENTIAL) == 0) {
@@ -320,7 +320,7 @@ udf_calculate_disc_layout(int format_flags, int min_udf,
 	if (format_flags & FORMAT_META) {
 		printf("\tmeta blockingnr\t\t%d\n", layout.meta_blockingnr);
 		printf("\tmeta alignment\t\t%d\n",  layout.meta_alignment);
-		printf("\tmeta size\t\t%d KiB, %d MiB\n",
+		printf("\tmeta size\t\t%d KB, %d MB\n",
 			(layout.meta_part_size_lba * sector_size) / 1024,
 			(layout.meta_part_size_lba * sector_size) / (1024*1024));
 		printf("\tmeta file\t\t%d\n", layout.meta_file);
@@ -335,11 +335,11 @@ udf_calculate_disc_layout(int format_flags, int min_udf,
 #endif
 
 	kbsize = (uint64_t) last_lba * sector_size;
-	printf("Total space on this medium aprox. %"PRIu64" KiB, %"PRIu64" MiB\n",
+	printf("Total space on this medium aprox. %"PRIu64" KB, %"PRIu64" MB\n",
 			kbsize/1024, kbsize/(1024*1024));
 	kbsize = (uint64_t) (layout.part_size_lba - layout.alloc_bitmap_dscr_size
 		- layout.meta_bitmap_dscr_size) * sector_size;
-	printf("Free space on this volume aprox.  %"PRIu64" KiB, %"PRIu64" MiB\n\n",
+	printf("Free space on this volume aprox.  %"PRIu64" KB, %"PRIu64" MB\n\n",
 			kbsize/1024, kbsize/(1024*1024));
 
 	return 0;

@@ -103,10 +103,10 @@ will extract the
 .Pa file.tar.gz
 displaying the progress bar as time passes:
 .Bd -literal
-  0% |                               |     0        0.00 KiB/s    --:-- ETA
- 40% |********                       |   273 KiB  271.95 KiB/s    00:01 ETA
- 81% |***********************        |   553 KiB  274.61 KiB/s    00:00 ETA
-100% |*******************************|   680 KiB  264.59 KiB/s    00:00 ETA
+  0% |                               |     0       0.00 KB/s    --:-- ETA
+ 40% |********                       |   273 KB  271.95 KB/s    00:01 ETA
+ 81% |***********************        |   553 KB  274.61 KB/s    00:00 ETA
+100% |*******************************|   680 KB  264.59 KB/s    00:00 ETA
 .Ed
 .Pp
 If it is preferred to monitor the progress of the decompression
@@ -117,7 +117,7 @@ could be used.
 The command
 .Dl dd if=/dev/rwd0d ibs=64k | \e
 .Dl progress -l 120g dd of=/dev/rwd1d obs=64k
-will copy the 120 GiB disk
+will copy the 120 GB disk
 .Sy wd0
 .Pa ( /dev/rwd0d )
 to

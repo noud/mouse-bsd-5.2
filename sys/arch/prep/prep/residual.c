@@ -868,13 +868,13 @@ large_vendor_floppy_subr(struct _L4_PPCPack *p, void *v, int size)
 			str = "Not present";
 			break;
 		case 1:
-			str = "3.5\" 2MiB";
+			str = "3.5\" 2MB";
 			break;
 		case 2:
-			str = "3.5\" 4MiB";
+			str = "3.5\" 4MB";
 			break;
 		case 3:
-			str = "5.25\" 1.6MiB";
+			str = "5.25\" 1.6MB";
 			break;
 		default:
 			str = "Unknown type";

@@ -84,20 +84,20 @@ updateprogressmeter(int dummy)
 }
 
 /*
- * List of order of magnitude suffixes, per IEC 60027-2.
+ * List of order of magnitude suffixes.
  */
 static const char * const suffixes[] = {
 	"",	/* 2^0  (byte) */
-	"KiB",	/* 2^10 Kibibyte */
-	"MiB",	/* 2^20 Mebibyte */
-	"GiB",	/* 2^30 Gibibyte */
-	"TiB",	/* 2^40 Tebibyte */
-	"PiB",	/* 2^50 Pebibyte */
-	"EiB",	/* 2^60 Exbibyte */
+	"KB",	/* 2^10 Kilobyte */
+	"MB",	/* 2^20 Megabyte */
+	"GB",	/* 2^30 Gigabyte */
+	"TB",	/* 2^40 Terabyte */
+	"PB",	/* 2^50 Petabyte */
+	"EB",	/* 2^60 Exabyte */
 #if 0
 		/* The following are not necessary for signed 64-bit off_t */
-	"ZiB",	/* 2^70 Zebibyte */
-	"YiB",	/* 2^80 Yobibyte */
+	"ZB",	/* 2^70 Zettabyte */
+	"YB",	/* 2^80 Yottabyte */
 #endif
 };
 #define NSUFFIXES	(sizeof(suffixes) / sizeof(suffixes[0]))
@@ -250,7 +250,7 @@ progressmeter(int flag)
 	for (i = 1; bytespersec >= 1024000 && i < NSUFFIXES; i++)
 		bytespersec >>= 10;
 	len += snprintf(buf + len, BUFLEFT,
-	    " " LLFP("3") ".%02d %.2sB/s ",
+	    " " LLFP("3") ".%02d %.1sB/s ",
 	    (LLT)(bytespersec / 1024),
 	    (int)((bytespersec % 1024) * 100 / 1024),
 	    suffixes[i]);
@@ -343,7 +343,7 @@ ptransfer(int siginfo)
 		bytespersec >>= 10;
 	if (i == NSUFFIXES)
 		i--;
-	len += snprintf(buf + len, BUFLEFT, "(" LLF ".%02d %.2sB/s)",
+	len += snprintf(buf + len, BUFLEFT, "(" LLF ".%02d %.1sB/s)",
 	    (LLT)(bytespersec / 1024),
 	    (int)((bytespersec % 1024) * 100 / 1024),
 	    suffixes[i]);

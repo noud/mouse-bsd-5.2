@@ -1016,7 +1016,7 @@ udf_do_newfs(void)
 	wrtrack_skew = ti.track_start % blockingnr;
 
 	if (mmc_discinfo.mmc_class == MMC_CLASS_CD) {
-		/* not too much for CD-RW, still 20MiB */
+		/* not too much for CD-RW, still 20MB */
 		sparable_blocks = 32;
 	} else {
 		/* take a value for DVD*RW mainly, BD is `defect free' */
