@@ -407,6 +407,8 @@ acct_process(struct lwp *l)
 	if (acct_state != ACCT_ACTIVE)
 		goto out;
 
+	bzero(&acct,sizeof(acct)); /* don't leak stack trash in padding */
+
 	/*
 	 * Temporarily raise the file limit so that accounting can't
 	 * be stopped by the user.
