@@ -129,6 +129,7 @@ struct netdissect_options {
   int32_t ndo_thiszone;	/* seconds offset from gmt to local time */
 
   int   ndo_snaplen;
+  int   ndo_explicit_snaplen;
 
   /*global pointers to beginning and end of current packet (during printing) */
   const u_char *ndo_packetp;

@@ -486,6 +486,7 @@ main(int argc, char **argv)
 	gndo->ndo_error=ndo_error;
 	gndo->ndo_warning=ndo_warning;
 	gndo->ndo_snaplen = DEFAULT_SNAPLEN;
+	gndo->ndo_explicit_snaplen = 0;
 
 	cnt = -1;
 	device = NULL;
@@ -695,6 +696,7 @@ main(int argc, char **argv)
 				error("invalid snaplen %s", optarg);
 			else if (snaplen == 0)
 				snaplen = 65535;
+			explicit_snaplen = 1;
 			break;
 		}
 
@@ -1268,22 +1270,32 @@ print_packet(u_char *user, const struct pcap_pkthdr *h, const u_char *sp)
 		}
 	} else if (xflag) {
 		/*
-		 * Print the raw packet data in hex.
+		 * Print the raw packet data in hex.  "The smaller of
+		 *  the entire packet or snaplen bytes will be
+		 *  printed", to quote the manpage, so truncate to
+		 *  snaplen if that's smaller than h->caplen.  This
+		 *  allows -s to limit the amount printed when using -x
+		 *  with -r.  But check explicit_snaplen, to avoid
+		 *  truncating packets to DEFAULT_SNAPLEN when -s is
+		 *  not given.
 		 */
+		int printlen;
+		printlen = (explicit_snaplen && (snaplen < h->caplen))
+				? snaplen : h->caplen;
 		if (xflag > 1) {
 			/*
 			 * Include the link-layer header.
 			 */
-			hex_print("\n\t", sp, h->caplen);
+			hex_print("\n\t", sp, printlen);
 		} else {
 			/*
 			 * Don't include the link-layer header - and if
 			 * we have nothing past the link-layer header,
 			 * print nothing.
 			 */
-			if (h->caplen > hdrlen)
+			if (printlen > hdrlen)
 				hex_print("\n\t", sp + hdrlen,
-				    h->caplen - hdrlen);
+				    printlen - hdrlen);
 		}
 	} else if (Aflag) {
 		/*
@@ -1465,4 +1477,3 @@ ndo_warning(netdissect_options *ndo _U_, const char *fmt, ...)
 			(void)fputc('\n', stderr);
 	}
 }
-
