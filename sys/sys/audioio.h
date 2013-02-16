@@ -95,7 +95,7 @@ typedef struct audio_info audio_info_t;
  * Parameter for the AUDIO_GETDEV ioctl to determine current
  * audio devices.
  */
-#define MAX_AUDIO_DEV_LEN       16
+#define MAX_AUDIO_DEV_LEN       48
 typedef struct audio_device {
         char name[MAX_AUDIO_DEV_LEN];
         char version[MAX_AUDIO_DEV_LEN];
