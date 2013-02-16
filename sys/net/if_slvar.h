@@ -52,6 +52,7 @@ struct sl_softc {
 	struct mbuf *sc_mbuf;		/* input buffer */
 	u_int	sc_flags;		/* see below */
 	u_int	sc_escape;	/* =1 if last char input was FRAME_ESCAPE */
+	int	sc_af;			/* AF_INET, AF_INET6, etc - input */
 	long	sc_lasttime;		/* last time a char arrived */
 	long	sc_abortcount;		/* number of abort esacpe chars */
 	long	sc_starttime;		/* time of first abort in window */

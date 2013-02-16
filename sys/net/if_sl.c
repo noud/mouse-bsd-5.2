@@ -90,11 +90,16 @@ __KERNEL_RCSID(0, "$NetBSD: if_sl.c,v 1.112 2008/06/15 16:37:21 christos Exp $")
 #include <net/netisr.h>
 #include <net/route.h>
 
-#ifdef INET
+#if defined(INET) || defined(INET6)
 #include <netinet/in.h>
 #include <netinet/in_systm.h>
 #include <netinet/in_var.h>
 #include <netinet/ip.h>
+#else
+#error "SLIP wit hneither INET nor INET6?"
+#endif
+#ifdef INET6
+#include <netinet/ip6.h>
 #endif
 
 #include <net/slcompress.h>
@@ -186,6 +191,8 @@ struct if_clone sl_cloner =
 #define FRAME_ESCAPE		0xdb		/* Frame Esc */
 #define TRANS_FRAME_END		0xdc		/* transposed frame end */
 #define TRANS_FRAME_ESCAPE	0xdd		/* transposed frame esc */
+#define TRANS_PKTTYPE_BASE	0x80		/* packet type base */
+#define PKTTYPE_IPv6		0		/* packet is a v6 packet */
 
 static void	slintr(void *);
 
@@ -248,6 +255,7 @@ sl_clone_create(struct if_clone *ifc, int unit)
 #if NBPFILTER > 0
 	bpfattach(&sc->sc_if, DLT_SLIP, SLIP_HDRLEN);
 #endif
+	sc->sc_af = AF_INET;
 	LIST_INSERT_HEAD(&sl_softc_list, sc, sc_iflist);
 	return 0;
 }
@@ -447,16 +455,23 @@ sloutput(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 
 	IFQ_CLASSIFY(&ifp->if_snd, m, dst->sa_family, &pktattr);
 
-	/*
-	 * `Cannot happen' (see slioctl).  Someday we will extend
-	 * the line protocol to support other address families.
-	 */
-	if (dst->sa_family != AF_INET) {
-		printf("%s: af%d not supported\n", sc->sc_if.if_xname,
-		    dst->sa_family);
-		m_freem(m);
-		sc->sc_if.if_noproto++;
-		return EAFNOSUPPORT;
+	switch (dst->sa_family) {
+#ifdef INET
+		case AF_INET:
+			break;
+#endif
+#ifdef INET6
+		case AF_INET6:
+			break;
+#endif
+		default:
+			/* "can't happen"; slioctl won't set others */
+			printf("%s: af%d not supported\n",
+				&sc->sc_if.if_xname[0], dst->sa_family);
+			m_freem(m);
+			sc->sc_if.if_noproto++;
+			return EAFNOSUPPORT;
+			break;
 	}
 
 	if (sc->sc_ttyp == NULL) {
@@ -469,13 +484,24 @@ sloutput(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 		printf("%s: no carrier and not local\n", sc->sc_if.if_xname);
 		return EHOSTUNREACH;
 	}
-	ip = mtod(m, struct ip *);
 #ifdef INET
-	if (sc->sc_if.if_flags & SC_NOICMP && ip->ip_p == IPPROTO_ICMP) {
-		m_freem(m);
-		return ENETRESET;		/* XXX ? */
+	/* XXX really should do likewise for icmp6! */
+	if (dst->sa_family == AF_INET) {
+		ip = mtod(m, struct ip *);
+		if (sc->sc_if.if_flags & SC_NOICMP && ip->ip_p == IPPROTO_ICMP) {
+			m_freem(m);
+			return ENETRESET;		/* XXX ? */
+		}
+		if ((ip->ip_tos & IPTOS_LOWDELAY) != 0)
+			ifq = &sc->sc_fastq;
 	}
 #endif
+	M_PREPEND(m,dst->sa_len,M_DONTWAIT);
+	if (m == 0) {
+		sc->sc_if.if_oerrors ++;
+		return(ENOBUFS);
+	}
+	bcopy(dst,mtod(m,char *),dst->sa_len);
 
 	s = spltty();
 	if (sc->sc_oqlen && sc->sc_ttyp->t_outq.c_cc == sc->sc_oqlen) {
@@ -492,10 +518,6 @@ sloutput(struct ifnet *ifp, struct mbuf *m, const struct sockaddr *dst,
 	splx(s);
 
 	s = splnet();
-#ifdef INET
-	if ((ip->ip_tos & IPTOS_LOWDELAY) != 0)
-		ifq = &sc->sc_fastq;
-#endif
 	if ((error = ifq_enqueue2(ifp, ifq, m ALTQ_COMMA
 	    ALTQ_DECL(&pktattr))) != 0) {
 		splx(s);
@@ -636,6 +658,14 @@ slinput(int c, struct tty *tp)
 			c = FRAME_END;
 		break;
 
+	case TRANS_PKTTYPE_BASE + PKTTYPE_IPv6:
+		if (sc->sc_escape) {
+			sc->sc_af = AF_INET6;
+			sc->sc_escape = 0;
+			return(0);
+		}
+		break;
+
 	case FRAME_ESCAPE:
 		sc->sc_escape = 1;
 		return 0;
@@ -653,6 +683,12 @@ slinput(int c, struct tty *tp)
 		m = sl_btom(sc, len);
 		if (m == NULL)
 			goto error;
+
+		M_PREPEND(m,sizeof(int),M_DONTWAIT);
+		if (m == 0)
+			goto error;
+
+		bcopy(&sc->sc_af,mtod(m,int *),sizeof(int));
 
 		IF_ENQUEUE(&sc->sc_inq, m);
 		softint_schedule(sc->sc_si);
@@ -673,6 +709,7 @@ newpack:
 	sc->sc_mp = sc->sc_pktstart = (u_char *)sc->sc_mbuf->m_ext.ext_buf +
 	    BUFOFFSET;
 	sc->sc_escape = 0;
+	sc->sc_af = AF_INET;
 
 	return 0;
 }
@@ -703,6 +740,8 @@ slintr(void *arg)
 		struct ip *ip;
 #endif
 		struct mbuf *m2;
+		struct sockaddr_storage dst;
+		struct sockaddr *dstp;
 #if NBPFILTER > 0
 		struct mbuf *bpf_m;
 #endif
@@ -736,6 +775,14 @@ slintr(void *arg)
 			break;
 
 		/*
+		 * We know (because we added it ourselves) that the
+		 *  destination address is entirely in the first mbuf.
+		 */
+		dstp = mtod(m,struct sockaddr *);
+		bcopy(dstp,&dst,dstp->sa_len);
+		m_adj(m,dst.ss_len);
+
+		/*
 		 * We do the header compression here rather than in
 		 * sloutput() because the packets will be out of order
 		 * if we are using TOS queueing, and the connection
@@ -757,7 +804,8 @@ slintr(void *arg)
 			bpf_m = NULL;
 #endif
 #ifdef INET
-		if ((ip = mtod(m, struct ip *))->ip_p == IPPROTO_TCP) {
+		if ( (dst.ss_family == AF_INET) &&
+		     ((ip = mtod(m, struct ip *))->ip_p == IPPROTO_TCP) ) {
 			if (sc->sc_if.if_flags & SC_COMPRESS)
 				*mtod(m, u_char *) |=
 				    sl_compress_tcp(m, ip, &sc->sc_comp, 1);
@@ -781,6 +829,31 @@ slintr(void *arg)
 		if (tp->t_outq.c_cc == 0) {
 			sc->sc_if.if_obytes++;
 			(void)putc(FRAME_END, &tp->t_outq);
+		}
+
+		switch (dst.ss_family) {
+#ifdef INET
+			case AF_INET:
+				break;
+ #endif
+#ifdef INET6
+			case AF_INET6:
+				if (! putc(FRAME_ESCAPE,&tp->t_outq)) {
+					if (! putc(TRANS_PKTTYPE_BASE+PKTTYPE_IPv6,&tp->t_outq)) {
+						sc->sc_if.if_obytes += 2;
+					} else {
+						unputc(&tp->t_outq);
+					}
+				} else {
+					sc->sc_if.if_oerrors ++;
+					m_freem(m);
+					continue;
+				}
+				break;
+#endif
+			default:
+				panic("slstart: impossible dst.ss_family");
+				break;
 		}
 
 		while (m) {
@@ -865,11 +938,16 @@ slintr(void *arg)
 	 * Input processing loop.
 	 */
 	for (;;) {
+		int af;
+		struct ifqueue *queue;
+		int isr;
 		s = spltty();
 		IF_DEQUEUE(&sc->sc_inq, m);
 		splx(s);
 		if (m == NULL)
 			break;
+		bcopy(mtod(m,int *),&af,sizeof(int));
+		m_adj(m,sizeof(int));
 		pktstart = mtod(m, u_char *);
 		len = m->m_pkthdr.len;
 #if NBPFILTER > 0
@@ -886,7 +964,7 @@ slintr(void *arg)
 		}
 #endif /* NBPFILTER > 0 */
 #ifdef INET
-		if ((c = (*pktstart & 0xf0)) != (IPVERSION << 4)) {
+		if ((af == AF_INET) && ((c = (*pktstart & 0xf0)) != (IPVERSION << 4))) {
 			if (c & 0x80)
 				c = TYPE_COMPRESSED_TCP;
 			else if (c == TYPE_UNCOMPRESSED_TCP)
@@ -952,25 +1030,44 @@ slintr(void *arg)
 		sc->sc_if.if_ipackets++;
 		getbinuptime(&sc->sc_lastpacket);
 
+		queue = 0;
+		switch (af) {
+			case AF_INET:
 #ifdef INET
-		s = splnet();
-		if (IF_QFULL(&ipintrq)) {
-			IF_DROP(&ipintrq);
+				queue = &ipintrq;
+				isr = NETISR_IP;
+#endif
+				break;
+			case AF_INET6:
+#ifdef INET6
+				queue = &ip6intrq;
+				isr = NETISR_IPV6;
+#endif
+				break;
+			default:
+				panic("slinput impossible af");
+				break;
+		}
+		if (queue == 0) {
+			/* af not in this kernel! */
+			sc->sc_if.if_ierrors ++;
+			m_freem(m);
+		} else if (IF_QFULL(queue)) {
+			IF_DROP(queue);
 			sc->sc_if.if_ierrors++;
 			sc->sc_if.if_iqdrops++;
 			m_freem(m);
 		} else {
-			IF_ENQUEUE(&ipintrq, m);
-			schednetisr(NETISR_IP);
+			IF_ENQUEUE(queue, m);
+			schednetisr(isr);
 		}
 		splx(s);
-#endif
 	}
 	mutex_exit(softnet_lock);
 }
 
 /*
- * Process an ioctl request.
+ * Process a (network interface) ioctl request.
  */
 static int
 slioctl(struct ifnet *ifp, u_long cmd, void *data)
@@ -985,15 +1082,39 @@ slioctl(struct ifnet *ifp, u_long cmd, void *data)
 	switch (cmd) {
 
 	case SIOCSIFADDR:
-		if (ifa->ifa_addr->sa_family == AF_INET)
-			ifp->if_flags |= IFF_UP;
-		else
-			error = EAFNOSUPPORT;
+		switch (ifa->ifa_addr->sa_family) {
+#ifdef INET
+			case AF_INET:
+				ifp->if_flags |= IFF_UP;
+				break;
+#endif
+#ifdef INET6
+			case AF_INET6:
+				ifp->if_flags |= IFF_UP;
+				if (sc->sc_if.if_mtu < IPV6_MMTU)
+					sc->sc_if.if_mtu = IPV6_MMTU;
+				break;
+#endif
+			default:
+				error = EAFNOSUPPORT;
+				break;
+		}
 		break;
 
 	case SIOCSIFDSTADDR:
-		if (ifa->ifa_addr->sa_family != AF_INET)
-			error = EAFNOSUPPORT;
+		switch (ifa->ifa_addr->sa_family) {
+#ifdef INET
+			case AF_INET:
+				break;
+#endif
+#ifdef INET6
+			case AF_INET6:
+				break;
+#endif
+			default:
+				error = EAFNOSUPPORT;
+				break;
+		}
 		break;
 
 	case SIOCSIFMTU:
@@ -1001,6 +1122,20 @@ slioctl(struct ifnet *ifp, u_long cmd, void *data)
 		    error = EINVAL;
 		    break;
 		}
+#ifdef INET6
+		if (ifr->ifr_mtu < IPV6_MMTU) {
+			/* If we have any v6 address set, reject! */
+			struct ifaddr *ifa2;
+			for ( ifa2 = sc->sc_if.if_addrlist.tqh_first;
+			      ifa2;
+			      ifa2 = ifa2->ifa_list.tqe_next )
+				switch (((struct sockaddr *)ifa2->ifa_addr)->sa_family) {
+					case AF_INET6:
+						error = EINVAL;
+						goto done; /* break switch, for, switch */
+				}
+		}
+#endif
 		/*FALLTHROUGH*/
 	case SIOCGIFMTU:
 		if ((error = ifioctl_common(&sc->sc_if, cmd, data)) == ENETRESET)
@@ -1014,12 +1149,14 @@ slioctl(struct ifnet *ifp, u_long cmd, void *data)
 			break;
 		}
 		switch (ifreq_getaddr(cmd, ifr)->sa_family) {
-
 #ifdef INET
 		case AF_INET:
 			break;
 #endif
-
+#ifdef INET6
+		case AF_INET6:
+			break;
+#endif
 		default:
 			error = EAFNOSUPPORT;
 			break;
@@ -1055,6 +1192,9 @@ slioctl(struct ifnet *ifp, u_long cmd, void *data)
 	default:
 		error = EINVAL;
 	}
+#ifdef INET6
+done:;
+#endif
 	splx(s);
 	return error;
 }

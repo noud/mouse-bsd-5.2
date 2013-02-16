@@ -123,18 +123,24 @@ The
 device appeared in
 .Nx 1.0 .
 .Sh BUGS
+Standard
 .Tn SLIP
-can only transmit
+can transmit only
 .Tn IPv4
-packets between preconfigured hosts on an asynchronous serial link.
-It has no provision for address negotiation,
-carriage of additional protocols (e.g.
+packets between preconfigured hosts on an asynchronous serial link; the
+.Nx
+implementation has been enhanced to support
+.Tn IPv6
+as well.  It has no provision for address negotiation and is not
+designed for synchronous serial links.  There is no support for other
+protocols (e.g.
 .Tn XNS ,
 .Tn AppleTalk ,
 .Tn DECNET ) ,
-and is not designed for synchronous serial links.
-This is why
+though they would be relatively easy to add.  These are among the
+reasons why
 .Tn SLIP
-has been superseded by the Point-to-Point Protocol
+has for most applications been superseded by the Point-to-Point
+Protocol
 .Pq Tn PPP ,
-which does all of those things, and much more.
+which does all of those things and much more.
