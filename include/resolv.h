@@ -54,6 +54,7 @@
 #ifndef _RESOLV_H_
 #define	_RESOLV_H_
 
+#include <netinet/in.h>
 #include <sys/param.h>
 #if (!defined(BSD)) || (BSD < 199306)
 # include <sys/bitypes.h>
