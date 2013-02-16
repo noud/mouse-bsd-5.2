@@ -11,16 +11,16 @@ export BLOCKSIZE=1k
 
 export HOST="$(hostname)"
 
-if [ -x /usr/bin/tset ]; then
-	eval `tset -sQrm 'unknown:?unknown'`
-fi
+#	if [ -x /usr/bin/tset ]; then
+#		eval `tset -sQrm 'unknown:?unknown'`
+#	fi
 
 umask 022
 #ulimit -c 0
 
 export ENV=/root/.shrc
 
-# Do not display in 'su -' case
-if [ -z "$SU_FROM" ]; then
-        echo "We recommend creating a non-root account and using su(1) for root access."
-fi
+#	# Do not display in 'su -' case
+#	if [ -z "$SU_FROM" ]; then
+#	        echo "We recommend creating a non-root account and using su(1) for root access."
+#	fi
