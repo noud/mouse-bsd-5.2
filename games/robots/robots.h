@@ -98,7 +98,7 @@ typedef struct passwd	PASSWD;
  */
 
 extern bool	Dead, Full_clear, Jump, Newscore, Real_time, Running,
-		Teleport, Waiting, Was_bonus, Auto_bot;
+		Teleport, Quick_teleport, Waiting, Was_bonus, Auto_bot;
 
 #ifdef	FANCY
 extern bool	Pattern_roll, Stand_still;

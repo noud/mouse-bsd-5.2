@@ -54,6 +54,7 @@ bool	Running = FALSE;	/* Currently in the middle of a run */
 bool	Stand_still = FALSE;	/* Auto play for standing still pattern */
 #endif
 bool	Teleport = FALSE;	/* Teleport automatically when player must */
+bool	Quick_teleport = FALSE;	/* Don't sleep when teleporting */
 bool	Waiting;		/* Player is waiting for end */
 bool	Was_bonus = FALSE;	/* Was a bonus last level */
 

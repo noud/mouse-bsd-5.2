@@ -37,7 +37,7 @@
 .Nd fight off villainous robots
 .Sh SYNOPSIS
 .Nm
-.Op Fl Asjtan
+.Op Fl Asjtanq
 .Op Ar scorefile
 .Sh DESCRIPTION
 .Nm
@@ -132,6 +132,14 @@ This is useful on slow terminals.
 Teleport automatically when you have no other option.
 This is a little disconcerting until you get used to it, and then it is
 very nice.
+.It Fl q
+When teleporting, the game normally displays a message to that effect
+for one second.
+.Fl q
+.Pf ( Sq quick )
+suppresses the message and pause.  (Eliminating the pause is the point;
+the message is suppressed as well because there's little point in
+displaying it and immediately erasing it.)
 .It Fl a
 Advance into the higher levels directly, skipping the lower, easier levels.
 .It Fl A

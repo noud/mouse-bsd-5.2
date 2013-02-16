@@ -175,10 +175,12 @@ teleport:
 			Running = FALSE;
 			mvaddch(My_pos.y, My_pos.x, ' ');
 			My_pos = *rnd_pos();
-			telmsg(1);
-			refresh();
-			sleep(1);
-			telmsg(0);
+			if (! Quick_teleport) {
+				telmsg(1);
+				refresh();
+				sleep(1);
+				telmsg(0);
+			}
 			mvaddch(My_pos.y, My_pos.x, PLAYER);
 			leaveok(stdscr, FALSE);
 			refresh();
