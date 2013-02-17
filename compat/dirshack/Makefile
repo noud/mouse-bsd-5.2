@@ -8,7 +8,7 @@
 # and from there into the ../../lib dirs, it ends up setting the forced
 # MAKEOBJDIRPREFIX to something based upon ${.CURDIR}, since the objdir
 # doesn't exist yet.
-# 
+#
 # our solution is simple - from this Makefile we traverse the same list
 # of $arch/$libtype's with "BOOTSTRAP_SUBDIR=".  then the compat/Makefile
 # handles these subdirs as normal, with the base objdir created.

@@ -55,7 +55,7 @@ CPPFLAGS+=	-DCIRRUS_SUPPORT -DRETINAZ3_SUPPORT -DCV64_SUPPORT
 
 BUILDSYMLINKS=	../../../mi/miinitext.c amigaInEx.c \
 		clblt.c clbltC.c \
-		clsolid.c clsolidC.c 
+		clsolid.c clsolidC.c
 
 CPPFLAGS.clbltC.c+=	-DMROP=Mcopy
 CPPFLAGS.clsolidC.c+=	-DRROP=GXcopy

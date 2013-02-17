@@ -8,7 +8,7 @@
 0	beshort 0x0009
 >2 	belong	=0x0ff00ff0
 >>&0	belong  =0x0ff00ff0
->>>&0	beshort =0x0000	
+>>>&0	beshort =0x0000
 >>>>&0	pstring	a	Xilinx BIT data
 # Next is a Pascal-style string with the NCD name. We want to capture that.
 >>>>0x0F	pstring	x	- from %s

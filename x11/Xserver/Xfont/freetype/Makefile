@@ -16,8 +16,8 @@ SRCS=	xttcap.c ftfuncs.c ftenc.c fttools.c
 SRCS+=	ftmodule.c
 
 .PATH:	${FT2SRC}/base
-SRCS+=	ftbase.c ftinit.c ftglyph.c ftbbox.c ftsystem.c fttype1.c ftxf86.c ftbdf.c 
-	
+SRCS+=	ftbase.c ftinit.c ftglyph.c ftbbox.c ftsystem.c fttype1.c ftxf86.c ftbdf.c
+
 .PATH:	${FT2SRC}/gzip
 SRCS+=	ftgzip.c
 

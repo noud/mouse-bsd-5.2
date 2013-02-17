@@ -31,7 +31,7 @@
 # they will ordinarily reported as "compressed", but at least -z helps
 39      string          =<gmr:Workbook           Gnumeric spreadsheet
 
-# From: James Youngman <jay@gnu.org> 
+# From: James Youngman <jay@gnu.org>
 # gnu find magic
 0	string	\0LOCATE	GNU findutils locate database data
 >7	string	>\0		\b, format %s

@@ -221,7 +221,7 @@ get_gcc () {
 		_hconfig_h=""
 		_extravars2="tm_file_list build_xm_include_list"
 		_extravars3="tm_p_include_list"
-		
+
 		;;
 	*)
 		_buildname="HOST_"

@@ -25,7 +25,7 @@ AC_CONFIG_FILES(defs.mk)
 
 # Autoheader header and footer
 AH_TOP([/*      $NetBSD: configure.ac,v 1.67.2.3 2011/11/02 19:43:02 riz Exp $    */
- 
+
 #ifndef __NETBSD_NBTOOL_CONFIG_H__
 #define __NETBSD_NBTOOL_CONFIG_H__])
 
@@ -130,7 +130,7 @@ AC_CHECK_MEMBERS([DIR.dd_fd, DIR.__dd_fd, struct dirent.d_namlen],,,
 #include <dirent.h>])
 AC_CHECK_MEMBERS([struct stat.st_flags, struct stat.st_gen,
 	struct stat.st_birthtime, struct stat.st_birthtimensec,
-	struct stat.st_atim, struct stat.st_mtimensec],,, 
+	struct stat.st_atim, struct stat.st_mtimensec],,,
 	[#include <sys/stat.h>])
 AC_CHECK_MEMBERS(struct statvfs.f_iosize,,, [#include <sys/statvfs.h>])
 

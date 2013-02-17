@@ -36,7 +36,7 @@
 
 #0	string	(*This\ is\ a\ Mathematica\ binary\ dump\ file.\ It\ can\ be\ loaded\ with\ Get.*)	Mathematica binary file
 0	string	(*This\ is\ a\ Mathematica\ binary\ 	Mathematica binary file
-#>71	string \000\010\010\010\010\000\000\000\000\000\000\010\100\010\000\000\000	
+#>71	string \000\010\010\010\010\000\000\000\000\000\000\010\100\010\000\000\000
 # >71... is optional
 >88	string	>\0	from %s
 

@@ -126,7 +126,7 @@ all-${dir} depend-${dir} dependall-${dir} install-${dir}:
 .  if exists(PREVIOUSTOOLDIR)
 PREVIOUSTOOLDIR!=	cat PREVIOUSTOOLDIR
 .  else
-PREVIOUSTOOLDIR=	
+PREVIOUSTOOLDIR=
 .  endif
 .endif
 

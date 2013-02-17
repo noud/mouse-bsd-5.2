@@ -4,7 +4,7 @@ XMODULEDIR=	${X11USRLIBDIR}/modules/drivers
 
 .include "../../../../Makefile.serverlib"
 
-MODULE=	newport_drv	
+MODULE=	newport_drv
 MAN=	newport.4
 .PATH:	${X11SRCDIR.xc}/programs/Xserver/hw/xfree86/drivers/newport
 

@@ -5,7 +5,7 @@
 
 # updated by Joerg Jenderek
 # GRR: This lot is too weak
-#0	string	;;			
+#0	string	;;
 # windows INF files often begin with semicolon and use CRLF as line end
 # lisp files are mainly created on unix system with LF as line end
 #>2	search/2048	!\r		Lisp/Scheme program text
@@ -32,10 +32,10 @@
 # Emacs 19+ - ver. recognition added by Ian Springer
 # Also applies to XEmacs 19+ .elc files; could tell them apart with regexs
 # - Chris Chittleborough <cchittleborough@yahoo.com.au>
-0	string	;ELC	
->4	byte	>18			
+0	string	;ELC
+>4	byte	>18
 >4	byte    <32			Emacs/XEmacs v%d byte-compiled Lisp data
-!:mime	application/x-elc		
+!:mime	application/x-elc
 
 # Files produced by CLISP Common Lisp From: Bruno Haible <haible@ilog.fr>
 0	string	(SYSTEM::VERSION\040'	CLISP byte-compiled Lisp program (pre 2004-03-27)
@@ -44,7 +44,7 @@
 0	long	0x70768BD2		CLISP memory image data
 0	long	0xD28B7670		CLISP memory image data, other endian
 
-#.com and .bin for MIT scheme 
+#.com and .bin for MIT scheme
 0	string	\372\372\372\372	MIT scheme (library?)
 
 # From: David Allouche <david@allouche.net>

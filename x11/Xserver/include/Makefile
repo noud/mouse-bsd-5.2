@@ -12,7 +12,7 @@ BUILDSYMLINKS=	${XF86SRC}/common/xf86Module.h		xf86Module.h \
 		${XF86SRC}/xf86Version.h		xf86Version.h \
 		${XF86SRC}/common/compiler.h		compiler.h
 
-XTODO=		osdep.h 
+XTODO=		osdep.h
 
 .include <bsd.x11.mk>
 .include <bsd.prog.mk>

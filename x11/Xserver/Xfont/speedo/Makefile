@@ -26,5 +26,5 @@ LIBDIR=	${XMODULEDIR}
 .else
 libinstall::
 .endif
-		
+
 .include <bsd.lib.mk>

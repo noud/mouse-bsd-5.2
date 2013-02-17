@@ -1,7 +1,7 @@
 
 #------------------------------------------------------------------------------
 # project:  file(1) magic for Project management
-# 
+#
 # Magic strings for ftnchek project files. Alexander Mai
 0	string	FTNCHEK_\ P	project file for ftnchek
 >10	string	1		version 2.7

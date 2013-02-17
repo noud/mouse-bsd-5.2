@@ -9,7 +9,7 @@ XMODULEDIR=	${X11USRLIBDIR}/modules/extensions
 LIB=	drm
 
 .PATH:	${X11SRCDIR.xc}/programs/Xserver/hw/xfree86/os-support/linux/drm
-SRCS=	xf86drm.c xf86drmHash.c xf86drmRandom.c xf86drmSL.c drmmodule.c 
+SRCS=	xf86drm.c xf86drmHash.c xf86drmRandom.c xf86drmSL.c drmmodule.c
 
 CPPFLAGS+=	-I${X11SRCDIR.xc}/programs/Xserver/hw/xfree86/common \
 		-I${X11SRCDIR.xc}/programs/Xserver/hw/xfree86/os-support \

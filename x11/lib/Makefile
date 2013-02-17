@@ -14,7 +14,7 @@ SUBDIR=\
 	Xmu dps XTrap GLU GLw OSmesa Xcursor Xrandr Xft Xft1 xkbui \
 	 .WAIT \
 	Xaw Xaw6 dpstk
- 
+
 
 .include <bsd.own.mk>
 

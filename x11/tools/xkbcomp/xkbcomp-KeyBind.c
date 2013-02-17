@@ -1,7 +1,7 @@
 /*	$NetBSD: xkbcomp-KeyBind.c,v 1.1.1.1 2003/09/11 18:39:58 lukem Exp $	*/
 
 /* $Xorg: KeyBind.c,v 1.4 2001/02/09 02:03:34 xorgcvs Exp $ */
-/* 
+/*
 
 Copyright 1985, 1987, 1998  The Open Group
 
@@ -275,7 +275,7 @@ _XKeyInitialize(dpy)
     int per, n;
     KeySym *keysyms;
 
-    /* 
+    /*
      * lets go get the keysyms from the server.
      */
     if (!dpy->keysyms) {
@@ -490,7 +490,7 @@ _XTranslateKeySym(dpy, symbol, modifiers, buffer, nbytes)
     char *buffer;
     int nbytes;
 {
-    register struct _XKeytrans *p; 
+    register struct _XKeytrans *p;
     int length;
     unsigned long hiBytes;
     register unsigned char c;
@@ -540,7 +540,7 @@ _XTranslateKeySym(dpy, symbol, modifiers, buffer, nbytes)
     buffer[0] = c;
     return 1;
 }
-  
+
 /*ARGSUSED*/
 int
 XLookupString (event, buffer, nbytes, keysym, status)
@@ -568,7 +568,7 @@ XLookupString (event, buffer, nbytes, keysym, status)
 	    status->compose_ptr = NULL;
 	    status->chars_matched = 0;
 	}
-	if ( ((status->chars_matched>0)&&(status->compose_ptr!=NULL)) || 
+	if ( ((status->chars_matched>0)&&(status->compose_ptr!=NULL)) ||
 		XimCompIsComposeKey(symbol,event->keycode,status) ) {
 	    XimCompRtrn rtrn;
 	    switch (XimCompProcessSym(status,symbol,&rtrn)) {
@@ -642,7 +642,7 @@ _XFreeKeyBindings (dpy)
 	Xfree(p->string);
 	Xfree((char *)p->modifiers);
 	Xfree((char *)p);
-    }   
+    }
 }
 
 int
@@ -674,7 +674,7 @@ XRebindKeysym (dpy, keysym, mlist, nm, str, nbytes)
     nb = sizeof(KeySym) * nm;
 
     if ((! (p = (struct _XKeytrans *) Xmalloc( sizeof(struct _XKeytrans)))) ||
-	((! (p->string = (char *) Xmalloc( (unsigned) nbytes))) && 
+	((! (p->string = (char *) Xmalloc( (unsigned) nbytes))) &&
 	 (nbytes > 0)) ||
 	((! (p->modifiers = (KeySym *) Xmalloc( (unsigned) nb))) &&
 	 (nb > 0))) {
@@ -712,7 +712,7 @@ _XKeysymToModifiers(dpy,ks)
 
     if ((! dpy->keysyms) && (! _XKeyInitialize(dpy)))
 	return 0;
-    kmax = dpy->keysyms + 
+    kmax = dpy->keysyms +
 	   (dpy->max_keycode - dpy->min_keycode + 1) * dpy->keysyms_per_keycode;
     k = dpy->keysyms;
     m = dpy->modifiermap;
@@ -732,7 +732,7 @@ _XKeysymToModifiers(dpy,ks)
     }
     return mods;
 }
-	
+
 /*
  * given a list of modifiers, computes the mask necessary for later matching.
  * This routine must lookup the key in the Keymap and then search to see

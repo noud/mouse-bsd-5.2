@@ -25,7 +25,7 @@ CPPFLAGS.utils.c=	-DDEF_ATOMS_FILE=\"${LBXPROXYDIR}/AtomControl\" \
 
 .PATH:		${X11SRCDIR.xc}/programs/${PROG}/os
 .PATH:		${X11SRCDIR.xc}/lib/xtrans
-SRCS.os=	WaitFor.c connection.c io.c osinit.c transport.c 
+SRCS.os=	WaitFor.c connection.c io.c osinit.c transport.c
 SRCS+=		${SRCS.os}
 .for _S in ${SRCS.os}
 CPPFLAGS.${_S}=	${X11FLAGS.CONNECTION} \
@@ -35,7 +35,7 @@ CPPFLAGS.${_S}=	${X11FLAGS.CONNECTION} \
 CPPFLAGS.connection.c+=	-DLBXPROXY_t -DTRANS_SERVER -DBSD44SOCKETS
 CPPFLAGS.io.c+=		-DLBXPROXY_t -DTRANS_SERVER ${X11FLAGS.EXTENSION}
 CPPFLAGS.transport.c+=	-DLBXPROXY_t -DTRANS_SERVER -DBSD44SOCKETS \
-			-I${X11SRCDIR.xc}/lib/xtrans  
+			-I${X11SRCDIR.xc}/lib/xtrans
 
 .if ${MACHINE} == "vax"
 COPTS.connection.c+=	-O2

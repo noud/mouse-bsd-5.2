@@ -21,9 +21,9 @@ SRCS+=		xkbatom.c xkberrs.c xkbout.c xkmread.c xkbtext.c \
 SRCS+=		xkbfile-xkbmisc.c
 
 .PATH:		${X11SRCDIR.xc}/lib/X11
-SRCS+=		KeysymStr.c StrKeysym.c Quarks.c Xrm.c 
+SRCS+=		KeysymStr.c StrKeysym.c Quarks.c Xrm.c
 SRCS+=		XKB.c XKBAlloc.c XKBGAlloc.c XKBMAlloc.c XKBMisc.c \
-		XKBGeom.c XKBRdBuf.c 
+		XKBGeom.c XKBRdBuf.c
 
 HOST_CPPFLAGS+=	-I${DESTDIR}${X11INCDIR} \
 		-I. \

@@ -802,7 +802,7 @@ struct elf_args {
 
 #ifdef EXEC_ELF32
 int	exec_elf32_makecmds(struct proc *, struct exec_package *);
-int	elf32_copyargs(struct proc *, struct exec_package *, 
+int	elf32_copyargs(struct proc *, struct exec_package *,
     	    struct ps_strings *, char **, void *);
 
 int	coredump_elf32(struct lwp *, struct vnode *, struct ucred *);
@@ -815,7 +815,7 @@ int	elf32_check_header(Elf32_Ehdr *, int);
 #ifdef EXEC_ELF64
 int	exec_elf64_makecmds(struct proc *, struct exec_package *);
 int	elf64_read_from(struct proc *, struct vnode *, u_long, caddr_t, int);
-int	elf64_copyargs(struct proc *, struct exec_package *, 
+int	elf64_copyargs(struct proc *, struct exec_package *,
 	    struct ps_strings *, char **, void *);
 
 int	coredump_elf64 __P((struct lwp *, struct vnode *, struct ucred *));

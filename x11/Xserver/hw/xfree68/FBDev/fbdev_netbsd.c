@@ -196,7 +196,7 @@ typedef struct {
     size_t smem_len;
 } fb_fix_screeninfo;
 
-static int fb_fd = -1; 
+static int fb_fd = -1;
 
 static u_long colorentry[256];
 static int colorbitshift;
@@ -267,7 +267,7 @@ static void fbdevUpdateColormap(ScreenPtr pScreen, int dex, int count,
     if (!xf86VTSema)
 	/* Switched away from server vt, do nothing. */
 	return;
-    
+
 #if 0
     while(count--) {
 	cmap->entry[dex] = (rmap[dex] << 16 | gmap[dex] << 8 | bmap[dex]);
@@ -276,7 +276,7 @@ static void fbdevUpdateColormap(ScreenPtr pScreen, int dex, int count,
 #else
     cmap->first = dex;
     cmap->size = count;
-    
+
     for (i = 0; i < count; i++, dex++) {
 	cmap->entry[i] = (rmap[dex] << 16 | gmap[dex] << 8 | bmap[dex]);
     }
@@ -599,7 +599,7 @@ static Bool fbdevScreenInit(int scr_index, ScreenPtr pScreen, int argc,
 
     if (ioctl(fb_fd, VIOCGBMAP, &fb_fix.bm))
 	 FatalError("ioctl(fd, VIOCGBMAP, ...)");
-    
+
     fb_fix.colormap.first = 0;
     fb_fix.colormap.size = 1 << fb_fix.bm.depth;
     fb_fix.colormap.entry = colorentry;
@@ -634,7 +634,7 @@ static Bool fbdevScreenInit(int scr_index, ScreenPtr pScreen, int argc,
     }
 
     fbdevVirtBase = MapVidMem(scr_index, fb_fix.smem_len);
-    
+
 
     bpp = fb_fix.bm.depth;
     xsize = fb_fix.vs.width;
@@ -821,7 +821,7 @@ static void fbdevEnterLeaveVT(Bool enter, int screen_idx)
 	UnMapVidMem(screen_idx, fb_fix.smem_len);
     }
 }
- 
+
 /*
  *  fbdevCloseScreen -- Called to ensure video is enabled when server exits.
  */

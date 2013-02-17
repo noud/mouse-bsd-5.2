@@ -126,7 +126,7 @@
 #------------------------------------------------------------------------------
 # msx: file(1) magic for MSX game cartridge dumps
 # Too simple - MPi
-#0 beshort 0x4142 MSX game cartridge dump 
+#0 beshort 0x4142 MSX game cartridge dump
 
 #------------------------------------------------------------------------------
 # Sony Playstation executables (Adam Sjoegren <asjo@diku.dk>) :
@@ -202,7 +202,7 @@
 # SNES9x .smv "movie" file format.
 0		string		SMV\x1A	SNES9x input recording
 >0x4		lelong		x	\b, version %d
-# version 4 is latest so far 
+# version 4 is latest so far
 >0x4		lelong		<5
 >>0x8		ledate		x	\b, recorded at %s
 >>0xc		lelong		>0	\b, rerecorded %d times

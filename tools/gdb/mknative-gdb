@@ -97,7 +97,7 @@ get_gdb () {
 	done
 
 	for f in nm tm xm; do
-		if [ -f $_TMPDIR/gdb/$f.h ]; then 
+		if [ -f $_TMPDIR/gdb/$f.h ]; then
 			ls -l $_TMPDIR/gdb/$f.h | sed 's,^.*->.*/gdb/,,;s,^,#include <,;s,$,>,' \
 				| write_c gnu/usr.bin/gdb6/arch/$MACHINE_ARCH/$f.h
 		fi

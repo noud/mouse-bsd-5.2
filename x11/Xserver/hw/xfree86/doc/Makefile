@@ -19,6 +19,6 @@ FILES=	BUILD DESIGN Install LICENSE README README.DECtga \
 	Versions VideoBoard98
 
 FILESDIR=	${X11USRLIBDIR}/X11/doc
-     
+
 .include <bsd.x11.mk>
 .include <bsd.prog.mk>

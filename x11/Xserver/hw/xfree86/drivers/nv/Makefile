@@ -38,7 +38,7 @@ CPPFLAGS+=	-I${X11SRCDIR.xc}/programs/Xserver/hw/xfree86/drivers/nv \
 		-I${XSERVERINCDIR}
 
 CPPFLAGS+=	-DPSZ=8
-		
+
 .include <bsd.x11.mk>
 LIBDIR=	${XMODULEDIR}
 .include "../../Makefile.drivermod"

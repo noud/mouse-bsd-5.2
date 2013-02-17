@@ -2,7 +2,7 @@
 
 .include <bsd.own.mk>
 
-PROG=	gtf	
+PROG=	gtf
 .PATH:	${X11SRCDIR.xc}/programs/Xserver/hw/xfree86/etc
 
 SRCS=	gtf.c

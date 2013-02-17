@@ -16,6 +16,6 @@
 # Maybe we should just switch everybody from SCCS to RCS!
 # Further, you can't just say '\001h0', because the five-digit number
 # is a checksum that could (presumably) have any leading digit,
-# and we don't have regular expression matching yet. 
+# and we don't have regular expression matching yet.
 # Hence the following official kludge:
 8	string		\001s\ 			SCCS archive data

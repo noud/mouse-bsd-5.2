@@ -22,7 +22,7 @@ FILES=		al am ar \
 		sapmi se se_FI se_NO se_SE si sin sk sk_qwerty sr syr syr_phonetic \
 		tel th th_tis th_pat tj tml tr \
 		ua us ur_PK us_intl uz \
-		yu 
+		yu
 
 .PATH:		${X11SRCDIR.xc}/programs/xkbcomp/symbols/pc
 

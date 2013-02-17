@@ -2,7 +2,7 @@
 
 .include <bsd.own.mk>
 
-CPPSCRIPTS=	Xresources Xservers.ws xdm-config 
+CPPSCRIPTS=	Xresources Xservers.ws xdm-config
 
 CPPSCRIPTFLAGS_Xresources=	-DXPM -DBITMAPDIR=${X11INCDIR}/X11/pixmaps \
 				-DXDM_PIXMAP=NetBSD.xpm \
@@ -24,9 +24,9 @@ CPPSCRIPTFLAGS_xdm-config=	-DXDMDIR=${XDMDIR} \
 
 CONFIGFILES=		GiveConsole TakeConsole \
 			Xaccess Xservers.fs Xsession Xsetup_0 Xwilling \
-			${CPPSCRIPTS} 
+			${CPPSCRIPTS}
 FILES=			NetBSD.xpm NetBSDbw.xpm NetBSDinv.xpm		\
-			XFree86.xpm XFree86bw.xpm 
+			XFree86.xpm XFree86bw.xpm
 FILESDIR=		${XDMDIR}
 FILESDIR_NetBSD.xpm=	${X11INCDIR}/X11/pixmaps
 FILESDIR_NetBSDbw.xpm=	${X11INCDIR}/X11/pixmaps

@@ -15,7 +15,7 @@
 # DGN is the default file extension of Microstation/Intergraph CAD files.
 # CIT is the proprietary raster format (similar to TIFF) used to attach
 # raster underlays to Microstation DGN (vector) drawings.
-# 
+#
 # http://www.wotsit.org/search.asp
 # http://filext.com/detaillist.php?extdetail=DGN
 # http://filext.com/detaillist.php?extdetail=CIT
@@ -65,5 +65,5 @@
 >0x02	byte	0xfe
 >>0x04	beshort	0x1800		CIT raster CAD
 0	string	AC1012		AutoDesk AutoCAD R13
-0	string	AC1014		AutoDesk AutoCAD R14 
+0	string	AC1014		AutoDesk AutoCAD R14
 0	string	AC1015		AutoDesk AutoCAD R2000

@@ -5,7 +5,7 @@
 
 # .BAT files (Daniel Quinlan, quinlan@yggdrasil.com)
 # updated by Joerg Jenderek
-0	string	@			
+0	string	@
 >1	string/cB	\ echo\ off	MS-DOS batch file text
 !:mime	text/x-msdos-batch
 >1	string/cB	echo\ off	MS-DOS batch file text
@@ -216,7 +216,7 @@
 >>(8.s*16)	string		go32stub for MS-DOS, DJGPP go32 DOS extender
 >>(8.s*16)	string		emx
 >>>&1		string		x for DOS, Win or OS/2, emx %s
->>&(&0x42.l-3)	byte		x 
+>>&(&0x42.l-3)	byte		x
 >>>&0x26	string		UPX \b, UPX compressed
 # and yet another guess: small .text, and after large .data is unusal, could be 32lite
 >>&0x2c		search/0xa0	.text
@@ -254,8 +254,8 @@
 >28	 string WWP\  		\b, WWPACK compressed
 
 # skip to the end of the exe
->(4.s*512)	long	x 
->>&(2.s-517)	byte	x 
+>(4.s*512)	long	x
+>>&(2.s-517)	byte	x
 >>>&0	string		PK\3\4 \b, ZIP self-extracting archive
 >>>&0	string		Rar! \b, RAR self-extracting archive
 >>>&0	string		=!\x11 \b, AIN 2.x self-extracting archive
@@ -290,24 +290,24 @@
 >6	string		SFX\ of\ LHarc	(%s)
 0	belong	0xffffffff		DOS executable (device driver)
 #CMD640X2.SYS
->10	string	>\x23			
->>10	string	!\x2e			
->>>17	string	<\x5B			
+>10	string	>\x23
+>>10	string	!\x2e
+>>>17	string	<\x5B
 >>>>10	string	x			\b, name: %.8s
 #UDMA.SYS KEYB.SYS CMD640X2.SYS
->10	string	<\x41			
->>12	string	>\x40			
->>>10	string	!$			
+>10	string	<\x41
+>>12	string	>\x40
+>>>10	string	!$
 >>>>12	string	x			\b, name: %.8s
 #BTCDROM.SYS ASPICD.SYS
->22	string	>\x40			
->>22	string	<\x5B			
->>>23	string	<\x5B			
+>22	string	>\x40
+>>22	string	<\x5B
+>>>23	string	<\x5B
 >>>>22	string	x			\b, name: %.8s
 #ATAPICD.SYS
->76	string	\0			
->>77	string	>\x40			
->>>77	string	<\x5B			
+>76	string	\0
+>>77	string	>\x40
+>>>77	string	<\x5B
 >>>>77	string	x			\b, name: %.8s
 #0	byte		0x8c		DOS executable (COM)
 # 0xeb conflicts with "sequent" magic
@@ -324,8 +324,8 @@
 # (32-bit COMBOOT) programs *.C32 contain 32-bit code and run in flat-memory 32-bit protected mode
 # start with assembler instructions mov eax,21cd4cffh
 >1	lelong		0x21cd4cff	(32-bit COMBOOT)
-0	string	\x81\xfc		
->4	string	\x77\x02\xcd\x20\xb9	
+0	string	\x81\xfc
+>4	string	\x77\x02\xcd\x20\xb9
 >>36	string	UPX!			FREE-DOS executable (COM), UPX compressed
 252	string Must\ have\ DOS\ version DR-DOS executable (COM)
 # GRR search is not working
@@ -337,10 +337,10 @@
 #IFMEMDSK.cOM ASSIGN.cOM COMP.cOM
 5	string	\xcd\x21		COM executable for DOS
 #DELTMP.COm HASFAT32.cOM
-7	string	\xcd\x21		
+7	string	\xcd\x21
 >0	byte	!0xb8			COM executable for DOS
 #COMP.cOM MORE.COm
-10	string	\xcd\x21		
+10	string	\xcd\x21
 >5	string	!\xcd\x21		COM executable for DOS
 #comecho.com
 13	string	\xcd\x21		COM executable for DOS
@@ -476,13 +476,13 @@
 
 
 # .chr files
-0	string	PK\010\010BGI	Borland font 
+0	string	PK\010\010BGI	Borland font
 >4	string	>\0	%s
 # then there is a copyright notice
 
 
 # .bgi files
-0	string	pk\010\010BGI	Borland device 
+0	string	pk\010\010BGI	Borland device
 >4	string	>\0	%s
 # then there is a copyright notice
 
@@ -533,7 +533,7 @@
 >0x04	lelong		>0		(%ld records)
 0	leshort		0x0006		DBase 3 index file
 0	string		PMCC		Windows 3.x .GRP file
-1	string		RDC-meg		MegaDots 
+1	string		RDC-meg		MegaDots
 >8	byte		>0x2F		version %c
 >9	byte		>0x2F		\b.%c file
 0	lelong		0x4C
@@ -549,7 +549,7 @@
 >>>20	long		>0		TIFF starts at byte %d
 >>>>24	long		>0		length %d
 
-# TNEF magic From "Joomy" <joomy@se-ed.net> 
+# TNEF magic From "Joomy" <joomy@se-ed.net>
 # Microsoft Outlook's Transport Neutral Encapsulation Format (TNEF)
 0	leshort		0x223e9f78	TNEF
 !:mime	application/vnd.ms-tnef
@@ -592,7 +592,7 @@
 
 
 # Windows Enhanced Metafile (EMF)
-# See msdn.microsoft.com/archive/en-us/dnargdi/html/msdn_enhmeta.asp 
+# See msdn.microsoft.com/archive/en-us/dnargdi/html/msdn_enhmeta.asp
 # for further information.
 0	ulelong 1
 >40	string	\ EMF		Windows Enhanced Metafile (EMF) image data

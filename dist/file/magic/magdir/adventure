@@ -61,7 +61,7 @@
 >>13	string	>\0		%s resource data
 #  Some saved game files start with "TADS2 save/g\n\r\032\0", a little-endian
 #  2-byte length N, the N-char name of the game file *without* a NUL (darn!),
-# "TADS2 save\n\r\032\0" and the interpreter version. 
+# "TADS2 save\n\r\032\0" and the interpreter version.
 0	string	TADS2\ save/g	TADS
 >12	belong	!0x0A0D1A00	saved game data, CORRUPTED
 >12	belong	 0x0A0D1A00

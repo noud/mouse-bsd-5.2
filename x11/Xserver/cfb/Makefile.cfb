@@ -58,7 +58,7 @@ BUILDSYMLINKS=	cfbline.c cfbseg.c \
 		${X11XSERVERDIR}/cfb16/cfbmodule.c cfbmodule16.c \
 		${X11XSERVERDIR}/cfb24/cfbmodule.c cfbmodule24.c \
 		${X11XSERVERDIR}/cfb32/cfbmodule.c cfbmodule32.c
-		
+
 
 .if ${PIXELSIZE} == 8							# {
 SRCS+=		cfb8bit.c cfbteblt8.c cfbglrop8.c cfbpush8.c cfbrctstp8.c

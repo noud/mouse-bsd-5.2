@@ -55,7 +55,7 @@ CPPFLAGS+=	${X11FLAGS.DRI}
     ${MACHINE} == "sparc64" || ${MACHINE} == "ofppc"
 CPPFLAGS+=	-DAVOID_VGAHW
 .endif
-	
+
 .include <bsd.x11.mk>
 LIBDIR=	${XMODULEDIR}
 .include "../../Makefile.drivermod"

@@ -59,7 +59,7 @@
 4086	string		SWAPSPACE2	Linux/i386 swap file (new style)
 >0x400	long		x		%d (4K pages)
 >0x404	long		x		size %d pages
->>4086	string		SWAPSPACE2	
+>>4086	string		SWAPSPACE2
 >>>1052	string		>\0		Label %s
 # ECOFF magic for OSF/1 and Linux (only tested under Linux though)
 #
@@ -156,7 +156,7 @@
 ############################################################################
 # Linux 8086 executable
 0	lelong&0xFF0000FF 0xC30000E9	Linux-Dev86 executable, headerless
->5	string		.		
+>5	string		.
 >>4	string		>\0		\b, libc version %s
 
 0	lelong&0xFF00FFFF 0x4000301	Linux-8086 executable
@@ -170,7 +170,7 @@
 >2	byte&0x40	!0		\b, A_PURE
 >2	byte&0x80	!0		\b, A_TOVLY
 >28     long            !0              \b, not stripped
->37	string		.		
+>37	string		.
 >>36	string		>\0		\b, libc version %s
 
 # 0	lelong&0xFF00FFFF 0x10000301	ld86 I80386 executable
@@ -196,7 +196,7 @@
 >24	lelong	x			%d symbols
 >28	lelong	x			%d ocons
 
-# Linux Logical Volume Manager (LVM) 
+# Linux Logical Volume Manager (LVM)
 # Emmanuel VARAGNAT <emmanuel.varagnat@guzu.net>
 #
 # System ID, UUID and volume group name are 128 bytes long
@@ -259,6 +259,6 @@
 # Summary: Xen saved domain file
 # Created by: Radek Vokal <rvokal@redhat.com>
 0	string		LinuxGuestRecord	Xen saved domain
->20	search/256	(name			
+>20	search/256	(name
 >>&1	string		x			(name %s)
 

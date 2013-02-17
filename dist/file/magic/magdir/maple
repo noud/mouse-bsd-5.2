@@ -12,7 +12,7 @@
 # no magic for these :-(
 # they are compiled indexes for maple files
 
-# .hdb 
+# .hdb
 0	string	\000\004\000\000	Maple help database
 
 # .mhp
@@ -39,7 +39,7 @@
 # from byte 4 it is either 'nul E' or 'soh R'
 # I think 'nul E' means a file that was saved as  a different name
 # a sort of revision marking
-# 'soh R' means new 
+# 'soh R' means new
 >4	string	\000\105	An old revision
 >4	string	\001\122	The latest save
 

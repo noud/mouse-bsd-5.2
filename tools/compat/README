@@ -1,10 +1,10 @@
 $NetBSD: README,v 1.12 2005/04/05 00:21:22 jmc Exp $
 
-Special notes for cross-hosting a NetBSD build on certain platforms.  
+Special notes for cross-hosting a NetBSD build on certain platforms.
 Only those platforms which have been tested to complete a "build.sh" run
 are listed.
 
-All hosts must have a POSIX compatible sh. /bin/sh is assumed unless 
+All hosts must have a POSIX compatible sh. /bin/sh is assumed unless
 otherwise set. This can be overridden by setting HOST_SH in the environment.
 
 In addition all hosts must provide the following local tools:
@@ -16,7 +16,7 @@ gzip
 NetBSD:
 
 * _NETBSD_SOURCE is *not* to be defined/pulled in during compat/tools builds.
-  compat_defs.h will error out if it finds it defined. 
+  compat_defs.h will error out if it finds it defined.
 
 HP-UX:
 

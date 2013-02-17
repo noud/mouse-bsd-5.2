@@ -25,7 +25,7 @@ CPPFLAGS.ffcheck.c+=	-DLOADABLEFONTS
 CPPFLAGS.register.c+=	-DLOADABLEFONTS
 
 
-# fc 
+# fc
 .PATH:		${X11SRCDIR.xc}/lib/font/fc
 SRCS.fc=	fsconvert.c fserve.c fsio.c
 .PATH:          ${X11SRCDIR.xc}/lib/xtrans

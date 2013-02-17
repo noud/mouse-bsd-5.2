@@ -15,7 +15,7 @@
 #0	search/1	/*		C or REXX program text
 #0	search/1	//		C++ program text
 
-# From: Mikhail Teterin <mi@aldan.algebra.com> 
+# From: Mikhail Teterin <mi@aldan.algebra.com>
 0	string		cscope		cscope reference data
 >7	string		x		version %.2s
 # We skip the path here, because it is often long (so file will

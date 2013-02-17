@@ -78,7 +78,7 @@ CPPFLAGS+=	-DPCCONS_SUPPORT -DPCVT_SUPPORT
 .endif
 
 BUILDSYMLINKS=	xf86DefModes.c xf86DefModeSet.c \
-		../../../mi/miinitext.c xf86IniExt.c 
+		../../../mi/miinitext.c xf86IniExt.c
 
 OS_RELEASE!=	${HOST_SH} ${NETBSDSRCDIR}/sys/conf/osrelease.sh
 

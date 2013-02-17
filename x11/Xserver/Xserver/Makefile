@@ -6,7 +6,7 @@
 
 SUBDIR=		Xnest Xprt
 
-.if ${XSERVER_X68K} != "no" 
+.if ${XSERVER_X68K} != "no"
 SUBDIR+=	X68k
 .endif
 
@@ -38,17 +38,17 @@ SUBDIR+=	Xdreamcast
 SUBDIR+=	Xews4800mips
 .endif
 
-.if ${XSERVER_XFREE68} != "no" 
+.if ${XSERVER_XFREE68} != "no"
 SUBDIR+=	XF68_FBDev
 SUBDIR+=	XF68_SVGA
 SUBDIR+=	XF68_W32
 .endif
 
-.if ${XSERVER_XFREE86} != "no" 
+.if ${XSERVER_XFREE86} != "no"
 SUBDIR+=	XFree86
 .endif
 
-.if ${XSERVER_XHPC} != "no" 
+.if ${XSERVER_XHPC} != "no"
 SUBDIR+=	Xhpc
 .endif
 

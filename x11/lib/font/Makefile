@@ -124,7 +124,7 @@ CPPFLAGS.${fn}=	-I${DESTDIR}${X11INCDIR}/freetype2 \
 		-I${DESTDIR}${X11INCDIR}/X11 \
 		-I${X11SRCDIR.xc}/programs/Xserver/include \
 		-I${X11SRCDIR.xc}/extras/freetype2/src/truetype \
-		-I${X11SRCDIR.xc}/extras/freetype2/src/pcf 
+		-I${X11SRCDIR.xc}/extras/freetype2/src/pcf
 CPPFLAGS.${fn}+=${X11FLAGS.SERVER} -DXFreeXDGA -DXFree86LOADER \
 		-DXF86VIDMODE -DXFREE86_FT2
 .endfor

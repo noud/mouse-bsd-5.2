@@ -56,8 +56,8 @@
 0	string		\012\001\001\000Copyright\ (c)\ 199	Adobe Multiple Master font
 
 # Opentype font data from Avi Bercovich
-0	string		OTTO		OpenType font data 
+0	string		OTTO		OpenType font data
 
-# Gürkan Sengün <gurkan@linuks.mine.nu>, www.linuks.mine.nu 
-0	string		SplineFontDB:	Spline Font Database 
+# Gürkan Sengün <gurkan@linuks.mine.nu>, www.linuks.mine.nu
+0	string		SplineFontDB:	Spline Font Database
 >14	string		x		version %s

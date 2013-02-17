@@ -3,7 +3,7 @@
 # msvc:  file(1) magic for msvc
 # "H. Nanosecond" <aldomel@ix.netcom.com>
 # Microsoft visual C
-# 
+#
 # I have version 1.0
 
 # .aps
@@ -29,7 +29,7 @@
 # .pdb
 # too long 0	string	Microsoft\ C/C++\ program\ database\ 
 0	string	Microsoft\ C/C++\ 	MSVC program database
->18	string	program\ database\ 	
+>18	string	program\ database\ 
 >33	string	>\0	ver %s
 
 #.sbr

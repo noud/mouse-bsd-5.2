@@ -55,7 +55,7 @@ SRCS.mesa=	accum.c api_arrayelt.c api_eval.c api_loopback.c \
 		points.c polygon.c rastpos.c state.c stencil.c \
 		texcompress.c texformat.c teximage.c texobj.c texstate.c \
 		texstore.c texutil.c varray.c vtxfmt.c vpexec.c \
-		vpparse.c  vpstate.c 
+		vpparse.c  vpstate.c
 
 # XXX  avoid source name clashes with glx
 BUILDSYMLINKS=	${X11SRCDIR.xc}/extras/Mesa/src/pixel.c MESApixel.c \

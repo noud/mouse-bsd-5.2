@@ -4,7 +4,7 @@ XMODULEDIR=	${X11USRLIBDIR}/modules
 
 .include "../../../Makefile.serverlib"
 
-LIB=	scanpci	
+LIB=	scanpci
 
 .PATH:	${X11SRCDIR.xc}/programs/Xserver/hw/xfree86/scanpci
 SRCS=	xf86ScanPci.c xf86PciIds.h

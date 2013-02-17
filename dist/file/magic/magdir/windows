@@ -28,7 +28,7 @@
 # Created by: Andreas Schuster (http://computer.forensikblog.de/)
 # Reference (1): http://computer.forensikblog.de/en/2008/02/64bit_magic.html
 # Modified by (1): Abel Cheung (Avoid match with first 4 bytes only)
-0	string		PAGE		
+0	string		PAGE
 >4	string		DUMP		MS Windows 32bit crash dump
 >>0x05c	byte            0		\b, no PAE
 >>0x05c	byte            1		\b, PAE

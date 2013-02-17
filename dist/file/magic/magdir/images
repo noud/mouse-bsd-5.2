@@ -97,13 +97,13 @@
 !:mime	image/x-unknown
 #
 # GRR 950115:  this is Jeremy Wohl's Free Graphics Format (better):
-#					
+#
 0	string		FGF95a		FGF image (GIF+deflate beta)
 !:mime	image/x-unknown
 #
 # GRR 950115:  this is Thomas Boutell's Portable Bitmap Format proposal
 # (best; not yet implemented):
-#					
+#
 0	string		PBF		PBF image (deflate compression)
 !:mime	image/x-unknown
 

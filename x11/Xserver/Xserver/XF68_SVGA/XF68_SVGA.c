@@ -16,7 +16,7 @@
 
 extern ScrnInfoRec vga256InfoRec;
 
-ScrnInfoPtr xf86Screens[] = 
+ScrnInfoPtr xf86Screens[] =
 {
   &vga256InfoRec,
 };

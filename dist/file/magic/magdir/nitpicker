@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------
 # nitpicker:  file(1) magic for Flowfiles.
 # From: Christian Jachmann <C.Jachmann@gmx.net> http://www.nitpicker.de
-0	string	NPFF	NItpicker Flow File 
+0	string	NPFF	NItpicker Flow File
 >4	byte	x	V%d.
 >5	byte	x	%d
 >6	bedate	x	started: %s

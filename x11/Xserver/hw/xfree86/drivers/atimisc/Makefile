@@ -60,7 +60,7 @@ CPPFLAGS+=	-I${X11SRCDIR.xc}/programs/Xserver/hw/xfree86/drivers/ati \
 .if !(${MACHINE} == "i386" || \
     ${MACHINE} == "x86_64" || \
     ${MACHINE} == "amd64"  || \
-    ${MACHINE} == "alpha") 
+    ${MACHINE} == "alpha")
 CPPFLAGS+=	-DAVOID_CPIO
 .endif
 
