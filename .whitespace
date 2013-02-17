@@ -1,8 +1,4 @@
-bin/ed/test/ascii.d
-bin/ed/test/ascii.r
-common/dist/zlib/contrib/dotzlib/DotZLib.chm
 compat/dirshack/Makefile
-crypto/dist/openssl/doc/openssl_button.gif
 dist/bind/COPYRIGHT
 dist/bind/HISTORY
 dist/bind/bin/check/named-checkzone.html
@@ -132,8 +128,6 @@ dist/bind/doc/arm/managed-keys.xml
 dist/bind/doc/arm/pkcs11.xml
 dist/bind/lib/export/dns/Makefile.in
 dist/bind/lib/isc/powerpc/include/isc/atomic.h
-dist/bzip2/sample1.bz2
-dist/bzip2/sample2.bz2
 dist/file/magic/magdir/adventure
 dist/file/magic/magdir/amanda
 dist/file/magic/magdir/amigaos
