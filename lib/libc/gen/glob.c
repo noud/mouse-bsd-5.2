@@ -674,11 +674,7 @@ glob2(Char *pathbuf, Char *pathend, Char *pathlim, const Char *pattern,
 			pend = pathend;
 		}
 			
-                if ((!anymeta) ||
-		    ((pglob->gl_flags & GLOB_PERIOD) &&
-		     (diff >= 1 && pend[-1] == DOT) &&
-		     (diff >= 2 && (pend[-2] == SLASH || pend[-2] == DOT)) &&
-		     (diff < 3 || pend[-3] == SLASH))) {
+                if (!anymeta) {
 			pathend = q;
 			pattern = p;
 			while (*pattern == SEP) {
