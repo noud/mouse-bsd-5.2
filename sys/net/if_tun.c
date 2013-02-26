@@ -666,6 +666,9 @@ tunioctl(dev_t dev, u_long cmd, void *data, int flag, struct lwp *l)
 		switch (*(int *)data) {
 		case IFF_POINTOPOINT:
 		case IFF_BROADCAST:
+			if (((tp->tun_if.if_flags ^ *(int *)data) &
+			     (IFF_BROADCAST|IFF_POINTOPOINT)) == 0)
+				break;
 			if (tp->tun_if.if_flags & IFF_UP) {
 				error = EBUSY;
 				goto out;
