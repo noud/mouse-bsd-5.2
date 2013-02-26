@@ -201,6 +201,7 @@ struct tcpcb {
 #define	TF_DELACK	0x0002		/* ack, but try to delay it */
 #define	TF_NODELAY	0x0004		/* don't delay packets to coalesce */
 #define	TF_NOOPT	0x0008		/* don't use tcp options */
+#define	TF_QUIETDROP	0x0010		/* don't RST in tcp_drop */
 #define	TF_REQ_SCALE	0x0020		/* have/will request window scaling */
 #define	TF_RCVD_SCALE	0x0040		/* other side has requested scaling */
 #define	TF_REQ_TSTMP	0x0080		/* have/will request timestamps */

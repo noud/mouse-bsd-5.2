@@ -727,14 +727,22 @@ tcp_ctloutput(int op, struct socket *so, struct sockopt *sopt)
 #endif /* TCP_SIGNATURE */
 
 		case TCP_NODELAY:
-			error = sockopt_getint(sopt, &optval);
-			if (error)
-				break;
-			if (optval)
-				tp->t_flags |= TF_NODELAY;
-			else
-				tp->t_flags &= ~TF_NODELAY;
-			break;
+			{
+				unsigned int tflag;
+				tflag = TF_NODELAY;
+				if (0) {
+		case TCP_QUIETDROP:
+					tflag = TF_QUIETDROP;
+				}
+				error = sockopt_getint(sopt, &optval);
+				if (error)
+					break;
+				if (optval)
+					tp->t_flags |= tflag;
+				else
+					tp->t_flags &= ~tflag;
+			}
+       			break;
 
 		case TCP_MAXSEG:
 			error = sockopt_getint(sopt, &optval);
@@ -811,7 +819,11 @@ tcp_ctloutput(int op, struct socket *so, struct sockopt *sopt)
 			break;
 #endif
 		case TCP_NODELAY:
-			optval = tp->t_flags & TF_NODELAY;
+			optval = (tp->t_flags & TF_NODELAY) ? 1 : 0;
+			error = sockopt_set(sopt, &optval, sizeof(optval));
+			break;
+		case TCP_QUIETDROP:
+			optval = (tp->t_flags & TF_QUIETDROP) ? 1 : 0;
 			error = sockopt_set(sopt, &optval, sizeof(optval));
 			break;
 		case TCP_MAXSEG:

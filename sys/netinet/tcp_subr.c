@@ -1091,7 +1091,8 @@ tcp_drop(struct tcpcb *tp, int errno)
 
 	if (TCPS_HAVERCVDSYN(tp->t_state)) {
 		tp->t_state = TCPS_CLOSED;
-		(void) tcp_output(tp);
+		if (! (tp->t_flags & TF_QUIETDROP))
+			(void) tcp_output(tp);
 		TCP_STATINC(TCP_STAT_DROPS);
 	} else
 		TCP_STATINC(TCP_STAT_CONNDROPS);

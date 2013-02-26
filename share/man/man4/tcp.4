@@ -126,6 +126,18 @@ provides a boolean option,
 (from
 .Aq Pa netinet/tcp.h ) ,
 to defeat this algorithm.
+.It Dv TCP_QUIETDROP
+When closing a connected socket,
+.Tn TCP
+normally sends an RST segment to the peer.  It is occasionally
+desirable to avoid this, either for testing or to deliberately leave an
+abusive peer with a half-open connection.  If
+.Dv TCP_QUIETDROP
+is turned on when the socket is closed,
+.Tn TCP
+sends nothing at all to the peer, simply discarding local state.  As
+far as network-visible behaviour for the affected connection is
+concerned, it is equivalent to a (very fast) crash and reboot.
 .It Dv TCP_MAXSEG
 By default, a sender- and receiver-TCP
 will negotiate among themselves to determine the maximum segment size
