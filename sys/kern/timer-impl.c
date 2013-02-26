@@ -182,31 +182,35 @@ static int tsock_gentick(PCB *t)
 
  KASSERT(mutex_owned(&tsock_gblmtx));
  if (! t->emerg) return(0);
+ solock(t->socket);
  if (sbspace(&t->socket->so_rcv) < sizeof(struct timersock_event))
   { ((volatile PCB *)t)->pending ++;
     if (timerdebug) printf("gentick %p no space\n",(void *)t);
-    return(0);
-  }
- bzero(&ev,sizeof(ev));
- MGET(m,M_NOWAIT,MT_DATA);
- if (m == 0)
-  { m = ((volatile PCB *)t)->emerg;
-    ((volatile PCB *)t)->emerg = 0;
-    ev.tse_type = TS_EV_ERROR;
-    ev.tse_err = ENOBUFS;
     rv = 0;
-    if (timerdebug) printf("gentick %p used emerg\n",(void *)t);
   }
  else
-  { ev.tse_type = TS_EV_TICK;
-    microtime(&ev.tse_tv);
-    rv = 1;
-    if (timerdebug) printf("gentick %p normal\n",(void *)t);
+  { bzero(&ev,sizeof(ev));
+    MGET(m,M_NOWAIT,MT_DATA);
+    if (m == 0)
+     { m = ((volatile PCB *)t)->emerg;
+       ((volatile PCB *)t)->emerg = 0;
+       ev.tse_type = TS_EV_ERROR;
+       ev.tse_err = ENOBUFS;
+       if (timerdebug) printf("gentick %p used emerg\n",(void *)t);
+       rv = 0;
+     }
+    else
+     { ev.tse_type = TS_EV_TICK;
+       microtime(&ev.tse_tv);
+       if (timerdebug) printf("gentick %p normal\n",(void *)t);
+       rv = 1;
+     }
+    *mtod(m,struct timersock_event *) = ev;
+    m->m_len = sizeof(struct timersock_event);
+    sbappend(&t->socket->so_rcv,m);
+    sorwakeup(t->socket);
   }
- *mtod(m,struct timersock_event *) = ev;
- m->m_len = sizeof(struct timersock_event);
- sbappend(&t->socket->so_rcv,m);
- sorwakeup(t->socket);
+ sounlock(t->socket);
  return(rv);
 }
 
