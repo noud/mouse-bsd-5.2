@@ -2047,6 +2047,7 @@
 ./usr/include/sys/time.h			comp-c-include
 ./usr/include/sys/timeb.h			comp-c-include
 ./usr/include/sys/timepps.h			comp-c-include
+./usr/include/sys/timersock.h			comp-c-include
 ./usr/include/sys/times.h			comp-c-include
 ./usr/include/sys/timex.h			comp-c-include
 ./usr/include/sys/tprintf.h			comp-obsolete		obsolete

@@ -48,6 +48,7 @@
 #include <sys/time.h>
 #include <sys/tree.h>
 #include <sys/callback.h>
+#include <sys/param.h>
 #endif
 
 #define	POOL_PADDR_INVALID	((paddr_t) -1)

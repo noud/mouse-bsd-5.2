@@ -29,6 +29,8 @@
 #ifndef _SYS_PMF_H
 #define _SYS_PMF_H
 
+#include <sys/types.h>
+
 #ifdef _KERNEL
 
 typedef enum {

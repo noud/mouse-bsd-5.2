@@ -32,7 +32,7 @@ INCS=	acct.h agpio.h aio.h ansi.h ataio.h atomic.h audioio.h \
 	socketvar.h sockio.h specificdata.h stat.h statvfs.h \
 	syscall.h syscallargs.h sysctl.h stdint.h swap.h \
 	syncobj.h syslimits.h syslog.h \
-	tape.h termios.h time.h timeb.h timepps.h times.h \
+	tape.h termios.h time.h timeb.h timepps.h timersock.h times.h \
 	timex.h trace.h tree.h tty.h ttychars.h ttycom.h \
 	ttydefaults.h ttydev.h types.h \
 	ucontext.h ucred.h uio.h un.h unistd.h unpcb.h user.h utsname.h uuid.h \

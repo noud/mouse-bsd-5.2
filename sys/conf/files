@@ -1489,6 +1489,7 @@ file	kern/sysv_ipc.c			sysvshm | sysvsem | sysvmsg
 file	kern/sysv_msg.c			sysvmsg
 file	kern/sysv_sem.c			sysvsem
 file	kern/sysv_shm.c			sysvshm
+file	kern/timer-impl.c
 file	kern/tty.c
 file	kern/tty_conf.c
 file	kern/tty_bsdpty.c		compat_bsdpty
