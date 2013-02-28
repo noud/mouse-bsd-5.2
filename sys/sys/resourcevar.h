@@ -35,6 +35,7 @@
 #define	_SYS_RESOURCEVAR_H_
 
 #include <sys/mutex.h>
+#include <sys/resource.h>
 
 /*
  * Kernel per-process accounting / statistics
