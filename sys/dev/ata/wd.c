@@ -64,6 +64,7 @@ __KERNEL_RCSID(0, "$NetBSD: wd.c,v 1.363.8.4 2010/01/30 19:02:14 snj Exp $");
 #include "opt_ata.h"
 
 #include "rnd.h"
+#include "diskwatch.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -98,6 +99,10 @@ __KERNEL_RCSID(0, "$NetBSD: wd.c,v 1.363.8.4 2010/01/30 19:02:14 snj Exp $");
 #include "locators.h"
 
 #include <prop/proplib.h>
+
+#if NDISKWATCH > 0
+#include <dev/pseudo/diskwatch-kern.h>
+#endif
 
 #define	WDIORETRIES_SINGLE 4	/* number of retries before single-sector */
 #define	WDIORETRIES	5	/* number of retries before giving up */
@@ -391,6 +396,12 @@ wdattach(struct device *parent, struct device *self, void *aux)
 	rnd_attach_source(&wd->rnd_source, device_xname(wd->sc_dev),
 			  RND_TYPE_DISK, 0);
 #endif
+#if NDISKWATCH > 0
+	{	int j; /* dammit, whose bright idea was it to use -Wshadow? */
+		for (j=0;j<MAXPARTITIONS;j++)
+			wd->watchunit[j] = -1;
+	}
+#endif
 
 	/* Discover wedges on this disk. */
 	dkwedge_discover(&wd->sc_dk);
@@ -478,6 +489,13 @@ wddetach(struct device *self, int flags)
 	/* Unhook the entropy source. */
 	rnd_detach_source(&sc->rnd_source);
 #endif
+#if NDISKWATCH > 0
+	{	int j; /* dammit, whose bright idea was it to use -Wshadow? */
+		for (j=0;j<MAXPARTITIONS;j++)
+			if (sc->watchunit[j] >= 0)
+				diskwatch_detach(sc->watchunit[j]);
+	}
+#endif
 
 	sc->drvp->drive_flags = 0; /* no drive any more here */
 
@@ -531,6 +549,14 @@ wdstrategy(struct buf *bp)
 		    (wd->sc_flags & (WDF_WLABEL|WDF_LABELLING)) != 0) <= 0)
 			goto done;
 	}
+#if NDISKWATCH > 0
+	if ((bp->b_flags & (B_READ|B_WRITE)) == B_WRITE) {
+		int p;
+		p = WDPART(bp->b_dev);
+		if (wd->watchunit[p] >= 0)
+			diskwatch_watch(wd->watchunit[p],bp);
+	}
+#endif
 
 	/*
 	 * Now convert the block number to absolute and put it in
@@ -1144,6 +1170,28 @@ wdioctl(dev_t dev, u_long xfer, void *addr, int flag, struct lwp *l)
 #endif
 
 	ATADEBUG_PRINT(("wdioctl\n"), DEBUG_FUNCS);
+
+#if NDISKWATCH > 0
+	/* These need to work even if !WDF_LOADED.  The test for l
+	   ensures they can't be abused by userland (something we
+	   need to check anyway). */
+	switch (xfer) {
+	case DWIOCSET:
+		if (l)
+			return(EINVAL);
+		if (wd->watchunit[WDPART(dev)] >= 0)
+			return(EBUSY);
+		wd->watchunit[WDPART(dev)] = *(int *)addr;
+		return (0);
+	case DWIOCCLR:
+		if (l)
+			return(EINVAL);
+		if (wd->watchunit[WDPART(dev)] != *(int *)addr)
+			return(EBUSY);
+		wd->watchunit[WDPART(dev)] = -1;
+		return (0);
+	}
+#endif
 
 	if ((wd->sc_flags & WDF_LOADED) == 0)
 		return EIO;

@@ -51,6 +51,7 @@ __KERNEL_RCSID(0, "$NetBSD: sd.c,v 1.275.4.1 2012/10/31 15:17:53 riz Exp $");
 
 #include "opt_scsi.h"
 #include "rnd.h"
+#include "diskwatch.h"
 
 #include <sys/param.h>
 #include <sys/systm.h>
@@ -84,6 +85,10 @@ __KERNEL_RCSID(0, "$NetBSD: sd.c,v 1.275.4.1 2012/10/31 15:17:53 riz Exp $");
 #include <dev/scsipi/sdvar.h>
 
 #include <prop/proplib.h>
+
+#if NDISKWATCH > 0
+#include <dev/pseudo/diskwatch-kern.h>
+#endif
 
 #define	SDUNIT(dev)			DISKUNIT(dev)
 #define	SDPART(dev)			DISKPART(dev)
@@ -324,6 +329,12 @@ sdattach(struct device *parent, struct device *self, void *aux)
 	rnd_attach_source(&sd->rnd_source, device_xname(sd->sc_dev),
 			  RND_TYPE_DISK, 0);
 #endif
+#if NDISKWATCH > 0
+	{	int i;
+		for (i=0;i<MAXPARTITIONS;i++)
+			sd->watchunit[i] = -1;
+	}
+#endif
 
 	/* Discover wedges on this disk. */
 	dkwedge_discover(&sd->sc_dk);
@@ -395,6 +406,13 @@ sddetach(struct device *self, int flags)
 #if NRND > 0
 	/* Unhook the entropy source. */
 	rnd_detach_source(&sd->rnd_source);
+#endif
+#if NDISKWATCH > 0
+	{	int j; /* dammit, whose bright idea was it to use -Wshadow? */
+		for (j=0;j<MAXPARTITIONS;j++)
+			if (sd->watchunit[j] >= 0)
+				diskwatch_detach(sd->watchunit[j]);
+	}
 #endif
 
 	return (0);
@@ -705,6 +723,14 @@ sdstrategy(struct buf *bp)
 		    (sd->flags & (SDF_WLABEL|SDF_LABELLING)) != 0) <= 0)
 			goto done;
 	}
+#if NDISKWATCH > 0
+	if ((bp->b_flags & (B_READ|B_WRITE)) == B_WRITE) {
+		int p;
+		p = SDPART(bp->b_dev);
+		if (sd->watchunit[p] >= 0)
+			diskwatch_watch(sd->watchunit[p],bp);
+	}
+#endif
 
 	/*
 	 * Now convert the block number to absolute and put it in
@@ -1009,6 +1035,28 @@ sdioctl(dev_t dev, u_long cmd, void *addr, int flag, struct lwp *l)
 #endif
 
 	SC_DEBUG(sd->sc_periph, SCSIPI_DB2, ("sdioctl 0x%lx ", cmd));
+
+#if NDISKWATCH > 0
+	/* These need to work even if !MEDIA_LOADED.  The test for l
+	   ensures they can't be abused by userland (something we
+	   need to check anyway). */
+	switch (cmd) {
+	case DWIOCSET:
+		if (l)
+			return(EINVAL);
+		if (sd->watchunit[SDPART(dev)] >= 0)
+			return(EBUSY);
+		sd->watchunit[SDPART(dev)] = *(int *)addr;
+		return (0);
+	case DWIOCCLR:
+		if (l)
+			return(EINVAL);
+		if (sd->watchunit[SDPART(dev)] != *(int *)addr)
+			return(EBUSY);
+		sd->watchunit[SDPART(dev)] = -1;
+		return (0);
+	}
+#endif
 
 	/*
 	 * If the device is not valid, some IOCTLs can still be

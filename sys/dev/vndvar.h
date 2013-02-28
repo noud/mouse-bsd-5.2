@@ -161,6 +161,9 @@ struct vnd_softc {
 	unsigned char	*sc_comp_decombuf;/* decompressed data buffer */
 	int32_t		 sc_comp_buffblk;/*current decompressed block */
 	z_stream	 sc_comp_stream;/* decompress descriptor */
+#if NDISKWATCH > 0
+	int watchunit[MAXPARTITIONS];
+#endif
 };
 #endif
 

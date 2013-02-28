@@ -230,6 +230,7 @@
 #	clockctl clock control for non root users
 #	cpuctl	CPU control
 #	crypto	hardware crypto access driver
+#	diskwatch* disk write watching
 #	dmoverio hardware-assisted data movers
 #	dpt*	DPT/Adaptec EATA RAID management interface
 #	dpti*	DPT/Adaptec I2O RAID management interface
@@ -739,6 +740,7 @@ all)
 	makedev tap tap0 tap1 tap2 tap3
 	makedev gpio gpio0 gpio1 gpio2 gpio3 gpio4 gpio5 gpio6 gpio7
 	makedev pad pad0 pad1 pad2 pad3
+	makedev diskwatch0 diskwatch1 diskwatch2
 	makedev bthub
 	makedev putter
 	makedev drvctl
@@ -1934,6 +1936,13 @@ putter)
 	mkdev putter c %putter_chr% 0 600
 	mkdev pud c %putter_chr% 1 600
 	lndev putter puffs
+	;;
+
+diskwatch*)
+	unit=${i#diskwatch}
+	mkdev diskwatch${unit}ctl  c %diskwatch_chr% $(((${unit} * 4)  )) 600
+	mkdev diskwatch${unit}data c %diskwatch_chr% $(((${unit} * 4)+1)) 600
+	mkdev diskwatch${unit}dbg  c %diskwatch_chr% $(((${unit} * 4)+2)) 600
 	;;
 
 midevend)

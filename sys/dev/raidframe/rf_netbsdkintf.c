@@ -168,6 +168,7 @@ __KERNEL_RCSID(0, "$NetBSD: rf_netbsdkintf.c,v 1.250.4.13 2012/10/24 03:03:53 ri
 #include <dev/raidframe/rf_paritymap.h>
 #include "raid.h"
 #include "opt_raid_autoconfig.h"
+#include "diskwatch.h"
 #include "rf_raid.h"
 #include "rf_copyback.h"
 #include "rf_dag.h"
@@ -181,6 +182,10 @@ __KERNEL_RCSID(0, "$NetBSD: rf_netbsdkintf.c,v 1.250.4.13 2012/10/24 03:03:53 ri
 #include "rf_driver.h"
 #include "rf_parityscan.h"
 #include "rf_threadstuff.h"
+
+#if NDISKWATCH > 0
+#include <dev/pseudo/diskwatch-kern.h>
+#endif
 
 #ifdef DEBUG
 int     rf_kdebug_level = 0;
@@ -258,6 +263,9 @@ struct raid_softc {
 	char    sc_xname[20];	/* XXX external name */
 	struct disk sc_dkdev;	/* generic disk device info */
 	struct bufq_state *buf_queue;	/* used for the device queue */
+#if NDISKWATCH > 0
+	int watchunit[MAXPARTITIONS];
+#endif
 };
 /* sc_flags */
 #define RAIDF_INITED	0x01	/* unit has been initialized */
@@ -916,6 +924,14 @@ raidstrategy(struct buf *bp)
 			goto done;
 		}
 	}
+#if NDISKWATCH > 0
+	if ((bp->b_flags & (B_READ|B_WRITE)) == B_WRITE) {
+		int p;
+		p = DISKPART(bp->b_dev);
+		if (rs->watchunit[p] >= 0)
+			diskwatch_watch(rs->watchunit[p],bp);
+	}
+#endif
 	s = splbio();
 
 	bp->b_resid = 0;
@@ -1036,6 +1052,10 @@ raidioctl(dev_t dev, u_long cmd, void *data, int flag, struct lwp *l)
 	case DIOCGDINFO:
 	case DIOCSDINFO:
 	case DIOCWDINFO:
+#if NDISKWATCH > 0
+	case DWIOCSET:
+	case DWIOCCLR:
+#endif
 #ifdef __HAVE_OLD_DISKLABEL
 	case ODIOCGDINFO:
 	case ODIOCWDINFO:
@@ -1086,6 +1106,24 @@ raidioctl(dev_t dev, u_long cmd, void *data, int flag, struct lwp *l)
 	}
 
 	switch (cmd) {
+
+#if NDISKWATCH > 0
+	case DWIOCSET:
+		if (l)
+			return(EINVAL);
+		if (rs->watchunit[DISKPART(dev)] > 0)
+			return(EBUSY);
+		rs->watchunit[DISKPART(dev)] = *(int *)data;
+		return(0);
+
+	case DWIOCCLR:
+		if (l)
+			return(EINVAL);
+		if (rs->watchunit[DISKPART(dev)] != *(int *)data)
+			return(EBUSY);
+		rs->watchunit[DISKPART(dev)] = -1;
+		return(0);
+#endif
 
 		/* configure the system */
 	case RAIDFRAME_CONFIGURE:
@@ -1192,6 +1230,14 @@ raidioctl(dev_t dev, u_long cmd, void *data, int flag, struct lwp *l)
 		}
 
 		retcode = rf_Shutdown(raidPtr);
+
+#if NDISKWATCH > 0
+		{	int k;
+			for (k=0;k<MAXPARTITIONS;k++)
+				if (rs->watchunit[k] >= 0)
+					diskwatch_detach(rs->watchunit[k]);
+		}
+#endif
 
 		/* It's no longer initialized... */
 		rs->sc_flags &= ~RAIDF_INITED;
@@ -1904,6 +1950,13 @@ raidinit(RF_Raid_t *raidPtr)
 	unit = raidPtr->raidid;
 
 	rs = &raid_softc[unit];
+
+#if NDISKWATCH > 0
+	{	int j;
+		for (j=0;j<MAXPARTITIONS;j++)
+			rs->watchunit[j] = -1;
+	}
+#endif
 
 	/* XXX should check return code first... */
 	rs->sc_flags |= RAIDF_INITED;

@@ -74,6 +74,9 @@ struct wd_softc {
 #if NRND > 0
 	rndsource_element_t	rnd_source;
 #endif
+#if NDISKWATCH > 0
+	int watchunit[MAXPARTITIONS];
+#endif
 };
 
 #define sc_drive sc_wdc_bio.drive

@@ -96,6 +96,9 @@ struct sd_softc {
 #if NRND > 0
 	rndsource_element_t rnd_source;
 #endif
+#if NDISKWATCH > 0
+	int watchunit[MAXPARTITIONS];
+#endif
 };
 
 #define	SDGP_RESULT_OK		0	/* parameters obtained */

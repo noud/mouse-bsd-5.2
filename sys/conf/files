@@ -1653,3 +1653,5 @@ include "lib/libx86emu/files.x86emu"
 # "tprof" profiler.
 #
 include	"dev/tprof/files.tprof"
+
+include "dev/pseudo/files"

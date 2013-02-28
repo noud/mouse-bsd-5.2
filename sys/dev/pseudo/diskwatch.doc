@@ -1,0 +1,99 @@
+diskwatch pseudo-device driver.
+
+A diskwatch device is associated with a disk device.  Conceptually,
+this is just a means whereby as the disk is written to, a userland
+process hears about the writes.
+
+Provided writes occur at a low enough rate for userland to keep up,
+writes are simply copied to userland, each tagged with the block number
+of the block written to.  When writers overrun the reader, the kernel
+stops passing block contents to userland, passing instead just the
+block numbers.  If userland fails to keep up with even this reduced
+data rate, the kernel generates a distinctive event and stops sending
+userland anything; after each of these slowdowns, the kernel does not
+resume sending at the higher data rate until userland tells it to.
+
+Userland's interface is through a character special device.  There are
+two of these for each diskwatch device, a `control' device and a `data'
+device.  The `control' device is used for tasks such as telling the
+diskwatch device what real disk device to watch; the `data' device is
+the interface through which disk blocks are passed from the kernel to
+userland.
+
+Writes to the control device are expected to be plain text commands.
+The first character is a command code.  The recognized commands, and
+the rest of the write in each case, are:
+
+	d
+		Set the real disk device.  The rest of the string is f
+		followed by a number, which must be the number of a
+		file descriptor open on the relevant raw disk device in
+		the writing process.  (The f is to allow easy
+		extensibility to other possible ways of identifying the
+		disk.)
+
+	2
+		Start sending at the highest data rate (including block
+		contents).  No additional data.
+
+	1
+		Start sending at the intermediate data rate (just block
+		numbers).  No additional data.
+
+	0
+		Stop sending altogether.  No additional data.
+
+If the write does not fit the above, the write returns showing EIO.
+Note that a command cannot be split between two writes, nor can
+multiple commands be combined into a single write.  Note that setting a
+non-stopped data rate may have no visible effect, throttling back
+immediately, if the queue is already too full.
+
+Reads from the control device return a 0, 1, or 2 indicating the
+current sending data rate.
+
+The data device rejects all write attempts (EIO).  Each read from it
+returns zero or more data packets, concatenated in the buffer space
+provided.  If the first data packet is too large for the buffer, the
+read returns showing EMSGSIZE without changing anything.  A read will
+never return a partial data packet; if the space remaining at the end
+of the buffer after dequeueing some data packets is less than the size
+of the next packet, the packet is left alone and the read returns a
+less than completely filled buffer.
+
+Data packets consist of an unsigned long long int, possibly followed by
+more data.  The high 8 bits of (the low 64 bits of) this value indicate
+what the packet is:
+
+	0x00
+		The packet is a full data block.  The low 56 bits
+		contain the block number; the following 512 bytes
+		contain the new block data.
+
+	0x01
+		The packet is a data block number.  The low 56 bits
+		contain the block number; there is nothing following.
+
+	0x02
+		The packet indicates that the kernel has stopped
+		sending entirely.
+
+Note in particular that if the read buffer is aligned to a natural
+unsigned long long int boundary, every packet beginning will be too.
+
+A diskwatch device is said to be "ready" whenever both its control
+device and its data device are open.  Whenever a diskwatch device
+becomes non-ready, it disassociates itself from any disk device it may
+be associated with, discards anything it has buffered, and returns EIO
+from any I/O attempts that may be done on any descriptor that may be
+open.  When a diskwatch device is ready but has not yet had any disk
+device associated with it, attempts to do anything but set its disk
+device (including read from the data device) return showing EIO.
+Whenever a diskwatch device's disk device is set or changed, it reverts
+to "not sending anything" mode, as if a "0" command had been given.
+Attempts to set the disk device to a device that does not support
+diskwatching return EOPNOTSUPP.
+
+For diskwatch device N, the control device is minor 4*N and the data
+device is minor (4*N)+1.  Minors (4*N)+2 and (4*N)+3 are reserved for
+future use.

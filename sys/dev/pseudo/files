@@ -1,0 +1,2 @@
+defpseudo diskwatch
+file	dev/pseudo/diskwatch.c		diskwatch		needs-count
