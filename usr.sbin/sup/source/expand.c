@@ -99,7 +99,7 @@ static void addone(char *, char *);
 static int addpath(char);
 static int gethdir(char *, int);
 
-int 
+int
 expand(char *spec, char **buffer, int bufsize)
 {
 	pathp = path = pathbuf;
@@ -113,7 +113,7 @@ expand(char *spec, char **buffer, int bufsize)
 	return (bufcnt);
 }
 
-static void 
+static void
 glob(char *as)
 {
 	char *cs;
@@ -168,7 +168,7 @@ endit:
 	return;
 }
 
-static void 
+static void
 matchdir(char *pattern)
 {
 #ifdef HAS_POSIX_DIR
@@ -196,7 +196,7 @@ matchdir(char *pattern)
 	return;
 }
 
-static int 
+static int
 execbrc(char *p, char *s)
 {
 	char restbuf[MAXPATHLEN + 1];
@@ -266,7 +266,7 @@ pend:
 	return (0);
 }
 
-static int 
+static int
 match(char *s, char *p)
 {
 	int c;
@@ -281,7 +281,7 @@ match(char *s, char *p)
 	return (c);
 }
 
-static int 
+static int
 amatch(char *s, char *p)
 {
 	int scc;
@@ -360,7 +360,7 @@ amatch(char *s, char *p)
 	}
 }
 
-static void 
+static void
 addone(char *s1, char *s2)
 {
 	char *ep;
@@ -381,7 +381,7 @@ addone(char *s1, char *s2)
 		continue;
 }
 
-static int 
+static int
 addpath(char c)
 {
 	if (pathp >= lastpathp)
@@ -391,7 +391,7 @@ addpath(char c)
 	return (0);
 }
 
-static int 
+static int
 gethdir(char *home, int homelen)
 {
 	struct passwd *pp = getpwnam(home);

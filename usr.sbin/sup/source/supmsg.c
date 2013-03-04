@@ -75,7 +75,7 @@ static int needone(TREE *, void *);
 static int denyone(TREE *, void *);
 static int writeone(TREE *, void *);
 
-int 
+int
 msgsignon(void)
 {
 	int x;
@@ -104,7 +104,7 @@ msgsignon(void)
 	return (x);
 }
 
-int 
+int
 msgsignonack(void)
 {
 	int x;
@@ -151,7 +151,7 @@ extern int newonly;		/* only send new files */
 extern char *release;		/* release name */
 extern int setupack;		/* ack return value for setup */
 
-int 
+int
 msgsetup(void)
 {
 	int x;
@@ -230,7 +230,7 @@ msgsetup(void)
 	return (x);
 }
 
-int 
+int
 msgsetupack(void)
 {
 	if (server)
@@ -242,7 +242,7 @@ msgsetupack(void)
  */
 extern char *crypttest;		/* encryption test string */
 
-int 
+int
 msgcrypt(void)
 {
 	if (server)
@@ -250,7 +250,7 @@ msgcrypt(void)
 	return (writemstr(MSGCRYPT, crypttest));
 }
 
-int 
+int
 msgcryptok(void)
 {
 	if (server)
@@ -266,7 +266,7 @@ extern char *logpswd;		/* password for login */
 extern int logack;		/* login ack status */
 extern char *logerror;		/* error from login */
 
-int 
+int
 msglogin(void)
 {
 	int x;
@@ -294,7 +294,7 @@ msglogin(void)
 	return (x);
 }
 
-int 
+int
 msglogack(void)
 {
 	int x;
@@ -322,13 +322,13 @@ msglogack(void)
  */
 extern TREE *refuseT;		/* tree of files to refuse */
 
-static int 
+static int
 refuseone(TREE * t, void *v __unused)
 {
 	return (writestring(t->Tname));
 }
 
-int 
+int
 msgrefuse(void)
 {
 	int x;
@@ -364,7 +364,7 @@ msgrefuse(void)
 extern TREE *listT;		/* tree of files to list */
 extern time_t scantime;		/* time that collection was scanned */
 
-static int 
+static int
 listone(TREE * t, void *v __unused)
 {
 	int x;
@@ -379,7 +379,7 @@ listone(TREE * t, void *v __unused)
 	return (x);
 }
 
-int 
+int
 msglist(void)
 {
 	int x;
@@ -429,7 +429,7 @@ msglist(void)
  */
 extern TREE *needT;		/* tree of files to need */
 
-static int 
+static int
 needone(TREE * t, void *v __unused)
 {
 	int x;
@@ -439,7 +439,7 @@ needone(TREE * t, void *v __unused)
 	return (x);
 }
 
-int 
+int
 msgneed(void)
 {
 	int x;
@@ -480,13 +480,13 @@ msgneed(void)
  */
 extern TREE *denyT;		/* tree of files to deny */
 
-static int 
+static int
 denyone(TREE * t, void *v __unused)
 {
 	return (writestring(t->Tname));
 }
 
-int 
+int
 msgdeny(void)
 {
 	int x;
@@ -519,7 +519,7 @@ msgdeny(void)
 /*
  * send file message
  */
-int 
+int
 msgsend(void)
 {
 	if (server)
@@ -531,7 +531,7 @@ msgsend(void)
  */
 extern TREE *upgradeT;		/* pointer to file being upgraded */
 
-static int 
+static int
 writeone(TREE * t, void *v __unused)
 {
 	return (writestring(t->Tname));
@@ -655,7 +655,7 @@ msgrecv(int (*xferfile)(TREE *, va_list), ...)
 extern int doneack;
 extern char *donereason;
 
-int 
+int
 msgdone(void)
 {
 	int x;
@@ -688,7 +688,7 @@ msgdone(void)
  */
 extern char *goawayreason;	/* reason for goaway */
 
-int 
+int
 msggoaway(void)
 {
 	return (writemstr(MSGGOAWAY, goawayreason));
@@ -699,7 +699,7 @@ msggoaway(void)
 extern int xargc;		/* arg count for crosspatch */
 extern char **xargv;		/* arg array for crosspatch */
 
-int 
+int
 msgxpatch(void)
 {
 	int x;
@@ -743,7 +743,7 @@ msgxpatch(void)
  */
 extern int docompress;		/* Compress file before sending? */
 
-int 
+int
 msgcompress(void)
 {
 	if (server)

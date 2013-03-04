@@ -7,23 +7,23 @@
  * may copy or modify Sun RPC without charge, but are not authorized
  * to license or distribute it to anyone else except as part of a product or
  * program developed by the user.
- * 
+ *
  * SUN RPC IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND INCLUDING THE
  * WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR
  * PURPOSE, OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE.
- * 
+ *
  * Sun RPC is provided with no support and without any obligation on the
  * part of Sun Microsystems, Inc. to assist in its use, correction,
  * modification or enhancement.
- * 
+ *
  * SUN MICROSYSTEMS, INC. SHALL HAVE NO LIABILITY WITH RESPECT TO THE
  * INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY SUN RPC
  * OR ANY PART THEREOF.
- * 
+ *
  * In no event will Sun Microsystems, Inc. be liable for any lost revenue
  * or profits or other special, indirect and consequential damages, even if
  * Sun has been advised of the possibility of such damages.
- * 
+ *
  * Sun Microsystems, Inc.
  * 2550 Garcia Avenue
  * Mountain View, California  94043
@@ -174,17 +174,17 @@ struct rpc_timers {
 	u_long		rt_rtxcur;	/* current (backed-off) rto */
 };
 
-/*      
+/*
  * Feedback values used for possible congestion and rate control
  */
 #define FEEDBACK_REXMIT1	1	/* first retransmit */
-#define FEEDBACK_OK		2	/* no retransmits */    
+#define FEEDBACK_OK		2	/* no retransmits */
 
 /* Used to set version of portmapper used in broadcast */
-  
+
 #define CLCR_SET_LOWVERS	3
 #define CLCR_GET_LOWVERS	4
- 
+
 #define RPCSMALLMSGSIZE 400	/* a more reasonable packet size */
 
 /*
@@ -303,8 +303,8 @@ struct rpc_timers {
 /*
  * Below are the client handle creation routines for the various
  * implementations of client side rpc.  They can return NULL if a
- * creation failure occurs.             
- */     
+ * creation failure occurs.
+ */
 
 /*
  * Generic client creation routine. Supported protocols are those that
@@ -426,7 +426,7 @@ __END_DECLS
 
 /*
  * Like clnt_perror(), but is more verbose in its output
- */ 
+ */
 __BEGIN_DECLS
 extern void clnt_perrno		(enum clnt_stat);		/* stderr */
 extern char *clnt_sperrno	(enum clnt_stat);		/* string */
@@ -441,7 +441,7 @@ extern char *clnt_sperror	(CLIENT *, const char *);	/* string */
 __END_DECLS
 
 
-/* 
+/*
  * If a creation fails, the following allows the user to figure out why.
  */
 struct rpc_createerr {

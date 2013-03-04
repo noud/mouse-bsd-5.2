@@ -3,7 +3,7 @@
 /*
  * Copyright (c) 1992 Carnegie Mellon University
  * All Rights Reserved.
- * 
+ *
  * Permission to use, copy, modify and distribute this software and its
  * documentation is hereby granted, provided that both the copyright
  * notice and this permission notice appear in all copies of the
@@ -38,11 +38,11 @@
  * 	Added CFURELSUF  - use-release-suffix flag
  * 	Made rpause code conditional on MACH rather than CMUCS
  * 	[92/07/26            mrt]
- * 
+ *
  * Revision 1.5  92/02/08  18:23:57  mja
  * 	Added CFKEEP flag.
  * 	[92/01/17            vdelvecc]
- * 
+ *
  * 10-Feb-88  Glenn Marcy (gm0w) at Carnegie-Mellon University
  *	Added timeout for backoff.
  *

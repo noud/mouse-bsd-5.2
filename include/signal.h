@@ -154,7 +154,7 @@ sigfillset(sigset_t *set)
 
 /*
  * X/Open CAE Specification Issue 4 Version 2
- */      
+ */
 #if (defined(_XOPEN_SOURCE) && defined(_XOPEN_SOURCE_EXTENDED)) || \
     (_XOPEN_SOURCE - 0) >= 500 || defined(_NETBSD_SOURCE)
 int	killpg(pid_t, int);
@@ -174,7 +174,7 @@ void	(*sigset (int, void (*)(int)))(int);
 
 /*
  * X/Open CAE Specification Issue 5; IEEE Std 1003.1b-1993 (POSIX)
- */      
+ */
 #if (_POSIX_C_SOURCE - 0) >= 199309L || (_XOPEN_SOURCE - 0) >= 500 || \
     defined(_NETBSD_SOURCE)
 int	sigwait	(const sigset_t * __restrict, int * __restrict);

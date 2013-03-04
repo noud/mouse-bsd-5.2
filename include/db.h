@@ -150,7 +150,7 @@ typedef struct {
 	int		lorder;		/* byte order */
 	size_t		reclen;		/* record length (fixed-length records) */
 	uint8_t		bval;		/* delimiting byte (variable-length records */
-	char		*bfname;	/* btree file name */ 
+	char		*bfname;	/* btree file name */
 } RECNOINFO;
 
 #ifdef __DBINTERFACE_PRIVATE

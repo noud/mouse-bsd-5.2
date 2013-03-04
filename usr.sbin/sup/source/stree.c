@@ -336,7 +336,7 @@ Tprocess(TREE * t, int (*f) (TREE *, void *), void *args)
 	return (Tsubprocess(t, FALSE, f, args));
 }
 
-static int 
+static int
 Tprintone(TREE * t, void *v __unused)
 {
 	int i;

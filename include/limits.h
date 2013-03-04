@@ -108,7 +108,7 @@
 
 #endif /* _POSIX_C_SOURCE || _XOPEN_SOURCE || _NETBSD_SOURCE */
 
-/*    
+/*
  * X/Open Extended API set 2 (a.k.a. C063)
  * This hides unimplemented functions from GNU configure until
  * we are done implementing them.

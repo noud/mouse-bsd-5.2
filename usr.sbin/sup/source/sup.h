@@ -3,7 +3,7 @@
 /*
  * Copyright (c) 1992 Carnegie Mellon University
  * All Rights Reserved.
- * 
+ *
  * Permission to use, copy, modify and distribute this software and its
  * documentation is hereby granted, provided that both the copyright
  * notice and this permission notice appear in all copies of the
@@ -45,14 +45,14 @@
  * 	Changed so that last and when file names could include
  * 	the relase name if any.
  * 	[92/07/23            mrt]
- * 
+ *
  * Revision 1.9  91/04/29  14:39:03  mja
  * 	Reduce MAXCHILDREN from 8 to 3.
- * 
+ *
  * Revision 1.8  89/08/23  14:55:30  gm0w
  * 	Moved coll.dir from supservers to supfiles.
  * 	[89/08/23            gm0w]
- * 
+ *
  * 18-Mar-88  Glenn Marcy (gm0w) at Carnegie-Mellon University
  *	Added host=<hostfile> support to releases file.
  *

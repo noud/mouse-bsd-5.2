@@ -97,7 +97,7 @@ prtime(void)
 	    buf, thisC->Cname, relsufix);
 }
 
-int 
+int
 establishdir(char *fname)
 {
 	char dpart[STRINGLENGTH], fpart[STRINGLENGTH];
@@ -105,7 +105,7 @@ establishdir(char *fname)
 	return (estabd(fname, dpart));
 }
 
-int 
+int
 makedir(char *fname, unsigned int mode, struct stat * statp)
 {
 	if (lstat(fname, statp) != -1 && !S_ISDIR(statp->st_mode)) {
@@ -119,7 +119,7 @@ makedir(char *fname, unsigned int mode, struct stat * statp)
 	return stat(fname, statp);
 }
 
-int 
+int
 estabd(char *fname, char *dname)
 {
 	char dpart[STRINGLENGTH], fpart[STRINGLENGTH];
@@ -147,7 +147,7 @@ estabd(char *fname, char *dname)
  ***    L I S T   R O U T I N E S    ***
  ***************************************/
 
-static int 
+static int
 Lhash(char *name)
 {
 	/* Hash function is:  HASHSIZE * (strlen mod HASHSIZE) +
@@ -190,7 +190,7 @@ Llookup(LIST ** table, char *name)
 	return (l);
 }
 
-void 
+void
 ugconvert(char *uname, char *gname, int *uid, int *gid, int *mode)
 {
 	LIST *u, *g;

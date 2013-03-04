@@ -3,7 +3,7 @@
 /*
  * Copyright (c) 1991 Carnegie Mellon University
  * All Rights Reserved.
- * 
+ *
  * Permission to use, copy, modify and distribute this software and its
  * documentation is hereby granted, provided that both the copyright
  * notice and this permission notice appear in all copies of the
@@ -24,7 +24,7 @@
  * any improvements or extensions that they make and grant Carnegie the rights
  * to redistribute these changes.
  */
-/* 
+/*
  * Mach Operating System
  * Copyright (c) 1989 Carnegie-Mellon University
  * Copyright (c) 1988 Carnegie-Mellon University

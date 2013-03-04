@@ -57,7 +57,7 @@
 #include "supcdefs.h"
 #include "supextern.h"
 
-int 
+int
 filecopy(int here, int there)
 {
 	int kount;

@@ -3,7 +3,7 @@
 /*
  * Copyright (c) 1991 Carnegie Mellon University
  * All Rights Reserved.
- * 
+ *
  * Permission to use, copy, modify and distribute this software and its
  * documentation is hereby granted, provided that both the copyright
  * notice and this permission notice appear in all copies of the
@@ -35,11 +35,11 @@
  * 	defined(c_plusplus) conditionals.  This may not be necessary
  * 	and perhaps should be fixed at a later time.
  * 	[89/04/03            vanryzin]
- * 
+ *
  * Revision 1.6  89/02/05  15:55:57  gm0w
  * 	Added extern char *errmsg().
  * 	[89/02/04            gm0w]
- * 
+ *
  * Revision 1.5  89/01/20  15:34:40  gm0w
  * 	Moved all of the STDC changes to other existing include files
  * 	back into this one.  Added non-STDC extern declarations for
@@ -47,15 +47,15 @@
  * 	by STDC.  Added include of sysent.h.  Removed obsolete cdate
  * 	extern declaration.
  * 	[88/12/17            gm0w]
- * 
+ *
  * Revision 1.4  88/12/22  16:58:56  mja
  * 	Correct __STDC__ parameter type for getenv().
  * 	[88/12/20            dld]
- * 
+ *
  * Revision 1.3  88/12/14  23:31:42  mja
  * 	Made file reentrant.  Added declarations for __STDC__.
  * 	[88/01/06            jjk]
- * 
+ *
  * 30-Apr-88  Glenn Marcy (gm0w) at Carnegie-Mellon University
  *	Added pathof() extern.
  *

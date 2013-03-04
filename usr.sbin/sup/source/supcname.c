@@ -66,7 +66,7 @@ extern COLLECTION *firstC;	/* collection list pointer */
  * It's a fatal error if a collection has no file server.
  */
 
-void 
+void
 getnams(void)
 {
 	COLLECTION *c;

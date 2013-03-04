@@ -1,6 +1,6 @@
 /*	$NetBSD: ieeefp.h,v 1.7 2005/11/18 20:02:59 christos Exp $	*/
 
-/* 
+/*
  * Written by J.T. Conklin, Apr 6, 1995
  * Public domain.
  */

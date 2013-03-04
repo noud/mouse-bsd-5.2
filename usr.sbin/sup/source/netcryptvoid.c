@@ -56,7 +56,7 @@
 int cryptflag;			/* whether to encrypt/decrypt data */
 char *cryptbuf;			/* buffer for data encryption/decryption */
 
-int 
+int
 netcrypt(char *pword)
 {
 	if (pword == NULL || (strcmp(pword, PSWDCRYPT) == 0)) {
@@ -67,7 +67,7 @@ netcrypt(char *pword)
 	return (SCMERR);
 }
 
-int 
+int
 getcryptbuf(int x __unused)
 {
 	if (cryptflag == 0) {
@@ -76,13 +76,13 @@ getcryptbuf(int x __unused)
 		return (SCMERR);
 }
 
-void 
+void
 decode(char *in __unused, char *out __unused, int count __unused)
 {
 }
 
 
-void 
+void
 encode(char *in __unused, char *out __unused, int count __unused)
 {
 }

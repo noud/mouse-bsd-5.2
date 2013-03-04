@@ -282,7 +282,7 @@ ssize_t	 pread(int, void *, size_t, off_t);
 ssize_t	 pwrite(int, const void *, size_t, off_t);
 #endif
 
-/* 
+/*
  * X/Open Extended API set 2 (a.k.a. C063)
  */
 #if defined(_INCOMPLETE_XOPEN_C063)

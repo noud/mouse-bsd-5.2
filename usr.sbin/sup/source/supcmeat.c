@@ -145,7 +145,7 @@ static int finishone(TREE *, void *);
 /* The next two routines define the fsm to support multiple fileservers
  * per collection.
  */
-int 
+int
 getonehost(TREE * t, void *v)
 {
 	long *state = v;
@@ -192,7 +192,7 @@ getcollhost(int *tout, int *backoff, long int *state, int *nhostsp)
  *  host machine.
  */
 
-void 
+void
 getcoll(void)
 {
 	TREE *t;
@@ -237,7 +237,7 @@ getcoll(void)
 }
 /***  Sign on to file server ***/
 
-int 
+int
 signon(TREE * t, int nhosts, int *tout)
 {
 	int x;
@@ -295,7 +295,7 @@ signon(TREE * t, int nhosts, int *tout)
 }
 /***  Tell file server what to connect to ***/
 
-int 
+int
 setup(TREE * t)
 {
 	char relsufix[STRINGLENGTH];
@@ -385,7 +385,7 @@ setup(TREE * t)
 }
 /***  Tell file server what account to use ***/
 
-void 
+void
 suplogin(void)
 {
 	char buf[STRINGLENGTH];
@@ -471,7 +471,7 @@ suplogin(void)
  *  which are no longer on the repository.
  */
 
-void 
+void
 listfiles(void)
 {
 	char buf[STRINGLENGTH];
@@ -539,7 +539,7 @@ listfiles(void)
 	Tfree(&refuseT);
 }
 
-static int 
+static int
 needone(TREE * t, void *dummy __unused)
 {
 	TREE *newt;
@@ -591,14 +591,14 @@ needone(TREE * t, void *dummy __unused)
 	return (SCMOK);
 }
 
-static int 
+static int
 denyone(TREE * t, void *v __unused)
 {
 	vnotify("SUP: Access denied to %s\n", t->Tname);
 	return (SCMOK);
 }
 
-static int 
+static int
 deleteone(TREE * t, void *v __unused)
 {
 	struct stat sbuf, pbuf;
@@ -703,7 +703,7 @@ deleteone(TREE * t, void *v __unused)
  * badly and best just stop the program as soon as possible.
  */
 
-void 
+void
 recvfiles(void)
 {
 	int x;
@@ -733,7 +733,7 @@ recvfiles(void)
 	} while (recvmore);
 }
 /* prepare the target, if necessary */
-int 
+int
 prepare(char *name, int mode, int *newp, struct stat * statp)
 {
 	char *type;
@@ -847,7 +847,7 @@ recvone(TREE * t, va_list ap)
 	return (SCMOK);
 }
 
-int 
+int
 recvdir(TREE * t, int new, struct stat * statp)
 {				/* receive directory from network */
 	struct timeval tbuf[2];
@@ -890,7 +890,7 @@ recvdir(TREE * t, int new, struct stat * statp)
 	return (FALSE);
 }
 
-int 
+int
 recvsym(TREE * t, int new, struct stat * statp)
 {				/* receive symbolic link */
 	char buf[STRINGLENGTH];
@@ -925,7 +925,7 @@ recvsym(TREE * t, int new, struct stat * statp)
 	return (FALSE);
 }
 
-int 
+int
 recvreg(TREE * t, int new, struct stat * statp)
 {				/* receive file from network */
 	FILE *fin, *fout;
@@ -1029,7 +1029,7 @@ recvreg(TREE * t, int new, struct stat * statp)
 	return (FALSE);
 }
 
-static int 
+static int
 linkone(TREE * t, void *fv)
 {				/* link to file already received */
 	char *fname = fv;
@@ -1073,7 +1073,7 @@ linkone(TREE * t, void *fv)
 	return (SCMOK);
 }
 
-static int 
+static int
 execone(TREE * t, void *v __unused)
 {				/* execute command for file */
 	int w;
@@ -1106,7 +1106,7 @@ execone(TREE * t, void *v __unused)
 }
 
 /* from will be 0 if reading from network */
-int 
+int
 copyfile(char *to, char *from)
 {
 	int fromf, tof, istemp, x;
@@ -1334,7 +1334,7 @@ copyfile(char *to, char *from)
 }
 /***  Finish connection with file server ***/
 
-void 
+void
 finishup(int x)
 {
 	char tname[STRINGLENGTH], fname[STRINGLENGTH];
@@ -1436,7 +1436,7 @@ finishup(int x)
 	Tfree(&lastT);
 }
 
-int 
+int
 finishone(TREE * t, void *fv)
 {
 	FILE *finishfile = fv;

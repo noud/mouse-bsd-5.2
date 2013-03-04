@@ -93,7 +93,7 @@ main(int argc, char **argv)
 	CLIENT *client;
 	char temp_map[MAXPATHLEN];
 	int status, xfr_status;
-	
+
 	status = YPPUSH_SUCC;
 	client = NULL;
 
@@ -160,7 +160,7 @@ main(int argc, char **argv)
 	syslog(LOG_DEBUG, "ypxfr: Arguments:");
 	syslog(LOG_DEBUG, "YP clear to local: %s", (cflag) ? "no" : "yes");
 	syslog(LOG_DEBUG, "   Force transfer: %s", (fflag) ? "yes" : "no");
-	syslog(LOG_DEBUG, "           domain: %s", domain); 
+	syslog(LOG_DEBUG, "           domain: %s", domain);
 	syslog(LOG_DEBUG, "             host: %s", host);
 	syslog(LOG_DEBUG, "    source domain: %s", srcdomain);
 	syslog(LOG_DEBUG, "          transid: %s", tid);
@@ -197,14 +197,14 @@ main(int argc, char **argv)
 	}
 
 #ifdef DEBUG
-        syslog(LOG_DEBUG, "Connect host: %s", host); 
+        syslog(LOG_DEBUG, "Connect host: %s", host);
 #endif
 
 	client = yp_bind_host(host, YPPROG, YPVERS, 0, 1);
 
 	status = get_remote_ordernum(client, domain, map, ordernum,
 	    &new_ordernum);
-	
+
 
 	if (status == YPPUSH_SUCC) {
 		/* Create temporary db */
@@ -215,19 +215,19 @@ main(int argc, char **argv)
 	  	/* Add ORDER */
 		if (status > 0)
 			status = add_order(db, new_ordernum);
-		
+
 		/* Add MASTER */
 		if (status > 0)
 			status = add_master(client, domain, map, db);
-		
+
 	        /* Add INTERDOMAIN */
 		if (status > 0)
 			status = add_interdomain(client, domain, map, db);
-		
+
 	        /* Add SECURE */
 		if (status > 0)
 			status = add_secure(client, domain, map, db);
-		
+
 		if (status > 0) {
 			callback.foreach = ypxfr_foreach;
 			get_map(client, domain, map, &callback);
@@ -243,7 +243,7 @@ main(int argc, char **argv)
 		else
 			(void) unlink_db(domain, map, temp_map);
 	}
-	
+
  punt:
 	xfr_status = status;
 
@@ -460,10 +460,10 @@ add_order(DBM *ldb, u_int ordernum)
 
 	key.dptr = keystr;
 	key.dsize = strlen(keystr);
-	
+
 	val.dptr = datestr;
 	val.dsize = strlen(datestr);
-	
+
 	status = ypdb_store(ldb, key, val, YPDB_INSERT);
 	if(status >= 0)
 		status = YPPUSH_SUCC;
@@ -485,7 +485,7 @@ add_master(CLIENT *client, char *domain, char *map, DBM *ldb)
 
 	/* Get MASTER */
 	status = yp_master_host(client, domain, map, &master);
-	
+
 	if (master != NULL) {
 		key.dptr = keystr;
 		key.dsize = strlen(keystr);
@@ -523,11 +523,11 @@ add_interdomain(CLIENT *client, char *domain, char *map, DBM *ldb)
 
 	if (status == YPERR_KEY) {
 		/* this is an optional key/val, so it may not be present */
-		status = YPPUSH_SUCC;  
+		status = YPPUSH_SUCC;
 	} else if (status == 0 && value) {
 		v.dptr = value;
 		v.dsize = vallen;
-		
+
 		if (v.dptr != NULL) {
 			status = ypdb_store(ldb, k, v, YPDB_INSERT);
 			if (status >= 0)
@@ -557,14 +557,14 @@ add_secure(CLIENT *client, char *domain, char *map, DBM *ldb)
 
 	status = yp_match_host(client, domain, map,
 	    k.dptr, k.dsize, &value, &vallen);
-	
+
 	if (status == YPERR_KEY) {
 		/* this is an optional key/val, so it may not be present */
-		status = YPPUSH_SUCC;  
+		status = YPPUSH_SUCC;
 	} else if (status == 0 && value != 0) {
 		v.dptr = value;
 		v.dsize = vallen;
-		
+
 		if (v.dptr != NULL) {
 			status = ypdb_store(ldb, k, v, YPDB_INSERT);
 			if (status >= 0)

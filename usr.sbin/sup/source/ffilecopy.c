@@ -96,7 +96,7 @@
  *
  */
 
-int 
+int
 ffilecopy(FILE * here, FILE * there)
 {
 	int i, herefile, therefile;

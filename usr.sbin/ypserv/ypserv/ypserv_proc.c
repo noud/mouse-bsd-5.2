@@ -334,7 +334,7 @@ ypproc_all_2_svc(void *argp, struct svc_req *rqstp)
 		res.ypresp_all_u.val.status = YP_YPERR;
 		return (&res);
 	}
-	
+
 	switch (fork()) {
 	case -1:
 		/* XXXCDC An error has occurred */
@@ -501,6 +501,6 @@ ypproc_maplist_2_svc(void *argp, struct svc_req *rqstp)
 		(void)closedir(dirp);
 
 	res.status = status;
-	
+
 	return ((void *)&res);
 }

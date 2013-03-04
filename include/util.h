@@ -63,7 +63,7 @@ struct utmp;
 struct winsize;
 struct sockaddr;
 
-typedef struct pw_policy *pw_policy_t; 
+typedef struct pw_policy *pw_policy_t;
 
 char	       *flags_to_string(unsigned long, const char *);
 pid_t		forkpty(int *, char *, struct termios *, struct winsize *);

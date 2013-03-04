@@ -42,7 +42,7 @@
 #include "supcdefs.h"
 #include "supextern.h"
 
-unsigned int 
+unsigned int
 atoo(char *ap)
 {
 	unsigned int n;

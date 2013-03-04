@@ -457,7 +457,7 @@ main(int argc, char **argv)
 #define Twant	Tuid
 #define Tcount	Tgid
 
-static void 
+static void
 doswitch(char *argp, TREE ** collTp, int *oflagsp, int *aflagsp)
 {
 	TREE *t;

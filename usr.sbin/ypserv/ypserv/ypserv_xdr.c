@@ -2,7 +2,7 @@
 
 /*
  * This file was originally generated with rpcgen, then modified
- * by Jason R. Thorpe <thorpej@NetBSD.org>. 
+ * by Jason R. Thorpe <thorpej@NetBSD.org>.
  */
 
 #include <sys/cdefs.h>

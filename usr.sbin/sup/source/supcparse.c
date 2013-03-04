@@ -97,7 +97,7 @@ struct option {
 
 static void passdelim(char **, char);
 
-static void 
+static void
 passdelim(char **ptr, char delim)
 {				/* skip over delimiter */
 	*ptr = skipover(*ptr, " \t");
@@ -107,7 +107,7 @@ passdelim(char **ptr, char delim)
 	}
 }
 
-int 
+int
 parsecoll(COLLECTION * c, char *collname, char *args)
 {
 	char *arg, *p;

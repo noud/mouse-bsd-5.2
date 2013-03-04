@@ -62,6 +62,6 @@ typedef	_BSD_WCHAR_T_	wchar_t;
 #endif
 #define	offsetof(type, member) __offsetof__((reinterpret_cast<size_t> \
     (&reinterpret_cast<const volatile char &>(static_cast<type *>(0)->member))))
-#endif  
- 
+#endif
+
 #endif /* _STDDEF_H_ */

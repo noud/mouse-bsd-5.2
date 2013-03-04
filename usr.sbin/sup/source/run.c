@@ -139,7 +139,7 @@ run(char *name, ...)
 	return (val);
 }
 
-int 
+int
 runv(char *name, char **argv)
 {
 	return (dorun(name, argv, 0));
@@ -162,13 +162,13 @@ runp(char *name, ...)
 	return (val);
 }
 
-int 
+int
 runvp(char *name, char **argv)
 {
 	return (dorun(name, argv, 1));
 }
 
-static int 
+static int
 dorun(char *name, char **argv, int usepath)
 {
 	int wpid;

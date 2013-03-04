@@ -3,7 +3,7 @@
 /*
  * Copyright (c) 1992 Carnegie Mellon University
  * All Rights Reserved.
- * 
+ *
  * Permission to use, copy, modify and distribute this software and its
  * documentation is hereby granted, provided that both the copyright
  * notice and this permission notice appear in all copies of the
@@ -37,11 +37,11 @@
  * Revision 1.7  92/08/11  12:08:20  mrt
  * 	Added copyright.
  * 	[92/08/10            mrt]
- * 
+ *
  * Revision 1.6  89/08/23  14:56:42  gm0w
  * 	Changed MSGF to MSG constants.
  * 	[89/08/23            gm0w]
- * 
+ *
  * 27-Dec-87  Glenn Marcy (gm0w) at Carnegie-Mellon University
  *	Added crosspatch support.  Removed nameserver support.
  *

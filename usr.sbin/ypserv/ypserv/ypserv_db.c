@@ -350,7 +350,7 @@ ypdb_open_db(const char *domain, const char *map, u_int *status,
 	/*
 	 * not cached and non-existent, return
 	 */
-	if (*status != YP_TRUE)	
+	if (*status != YP_TRUE)
 		return (NULL);
 
 	/*
@@ -838,7 +838,7 @@ ypdb_secure(const char *domain, const char *map)
 	db = ypdb_open_db(domain, map, &status, &map_info);
 	if (db == NULL || (int)status < 0)
 		return (secure);
-	if (map_info != NULL) 
+	if (map_info != NULL)
 		secure = map_info->secure;
 
 	ypdb_close_db(db);

@@ -233,7 +233,7 @@ diff -c -r ./ftp-gw/ftp-gw.c ../../NEW/fwtk/ftp-gw/ftp-gw.c
 +                                 return(1);
 +                         }
 +                 }
-+         }      
++         }
 + 
 +         syslog(LLEV,"permit host=%s/%s connect to %s",rladdr,riaddr,dest);
 + 

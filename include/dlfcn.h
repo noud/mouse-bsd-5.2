@@ -68,9 +68,9 @@ __END_DECLS
 #define DL_LAZY		RTLD_LAZY	/* Compat */
 #endif
 
-/* 
+/*
  * Special handle arguments for dlsym().
- */   
+ */
 #define	RTLD_NEXT	((void *) -1)	/* Search subsequent objects. */
 #define	RTLD_DEFAULT	((void *) -2)	/* Use default search algorithm. */
 #define	RTLD_SELF	((void *) -3)	/* Search the caller itself. */

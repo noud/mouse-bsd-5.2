@@ -47,7 +47,7 @@ int	_lwp_wait(lwpid_t, lwpid_t *);
 int	_lwp_suspend(lwpid_t);
 int	_lwp_continue(lwpid_t);
 int	_lwp_wakeup(lwpid_t);
-void	_lwp_makecontext(ucontext_t *, void (*)(void *), void *, void *, 
+void	_lwp_makecontext(ucontext_t *, void (*)(void *), void *, void *,
 	    caddr_t, size_t);
 void	*_lwp_getprivate(void);
 void	_lwp_setprivate(void *);

@@ -482,7 +482,7 @@ readdata(int count, char *data)
 	return (SCMOK);
 }
 
-static int 
+static int
 readcount(int *count)
 {				/* read count of data block */
 	int x;
@@ -494,7 +494,7 @@ readcount(int *count)
 	return (SCMOK);
 }
 
-int 
+int
 prereadcount(int *count)
 {				/* preread count of data block */
 	int x;
@@ -572,7 +572,7 @@ readskip(void)
 	return (x);
 }
 
-int 
+int
 readint(int *buf)
 {				/* read int data block */
 	int x;
@@ -591,7 +591,7 @@ readint(int *buf)
 	return (x);
 }
 
-int 
+int
 readstring(char **buf)
 {				/* read string data block */
 	int x;
@@ -692,7 +692,7 @@ readmint(int msg, int *buf)
 	return (x);
 }
 
-int 
+int
 readmstr(int msg, char **buf)
 {				/* read string message */
 	int x;

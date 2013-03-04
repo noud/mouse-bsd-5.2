@@ -88,7 +88,7 @@ main(int argc, char *argv[])
 		fname = argv[0];
 		data_file = fopen(fname, "r");
 		if (data_file == NULL)
-			err(1, "%s", fname); 
+			err(1, "%s", fname);
 	} else {
 		fname = "<stdin>";
 		data_file = stdin;

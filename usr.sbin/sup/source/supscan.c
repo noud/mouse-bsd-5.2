@@ -405,7 +405,7 @@ goaway(char *fmt, ...)
 	longjmp(sjbuf, TRUE);
 }
 
-int 
+int
 localhost(char *host)
 {
 	static char myhost[MAXHOSTNAMELEN + 1];

@@ -823,7 +823,7 @@ anyglob(char *pattern, char *match)
  ***    R E A D   S C A N   F I L E    ***
  *****************************************/
 
-static int 
+static int
 getscanfile(char *scanfile)
 {
 	char buf[STRINGLENGTH];
@@ -935,7 +935,7 @@ getscanfile(char *scanfile)
  ***    W R I T E   S C A N   F I L E    ***
  *******************************************/
 
-static void 
+static void
 chkscanfile(char *scanfile)
 {
 	char tname[STRINGLENGTH], fname[STRINGLENGTH];
@@ -953,7 +953,7 @@ chkscanfile(char *scanfile)
 	}
 }
 
-static void 
+static void
 makescanfile(char *scanfile)
 {
 	char tname[STRINGLENGTH], fname[STRINGLENGTH];

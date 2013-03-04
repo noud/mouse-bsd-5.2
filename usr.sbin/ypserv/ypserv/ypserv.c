@@ -151,8 +151,8 @@ ypprog_2(struct svc_req *rqstp, SVCXPRT *transp)
 
 	/*
 	 * Do not do hostname lookups!  This avoids possible delays due
-	 * to DNS, preventing a possible DoS attack, as well as possible 
-	 * circular lookups (e.g. a hostname lookup requiring a request 
+	 * to DNS, preventing a possible DoS attack, as well as possible
+	 * circular lookups (e.g. a hostname lookup requiring a request
 	 * to ourselves).
 	 */
 	req.hostname = ypserv_sock_hostname;
@@ -378,7 +378,7 @@ main(int argc, char *argv[])
 			 */
 			if (setsockopt(s, IPPROTO_IPV6,
 			    IPV6_V6ONLY, &one, sizeof(one)) == -1) {
-				_msgout(LOG_ERR, 
+				_msgout(LOG_ERR,
 				    "can't disable v4-in-v6 on %s socket",
 				    bs->name);
 				exit(1);

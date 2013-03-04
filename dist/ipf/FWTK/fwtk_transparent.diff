@@ -367,7 +367,7 @@ diff -cr ../TIS.orig/fwtk/ftp-gw/ftp-gw.c fwtk/ftp-gw/ftp-gw.c
 + 	  if(sendsaved(0,x)) return(1);
 + 	  return(say(0,buf));
 + 	}
-+ #endif 
++ #endif
   	if(*dest == '\0')
   		dest = "localhost";
   
@@ -442,7 +442,7 @@ diff -cr ../TIS.orig/fwtk/ftp-gw/ftp-gw.c fwtk/ftp-gw/ftp-gw.c
 +                                 return(1);
 +                         }
 +                 }
-+         }      
++         }
 + 
 +         syslog(LLEV,"permit host=%s/%s connect to %s",rladdr,riaddr,dest);
 + 
@@ -546,7 +546,7 @@ diff -cr ../TIS.orig/fwtk/http-gw/http-gw.c fwtk/http-gw/http-gw.c
 +                                         strncpy(def_server,psychic,strlen(psychic));
 +                                 }
 +                         }
-+  
++ 
 + #endif /* USE_IP_FILTER */
   /*  See if it can be forwarded */
   
@@ -561,7 +561,7 @@ diff -cr ../TIS.orig/fwtk/http-gw/http-gw.c fwtk/http-gw/http-gw.c
 + #ifdef USE_IP_FILTER
 + 				    else if(do_transparent) {
 + 				      sprintf(new_reply,"%s\t%s\t%s\t%s",parse_vec[0],parse_vec[1],parse_vec[2],parse_vec[3]);
-+ #endif	/* USE_IP_FILTER */			    
++ #endif	/* USE_IP_FILTER */
   				    }else{
   					    sprintf(new_reply,"%s\tgopher://%s:%s/%c%s\t%s\t%u",
   						    parse_vec[0], parse_vec[2],
@@ -612,7 +612,7 @@ diff -cr ../TIS.orig/fwtk/lib/hnam.c fwtk/lib/hnam.c
 +   struct natlookup natlookup;
 +   int natfd;
 + #endif
-+   
++ 
 + #ifdef linux
 +   /* This should also work for UDP. Unfortunately, it doesn't.
 +      Maybe when the Linux UDP proxy code gets a little cleaner.
@@ -631,7 +631,7 @@ diff -cr ../TIS.orig/fwtk/lib/hnam.c fwtk/lib/hnam.c
 +     else { return(buf); }
 +   }
 + #endif
-+   
++ 
 + #if defined(__FreeBSD__)
 +   /* The basis for this block of code is Darren Reed's
 +      patches to the TIS ftwk's ftp-gw.
@@ -689,7 +689,7 @@ diff -cr ../TIS.orig/fwtk/lib/hnam.c fwtk/lib/hnam.c
 +   if(ptr) *ptr=ntohs(natlookup.nl_realport);
 +   sprintf(buf,"%s",inet_ntoa(natlookup.nl_realip));
 + #endif
-+   
++ 
 +   /* No transparent proxy support */
 +   return(NULL);
 + }
@@ -888,7 +888,7 @@ diff -cr ../TIS.orig/fwtk/tn-gw/tn-gw.c fwtk/tn-gw/tn-gw.c
   
 + #ifdef USE_IP_FILTER
 + static int do_transparent=0;
-+ #endif 
++ #endif
 + 
   typedef	struct	{
   	char	*name;
@@ -928,8 +928,8 @@ diff -cr ../TIS.orig/fwtk/tn-gw/tn-gw.c fwtk/tn-gw/tn-gw.c
 !                                sprintf(dest,"%s:%d",psychic,port);
 !                        else
 !                                sprintf(dest,"%s",psychic);
-!  
-!  
+! 
+! 
 !                if(!welcomedone)
 !                        if((cf = cfg_get("welcome-msg",confp)) != (Cfg *)0) {
 !                                 if(cf->argc != 1) {
@@ -942,11 +942,11 @@ diff -cr ../TIS.orig/fwtk/tn-gw/tn-gw.c fwtk/tn-gw/tn-gw.c
 !                                 }
 !                                 welcomedone = 1;
 !                                }
-!  
-!  
+! 
+! 
 !                }
 !        }
-!  
+! 
 ! #endif /* USE_IP_FILTER */
   	while (argc > 1) {
   		argc--;

@@ -359,7 +359,7 @@ serviceend(void)
  ***    F O R   C L I E N T                      ***
  ***************************************************/
 
-int 
+int
 dobackoff(int *t, int *b)
 {
 	struct timeval tt;
@@ -507,7 +507,7 @@ remotehost(void)
 	return (remotename);
 }
 
-int 
+int
 thishost(char *host)
 {
 	struct hostent *h;
@@ -524,7 +524,7 @@ thishost(char *host)
 #ifdef __linux__
 /* Nice and sleazy does it... */
 struct ifaddrs {
-	struct ifaddrs *ifa_next;	
+	struct ifaddrs *ifa_next;
 	struct sockaddr *ifa_addr;
 	struct sockaddr ifa_addrspace;
 };
@@ -576,10 +576,10 @@ freeifaddrs(struct ifaddrs *ifa)
 {
 	free(ifa);
 }
-	
+
 #endif
 
-int 
+int
 samehost(void)
 {				/* is remote host same as local host? */
 	struct ifaddrs *ifap, *ifa;
@@ -616,7 +616,7 @@ samehost(void)
 	return (0);
 }
 
-int 
+int
 matchhost(char *name)
 {				/* is this name of remote host? */
 	char h1[NI_MAXHOST], h2[NI_MAXHOST];
@@ -651,7 +651,7 @@ matchhost(char *name)
 	return (0);
 }
 
-int 
+int
 scmerr(int error, char *fmt, ...)
 {
 	va_list ap;
@@ -682,7 +682,7 @@ union intchar {
 	char uc[sizeof(int)];
 };
 
-int 
+int
 byteswap(int in)
 {
 	union intchar x, y;

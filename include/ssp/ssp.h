@@ -58,7 +58,7 @@ __ssp_inline rtype __ssp_alias_name(fun) args { \
 	if (bos(__buf) != (size_t)-1 && __len > bos(__buf)) \
 		__chk_fail(); \
 	return fun call; \
-} 
+}
 
 #define __ssp_redirect(rtype, fun, args, call) \
     __ssp_redirect_raw(rtype, fun, args, call, __ssp_bos)
