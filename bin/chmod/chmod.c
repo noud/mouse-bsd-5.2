@@ -1,5 +1,6 @@
 /* $NetBSD: chmod.c,v 1.34 2008/07/20 00:52:39 lukem Exp $ */
-/* mods by mouse: add -F, handle ls-style symbolic modes */
+/* mods by mouse: add -F, make -h actually work,
+   handle moded symlinks, handle ls-style symbolic modes */
 
 /*
  * Copyright (c) 1989, 1993, 1994
@@ -147,11 +148,6 @@ done:	argv += optind;
 
 	fts_options = FTS_PHYSICAL;
 	if (Rflag) {
-		if (hflag) {
-			errx(EXIT_FAILURE,
-		"the -R and -h options may not be specified together.");
-			/* NOTREACHED */
-		}
 		if (Hflag)
 			fts_options |= FTS_COMFOLLOW;
 		if (Lflag) {
@@ -207,7 +203,7 @@ done:	argv += optind;
 			warnx("%s: %s", p->fts_path, strerror(p->fts_errno));
 			rval = 1;
 			continue;
-		case FTS_SL:			/* Ignore. */
+		case FTS_SL:			/* Ignore, unless -h. */
 		case FTS_SLNONE:
 			/*
 			 * The only symlinks that end up here are ones that

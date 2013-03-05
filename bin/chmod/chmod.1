@@ -1,5 +1,6 @@
 .\"	$NetBSD: chmod.1,v 1.21 2005/12/09 20:27:02 wiz Exp $
-.\" mods by mouse: add -F and ls-style modes and replace `` '' with .Dq.
+.\" mods by mouse: document -h better, add -F and ls-style modes,
+.\"  and replace `` '' with .Dq.
 .\"
 .\" Copyright (c) 1989, 1990, 1993, 1994
 .\"	The Regents of the University of California.  All rights reserved.
@@ -352,8 +353,19 @@ symbol
 .Ar ls_mode
 specifications, and the
 .Fl F
-option, which are not included in that standard.
+and
+.Fl h
+options, which are not included in that standard.
 .Sh BUGS
 There's no
 .Ar perm
 option for the naughty bits.
+.Pp
+The
+.Fl R ,
+.Fl L ,
+and
+.Fl h
+options, when specified together, combine to produce confusing and
+probably incorrect behavior: symlinks' modes will be changed, but they
+will be changed to a mode based on the linked-to object's mode.
