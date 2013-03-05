@@ -1,4 +1,5 @@
 /*	$NetBSD: setmode.c,v 1.31 2005/10/01 20:08:01 christos Exp $	*/
+/* mods by mouse: add support for ls-style symbolic modes */
 
 /*
  * Copyright (c) 1989, 1993, 1994
@@ -177,6 +178,74 @@ common:			if (set->cmd2 & CMD2_CLR) {
 
 #define	STANDARD_BITS	(S_ISUID|S_ISGID|S_IRWXU|S_IRWXG|S_IRWXO)
 
+static int ls_mode_p(const char *s, int *setp, int *clrp)
+{
+ /* N, ch1, set1, clr1, ch2, set2, clr2, ... chN, setN, clrN,
+    repeated once per character in the mode.  N==0 signals end. */
+ static int prog[] = { 3, 'r', S_IRUSR, 0,
+			  '-', 0, S_IRUSR,
+			  '.', 0, 0,
+		       3, 'w', S_IWUSR, 0,
+			  '-', 0, S_IWUSR,
+			  '.', 0, 0,
+		       5, 'x', S_IXUSR, S_ISUID,
+			  's', S_IXUSR|S_ISUID, 0,
+			  'S', S_ISUID, S_IXUSR,
+			  '-', 0, S_IXUSR|S_ISUID,
+			  '.', 0, 0,
+		       3, 'r', S_IRGRP, 0,
+			  '-', 0, S_IRGRP,
+			  '.', 0, 0,
+		       3, 'w', S_IWGRP, 0,
+			  '-', 0, S_IWGRP,
+			  '.', 0, 0,
+		       5, 'x', S_IXGRP, S_ISGID,
+			  's', S_IXGRP|S_ISGID, 0,
+			  'S', S_ISGID, S_IXGRP,
+			  '-', 0, S_IXGRP|S_ISGID,
+			  '.', 0, 0,
+		       3, 'r', S_IROTH, 0,
+			  '-', 0, S_IROTH,
+			  '.', 0, 0,
+		       3, 'w', S_IWOTH, 0,
+			  '-', 0, S_IWOTH,
+			  '.', 0, 0,
+		       5, 'x', S_IXOTH, S_ISTXT,
+			  't', S_IXOTH|S_ISTXT, 0,
+			  'T', S_ISTXT, S_IXOTH,
+			  '-', 0, S_IXOTH|S_ISTXT,
+			  '.', 0, 0,
+		       0 };
+ int *pp;
+ int n;
+ int mset;
+ int mclr;
+ int bad;
+
+ pp = &prog[0];
+ mset = 0;
+ mclr = 0;
+ for (;;) /* It won't even *build* with while (1)!! */
+  { n = *pp++;
+    if (n == 0)
+     { if (*s) return(0);
+       *setp = mset;
+       *clrp = mclr;
+       return(1);
+     }
+    bad = 1;
+    for (;n>0;n--,pp+=3)
+     { if (*s == pp[0])
+	{ mset |= pp[1];
+	  mclr |= pp[2];
+	  bad = 0;
+	}
+     }
+    if (bad) return(0);
+    s ++;
+  }
+}
+
 void *
 setmode(p)
 	const char *p;
@@ -189,6 +258,7 @@ setmode(p)
 	long lval;
 	int equalopdone = 0;	/* pacify gcc */
 	int setlen;
+	int permset, permclr;
 
 	if (!*p) {
 		errno = EINVAL;
@@ -233,6 +303,16 @@ setmode(p)
 		}
 		perm = (mode_t)lval;
 		ADDCMD('=', (STANDARD_BITS|S_ISTXT), perm, mask);
+		set->cmd = 0;
+		return (saveset);
+	}
+
+	/*
+	 * Check for ls-style symbolc modes.
+	 */
+	if (ls_mode_p(p,&permset,&permclr)) {
+		ADDCMD('+', STANDARD_BITS|S_ISTXT, permset, 0);
+		ADDCMD('-', STANDARD_BITS|S_ISTXT, permclr, 0);
 		set->cmd = 0;
 		return (saveset);
 	}

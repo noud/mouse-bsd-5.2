@@ -1,4 +1,5 @@
 /* $NetBSD: chmod.c,v 1.34 2008/07/20 00:52:39 lukem Exp $ */
+/* mods by mouse: handle ls-style symbolic modes */
 
 /*
  * Copyright (c) 1989, 1993, 1994
@@ -124,6 +125,15 @@ main(int argc, char *argv[])
 		}
 done:	argv += optind;
 	argc -= optind;
+
+	/* If we have a mode beginning with --, like --x--x--x,
+	   getopt will mistake it for a -- end-of-flags indicator. */
+	if ( (argv[-1][0] == '-') &&
+	     (argv[-1][1] == '-') &&
+	     (strlen(argv[-1]) == 9) ) {
+		argc ++;
+		argv --;
+	}
 
 	if (argc < 2)
 		usage();

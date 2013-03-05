@@ -1,4 +1,5 @@
 .\"	$NetBSD: chmod.1,v 1.21 2005/12/09 20:27:02 wiz Exp $
+.\" mods by mouse: add ls-style modes.
 .\"
 .\" Copyright (c) 1989, 1990, 1993, 1994
 .\"	The Regents of the University of California.  All rights reserved.
@@ -127,7 +128,13 @@ are encoded as described for owner.
 .Pp
 The symbolic mode is described by the following grammar:
 .Bd -literal -offset indent
-mode         ::= clause [, clause ...]
+mode         ::= ls_mode | op_mode
+ls_mode      ::= ls_r ls_w ls_xs ls_r ls_w ls_xs ls_r ls_w ls_xt
+ls_r         ::= r | \- | .
+ls_w         ::= w | \- | .
+ls_xs        ::= x | s | S | \- | .
+ls_xt        ::= x | t | T | \- | .
+op_mode      ::= clause [, clause ...]
 clause       ::= [who ...] [action ...] last_action
 action       ::= op [perm ...]
 last_action  ::= op [perm ...]
@@ -135,6 +142,20 @@ who          ::= a | u | g | o
 op           ::= + | \- | =
 perm         ::= r | s | t | w | x | X | u | g | o
 .Ed
+.Pp
+If an
+.Ar ls_mode
+is used, it is simply a symbolic mode such as that printed by
+.Xr ls 1
+with the first character (which indicates the file type) stripped,
+and possibly with some characters replaced by dots, indicating that
+.Nm chmod
+should not change the bit(s) corresponding to that character.  (When using
+this style of symbolic mode, there is no way to, for example, specify the
+group-execute bit's state without specifying the setgid bit's state as well.
+Affecting one of a pair of bits that use the same character without
+affecting the other is simply not possible with an
+.Ar ls_mode . )
 .Pp
 The
 .Ar who
@@ -259,7 +280,12 @@ already searchable/executable by anyone.
 .It Li u=rwx,go=u-w
 make a file readable/executable by everyone and writable by the owner only.
 .Pp
+.It Li rw.r\-.\-\-.
+make a file readable by owner and group, executable by owner only, and
+do not modify the execute, set-ID, or sticky bits.
+.Pp
 .It Li go=
+.It Li ...\-\-\-\-\-\-
 clear all mode bits for group and others.
 .Pp
 .It Li g=u-w
@@ -284,7 +310,9 @@ compatible with the exception of the
 .Ar perm
 symbol
 .Dq t
-which is not included in that standard.
+and
+.Ar ls_mode
+specifications, which are not included in that standard.
 .Sh BUGS
 There's no
 .Ar perm
