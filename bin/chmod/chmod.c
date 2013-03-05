@@ -1,5 +1,5 @@
 /* $NetBSD: chmod.c,v 1.34 2008/07/20 00:52:39 lukem Exp $ */
-/* mods by mouse: handle ls-style symbolic modes */
+/* mods by mouse: add -F, handle ls-style symbolic modes */
 
 /*
  * Copyright (c) 1989, 1993, 1994
@@ -68,16 +68,20 @@ main(int argc, char *argv[])
 	FTS *ftsp;
 	FTSENT *p;
 	mode_t *set;
-	int Hflag, Lflag, Rflag, ch, fflag, fts_options, hflag, rval;
+	int Fflag, Hflag, Lflag, Rflag, ch, fflag, fts_options, hflag, rval;
 	char *mode;
 	int (*change_mode)(const char *, mode_t);
+	int (*get_mode)(const char *, struct stat *);
 
 	setprogname(argv[0]);
 	(void)setlocale(LC_ALL, "");
 
-	Hflag = Lflag = Rflag = fflag = hflag = 0;
-	while ((ch = getopt(argc, argv, "HLPRXfghorstuwx")) != -1)
+	Fflag = Hflag = Lflag = Rflag = fflag = hflag = 0;
+	while ((ch = getopt(argc, argv, "FHLPRXfghorstuwx")) != -1)
 		switch (ch) {
+		case 'F':
+			Fflag = 1;
+			break;
 		case 'H':
 			Hflag = 1;
 			Lflag = 0;
@@ -138,6 +142,9 @@ done:	argv += optind;
 	if (argc < 2)
 		usage();
 
+	if (Fflag && Rflag)
+		errx(EXIT_FAILURE,"-F is incompatible with -R");
+
 	fts_options = FTS_PHYSICAL;
 	if (Rflag) {
 		if (hflag) {
@@ -153,15 +160,30 @@ done:	argv += optind;
 		}
 	} else if (!hflag)
 		fts_options |= FTS_COMFOLLOW;
-	if (hflag)
-		change_mode = lchmod;
-	else
-		change_mode = chmod;
+	change_mode = hflag ? &lchmod : &chmod;
+	get_mode = hflag ? &lstat : &stat;
 
 	mode = *argv;
 	if ((set = setmode(mode)) == NULL) {
 		err(EXIT_FAILURE, "Cannot set file mode `%s'", mode);
 		/* NOTREACHED */
+	}
+
+	if (Fflag) {
+		int i;
+		int rv;
+		rval = 0;
+		for (i=1;argv[i];i++) {
+			struct stat stb;
+			rv = (*get_mode)(argv[i],&stb);
+			if (rv == 0)
+				rv = (*change_mode)(argv[i],getmode(set,stb.st_mode));
+			if (rv < 0) {
+				warn(argv[i]);
+				rval = 1;
+			}
+		}
+		exit(rval);
 	}
 
 	if ((ftsp = fts_open(++argv, fts_options, 0)) == NULL) {
@@ -217,7 +239,7 @@ void
 usage(void)
 {
 	(void)fprintf(stderr,
-	    "usage: %s [-R [-H | -L | -P]] [-h] mode file ...\n",
+	    "usage: %s [-R [-H | -L | -P]] [-F] [-h] mode file ...\n",
 	    getprogname());
 	exit(1);
 	/* NOTREACHED */
