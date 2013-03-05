@@ -1,5 +1,5 @@
 .\"	$NetBSD: chmod.1,v 1.21 2005/12/09 20:27:02 wiz Exp $
-.\" mods by mouse: add ls-style modes.
+.\" mods by mouse: add ls-style modes and replace `` '' with .Dq.
 .\"
 .\" Copyright (c) 1989, 1990, 1993, 1994
 .\"	The Regents of the University of California.  All rights reserved.
@@ -159,11 +159,19 @@ affecting the other is simply not possible with an
 .Pp
 The
 .Ar who
-symbols ``u'', ``g'', and ``o'' specify the user, group, and other parts
+symbols
+.Dq u ,
+.Dq g ,
+and
+.Dq o
+specify the user, group, and other parts
 of the mode bits, respectively.
 The
 .Ar who
-symbol ``a'' is equivalent to ``ugo''.
+symbol
+.Dq a
+is equivalent to
+.Dq ugo .
 .Pp
 .ne 1i
 The
@@ -186,9 +194,13 @@ The execute/search bits if the file is a directory or any of the
 execute/search bits are set in the original (unmodified) mode.
 Operations with the
 .Ar perm
-symbol ``X'' are only meaningful in conjunction with the
+symbol
+.Dq X
+are only meaningful in conjunction with the
 .Ar op
-symbol ``+'', and are ignored in all other cases.
+symbol
+.Dq \&+
+and are ignored in all other cases.
 .It u
 The user permission bits in the mode of the original file.
 .It g
@@ -204,7 +216,9 @@ symbols represent the operation performed, as follows:
 .It +
 If no value is supplied for
 .Ar perm ,
-the ``+'' operation has no effect.
+the
+.Dq \&+
+operation has no effect.
 If no value is supplied for
 .Ar who ,
 each permission bit specified in
@@ -219,7 +233,9 @@ values are set.
 .It \&\-
 If no value is supplied for
 .Ar perm ,
-the ``\-'' operation has no effect.
+the
+.Dq \-
+operation has no effect.
 If no value is supplied for
 .Ar who ,
 each permission bit specified in
@@ -256,9 +272,14 @@ bits, and each operation is applied to the mode bits in the
 order specified.
 .Pp
 Operations upon the other permissions only (specified by the symbol
-``o'' by itself), in combination with the
+.Dq o
+by itself), in combination with the
 .Ar perm
-symbols ``s'' or ``t'', are ignored.
+symbols
+.Dq s
+or
+.Dq t ,
+are ignored.
 .Sh EXAMPLES
 .Bl -tag -width "u=rwx,go=u-w" -compact
 .It Li 644
