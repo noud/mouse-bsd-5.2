@@ -582,7 +582,12 @@ mpt_done(mpt_softc_t *mpt, uint32_t reply)
 		break;
 
 	case MPI_IOCSTATUS_BUSY:
+		printf("mpt XS_RESOURCE_SHORTAGE: MPI_IOCSTATUS_BUSY\n");
+		xs->error = XS_RESOURCE_SHORTAGE;
+		break;
+
 	case MPI_IOCSTATUS_INSUFFICIENT_RESOURCES:
+		printf("mpt XS_RESOURCE_SHORTAGE: MPI_IOCSTATUS_INSUFFICIENT_RESOURCES\n");
 		xs->error = XS_RESOURCE_SHORTAGE;
 		break;
 
@@ -658,6 +663,7 @@ mpt_run_xfer(mpt_softc_t *mpt, struct scsipi_xfer *xs)
 	req = mpt_get_request(mpt);
 	if (__predict_false(req == NULL)) {
 		/* This should happen very infrequently. */
+		printf("mpt XS_RESOURCE_SHORTAGE: mpt_get_request failed\n");
 		xs->error = XS_RESOURCE_SHORTAGE;
 		scsipi_done(xs);
 		splx(s);
@@ -762,7 +768,12 @@ mpt_run_xfer(mpt_softc_t *mpt, struct scsipi_xfer *xs)
 			break;
 
 		case ENOMEM:
+			printf("mpt XS_RESOURCE_SHORTAGE: bus_dmamap_load ENOMEM\n");
+			xs->error = XS_RESOURCE_SHORTAGE;
+			goto out_bad;
+
 		case EAGAIN:
+			printf("mpt XS_RESOURCE_SHORTAGE: bus_dmamap_load EAGAIN\n");
 			xs->error = XS_RESOURCE_SHORTAGE;
 			goto out_bad;
 
