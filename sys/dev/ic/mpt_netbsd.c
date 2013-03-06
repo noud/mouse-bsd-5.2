@@ -107,13 +107,14 @@ mpt_scsipi_attach(mpt_softc_t *mpt)
 
 	maxq = (mpt->mpt_global_credits < MPT_MAX_REQUESTS(mpt)) ?
 	    mpt->mpt_global_credits : MPT_MAX_REQUESTS(mpt);
+	if (maxq > 5) maxq -= 5; else maxq = 1;
 
 	/* Fill in the scsipi_adapter. */
 	memset(adapt, 0, sizeof(*adapt));
 	adapt->adapt_dev = &mpt->sc_dev;
 	adapt->adapt_nchannels = 1;
-	adapt->adapt_openings = maxq - 2;	/* Reserve 2 for driver use*/
-	adapt->adapt_max_periph = maxq - 2;
+	adapt->adapt_openings = maxq;
+	adapt->adapt_max_periph = maxq;
 	adapt->adapt_request = mpt_scsipi_request;
 	adapt->adapt_minphys = mpt_minphys;
 
