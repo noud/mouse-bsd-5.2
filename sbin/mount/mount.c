@@ -281,11 +281,6 @@ main(int argc, char *argv[])
 		 */
 		if (vfslist == NULL) {
 			if (strpbrk(argv[0], ":@") != NULL) {
-				fprintf(stderr, "WARNING: autoselecting nfs "
-				    "based on : or @ in the device name is "
-				    "deprecated!\n"
-				    "WARNING: This behaviour will be removed "
-				    "in a future release\n");
 				vfstype = "nfs";
 			} else {
 				vfstype = getfslab(argv[0]);
