@@ -38,6 +38,7 @@
 .Sh SYNOPSIS
 .Nm
 .Op Fl i
+.Op Fl s
 .Op Fl t Ar terminal
 .Op Ar name Ar ...
 .Sh DESCRIPTION
@@ -67,6 +68,17 @@ dashes `\-'; this is useful when you want to look at the underlining
 which is present in an
 .Xr nroff 1
 output stream on a crt-terminal.
+.It Fl s
+By default, a space is handled just like any other character: a space
+overstruck with an underscore produces an underlined space.  This is
+logically consistent and produces the most sensible results when used
+with terminals with a standout mode, especially as compared with what
+programs such as
+.Xr less 1
+do.  Historically, such combinations have turned into single
+underscores.
+.Fl s
+produces the historical behaviour.
 .It Fl t Ar terminal
 Overrides the terminal type specified in the environment with
 .Ar terminal .
