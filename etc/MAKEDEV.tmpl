@@ -272,6 +272,7 @@
 #	ses*	SES/SAF-TE SCSI Devices
 #	speaker	PC speaker		(XXX - installed)
 #	sram	battery backuped memory (x68k)
+#	srt*	source-IP-routing network driver
 #	ss*	SCSI scanner
 #	stic*	PixelStamp interface chip
 #	sysmon	System Monitoring hardware
@@ -1245,6 +1246,11 @@ bthub)
 tun*)
 	unit=${i#tun}
 	mkdev tun$unit c %tun_chr% $unit
+	;;
+
+srt*)
+	unit=${i#srt}
+	mkdev srt$unit c %srt_chr% $unit
 	;;
 
 joy*)
