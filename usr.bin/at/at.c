@@ -466,7 +466,7 @@ list_jobs(void)
 
 		runtimer = 60 * (time_t)ctm;
 		runtime = *localtime(&runtimer);
-		(void)strftime(timestr, TIMESIZE, "%X %x", &runtime);
+		(void)strftime(timestr, TIMESIZE, "%Y-%m-%d %H:%M", &runtime);
 		if (first) {
 			(void)printf("%-*s  %-*s  %-*s  %s\n",
 			    (int)strlen(timestr), "Date",
