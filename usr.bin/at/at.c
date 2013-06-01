@@ -469,7 +469,7 @@ list_jobs(void)
 		(void)strftime(timestr, TIMESIZE, "%Y-%m-%d %H:%M", &runtime);
 		if (first) {
 			(void)printf("%-*s  %-*s  %-*s  %s\n",
-			    (int)strlen(timestr), "Date",
+			    (int)strlen(timestr), "When",
 			    LOGIN_NAME_MAX, "Owner",
 			    7, "Queue",
 			    "Job");
