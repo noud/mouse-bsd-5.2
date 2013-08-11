@@ -2123,7 +2123,7 @@ wdioctlstrategy(struct buf *bp)
 	} else {
 		wi->wi_atareq.retsts = ATACMD_OK;
 		if (wi->wi_atareq.flags & ATACMD_READREG) {
-			wi->wi_atareq.head = ata_c.r_head ;
+			wi->wi_atareq.head = ata_c.r_head;
 			wi->wi_atareq.cylinder = ata_c.r_cyl;
 			wi->wi_atareq.sec_num = ata_c.r_sector;
 			wi->wi_atareq.sec_count = ata_c.r_count;
