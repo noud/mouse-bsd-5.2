@@ -133,6 +133,16 @@
 
 #define WDCC_SECURITY_FREEZE	0xf5	/* freeze locking state */
 
+#define WDCC_READ_NATIVE_MAX_ADDRESS 0xf8
+		/* if HPA: get _real_ size */
+#define WDCC_READ_NATIVE_MAX_ADDRESS_EXT 0x27
+		/* if HPA and LBA48: get _real_ 48-bit size */
+#define WDCC_SET_MAX		0xf9	/* various SET MAX operations */
+		/* SET MAX operations are distinguished in funky ways; */
+		/* the function register and whether the previous */
+		/* command was a READ NATIVE MAX ADDRESS control this. */
+#define WDCC_SET_MAX_ADDRESS_EXT 0x37	/* Set 48-bit HPA boundary point */
+
 /* Big Drive support */
 #define	WDCC_READ_EXT		0x24	/* read 48-bit addressing */
 #define	WDCC_WRITE_EXT		0x34	/* write 48-bit addressing */
@@ -400,6 +410,7 @@ struct ataparams {
 #define	ATA_CMD2_LBA48	0x0400		/*	48-bit Address */
 #define	WDC_CMD2_AAM	0x0200		/*	Automatic Acoustic Management */
 #define	WDC_CMD2_SM	0x0100		/*	SET MAX security extension */
+#define	WDC_CMD2_HPAOFF	0x0080		/*	HPA offset supported */
 #define	WDC_CMD2_SFREQ	0x0040		/*	SET FEATURE is required
 						to spin-up after power-up */
 #define	WDC_CMD2_PUIS	0x0020		/*	Power-Up In Standby */
