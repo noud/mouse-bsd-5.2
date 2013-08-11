@@ -274,6 +274,7 @@ struct ata_command {
 #define AT_RESET    0x0400 /* command terminated by channel reset */
 #define AT_GONE     0x0800 /* command terminated because device is gone */
 #define AT_READREG  0x1000 /* Read registers on completion */
+#define AT_NORESEL  0x2000 /* don't reselect in interrupt routine */
 
 	int timeout;		/* timeout (in ms) */
 	void *data;		/* Data buffer address */

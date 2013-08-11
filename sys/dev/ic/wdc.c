@@ -1523,8 +1523,9 @@ __wdccommand_intr(struct ata_channel *chp, struct ata_xfer *xfer, int irq)
 	 * penalty for the extra regiter write is acceptable,
 	 * wdc_exec_command() isn't called often (mosly for autoconfig)
 	 */
-	bus_space_write_1(wdr->cmd_iot, wdr->cmd_iohs[wd_sdh], 0,
-	    WDSD_IBM | (xfer->c_drive << 4));
+	if (! (ata_c->flags & AT_NORESEL))
+		bus_space_write_1(wdr->cmd_iot, wdr->cmd_iohs[wd_sdh], 0,
+		    WDSD_IBM | (xfer->c_drive << 4));
 	if ((ata_c->flags & AT_XFDONE) != 0) {
 		/*
 		 * We have completed a data xfer. The drive should now be
