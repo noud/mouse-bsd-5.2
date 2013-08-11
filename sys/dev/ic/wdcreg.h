@@ -63,6 +63,7 @@
 /* offsets of registers in the auxiliary register region */
 #define	wd_aux_altsts		0	/* alternate fixed disk status (R) */
 #define	wd_aux_ctlr		0	/* fixed disk controller control (W) */
+#define  WDCTL_HOB		 0x80	/* set to read `previous' values */
 #define  WDCTL_4BIT		 0x08	/* use four head bits (wd1003) */
 #define  WDCTL_RST		 0x04	/* reset the controller */
 #define  WDCTL_IDS		 0x02	/* disable controller interrupts */
