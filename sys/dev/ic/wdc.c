@@ -1604,6 +1604,23 @@ __wdccommand_done(struct ata_channel *chp, struct ata_xfer *xfer)
 	if ((ata_c->flags & AT_READREG) != 0 &&
 	    device_is_active(atac->atac_dev) &&
 	    (ata_c->flags & (AT_ERROR | AT_DF)) == 0) {
+		if (ata_c->flags & AT_READREG48) {
+			unsigned char dctl;
+			unsigned char *hbv;
+			dctl = bus_space_read_1(wdr->ctl_iot, wdr->ctl_ioh, wd_aux_ctlr);
+			hbv = ata_c->data;
+			bus_space_write_1(wdr->ctl_iot, wdr->ctl_ioh, wd_aux_ctlr,
+			    WDCTL_HOB | WDCTL_IDS);
+			hbv[wd_seccnt] = bus_space_read_1(wdr->cmd_iot,
+			    wdr->cmd_iohs[wd_seccnt], 0);
+			hbv[wd_lba_hi] = bus_space_read_1(wdr->cmd_iot,
+			    wdr->cmd_iohs[wd_lba_hi], 0);
+			hbv[wd_lba_mi] = bus_space_read_1(wdr->cmd_iot,
+			    wdr->cmd_iohs[wd_lba_mi], 0);
+			hbv[wd_lba_lo] = bus_space_read_1(wdr->cmd_iot,
+			    wdr->cmd_iohs[wd_lba_lo], 0);
+			bus_space_write_1(wdr->ctl_iot, wdr->ctl_ioh, wd_aux_ctlr, dctl);
+		}
 		ata_c->r_head = bus_space_read_1(wdr->cmd_iot,
 		    wdr->cmd_iohs[wd_sdh], 0);
 		ata_c->r_count = bus_space_read_1(wdr->cmd_iot,

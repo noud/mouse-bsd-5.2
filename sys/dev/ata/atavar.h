@@ -262,19 +262,21 @@ struct ata_command {
 	u_int8_t r_error;	/* error register after command done */
 	volatile u_int16_t flags;
 
-#define AT_READ     0x0001 /* There is data to read */
-#define AT_WRITE    0x0002 /* There is data to write (excl. with AT_READ) */
-#define AT_WAIT     0x0008 /* wait in controller code for command completion */
-#define AT_POLL     0x0010 /* poll for command completion (no interrupts) */
-#define AT_DONE     0x0020 /* command is done */
-#define AT_XFDONE   0x0040 /* data xfer is done */
-#define AT_ERROR    0x0080 /* command is done with error */
-#define AT_TIMEOU   0x0100 /* command timed out */
-#define AT_DF       0x0200 /* Drive fault */
-#define AT_RESET    0x0400 /* command terminated by channel reset */
-#define AT_GONE     0x0800 /* command terminated because device is gone */
-#define AT_READREG  0x1000 /* Read registers on completion */
-#define AT_NORESEL  0x2000 /* don't reselect in interrupt routine */
+#define AT_READ      0x0001 /* There is data to read */
+#define AT_WRITE     0x0002 /* There is data to write (excl. with AT_READ) */
+#define AT_WAIT      0x0008 /* wait in controller code for command completion */
+#define AT_POLL      0x0010 /* poll for command completion (no interrupts) */
+#define AT_DONE      0x0020 /* command is done */
+#define AT_XFDONE    0x0040 /* data xfer is done */
+#define AT_ERROR     0x0080 /* command is done with error */
+#define AT_TIMEOU    0x0100 /* command timed out */
+#define AT_DF        0x0200 /* Drive fault */
+#define AT_RESET     0x0400 /* command terminated by channel reset */
+#define AT_GONE      0x0800 /* command terminated because device is gone */
+#define AT_READREG   0x1000 /* Read registers on completion */
+#define AT_READREG48 0x2000 /* READREG for both current and previous (LBA48) */
+			    /* XXX READREG48 puts values through .data */
+#define AT_NORESEL   0x4000 /* don't reselect in interrupt routine */
 
 	int timeout;		/* timeout (in ms) */
 	void *data;		/* Data buffer address */
