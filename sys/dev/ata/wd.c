@@ -95,6 +95,7 @@ __KERNEL_RCSID(0, "$NetBSD: wd.c,v 1.363.8.4 2010/01/30 19:02:14 snj Exp $");
 #include <dev/ata/atavar.h>
 #include <dev/ata/wdvar.h>
 #include <dev/ic/wdcreg.h>
+#include <dev/ic/wdcvar.h> /* XXX for gross hack for WDCC_SET_MAX_ADDRESS_EXT */
 #include <sys/ataio.h>
 #include "locators.h"
 
@@ -266,6 +267,160 @@ wdprobe(struct device *parent, struct cfdata *match, void *aux)
 	return 1;
 }
 
+static void wd_capacity_from_params(struct wd_softc *wd, u_int64_t *p48, u_int32_t *p28)
+{
+ u_int64_t cap48;
+ u_int32_t cap28;
+
+ if (wd->sc_flags & WDF_LBA48)
+  { cap48 = ((u_int64_t)wd->sc_params.atap_max_lba[3] << 48) |
+	    ((u_int64_t)wd->sc_params.atap_max_lba[2] << 32) |
+	    ((u_int64_t)wd->sc_params.atap_max_lba[1] << 16) |
+			wd->sc_params.atap_max_lba[0];
+    cap28 = (wd->sc_params.atap_capacity[1] << 16) |
+	     wd->sc_params.atap_capacity[0];
+    if ((cap48 > 0x0fffffff) && (cap28 != 0x0fffffff))
+     { printf("%s: WARNING: 28-bit capacity is wrong (%08lx)\n",device_xname(wd->sc_dev),(unsigned long int)cap28);
+     }
+  }
+ else
+  { if (wd->sc_flags & WDF_LBA)
+     { cap28 = (wd->sc_params.atap_capacity[1] << 16) |
+		wd->sc_params.atap_capacity[0];
+     }
+    else
+     { cap28 = wd->sc_params.atap_cylinders *
+	       wd->sc_params.atap_heads *
+	       wd->sc_params.atap_sectors;
+     }
+    cap48 = cap28;
+  }
+ if (p48) *p48 = cap48;
+ if (p28) *p28 = cap28;
+}
+
+static int hpa_check(struct device *self)
+{
+ struct wd_softc *wd;
+ struct ata_command cmd;
+ u_int64_t curcap;
+ u_int64_t maxcap;
+ static const char *cmdname;
+ unsigned char prevreg[8];
+
+ wd = device_private(self);
+ if ( (wd->sc_params.atap_cmd_set1 == 0x0000) ||
+      (wd->sc_params.atap_cmd_set1 == 0xffff) ||
+      !(wd->sc_params.atap_cmd_set1 & WDC_CMD1_HPA) ) return(0);
+ if (wd->sc_params.atap_cmd1_en & WDC_CMD1_HPA)
+  { aprint_normal("%s: HPA enabled",device_xname(self));
+  }
+ else
+  { aprint_normal("%s: HPA supported but disabled",device_xname(self));
+    return(0);
+  }
+ if (wd->sc_params.atap_cmd_set2 & WDC_CMD2_HPAOFF)
+  { aprint_normal(", offset supported");
+  }
+ wd_capacity_from_params(wd,&curcap,0);
+ bzero(&cmd,sizeof(cmd));
+ cmd.data = 0;
+ if (wd->sc_flags & WDF_LBA48)
+  { cmd.r_command = WDCC_READ_NATIVE_MAX_ADDRESS_EXT;
+    cmdname = "READ NATIVE MAX ADDRESS EXT";
+    cmd.flags = AT_WAIT | AT_READREG | AT_READREG48 | AT_NORESEL;
+    cmd.data = &prevreg[0];
+  }
+ else
+  { cmd.r_command = WDCC_READ_NATIVE_MAX_ADDRESS;
+    cmdname = "READ NATIVE MAX ADDRESS";
+    cmd.flags = AT_WAIT | AT_READREG | AT_NORESEL;
+  }
+ cmd.r_head = WDSD_LBA;
+ cmd.timeout = 1000;
+ if ((*((struct ata_channel *)wd->drvp->chnl_softc)->ch_atac->atac_bustype_ata->ata_exec_command)(wd->drvp,&cmd) != ATACMD_COMPLETE)
+  { aprint_normal("\n%s: %s failed\n",device_xname(self),cmdname);
+  }
+ else
+  { if (wd->sc_flags & WDF_LBA48)
+     { maxcap = (((u_int64_t)prevreg[wd_lba_hi]) << 40) |
+		(((u_int64_t)prevreg[wd_lba_mi]) << 32) |
+		(((u_int64_t)prevreg[wd_lba_lo]) << 24) |
+		(((u_int64_t)cmd.r_cyl) <<  8) |
+		 ((u_int64_t)cmd.r_sector);
+     }
+    else
+     { maxcap = cmd.r_sector | (cmd.r_cyl * 256) | ((cmd.r_head & 0xf) * 0x1000000);
+     }
+    maxcap ++; /* capacity is one more than max address */
+    if (maxcap < curcap)
+     { aprint_normal( "\n%s: %s returned nonsense (max %llu < cur %llu)\n",
+		device_xname(self), cmdname,
+		(unsigned long long int) maxcap,
+		(unsigned long long int) curcap) ;
+       return(0);
+     }
+    if (maxcap == curcap)
+     { aprint_normal(", no protected area\n");
+       return(0);
+     }
+    else
+     { aprint_normal(", protected area present\n");
+     }
+    bzero(&cmd,sizeof(cmd));
+    if (wd->sc_flags & WDF_LBA48)
+     { /* XXX this is gross; the wdc command structures need reworking
+	  to support this sort of thing properly. */
+       struct ata_channel *ch;
+       struct wdc_regs *wdr;
+       ch = wd->drvp->chnl_softc;
+       wdr = &CHAN_TO_WDC(ch)->regs[ch->ch_channel];
+       bus_space_write_1(wdr->cmd_iot,wdr->cmd_iohs[wd_lba_lo],0,(maxcap-1)>>24);
+       bus_space_write_1(wdr->cmd_iot,wdr->cmd_iohs[wd_lba_mi],0,(maxcap-1)>>32);
+       bus_space_write_1(wdr->cmd_iot,wdr->cmd_iohs[wd_lba_hi],0,(maxcap-1)>>40);
+       cmd.r_command = WDCC_SET_MAX_ADDRESS_EXT;
+       cmdname = "SET MAX ADDRESS EXT";
+       cmd.r_head = WDSD_LBA;
+       cmd.r_cyl = ((maxcap-1) >> 8) & 0xffff;
+       cmd.r_sector = (maxcap-1) & 0xff;
+     }
+    else
+     { if (maxcap > 0x0fffffff) panic("impossible capacity");
+       cmd.r_command = WDCC_SET_MAX;
+       cmdname = "SET MAX ADDRESS";
+       cmd.r_head = WDSD_LBA | (((maxcap-1) >> 24) & 0xf);
+       cmd.r_cyl = ((maxcap-1) >> 8) & 0xffff;
+       cmd.r_sector = (maxcap-1) & 0xff;
+     }
+    cmd.timeout = 1000;
+    cmd.flags = AT_WAIT;
+    cmd.data = 0;
+    if ((*((struct ata_channel *)wd->drvp->chnl_softc)->ch_atac->atac_bustype_ata->ata_exec_command)(wd->drvp,&cmd) != ATACMD_COMPLETE)
+     { aprint_normal("%s: %s failed\n",device_xname(self),cmdname);
+     }
+    else
+     { if (wd_get_params(wd,AT_WAIT,&wd->sc_params) != 0)
+	{ aprint_error("%s: IDENTIFY reload failed\n",device_xname(wd->sc_dev));
+	  return(1);
+	}
+       wd_capacity_from_params(wd,&wd->sc_capacity,&wd->sc_capacity28);
+       if (wd->sc_capacity != maxcap)
+	{ aprint_error( "%s: WARNING: %s didn't work right (wanted %llu, got %llu)\n",
+		device_xname(wd->sc_dev), cmdname,
+		(unsigned long long int) maxcap,
+		(unsigned long long int) wd->sc_capacity );
+	}
+       else
+	{ aprint_normal( "%s: effective capacity raised from %llu to %llu\n",
+		device_xname(self),
+		(unsigned long long int) curcap,
+		(unsigned long long int)wd->sc_capacity );
+	}
+     }
+  }
+ return(0);
+}
+
 void
 wdattach(struct device *parent, struct device *self, void *aux)
 {
@@ -333,9 +488,6 @@ wdattach(struct device *parent, struct device *self, void *aux)
 		wd->sc_multi = 1;
 	}
 
-	aprint_verbose_dev(self, "drive supports %d-sector PIO transfers,",
-	    wd->sc_multi);
-
 	/* 48-bit LBA addressing */
 	if ((wd->sc_params.atap_cmd2_en & ATA_CMD2_LBA48) != 0)
 		wd->sc_flags |= WDF_LBA48;
@@ -350,28 +502,21 @@ wdattach(struct device *parent, struct device *self, void *aux)
 		wd->sc_flags |= WDF_LBA;
 #endif
 
+	aprint_verbose_dev(self, "drive supports %d-sector PIO transfers,",
+	    wd->sc_multi);
+
 	if ((wd->sc_flags & WDF_LBA48) != 0) {
 		aprint_verbose(" LBA48 addressing\n");
-		wd->sc_capacity =
-		    ((u_int64_t) wd->sc_params.atap_max_lba[3] << 48) |
-		    ((u_int64_t) wd->sc_params.atap_max_lba[2] << 32) |
-		    ((u_int64_t) wd->sc_params.atap_max_lba[1] << 16) |
-		    ((u_int64_t) wd->sc_params.atap_max_lba[0] <<  0);
-		wd->sc_capacity28 =
-		    (wd->sc_params.atap_capacity[1] << 16) |
-		    wd->sc_params.atap_capacity[0];
 	} else if ((wd->sc_flags & WDF_LBA) != 0) {
 		aprint_verbose(" LBA addressing\n");
-		wd->sc_capacity28 = wd->sc_capacity =
-		    (wd->sc_params.atap_capacity[1] << 16) |
-		    wd->sc_params.atap_capacity[0];
 	} else {
 		aprint_verbose(" chs addressing\n");
-		wd->sc_capacity28 = wd->sc_capacity =
-		    wd->sc_params.atap_cylinders *
-		    wd->sc_params.atap_heads *
-		    wd->sc_params.atap_sectors;
 	}
+
+	wd_capacity_from_params(wd,&wd->sc_capacity,&wd->sc_capacity28);
+
+	if (hpa_check(self)) return;
+
 	format_bytes(pbuf, sizeof(pbuf), wd->sc_capacity * DEV_BSIZE);
 	aprint_normal_dev(self, "%s, %d cyl, %d head, %d sec, "
 	    "%d bytes/sect x %llu sectors\n",
