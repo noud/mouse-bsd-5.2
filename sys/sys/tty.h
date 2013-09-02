@@ -65,6 +65,7 @@
 #ifndef _SYS_TTY_H_
 #define _SYS_TTY_H_
 
+#include <sys/file.h>
 #include <sys/termios.h>
 #include <sys/select.h>
 #include <sys/selinfo.h>	/* For struct selinfo. */
