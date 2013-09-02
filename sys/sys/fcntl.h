@@ -47,11 +47,12 @@
 
 #ifndef _KERNEL
 #include <sys/featuretest.h>
-#include <sys/types.h>
 #if defined(_XOPEN_SOURCE) || defined(_NETBSD_SOURCE)
 #include <sys/stat.h>
 #endif /* _XOPEN_SOURCE || _NETBSD_SOURCE */
 #endif /* !_KERNEL */
+
+#include <sys/types.h>
 
 /*
  * File status flags: these are used by open(2), fcntl(2).
