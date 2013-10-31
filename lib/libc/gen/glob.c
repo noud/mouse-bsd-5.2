@@ -609,8 +609,6 @@ glob2(Char *pathbuf, Char *pathend, Char *pathlim, const Char *pattern,
 	const Char *p;
 	Char *q;
 	int anymeta;
-	Char *pend;
-	ptrdiff_t diff;
 
 	_DIAGASSERT(pathbuf != NULL);
 	_DIAGASSERT(pathend != NULL);
@@ -663,16 +661,6 @@ glob2(Char *pathbuf, Char *pathend, Char *pathlim, const Char *pattern,
 		 * No expansion, or path ends in slash-dot shash-dot-dot,
 		 * do next segment.
 		 */
-		if (pglob->gl_flags & GLOB_PERIOD) {
-			for (pend = pathend; pend > pathbuf && pend[-1] == '/';
-			    pend--)
-				continue;
-			diff = pend - pathbuf;
-		} else {
-			/* XXX: GCC */
-			diff = 0;
-			pend = pathend;
-		}
 
                 if (!anymeta) {
 			pathend = q;
