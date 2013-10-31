@@ -11716,7 +11716,6 @@ lib/libc/gen/getlogin.c
 lib/libc/gen/getnetgrent.c
 lib/libc/gen/getprogname.c
 lib/libc/gen/getpwent.3
-lib/libc/gen/glob.c
 lib/libc/gen/modf_ieee754.c
 lib/libc/gen/nlist.c
 lib/libc/gen/nlist_coff.c
