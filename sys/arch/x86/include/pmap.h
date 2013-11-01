@@ -74,6 +74,8 @@
 #ifndef _X86_PMAP_H_
 #define	_X86_PMAP_H_
 
+#include <machine/param.h>
+
 #define ptei(VA)	(((VA_SIGN_POS(VA)) & L1_MASK) >> L1_SHIFT)
 
 /*
