@@ -283,7 +283,9 @@ WRITE(void *v)
 		mutex_enter(proc_lock);
 		psignal(l->l_proc, SIGXFSZ);
 		mutex_exit(proc_lock);
-		return (EFBIG);
+		if (uio->uio_offset + uio->uio_resid >
+		    l->l_proc->p_rlimit[RLIMIT_FSIZE].rlim_max)
+			return (EFBIG);
 	}
 	if (uio->uio_resid == 0)
 		return (0);

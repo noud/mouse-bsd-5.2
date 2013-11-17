@@ -287,7 +287,8 @@ smbfs_writevnode(struct vnode *vp, struct uio *uiop,
 		mutex_enter(proc_lock);
 		psignal(p, SIGXFSZ);
 		mutex_exit(proc_lock);
-		return EFBIG;
+		if (uiop->uio_offset + uiop->uio_resid > p->p_rlimit[RLIMIT_FSIZE].rlim_max)
+			return EFBIG;
 	}
 	smb_makescred(&scred, l, cred);
 	error = smb_write(smp->sm_share, np->n_fid, uiop, &scred);

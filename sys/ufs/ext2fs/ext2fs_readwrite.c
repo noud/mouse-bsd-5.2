@@ -289,7 +289,9 @@ ext2fs_write(void *v)
 		mutex_enter(proc_lock);
 		psignal(p, SIGXFSZ);
 		mutex_exit(proc_lock);
-		return (EFBIG);
+		if (uio->uio_offset + uio->uio_resid >
+		    p->p_rlimit[RLIMIT_FSIZE].rlim_max)
+			return (EFBIG);
 	}
 	if (uio->uio_resid == 0)
 		return (0);
