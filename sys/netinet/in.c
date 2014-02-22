@@ -975,23 +975,26 @@ static int
 in_addprefix(struct in_ifaddr *target, int flags)
 {
 	struct in_ifaddr *ia;
-	struct in_addr prefix, mask, p;
+	struct in_addr prefix, mask, p, pmask;
 	int error;
 
-	if ((flags & RTF_HOST) != 0)
+	if ((flags & RTF_HOST) != 0) {
 		prefix = target->ia_dstaddr.sin_addr;
-	else {
+		mask.s_addr = ~0;
+	} else {
 		prefix = target->ia_addr.sin_addr;
 		mask = target->ia_sockmask.sin_addr;
 		prefix.s_addr &= mask.s_addr;
 	}
 
 	TAILQ_FOREACH(ia, &in_ifaddrhead, ia_list) {
-		if (rtinitflags(ia))
+		if (rtinitflags(ia)) {
 			p = ia->ia_dstaddr.sin_addr;
-		else {
+			pmask.s_addr = ~0;
+		} else {
 			p = ia->ia_addr.sin_addr;
-			p.s_addr &= ia->ia_sockmask.sin_addr.s_addr;
+			pmask = ia->ia_sockmask.sin_addr;
+			p.s_addr &= pmask.s_addr;
 		}
 
 		if (prefix.s_addr != p.s_addr)
@@ -1003,7 +1006,8 @@ in_addprefix(struct in_ifaddr *target, int flags)
 		 *
 		 * XXX RADIX_MPATH implications here? -dyoung
 		 */
-		if (ia->ia_flags & IFA_ROUTE)
+		if ( (ia->ia_flags & IFA_ROUTE) &&
+		     (mask.s_addr == pmask.s_addr) )
 			return 0;
 	}
 
