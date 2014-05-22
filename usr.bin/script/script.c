@@ -79,12 +79,13 @@ int	child, subchild;
 int	outcc;
 int	usesleep, rawout;
 char	*fname;
+static char *cmd = 0;
 
 struct	termios tt;
 
 void	done(void);
 void	dooutput(void);
-void	doshell(void);
+void	docmd(void);
 void	fail(void);
 void	finish(int);
 int	main(int, char **);
@@ -106,10 +107,13 @@ main(int argc, char *argv[])
 	pflg = 0;
 	usesleep = 1;
 	rawout = 0;
-	while ((ch = getopt(argc, argv, "adpr")) != -1)
+	while ((ch = getopt(argc, argv, "ac:dpr")) != -1)
 		switch(ch) {
 		case 'a':
 			aflg = 1;
+			break;
+		case 'c':
+			cmd = optarg;
 			break;
 		case 'd':
 			usesleep = 0;
@@ -166,7 +170,7 @@ main(int argc, char *argv[])
 		if (child)
 			dooutput();
 		else
-			doshell();
+			docmd();
 	}
 
 	if (!rawout)
@@ -239,20 +243,23 @@ scriptflush(int signo)
 }
 
 void
-doshell()
+docmd()
 {
-	char *shell;
+ char *shell;
 
-	shell = getenv("SHELL");
-	if (shell == NULL)
-		shell = _PATH_BSHELL;
-
-	(void)close(master);
-	(void)fclose(fscript);
-	login_tty(slave);
-	execl(shell, shell, "-i", NULL);
-	warn("execl %s", shell);
-	fail();
+ shell = getenv("SHELL");
+ if (! shell) shell = _PATH_BSHELL;
+ close(master);
+ fclose(fscript);
+ login_tty(slave);
+ if (cmd)
+  { execl(shell,shell,"-c",cmd,(char *)0);
+  }
+ else
+  { execl(shell,shell,"-i",(char *)0);
+  }
+ warn("execl %s",shell);
+ fail();
 }
 
 void

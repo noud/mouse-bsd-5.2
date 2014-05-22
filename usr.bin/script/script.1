@@ -38,6 +38,7 @@
 .Sh SYNOPSIS
 .Nm
 .Op Fl adpr
+.Op Fl c Ar command
 .Op Ar file
 .Sh DESCRIPTION
 .Nm
@@ -70,6 +71,14 @@ Don't sleep between records when playing back a timestamped session.
 Play back a recorded session in real time.
 .It Fl r
 Record a session with input, output, and timestamping.
+.It Fl c Ar command
+Run
+.Ar command
+instead of a shell.  This works only if the shell found via
+.Dv \&$SHELL
+(see below) understands the
+.Fl c
+convention for passing a command to execute, as the usual shells do.
 .El
 .Pp
 The script ends when the forked shell exits (the EOF character,
@@ -123,3 +132,12 @@ places
 .Sy everything
 in the log file, including linefeeds and backspaces.
 This is not what the naive user expects.
+.Pp
+When not using
+.Fl c ,
+the code assumes
+.Dv \&$SHELL
+accepts
+.Fl i
+to indicate
+.Sq interactive .
