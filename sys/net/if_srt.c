@@ -58,6 +58,13 @@ static unsigned int global_flags;
 
 /* Internal routines. */
 
+/*
+ * Annoyingly, ipv4_masks must be in network byte order, which is
+ *  difficult to generate with an initializer, since htonl() might not
+ *  be a compile-time constant expression even if its argument is.  So,
+ *  instead, we write them in host order here and fix them up in
+ *  srtattach().
+ */
 static unsigned int ipv4_masks[33]
  = { 0x00000000, /* /0 */
      0x80000000, 0xc0000000, 0xe0000000, 0xf0000000, /* /1 - /4 */
@@ -286,11 +293,13 @@ static int srt_clone_destroy(struct ifnet *intf)
 struct if_clone srt_clone =
     IF_CLONE_INITIALIZER("srt",&srt_clone_create,&srt_clone_destroy);
 
+/* See also the comment on ipv4_masks, above. */
 extern void srtattach(void);
 void srtattach(void)
 {
  int i;
 
+ for (i=33-1;i>=0;i--) ipv4_masks[i] = htonl(ipv4_masks[i]);
  for (i=SRT_MAXUNIT;i>=0;i--) softcv[i] = 0;
  global_flags = 0;
  if_clone_attach(&srt_clone);
