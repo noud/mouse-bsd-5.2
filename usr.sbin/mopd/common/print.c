@@ -266,7 +266,7 @@ mopPrintHeader(fd, pkt, trans)
 
 	trans = mopGetTrans(pkt, trans);
 	mopGetHeader(pkt, &index, &dst, &src, &proto, &len, trans);
-	
+
 	(void)fprintf(fd,"\nDst          : ");
 	mopPrintHWA(fd, dst);
 	if (mopCmpEAddr(dl_mcst,dst) == 0) {
@@ -314,7 +314,7 @@ mopPrintHeader(fd, pkt, trans)
 		break;
 	}
 
-	
+
         (void)fprintf(fd,"Length       : %04x (%d)\n",len,len);
 }
 
@@ -331,7 +331,7 @@ mopPrintMopHeader(fd, pkt, trans)
 
 	trans = mopGetTrans(pkt, trans);
 	mopGetHeader(pkt, &index, &dst, &src, &proto, &len, trans);
-	
+
 	code = mopGetChar(pkt, &index);
 
 	(void)fprintf(fd, "Code         :   %02x ",code);
@@ -439,7 +439,7 @@ mopPrintDevice(fd, device)
 
 	sname = nmaGetShort((int) device);
 	name  = nmaGetDevice((int) device);
-	
+
         (void)fprintf(fd, "%s '%s'",sname,name);
 }
 
@@ -465,7 +465,7 @@ mopPrintInfo(fd, pkt, index, moplen, mopcode, trans)
 	u_char  ilen ,tmpc,device;
 	u_char  uc1,uc2,uc3,*ucp;
 	int     i;
-	
+
 	device = 0;
 
 	switch(trans) {
@@ -477,7 +477,7 @@ mopPrintInfo(fd, pkt, index, moplen, mopcode, trans)
 		break;
 	}
 
-	itype = mopGetShort(pkt,index); 
+	itype = mopGetShort(pkt,index);
 
 	while (*index < (int)(moplen + 2)) {
 		ilen  = mopGetChar(pkt,index);
@@ -515,7 +515,7 @@ mopPrintInfo(fd, pkt, index, moplen, mopcode, trans)
 		case MOP_K_INFO_RTM:
 			tmps = mopGetShort(pkt,index);
 			(void)fprintf(fd,"Reserv Timer : %04x (%d)\n",
-				      tmps,tmps); 
+				      tmps,tmps);
 			break;
 		case MOP_K_INFO_CSZ:
 			tmps = mopGetShort(pkt,index);
@@ -572,7 +572,7 @@ mopPrintInfo(fd, pkt, index, moplen, mopcode, trans)
 		case MOP_K_INFO_PRTY:
 			tmpc = mopGetChar(pkt,index);
 			(void)fprintf(fd,"System Proc  :   %02x ",tmpc);
-			switch (tmpc) { 
+			switch (tmpc) {
 			case MOP_K_PRTY_11:
 				(void)fprintf(fd, "PDP-11\n");
 				break;
@@ -600,7 +600,7 @@ mopPrintInfo(fd, pkt, index, moplen, mopcode, trans)
 		case MOP_K_INFO_DLTY:
 			tmpc = mopGetChar(pkt,index);
 			(void)fprintf(fd,"Data Link Typ:   %02x ",tmpc);
-			switch (tmpc) { 
+			switch (tmpc) {
 			case MOP_K_DLTY_NI:
 				(void)fprintf(fd, "Ethernet\n");
 				break;
@@ -690,18 +690,18 @@ mopPrintInfo(fd, pkt, index, moplen, mopcode, trans)
 					      ilen);
 				for (i = 0; i < ilen; i++) {
 					if ((i % 16) == 0) {
-						if ((i / 16) == 0) { 
-						} else { 
+						if ((i / 16) == 0) {
+						} else {
 							(void)fprintf(fd,
 						     "\n                    ");
 						};
 					};
-					(void)fprintf(fd, "%02x ",ucp[i]); 
+					(void)fprintf(fd, "%02x ",ucp[i]);
 				}
 				(void)fprintf(fd, "\n");
 			};
 		}
-		itype = mopGetShort(pkt,index); 
+		itype = mopGetShort(pkt,index);
         }
 }
 

@@ -53,7 +53,7 @@ __RCSID("$NetBSD: moptrace.c,v 1.9 2003/04/20 00:20:29 christos Exp $");
 #include "log.h"
 
 /*
- * The list of all interfaces that are being listened to. 
+ * The list of all interfaces that are being listened to.
  * "selects" on the descriptors in this list.
  */
 struct if_info *iflist;
@@ -65,7 +65,7 @@ void	mopProcess __P((struct if_info *, u_char *));
 int     AllFlag = 0;		/* listen on "all" interfaces  */
 int     DebugFlag = 0;		/* print debugging messages    */
 int	Not3Flag = 0;		/* Ignore MOP V3 messages      */
-int	Not4Flag = 0;		/* Ignore MOP V4 messages      */ 
+int	Not4Flag = 0;		/* Ignore MOP V4 messages      */
 int	promisc = 1;		/* Need promisc mode           */
 
 int
@@ -99,7 +99,7 @@ main(argc, argv)
 	}
 
 	interface = argv[optind++];
-	
+
 	if ((AllFlag && interface) ||
 	    (!AllFlag && interface == 0) ||
 	    (Not3Flag && Not4Flag))
@@ -146,7 +146,7 @@ mopProcess(ii, pkt)
 
 	mopPrintHeader(stdout, pkt, trans);
 	mopPrintMopHeader(stdout, pkt, trans);
-	
+
 	mopDumpDL(stdout, pkt, trans);
 	mopDumpRC(stdout, pkt, trans);
 

@@ -85,7 +85,7 @@ mopPutMulti(pkt, index, value, size)
 
 	for (i = 0; i < size; i++) {
 	  pkt[*index+i] = value[i];
-	}  
+	}
 	*index = *index + size;
 }
 
@@ -127,7 +127,7 @@ mopPutHeader(pkt, index, dst, src, proto, trans)
 	u_short	 proto;
 	int	 trans;
 {
-	
+
 	mopPutMulti(pkt, index, dst, 6);
 	mopPutMulti(pkt, index, src, 6);
 	if (trans == TRANS_8023) {
@@ -163,7 +163,7 @@ mopPutLength(pkt, trans, len)
 	u_short	 len;
 {
 	int	 index = 0;
-	
+
 	switch(trans) {
 	case TRANS_ETHER:
 		index = 14;

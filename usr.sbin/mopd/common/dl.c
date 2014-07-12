@@ -63,18 +63,18 @@ mopDumpDL(fd, pkt, trans)
 		moplen = len;
 	}
 	code = mopGetChar(pkt,&index);
-	
+
 	switch (code) {
 	case MOP_K_CODE_MLT:
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Load Number */
 		(void)fprintf(fd,"Load Number  :   %02x\n",tmpc);
-		
+
 		if (moplen > 6) {
 			tmpl = mopGetLong(pkt,&index);/* Load Address */
 			(void)fprintf(fd,"Load Address : %08x\n", tmpl);
 		}
-		
+
 		if (moplen > 10) {
 #ifndef SHORT_PRINT
 			for (i = 0; i < (moplen - 10); i++) {
@@ -88,23 +88,23 @@ mopDumpDL(fd, pkt, trans)
 						       "                    ");
 				        }
 				}
-				
+
 				(void)fprintf(fd, "%02x ",
 					      mopGetChar(pkt,&index));
 				if ((i % 16) == 15)
 					(void)fprintf(fd,"\n");
 			}
-			
+
 			if ((i % 16) != 15)
 				(void)fprintf(fd,"\n");
 #else
 			index = index + moplen - 10;
 #endif
 		}
-		
+
 		tmpl = mopGetLong(pkt,&index);	/* Load Address */
 		(void)fprintf(fd,"Xfer Address : %08x\n", tmpl);
-		
+
 		break;
 	case MOP_K_CODE_DCM:
 
@@ -112,13 +112,13 @@ mopDumpDL(fd, pkt, trans)
 
 		break;
 	case MOP_K_CODE_MLD:
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Load Number */
 		(void)fprintf(fd,"Load Number  :   %02x\n",tmpc);
-		
+
 		tmpl = mopGetLong(pkt,&index);	/* Load Address */
 		(void)fprintf(fd,"Load Address : %08x\n", tmpl);
-		
+
 		if (moplen > 6) {
 #ifndef SHORT_PRINT
 			for (i = 0; i < (moplen - 6); i++) {
@@ -144,56 +144,56 @@ mopDumpDL(fd, pkt, trans)
 			index = index + moplen - 6;
 #endif
 		}
-		
+
 		break;
 	case MOP_K_CODE_ASV:
-		
+
 		/* Empty Message */
-		
+
 		break;
 	case MOP_K_CODE_RMD:
 
 		tmpl = mopGetLong(pkt,&index);	/* Memory Address */
 		(void)fprintf(fd,"Mem Address  : %08x\n", tmpl);
-		
+
 		tmps = mopGetShort(pkt,&index);	/* Count */
 		(void)fprintf(fd,"Count        : %04x (%d)\n",tmps,tmps);
-		
+
 		break;
 	case MOP_K_CODE_RPR:
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Device Type */
 		(void)fprintf(fd, "Device Type  :   %02x ",tmpc);
 		mopPrintDevice(fd, tmpc); (void)fprintf(fd, "\n");
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Format Version */
 		(void)fprintf(fd,"Format       :   %02x\n",tmpc);
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Program Type */
 		(void)fprintf(fd,"Program Type :   %02x ",tmpc);
 		mopPrintPGTY(fd, tmpc); (void)fprintf(fd, "\n");
-		
+
 		program[0] = 0;
 		tmpc = mopGetChar(pkt,&index);	/* Software ID Len */
 		for (i = 0; i < tmpc; i++) {
 			program[i] = mopGetChar(pkt,&index);
 			program[i+1] = '\0';
 		}
-		
+
 		(void)fprintf(fd,"Software     :   %02x '%s'\n",tmpc,program);
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Processor */
 		(void)fprintf(fd,"Processor    :   %02x ",tmpc);
 		mopPrintBPTY(fd, tmpc); (void)fprintf(fd, "\n");
-		
+
 		mopPrintInfo(fd, pkt, &index, moplen, code, trans);
-		
+
 		break;
 	case MOP_K_CODE_RML:
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Load Number */
 		(void)fprintf(fd,"Load Number  :   %02x\n",tmpc);
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Error */
 		(void)fprintf(fd,"Error        :   %02x (",tmpc);
 		if ((tmpc == 0)) {
@@ -201,31 +201,31 @@ mopDumpDL(fd, pkt, trans)
 		} else {
 		  	(void)fprintf(fd,"error)\n");
 		}
-		
+
 		break;
 	case MOP_K_CODE_RDS:
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Device Type */
 		(void)fprintf(fd, "Device Type  :   %02x ",tmpc);
 		mopPrintDevice(fd, tmpc); (void)fprintf(fd, "\n");
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Format Version */
 		(void)fprintf(fd,"Format       :   %02x\n",tmpc);
-		
+
 		tmpl = mopGetLong(pkt,&index);	/* Memory Size */
 		(void)fprintf(fd,"Memory Size  : %08x\n", tmpl);
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Bits */
 		(void)fprintf(fd,"Bits         :   %02x\n",tmpc);
-		
+
 		mopPrintInfo(fd, pkt, &index, moplen, code, trans);
-		
+
 		break;
 	case MOP_K_CODE_MDD:
-		
+
 		tmpl = mopGetLong(pkt,&index);	/* Memory Address */
 		(void)fprintf(fd,"Mem Address  : %08x\n", tmpl);
-		
+
 		if (moplen > 5) {
 #ifndef SHORT_PRINT
 			for (i = 0; i < (moplen - 5); i++) {
@@ -250,13 +250,13 @@ mopDumpDL(fd, pkt, trans)
 			index = index + moplen - 5;
 #endif
 		}
-		
+
 		break;
 	case MOP_K_CODE_PLT:
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Load Number */
 		(void)fprintf(fd,"Load Number  :   %02x\n",tmpc);
-		
+
 		tmpc = mopGetChar(pkt,&index);	/* Parameter Type */
 		while (tmpc != MOP_K_PLTP_END) {
 			c = mopGetChar(pkt,&index);	/* Parameter Length */
@@ -306,10 +306,10 @@ mopDumpDL(fd, pkt, trans)
 			}
 			tmpc = mopGetChar(pkt,&index);/* Parameter Type */
 		}
-		
+
 		tmpl = mopGetLong(pkt,&index);	/* Transfer Address */
 		(void)fprintf(fd,"Transfer Addr: %08x\n", tmpl);
-		
+
 		break;
 	default:
 		break;

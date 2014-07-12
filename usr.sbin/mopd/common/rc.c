@@ -63,31 +63,31 @@ mopDumpRC(fd, pkt, trans)
 		moplen = len;
 	}
 	code = mopGetChar(pkt,&index);
-	
+
 	switch (code) {
 	case MOP_K_CODE_RID:
-	  	
+
 		tmpc = mopGetChar(pkt,&index);
 		(void)fprintf(fd,"Reserved     :   %02x\n",tmpc);
-		
+
 		tmps = mopGetShort(pkt,&index);
 		(void)fprintf(fd,"Receipt Nbr  : %04x\n",tmps);
-		
+
 		break;
 	case MOP_K_CODE_BOT:
-		
+
 		if ((moplen == 5)) {
 			tmps = mopGetShort(pkt,&index);
 			(void)fprintf(fd,"Verification : %04x\n",tmps);
 		} else {
-			
+
 			tmpl = mopGetLong(pkt,&index);
 			(void)fprintf(fd,"Verification : %08x\n",tmpl);
 
 			tmpc = mopGetChar(pkt,&index);	/* Processor */
 			(void)fprintf(fd,"Processor    :   %02x ",tmpc);
 			mopPrintBPTY(fd, tmpc);  (void)fprintf(fd, "\n");
-			
+
 			control = mopGetChar(pkt,&index);	/* Control */
 			(void)fprintf(fd,"Control    :   %02x ",control);
 			if ((control & (1>>MOP_K_BOT_CNTL_SERVER))) {
@@ -105,7 +105,7 @@ mopDumpRC(fd, pkt, trans)
 					      "Bootdevice System default");
 			}
 			(void)fprintf(fd,"\n");
-			
+
 			if ((control & (1>>MOP_K_BOT_CNTL_DEVICE))) {
 				tmpc = mopGetChar(pkt,&index);/* Device ID */
 				(void)fprintf(fd,
@@ -116,7 +116,7 @@ mopDumpRC(fd, pkt, trans)
 				}
 				(void)fprintf(fd,"'\n");
 			}
-			
+
 			tmpc = mopGetChar(pkt,&index);      /* Software ID */
 			(void)fprintf(fd,"Software ID  :   %02x ",tmpc);
 			if ((tmpc == 0)) {
@@ -139,64 +139,64 @@ mopDumpRC(fd, pkt, trans)
 				(void)fprintf(fd,"'");
 			}
 			(void)fprintf(fd,"'\n");
-			
+
 		}
 		break;
 	case MOP_K_CODE_SID:
-		
+
 		tmpc = mopGetChar(pkt,&index);		/* Reserved */
 		(void)fprintf(fd, "Reserved     :   %02x\n",tmpc);
-		
+
 		tmps = mopGetShort(pkt,&index);		/* Receipt # */
 		(void)fprintf(fd, "Receipt Nbr  : %04x\n",tmpc);
-		
+
 		mopPrintInfo(fd, pkt, &index, moplen, code, trans);
-		
+
 		break;
 	case MOP_K_CODE_RQC:
-		
+
 		tmps = mopGetShort(pkt,&index);
 		(void)fprintf(fd,"Receipt Nbr  : %04x\n",tmps);
-		
+
 		break;
 	case MOP_K_CODE_CNT:
-		
+
 		tmps = mopGetShort(pkt,&index);
 		(void)fprintf(fd,"Receipt Nbr  : %04x %d\n",tmps,tmps);
-		
+
 		tmps = mopGetShort(pkt,&index);
 		(void)fprintf(fd,"Last Zeroed  : %04x %d\n",tmps,tmps);
-		
+
 		tmpl = mopGetLong(pkt,&index);
 		(void)fprintf(fd,"Bytes rec    : %08x %d\n",tmpl,tmpl);
-		
+
 		tmpl = mopGetLong(pkt,&index);
 		(void)fprintf(fd,"Bytes snd    : %08x %d\n",tmpl,tmpl);
-		
+
 		tmpl = mopGetLong(pkt,&index);
 		(void)fprintf(fd,"Frames rec   : %08x %d\n",tmpl,tmpl);
-		
+
 		tmpl = mopGetLong(pkt,&index);
 		(void)fprintf(fd,"Frames snd   : %08x %d\n",tmpl,tmpl);
-		
+
 		tmpl = mopGetLong(pkt,&index);
 		(void)fprintf(fd,"Mcst Bytes re: %08x %d\n",tmpl,tmpl);
-		
+
 		tmpl = mopGetLong(pkt,&index);
 		(void)fprintf(fd,"Mcst Frame re: %08x %d\n",tmpl,tmpl);
-		
+
 		tmpl = mopGetLong(pkt,&index);
 		(void)fprintf(fd,"Frame snd,def: %08x %d\n",tmpl,tmpl);
-		
+
 		tmpl = mopGetLong(pkt,&index);
 		(void)fprintf(fd,"Frame snd,col: %08x %d\n",tmpl,tmpl);
-		
+
 		tmpl = mopGetLong(pkt,&index);
 		(void)fprintf(fd,"Frame snd,mcl: %08x %d\n",tmpl,tmpl);
-		
+
 		tmps = mopGetShort(pkt,&index);
 		(void)fprintf(fd,"Snd failure  : %04x %d\n",tmps,tmps);
-		
+
 		tmps = mopGetShort(pkt,&index);
 		(void)fprintf(fd,"Snd fail reas: %04x ",tmps);
 		if ((tmps &  1)) (void)fprintf(fd,"Excess col  ");
@@ -206,50 +206,50 @@ mopDumpRC(fd, pkt, trans)
 		if ((tmps & 16)) (void)fprintf(fd,"Frm to long  ");
 		if ((tmps & 32)) (void)fprintf(fd,"Rem fail to defer  ");
 		(void)fprintf(fd,"\n");
-		
+
 		tmps = mopGetShort(pkt,&index);
 		(void)fprintf(fd,"Rec failure  : %04x %d\n",tmps,tmps);
-		
+
 		tmps = mopGetShort(pkt,&index);
 		(void)fprintf(fd,"Rec fail reas: %04x ",tmps);
 		if ((tmps &  1)) (void)fprintf(fd,"Block chk err  ");
 		if ((tmps &  2)) (void)fprintf(fd,"Framing err  ");
 		if ((tmps &  4)) (void)fprintf(fd,"Frm to long  ");
 		(void)fprintf(fd,"\n");
-		
+
 		tmps = mopGetShort(pkt,&index);
 		(void)fprintf(fd,"Unrec frm dst: %04x %d\n",tmps,tmps);
-		
+
 		tmps = mopGetShort(pkt,&index);
 		(void)fprintf(fd,"Data overrun : %04x %d\n",tmps,tmps);
-		
+
 		tmps = mopGetShort(pkt,&index);
 		(void)fprintf(fd,"Sys Buf Unava: %04x %d\n",tmps,tmps);
-		
+
 		tmps = mopGetShort(pkt,&index);
 		(void)fprintf(fd,"Usr Buf Unava: %04x %d\n",tmps,tmps);
-		
+
 		break;
 	case MOP_K_CODE_RVC:
-		
+
 		tmpl = mopGetLong(pkt,&index);
 		(void)fprintf(fd,"Verification : %08x\n",tmpl);
-		
+
 		break;
 	case MOP_K_CODE_RLC:
 
 		/* Empty message */
-	  
+
 		break;
 	case MOP_K_CODE_CCP:
-		
+
 		tmpc = mopGetChar(pkt,&index);
 		(void)fprintf(fd,
 			      "Control Flags: %02x Message %d ",tmpc,tmpc & 1);
 		if ((tmpc & 2))
 			(void)fprintf(fd,"Break");
 		(void)fprintf(fd,"\n");
-		
+
 		if (moplen > 2) {
 #ifndef SHORT_PRINT
 			for (i = 0; i < (moplen - 2); i++) {
@@ -274,10 +274,10 @@ mopDumpRC(fd, pkt, trans)
 			index = index + moplen - 2;
 #endif
 		}
-		
+
 		break;
 	case MOP_K_CODE_CRA:
-		
+
 		tmpc = mopGetChar(pkt,&index);
 		(void)fprintf(fd,
 			      "Control Flags: %02x Message %d ",tmpc,tmpc & 1);
@@ -286,7 +286,7 @@ mopDumpRC(fd, pkt, trans)
 		if ((tmpc & 4))
 			(void)fprintf(fd,"Resp Data Lost ");
 		(void)fprintf(fd,"\n");
-		
+
 		if (moplen > 2) {
 #ifndef SHORT_PRINT
 			for (i = 0; i < (moplen - 2); i++) {
@@ -311,7 +311,7 @@ mopDumpRC(fd, pkt, trans)
 			index = index + moplen - 2;
 #endif
 		}
-		
+
 		break;
 	default:
 		break;

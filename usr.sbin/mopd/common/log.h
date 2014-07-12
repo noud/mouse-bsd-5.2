@@ -35,13 +35,13 @@
 __BEGIN_DECLS
 extern int mopInteractive;
 void	mopLogErr __P((const char *, ...))
-    __attribute__((__format__(__printf__, 1, 2))); 
+    __attribute__((__format__(__printf__, 1, 2)));
 void	mopLogErrX __P((const char *, ...))
-    __attribute__((__format__(__printf__, 1, 2))); 
+    __attribute__((__format__(__printf__, 1, 2)));
 void	mopLogWarn __P((const char *, ...))
-    __attribute__((__format__(__printf__, 1, 2))); 
+    __attribute__((__format__(__printf__, 1, 2)));
 void	mopLogWarnX __P((const char *, ...))
-    __attribute__((__format__(__printf__, 1, 2))); 
+    __attribute__((__format__(__printf__, 1, 2)));
 __END_DECLS
 
 #endif /* _LOG_H_ */

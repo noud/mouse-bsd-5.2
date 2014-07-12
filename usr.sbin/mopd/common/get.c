@@ -56,7 +56,7 @@ mopGetShort(pkt, index)
 	int    *index;
 {
         u_short ret;
-	
+
 	ret = pkt[*index] + pkt[*index+1]*256;
 	*index = *index + 2;
 	return(ret);
@@ -68,7 +68,7 @@ mopGetLong(pkt, index)
 	int    *index;
 {
         u_int32_t ret;
-	
+
 	ret = pkt[*index] +
 	      pkt[*index+1]*0x100 +
 	      pkt[*index+2]*0x10000 +
@@ -86,7 +86,7 @@ mopGetMulti(pkt, index, dest, size)
 
 	for (i = 0; i < size; i++) {
 	  dest[i] = pkt[*index+i];
-	}  
+	}
 	*index = *index + size;
 
 }
@@ -97,7 +97,7 @@ mopGetTrans(pkt, trans)
 	int	 trans;
 {
 	u_short	*ptype;
-	
+
 	if (trans == 0) {
 		ptype = (u_short *)(pkt+12);
 		if (ntohs(*ptype) < 1600) {

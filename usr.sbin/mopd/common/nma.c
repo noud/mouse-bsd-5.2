@@ -199,7 +199,7 @@ nmaGetShort(devno)
 	struct commDev *current;
 
 	current = nmaCommDev;
-	
+
 	while (current->sname != NULL) {
 		if (current->val == devno)
 			break;
@@ -216,7 +216,7 @@ nmaGetDevice(devno)
 	struct commDev *current;
 
 	current = nmaCommDev;
-	
+
 	while (current->name != NULL) {
 		if (current->val == devno)
 			break;

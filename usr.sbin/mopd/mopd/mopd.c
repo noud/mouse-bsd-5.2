@@ -56,7 +56,7 @@ __RCSID("$NetBSD: mopd.c,v 1.10 2002/11/05 14:18:05 thorpej Exp $");
 #include <util.h>
 
 /*
- * The list of all interfaces that are being listened to. 
+ * The list of all interfaces that are being listened to.
  * "selects" on the descriptors in this list.
  */
 struct if_info *iflist;
@@ -198,7 +198,7 @@ mopProcess(ii, pkt)
 	/*
 	 * Ignore our own transmissions
 	 *
-	 */	
+	 */
 	if (mopCmpEAddr(ii->eaddr,src) == 0)
 		return;
 
