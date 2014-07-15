@@ -108,8 +108,10 @@ getargs(av)
 	static char fmtbuf[BUFSIZ];
 	char *fmtp = fmtbuf;
 	int P, S, F, T;
+	int i;
 
 	P = S = F = T = 0;		/* capitalized options */
+	for (i=MAXOFILES-1;i>=0;i--) input[i].pad = -1;
 	while ((p = *++av) != NULL) {
 		if (*p != '-' || !p[1]) {
 			if (++morefiles >= MAXOFILES)
@@ -118,7 +120,7 @@ getargs(av)
 				ip->fp = stdin;
 			else if ((ip->fp = fopen(p, "r")) == NULL)
 				errx(1, "open %s", p);
-			ip->pad = P;
+			if (ip->pad < 0) ip->pad = P;
 			if (!ip->sepstring)
 				ip->sepstring = (S ? (ip-1)->sepstring : "");
 			if (!ip->format)
