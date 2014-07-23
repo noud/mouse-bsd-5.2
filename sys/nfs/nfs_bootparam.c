@@ -181,6 +181,7 @@ nfs_bootparam(struct nfs_diskless *nd, struct lwp *lwp, int *flags)
 	}
 	printf("nfs_boot: server_addr=%s\n", inet_ntoa(sin->sin_addr));
 	printf("nfs_boot: hostname=%s\n", hostname);
+	*flags |= NFS_BOOT_HAS_SERVADDR;
 
 	/*
 	 * Now fetch the server:pathname strings and server IP
@@ -191,6 +192,7 @@ nfs_bootparam(struct nfs_diskless *nd, struct lwp *lwp, int *flags)
 		printf("nfs_boot: bootparam get root: %d\n", error);
 		goto delout;
 	}
+	*flags |= NFS_BOOT_HAS_SERVER | NFS_BOOT_HAS_ROOTPATH;
 
 #ifndef NFS_BOOTPARAM_NOGATEWAY
 	gw_ndm = kmem_alloc(sizeof(*gw_ndm), KM_SLEEP);
@@ -209,6 +211,7 @@ nfs_bootparam(struct nfs_diskless *nd, struct lwp *lwp, int *flags)
 	printf("nfs_boot: gateway=%s\n", inet_ntoa(sin->sin_addr));
 	/* Just save it.  Caller adds the route. */
 	nd->nd_gwip = sin->sin_addr;
+	*flags |= NFS_BOOT_HAS_GWIP;
 
 	/* Look for a mask string after the colon. */
 	p = strchr(gw_ndm->ndm_host, ':');
@@ -222,6 +225,7 @@ nfs_bootparam(struct nfs_diskless *nd, struct lwp *lwp, int *flags)
 
 	/* Have a netmask too!  Save it; update the I/F. */
 	nd->nd_mask.s_addr = mask;
+	*flags |= NFS_BOOT_HAS_MASK;
 	printf("nfs_boot: my_mask=%s\n", inet_ntoa(nd->nd_mask));
 	(void)  nfs_boot_deladdress(ifp, lwp, my_ip.s_addr);
 	error = nfs_boot_setaddress(ifp, lwp, my_ip.s_addr,
@@ -265,8 +269,19 @@ gwok:
 	if (gw_ndm)
 		kmem_free(gw_ndm, sizeof(*gw_ndm));
 #endif
-	if ((*flags & NFS_BOOT_ALLINFO) != NFS_BOOT_ALLINFO)
+	if ((*flags & NFS_BOOT_ALLINFO) != NFS_BOOT_ALLINFO) {
+		unsigned int missing;
+		missing = NFS_BOOT_ALLINFO & ~*flags;
+		printf("nfs_boot: missing critical info:");
+		if (! (missing & NFS_BOOT_HAS_MYIP)) printf(" IP");
+		if (! (missing & NFS_BOOT_HAS_GWIP)) printf(" GW");
+		if (! (missing & NFS_BOOT_HAS_MASK)) printf(" mask");
+		if (! (missing & NFS_BOOT_HAS_SERVADDR)) printf(" boot-server");
+		if (! (missing & NFS_BOOT_HAS_SERVER)) printf(" root-server");
+		if (! (missing & NFS_BOOT_HAS_ROOTPATH)) printf(" root-path");
+		printf("\n");
 		return error ? error : EADDRNOTAVAIL;
+	}
 
 	return (error);
 }
