@@ -51,7 +51,7 @@ struct ataraid_disk_vnode {
 static SLIST_HEAD(, ataraid_disk_vnode) ataraid_disk_vnode_list =
     SLIST_HEAD_INITIALIZER(ataraid_disk_vnode_list);
 
-/* 
+/*
  * Finds the RAW_PART vnode of the block device associated with a component
  * by looking at the singly linked list; otherwise creates, opens and
  * returns the vnode to the caller.

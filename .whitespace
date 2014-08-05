@@ -16257,15 +16257,6 @@ sys/dev/adb/adb_ms.c
 sys/dev/adb/adbvar.h
 sys/dev/adb/files.adb
 sys/dev/apm/apm.c
-sys/dev/ata/ata_raid_adaptec.c
-sys/dev/ata/ata_raid_intel.c
-sys/dev/ata/ata_raid_jmicron.c
-sys/dev/ata/ata_raid_subr.c
-sys/dev/ata/ata_raid_via.c
-sys/dev/ata/ata_raidvar.h
-sys/dev/ata/ld_ataraid.c
-sys/dev/ata/satafisreg.h
-sys/dev/ata/wd.c
 sys/dev/audio.c
 sys/dev/bio.c
 sys/dev/biovar.h

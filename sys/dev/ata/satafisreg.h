@@ -39,7 +39,7 @@
 #define rhd_cyl_lo 5 /* wd_cyl_lo */
 #define rhd_cyl_hi 6 /* wd_cyl_hi */
 #define rhd_dh 7 /* wd_sdh */
-#define rhd_sector_exp 8 
+#define rhd_sector_exp 8
 #define rhd_cyl_lo_exp 9
 #define rhd_cyl_hi_exp 10
 #define rhd_features_exp 11

@@ -45,7 +45,7 @@
  * of this list, as it will change the order in which the arrays are
  * sorted.
  *
- * If this list is updated, ensure the array in 
+ * If this list is updated, ensure the array in
  * ata_raid.c:ata_raid_type_name() is also updated.
  */
 #define	ATA_RAID_TYPE_PROMISE	0

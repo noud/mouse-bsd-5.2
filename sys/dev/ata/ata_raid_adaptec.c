@@ -132,7 +132,7 @@ ata_raid_read_config_adaptec(struct wd_softc *sc)
 		switch (info->configs[0].type) {
 		case ADP_T_RAID0:
 			aai->aai_level = AAI_L_RAID0;
-			aai->aai_interleave = 
+			aai->aai_interleave =
 			    (be16toh(info->configs[0].stripe_sectors) >> 1);
 			aai->aai_width = be16toh(info->configs[0].total_disks);
 			break;

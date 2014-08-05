@@ -42,7 +42,7 @@
  * controllers we're dealing with (Promise, etc.) only support
  * configuration data on the component disks, with the BIOS supporting
  * booting from the RAID volumes.
- *            
+ *
  * bio(4) support was written by Juan Romero Pardines <xtraeme@gmail.com>.
  */
 

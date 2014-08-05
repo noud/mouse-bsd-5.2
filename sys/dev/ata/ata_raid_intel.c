@@ -86,7 +86,7 @@ ata_raid_intel_print_info(struct intel_raid_conf *info)
 {
 	struct intel_raid_mapping *map;
 	int i, j;
- 
+
 	printf("********* ATA Intel MatrixRAID Metadata *********\n");
 	printf("intel_id		<%.24s>\n", info->intel_id);
 	printf("version			<%.6s>\n", info->version);
@@ -207,7 +207,7 @@ findvol:
 	/*
 	 * Lookup or allocate a new array info structure for this array.
 	 */
-	aai = ata_raid_get_array_info(ATA_RAID_TYPE_INTEL, curvol); 
+	aai = ata_raid_get_array_info(ATA_RAID_TYPE_INTEL, curvol);
 
 	/* Fill in array info */
 	aai->aai_generation = info->generation;

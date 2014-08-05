@@ -86,7 +86,7 @@ static void
 ata_raid_via_print_info(struct via_raid_conf *info)
 {
 	int i;
-  
+
 	printf("*************** ATA VIA Metadata ****************\n");
 	printf("magic               0x%02x\n", info->magic);
 	printf("dummy_0             0x%02x\n", info->dummy_0);
@@ -105,7 +105,7 @@ ata_raid_via_print_info(struct via_raid_conf *info)
 	for (i = 0; i < 8; i++) {
 	if (info->disks[i])
 		printf("  %d    0x%08x\n", i, info->disks[i]);
-	}    
+	}
 	printf("checksum            0x%02x\n", info->checksum);
 	printf("=================================================\n");
 }
@@ -180,7 +180,7 @@ ata_raid_read_config_via(struct wd_softc *sc)
 		error = ESRCH;
 		goto out;
 	}
-	
+
 	/*
 	 * Lookup or allocate a new array info structure for
 	 * this array. Use the serial number of disk0 as the array#

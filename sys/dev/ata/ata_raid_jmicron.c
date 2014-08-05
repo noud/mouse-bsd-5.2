@@ -91,7 +91,7 @@ static void
 ata_raid_jmicron_print_info(struct jmicron_raid_conf *info)
 {
 	int i;
-  
+
 	printf("****** ATA JMicron Technology Corp Metadata ******\n");
 	printf("signature           %.2s\n",	info->signature);
 	printf("version             0x%04x\n",	info->version);
@@ -201,7 +201,7 @@ ata_raid_read_config_jmicron(struct wd_softc *sc)
 	 * Lookup or allocate a new array info structure for
 	 * this array.
 	 */
-	aai = ata_raid_get_array_info(ATA_RAID_TYPE_JMICRON, 0); 
+	aai = ata_raid_get_array_info(ATA_RAID_TYPE_JMICRON, 0);
 	aai->aai_status = AAI_S_READY;
 
 	switch (info->type) {
