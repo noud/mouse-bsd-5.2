@@ -64,7 +64,20 @@ __RCSID("$NetBSD: mv.c,v 1.41 2008/07/20 00:52:40 lukem Exp $");
 
 #include "pathnames.h"
 
-static int fflg, iflg, vflg, Rflg;
+typedef enum {
+	  OP_DEFAULT = 1,
+	  OP_FORCE,
+	  OP_INTERACTIVE
+	  } OPMODE;
+
+typedef enum {
+	  FM_NONE = 1,
+	  FM_RENAME
+	  } FORCEMODE;
+
+static OPMODE opmode = OP_DEFAULT;
+static FORCEMODE forcemode = FM_NONE;
+static int vflg;
 static int stdin_ok;
 
 int	copy(char *, char *);
@@ -88,18 +101,16 @@ main(int argc, char *argv[])
 	while ((ch = getopt(argc, argv, "fivR")) != -1)
 		switch (ch) {
 		case 'f':
-			iflg = 0;
-			fflg = 1;
+			opmode = OP_FORCE;
 			break;
 		case 'i':
-			fflg = 0;
-			iflg = 1;
+			opmode = OP_INTERACTIVE;
 			break;
 		case 'v':
 			vflg = 1;
 			break;
 		case 'R':
-			Rflg = 1;
+			forcemode = FM_RENAME;
 			break;
 		default:
 			usage();
@@ -107,16 +118,21 @@ main(int argc, char *argv[])
 	argc -= optind;
 	argv += optind;
 
-	if ((argc < 2) || (Rflg && (argc != 2)))
+	if ((argc < 2) || ((forcemode != FM_NONE) && (argc != 2)))
 		usage();
 
-	if (Rflg) {
-		if (rename(argv[0],argv[1]) < 0) {
-			warn("rename %s to %s",argv[0],argv[1]);
-			exit(1);
-		}
-		exit(0);
+ switch (forcemode)
+  { case FM_RENAME:
+       if (rename(argv[0],argv[1]) < 0)
+	{ warn("rename %s to %s",argv[0],argv[1]);
+	  exit(1);
 	}
+       if (vflg) printf("%s -> %s\n",argv[0],argv[1]);
+       exit(0);
+       break;
+    default:
+       break;
+  }
 
 	stdin_ok = isatty(STDIN_FILENO);
 
@@ -180,39 +196,48 @@ do_move(char *from, char *to)
 	 *	affirmative, mv shall do nothing more with the current
 	 *	source file...
 	 */
-	if (!fflg && !access(to, F_OK)) {
-		int ask = 1;
-		int ch;
-
-		if (iflg) {
-			if (access(from, F_OK)) {
-				warn("rename %s", from);
-				return (1);
-			}
-			(void)fprintf(stderr, "overwrite %s? ", to);
-		} else if (stdin_ok && access(to, W_OK) && !stat(to, &sb)) {
-			if (access(from, F_OK)) {
-				warn("rename %s", from);
-				return (1);
-			}
-			strmode(sb.st_mode, modep);
-			(void)fprintf(stderr, "override %s%s%s/%s for %s? ",
-			    modep + 1, modep[9] == ' ' ? "" : " ",
-			    user_from_uid(sb.st_uid, 0),
-			    group_from_gid(sb.st_gid, 0), to);
-		} else
-			ask = 0;
-		if (ask) {
-			if ((ch = getchar()) != EOF && ch != '\n') {
-				int ch2;
-				while ((ch2 = getchar()) != EOF && ch2 != '\n')
-					continue;
-			}
-			if (ch != 'y' && ch != 'Y')
-				return (0);
-		}
+ if ((opmode != OP_FORCE) && !access(to,F_OK))
+  { int ask;
+    int ch;
+    ask = 1;
+    switch (opmode)
+     { case OP_INTERACTIVE:
+	  if (access(from,F_OK))
+	   { warn("rename %s",from);
+	     return(1);
+	   }
+	  fprintf(stderr,"overwrite %s? ",to);
+	  break;
+       case OP_DEFAULT:
+	  if (stdin_ok && access(to,W_OK) && !stat(to,&sb))
+	   { if (access(from,F_OK))
+	      { warn("rename %s",from);
+		return(1);
+	      }
+	     strmode(sb.st_mode,modep);
+	     fprintf(stderr,"override %s%s%s/%s for %s? ",
+			modep+1, (modep[9] == ' ') ? "" : " ",
+			user_from_uid(sb.st_uid, 0),
+			group_from_gid(sb.st_gid, 0),
+			to );
+	   }
+	  else
+	   { ask = 0;
+	   }
+	  break;
+       default:
+	  abort();
+	  break;
+     }
+    if (ask)
+     { ch = getchar();
+       if ((ch != EOF) && (ch != '\n'))
+	{ int ch2;
+	  do ch2 = getchar(); while ((ch2 != EOF) && (ch2 != '\n')) ;
+	  if ((ch != 'y') && (ch != 'Y')) return (0);
 	}
-
+     }
+  }
 	/*
 	 * (2)	If rename() succeeds, mv shall do nothing more with the
 	 *	current source file.  If it fails for any other reason than
