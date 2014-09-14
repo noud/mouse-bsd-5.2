@@ -64,7 +64,7 @@ __RCSID("$NetBSD: mv.c,v 1.41 2008/07/20 00:52:40 lukem Exp $");
 
 #include "pathnames.h"
 
-int fflg, iflg, vflg;
+int fflg, iflg, vflg, Rflg;
 int stdin_ok;
 
 int	copy(char *, char *);
@@ -85,7 +85,7 @@ main(int argc, char *argv[])
 	setprogname(argv[0]);
 	(void)setlocale(LC_ALL, "");
 
-	while ((ch = getopt(argc, argv, "ifv")) != -1)
+	while ((ch = getopt(argc, argv, "ifRv")) != -1)
 		switch (ch) {
 		case 'i':
 			fflg = 0;
@@ -94,6 +94,9 @@ main(int argc, char *argv[])
 		case 'f':
 			iflg = 0;
 			fflg = 1;
+			break;
+		case 'R':
+			Rflg = 1;
 			break;
 		case 'v':
 			vflg = 1;
@@ -104,8 +107,16 @@ main(int argc, char *argv[])
 	argc -= optind;
 	argv += optind;
 
-	if (argc < 2)
+	if ((argc < 2) || (Rflg && (argc != 2)))
 		usage();
+
+	if (Rflg) {
+		if (rename(argv[0],argv[1]) < 0) {
+			warn("rename %s to %s",argv[0],argv[1]);
+			exit(1);
+		}
+		exit(0);
+	}
 
 	stdin_ok = isatty(STDIN_FILENO);
 
@@ -381,7 +392,8 @@ void
 usage(void)
 {
 	(void)fprintf(stderr, "usage: %s [-fiv] source target\n"
-	    "       %s [-fiv] source ... directory\n", getprogname(),
+	    "       %s [-fiv] source ... directory\n"
+	    "       %s -R source target\n", getprogname(), getprogname(),
 	    getprogname());
 	exit(1);
 	/* NOTREACHED */
