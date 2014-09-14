@@ -67,7 +67,8 @@ __RCSID("$NetBSD: mv.c,v 1.41 2008/07/20 00:52:40 lukem Exp $");
 typedef enum {
 	  OP_DEFAULT = 1,
 	  OP_FORCE,
-	  OP_INTERACTIVE
+	  OP_INTERACTIVE,
+	  OP_ERROR
 	  } OPMODE;
 
 typedef enum {
@@ -98,8 +99,11 @@ main(int argc, char *argv[])
 	setprogname(argv[0]);
 	(void)setlocale(LC_ALL, "");
 
-	while ((ch = getopt(argc, argv, "fivR")) != -1)
+	while ((ch = getopt(argc, argv, "efivR")) != -1)
 		switch (ch) {
+		case 'e':
+			opmode = OP_ERROR;
+			break;
 		case 'f':
 			opmode = OP_FORCE;
 			break;
@@ -224,6 +228,10 @@ do_move(char *from, char *to)
 	  else
 	   { ask = 0;
 	   }
+	  break;
+       case OP_ERROR:
+	  warnx("%s exists",to);
+	  return(1);
 	  break;
        default:
 	  abort();
@@ -416,8 +424,8 @@ copy(char *from, char *to)
 void usage(void)
 {
  fprintf(stderr,
-	"usage: %s [-fiv] source target\n"
-	"       %s [-fiv] source ... directory\n"
+	"usage: %s [-efiv] source target\n"
+	"       %s [-efiv] source ... directory\n"
 	"       %s -R source target\n",
 	getprogname(), getprogname(), getprogname());
  exit(1);
