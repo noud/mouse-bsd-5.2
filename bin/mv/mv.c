@@ -73,7 +73,8 @@ typedef enum {
 
 typedef enum {
 	  FM_NONE = 1,
-	  FM_RENAME
+	  FM_RENAME,
+	  FM_LINK
 	  } FORCEMODE;
 
 static OPMODE opmode = OP_DEFAULT;
@@ -100,7 +101,7 @@ main(int argc, char *argv[])
 	setprogname(argv[0]);
 	(void)setlocale(LC_ALL, "");
 
-	while ((ch = getopt(argc, argv, "efivxR")) != -1)
+	while ((ch = getopt(argc, argv, "efivxLR")) != -1)
 		switch (ch) {
 		case 'e':
 			opmode = OP_ERROR;
@@ -116,6 +117,9 @@ main(int argc, char *argv[])
 			break;
 		case 'x':
 			xflg = 1;
+			break;
+		case 'L':
+			forcemode = FM_LINK;
 			break;
 		case 'R':
 			forcemode = FM_RENAME;
@@ -136,6 +140,17 @@ main(int argc, char *argv[])
 	  exit(1);
 	}
        if (vflg) printf("%s -> %s\n",argv[0],argv[1]);
+       exit(0);
+       break;
+    case FM_LINK:
+       if (link(argv[0],argv[1]) < 0)
+	{ warn("link %s to %s",argv[0],argv[1]);
+	  exit(1);
+	}
+       if (unlink(argv[0]) < 0)
+	{ warn("unlink %s",argv[0]);
+	  exit(1);
+	}
        exit(0);
        break;
     default:
@@ -430,7 +445,8 @@ void usage(void)
  fprintf(stderr,
 	"usage: %s [-efivx] source target\n"
 	"       %s [-efivx] source ... directory\n"
-	"       %s -R source target\n",
-	getprogname(), getprogname(), getprogname());
+	"       %s -R source target\n"
+	"       %s -L source target\n",
+	getprogname(), getprogname(), getprogname(), getprogname());
  exit(1);
 }
