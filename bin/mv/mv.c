@@ -85,21 +85,21 @@ main(int argc, char *argv[])
 	setprogname(argv[0]);
 	(void)setlocale(LC_ALL, "");
 
-	while ((ch = getopt(argc, argv, "ifRv")) != -1)
+	while ((ch = getopt(argc, argv, "fivR")) != -1)
 		switch (ch) {
-		case 'i':
-			fflg = 0;
-			iflg = 1;
-			break;
 		case 'f':
 			iflg = 0;
 			fflg = 1;
 			break;
-		case 'R':
-			Rflg = 1;
+		case 'i':
+			fflg = 0;
+			iflg = 1;
 			break;
 		case 'v':
 			vflg = 1;
+			break;
+		case 'R':
+			Rflg = 1;
 			break;
 		default:
 			usage();
