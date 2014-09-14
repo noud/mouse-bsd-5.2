@@ -40,10 +40,10 @@
 .Nd move files
 .Sh SYNOPSIS
 .Nm
-.Op Fl efiv
+.Op Fl efivx
 .Ar source target
 .Nm
-.Op Fl efiv
+.Op Fl efivx
 .Ar source ... directory
 .Nm
 .Fl R
@@ -91,6 +91,14 @@ to write a prompt to standard error before moving a file that would
 overwrite an existing file.
 If the response from the standard input begins with the character ``y'',
 the move is attempted.
+.It Fl x
+Disables the copy-and-remove behaviour (see below) when attempting a
+move which would move across filesystem boundaries.  Instead,
+.Fl x
+makes
+.Nm
+print a message on standard error and exit with an error status in that
+case.
 .It Fl R
 Requires that exactly two arguments be given and simply attempts to
 .Xr rename 2
@@ -100,7 +108,9 @@ directory-hood and permission bits, and ignores the
 .Fl f ,
 and
 .Fl i
-options.
+options; it also means that
+.Fl x
+is implicitly in effect.
 .It Fl v
 Cause
 .Nm
@@ -138,7 +148,9 @@ call fail because
 .Ar source
 and
 .Ar target
-are on different file systems,
+are on different file systems, and
+.Fl x
+was not specified,
 .Nm
 will remove the destination file, copy the source file to the
 destination, and then remove the source.

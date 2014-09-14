@@ -78,6 +78,7 @@ typedef enum {
 
 static OPMODE opmode = OP_DEFAULT;
 static FORCEMODE forcemode = FM_NONE;
+static int xflg = 0;
 static int vflg;
 static int stdin_ok;
 
@@ -99,7 +100,7 @@ main(int argc, char *argv[])
 	setprogname(argv[0]);
 	(void)setlocale(LC_ALL, "");
 
-	while ((ch = getopt(argc, argv, "efivR")) != -1)
+	while ((ch = getopt(argc, argv, "efivxR")) != -1)
 		switch (ch) {
 		case 'e':
 			opmode = OP_ERROR;
@@ -112,6 +113,9 @@ main(int argc, char *argv[])
 			break;
 		case 'v':
 			vflg = 1;
+			break;
+		case 'x':
+			xflg = 1;
 			break;
 		case 'R':
 			forcemode = FM_RENAME;
@@ -265,7 +269,7 @@ do_move(char *from, char *to)
 		return (0);
 	}
 
-	if (errno != EXDEV) {
+	if (xflg || (errno != EXDEV)) {
 		warn("rename %s to %s", from, to);
 		return (1);
 	}
@@ -424,8 +428,8 @@ copy(char *from, char *to)
 void usage(void)
 {
  fprintf(stderr,
-	"usage: %s [-efiv] source target\n"
-	"       %s [-efiv] source ... directory\n"
+	"usage: %s [-efivx] source target\n"
+	"       %s [-efivx] source ... directory\n"
 	"       %s -R source target\n",
 	getprogname(), getprogname(), getprogname());
  exit(1);
