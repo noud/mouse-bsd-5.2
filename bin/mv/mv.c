@@ -388,13 +388,12 @@ copy(char *from, char *to)
 	return (0);
 }
 
-void
-usage(void)
+void usage(void)
 {
-	(void)fprintf(stderr, "usage: %s [-fiv] source target\n"
-	    "       %s [-fiv] source ... directory\n"
-	    "       %s -R source target\n", getprogname(), getprogname(),
-	    getprogname());
-	exit(1);
-	/* NOTREACHED */
+ fprintf(stderr,
+	"usage: %s [-fiv] source target\n"
+	"       %s [-fiv] source ... directory\n"
+	"       %s -R source target\n",
+	getprogname(), getprogname(), getprogname());
+ exit(1);
 }
