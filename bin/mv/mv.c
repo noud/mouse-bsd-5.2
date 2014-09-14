@@ -64,8 +64,8 @@ __RCSID("$NetBSD: mv.c,v 1.41 2008/07/20 00:52:40 lukem Exp $");
 
 #include "pathnames.h"
 
-int fflg, iflg, vflg, Rflg;
-int stdin_ok;
+static int fflg, iflg, vflg, Rflg;
+static int stdin_ok;
 
 int	copy(char *, char *);
 int	do_move(char *, char *);
