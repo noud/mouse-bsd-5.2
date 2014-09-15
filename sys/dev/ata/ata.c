@@ -1218,8 +1218,8 @@ ata_probe_caps(struct ata_drive_datas *drvp)
 		s = splbio();
 		drvp->drive_flags |= DRIVE_CAP32;
 		splx(s);
-		ata_get_params(drvp, AT_WAIT, &params2);
-		if (memcmp(&params, &params2, sizeof(struct ataparams)) != 0) {
+		if ( (ata_get_params(drvp, AT_WAIT, &params2) != CMD_OK) ||
+		     memcmp(&params, &params2, sizeof(struct ataparams)) ) {
 			/* Not good. fall back to 16bits */
 			s = splbio();
 			drvp->drive_flags &= ~DRIVE_CAP32;
