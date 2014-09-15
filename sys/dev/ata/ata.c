@@ -639,6 +639,9 @@ ata_get_params(struct ata_drive_datas *drvp, u_int8_t flags,
 
 	ATADEBUG_PRINT(("%s\n", __func__), DEBUG_FUNCS);
 
+	if (sizeof(struct ataparams) > DEV_BSIZE)
+		panic("ataparams too big for DEV_BSIZE");
+
 	tb = kmem_zalloc(DEV_BSIZE, KM_SLEEP);
 	memset(prms, 0, sizeof(struct ataparams));
 	memset(&ata_c, 0, sizeof(struct ata_command));
