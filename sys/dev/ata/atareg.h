@@ -451,9 +451,20 @@ struct ataparams {
     u_int16_t	atap_apm_val;		/* 91: current APM value */
     u_int16_t	__reserved5[8];		/* 92-99: reserved */
     u_int16_t	atap_max_lba[4];	/* 100-103: Max. user LBA addr */
-    u_int16_t	__reserved6[4];		/* 104-107: reserved */
+    u_int16_t	__reserved6a[2];	/* 104-105: reserved */
+    u_int16_t	atap_blksiz;		/* 106: adv fmt: blksize scaling */
+#define WDC_BLKSIZ_VALIDMASK   0xc000
+#define WDC_BLKSIZ_VALIDTEST   0x4000
+#define WDC_BLKSIZ_SCALEVALID  0x2000
+#define WDC_BLKSIZ_PBLKVALID   0x1000
+#define WDC_BLKSIZ_SCALE_MASK  0x000f
+#define WDC_BLKSIZ_SCALE_SHIFT 0
+    u_int16_t	__reserved6b;		/* 107: reserved */
     u_int16_t 	atap_wwn[4];		/* 108-111: World Wide Name */
-    u_int16_t	__reserved7[15];	/* 112-126: reserved */
+    u_int16_t	__reserved7a[5];	/* 112-116: reserved */
+    u_int16_t	atap_lblksiz_l;		/* 117: adv fmt: logical blksize L */
+    u_int16_t	atap_lblksiz_h;		/* 118: adv fmt: logical blksize H */
+    u_int16_t	__reserved7b[8];	/* 119-126: reserved */
     u_int16_t	atap_rmsn_supp;		/* 127: remov. media status notif. */
 #define WDC_RMSN_SUPP_MASK 0x0003
 #define WDC_RMSN_SUPP 0x0001
@@ -465,6 +476,15 @@ struct ataparams {
 #define WDC_SEC_LOCKED	0x0004
 #define WDC_SEC_EN	0x0002
 #define WDC_SEC_SUPP	0x0001
+    u_int16_t	__reserved8[80];	/* 129-208: reserved/unknown */
+    u_int16_t	atap_blkalign;		/* 209: adv fmt: alignment */
+#define WDC_BLKALIGN_VALIDMASK   0xc000
+#define WDC_BLKALIGN_VALIDTEST   0x4000
+#define WDC_BLKALIGN_ALIGN_MASK  0x3fff
+#define WDC_BLKALIGN_ALIGN_SHIFT 0
+    u_int16_t	__reserved9[7];		/* 210-216: reserved/unknown */
+    u_int16_t	atap_rotrate;		/* 217: adv fmt: 1=>non-rotational */
+    u_int16_t	__reserved10[38];	/* 218-255: reserved/unknown */
 };
 
 /*
