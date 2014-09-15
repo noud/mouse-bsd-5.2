@@ -1827,6 +1827,12 @@ sd_read_capacity(struct scsipi_periph *periph, int *blksize, int flags)
 
 	*blksize = _4btol(datap->data16.length);
 	rv = _8btol(datap->data16.addr) + 1;
+ if (datap->data16.byte13)
+  { printf("sd_read_capacity: interface blksize %d, shift %d, offset %d\n",
+	*blksize,
+	datap->data16.byte13,
+	(((&datap->data16.byte13)[1]&0x3f)<<8)+(&datap->data16.byte13)[2]);
+  }
 
  out:
 	free(datap, M_TEMP);
