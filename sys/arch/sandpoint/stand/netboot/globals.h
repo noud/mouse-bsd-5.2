@@ -99,6 +99,10 @@ struct atac_softc {
 	struct atac_channel channel[4];
 };
 
+/*
+ * XXX - the code assumes struct ataparams fits in DEV_BSIZE.
+ * This is currently true, but will it always be so?
+ */
 struct wd_softc {
 #define WDF_LBA		0x0001
 #define WDF_LBA48	0x0002

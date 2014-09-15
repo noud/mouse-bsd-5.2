@@ -292,6 +292,9 @@ wdccommandext(struct wd_softc *wd, struct wdc_command *wd_c)
 
 /*
  * Issue 'device identify' command.
+ *
+ * XXX The code assumes struct ataparams fits in DEV_BSIZE.
+ * This is currently true, but will it remain so?
  */
 int
 wdc_exec_identify(struct wd_softc *wd, void *data)
