@@ -1381,6 +1381,52 @@ ata_probe_caps(struct ata_drive_datas *drvp)
 			}
 		}
 		aprint_verbose("\n");
+  { unsigned int pblk;
+    unsigned int lblk;
+    int shift;
+    int offset;
+    pblk = 0;
+    lblk = 0;
+    shift = -1;
+    offset = -1;
+    if ((params.atap_blkalign & WDC_BLKALIGN_VALIDMASK) == WDC_BLKALIGN_VALIDTEST)
+     { offset = (params.atap_blkalign >> WDC_BLKALIGN_ALIGN_SHIFT) & WDC_BLKALIGN_ALIGN_MASK;
+     }
+    if ((params.atap_blksiz & WDC_BLKSIZ_VALIDMASK) == WDC_BLKSIZ_VALIDTEST)
+     { if (params.atap_blksiz & WDC_BLKSIZ_SCALEVALID)
+	{ if (offset < 0)
+	   { aprint_normal_dev(drv_dev,"note: block size scaling but no alignment\n");
+	     offset = 0;
+	   }
+	  shift = (params.atap_blksiz >> WDC_BLKSIZ_SCALE_SHIFT) & WDC_BLKSIZ_SCALE_MASK;
+	}
+       if (params.atap_blksiz & WDC_BLKSIZ_PBLKVALID)
+	{ pblk = (params.atap_lblksiz_h * 0x10000U) + params.atap_lblksiz_l;
+	}
+     }
+    if (shift < 0) shift = 0;
+    if (pblk == 0)
+     { lblk = 512;
+       pblk = 512 << shift;
+     }
+    else
+     { lblk = pblk >> shift;
+       if ((lblk << shift) != pblk)
+	{ aprint_normal_dev(drv_dev,"note: shift %d unreasonable for physical block size %u\n",shift,pblk);
+	  shift = 0;
+	}
+     }
+    if (offset >> shift)
+     { aprint_normal_dev(drv_dev,"note: offset %d unreasonable for shift %d\n",offset,shift);
+       offset = 0;
+     }
+    if ((pblk != 512) || (lblk != 512) || offset)
+     { aprint_normal_dev(drv_dev,"block sizes: medium %u, interface %u, alignment %d\n",pblk,lblk,offset);
+     }
+    if (params.atap_rotrate == 1)
+     { aprint_normal_dev(drv_dev,"non-rotational device\n");
+     }
+  }
 	}
 
 	s = splbio();
