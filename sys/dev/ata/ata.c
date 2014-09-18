@@ -1404,6 +1404,7 @@ ata_probe_caps(struct ata_drive_datas *drvp)
 	{ pblk = (params.atap_lblksiz_h * 0x10000U) + params.atap_lblksiz_l;
 	}
      }
+    if (offset < 0) offset = 0;
     if (shift < 0) shift = 0;
     if (pblk == 0)
      { lblk = 512;
