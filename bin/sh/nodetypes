@@ -115,6 +115,7 @@ NTO nfile			# fd> fname
 NCLOBBER nfile			# fd>| fname
 NFROM nfile			# fd< fname
 NFROMTO nfile			# fd<> fname
+NFTPLUS nfile			# fd<>+ fname
 NAPPEND nfile			# fd>> fname
 	type	  int
 	next	  nodeptr		# next redirection in list

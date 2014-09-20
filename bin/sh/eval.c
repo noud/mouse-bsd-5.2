@@ -462,6 +462,7 @@ expredir(union node *n)
 		fn.lastp = &fn.list;
 		switch (redir->type) {
 		case NFROMTO:
+		case NFTPLUS:
 		case NFROM:
 		case NTO:
 		case NCLOBBER:

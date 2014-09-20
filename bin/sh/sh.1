@@ -323,7 +323,7 @@ Following is a list of operators:
 .It "Control operators:"
 .Dl \*[Am]  \*[Am]\*[Am]  \&(  \&)  \&;  ;; | || \*[Lt]newline\*[Gt]
 .It "Redirection operators:"
-.Dl \*[Lt]  \*[Gt]  \*[Gt]|  \*[Lt]\*[Lt]  \*[Gt]\*[Gt]  \*[Lt]\*[Am]  \*[Gt]\*[Am]  \*[Lt]\*[Lt]-  \*[Lt]\*[Gt]
+.Dl \*[Lt]  \*[Gt]  \*[Gt]|  \*[Lt]\*[Lt]  \*[Gt]\*[Gt]  \*[Lt]\*[Am]  \*[Gt]\*[Am]  \*[Lt]\*[Lt]-  \*[Lt]\*[Gt]  \*[Lt]\*[Gt]+
 .El
 .Ss Quoting
 Quoting is used to remove the special meaning of certain characters or
@@ -463,7 +463,12 @@ Duplicate standard output (or n1) to n2.
 .It [n] Ns \*[Gt]\*[Am]-
 Close standard output (or n).
 .It [n] Ns \*[Lt]\*[Gt] file
-Open file for reading and writing on standard input (or n).
+Open file for reading and writing on standard input (or n).  Existing
+file contents are destroyed.
+.It [n] Ns \*[Lt]\*[Gt]+ file
+Open file for reading and writing on standard input (or n).  Existing
+file contents are preserved; the descriptor is initially positioned at
+the beginning of the file.
 .El
 .Pp
 The following redirection is often called a

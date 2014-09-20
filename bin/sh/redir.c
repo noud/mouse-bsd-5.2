@@ -202,6 +202,11 @@ openredirect(union node *redir, char memory[10], int flags)
 		if ((f = open(fname, O_RDWR|O_CREAT|O_TRUNC, 0666)) < 0)
 			goto ecreate;
 		break;
+	case NFTPLUS:
+		fname = redir->nfile.expfname;
+		if ((f = open(fname, O_RDWR|O_CREAT, 0666)) < 0)
+			goto ecreate;
+		break;
 	case NTO:
 		if (Cflag)
 			oflags |= O_EXCL;

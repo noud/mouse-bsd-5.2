@@ -1342,6 +1342,8 @@ until:
 		p = "<&";  i = 0;  goto redir;
 	case NFROMTO:
 		p = "<>";  i = 0;  goto redir;
+	case NFTPLUS:
+		p = "<>+";  i = 0;  goto redir;
 redir:
 		if (n->nfile.fd != i) {
 			s[0] = n->nfile.fd + '0';
