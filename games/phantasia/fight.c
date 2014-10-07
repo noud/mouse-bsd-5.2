@@ -443,7 +443,7 @@ monsthits()
 			if (Player.p_ring.ring_type != R_NONE)
 				/* player has a ring */
 			{
-				mvaddstr(Lines++, 0, "Will you relinguish your ring ? ");
+				mvaddstr(Lines++, 0, "Will you relinquish your ring ? ");
 				ch = getanswer("YN", FALSE);
 				if (ch == 'Y')
 					/* take ring away */
