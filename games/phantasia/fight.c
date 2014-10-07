@@ -501,12 +501,14 @@ monsthits()
 			if (Player.p_ring.ring_type != R_NONE)
 				/* try to steal ring */
 			{
-				mvprintw(Lines++, 0,
-				    "%s tried to steal your ring, ", Enemyname);
 				if (drandom() > 0.1)
-					addstr("but was unsuccessful.");
+					mvprintw(Lines++, 0,
+					    "%s tried to steal your ring, but was unsuccessful.",
+						Enemyname);
 				else {
-					addstr("and ran away with it!");
+					mvprintw(Lines++, 0,
+					    "%s stole your ring and ran away with it!",
+						Enemyname);
 					Player.p_ring.ring_type = R_NONE;
 					cancelmonster();
 				}
