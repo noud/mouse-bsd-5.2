@@ -723,8 +723,14 @@ altercoordinates(xnew, ynew, operation)
 		break;
 
 	case A_NEAR:		/* pick random coordinates near */
-		xnew = Player.p_x + ROLL(1.0, 5.0);
-		ynew = Player.p_y - ROLL(1.0, 5.0);
+		if (drandom() < .5)
+			xnew = Player.p_x + ROLL(1.0, 5.0);
+		else
+			xnew = Player.p_x - ROLL(1.0, 5.0);
+		if (drandom() < .5)
+			ynew = Player.p_y + ROLL(1.0, 5.0);
+		else
+			ynew = Player.p_y - ROLL(1.0, 5.0);
 		/* fall through for check */
 
 	case A_SPECIFIC:	/* just move player */
