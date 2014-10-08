@@ -913,6 +913,21 @@ callmonster(which)
 	Curmonster.m_melee = Curmonster.m_skirmish = 0.0;
 }
 
+void rescuevirgin(void)
+{
+ int ch;
+
+ addstr("You have rescued a virgin.  Will you be honorable ? ");
+ ch = getanswer("NY", FALSE);
+ if (ch == 'Y')
+  { Player.p_virgin = TRUE;
+  }
+ else
+  { Player.p_experience += 2000.0 * Circle;
+    Player.p_sin ++;
+  }
+}
+
 void
 awardtreasure()
 {
@@ -1033,15 +1048,8 @@ awardtreasure()
 						break;
 
 					case 2:
-						addstr("You have rescued a virgin.  Will you be honorable ? ");
-						ch = getanswer("NY", FALSE);
+						rescuevirgin();
 						addstr("\n\n");
-						if (ch == 'Y')
-							Player.p_virgin = TRUE;
-						else {
-							Player.p_experience += 2000.0 * Circle;
-							++Player.p_sin;
-						}
 						break;
 
 					case 3:

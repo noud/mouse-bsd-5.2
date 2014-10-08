@@ -241,13 +241,8 @@ battleplayer(foeplace)
 			Player.p_shield = MAX(Player.p_shield, Other.p_shield);
 			Player.p_quksilver = MAX(Player.p_quksilver, Other.p_quksilver);
 			if (Other.p_virgin && !Player.p_virgin) {
-				mvaddstr(Lines++, 0, "You have rescued a virgin.  Will you be honorable ? ");
-				if ((ch = getanswer("YN", FALSE)) == 'Y')
-					Player.p_virgin = TRUE;
-				else {
-					++Player.p_sin;
-					Player.p_experience += 8000.0;
-				}
+				move(Lines++,0);
+				rescuevirgin();
 			}
 			sleep(3);	/* give other person time to die */
 			break;

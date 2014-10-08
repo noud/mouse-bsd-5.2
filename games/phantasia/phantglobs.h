@@ -116,6 +116,7 @@ void	purgeoldplayers(void);
 void	readmessage(void);
 void	readrecord(struct player *, long);
 long	recallplayer(void);
+void	rescuevirgin(void);
 long	rollnewplayer(void);
 void	scorelist(void);
 void	scramblestats(void);
