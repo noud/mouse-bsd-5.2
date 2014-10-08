@@ -925,6 +925,11 @@ void rescuevirgin(void)
  else
   { Player.p_experience += 2000.0 * Circle;
     Player.p_sin ++;
+    if (drandom() < .15)
+     { addstr("\nThe person you just rescued seduced the one following you around!");
+       Player.p_experience += 500 * Circle; /* watching, hurr hurr */
+       Player.p_virgin = FALSE;
+     }
   }
 }
 
