@@ -799,14 +799,20 @@ neatstuff()
 			if (temp < 0.0 || temp > Player.p_gold)
 				/* negative gold, or more than available */
 			{
-				mvaddstr(6, 0, "He was not amused, and made you worse.\n");
+				mvaddstr(6, 0, (drandom() < .5) ?
+						"He was not amused, and made you worse.\n" :
+						"She was not amused, and made you worse.\n" );
 				Player.p_poison += 1.0;
 			} else
 				if (drandom() / 2.0 > (temp + 1.0) / MAX(Player.p_gold, 1))
 					/* medic wants 1/2 of available gold */
-					mvaddstr(5, 0, "Sorry, he wasn't interested.\n");
+					mvaddstr(5, 0, (drandom() < .5) ?
+							"Sorry, he wasn't interested.\n" :
+							"Sorry, she wasn't interested.\n" );
 				else {
-					mvaddstr(5, 0, "He accepted.");
+					mvaddstr(5, 0, (drandom() < .5) ?
+							"He accepted." :
+							"She accepted." );
 					Player.p_poison = MAX(0.0, Player.p_poison - 1.0);
 					Player.p_gold -= temp;
 				}
