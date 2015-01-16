@@ -31,6 +31,7 @@
  *	@(#)ps.h	8.1 (Berkeley) 5/31/93
  */
 
+#include <kvm.h>
 #include <sys/queue.h>
 
 #define	UNLIMITED	0	/* unlimited terminal width */
@@ -47,6 +48,13 @@ enum type {
 
 /* Variables. */
 typedef SIMPLEQ_HEAD(varlist, varent) VARLIST;
+
+typedef struct procaux PROCAUX;
+struct procaux {
+  int inx;
+  int indent;
+  int order;
+  } ;
 
 typedef struct varent {
 	SIMPLEQ_ENTRY(varent) next;

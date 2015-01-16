@@ -37,7 +37,7 @@
 .Nd process status
 .Sh SYNOPSIS
 .Nm
-.Op Fl AaCcehjlmrSsTuvwx
+.Op Fl AaCcehHjlmrSsTuvwx
 .Op Fl k Ar key
 .Op Fl M Ar core
 .Op Fl N Ar system
@@ -106,6 +106,20 @@ users' processes can only be displayed by the super-user.
 .It Fl h
 Repeat the information header as often as necessary to guarantee one
 header per page of information.
+.It Fl H
+Show processes hierarchically.  This has two effects.  One is that each
+process's line is indented further than its parent's (with processes
+with no parent, or whose parent is not shown, not indented); this
+indentation consists of one vertical bar and one space per level.  The
+other is that the sort order is changed so that all of a process's
+displayed descendents appear after that process but before any
+non-descendent.  (That is, whenever processes A, B, and C are shown,
+where B is a descendent of A but C isn't, then (1) B appears after A
+and (2) C appears either before A or after B.)  The sort order which
+would otherwise be used (either the default or as specified by other
+flags) is used only to order processes whose order is not constrained
+by this criterion, ie, among siblings or among processes with no
+displayed parent.
 .It Fl j
 Print information associated with the following keywords:
 .Ar user , pid , ppid , pgid , sess , jobc , state , tt , time ,

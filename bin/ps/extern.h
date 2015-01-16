@@ -97,3 +97,4 @@ void	 uname(void *, VARENT *, int);
 void	 uvar(void *, VARENT *, int);
 void	 vsize(void *, VARENT *, int);
 void	 wchan(void *, VARENT *, int);
+void sort_hierarchical(PROCAUX *, int, int (*)(const void *, const void *));
