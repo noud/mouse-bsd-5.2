@@ -1361,8 +1361,8 @@ cursedtreasure()
 			addstr("But your amulet saved you!\n");
 			--Player.p_amulets;
 		} else {
-			Player.p_energy =
-			    (Player.p_maxenergy + Player.p_shield) / 10.0;
+			Player.p_energy = MIN(Player.p_energy,
+			    (Player.p_maxenergy + Player.p_shield) / 10.0);
 			Player.p_poison += 0.25;
 		}
 }
