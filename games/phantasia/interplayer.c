@@ -426,7 +426,7 @@ tampered(what, arg1, arg2)
 		} else {
 			addch('\n');
 			Player.p_poison += 2.0;
-			Player.p_energy = 10.0;
+			Player.p_energy = MIN(Player.p_energy,10);
 			Player.p_maxenergy *= 0.95;
 			Player.p_status = S_PLAYING;	/* no longer cloaked */
 		}
