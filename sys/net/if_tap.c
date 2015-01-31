@@ -115,6 +115,7 @@ struct tap_softc {
 	kmutex_t	sc_rdlock;
 	struct simplelock	sc_kqlock;
 	void		*sc_sih;
+  struct callout sc_ticker;
 };
 
 /* autoconf(9) glue */
@@ -251,6 +252,15 @@ tap_match(device_t parent, cfdata_t cfdata, void *arg)
 	return (1);
 }
 
+static void tap_ticker(void *scv)
+{
+ struct tap_softc *sc;
+
+ sc = scv;
+ callout_schedule(&sc->sc_ticker,hz);
+ tap_start(&sc->sc_ec.ec_if);
+}
+
 void
 tap_attach(device_t parent, device_t self, void *aux)
 {
@@ -323,6 +333,8 @@ tap_attach(device_t parent, device_t self, void *aux)
 	ether_ifattach(ifp, enaddr);
 
 	sc->sc_flags = 0;
+ callout_init(&sc->sc_ticker);
+ callout_setfunc(&sc->sc_ticker,&tap_ticker,sc);
 
 #if defined(COMPAT_40) || defined(MODULAR)
 	/*
@@ -721,6 +733,7 @@ tap_cdev_open(dev_t dev, int flags, int fmt, struct lwp *l)
 	if (sc->sc_flags & TAP_INUSE)
 		return (EBUSY);
 	sc->sc_flags |= TAP_INUSE;
+ callout_schedule(&sc->sc_ticker,hz);
 	return (0);
 }
 
@@ -762,6 +775,7 @@ tap_dev_cloner(struct lwp *l)
 	}
 
 	sc->sc_flags |= TAP_INUSE;
+ callout_schedule(&sc->sc_ticker,hz);
 
 	return fd_clone(fp, fd, FREAD|FWRITE, &tap_fileops,
 	    (void *)(intptr_t)device_unit(sc->sc_dev));
@@ -858,6 +872,7 @@ tap_dev_close(struct tap_softc *sc)
 	splx(s);
 
 	sc->sc_flags &= ~(TAP_INUSE | TAP_ASYNCIO);
+ callout_stop(&sc->sc_ticker);
 
 	return (0);
 }
