@@ -971,7 +971,7 @@ valid_class(char *class)
 }
 
 /* return 1 if the `shellname' is a valid user shell */
-static int 
+static int
 valid_shell(const char *shellname)
 {
 	char *shellp;
@@ -981,7 +981,7 @@ valid_shell(const char *shellname)
 		warn("Access failed for `%s'; will not validate shell `%s'",
 		    _PATH_SHELLS, shellname);
 		return 1;
-	} 
+	}
 
 	/* if nologin is used as a shell, consider it a valid shell */
 	if (strcmp(shellname, NOLOGIN) == 0)

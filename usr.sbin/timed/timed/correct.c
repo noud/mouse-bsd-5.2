@@ -142,7 +142,7 @@ adjclock(struct timeval *corr)
 				smoother++;
 			ndelta = (unsigned long)delta >> smoother;
 			if (delta < 0) {
-				long mask = (long)~0 & 
+				long mask = (long)~0 &
 				    ~((1 << ((sizeof(long) * NBBY) - smoother))
 				    - 1);
 				ndelta |= mask;

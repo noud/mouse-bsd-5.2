@@ -34,7 +34,7 @@ if [ ! "${SIZEOF_PTR}" ]; then
 fi
 
 hexdump -v -e "/${SIZEOF_PTR} \"%x\n\""|sort|uniq -c|sort -nr|
-while read x y;do 
+while read x y;do
 	printf "$x\t$y\t"
 	objdump -d --start-address=0x$y /netbsd|head -6|sed -ne '/.*<\(.*\)>:/{s//\1/;p;}'
 done

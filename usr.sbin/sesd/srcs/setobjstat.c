@@ -1,4 +1,4 @@
-/* $NetBSD: setobjstat.c,v 1.2 2000/02/22 06:06:10 mjacob Exp $ */ 
+/* $NetBSD: setobjstat.c,v 1.2 2000/02/22 06:06:10 mjacob Exp $ */
 /* $FreeBSD: $ */
 /* $OpenBSD: $ */
 /*
@@ -28,7 +28,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * Matthew Jacob
  * Feral Software
  * mjacob@feral.com

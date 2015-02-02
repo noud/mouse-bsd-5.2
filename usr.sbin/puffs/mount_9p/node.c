@@ -248,7 +248,7 @@ puffs9p_node_setattr(struct puffs_usermount *pu, void *opc,
  * If it's a directory, don't bother opening it here, but rather
  * wait until readdir, since it's probable we need to be able to
  * open a directory there in any case.
- * 
+ *
  * If it's a regular file, open it here with whatever credentials
  * we happen to have.   Let the upper layers of the kernel worry
  * about permission control.
@@ -346,7 +346,7 @@ puffs9p_node_read(struct puffs_usermount *pu, void *opc, uint8_t *buf,
 
 		p9pbuf_recycleout(pb);
 	}
-			
+
  out:
 	RETURN(rv);
 }
@@ -393,7 +393,7 @@ puffs9p_node_write(struct puffs_usermount *pu, void *opc, uint8_t *buf,
 
 		p9pbuf_recycleout(pb);
 	}
-			
+
  out:
 	RETURN(rv);
 }
@@ -552,7 +552,7 @@ puffs9p_node_rmdir(struct puffs_usermount *pu, void *opc, void *targ,
  * 9P supports renames only for files within a directory
  * from what I could tell.  So just support in-directory renames
  * for now.
- */ 
+ */
 int
 puffs9p_node_rename(struct puffs_usermount *pu, void *opc, void *src,
 	const struct puffs_cn *pcn_src, void *targ_dir, void *targ,

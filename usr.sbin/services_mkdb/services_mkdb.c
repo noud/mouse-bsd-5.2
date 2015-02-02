@@ -276,7 +276,7 @@ parseservices(const char *fname, StringList *sl)
 			s = svc[pnum][pindex] = sl_init();
 		else
 			s = svc[pnum][pindex];
-			
+
 		/* build list of aliases */
 		if (sl_find(s, name) == NULL)
 			(void)sl_add(s, estrdup(name));

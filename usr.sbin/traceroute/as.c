@@ -77,7 +77,7 @@ as_setup(server)
 	} else
 		in.sin_port = se->s_port;
 
-	if (inet_aton(server, &in.sin_addr) == 0 && 
+	if (inet_aton(server, &in.sin_addr) == 0 &&
 	    ((he = gethostbyname(server)) == NULL ||
 	    he->h_addr == NULL)) {
 		warnx("%s: %s", server, hstrerror(h_errno));
@@ -174,7 +174,7 @@ as_lookup(_asn, addr)
 				}
 #endif /* AS_DEBUG_FILE */
 				break;
-			    case 'C':	
+			    case 'C':
 			    case 'D':
 			    case 'E':
 			    case 'F':

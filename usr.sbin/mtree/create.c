@@ -348,7 +348,7 @@ statd(FTS *t, FTSENT *parent, uid_t *puid, gid_t *pgid, mode_t *pmode,
 	 */
 	if (((keys & (F_UNAME | F_UID)) && (*puid != saveuid)) ||
 	    ((keys & (F_GNAME | F_GID)) && (*pgid != savegid)) ||
-	    ((keys & F_MODE) && (*pmode != savemode)) || 
+	    ((keys & F_MODE) && (*pmode != savemode)) ||
 	    ((keys & F_FLAGS) && (*pflags != saveflags)) ||
 	    first) {
 		first = 0;

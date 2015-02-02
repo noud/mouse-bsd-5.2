@@ -1,9 +1,9 @@
 /*	$NetBSD: tdb.c,v 1.6 2007/01/16 17:32:05 hubertf Exp $	*/
 
-/* 
+/*
  * Database functions
  * Copyright (C) Andrew Tridgell 1999
- * 
+ *
  * Redistribution and use in source and binary forms are permitted
  * provided that the above copyright notice and this paragraph are
  * duplicated in all such forms AND provided that this software or
@@ -68,7 +68,7 @@ struct list_struct {
 	unsigned full_hash; /* the full 32 bit hash of the key */
 	unsigned magic;   /* try to catch errors */
 	/*
-	   the following union is implied 
+	   the following union is implied
 	   union {
               char record[rec_len];
 	      struct {
@@ -90,7 +90,7 @@ static int tdb_unlockchain __P((TDB_CONTEXT *, TDB_DATA));
 
 /* a byte range locking function - return 0 on success
    this functions locks/unlocks 1 byte at the specified offset */
-static int tdb_brlock(TDB_CONTEXT *tdb, tdb_off offset, 
+static int tdb_brlock(TDB_CONTEXT *tdb, tdb_off offset,
 		      int set, int rw_type, int lck_type)
 {
 #if NOLOCK
@@ -111,7 +111,7 @@ static int tdb_brlock(TDB_CONTEXT *tdb, tdb_off offset,
 	if (fcntl(tdb->fd, lck_type, &fl) != 0) {
 #if TDB_DEBUG
 		if (lck_type == F_SETLKW) {
-			printf("lock %d failed at %d (%s)\n", 
+			printf("lock %d failed at %d (%s)\n",
 			       set, offset, strerror(errno));
 		}
 #endif
@@ -132,7 +132,7 @@ static int tdb_lock(TDB_CONTEXT *tdb, int list)
 		return -1;
 	}
 	if (tdb->locked[list+1] == 0) {
-		if (tdb_brlock(tdb, LIST_LOCK_BASE + 4*list, LOCK_SET, 
+		if (tdb_brlock(tdb, LIST_LOCK_BASE + 4*list, LOCK_SET,
 			       F_WRLCK, F_SETLKW) != 0) {
 			return -1;
 		}
@@ -159,7 +159,7 @@ static int tdb_unlock(TDB_CONTEXT *tdb, int list)
 		return -1;
 	}
 	if (tdb->locked[list+1] == 1) {
-		if (tdb_brlock(tdb, LIST_LOCK_BASE + 4*list, LOCK_CLEAR, 
+		if (tdb_brlock(tdb, LIST_LOCK_BASE + 4*list, LOCK_CLEAR,
 			       F_WRLCK, F_SETLKW) != 0) {
 			return -1;
 		}
@@ -181,7 +181,7 @@ static unsigned tdb_hash(TDB_DATA *key)
 		value = (value + (key->dptr[i] << (i*5 % 24)));
 	}
 
-	value = (1103515243 * value + 12345);  
+	value = (1103515243 * value + 12345);
 
 	return value;
 }
@@ -219,10 +219,10 @@ static int tdb_oob(TDB_CONTEXT *tdb, tdb_off offset)
 
 	tdb->map_size = st.st_size;
 #if HAVE_MMAP
-	tdb->map_ptr = (void *)mmap(NULL, tdb->map_size, 
+	tdb->map_ptr = (void *)mmap(NULL, tdb->map_size,
 				    tdb->read_only?PROT_READ:PROT_READ|PROT_WRITE,
 				    MAP_SHARED | MAP_FILE, tdb->fd, 0);
-#endif	
+#endif
 	return 0;
 }
 
@@ -284,7 +284,7 @@ static char *tdb_alloc_read(TDB_CONTEXT *tdb, tdb_off offset, tdb_len len)
 		free(buf);
 		return NULL;
 	}
-	
+
 	return buf;
 }
 
@@ -386,7 +386,7 @@ static int tdb_expand(TDB_CONTEXT *tdb, tdb_off length)
 
 #if HAVE_MMAP
         if (tdb->fd != -1) {
-            tdb->map_ptr = (void *)mmap(NULL, tdb->map_size, 
+            tdb->map_ptr = (void *)mmap(NULL, tdb->map_size,
                                         PROT_READ|PROT_WRITE,
                                         MAP_SHARED | MAP_FILE, tdb->fd, 0);
         }
@@ -447,7 +447,7 @@ static tdb_off tdb_allocate(TDB_CONTEXT *tdb, tdb_len length)
 
 				rec.rec_len = length;
 				rec.next = rec_ptr + sizeof(rec) + rec.rec_len;
-				
+
 				if (rec_write(tdb, rec.next, &newrec) == -1) {
 					goto fail;
 				}
@@ -463,7 +463,7 @@ static tdb_off tdb_allocate(TDB_CONTEXT *tdb, tdb_len length)
 
 				if (ofs_write(tdb, offset, &rec.next) == -1) {
 					goto fail;
-				}				
+				}
 			} else {
 				lastrec.next = rec.next;
 				if (rec_write(tdb, last_ptr, &lastrec) == -1) {
@@ -509,19 +509,19 @@ static int tdb_new_database(TDB_CONTEXT *tdb, int hash_size)
         header.hash_size = hash_size;
         lseek(tdb->fd, 0, SEEK_SET);
         ftruncate(tdb->fd, 0);
-        
-        if (tdb->fd != -1 && write(tdb->fd, &header, sizeof(header)) != 
+
+        if (tdb->fd != -1 && write(tdb->fd, &header, sizeof(header)) !=
             sizeof(header)) {
             tdb->ecode = TDB_ERR_IO;
             return -1;
         } else size += sizeof(header);
-	
+
         /* the freelist and hash pointers */
         offset = 0;
         memset(buf, 0, sizeof(buf));
 
         for (i=0;(hash_size+1)-i >= 16; i += 16) {
-            if (tdb->fd != -1 && write(tdb->fd, buf, sizeof(buf)) != 
+            if (tdb->fd != -1 && write(tdb->fd, buf, sizeof(buf)) !=
                 sizeof(buf)) {
                 tdb->ecode = TDB_ERR_IO;
                 return -1;
@@ -529,7 +529,7 @@ static int tdb_new_database(TDB_CONTEXT *tdb, int hash_size)
         }
 
         for (;i<hash_size+1; i++) {
-            if (tdb->fd != -1 && write(tdb->fd, buf, sizeof(tdb_off)) != 
+            if (tdb->fd != -1 && write(tdb->fd, buf, sizeof(tdb_off)) !=
                 sizeof(tdb_off)) {
                 tdb->ecode = TDB_ERR_IO;
                 return -1;
@@ -547,7 +547,7 @@ static int tdb_new_database(TDB_CONTEXT *tdb, int hash_size)
         }
 
 #if TDB_DEBUG
-	printf("initialised database of hash_size %u\n", 
+	printf("initialised database of hash_size %u\n",
 	       hash_size);
 #endif
 	return 0;
@@ -559,7 +559,7 @@ static tdb_off tdb_find(TDB_CONTEXT *tdb, TDB_DATA key, unsigned int hash,
 			struct list_struct *rec)
 {
 	tdb_off offset, rec_ptr;
-	
+
 	/* find the top of the hash chain */
 	offset = tdb_hash_top(tdb, hash);
 
@@ -575,7 +575,7 @@ static tdb_off tdb_find(TDB_CONTEXT *tdb, TDB_DATA key, unsigned int hash,
 		if (hash == rec->full_hash && key.dsize == rec->key_len) {
 			char *k;
 			/* a very likely hit - read the key */
-			k = tdb_alloc_read(tdb, rec_ptr + sizeof(*rec), 
+			k = tdb_alloc_read(tdb, rec_ptr + sizeof(*rec),
 					   rec->key_len);
 
 			if (!k)
@@ -594,7 +594,7 @@ static tdb_off tdb_find(TDB_CONTEXT *tdb, TDB_DATA key, unsigned int hash,
 	return 0;
 }
 
-/* 
+/*
    return an error string for the last tdb error
 */
 char *tdb_error(TDB_CONTEXT *tdb)
@@ -696,12 +696,12 @@ TDB_DATA tdb_fetch(TDB_CONTEXT *tdb, TDB_DATA key)
 					  rec.data_len);
 		ret.dsize = rec.data_len;
 	}
-	
+
 	tdb_unlock(tdb, BUCKET(hash));
 	return ret;
 }
 
-/* check if an entry in the database exists 
+/* check if an entry in the database exists
 
    note that 1 is returned if the key is found and 0 is returned if not found
    this doesn't match the conventions in the rest of this module, but is
@@ -712,7 +712,7 @@ int tdb_exists(TDB_CONTEXT *tdb, TDB_DATA key)
 	unsigned hash;
 	tdb_off rec_ptr;
 	struct list_struct rec;
-	
+
         if (tdb == NULL) {
 #ifdef TDB_DEBUG
             printf("tdb_exists() called with null context\n");
@@ -768,7 +768,7 @@ int tdb_traverse(TDB_CONTEXT *tdb, int (*fn)(TDB_CONTEXT *tdb, TDB_DATA key, TDB
 			}
 
 			/* now read the full record */
-			data = tdb_alloc_read(tdb, rec_ptr + sizeof(rec), 
+			data = tdb_alloc_read(tdb, rec_ptr + sizeof(rec),
 					     rec.key_len + rec.data_len);
 			if (!data) {
 				goto fail;
@@ -821,7 +821,7 @@ TDB_DATA tdb_firstkey(TDB_CONTEXT *tdb)
         }
 
 	/* look for a non-empty hash chain */
-	for (hash = 0, rec_ptr = 0; 
+	for (hash = 0, rec_ptr = 0;
 	     hash < tdb->header.hash_size;
 	     hash++) {
 		/* find the top of the hash chain */
@@ -875,7 +875,7 @@ TDB_DATA tdb_nextkey(TDB_CONTEXT *tdb, TDB_DATA key)
 	/* find which hash bucket it is in */
 	hash = tdb_hash(&key);
 	hbucket = BUCKET(hash);
-	
+
 	tdb_lock(tdb, hbucket);
 	rec_ptr = tdb_find(tdb, key, hash, &rec);
 	if (rec_ptr) {
@@ -950,7 +950,7 @@ int tdb_delete(TDB_CONTEXT *tdb, TDB_DATA key)
 
 		if (hash == rec.full_hash && key.dsize == rec.key_len) {
 			/* a very likely hit - read the record and full key */
-			data = tdb_alloc_read(tdb, rec_ptr + sizeof(rec), 
+			data = tdb_alloc_read(tdb, rec_ptr + sizeof(rec),
 					     rec.key_len);
 			if (!data) {
 				goto fail;
@@ -967,7 +967,7 @@ int tdb_delete(TDB_CONTEXT *tdb, TDB_DATA key)
 					lastrec.next = rec.next;
 					if (rec_write(tdb, last_ptr, &lastrec) == -1) {
 						goto fail;
-					}					
+					}
 				}
 				tdb_unlock(tdb, BUCKET(hash));
 				tdb_lock(tdb, -1);
@@ -1014,7 +1014,7 @@ int tdb_delete(TDB_CONTEXT *tdb, TDB_DATA key)
 
 
 /* store an element in the database, replacing any existing element
-   with the same key 
+   with the same key
 
    return 0 on success, -1 on failure
 */
@@ -1091,7 +1091,7 @@ int tdb_store(TDB_CONTEXT *tdb, TDB_DATA key, TDB_DATA dbuf, int flag)
 	if (tdb_write(tdb, rec_ptr, p, sizeof(rec)+key.dsize+dbuf.dsize) == -1)
 		goto fail;
 
-	free(p); 
+	free(p);
 	p = NULL;
 
 	/* and point the top of the hash chain at it */
@@ -1110,12 +1110,12 @@ int tdb_store(TDB_CONTEXT *tdb, TDB_DATA key, TDB_DATA dbuf, int flag)
 }
 
 
-/* open the database, creating it if necessary 
+/* open the database, creating it if necessary
 
    The open_flags and mode are passed straight to the open call on the database
    file. A flags value of O_WRONLY is invalid
 
-   The hash size is advisory, use zero for a default value. 
+   The hash size is advisory, use zero for a default value.
 
    return is NULL on error
 */
@@ -1148,7 +1148,7 @@ TDB_CONTEXT *tdb_open(char *name, int hash_size, int tdb_flags,
 
 	/* ensure there is only one process initialising at once */
 	tdb_brlock(&tdb, GLOBAL_LOCK, LOCK_SET, F_WRLCK, F_SETLKW);
-	
+
 	if (tdb_flags & TDB_CLEAR_IF_FIRST) {
 		/* we need to zero the database if we are the only
 		   one with it open */
@@ -1171,9 +1171,9 @@ TDB_CONTEXT *tdb_open(char *name, int hash_size, int tdb_flags,
 		if (tdb_new_database(&tdb, hash_size) == -1) goto fail;
 
 		lseek(tdb.fd, 0, SEEK_SET);
-		if (tdb.fd != -1 && read(tdb.fd, &tdb.header, 
-                                         sizeof(tdb.header)) != 
-                                         sizeof(tdb.header)) 
+		if (tdb.fd != -1 && read(tdb.fd, &tdb.header,
+                                         sizeof(tdb.header)) !=
+                                         sizeof(tdb.header))
                     goto fail;
 	}
 
@@ -1185,7 +1185,7 @@ TDB_CONTEXT *tdb_open(char *name, int hash_size, int tdb_flags,
             tdb.map_size = st.st_size;
         }
 
-        tdb.locked = (int *)calloc(tdb.header.hash_size+1, 
+        tdb.locked = (int *)calloc(tdb.header.hash_size+1,
                                    sizeof(tdb.locked[0]));
         if (!tdb.locked) {
             goto fail;
@@ -1193,7 +1193,7 @@ TDB_CONTEXT *tdb_open(char *name, int hash_size, int tdb_flags,
 
 #if HAVE_MMAP
         if (tdb.fd != -1) {
-            tdb.map_ptr = (void *)mmap(NULL, st.st_size, 
+            tdb.map_ptr = (void *)mmap(NULL, st.st_size,
                                        tdb.read_only? PROT_READ : PROT_READ|PROT_WRITE,
                                        MAP_SHARED | MAP_FILE, tdb.fd, 0);
         }
@@ -1205,7 +1205,7 @@ TDB_CONTEXT *tdb_open(char *name, int hash_size, int tdb_flags,
 	*ret = tdb;
 
 #if TDB_DEBUG
-	printf("mapped database of hash_size %u map_size=%u\n", 
+	printf("mapped database of hash_size %u map_size=%u\n",
 	       hash_size, tdb.map_size);
 #endif
 

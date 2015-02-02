@@ -203,7 +203,7 @@ int k_del_rg(u_int32_t origin, struct gtable *g)
     }
 
     return retval;
-}	
+}
 
 /*
  * Get the kernel's idea of what version of mrouted needs to run with it.

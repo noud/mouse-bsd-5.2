@@ -290,7 +290,7 @@
 #define HAVE_ARPA_NAMESER_H 1
 
 /* Do we have audio support? */
-#define HAVE_AUDIO 
+#define HAVE_AUDIO
 
 /* Define to 1 if you have the <bstring.h> header file. */
 /* #undef HAVE_BSTRING_H */
@@ -327,7 +327,7 @@
 /* #undef HAVE_DOPRNT */
 
 /* Can we drop root privileges? */
-#define HAVE_DROPROOT 
+#define HAVE_DROPROOT
 
 /* Define to 1 if you have the <errno.h> header file. */
 #define HAVE_ERRNO_H 1
@@ -404,10 +404,10 @@
 /* #undef HAVE_LIBADVAPI32 */
 
 /* Do we have the curses library? */
-#define HAVE_LIBCURSES 
+#define HAVE_LIBCURSES
 
 /* Do we have the edit library? */
-#define HAVE_LIBEDIT 
+#define HAVE_LIBEDIT
 
 /* Define to 1 if you have the `elf' library (-lelf). */
 /* #undef HAVE_LIBELF */
@@ -997,16 +997,16 @@
 /* #undef ISC_PLATFORM_HAVEIF_LADDRREQ */
 
 /* ISC: Have struct in6_pktinfo? */
-#define ISC_PLATFORM_HAVEIN6PKTINFO 
+#define ISC_PLATFORM_HAVEIN6PKTINFO
 
 /* ISC: Have IPv6? */
-#define ISC_PLATFORM_HAVEIPV6 
+#define ISC_PLATFORM_HAVEIPV6
 
 /* ISC: struct sockaddr as sa_len? */
-#define ISC_PLATFORM_HAVESALEN 
+#define ISC_PLATFORM_HAVESALEN
 
 /* ISC: Have sin6_scope_id? */
-#define ISC_PLATFORM_HAVESCOPEID 
+#define ISC_PLATFORM_HAVESCOPEID
 
 /* ISC: provide inet_aton() */
 /* #undef ISC_PLATFORM_NEEDATON */

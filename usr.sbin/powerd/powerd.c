@@ -209,7 +209,7 @@ run_script(const char *argv[])
 				}
 				break;
 			}
-			
+
 			return;
 		}
 	}
@@ -258,7 +258,7 @@ dispatch_dev_power(struct kevent *ev)
 	int fd = ev->ident;
 
 	if (debug)
-		(void)fprintf(stderr, "%s: %" PRId64 
+		(void)fprintf(stderr, "%s: %" PRId64
 		    " event%s available\n", __func__,
 		    ev->data, ev->data > 1 ? "s" : "");
 
@@ -303,7 +303,7 @@ dispatch_power_event_state_change(int fd, power_event_t *pev)
 			    __func__, error);
 		return;
 	}
-	
+
 	if (debug) {
 		buf = prop_dictionary_externalize(dict);
 		printf("%s", buf);

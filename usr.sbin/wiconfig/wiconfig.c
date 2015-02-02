@@ -247,11 +247,11 @@ static void wi_apscan(iface)
 			w->bssid[4]&0xff, w->bssid[5]&0xff);
 		printf("\tChannel:\t\t\t[ %d ]\n", w->channel);
 		printf("\tQuality/Signal/Noise [signal]:\t[ %d / %d / %d ]\n"
-		       "\t                        [dBm]:\t[ %d / %d / %d ]\n", 
+		       "\t                        [dBm]:\t[ %d / %d / %d ]\n",
 			w->quality, w->signal, w->noise,
 			w->quality, w->signal - 149, w->noise - 149);
-		printf("\tBSS Beacon Interval [msec]:\t[ %d ]\n", w->interval); 
-		printf("\tCapinfo:\t\t\t[ "); 
+		printf("\tBSS Beacon Interval [msec]:\t[ %d ]\n", w->interval);
+		printf("\tCapinfo:\t\t\t[ ");
 			if (w->capinfo & IEEE80211_CAPINFO_ESS)
 				printf("ESS ");
 			if (w->capinfo & IEEE80211_CAPINFO_PRIVACY)
@@ -486,7 +486,7 @@ void wi_printvendor(wreq)
 #define WI_RID_STA_IDENTITY_PRISMII	0x2
 #define WI_RID_STA_IDENTITY_SAMSUNG	0x3
 #define WI_RID_STA_IDENTITY_DLINK	0x6
-	
+
 	const char *vendor = "Unknown";
 
 	if (wreq->wi_len < 4)
@@ -509,7 +509,7 @@ void wi_printvendor(wreq)
 	printf("[ %s ID: %d version: %d.%d ]", vendor, le16toh(wreq->wi_val[0]),
 	    le16toh(wreq->wi_val[2]), le16toh(wreq->wi_val[3]));
 	return;
-}	
+}
 
 void wi_printwords(wreq)
 	struct wi_req		*wreq;
@@ -654,7 +654,7 @@ static void wi_checkwifi(iface)
 
 	if (s == -1)
 		err(1, "socket");
-	
+
 	/* Choice of ioctl inspired by ifconfig/ieee80211.c */
 	if (ioctl(s, SIOCG80211NWID, &ifr) == -1)
 		err(1, "SIOCG80211NWID");
@@ -711,7 +711,7 @@ static void wi_dumpinfo(iface)
 			break;
 		default:
 			break;
-		}	
+		}
 		printf("\n");
 	}
 
@@ -746,7 +746,7 @@ static void wi_dumpinfo(iface)
 				break;
 			default:
 				break;
-			}	
+			}
 			printf("\n");
 		}
 	}
@@ -891,7 +891,7 @@ int main(argc, argv)
 
 	/* Check interface is wireless. Will not return on error */
 	wi_checkwifi(iface);
-	
+
 	for (table = wi_tables; *table != NULL; table++)
 		for (wt = *table; wt->wi_code != WI_NONE; wt++)
 			if (wt->wi_optval != NULL) {

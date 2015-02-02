@@ -169,7 +169,7 @@ check_dir()
 # check_ids op type file id [...]
 #	Check if file of type "users" or "groups" contains the relevant IDs
 #	Returns 0 if ok, 1 otherwise.
-#	
+#
 check_ids()
 {
 	[ $# -ge 4 ] || err 3 "USAGE: checks_ids op type file id [...]"
@@ -532,7 +532,7 @@ function checklib(results, line, regex) {
 }
 
 #}'
-	
+
 	)
 }
 
@@ -597,7 +597,7 @@ contents_owner()
 		find "${_dir}" \( \( ! -user "${_user}" \) -o \
 		\( ! -group "${_grp}" \) \) -a -print0 \
 		| xargs -0 chown "${_user}:${_grp}"
-	fi	
+	fi
 }
 
 # get_makevar var [var ...]
@@ -1177,7 +1177,7 @@ do_mailerconf()
 		failed=$?
 	    fi
 	fi
-	
+
 	return ${failed}
 }
 
@@ -1755,7 +1755,7 @@ _Fix_me_
 		fi
 
 		;;
-		
+
 	*)
 		warn "Unknown operation '"${op}"'"
 		usage

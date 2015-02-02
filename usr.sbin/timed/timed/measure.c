@@ -98,7 +98,7 @@ measure(u_long maxmsec,			/* wait this many msec at most */
 			goto quit;
 		}
 	}
-	    
+
 	set[0].fd = sock_raw;
 	set[0].events = POLLIN;
 
@@ -150,7 +150,7 @@ measure(u_long maxmsec,			/* wait this many msec at most */
 			uint32_t otime;
 
 			trials++;
-			otime = (tcur.tv_sec % SECDAY) * 1000  
+			otime = (tcur.tv_sec % SECDAY) * 1000
                                             + tcur.tv_usec / 1000;
 			oicp.icmp_otime = htonl(otime);
 			oicp.icmp_cksum = 0;
@@ -189,7 +189,7 @@ measure(u_long maxmsec,			/* wait this many msec at most */
 			if (ret < 0)
 				goto quit;
 
-			/* 
+			/*
 			 * got something.  See if it is ours
 			 */
 

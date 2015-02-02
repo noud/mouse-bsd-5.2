@@ -128,13 +128,13 @@ __fb_swap_workbuf(struct fb *fb)
 	n = ALIGN(fb->conf.hf_bytes_per_line, 16) / sizeof(fb_pixel_t);
 	if (fb->conf.hf_order_flags & HPCFB_REVORDER_BYTE) {
 		for (i = 0; i < n; i++)
-			fb->workbuf[i] = 
+			fb->workbuf[i] =
 			    ((fb->workbuf[i] << 8) & 0xff00ff00) |
 			    ((fb->workbuf[i] >> 8) & 0x00ff00ff);
 	}
 	if (fb->conf.hf_order_flags & HPCFB_REVORDER_WORD) {
 		for (i = 0; i < n; i++)
-			fb->workbuf[i] = 
+			fb->workbuf[i] =
 			    ((fb->workbuf[i] << 16) & 0xffff0000) |
 			    ((fb->workbuf[i] >> 16) & 0x0000ffff);
 	}
@@ -192,9 +192,9 @@ fb_getline(struct fb *fb, int y)
 	dst = fb->workbuf;
 	n = ALIGN(fb->conf.hf_bytes_per_line, 16) / sizeof(fb_pixel_t);
 	for (i = 0; i < n; i++) {
-		*dst++ = ((fb_pixel_t)src[0] << 24) | 
-		    ((fb_pixel_t)src[1] << 16) | 
-		    ((fb_pixel_t)src[2] << 8) | 
+		*dst++ = ((fb_pixel_t)src[0] << 24) |
+		    ((fb_pixel_t)src[1] << 16) |
+		    ((fb_pixel_t)src[2] << 8) |
 		    ((fb_pixel_t)src[3] << 0);
 		src += 4;
 	}
@@ -261,7 +261,7 @@ fb_drawpixel(struct fb *fb, int x, int y, fb_pixel_t pixel)
 		x = fb->conf.hf_pixels_per_pack - x - 1;
 	x *= fb->conf.hf_pixel_width;
 	if (fb->conf.hf_access_flags & HPCFB_ACCESS_PACK_BLANK)
-		x += (fb->conf.hf_pack_width - 
+		x += (fb->conf.hf_pack_width -
 		    fb->conf.hf_pixel_width * fb->conf.hf_pixels_per_pack);
 	x += pack * fb->conf.hf_pack_width;
 

@@ -293,7 +293,7 @@ ng_load(const char *fname)
 			case _NG_ERROR:
 				errx(1, "Fatal error at `%s'", p);
 				break;
-				
+
 			default:
 				abort();
 				break;

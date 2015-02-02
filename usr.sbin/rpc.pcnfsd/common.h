@@ -60,7 +60,7 @@
 
 /*
 **---------------------------------------------------------------------
-** Define (via Makefile) the following symbol to enable the use of a 
+** Define (via Makefile) the following symbol to enable the use of a
 ** shadow password file
 **---------------------------------------------------------------------
 **/
@@ -69,7 +69,7 @@
 
 /*
 **---------------------------------------------------------------------
-** Define (via Makefile) the following symbol to enable the logging 
+** Define (via Makefile) the following symbol to enable the logging
 ** of authentication requests to /usr/adm/wtmp
 **---------------------------------------------------------------------
 **/
@@ -169,7 +169,7 @@
 
 /*
 **---------------------------------------------------------------------
-** Other #define's 
+** Other #define's
 **---------------------------------------------------------------------
 */
 

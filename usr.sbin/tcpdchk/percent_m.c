@@ -2,7 +2,7 @@
 
  /*
   * Replace %m by system error message.
-  * 
+  *
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   */
 

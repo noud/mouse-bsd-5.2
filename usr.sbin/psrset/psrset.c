@@ -149,7 +149,7 @@ usage(void)
 	    "\tpsrset -p\n"
 	    "\tpsrset -r cpuid ...\n"
 	    "\tpsrset -u pid ...\n");
-                                                  
+
 	exit(EXIT_FAILURE);
 }
 

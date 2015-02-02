@@ -388,7 +388,7 @@ OF_finddevice(const char *name)
 {
 #if 0
 	struct ofiocdesc ofio;
-	
+
 	ofio.of_nodeid = 0;
 	ofio.of_name = argv[optind++];
 	ofio.of_namelen = strlen(ofio.of_name);
@@ -624,7 +624,7 @@ ofname(int node, char *buf, size_t buflen)
 	address_cells = of_decode_int(address_cells_buf);
 	for (len = 0; len < address_cells; len ++)
 		reg[len] = of_decode_int(&reg_buf[len * 4]);
-	
+
 	if (!strcmp(device_type,"pci")) {
 		off += snprintf(buf + off, buflen - off,
 		    "%x", (reg[0] >> 11) & 31);
@@ -787,7 +787,7 @@ frequency_format(int node, const u_int8_t *buf, size_t len)
 			frac = 0;
 		else
 			frac = (freq / (divisor / 1000)) % 1000;
-			
+
 		switch (divisor) {
 		case 1000000000: units = "GHz"; break;
 		case    1000000: units = "MHz"; break;
@@ -819,7 +819,7 @@ size_format(int node, const u_int8_t *buf, size_t len)
 			frac = 0;
 		else
 			frac = (freq / (divisor >> 10)) & 1023;
-			
+
 		switch (divisor) {
 		case 0x40000000: units = "G"; break;
 		case   0x100000: units = "M"; break;

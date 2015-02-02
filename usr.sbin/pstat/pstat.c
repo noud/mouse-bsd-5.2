@@ -583,7 +583,7 @@ nfs_print(struct vnode *vp, int ovflw)
 	case VCHR:
 		type = S_IFCHR;
 		goto device;
-		
+
 	case VBLK:
 		type = S_IFBLK;
 	device:

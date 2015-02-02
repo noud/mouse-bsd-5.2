@@ -139,7 +139,7 @@ psbuf_write(struct puffs_usermount *pu, struct puffs_framebuf *pb,
 	void *win;
 	ssize_t n;
 	size_t winlen, howmuch;
-	
+
 	/* finalize buffer.. could be elsewhere ... */
 	if (CUROFF(pb) == 0) {
 		uint32_t len;
@@ -470,7 +470,7 @@ psbuf_expect_status(struct puffs_framebuf *pb)
 		return INVALRESPONSE;
 
 	FAILRV(psbuf_get_4(pb, &error));
-	
+
 	return sftperr_to_errno(error);
 }
 
@@ -524,7 +524,7 @@ psbuf_do_data(struct puffs_framebuf *pb, uint8_t *data, uint32_t *dlen)
 			return EINVAL;
 		if (winlen == 0)
 			break;
-			
+
 		memcpy(data + dataoff, win, winlen);
 		dataoff += winlen;
 	}

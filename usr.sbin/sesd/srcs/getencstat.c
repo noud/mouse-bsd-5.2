@@ -1,4 +1,4 @@
-/* $NetBSD: getencstat.c,v 1.3 2000/07/04 20:27:40 matt Exp $ */ 
+/* $NetBSD: getencstat.c,v 1.3 2000/07/04 20:27:40 matt Exp $ */
 /* $FreeBSD: $ */
 /* $OpenBSD: $ */
 /*
@@ -28,7 +28,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * Matthew Jacob
  * Feral Software
  * mjacob@feral.com
@@ -73,7 +73,7 @@ main(a, v)
 		v++;
 	}
 	while (*++v) {
-			
+
 		fd = open(*v, O_RDONLY);
 		if (fd < 0) {
 			perror(*v);

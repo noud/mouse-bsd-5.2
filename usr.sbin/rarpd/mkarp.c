@@ -80,7 +80,7 @@ __RCSID("$NetBSD: mkarp.c,v 1.7 2008/07/21 13:36:59 lukem Exp $");
 #define ROUNDUP(a) \
        ((a) > 0 ? (1 + (((a) - 1) | (sizeof(long) - 1))) : sizeof(long))
 
-int	rtmsg(int, int, struct rt_msghdr *, struct sockaddr_inarp *, 
+int	rtmsg(int, int, struct rt_msghdr *, struct sockaddr_inarp *,
 	      struct sockaddr_dl *);
 struct	{
 	struct	rt_msghdr m_rtm;
@@ -88,7 +88,7 @@ struct	{
 }	m_rtmsg;
 
 /*
- * Set an individual arp entry 
+ * Set an individual arp entry
  */
 int
 mkarp(u_char *haddr, u_int32_t ipaddr)

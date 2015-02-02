@@ -190,7 +190,7 @@ static void update_spc(void);
 int  main(int, char **);
 
 /* The fields themselves. */
-static struct field fields[] = 
+static struct field fields[] =
 {
 	{"ascii", &label.asciilabel[0], print_ascii, chval_ascii, 0},
 	{"rpm", &label.rpm, print_int, chval_int, 0},
@@ -621,7 +621,7 @@ putlabel(void)
 	}
 
 	if (rv != 512)
-		errx(1, "short write to `%s': wanted %d, got %d", 
+		errx(1, "short write to `%s': wanted %d, got %d",
 		    diskname, 512, rv);
 
 	label.dirty = 0;
@@ -1202,7 +1202,7 @@ setlabel(void)
 	u.l.d_rpm = label.rpm;
 	u.l.d_interleave = label.intrlv;
 	u.l.d_npartitions = getmaxpartitions();
-	memset(&u.l.d_partitions[0], 0, 
+	memset(&u.l.d_partitions[0], 0,
 	    u.l.d_npartitions * sizeof(struct partition));
 	for (i = 0; i < u.l.d_npartitions; i++) {
 		u.l.d_partitions[i].p_size = p[i].nblk;

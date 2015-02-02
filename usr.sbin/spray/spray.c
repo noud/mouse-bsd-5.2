@@ -124,7 +124,7 @@ main(argc, argv)
 	/* Initialize spray argument */
 	host_array.sprayarr_len = length - SPRAYOVERHEAD;
 	host_array.sprayarr_val = spray_buffer;
-	
+
 
 	/* create connection with server */
 	cl = clnt_create(*argv, SPRAYPROG, SPRAYVERS, "udp");
@@ -135,8 +135,8 @@ main(argc, argv)
 
 
 	/*
-	 * For some strange reason, RPC 4.0 sets the default timeout, 
-	 * thus timeouts specified in clnt_call() are always ignored.  
+	 * For some strange reason, RPC 4.0 sets the default timeout,
+	 * thus timeouts specified in clnt_call() are always ignored.
 	 *
 	 * The following (undocumented) hack resets the internal state
 	 * of the client handle.
@@ -192,7 +192,7 @@ main(argc, argv)
 
 	printf("Rcvd:");
 	print_xferstats(host_stats.counter, length, xmit_time);
-	
+
 	exit (0);
 }
 
@@ -213,11 +213,11 @@ print_xferstats(packets, packetlen, xfertime)
 
 	printf("\t%.0f packets/sec, ", pps);
 
-	if (bps >= 1024) 
+	if (bps >= 1024)
 		printf ("%.1fK ", bps / 1024);
 	else
 		printf ("%.0f ", bps);
-	
+
 	printf("bytes/sec\n");
 }
 

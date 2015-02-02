@@ -40,7 +40,7 @@ made -n and -i work with subnets not named in /etc/networks
 compute the median of the measured clocks, instead of the average
     of "good" times.
 
-vastly improve the accuracy of the clock difference measure by 
+vastly improve the accuracy of the clock difference measure by
     `timedc clockdiff`.
 
 use adjtime() when possible, and directly set the clock only when
@@ -55,7 +55,7 @@ fix uncounted core-dumps on machines that do not allow dereferencing 0
 
 fix "master loop detection".
 
-fix several cases in which multi-homed masters could get into shouting 
+fix several cases in which multi-homed masters could get into shouting
     matches, consuming all available network bandwidth and CPU cycles
     (which ever runs out first), and convincing all bystanders to stop
     advancing their own clocks.

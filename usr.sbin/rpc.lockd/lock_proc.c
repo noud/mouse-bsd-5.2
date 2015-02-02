@@ -208,7 +208,7 @@ get_client(struct sockaddr *host_addr, rpcvers_t vers)
 		netid = "udp6";
 	else
 		netid = "udp";
-#else 
+#else
 	if (host_addr->sa_family == AF_INET6)
 		netid = "tcp6";
 	else

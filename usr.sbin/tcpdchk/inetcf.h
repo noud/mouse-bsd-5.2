@@ -2,7 +2,7 @@
 
  /*
   * @(#) inetcf.h 1.1 94/12/28 17:42:30
-  * 
+  *
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   */
 

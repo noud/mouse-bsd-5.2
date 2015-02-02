@@ -113,7 +113,7 @@ read_data(char *filename, struct tpctl_data *data)
 			*p-- = '\0';
 
 		/* skip space */;
-		p = buf; 
+		p = buf;
 		while (*p != '\0' && strchr(" \t", *p) != NULL)
 			p++;
 

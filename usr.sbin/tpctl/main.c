@@ -137,7 +137,7 @@ main(int argc, char *argv[])
 	/* find out saved parameters for the touch panel */
 	pref = search_data(&data, tp.id);
 	if (opt_forceupdate || pref == NULL) {
-		/* if the parameters wasn't found or '-f' options was 
+		/* if the parameters wasn't found or '-f' options was
 		   specified, do 'calibrarion' */
 		struct wsmouse_calibcoords coords;
 
@@ -150,7 +150,7 @@ main(int argc, char *argv[])
 		replace_data(&data, tp.id, &coords);
 		pref = search_data(&data, tp.id);
 	} else {
-		/* nothing is updated, 
+		/* nothing is updated,
 		   so you don't have to write back the data */
 		opt_noupdate = 1;
 	}
@@ -246,7 +246,7 @@ save_data(char *data_file, struct tpctl_data *data)
 }
 
 /*
- * draw cursors on frame buffer and collect samples in 
+ * draw cursors on frame buffer and collect samples in
  * wamouse_calibcoords structure.
  *
  * return:	0	succeeded

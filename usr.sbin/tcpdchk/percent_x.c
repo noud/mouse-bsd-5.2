@@ -4,9 +4,9 @@
   * of %<char> expansion may be passed on to a shell process. For this
   * reason, characters with a special meaning to shells are replaced by
   * underscores.
-  * 
+  *
   * Diagnostics are reported through syslog(3).
-  * 
+  *
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   */
 

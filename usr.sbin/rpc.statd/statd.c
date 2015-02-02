@@ -181,7 +181,7 @@ main(argc, argv)
  *		of SM_NOTIFY to other systems, so it is normal for the
  *		children to exit when they have done their work.
  */
-void 
+void
 notify_handler(sig)
 	int sig;
 {
@@ -212,7 +212,7 @@ notify_handler(sig)
  * Purpose:	Packaged call of msync() to flush changes to mmap()ed file
  * Returns:	Nothing.  Errors to syslog.
  */
-void 
+void
 sync_file()
 {
 	DBT data;
@@ -318,7 +318,7 @@ bad:
 /*
  * Purpose:	Call the given function if the element is valid
  * Returns:	Nothing - exits on error
- * Notes:	
+ * Notes:
  */
 static int
 walk_one(fun, key, data, ptr)
@@ -342,7 +342,7 @@ walk_one(fun, key, data, ptr)
 /*
  * Purpose:	Iterate over all elements calling the given function
  * Returns:	-1 if function failed, 0 on success
- * Notes:	
+ * Notes:
  */
 static int
 walk_db(fun, ptr)
@@ -395,7 +395,7 @@ bad:
  *		that the host was previously monitored is recorded by
  *		setting the notifyReqd flag, which will in due course
  *		cause a SM_NOTIFY to be sent.
- *		 
+ *
  *		Note that if we crash twice in quick succession, some hosts
  *		may already have notifyReqd set, where we didn't manage to
  *		notify them before the second crash occurred.
@@ -420,7 +420,7 @@ reset_host(key, hi, ptr)
 /*
  * Purpose:	Check if there is work to be done.
  * Returns:	0 if there is no work to be done -1 if there is.
- * Notes:	
+ * Notes:
  */
 static int
 check_work(key, hi, ptr)
@@ -435,7 +435,7 @@ check_work(key, hi, ptr)
 /*
  * Purpose:	Unmonitor a host
  * Returns:	0
- * Notes:	
+ * Notes:
  */
 static int
 unmon_host(key, hi, ptr)
@@ -454,7 +454,7 @@ unmon_host(key, hi, ptr)
 /*
  * Purpose:	Notify one host.
  * Returns:	0 if success -1 on failure
- * Notes:	
+ * Notes:
  */
 static int
 notify_one(key, hi, ptr)
@@ -516,13 +516,13 @@ notify_one(key, hi, ptr)
  *		all hosts that had a monitor list, and incrementing
  *		the state number to the next even value.
  */
-static void 
+static void
 init_file(filename)
 	char *filename;
 {
 	DBT data;
 
-	db = dbopen(filename, O_RDWR|O_CREAT|O_NDELAY|O_EXLOCK, 0644, DB_HASH, 
+	db = dbopen(filename, O_RDWR|O_CREAT|O_NDELAY|O_EXLOCK, 0644, DB_HASH,
 	    NULL);
 	if (db == NULL)
 		err(1, "Cannot open `%s'", filename);
@@ -584,7 +584,7 @@ unmon_hosts()
 	sync_file();
 }
 
-static int 
+static int
 notify_one_host(hostname)
 	char *hostname;
 {

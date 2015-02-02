@@ -191,7 +191,7 @@ getnode(struct puffs_usermount *pu, struct puffs_pathobj *po, int nodetype)
 			if (sysctl(myname, po->po_len, sn, &sl,
 			    &qnode, sizeof(qnode)) == -1)
 				abort();
-			
+
 			for (i = 0; i < sl / sizeof(struct sysctlnode); i++) {
 				 if (sn[i].sysctl_num==(*sname)[po->po_len-1]) {
 					nodetype = sn[i].sysctl_flags;
@@ -202,7 +202,7 @@ getnode(struct puffs_usermount *pu, struct puffs_pathobj *po, int nodetype)
 				return NULL;
 		}
 
-		sfs = emalloc(sizeof(struct sfsnode));	
+		sfs = emalloc(sizeof(struct sfsnode));
 		sfs->sysctl_flags = nodetype;
 		sfs->myid = nextid++;
 

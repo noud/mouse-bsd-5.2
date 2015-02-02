@@ -1,4 +1,4 @@
-#	$NetBSD: Makefile,v 1.48 2008/10/25 22:27:39 apb Exp $	
+#	$NetBSD: Makefile,v 1.48 2008/10/25 22:27:39 apb Exp $
 
 .include <bsd.own.mk>
 
@@ -8,7 +8,7 @@ SRCDIR=	${NETBSDSRCDIR}/dist/tcpdump
 .PATH:	${SRCDIR}
 
 PROG=	tcpdump
-MAN=	tcpdump.8 
+MAN=	tcpdump.8
 
 SRCS=	addrtoname.c cpack.c gmpls.c gmt2local.c machdep.c oui.c parsenfsfh.c \
 	print-802_11.c print-ah.c print-aodv.c print-ap1394.c print-arcnet.c \
@@ -50,7 +50,7 @@ DPADD+=	${LIBPCAP} ${LIBL}
 
 CPPFLAGS+=	-I${.CURDIR} -I${SRCDIR} -I${NETBSDSRCDIR}/sys/dist/pf
 
-AWKS= atime.awk packetdat.awk stime.awk send-ack.awk   
+AWKS= atime.awk packetdat.awk stime.awk send-ack.awk
 
 CPPFLAGS+= \
 	-DHAVE___ATTRIBUTE__=1 -DHAVE_FCNTL_H=1 -DHAVE_RPC_RPCENT_H=1 \
@@ -77,11 +77,11 @@ CPPFLAGS+=-D_U_="__attribute__((unused))"
 SRCS+=	print-ip6.c print-ip6opts.c print-ripng.c print-icmp6.c print-frag6.c \
 	print-rt6.c print-ospf6.c print-dhcp6.c
 
-CPPFLAGS+=-DINET6=1 -DHAVE_RES_USE_INET6=1 
+CPPFLAGS+=-DINET6=1 -DHAVE_RES_USE_INET6=1
 .endif
 
 .if (${MKCRYPTO} != "no")
-CPPFLAGS+=-DHAVE_LIBCRYPTO=1 
+CPPFLAGS+=-DHAVE_LIBCRYPTO=1
 LDADD+=	-lcrypto -lcrypt
 DPADD+=	${LIBCRYPTO} ${LIBCRYPT}
 .endif

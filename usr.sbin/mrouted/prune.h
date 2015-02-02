@@ -46,7 +46,7 @@ struct gtable {
  *
  * When source-based prunes exist, there will be a struct ptable here as well.
  */
-struct stable 
+struct stable
 {
     struct stable  *st_next;       	/* pointer to the next entry        */
     u_int32_t	    st_origin;		/* host origin of multicasts        */
@@ -56,7 +56,7 @@ struct stable
 /*
  * structure to store incoming prunes.  Can hang off of either group or source.
  */
-struct ptable 
+struct ptable
 {
     struct ptable  *pt_next;		/* pointer to the next entry	    */
     u_int32_t	    pt_router;		/* router that sent this prune	    */

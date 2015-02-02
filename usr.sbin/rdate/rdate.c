@@ -32,7 +32,7 @@
 
 /*
  * rdate.c: Set the date from the specified host
- * 
+ *
  * 	Uses the rfc868 time protocol at socket 37.
  *	Time is returned as the number of seconds since
  *	midnight January 1st 1900.
@@ -131,7 +131,7 @@ main(int argc, char *argv[])
 			emsg = "connect";
 			continue;
 		}
-		
+
 		break;
 	}
 	if (s < 0)
@@ -166,7 +166,7 @@ main(int argc, char *argv[])
 	if (!silent) {
 		(void) fputs(ctime(&tim), stdout);
 		if (slidetime)
-		    (void) fprintf(stdout, 
+		    (void) fprintf(stdout,
 				   "%s: adjust local clock by %d seconds\n",
 				   getprogname(), adjustment);
 	}

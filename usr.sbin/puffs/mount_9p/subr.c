@@ -131,11 +131,11 @@ getdfwithoffset(struct puffs_usermount *pu, struct p9pnode *p9n, off_t wantoff,
 		advance = wantoff - curoff;
 
 		tag = NEXTTAG(p9p);
-		p9pbuf_put_1(pb, P9PROTO_T_READ);  
+		p9pbuf_put_1(pb, P9PROTO_T_READ);
 		p9pbuf_put_2(pb, tag);
-		p9pbuf_put_4(pb, dfp->fid);       
+		p9pbuf_put_4(pb, dfp->fid);
 		p9pbuf_put_8(pb, 0);
-		p9pbuf_put_4(pb, advance);       
+		p9pbuf_put_4(pb, advance);
 		GETRESPONSE(pb);
 
 		if (p9pbuf_get_type(pb) != P9PROTO_R_READ) {

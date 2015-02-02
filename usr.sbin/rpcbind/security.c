@@ -56,7 +56,7 @@ int log_severity = PORTMAP_LOG_FACILITY|PORTMAP_LOG_SEVERITY;
 
 extern int verboselog;
 
-int 
+int
 check_access(SVCXPRT *xprt, rpcproc_t proc, void *args, int rpcbvers)
 {
 	struct netbuf *caller = svc_getrpccaller(xprt);
@@ -149,7 +149,7 @@ is_loopback(struct netbuf *nbuf)
 	default:
 		break;
 	}
-	
+
 	return 0;
 }
 
@@ -180,7 +180,7 @@ logit(int severity, struct sockaddr *addr, rpcproc_t procnum, rpcprog_t prognum,
 	/* RPCBPROC_GETADDRLIST */	"getaddrlist",
 	/* RPCBPROC_GETSTAT */		"getstat"
 	};
-   
+
 	/*
 	 * Fork off a process or the portmap daemon might hang while
 	 * getrpcbynumber() or syslog() does its thing.

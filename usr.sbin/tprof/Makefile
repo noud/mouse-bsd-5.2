@@ -1,7 +1,7 @@
 #	$NetBSD: Makefile,v 1.1 2008/01/01 21:33:26 yamt Exp $
 
 PROG=	tprof
-NOMAN=	
+NOMAN=
 
 WARNS?=	4
 

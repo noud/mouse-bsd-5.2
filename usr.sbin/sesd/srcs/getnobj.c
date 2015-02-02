@@ -1,4 +1,4 @@
-/* $NetBSD: getnobj.c,v 1.3 2007/01/16 17:32:05 hubertf Exp $ */ 
+/* $NetBSD: getnobj.c,v 1.3 2007/01/16 17:32:05 hubertf Exp $ */
 /* $FreeBSD: $ */
 /* $OpenBSD: $ */
 /*
@@ -28,7 +28,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * Matthew Jacob
  * Feral Software
  * mjacob@feral.com

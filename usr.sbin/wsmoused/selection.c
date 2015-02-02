@@ -608,7 +608,7 @@ static void
 selarea_calculate(void)
 {
 	size_t i;
-	
+
 	i = Selmouse.sm_max_x + 1;
 	Selarea.sa_y2 = Selmouse.sm_y;
 	Selarea.sa_x2 = Selmouse.sm_x;

@@ -245,7 +245,7 @@ parse_bdf(const char *str)
 		return (-1);
 
 	value = strtol(str, &end, 0);
-	if(*end != '\0') 
+	if(*end != '\0')
 		errx(1, "\"%s\" is not a number", str);
 
 	return value;

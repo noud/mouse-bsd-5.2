@@ -154,7 +154,7 @@ main(int argc, char **argv)
 			if (sysctl(mib, sizeof(mib) / sizeof(int), NULL,
 			    NULL, sa, sizeof(sa)) == -1) {
 				rval = 1;
-				warn("%s:%s, %s:%s", 
+				warn("%s:%s, %s:%s",
 				    lhp.host, lhp.serv, fhp.host, fhp.serv);
 			} else
 				(void)printf("%s:%s %s:%s dropped\n",

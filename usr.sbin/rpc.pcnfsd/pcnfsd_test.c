@@ -103,7 +103,7 @@ scramble(s1, s2)
 char           *s1;
 char           *s2;
 {
-        while (*s1) 
+        while (*s1)
               {
               *s2++ = (*s1 ^ zchar) & 0x7f;
               s1++;
@@ -130,7 +130,7 @@ int             i;
 		clnt_perror(cl2, server);
 		return(1);
 	}
-	
+
 	printf("results: vers = '%s', cm = '%s'\n",
 		rp->vers, rp->cm);
 	printf("facilities_len = %d\n", rp->facilities.facilities_len);
@@ -147,7 +147,7 @@ int             i;
 		free(rp->facilities.facilities_val);
 	if(rp->vers)
 		free(rp->vers);
-	
+
 	return(0);
 }
 
@@ -177,7 +177,7 @@ int             i;
 		clnt_perror(cl2, server);
 		return(1);
 	}
-	
+
 	if(rp->stat == AUTH_RES_FAIL)
 		printf("results: stat = AUTH_RES_FAIL\n");
 	else {
@@ -198,7 +198,7 @@ int             i;
 		free(rp->gids.gids_val);
 	if(rp->home)
 		free(rp->home);
-	
+
 	return(0);
 }
 
@@ -520,7 +520,7 @@ struct mapreq_res_item *rip;
 	a.req_list = make_mapreq_entry(MAP_REQ_UID, 906, NULL,
 		make_mapreq_entry(MAP_REQ_GID, 1, NULL,
 		 make_mapreq_entry(MAP_REQ_UNAME, 0, "root",
-		   make_mapreq_entry(MAP_REQ_GNAME, 0, "wheel", 
+		   make_mapreq_entry(MAP_REQ_GNAME, 0, "wheel",
 		      make_mapreq_entry(MAP_REQ_UNAME, 0, "bogus", NULL)))));
 
 	printf("\ninvoking pr_mapid_2\n");
@@ -535,7 +535,7 @@ struct mapreq_res_item *rip;
 	rip = rp->res_list;
 	while(rip) {
 		printf("request type = %d, status = %d, id = %d, name = '%s'\n",
-			rip->req, rip->stat, rip->id, 
+			rip->req, rip->stat, rip->id,
 			(rip->name ? rip->name : "(NULL)"));
 		rip = rip->mapreq_next;
 	}

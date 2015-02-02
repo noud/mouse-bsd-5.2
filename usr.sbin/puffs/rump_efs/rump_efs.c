@@ -50,7 +50,7 @@ main(int argc, char *argv[])
 	setprogname(argv[0]);
 
 	mount_efs_parseargs(argc, argv, &args, &mntflags, canon_dev, canon_dir);
-	rv = p2k_run_fs(MOUNT_EFS, canon_dev, canon_dir, mntflags, 
+	rv = p2k_run_fs(MOUNT_EFS, canon_dev, canon_dir, mntflags,
 		&args, sizeof(args), 0);
 	if (rv)
 		err(1, "mount");

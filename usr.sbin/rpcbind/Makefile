@@ -8,7 +8,7 @@ WARNS=4
 PROG=	rpcbind
 MAN=	rpcbind.8
 SRCS=	check_bound.c rpcb_stat.c rpcb_svc_4.c rpcbind.c pmap_svc.c \
-	rpcb_svc.c rpcb_svc_com.c security.c warmstart.c util.c 
+	rpcb_svc.c rpcb_svc_com.c security.c warmstart.c util.c
 
 LIBCDIR=        ${NETBSDSRCDIR}/lib/libc
 LIBCRPCDIR=     ${LIBCDIR}/rpc

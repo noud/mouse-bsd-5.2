@@ -85,7 +85,7 @@ typedef string comment<COMMENTLEN>;
 ** service in this way, please do so in a way which will avoid
 ** problems if your client attempts to interoperate with a server
 ** which does not support your extension. One way to do this is to
-** use the 
+** use the
 */
 
 typedef string spoolname<SPOOLNAMELEN>;
@@ -114,7 +114,7 @@ typedef string options<OPTIONSLEN>;
 ** reserved for client use. The second character specifies the type of
 ** data in the print file.  The following types are defined (an
 ** implementation may define additional values):
-** 
+**
 **  p - PostScript data. The client will ensure that a valid
 **      PostScript header is included.
 **  d - Diablo 630 data.
@@ -124,7 +124,7 @@ typedef string options<OPTIONSLEN>;
 **  r - Raw print data. The client performs no filtering.
 **  u - User-defined. Reserved for custom extensions. A vanilla
 **      pcnfsd server will treat this as equivalent to "r"
-** 
+**
 ** If diablo data (type 'd') is specified, a formatting specification
 ** string will be appended. This has the form:
 ** 	ppnnnbbb
@@ -259,7 +259,7 @@ enum maprstat {
 ** an individual mapping request.
 */
 
-/* 
+/*
 **********************************************************
 ** Version 1 of the PCNFSD protocol.
 **********************************************************
@@ -295,7 +295,7 @@ struct pr_start_results {
 };
 
 
-/* 
+/*
 **********************************************************
 ** Version 2 of the PCNFSD protocol.
 **********************************************************
@@ -322,7 +322,7 @@ struct v2_pr_init_results {
         spoolname       dir;
         comment         cm;
 };
- 
+
 struct v2_pr_start_args {
         client          system;
         printername     pn;
@@ -354,10 +354,10 @@ struct v2_pr_list_results {
         comment        cm;
         pr_list        printers;
 };
- 
+
 struct v2_pr_queue_args {
         printername     pn;
-        client          system; 
+        client          system;
         username        user;
         bool            just_mine;
         comment         cm;
@@ -376,7 +376,7 @@ struct pr_queue_item {
         comment        cm;
         pr_queue       pr_next;
 };
- 
+
 struct v2_pr_queue_results {
         pirstat        stat;
         comment        cm;
@@ -385,35 +385,35 @@ struct v2_pr_queue_results {
         int            qshown;
         pr_queue       jobs;
 };
- 
+
 
 struct v2_pr_cancel_args {
         printername     pn;
         client          system;
         username        user;
-        printjobid      id; 
+        printjobid      id;
         comment         cm;
 };
 struct v2_pr_cancel_results {
         pcrstat        stat;
         comment        cm;
 };
- 
 
-struct v2_pr_status_args { 
-        printername     pn; 
-        comment         cm; 
-}; 
-struct v2_pr_status_results { 
+
+struct v2_pr_status_args {
+        printername     pn;
+        comment         cm;
+};
+struct v2_pr_status_results {
         pirstat        stat;
         bool           avail;
         bool           printing;
 	int            qlen;
         bool           needs_operator;
 	comment        status;
-        comment        cm; 
-}; 
-  
+        comment        cm;
+};
+
 struct v2_pr_admin_args {
         client          system;
         username        user;
@@ -443,26 +443,26 @@ struct v2_pr_hold_args {
         printername     pn;
         client          system;
         username        user;
-        printjobid      id; 
+        printjobid      id;
         comment         cm;
 };
 struct v2_pr_hold_results {
         pcrstat        stat;
         comment        cm;
 };
- 
+
 struct v2_pr_release_args {
         printername     pn;
         client          system;
         username        user;
-        printjobid      id; 
+        printjobid      id;
         comment         cm;
 };
 struct v2_pr_release_results {
         pcrstat        stat;
         comment        cm;
 };
- 
+
 
 typedef struct mapreq_arg_item *mapreq_arg;
 
@@ -493,7 +493,7 @@ struct v2_mapid_results {
         comment         cm;
         mapreq_res      res_list;
 };
- 
+
 struct v2_auth_args {
         client          system;
         ident           id;
@@ -520,14 +520,14 @@ struct v2_alert_results {
         alrstat          stat;
         comment         cm;
 };
- 
 
-/* 
+
+/*
 **********************************************************
 ** Protocol description for the PCNFSD program
 **********************************************************
 */
-/* 
+/*
 ** Version 1 of the PCNFSD protocol.
 **
 ** -- PCNFSD_NULL() = 0
@@ -567,32 +567,32 @@ struct v2_alert_results {
 **
 ** -- PCNFSD2_PR_STATUS() = 6
 **	Determine the status of a printer.
-**	
+**
 ** -- PCNFSD2_PR_CANCEL() = 7
 **	Cancel a print job.
-**	
+**
 ** -- PCNFSD2_PR_ADMIN() = 8
 **	Perform an implementation-dependent printer administration
 **	operation.
-**	
+**
 ** -- PCNFSD2_PR_REQUEUE() = 9
 **	Change the queue position of a previously-submitted print job.
-**	
+**
 ** -- PCNFSD2_PR_HOLD() = 10
 **	Place a "hold" on a previously-submitted print job. The job
 **	will remain in the queue, but will not be printed.
-**	
+**
 ** -- PCNFSD2_PR_RELEASE() = 11
 **	Release the "hold" on a previously-held print job.
-**	
+**
 ** -- PCNFSD2_MAPID() = 12
 **	Perform one or more translations between user and group
 **	names and IDs.
-**	
+**
 ** -- PCNFSD2_AUTH() = 13
 **	Perform user authentication - map username, password into uid, gid;
 **	may also return secondary gids, home directory, umask.
-**	
+**
 ** -- PCNFSD2_ALERT() = 14
 **	Send a message to the system operator.
 */

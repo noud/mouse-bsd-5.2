@@ -160,7 +160,7 @@ static int getquotagid __P((void));
 static int hasquota __P((struct fstab *, int, char **));
 static struct fileusage *lookup __P((u_int32_t, int));
 static struct fileusage *addid __P((u_int32_t, int, const char *));
-static u_int32_t subsequent __P((u_int32_t, int)); 
+static u_int32_t subsequent __P((u_int32_t, int));
 static union comb_dinode *getnextinode __P((ino_t));
 static void setinodebuf __P((ino_t));
 static void freeinodebuf __P((void));
@@ -923,8 +923,8 @@ bread(bno, buf, cnt)
 		err(1, "block %lld", (long long)bno);
 }
 
-void    
+void
 infohandler(int sig)
 {
 	got_siginfo = 1;
-} 
+}

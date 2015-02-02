@@ -55,7 +55,7 @@ bytenetorder(struct tsp *ptr)
 		ptr->tsp_time.tv_sec = htonl((uint32_t)ptr->tsp_time.tv_sec);
 		ptr->tsp_time.tv_usec = htonl((uint32_t)ptr->tsp_time.tv_usec);
 		break;
-	
+
 	default:
 		break;		/* nothing more needed */
 	}
@@ -74,7 +74,7 @@ bytehostorder(struct tsp *ptr)
 		ptr->tsp_time.tv_sec = ntohl((uint32_t)ptr->tsp_time.tv_sec);
 		ptr->tsp_time.tv_usec = ntohl((uint32_t)ptr->tsp_time.tv_usec);
 		break;
-	
+
 	default:
 		break;		/* nothing more needed */
 	}

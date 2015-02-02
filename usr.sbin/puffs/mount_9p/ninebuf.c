@@ -261,7 +261,7 @@ int
 p9pbuf_get_2(struct puffs_framebuf *pb, uint16_t *val)
 {
 	int rv;
-	 
+
 	rv = puffs_framebuf_getdata(pb, val, 2);
 	LE16TOH(*val);
 
@@ -272,7 +272,7 @@ int
 p9pbuf_get_4(struct puffs_framebuf *pb, uint32_t *val)
 {
 	int rv;
-	 
+
 	rv = puffs_framebuf_getdata(pb, val, 4);
 	LE32TOH(*val);
 
@@ -283,7 +283,7 @@ int
 p9pbuf_get_8(struct puffs_framebuf *pb, uint64_t *val)
 {
 	int rv;
-	 
+
 	rv = puffs_framebuf_getdata(pb, val, 8);
 	LE64TOH(*val);
 
@@ -293,7 +293,7 @@ p9pbuf_get_8(struct puffs_framebuf *pb, uint64_t *val)
 int
 p9pbuf_get_data(struct puffs_framebuf *pb, uint8_t **dp, uint16_t *dlenp)
 {
-        uint8_t *data;              
+        uint8_t *data;
 	uint16_t len;
 	int rv;
 
@@ -303,9 +303,9 @@ p9pbuf_get_data(struct puffs_framebuf *pb, uint8_t **dp, uint16_t *dlenp)
 
         if (puffs_framebuf_remaining(pb) < len)
                 return EPROTO;
- 
+
 	if (dp) {
-		data = emalloc(len+1);   
+		data = emalloc(len+1);
 		rv = puffs_framebuf_getdata(pb, data, len);
 		if (rv) {
 			free(data);

@@ -20,7 +20,7 @@
  * Xerox PARC).  It attempts to parallel in command syntax and output
  * format the unicast traceroute program written by Van Jacobson (LBL)
  * for the parts where that makes sense.
- * 
+ *
  * Copyright (c) 1998-2001.
  * The University of Southern California/Information Sciences Institute.
  * All rights reserved.
@@ -180,7 +180,7 @@ inet_name(u_int32_t addr)
 }
 
 
-u_int32_t 
+u_int32_t
 host_addr(char *name)
 {
     struct hostent *e = (struct hostent *)0;
@@ -284,7 +284,7 @@ flag_type(u_int type)
 	(void)snprintf(buf, sizeof buf, "Unknown error code %d", type);
 	return (buf);
     }
-}    
+}
 
 /*
  * If destination is on a local net, get the netmask, else set the
@@ -1063,7 +1063,7 @@ print_stats(struct resp_buf *base, struct resp_buf *prev, struct resp_buf *new)
     VAL_TO_MASK(smask, b->tr_smask);
     printf("  Source        Response Dest");
     printf("    Packet Statistics For     Only For Traffic\n");
-    s1 = inet_fmt(qsrc); 
+    s1 = inet_fmt(qsrc);
     printf("%-15s %-15s  All Multicast Traffic     From %s\n",
 	   ((b->tr_inaddr & smask) == (qsrc & smask)) ? s1 : "   * * *       ",
 	   inet_fmt(base->qhdr.tr_raddr), s1);
@@ -1119,7 +1119,7 @@ print_stats(struct resp_buf *base, struct resp_buf *prev, struct resp_buf *new)
 	if (ttl < n->tr_fttl) ttl = n->tr_fttl;
 	else ++ttl;
     }
-	   
+
     printf("     %c      \\__   ttl%5d   ", first ? 'v' : '|', ttl);
     stat_line(p, n, FALSE, r);
     if (!first) {
@@ -1338,7 +1338,7 @@ Usage: mtrace [-Mlnps] [-w wait] [-m max_hops] [-q nqueries] [-g gateway]\n\
 	char myhostname[MAXHOSTNAMELEN];
 	struct hostent *hp;
 	int error;
-    
+
 	error = sysinfo(SI_HOSTNAME, myhostname, sizeof(myhostname));
 	if (error == -1) {
 	    perror("Getting my hostname");
@@ -1388,7 +1388,7 @@ Usage: mtrace [-Mlnps] [-w wait] [-m max_hops] [-q nqueries] [-g gateway]\n\
     }
 
     /*
-     * If the response is to be a multicast address, make sure we 
+     * If the response is to be a multicast address, make sure we
      * are listening on that multicast address.
      */
     if (raddr) {
@@ -1427,7 +1427,7 @@ Usage: mtrace [-Mlnps] [-w wait] [-m max_hops] [-q nqueries] [-g gateway]\n\
 	hops = qno;
 	tries = nqueries;
 	printf("Querying reverse path, maximum %d hops... ", qno);
-	fflush(stdout); 
+	fflush(stdout);
     }
     base.rtime = 0;
     base.len = 0;

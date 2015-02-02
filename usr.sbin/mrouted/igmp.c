@@ -45,7 +45,7 @@ init_igmp(void)
     send_buf = malloc(RECV_BUF_SIZE);
     send_buflen = RECV_BUF_SIZE;
 
-    if ((igmp_socket = socket(AF_INET, SOCK_RAW, IPPROTO_IGMP)) < 0) 
+    if ((igmp_socket = socket(AF_INET, SOCK_RAW, IPPROTO_IGMP)) < 0)
 	logit(LOG_ERR, errno, "IGMP socket");
 
     k_hdr_include(TRUE);	/* include IP header when sending */
@@ -138,9 +138,9 @@ accept_igmp(int recvlen)
     src       = ip->ip_src.s_addr;
     dst       = ip->ip_dst.s_addr;
 
-    /* 
+    /*
      * this is most likely a message from the kernel indicating that
-     * a new src grp pair message has arrived and so, it would be 
+     * a new src grp pair message has arrived and so, it would be
      * necessary to install a route into the kernel for this.
      */
     if (ip->ip_p == 0) {
@@ -184,7 +184,7 @@ accept_igmp(int recvlen)
 	case IGMP_v2_HOST_MEMBERSHIP_REPORT:
 	    accept_group_report(src, dst, group, igmp->igmp_type);
 	    return;
-	    
+
 	case IGMP_HOST_LEAVE_MESSAGE:
 	    accept_leave_message(src, dst, group);
 	    return;

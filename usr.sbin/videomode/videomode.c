@@ -158,7 +158,7 @@ dump_vm(vm)
 {
 	(void)printf("%d: %s\n", vm->mode_num, vm->mode_descr);
 	(void)printf(
-	    "pixel_clock = %lu, width = %d, height = %d, depth = %d\n", 
+	    "pixel_clock = %lu, width = %d, height = %d, depth = %d\n",
 	    vm->pixel_clock, vm->disp_width, vm->disp_height, vm->depth);
 }
 

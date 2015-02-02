@@ -1,4 +1,4 @@
-/* $NetBSD: setencstat.c,v 1.2 2000/02/22 06:06:09 mjacob Exp $ */ 
+/* $NetBSD: setencstat.c,v 1.2 2000/02/22 06:06:09 mjacob Exp $ */
 /* $FreeBSD: $ */
 /* $OpenBSD: $ */
 /*
@@ -28,7 +28,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- * 
+ *
  * Matthew Jacob
  * Feral Software
  * mjacob@feral.com
@@ -61,7 +61,7 @@ main(a, v)
 		perror(v[1]);
 		return (1);
 	}
-	
+
 	val =  strtol(v[2], NULL, 0);
 	stat = (ses_encstat) val;
 	if (ioctl(fd, SESIOC_SETENCSTAT, (caddr_t) &stat) < 0) {

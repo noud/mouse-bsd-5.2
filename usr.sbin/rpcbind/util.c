@@ -271,7 +271,7 @@ found:
 		tbuf.len = clnt_sa->sa_len;
 		tbuf.maxlen = sizeof (struct sockaddr_storage);
 		tbuf.buf = newsin;
-		break;				
+		break;
 #ifdef INET6
 	case AF_INET6:
 		assert(newsin6);

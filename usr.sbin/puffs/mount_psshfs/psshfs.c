@@ -74,7 +74,7 @@ static int sighup;
 static void
 add_ssharg(char ***sshargs, int *nargs, char *arg)
 {
-	
+
 	*sshargs = realloc(*sshargs, (*nargs + 2) * sizeof(char*));
 	if (!*sshargs)
 		err(1, "realloc");

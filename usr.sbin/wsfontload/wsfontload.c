@@ -54,9 +54,9 @@ static struct {
 	const char *name;
 	int val;
 } fontorders[] = {
-	{ "known", WSDISPLAY_FONTORDER_KNOWN}, 
-	{ "l2r", WSDISPLAY_FONTORDER_L2R}, 
-	{ "r2l", WSDISPLAY_FONTORDER_R2L}, 
+	{ "known", WSDISPLAY_FONTORDER_KNOWN},
+	{ "l2r", WSDISPLAY_FONTORDER_L2R},
+	{ "r2l", WSDISPLAY_FONTORDER_R2L},
 };
 
 static struct {
@@ -96,7 +96,7 @@ rgetfontorder(int fontorder)
 	return "unknown";
 }
 
-/* 
+/*
  * map given encoding to its string representation
  */
 static const char *
@@ -222,7 +222,7 @@ main(int argc, char **argv)
 		printf("name:       %s\n", f.name);
 		printf("firstchar:  %d\n", f.firstchar);
 		printf("numchars:   %d\n", f.numchars);
-		printf("encoding:   %s (%d)\n", 
+		printf("encoding:   %s (%d)\n",
 			rgetencoding(f.encoding), f.encoding);
 		printf("fontwidth:  %d\n", f.fontwidth);
 		printf("fontheight: %d\n", f.fontheight);

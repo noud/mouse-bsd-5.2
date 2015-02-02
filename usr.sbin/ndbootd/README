@@ -24,7 +24,7 @@ where OPTIONS are:
                           find a second-stage boot program in the file
                           BOOT2-BIN or in the directory DIR
   -i, --interface NAME    use interface NAME
-  -w, --window-size COUNT 
+  -w, --window-size COUNT
                           send at most COUNT unacknowledged packets [default=6]
   -d, --debug             set debug mode
 

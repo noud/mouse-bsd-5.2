@@ -374,12 +374,12 @@ int optlen;			/* length of ip options */
 int mtus[] = {
         17914,
          8166,
-         4464,  
-         4352,  
+         4464,
+         4352,
          2048,
-         2002,  
-         1536,  
-         1500,  
+         2002,
+         1536,
+         1500,
          1492,
 	 1480,
 	 1280,
@@ -389,10 +389,10 @@ int mtus[] = {
           544,
           512,
           508,
-          296, 
-           68, 
+          296,
+           68,
             0
-};      
+};
 int *mtuptr = &mtus[0];
 int mtudisc = 0;
 int nextmtu;   /* from ICMP error, set by packet_ok(), might be 0 */
@@ -907,7 +907,7 @@ main(int argc, char **argv)
 		freehostinfo(hi);
 	}
 
-	/* 
+	/*
 	 * If not root, make sure source address matches a local interface.
 	 * (The list of addresses produced by ifaddrlist() automatically
 	 * excludes interfaces that are marked down and/or loopback.)
@@ -937,7 +937,7 @@ main(int argc, char **argv)
 	if (as_path) {
 		asn = as_setup(as_server);
 		if (asn == NULL) {
-			Fprintf(stderr, "%s: as_setup failed, AS# lookups disabled\n", 
+			Fprintf(stderr, "%s: as_setup failed, AS# lookups disabled\n",
 				prog);
 			(void)fflush(stderr);
 			as_path = 0;
@@ -1159,13 +1159,13 @@ decode_extensions(unsigned char *buf, int ip_len)
          */
         if (ntohs(cmn_hdr->checksum) &&
             in_cksum((u_short *)cmn_hdr, datalen)) {
- 
+
             return;
         }
- 
+
         buf += sizeof(*cmn_hdr);
         datalen -= sizeof(*cmn_hdr);
- 
+
         while (datalen > 0) {
 		obj_hdr = (struct icmp_ext_obj_hdr *)buf;
 		obj_len = ntohs(obj_hdr->length);
@@ -1178,23 +1178,23 @@ decode_extensions(unsigned char *buf, int ip_len)
 		}
 
 		datalen -= obj_len;
- 
+
 		/*
 		 * Move past the object header
 		 */
 		buf += sizeof(struct icmp_ext_obj_hdr);
 		obj_len -= sizeof(struct icmp_ext_obj_hdr);
- 
+
 		switch (obj_hdr->class_num) {
 		case MPLS_STACK_ENTRY_CLASS:
 			switch (obj_hdr->c_type) {
 			case MPLS_STACK_ENTRY_C_TYPE:
 				while (obj_len >= sizeof(uint32_t)) {
 					mpls.mpls_h = ntohl(*(uint32_t *)buf);
- 
+
 					buf += sizeof(uint32_t);
 					obj_len -= sizeof(uint32_t);
- 
+
 					printf(" [MPLS: Label %d Exp %d]",
 					    mpls.mpls.label, mpls.mpls.exp);
 				}
@@ -1216,7 +1216,7 @@ decode_extensions(unsigned char *buf, int ip_len)
 				break;
 			}
 			break;
- 
+
 		default:
 			/*
 			 * Unknown object, skip past it
@@ -1237,7 +1237,7 @@ dump_packet()
 	Fprintf(stderr, "packet data:");
 
 #ifdef __hpux
-	for (p = useicmp ? (u_char *)outicmp : (u_char *)outudp, i = 0; i < 
+	for (p = useicmp ? (u_char *)outicmp : (u_char *)outudp, i = 0; i <
 	    i < packlen - (sizeof(*outip) + optlen); i++)
 #else
 	for (p = (u_char *)outip, i = 0; i < packlen; i++)
@@ -1376,7 +1376,7 @@ again:
 			 * decrease the packet size until we find one that
 			 * works.
 			 *
-			 * XXX maybe we should try to read the outgoing if's 
+			 * XXX maybe we should try to read the outgoing if's
 			 * mtu?
 			 */
 			if (errno == EMSGSIZE) {
@@ -1387,7 +1387,7 @@ again:
 				Fprintf(stderr, "%s: sendto: %s\n",
 				    prog, strerror(errno));
 		}
-		
+
 		Printf("%s: wrote %s %d chars, ret=%d\n",
 		    prog, hostname, packlen, cc);
 		(void)fflush(stdout);
@@ -1401,7 +1401,7 @@ again:
 		Printf("%2d ", ttl);
 		printed_ttl = 1;
 	}
-	
+
 }
 
 double
@@ -1468,7 +1468,7 @@ packet_ok(u_char *buf, int cc, struct sockaddr_in *from, int seq)
 		hlen = hip->ip_hl << 2;
 
 		nextmtu = ntohs(icp->icmp_nextmtu);	/* for frag_err() */
-			
+
 		if (useicmp) {
 			/* XXX */
 			if (type == ICMP_ECHOREPLY &&

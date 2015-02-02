@@ -238,7 +238,7 @@ bincvt(char *sysfile, char *outfile, void *img, int fsize)
 	free(outfile);
 	return;
 }
-   
+
 static void
 firmcvt(char *firmfile)
 {

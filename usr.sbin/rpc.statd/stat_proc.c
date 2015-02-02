@@ -157,7 +157,7 @@ sm_mon_1_svc(arg, req)
  *		In the unlikely event of more than one identical monitor
  *		request, all are removed.
  */
-int 
+int
 do_unmon(name, hp, ptr)
 	char *name;
 	HostInfo *hp;

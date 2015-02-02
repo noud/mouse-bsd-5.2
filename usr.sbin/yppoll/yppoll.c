@@ -186,7 +186,7 @@ get_remote_info(const char *indomain, const char *inmap, const char *server,
 	if (client == NULL)
 		errx(1, "clnt%s_create: no contact with host %s.",
 		    tcp ? "tcp" : "udp", server);
-	
+
 	yprnk.domain = indomain;
 	yprnk.map = inmap;
 

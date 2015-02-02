@@ -54,7 +54,7 @@ int input_is_unicode = 0;
 #define IS_UNICODE 	1
 #define ISNT_UNICODE	2
 static size_t opt_unicode_input(char *buf, size_t max_size);
- 
+
 #define YY_INPUT(buf, result, max_size)	\
 	result = opt_unicode_input(buf, max_size)
 
@@ -168,7 +168,7 @@ opt_unicode_input(char *buf, size_t max_size)
 			return YY_NULL;
 		}
 		rb = fread(buf, 2, 1, yyin);
-		if (!rb) 
+		if (!rb)
 			return YY_NULL;
 		if ((unsigned char)buf[0] == 0xff
 		    && (unsigned char)buf[1] == 0xfe) {

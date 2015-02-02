@@ -237,7 +237,7 @@ ParseConfig()
 			 *  the entire record is invalidated.
 			 */
 			if (i == 0) {
-				FreeClient(client);	
+				FreeClient(client);
 				continue;
 			}
 		}

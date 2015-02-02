@@ -119,7 +119,7 @@ stmt	: error
 			    if (!(v->uv_flags & VIFF_TUNNEL) &&
 				$2 == v->uv_lcl_addr)
 				break;
-			
+
 			if (vifi == numvifs)
 			    fatal("%s is not a configured interface",
 				inet_fmt($2));
@@ -520,7 +520,7 @@ yylex()
 		return ADDRMASK;
 	}
 	if ((addr = inet_parse(q,0)) != 0xffffffff &&
-	    inet_valid_host(addr)) { 
+	    inet_valid_host(addr)) {
 		yylval.addr = addr;
 		return ADDR;
 	}

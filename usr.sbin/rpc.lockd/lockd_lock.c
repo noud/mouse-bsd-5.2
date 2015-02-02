@@ -209,7 +209,7 @@ testlock(struct nlm4_lock *lock, int flags)
 }
 
 /*
- * getlock: try to acquire the lock. 
+ * getlock: try to acquire the lock.
  * If file is already locked and we can sleep, put the lock in the list with
  * status LKST_WAITING; it'll be processed later.
  * Otherwise try to lock. If we're allowed to block, fork a child which
@@ -225,7 +225,7 @@ getlock(nlm4_lockargs * lckarg, struct svc_req *rqstp, int flags)
 	if (grace_expired == 0 && lckarg->reclaim == 0)
 		return (flags & LOCK_V4) ?
 		    (enum nlm_stats)nlm4_denied_grace_period : nlm_denied_grace_period;
-			
+
 	/* allocate new file_lock for this request */
 	newfl = lalloc();
 	if (newfl == NULL) {
@@ -270,7 +270,7 @@ getlock(nlm4_lockargs * lckarg, struct svc_req *rqstp, int flags)
 	if (newfl->client_cookie.n_bytes == NULL) {
 		syslog(LOG_NOTICE, "malloc failed (%m)");
 		lfree(newfl);
-		return (flags & LOCK_V4) ? 
+		return (flags & LOCK_V4) ?
 		    (enum nlm_stats)nlm4_denied_nolock : nlm_denied_nolocks;
 	}
 	(void)memcpy(newfl->client_cookie.n_bytes, lckarg->cookie.n_bytes,
@@ -480,7 +480,7 @@ sigchild_handler(int sig)
 				(void)do_unlock(fl);
 				return;
 			}
-			    
+
 			/* check lock status */
 			syslog(LOG_DEBUG, "processing child %d, status %d",
 			    pid, fl->status);
@@ -567,7 +567,7 @@ do_lock(struct file_lock *fl, int block)
 				syslog(LOG_NOTICE, "flock failed (%m)");
 				_exit(1);
 			}
-			/* lock granted */	
+			/* lock granted */
 			_exit(0);
 			/*NOTREACHED*/
 		default:
@@ -740,7 +740,7 @@ void
 siglock(void)
 {
 	sigset_t block;
-	
+
 	(void)sigemptyset(&block);
 	(void)sigaddset(&block, SIGCHLD);
 
@@ -753,7 +753,7 @@ void
 sigunlock(void)
 {
 	sigset_t block;
-	
+
 	(void)sigemptyset(&block);
 	(void)sigaddset(&block, SIGCHLD);
 

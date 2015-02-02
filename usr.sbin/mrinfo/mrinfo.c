@@ -47,7 +47,7 @@
  * ---------------------------------
  * Copyright (c) 1992, 2001 Xerox Corporation.  All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification, 
+ * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
  *
  * Redistributions of source code must retain the above copyright notice,
@@ -58,11 +58,11 @@
  * and/or other materials provided with the distribution.
 
  * Neither name of the Xerox, PARC, nor the names of its contributors may be used
- * to endorse or promote products derived from this software 
- * without specific prior written permission. 
+ * to endorse or promote products derived from this software
+ * without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS'' 
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE XEROX CORPORATION OR CONTRIBUTORS
  * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
@@ -71,7 +71,7 @@
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include <sys/cdefs.h>
@@ -174,14 +174,14 @@ logit(int severity, int syserr, const char *format, ...)
 /*
  * Send a neighbors-list request.
  */
-void 
+void
 ask(u_int32_t dst)
 {
 	send_igmp(our_addr, dst, IGMP_DVMRP, DVMRP_ASK_NEIGHBORS,
 			htonl(MROUTED_LEVEL), 0);
 }
 
-void 
+void
 ask2(u_int32_t dst)
 {
 	send_igmp(our_addr, dst, IGMP_DVMRP, DVMRP_ASK_NEIGHBORS2,
@@ -191,7 +191,7 @@ ask2(u_int32_t dst)
 /*
  * Process an incoming neighbor-list message.
  */
-void 
+void
 accept_neighbors(u_int32_t src, u_int32_t dst, u_char *p, int datalen,
 		 u_int32_t level)
 {
@@ -223,7 +223,7 @@ accept_neighbors(u_int32_t src, u_int32_t dst, u_char *p, int datalen,
 	}
 }
 
-void 
+void
 accept_neighbors2(u_int32_t src, u_int32_t dst, u_char *p, int datalen,
 		  u_int32_t level)
 {
@@ -238,7 +238,7 @@ accept_neighbors2(u_int32_t src, u_int32_t dst, u_char *p, int datalen,
 	if ((level >> 16) & NF_GENID)  { printf (",genid"); }
 	if ((level >> 16) & NF_MTRACE) { printf (",mtrace"); }
 	printf ("]:\n");
-	
+
 	while (p < ep) {
 		u_char metric;
 		u_char thresh;
@@ -281,7 +281,7 @@ accept_neighbors2(u_int32_t src, u_int32_t dst, u_char *p, int datalen,
 	}
 }
 
-int 
+int
 get_number(int *var, int deflt, char ***pargv, int *pargc)
 {
 	if ((*pargv)[0][2] == '\0') {	/* Get the value from the next

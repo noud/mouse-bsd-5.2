@@ -37,7 +37,7 @@ __FBSDID("$FreeBSD: src/usr.sbin/ndiscvt/inf-parse.y,v 1.2 2004/01/02 04:31:06 w
 #endif
 #ifdef __NetBSD__
 __RCSID("$NetBSD: inf-parse.y,v 1.6 2006/04/19 20:38:49 martin Exp $");
-#endif 
+#endif
 
 
 #include <stdio.h>

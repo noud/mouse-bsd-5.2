@@ -102,9 +102,9 @@ usage:
 	     954  c0100610:     83 e9 20                sub    $0x20,%ecx
 	      45  c0100613:     8d 52 20                lea    0x20(%edx),%edx
 	     238  c0100616:     75 d8                   jne    c01005f0 <sse2_zero_page+0x10>
-	      71  c0100618:     0f ae f8                sfence 
+	      71  c0100618:     0f ae f8                sfence
 	     297  c010061b:     5d                      pop    %ebp
-	      19  c010061c:     c3                      ret    
+	      19  c010061c:     c3                      ret
 	       0  c010061d:     8d 76 00                lea    0x0(%esi),%esi
 
 		:

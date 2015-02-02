@@ -146,7 +146,7 @@ psshfs_node_setattr(struct puffs_usermount *pu, puffs_cookie_t opc,
 		else
 			kludgeva.va_atime.tv_sec = va->va_mtime.tv_sec;
 	}
-			
+
 	psbuf_put_vattr(pb, &kludgeva);
 	GETRESPONSE(pb);
 

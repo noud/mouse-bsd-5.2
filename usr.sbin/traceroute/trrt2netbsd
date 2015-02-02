@@ -155,7 +155,7 @@ sub dumpsrcs {
 
 #
 # Main program.
-# 
+#
 
 $srcdir = $ENV{'SRCDIR'};
 $targetdir = $ENV{'TARGETDIR'};
@@ -163,9 +163,9 @@ $incdirs = "-I. -I$srcdir/config -I$srcdir";
 
 if (!$srcdir | !targetdir) {
     die "You must define the environment variables SRCDIR and TARGETDIR.\n"
-} 
+}
 print "Making the NetBSD directory tree.\n";
-foreach $f (@subdirs) { 
+foreach $f (@subdirs) {
     print "   -->$f\n";
     makedir ("$targetdir/$f");
 }
@@ -228,7 +228,7 @@ while ($line = <DATA>) {
 	}
 	print ODATA "$line\n";
     }
-}    
+}
 close (ODATA);
 
 #
@@ -255,7 +255,7 @@ PROG=	traceroute
 %% man
 
 CPPFLAGS+=-DHAVE_MALLOC_H=1 -DHAVE_SYS_SELECT_H=1 -DHAVE_SYS_SOCKIO_H=1
-CPPFLAGS+=-DHAVE_STRERROR=1 -DHAVE_SETLINEBUF=1 -DHAVE_SOCKADDR_SA_LEN=1 
+CPPFLAGS+=-DHAVE_STRERROR=1 -DHAVE_SETLINEBUF=1 -DHAVE_SOCKADDR_SA_LEN=1
 CPPFLAGS+=-DHAVE_RAW_OPTIONS=1
 
 BINOWN= root
@@ -264,7 +264,7 @@ BINMODE=4555
 %% srcs
 SRCS+= version.c
 
-%% awks 
+%% awks
 
 .include <bsd.prog.mk>
 %% file usr.sbin/traceroute/version.c

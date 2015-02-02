@@ -532,9 +532,9 @@ rm(const char *victim)
 		warn("unlink(%s)", victim);
 }
 
-void                    
-cp(const char *from, const char *to, mode_t mode)              
-{               
+void
+cp(const char *from, const char *to, mode_t mode)
+{
 	static char buf[MAXBSIZE];
 	int from_fd, rcount, to_fd, wcount, sverrno;
 
@@ -607,7 +607,7 @@ bailout(void)
 }
 
 /*
- * Write entries to a database for a single user. 
+ * Write entries to a database for a single user.
  *
  * The databases actually contain three copies of the original data.  Each
  * password file entry is converted into a rough approximation of a ``struct
@@ -615,7 +615,7 @@ bailout(void)
  * the data for three separate keys.  The first key * is the pw_name field
  * prepended by the _PW_KEYBYNAME character.  The second key is the pw_uid
  * field prepended by the _PW_KEYBYUID character.  The third key is the line
- * number in the original file prepended by the _PW_KEYBYNUM character. 
+ * number in the original file prepended by the _PW_KEYBYNUM character.
  * (The special characters are prepended to ensure that the keys do not
  * collide.)
  */

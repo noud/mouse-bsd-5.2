@@ -67,7 +67,7 @@ main(int argc, char *argv[])
 	mount_syspuffs_parseargs(argc, argv, &args, &mntflags,
 	    canon_dev, canon_dir);
 
-	rv = p2k_run_fs(MOUNT_PUFFS, canon_dev, canon_dir, mntflags, 
+	rv = p2k_run_fs(MOUNT_PUFFS, canon_dev, canon_dir, mntflags,
 		&args.us_kargs, sizeof(args.us_kargs), args.us_pflags);
 	if (rv)
 		err(1, "mount");

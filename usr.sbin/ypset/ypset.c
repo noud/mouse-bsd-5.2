@@ -121,7 +121,7 @@ bind_tohost(sin, dom, server)
 	CLIENT *client;
 	int sock, port;
 	int r;
-	
+
 	port = htons(getrpcport(server, YPPROG, YPPROC_NULL, IPPROTO_UDP));
 	if (port == 0)
 		errx(1, "%s not running ypserv.", server);
@@ -133,7 +133,7 @@ bind_tohost(sin, dom, server)
 	(void) strlcpy(ypsd.ypsetdom_domain, dom, sizeof ypsd.ypsetdom_domain);
 	ypsd.ypsetdom_port = port;
 	ypsd.ypsetdom_vers = YPVERS;
-	
+
 	tv.tv_sec = 15;
 	tv.tv_usec = 0;
 	sock = RPC_ANYSOCK;

@@ -229,7 +229,7 @@ main(int argc, char *argv[])
 	if (sock < 0)
 		err(EXIT_FAILURE, "socket");
 
-	if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, &on, sizeof(on)) < 0) 
+	if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, &on, sizeof(on)) < 0)
 		err(EXIT_FAILURE, "setsockopt");
 
 	if (bind(sock, (struct sockaddr*)(void *)&server, sizeof(server))) {

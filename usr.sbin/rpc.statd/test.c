@@ -88,7 +88,7 @@ sm_simu_crash_1(argp, clnt)
 }
 
 
-int 
+int
 main(argc, argv)
 	int argc;
 	char **argv;

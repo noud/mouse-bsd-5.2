@@ -166,9 +166,9 @@ main(int argc, char *argv[])
 		case 'u':
 			newuser = optarg;
 			break;
-			
+
 		default:
-			usage();	
+			usage();
 		}
 	}
 
@@ -611,14 +611,14 @@ drop_privs(char *newuser)
 {
 	struct passwd *pw;
 	gid_t gidset[1];
-	
+
 	pw = getpwnam(newuser);
 	if (pw == NULL) {
 		syslog(LOG_ERR, "no user %.100s", newuser);
 		return 0;
 	}
 
-	endpwent();	
+	endpwent();
 
 	gidset[0] = pw->pw_gid;
 	if (setgroups(1, gidset) == -1) {

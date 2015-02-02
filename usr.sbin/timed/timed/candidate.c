@@ -115,7 +115,7 @@ again:
 		case TSP_REFUSE:
 			/*
 			 * Collision: change value of election timer
-			 * using exponential backoff. 
+			 * using exponential backoff.
 			 *
 			 *  Fooey.
 			 * An exponential backoff on a delay starting at

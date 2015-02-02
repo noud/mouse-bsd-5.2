@@ -214,7 +214,7 @@ main(int argc, char *argv[])
 		size_t lenx = sizeof(tcp_debx);
 		size_t lend = sizeof(tcp_debug);
 
-		if (sysctlbyname("net.inet.tcp.debx", &tcp_debx, &lenx, 
+		if (sysctlbyname("net.inet.tcp.debx", &tcp_debx, &lenx,
 		    NULL, 0) == -1)
 			err(1, "net.inet.tcp.debx");
 		if (sysctlbyname("net.inet.tcp.debug", &tcp_debug, &lend,
@@ -349,26 +349,26 @@ dotrace(caddr_t tcpcb)
 			if (use_sysctl) {
 				size_t len = sizeof(tcp_debx);
 
-				if (sysctlbyname("net.inet.tcp.debx", 
+				if (sysctlbyname("net.inet.tcp.debx",
 				    &tcp_debx, &len, NULL, 0) == -1)
 					err(1, "net.inet.tcp.debx");
 			} else
 				if (kvm_read(kd, nl[N_TCP_DEBX].n_value,
 				    (char *)&tcp_debx, sizeof(tcp_debx)) !=
 				    sizeof(tcp_debx))
-					errx(3, "tcp_debx: %s", 
+					errx(3, "tcp_debx: %s",
 					    kvm_geterr(kd));
 		} while (tcp_debx == prev_debx);
 
 		if (use_sysctl) {
 			size_t len = sizeof(tcp_debug);
 
-			if (sysctlbyname("net.inet.tcp.debug", &tcp_debug, 
+			if (sysctlbyname("net.inet.tcp.debug", &tcp_debug,
 			    &len, NULL, 0) == -1)
 				err(1, "net.inet.tcp.debug");
 		} else
-			if (kvm_read(kd, nl[N_TCP_DEBUG].n_value, 
-			    (char *)tcp_debug, 
+			if (kvm_read(kd, nl[N_TCP_DEBUG].n_value,
+			    (char *)tcp_debug,
 			    sizeof(tcp_debug)) != sizeof(tcp_debug))
 				errx(3, "tcp_debug: %s", kvm_geterr(kd));
 
@@ -435,7 +435,7 @@ tcp_trace(short act, short ostate, struct tcpcb *atp, struct tcpcb *tp,
 				(void *)&ip->ip_src,
 #else
 				family == AF_INET ? (void *)&ip->ip_src
-						  : (void *)&ip6->ip6_src, 
+						  : (void *)&ip6->ip6_src,
 #endif
 				hbuf, sizeof(hbuf));
 			printf("(src=%s,%u, ",
@@ -445,7 +445,7 @@ tcp_trace(short act, short ostate, struct tcpcb *atp, struct tcpcb *tp,
 				(void *)&ip->ip_dst,
 #else
 				family == AF_INET ? (void *)&ip->ip_dst
-						  : (void *)&ip6->ip6_dst, 
+						  : (void *)&ip6->ip6_dst,
 #endif
 				hbuf, sizeof(hbuf));
 			printf("dst=%s,%u)",
@@ -529,7 +529,7 @@ skipact:
 				err(1, "kern.hardclock_ticks");
 		} else {
 			if (kvm_read(kd, nl[N_HARDCLOCK_TICKS].n_value,
-			    (char *)&hardticks, 
+			    (char *)&hardticks,
 			    sizeof(hardticks)) != sizeof(hardticks))
 				errx(3, "hardclock_ticks: %s", kvm_geterr(kd));
 
@@ -540,7 +540,7 @@ skipact:
 				printf("%s%s=%d", cp, tcptimers[i],
 				    ci->c_time - hardticks);
 				if (i == TCPT_REXMT)
-					printf(" (t_rxtshft=%d)", 
+					printf(" (t_rxtshft=%d)",
 					    tp->t_rxtshift);
 				cp = ", ";
 			}

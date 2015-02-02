@@ -330,11 +330,11 @@ v_searchw(SCR *sp, VICMD *vp)
 
 	len = olen + RE_WSTART_LEN + RE_WSTOP_LEN;
 	GET_SPACE_RETW(sp, bp, blen, len);
-	MEMCPY(bp, RE_WSTART, RE_WSTART_LEN); 
+	MEMCPY(bp, RE_WSTART, RE_WSTART_LEN);
 	p = bp + RE_WSTART_LEN;
 	MEMCPY(p, VIP(sp)->keyw, olen);
 	p += olen;
-	MEMCPY(p, RE_WSTOP, RE_WSTOP_LEN); 
+	MEMCPY(p, RE_WSTOP, RE_WSTOP_LEN);
 
 	rval = v_search(sp, vp, bp, len, SEARCH_SET, FORWARD);
 

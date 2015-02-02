@@ -229,8 +229,8 @@ repquota(fs, type, qfpathname)
 		else
 			printf("%-10s", fup->fu_name);
 		printf("%c%c%9d%9d%9d%7s",
-			fup->fu_dqblk.dqb_bsoftlimit && 
-			    fup->fu_dqblk.dqb_curblocks >= 
+			fup->fu_dqblk.dqb_bsoftlimit &&
+			    fup->fu_dqblk.dqb_curblocks >=
 			    fup->fu_dqblk.dqb_bsoftlimit ? '+' : '-',
 			fup->fu_dqblk.dqb_isoftlimit &&
 			    fup->fu_dqblk.dqb_curinodes >=
@@ -238,8 +238,8 @@ repquota(fs, type, qfpathname)
 			(int)(dbtob((u_quad_t)fup->fu_dqblk.dqb_curblocks) / 1024),
 			(int)(dbtob((u_quad_t)fup->fu_dqblk.dqb_bsoftlimit) / 1024),
 			(int)(dbtob((u_quad_t)fup->fu_dqblk.dqb_bhardlimit) / 1024),
-			fup->fu_dqblk.dqb_bsoftlimit && 
-			    fup->fu_dqblk.dqb_curblocks >= 
+			fup->fu_dqblk.dqb_bsoftlimit &&
+			    fup->fu_dqblk.dqb_curblocks >=
 			    fup->fu_dqblk.dqb_bsoftlimit ?
 			    timeprt(fup->fu_dqblk.dqb_btime) : "");
 		printf("  %8d%8d%8d%7s\n",

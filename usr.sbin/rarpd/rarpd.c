@@ -307,8 +307,8 @@ rarp_open(char *device)
 		BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, ETHERTYPE_REVARP, 0, 3),
 		BPF_STMT(BPF_LD | BPF_H | BPF_ABS, 20),
 		BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, ARPOP_REVREQUEST, 0, 1),
-		BPF_STMT(BPF_RET | BPF_K, 
-		    sizeof(struct arphdr) + 
+		BPF_STMT(BPF_RET | BPF_K,
+		    sizeof(struct arphdr) +
 		    2 * ETHER_ADDR_LEN + 2 * sizeof(struct in_addr) +
 		    sizeof(struct ether_header)),
 		BPF_STMT(BPF_RET | BPF_K, 0),
@@ -812,7 +812,7 @@ rarp_reply(struct if_info *ii, struct ether_header *ep, u_int32_t ipaddr,
 	/* Target hardware is unchanged. */
 	memmove(ar_spa(ap), (char *) &ii->ii_ipaddr, 4);
 
-	len = sizeof(*ep) + sizeof(*ap) + 
+	len = sizeof(*ep) + sizeof(*ap) +
 	    2 * ap->ar_pln + 2 * ap->ar_hln;
 #else
 	ap->ea_hdr.ar_hrd = htons(ARPHRD_ETHER);

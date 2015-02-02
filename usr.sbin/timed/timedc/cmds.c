@@ -149,7 +149,7 @@ daydiff(const char *hostname, const struct sockaddr_in *addr)
 		sec = 0;
 		ret = send(sock, &sec, sizeof(sec), 0);
 		if (ret < (ssize_t)sizeof(sec)) {
-			if (ret < 0) 
+			if (ret < 0)
 				warn("send(sock)");
 			else
 				warnx("send(sock): incomplete");

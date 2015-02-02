@@ -4,7 +4,7 @@
 /*
  * Copyright (C) 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -16,7 +16,7 @@
  * 3. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -934,7 +934,7 @@ make_packet(struct rainfo *rainfo)
 		packlen += sizeof(struct nd_opt_mtu);
 #ifdef ROUTEINFO
 	for (rti = rainfo->route.next; rti != &rainfo->route; rti = rti->next)
-		packlen += sizeof(struct nd_opt_route_info) + 
+		packlen += sizeof(struct nd_opt_route_info) +
 			   ((rti->prefixlen + 0x3f) >> 6) * 8;
 #endif
 
@@ -991,8 +991,8 @@ make_packet(struct rainfo *rainfo)
 		buf += sizeof(struct nd_opt_mtu);
 	}
 
-	
-	
+
+
 	for (pfx = rainfo->prefix.next;
 	     pfx != &rainfo->prefix; pfx = pfx->next) {
 		u_int32_t vltime, pltime;
@@ -1026,7 +1026,7 @@ make_packet(struct rainfo *rainfo)
 			if (pfx->pltimeexpire == 0)
 				pltime = pfx->preflifetime;
 			else
-				pltime = (pfx->pltimeexpire > now.tv_sec) ? 
+				pltime = (pfx->pltimeexpire > now.tv_sec) ?
 				    pfx->pltimeexpire - now.tv_sec : 0;
 		}
 		if (vltime < pltime) {

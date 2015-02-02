@@ -3,7 +3,7 @@
 /*
  * Copyright (c) 1994 Christopher G. Demetriou
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -19,7 +19,7 @@
  *          information about NetBSD.
  * 4. The name of the author may not be used to endorse or promote products
  *    derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -30,7 +30,7 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * <<Id: LICENSE,v 1.2 2000/06/14 15:57:33 cgd Exp>>
  */
 
@@ -95,7 +95,7 @@ usracct_init()
 				warn("initializing user accounting stats");
 				error = -1;
 				break;
-			} 
+			}
 			if (nerr == 1) {
 				warnx("duplicate key in `%s': %s",
 				    _PATH_USRACCT, fmt(&key));
@@ -173,7 +173,7 @@ usracct_add(ci)
 	newui.ui_mem += ci->ci_mem;
 	newui.ui_io += ci->ci_io;
 
-	data.data = &newui; 
+	data.data = &newui;
 	data.size = sizeof(newui);
 	rv = DB_PUT(usracct_db, &key, &data, 0);
 	if (rv < 0) {
@@ -298,7 +298,7 @@ uid_compare(k1, k2)
 
 	memcpy(&d1, k1->data, sizeof(d1));
 	memcpy(&d2, k2->data, sizeof(d2));
-	
+
 	if (d1 < d2)
 		return -1;
 	else if (d1 == d2)

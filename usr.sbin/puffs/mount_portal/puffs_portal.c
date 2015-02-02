@@ -300,7 +300,7 @@ sendfd(int s, int fd, int error)
 
 /*
  * Produce I/O file descriptor by forking (like original portald).
- * 
+ *
  * child: run provider and transfer produced fd to parent
  * parent: yield until child produces fd.  receive it and store it.
  */

@@ -66,7 +66,7 @@ bootparamproc_whoami_1(argp, clnt)
 }
 
 
-int 
+int
 main(argc, argv)
 	int argc;
 	char **argv;
@@ -95,10 +95,10 @@ main(argc, argv)
 	bp.client_address.bp_address_u.ip_addr.host = (addr >> 16) & 0xff;
 	bp.client_address.bp_address_u.ip_addr.lh = (addr >> 8) & 0xff;
 	bp.client_address.bp_address_u.ip_addr.impno = (addr >> 0) & 0xff;
-	
+
 	if ((out = bootparamproc_whoami_1(&bp, cli)) != NULL) {
 		printf("Success [host=%s, domain=%s, gw=%d.%d.%d.%d]\n",
-		    out->client_name, out->domain_name, 
+		    out->client_name, out->domain_name,
 		    out->router_address.bp_address_u.ip_addr.net & 0xff,
 		    out->router_address.bp_address_u.ip_addr.host & 0xff,
 		    out->router_address.bp_address_u.ip_addr.lh & 0xff,

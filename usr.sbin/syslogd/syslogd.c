@@ -338,11 +338,11 @@ main(int argc, char *argv[])
 			UseNameService = 0;
 			break;
 		case 'p':		/* path */
-			logpath_add(&LogPaths, &funixsize, 
+			logpath_add(&LogPaths, &funixsize,
 			    &funixmaxsize, optarg);
 			break;
 		case 'P':		/* file of paths */
-			logpath_fileadd(&LogPaths, &funixsize, 
+			logpath_fileadd(&LogPaths, &funixsize,
 			    &funixmaxsize, optarg);
 			break;
 		case 'r':		/* disable "repeated" compression */
@@ -400,7 +400,7 @@ getuser:
 			if ((pw = getpwnam(user)) != NULL) {
 				uid = pw->pw_uid;
 			} else {
-				errno = 0;  
+				errno = 0;
 				logerror("Cannot find user `%s'", user);
 				die(NULL);
 			}
@@ -454,7 +454,7 @@ getgroup:
 #define SUN_LEN(unp) (strlen((unp)->sun_path) + 2)
 #endif
 	if (funixsize == 0)
-		logpath_add(&LogPaths, &funixsize, 
+		logpath_add(&LogPaths, &funixsize,
 		    &funixmaxsize, _PATH_LOG);
 	funix = (int *)malloc(sizeof(int) * funixsize);
 	if (funix == NULL) {
@@ -483,29 +483,29 @@ getgroup:
 		dprintf("Listening on kernel log `%s'\n", _PATH_KLOG);
 	}
 
-	/* 
+	/*
 	 * All files are open, we can drop privileges and chroot
 	 */
-	dprintf("Attempt to chroot to `%s'\n", root);  
+	dprintf("Attempt to chroot to `%s'\n", root);
 	if (chroot(root)) {
 		logerror("Failed to chroot to `%s'", root);
 		die(NULL);
 	}
-	dprintf("Attempt to set GID/EGID to `%d'\n", gid);  
+	dprintf("Attempt to set GID/EGID to `%d'\n", gid);
 	if (setgid(gid) || setegid(gid)) {
 		logerror("Failed to set gid to `%d'", gid);
 		die(NULL);
 	}
-	dprintf("Attempt to set UID/EUID to `%d'\n", uid);  
+	dprintf("Attempt to set UID/EUID to `%d'\n", uid);
 	if (setuid(uid) || seteuid(uid)) {
 		logerror("Failed to set uid to `%d'", uid);
 		die(NULL);
 	}
 
-	/* 
-	 * We cannot detach from the terminal before we are sure we won't 
+	/*
+	 * We cannot detach from the terminal before we are sure we won't
 	 * have a fatal error, because error message would not go to the
-	 * terminal and would not be logged because syslogd dies. 
+	 * terminal and would not be logged because syslogd dies.
 	 * All die() calls are behind us, we can call daemon()
 	 */
 	if (!Debug) {
@@ -1202,13 +1202,13 @@ fprintlog(struct filed *f, int flags, char *msg)
 			for (r = f->f_un.f_forw.f_addr; r; r = r->ai_next) {
 				retry = 0;
 				for (j = 0; j < *finet; j++) {
-#if 0 
+#if 0
 					/*
 					 * should we check AF first, or just
 					 * trial and error? FWD
 					 */
 					if (r->ai_family ==
-					    address_family_of(finet[j+1])) 
+					    address_family_of(finet[j+1]))
 #endif
 sendagain:
 					lsent = sendto(finet[j+1], line, l, 0,
@@ -1232,7 +1232,7 @@ sendagain:
 							fail++;
 							break;
 						}
-					} else if (lsent == l) 
+					} else if (lsent == l)
 						break;
 				}
 			}
@@ -1576,12 +1576,12 @@ logerror(const char *fmt, ...)
 	va_end(ap);
 
 	if (errno)
-		(void)snprintf(buf, sizeof(buf), "syslogd: %s: %s", 
+		(void)snprintf(buf, sizeof(buf), "syslogd: %s: %s",
 		    tmpbuf, strerror(errno));
 	else
 		(void)snprintf(buf, sizeof(buf), "syslogd: %s", tmpbuf);
 
-	if (daemonized) 
+	if (daemonized)
 		logmsg(LOG_SYSLOG|LOG_ERR, buf, LocalHostName, ADDDATE);
 	if (!daemonized && Debug)
 		dprintf("%s\n", buf);
@@ -1871,8 +1871,8 @@ cfline(char *line, struct filed *f, char *prog, char *host)
 	memset(f, 0, sizeof(*f));
 	for (i = 0; i <= LOG_NFACILITIES; i++)
 		f->f_pmask[i] = INTERNAL_NOPRI;
-	
-	/* 
+
+	/*
 	 * There should not be any space before the log facility.
 	 * Check this is okay, complain and fix if it is not.
 	 */
@@ -1885,18 +1885,18 @@ cfline(char *line, struct filed *f, char *prog, char *host)
 		/* Fix: strip all spaces/tabs before the log facility */
 		while (*q++ && isblank((unsigned char)*q))
 			/* skip blanks */;
-		line = q; 
+		line = q;
 	}
 
-	/* 
+	/*
 	 * q is now at the first char of the log facility
-	 * There should be at least one tab after the log facility 
+	 * There should be at least one tab after the log facility
 	 * Check this is okay, and complain and fix if it is not.
 	 */
 	q = line + strlen(line);
 	while (!isblank((unsigned char)*q) && (q != line))
 		q--;
-	if ((q == line) && strlen(line)) { 
+	if ((q == line) && strlen(line)) {
 		/* No tabs or space in a non empty line: complain */
 		errno = 0;
 		logerror(
@@ -1904,7 +1904,7 @@ cfline(char *line, struct filed *f, char *prog, char *host)
 		    line);
 		return;
 	}
-	
+
 	/* save host name, if any */
 	if (*host == '*')
 		f->f_host = NULL;

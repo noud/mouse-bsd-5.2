@@ -248,7 +248,7 @@ purge_bindingdir(const char *dirpath)
 			/* 'rm *.[0-9]' */
 			if (l > 2 && dp->d_name[l-2] == '.' &&
 			    dp->d_name[l-1] >= '0' && dp->d_name[l-1] <= '9') {
-				(void)snprintf(pathname, sizeof(pathname), 
+				(void)snprintf(pathname, sizeof(pathname),
 					"%s/%s", dirpath, dp->d_name);
 				if (unlink(pathname) < 0 && errno != ENOENT)
 					return(-1);
@@ -583,7 +583,7 @@ main(int argc, char *argv[])
 		err(1, "rpc socket");
 	if ((pingsock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1)
 		err(1, "ping socket");
-	
+
 	(void)fcntl(rpcsock, F_SETFL, fcntl(rpcsock, F_GETFL, 0) | FNDELAY);
 	(void)fcntl(pingsock, F_SETFL, fcntl(pingsock, F_GETFL, 0) | FNDELAY);
 
@@ -658,7 +658,7 @@ main(int argc, char *argv[])
 }
 
 /*
- * State transition is done like this: 
+ * State transition is done like this:
  *
  * STATE	EVENT		ACTION			NEWSTATE	TIMEOUT
  * no binding	timeout		broadcast 		no binding	5 sec
@@ -746,7 +746,7 @@ ping(struct _dom_binding *ypdb)
 		(void)printf("ping %x\n",
 		    ypdb->dom_server_addr.sin_addr.s_addr);
 #endif
-	if (sendto(pingsock, buf, outlen, 0, 
+	if (sendto(pingsock, buf, outlen, 0,
 	    (struct sockaddr *)(void *)&ypdb->dom_server_addr,
 	    (socklen_t)sizeof ypdb->dom_server_addr) == -1)
 		yp_log(LOG_WARNING, "ping: sendto: %m");
@@ -1174,7 +1174,7 @@ rpc_received(char *dom, struct sockaddr_in *raddrp, int force)
 		return;
 
 	if (_yp_invalid_domain(dom))
-		return;	
+		return;
 
 		/* don't support insecure servers by default */
 	if (!insecure && ntohs(raddrp->sin_port) >= IPPORT_RESERVED)
@@ -1203,7 +1203,7 @@ rpc_received(char *dom, struct sockaddr_in *raddrp, int force)
 		}
 		return;
 	}
-	
+
 	(void)memcpy(&ypdb->dom_server_addr, raddrp,
 	    sizeof ypdb->dom_server_addr);
 	/* recheck binding in 60 seconds */

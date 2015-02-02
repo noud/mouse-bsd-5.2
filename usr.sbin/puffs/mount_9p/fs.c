@@ -46,7 +46,7 @@ __RCSID("$NetBSD: fs.c,v 1.8 2008/08/24 18:26:05 pooka Exp $");
 	puffs_framebuf_seekset(a2, 0);					\
 	*(a4) = 0;							\
 	rv = fname(a1, a2, a3, a4);					\
-	if (rv || a4 == 0) errx(1, "p9p_handshake io failed %d, %d", rv, *a4) 
+	if (rv || a4 == 0) errx(1, "p9p_handshake io failed %d, %d", rv, *a4)
 
 struct puffs_node *
 p9p_handshake(struct puffs_usermount *pu,
@@ -182,7 +182,7 @@ p9p_handshake(struct puffs_usermount *pu,
 		if (walked != ncomp)
 			errx(1, "can't locate rootpath %s, only %d/%d "
 			    "components found", path, walked, ncomp);
-		
+
 		/* curfid is alive, clunk P9P_ROOTFID */
 		p9pbuf_recycleout(pb);
 		tagid = NEXTTAG(p9p);

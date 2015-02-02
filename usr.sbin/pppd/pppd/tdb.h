@@ -1,10 +1,10 @@
 /*	$NetBSD: tdb.h,v 1.1.1.1 2000/09/23 22:14:55 christos Exp $	*/
 
 #define STANDALONE	1
-/* 
+/*
  * Database functions
  * Copyright (C) Andrew Tridgell 1999
- * 
+ *
  * Redistribution and use in source and binary forms are permitted
  * provided that the above copyright notice and this paragraph are
  * duplicated in all such forms AND provided that this software or
@@ -57,7 +57,7 @@ typedef struct {
 #define TDB_CLEAR_IF_FIRST 1
 
 /* error codes */
-enum TDB_ERROR {TDB_SUCCESS=0, TDB_ERR_CORRUPT, TDB_ERR_IO, TDB_ERR_LOCK, 
+enum TDB_ERROR {TDB_SUCCESS=0, TDB_ERR_CORRUPT, TDB_ERR_IO, TDB_ERR_LOCK,
 		TDB_ERR_OOM, TDB_ERR_EXISTS};
 
 #if STANDALONE
@@ -72,7 +72,7 @@ int tdb_store(TDB_CONTEXT *tdb, TDB_DATA key, TDB_DATA dbuf, int flag);
 int tdb_close(TDB_CONTEXT *tdb);
 TDB_DATA tdb_firstkey(TDB_CONTEXT *tdb);
 TDB_DATA tdb_nextkey(TDB_CONTEXT *tdb, TDB_DATA key);
-int tdb_traverse(TDB_CONTEXT *tdb, 
+int tdb_traverse(TDB_CONTEXT *tdb,
 	int (*fn)(TDB_CONTEXT *tdb, TDB_DATA key, TDB_DATA dbuf, void *state),
 	void *state);
 int tdb_exists(TDB_CONTEXT *tdb, TDB_DATA key);

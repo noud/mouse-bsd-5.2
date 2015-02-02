@@ -160,7 +160,7 @@ put_address(name, addr, n)
 /* Get an IP address from an OID starting at element n */
 int
 get_address(name, length, addr, n)
-   oid	 *name;	
+   oid	 *name;
    int	  length;
    u_long *addr;
    int n;
@@ -491,8 +491,8 @@ o_dvmrpNeighborTable(vp, name, length, exact, var_len, write_method)
        return (u_char *) &long_return;
    }
 
-   case dvmrpNeighborExpiryTime: 
-       long_return = (NEIGHBOR_EXPIRE_TIME - neighbor->al_timer 
+   case dvmrpNeighborExpiryTime:
+       long_return = (NEIGHBOR_EXPIRE_TIME - neighbor->al_timer
         + secs_remaining_offset()) * 100;
        return (u_char *) &long_return;
 
@@ -525,10 +525,10 @@ static struct in_ifaddr in_ifaddr;
 
     Interface_Scan_Init();
     for (;;) {
-       if (Interface_Scan_Next(&interface, (char *)0, NULL, &in_ifaddr) == 0) 
+       if (Interface_Scan_Next(&interface, (char *)0, NULL, &in_ifaddr) == 0)
           return NULL;
-    
-       if (((struct sockaddr_in *) &(in_ifaddr.ia_addr))->sin_addr.s_addr 
+
+       if (((struct sockaddr_in *) &(in_ifaddr.ia_addr))->sin_addr.s_addr
         == ipaddr) {
           *ifIndex = interface;
           return &in_ifaddr;
@@ -568,7 +568,7 @@ next_cache(addr, vifi)
    for (i = 0; i < numvifs; i++) {
       for (n = uvifs[i].uv_groups; n; n=n->al_next) {
          if ((n->al_addr > addr || (n->al_addr == addr && i >= *vifi))
-          && (!bestn || n->al_addr < bestn->al_addr 
+          && (!bestn || n->al_addr < bestn->al_addr
            || (n->al_addr == bestn->al_addr && i < besti))) {
             bestn = n;
             besti = i;
@@ -664,7 +664,7 @@ o_igmpCacheTable(vp, name, length, exact, var_len, write_method)
 
     switch (vp->magic) {
 
-   case igmpCacheSelf: 
+   case igmpCacheSelf:
        inm = in_ifaddr->ia_multiaddrs;
        while (inm) {
           klookup( (int)inm, (char *)&in_multi, sizeof(in_multi));
@@ -689,11 +689,11 @@ o_igmpCacheTable(vp, name, length, exact, var_len, write_method)
       return (u_char *) &long_return;
    }
 
-   case igmpCacheExpiryTime: 
+   case igmpCacheExpiryTime:
        long_return = secs_remaining(cache->al_timerid)*100;
        return (u_char *) &long_return;
 
-   case igmpCacheStatus: 
+   case igmpCacheStatus:
        long_return = 1;
        return (u_char *) &long_return;
 
@@ -838,10 +838,10 @@ static struct sioc_vif_req v_req;
          long_return = 1;
       return (u_char *) &long_return;
 
-   case dvmrpVInterfaceLocalAddress: 
+   case dvmrpVInterfaceLocalAddress:
       return (u_char *) &uvifs[ifnum].uv_lcl_addr;
 
-   case dvmrpVInterfaceRemoteAddress: 
+   case dvmrpVInterfaceRemoteAddress:
       return (u_char *) ((uvifs[ifnum].uv_flags & VIFF_TUNNEL) ?
          &uvifs[ifnum].uv_rmt_addr :
          &uvifs[ifnum].uv_subnet);
@@ -954,7 +954,7 @@ o_dvmrpRouteTable(vp, name, length, exact, var_len, write_method)
 
     switch (vp->magic) {
 
-      case dvmrpRouteUpstreamNeighbor: 
+      case dvmrpRouteUpstreamNeighbor:
          return (u_char *) &rt->rt_gateway;
 
       case dvmrpRouteInVifIndex:
@@ -966,7 +966,7 @@ o_dvmrpRouteTable(vp, name, length, exact, var_len, write_method)
          return (u_char *) &long_return;
 
       case dvmrpRouteExpiryTime:
-         long_return = (ROUTE_EXPIRE_TIME - rt->rt_timer 
+         long_return = (ROUTE_EXPIRE_TIME - rt->rt_timer
           + secs_remaining_offset()) * 100;
          return (u_char *) &long_return;
 
@@ -1134,7 +1134,7 @@ static struct sioc_sg_req sg_req;
 
     switch (vp->magic) {
 
-      case ipMRouteUpstreamNeighbor: 
+      case ipMRouteUpstreamNeighbor:
          return (u_char *) &gt->gt_route->rt_gateway;
 
       case ipMRouteInIfIndex:

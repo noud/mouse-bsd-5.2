@@ -44,7 +44,7 @@
 static int str2vc(char *str, int *vpi, int *vci);
 static void usage(void);
 
-static void 
+static void
 usage(void)
 {
 	fprintf(stderr, "usage: pvctxctl interface [vpi:]vci\n");
@@ -120,7 +120,7 @@ main(int argc, char **argv)
 	if (strncmp(if_name, "pvc", 3) == 0)
 		/* pvc subinterface */
 		subinterface = 1;
-	
+
 	ATM_PH_FLAGS(&pvcreq.pvc_aph) = ATM_PH_AAL5 | llcsnap;
 	ATM_PH_VPI(&pvcreq.pvc_aph) = vpi;
 	ATM_PH_SETVCI(&pvcreq.pvc_aph, vci);
@@ -128,7 +128,7 @@ main(int argc, char **argv)
 	ATM_PH_FLAGS(&pvcreq.pvc_joint) = 0;
 	ATM_PH_VPI(&pvcreq.pvc_joint) = joint_vpi;
 	ATM_PH_SETVCI(&pvcreq.pvc_joint, joint_vci);
-	
+
 	pvcreq.pvc_pcr = pcr;
 
 	if (getinfo) {
@@ -183,7 +183,7 @@ main(int argc, char **argv)
 	return (0);
 }
 
-static int 
+static int
 str2vc(char *str, int *vpi, int *vci)
 {
 	char *c;

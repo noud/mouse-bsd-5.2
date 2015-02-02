@@ -116,11 +116,11 @@ usbdev(int f, int a, int rec)
 			if (verbose) {
 				printf("%*sport %d %s\n", indent+1, "", p+1,
 				       s == USB_PORT_ENABLED ? "enabled" :
-				       s == USB_PORT_SUSPENDED ? "suspended" : 
+				       s == USB_PORT_SUSPENDED ? "suspended" :
 				       s == USB_PORT_POWERED ? "powered" :
 				       s == USB_PORT_DISABLED ? "disabled" :
 				       "???");
-				
+
 			}
 			continue;
 		}
