@@ -840,9 +840,6 @@ games/quiz/datfiles/africa
 games/quiz/datfiles/asia
 games/random/random.c
 games/rogue/USD.doc/rogue.me
-games/rogue/message.c
-games/rogue/save.c
-games/rogue/use.c
 games/sail/assorted.c
 games/sail/display.h
 games/sail/dr_3.c

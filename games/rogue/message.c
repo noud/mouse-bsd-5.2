@@ -147,9 +147,9 @@ check_message(void)
 }
 
 int
-get_input_line(const char *prompt, const char *insert, 
-	       char *buf, size_t buflen, 
-	       const char *if_cancelled, 
+get_input_line(const char *prompt, const char *insert,
+	       char *buf, size_t buflen,
+	       const char *if_cancelled,
 	       boolean add_blank, boolean do_echo)
 {
 	short ch;

@@ -65,7 +65,7 @@ short extra_hp = 0;
 boolean detect_monster = 0;
 boolean con_mon = 0;
 
-static const char strange_feeling[] = 
+static const char strange_feeling[] =
 	"you have a strange feeling for a moment, then it passes";
 
 void
