@@ -333,7 +333,7 @@ tap_attach(device_t parent, device_t self, void *aux)
 	ether_ifattach(ifp, enaddr);
 
 	sc->sc_flags = 0;
- callout_init(&sc->sc_ticker);
+ callout_init(&sc->sc_ticker,0);
  callout_setfunc(&sc->sc_ticker,&tap_ticker,sc);
 
 #if defined(COMPAT_40) || defined(MODULAR)
