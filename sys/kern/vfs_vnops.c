@@ -202,6 +202,10 @@ vn_open(struct nameidata *ndp, int fmode, int cmode)
 	} else {
 		vp = ndp->ni_vp;
 	}
+	if ((fmode & O_DIRECTORY) && (vp->v_type != VDIR)) {
+		error = ENOTDIR;
+		goto bad;
+	}
 	if (vp->v_type == VSOCK) {
 		error = EOPNOTSUPP;
 		goto bad;

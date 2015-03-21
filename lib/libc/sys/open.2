@@ -145,6 +145,12 @@ be multiples of
 If the I/O request is made
 using an interface that supports scatter/gather via struct iovec, each
 element of the request must meet the above alignment constraints.
+.It Dv O_DIRECTORY
+Error if the path names a non-directory.  It is invalid to combine this
+bit with
+.Dv O_CREAT
+or
+.Dv O_TRUNC .
 .El
 .Pp
 Opening a file with
@@ -233,7 +239,9 @@ The file's flags (see
 .Xr chflags 2 )
 don't allow the file to be opened.
 .It Bq Er ENOTDIR
-A component of the path prefix is not a directory.
+A component of the path prefix is not a directory, or
+.Dv O_DIRECTORY
+is specified and the path does not name a directory.
 .It Bq Er ENAMETOOLONG
 A component of a pathname exceeded
 .Dv NAME_MAX
