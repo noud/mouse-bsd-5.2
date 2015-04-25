@@ -415,6 +415,8 @@ tap_detach(device_t self, int flags)
 		aprint_error_dev(self,
 		    "sysctl_destroyv returned %d, ignoring\n", error);
 #endif
+ callout_stop(&sc->sc_ticker);
+ callout_destroy(&sc->sc_ticker);
 	ether_ifdetach(ifp);
 	if_detach(ifp);
 	ifmedia_delete_instance(&sc->sc_im, IFM_INST_ANY);
