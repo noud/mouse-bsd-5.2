@@ -63,6 +63,10 @@ Open for reading only.
 Open for writing only.
 .It Dv O_RDWR
 Open for reading and writing.
+.It Dv O_NOACCESS
+Open for neither reading nor writing.  This is permitted only when
+.Dv O_DIRECTORY
+(see below) is also specified.
 .El
 .Pp
 Any combination of the following may be used:

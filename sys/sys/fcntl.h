@@ -65,6 +65,7 @@
 #define	O_RDONLY	0x00000000	/* open for reading only */
 #define	O_WRONLY	0x00000001	/* open for writing only */
 #define	O_RDWR		0x00000002	/* open for reading and writing */
+#define	O_NOACCESS	0x00000003	/* open for neither reading nor writing */
 #define	O_ACCMODE	0x00000003	/* mask for above modes */
 
 /*
@@ -117,8 +118,24 @@
 
 #ifdef _KERNEL
 /* convert from open() flags to/from fflags; convert O_RD/WR to FREAD/FWRITE */
-#define	FFLAGS(oflags)	((oflags) + 1)
-#define	OFLAGS(fflags)	((fflags) - 1)
+#define	FFLAGS(oflags) sys_FFLAGS((oflags))
+#define	OFLAGS(fflags) sys_OFLAGS((fflags))
+extern int sys_FFLAGS(int);
+extern int sys_OFLAGS(int);
+#ifndef LIBRARY_FFLAGS_OFLAGS
+extern __inline
+#endif
+int sys_FFLAGS(int x)
+{
+ return((x&~3)|((x+1)&3));
+}
+#ifndef LIBRARY_FFLAGS_OFLAGS
+extern __inline
+#endif
+int sys_OFLAGS(int x)
+{
+ return((x&~3)|((x+3)&3));
+}
 
 /* all bits settable during open(2) */
 #define	O_MASK		(O_ACCMODE|O_NONBLOCK|O_APPEND|O_SHLOCK|O_EXLOCK|\

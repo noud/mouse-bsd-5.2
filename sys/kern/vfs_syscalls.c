@@ -1342,7 +1342,7 @@ sys_open(struct lwp *l, const struct sys_open_args *uap, register_t *retval)
 	struct nameidata nd;
 
 	flags = FFLAGS(SCARG(uap, flags));
-	if ( ((flags & (FREAD | FWRITE)) == 0) ||
+	if ( ((flags & (FREAD | FWRITE | O_DIRECTORY)) == 0) ||
 	     ((flags & O_DIRECTORY) && (flags & (O_CREAT | O_TRUNC))) )
 		return (EINVAL);
 	if ((error = fd_allocfile(&fp, &indx)) != 0)
@@ -1657,8 +1657,6 @@ dofhopen(struct lwp *l, const void *ufhp, size_t fhsize, int oflags,
 		return (error);
 
 	flags = FFLAGS(oflags);
-	if ((flags & (FREAD | FWRITE)) == 0)
-		return (EINVAL);
 	if ((flags & O_CREAT))
 		return (EINVAL);
 	if ((error = fd_allocfile(&nfp, &indx)) != 0)
