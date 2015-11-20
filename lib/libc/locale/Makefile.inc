@@ -24,7 +24,8 @@ CPPFLAGS+=	-UWITH_RUNE
 SRCS+=	aliasname.c bsdctype.c localeio.c \
 	multibyte_sb.c iswctype_sb.c \
 	localeio_lc_ctype.c localeio_lc_monetary.c \
-	localeio_lc_numeric.c localeio_lc_time.c
+	localeio_lc_numeric.c localeio_lc_time.c \
+	localeio_lc_messages.c ctypeio.c
 .else
 # citrus multibyte locale support
 # we have quirk for libc.a - see the last part of lib/libc/Makefile
