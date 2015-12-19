@@ -164,7 +164,7 @@ quaff(void)
 			}
 			break;
 		case SEE_INVISIBLE:
-			messagef(0, "hmm, this potion tastes like %sjuice",
+			messagef(0, "hmm, this potion tastes like %s juice",
 				 fruit);
 			if (blind) {
 				unblind();
