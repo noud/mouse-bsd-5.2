@@ -154,6 +154,7 @@ void	getmove(void);
 void	getout(int) __attribute__((__noreturn__));
 void	gwrite(void);
 void	init(void);
+void	intsleep(int);
 int	last(void);
 int	main(int, char *[]);
 int	makmove(int);

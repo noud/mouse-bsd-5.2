@@ -395,7 +395,7 @@ main(int argc __unused, char **argv)
 						if (tflag) {
 							if (pnum) {
 								buflush();
-								sleep(MVPAUSE);
+								intsleep(MVPAUSE);
 							}
 						}
 						nexturn();
@@ -442,7 +442,7 @@ main(int argc __unused, char **argv)
 					writel(*colorptr);
 					writel(cantmv);
 					buflush();
-					sleep(MVPAUSE);
+					intsleep(MVPAUSE);
 					nexturn();
 					continue;
 				}
