@@ -39,7 +39,7 @@
 .Nm
 .Op Fl H | Fl L | Fl P
 .Op Fl a | Fl d Ar depth | Fl s
-.Op Fl cghkmnrx
+.Op Fl ceghkmnrx
 .Op Ar file ...
 .Sh DESCRIPTION
 The
@@ -67,6 +67,9 @@ Display the grand total after all the arguments have been processed.
 Display an entry files and directories
 .Ar depth
 directories deep.
+.It Fl e
+When displaying the space used by a directory, do not include the space
+used by any subdirectories it may contain.
 .It Fl g
 If the
 .Fl g

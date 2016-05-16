@@ -75,14 +75,14 @@ main(int argc, char *argv[])
 	int64_t totalblocks;
 	int ftsoptions, listfiles;
 	int depth;
-	int Hflag, Lflag, aflag, ch, cflag, dflag, gkmflag, nflag, rval, sflag;
+	int Hflag, Lflag, aflag, ch, cflag, dflag, eflag, gkmflag, nflag, rval, sflag;
 	const char *noargv[2];
 
-	Hflag = Lflag = aflag = cflag = dflag = gkmflag = nflag = sflag = 0;
+	Hflag = Lflag = aflag = cflag = dflag = eflag = gkmflag = nflag = sflag = 0;
 	totalblocks = 0;
 	ftsoptions = FTS_PHYSICAL;
 	depth = INT_MAX;
-	while ((ch = getopt(argc, argv, "HLPacd:ghkmnrsx")) != -1)
+	while ((ch = getopt(argc, argv, "HLPacd:eghkmnrsx")) != -1)
 		switch (ch) {
 		case 'H':
 			Hflag = 1;
@@ -109,6 +109,9 @@ main(int argc, char *argv[])
 					optarg);
 				usage();
 			}
+			break;
+		case 'e':
+			eflag = 1;
 			break;
 		case 'g':
 			blocksize = 1024 * 1024 * 1024;
@@ -204,8 +207,8 @@ main(int argc, char *argv[])
 		case FTS_D:			/* Ignore. */
 			break;
 		case FTS_DP:
-			p->fts_parent->fts_number += 
-			    p->fts_number += p->fts_statp->st_blocks;
+			p->fts_number += p->fts_statp->st_blocks;
+			if (! eflag) p->fts_parent->fts_number += p->fts_number;
 			if (cflag)
 				totalblocks += p->fts_statp->st_blocks;
 			/*
