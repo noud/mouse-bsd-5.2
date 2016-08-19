@@ -88,7 +88,7 @@ struct hme_softc {
 	int			sc_debug;
 	void			*sc_sh;		/* shutdownhook cookie */
 	int			sc_ec_capenable;
-	short			sc_if_flags;
+	unsigned long int 	sc_if_flags;
 	u_int8_t		sc_enaddr[ETHER_ADDR_LEN]; /* MAC address */
 
 	/* Special hardware hooks */

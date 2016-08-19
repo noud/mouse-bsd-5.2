@@ -943,7 +943,7 @@ static int wpa_driver_wext_get_ifflags_ifname(struct wpa_driver_wext_data *drv,
 		perror("ioctl[SIOCGIFFLAGS]");
 		return -1;
 	}
-	*flags = ifr.ifr_flags & 0xffff;
+	*flags = ifr.ifr_flags;
 	return 0;
 }
 
@@ -967,7 +967,7 @@ static int wpa_driver_wext_set_ifflags_ifname(struct wpa_driver_wext_data *drv,
 
 	os_memset(&ifr, 0, sizeof(ifr));
 	os_strlcpy(ifr.ifr_name, ifname, IFNAMSIZ);
-	ifr.ifr_flags = flags & 0xffff;
+	ifr.ifr_flags = flags;
 	if (ioctl(drv->ioctl_sock, SIOCSIFFLAGS, (caddr_t) &ifr) < 0) {
 		perror("SIOCSIFFLAGS");
 		return -1;

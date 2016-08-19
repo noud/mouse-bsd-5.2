@@ -936,7 +936,7 @@ qn_dump(struct qn_softc *sc)
 	log(LOG_INFO, "r_mask    : %04x\n", *sc->nic_r_mask);
 	log(LOG_INFO, "r_mode    : %04x\n", *sc->nic_r_mode);
 	log(LOG_INFO, "pending   : %02x\n", sc->transmit_pending);
-	log(LOG_INFO, "if_flags  : %04x\n", sc->sc_ethercom.ec_if.if_flags);
+	log(LOG_INFO, "if_flags  : %08lx\n", sc->sc_ethercom.ec_if.if_flags);
 }
 #endif
 

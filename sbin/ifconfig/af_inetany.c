@@ -71,7 +71,7 @@ commit_address(prop_dictionary_t env, prop_dictionary_t oenv,
 	bool alias, delete, replace;
 	prop_data_t d;
 	const struct paddr_prefix *addr, *brd, *dst, *mask;
-	unsigned short flags;
+	unsigned long int flags;
 
 	if ((af = getaf(env)) == -1)
 		af = AF_INET;

@@ -127,7 +127,7 @@ struct ex_softc {
 	bus_dma_segment_t sc_useg, sc_dseg;
 	int sc_urseg, sc_drseg;
 
-	short sc_if_flags;
+	unsigned long int sc_if_flags;
 };
 
 #define ex_waitcmd(sc) \

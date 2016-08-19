@@ -72,7 +72,7 @@ prop_dictionary_augment(prop_dictionary_t bottom, prop_dictionary_t top)
 
 int
 getifflags(prop_dictionary_t env, prop_dictionary_t oenv,
-    unsigned short *flagsp)
+    unsigned long int *flagsp)
 {
 	struct ifreq ifr;
 	const char *ifname;
@@ -80,7 +80,7 @@ getifflags(prop_dictionary_t env, prop_dictionary_t oenv,
 	int s;
 
 	if (prop_dictionary_get_uint64(env, "ifflags", &ifflags)) {
-		*flagsp = (unsigned short)ifflags;
+		*flagsp = ifflags;
 		return 0;
 	}
 
@@ -95,16 +95,16 @@ getifflags(prop_dictionary_t env, prop_dictionary_t oenv,
 	if (ioctl(s, SIOCGIFFLAGS, &ifr) == -1)
 		return -1;
 
-	*flagsp = (unsigned short)ifr.ifr_flags;
+	*flagsp = ifr.ifr_flags;
 
 	prop_dictionary_set_uint64(oenv, "ifflags",
-	    (unsigned short)ifr.ifr_flags);
+	    ifr.ifr_flags);
 
 	return 0;
 }
 
 const char *
-getifinfo(prop_dictionary_t env, prop_dictionary_t oenv, unsigned short *flagsp)
+getifinfo(prop_dictionary_t env, prop_dictionary_t oenv, unsigned long int *flagsp)
 {
 	if (getifflags(env, oenv, flagsp) == -1)
 		return NULL;

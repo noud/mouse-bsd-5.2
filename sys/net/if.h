@@ -242,7 +242,7 @@ struct ifnet {				/* and the entries */
 	void *	if_bpf;			/* packet filter structure */
 	u_short	if_index;		/* numeric abbreviation for this if */
 	short	if_timer;		/* time 'til if_watchdog called */
-	short	if_flags;		/* up/down, broadcast, etc. */
+	unsigned long int if_flags;	/* up/down, broadcast, etc. */
 	short	if__pad1;		/* be nice to m68k ports */
 	struct	if_data if_data;	/* statistics and other data about if */
 	/*
@@ -319,22 +319,22 @@ struct ifnet {				/* and the entries */
 #define	if_noproto	if_data.ifi_noproto
 #define	if_lastchange	if_data.ifi_lastchange
 
-#define	IFF_UP		0x0001		/* interface is up */
-#define	IFF_BROADCAST	0x0002		/* broadcast address valid */
-#define	IFF_DEBUG	0x0004		/* turn on debugging */
-#define	IFF_LOOPBACK	0x0008		/* is a loopback net */
-#define	IFF_POINTOPOINT	0x0010		/* interface is point-to-point link */
-#define	IFF_NOTRAILERS	0x0020		/* avoid use of trailers */
-#define	IFF_RUNNING	0x0040		/* resources allocated */
-#define	IFF_NOARP	0x0080		/* no address resolution protocol */
-#define	IFF_PROMISC	0x0100		/* receive all packets */
-#define	IFF_ALLMULTI	0x0200		/* receive all multicast packets */
-#define	IFF_OACTIVE	0x0400		/* transmission in progress */
-#define	IFF_SIMPLEX	0x0800		/* can't hear own transmissions */
-#define	IFF_LINK0	0x1000		/* per link layer defined bit */
-#define	IFF_LINK1	0x2000		/* per link layer defined bit */
-#define	IFF_LINK2	0x4000		/* per link layer defined bit */
-#define	IFF_MULTICAST	0x8000		/* supports multicast */
+#define	IFF_UP		0x00000001UL	/* interface is up */
+#define	IFF_BROADCAST	0x00000002UL	/* broadcast address valid */
+#define	IFF_DEBUG	0x00000004UL	/* turn on debugging */
+#define	IFF_LOOPBACK	0x00000008UL	/* is a loopback net */
+#define	IFF_POINTOPOINT	0x00000010UL	/* interface is point-to-point link */
+#define	IFF_NOTRAILERS	0x00000020UL	/* avoid use of trailers */
+#define	IFF_RUNNING	0x00000040UL	/* resources allocated */
+#define	IFF_NOARP	0x00000080UL	/* no address resolution protocol */
+#define	IFF_PROMISC	0x00000100UL	/* receive all packets */
+#define	IFF_ALLMULTI	0x00000200UL	/* receive all multicast packets */
+#define	IFF_OACTIVE	0x00000400UL	/* transmission in progress */
+#define	IFF_SIMPLEX	0x00000800UL	/* can't hear own transmissions */
+#define	IFF_LINK0	0x00001000UL	/* per link layer defined bit */
+#define	IFF_LINK1	0x00002000UL	/* per link layer defined bit */
+#define	IFF_LINK2	0x00004000UL	/* per link layer defined bit */
+#define	IFF_MULTICAST	0x00008000UL	/* supports multicast */
 
 #define	IFFBITS \
     "\020\1UP\2BROADCAST\3DEBUG\4LOOPBACK\5POINTOPOINT\6NOTRAILERS" \
@@ -480,7 +480,7 @@ struct if_msghdr {
 	u_char	ifm_version;	/* future binary compatibility */
 	u_char	ifm_type;	/* message type */
 	int	ifm_addrs;	/* like rtm_addrs */
-	int	ifm_flags;	/* value of if_flags */
+	unsigned long int ifm_flags; /* value of if_flags */
 	u_short	ifm_index;	/* index for associated ifp */
 	struct	if_data ifm_data;/* statistics and other data about if */
 };
@@ -492,7 +492,7 @@ struct if_msghdr14 {
 	u_char	ifm_version;	/* future binary compatibility */
 	u_char	ifm_type;	/* message type */
 	int	ifm_addrs;	/* like rtm_addrs */
-	int	ifm_flags;	/* value of if_flags */
+	unsigned long int ifm_flags; /* value of if_flags */
 	u_short	ifm_index;	/* index for associated ifp */
 	struct	if_data14 ifm_data; /* statistics and other data about if */
 };
@@ -540,7 +540,7 @@ struct	ifreq {
 		struct	sockaddr ifru_dstaddr;
 		struct	sockaddr ifru_broadaddr;
 		struct	sockaddr_storage ifru_space;
-		short	ifru_flags;
+		unsigned long int ifru_flags;
 		int	ifru_metric;
 		int	ifru_mtu;
 		int	ifru_dlt;

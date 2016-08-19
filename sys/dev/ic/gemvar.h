@@ -150,7 +150,7 @@ struct gem_softc {
 	int		sc_chiprev;	/* hardware revision */
 
 	u_int		sc_flags;	/* */
-	short		sc_if_flags;	/* copy of ifp->if_flags */
+	unsigned long int sc_if_flags;	/* copy of ifp->if_flags */
 #define	GEM_GIGABIT		0x0001	/* has a gigabit PHY */
 #define GEM_LINK		0x0002	/* link is up */
 #define	GEM_PCI			0x0004	/* XXX PCI busses are little-endian */

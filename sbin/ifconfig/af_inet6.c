@@ -279,7 +279,7 @@ in6_alias(const char *ifname, prop_dictionary_t env, prop_dictionary_t oenv,
 	u_int32_t scopeid;
 	int s;
 	const int niflag = NI_NUMERICHOST;
-	unsigned short flags;
+	unsigned long int flags;
 
 	/* Get the non-alias address for this interface. */
 	if ((s = getsock(AF_INET6)) == -1) {

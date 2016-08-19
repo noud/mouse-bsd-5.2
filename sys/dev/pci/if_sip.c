@@ -298,7 +298,7 @@ struct sip_softc {
 		int		is_vlan;
 	}	sc_prev;
 		
-	short	sc_if_flags;
+	unsigned long int sc_if_flags;
 
 	int	sc_rxptr;		/* next ready Rx descriptor/descsoft */
 	int	sc_rxdiscard;

@@ -565,7 +565,7 @@ ae_start(struct ifnet *ifp)
 	bus_dmamap_t dmamap;
 	int error, firsttx, nexttx, lasttx = 1, ofree, seg;
 
-	DPRINTF(sc, ("%s: ae_start: sc_flags 0x%08x, if_flags 0x%08x\n",
+	DPRINTF(sc, ("%s: ae_start: sc_flags 0x%08x, if_flags 0x%08lx\n",
 	    sc->sc_dev.dv_xname, sc->sc_flags, ifp->if_flags));
 
 

@@ -1331,7 +1331,7 @@ int
 ifpromisc(struct ifnet *ifp, int pswitch)
 {
 	int pcount, ret;
-	short flags;
+	unsigned long int flags;
 	struct ifreq ifr;
 
 	pcount = ifp->if_pcount;
@@ -1564,7 +1564,7 @@ ifioctl(struct socket *so, u_long cmd, void *data, struct lwp *l)
 #if defined(COMPAT_OSOCK) || defined(COMPAT_OIFREQ)
 	u_long ocmd = cmd;
 #endif
-	short oif_flags;
+	unsigned long int oif_flags;
 #ifdef COMPAT_OIFREQ
 	struct ifreq ifrb;
 	struct oifreq *oifr = NULL;

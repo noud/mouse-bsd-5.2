@@ -1202,13 +1202,13 @@ read_rt(void)
 			ifp = ifwithindex(m.ifm.ifm_index,
 					  m.r.rtm.rtm_type != RTM_DELADDR);
 			if (ifp == 0)
-				trace_act("note %s with flags %#x"
+				trace_act("note %s with flags %#lx"
 					  " for unknown interface index #%d",
 					  rtm_type_name(m.r.rtm.rtm_type),
 					  m.ifm.ifm_flags,
 					  m.ifm.ifm_index);
 			else
-				trace_act("note %s with flags %#x for %s",
+				trace_act("note %s with flags %#lx for %s",
 					  rtm_type_name(m.r.rtm.rtm_type),
 					  m.ifm.ifm_flags,
 					  ifp->int_name);

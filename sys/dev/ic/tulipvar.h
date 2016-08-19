@@ -443,7 +443,7 @@ struct tulip_softc {
 	struct tulip_txsq sc_txfreeq;	/* free Tx descsofts */
 	struct tulip_txsq sc_txdirtyq;	/* dirty Tx descsofts */
 
-	short	sc_if_flags;
+	unsigned long int sc_if_flags;
 
 	int	sc_rxptr;		/* next ready RX descriptor/descsoft */
 

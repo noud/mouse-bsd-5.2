@@ -384,7 +384,7 @@ cue_setmulti(struct cue_softc *sc)
 
 	ifp = GET_IFP(sc);
 
-	DPRINTFN(2,("%s: cue_setmulti if_flags=0x%x\n",
+	DPRINTFN(2,("%s: cue_setmulti if_flags=0x%lx\n",
 		    USBDEVNAME(sc->cue_dev), ifp->if_flags));
 
 	if (ifp->if_flags & IFF_PROMISC) {

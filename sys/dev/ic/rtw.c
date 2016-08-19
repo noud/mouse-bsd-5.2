@@ -1748,7 +1748,7 @@ rtw_collect_txpkt(struct rtw_softc *sc, struct rtw_txdesc_blk *tdb,
 static void
 rtw_reset_oactive(struct rtw_softc *sc)
 {
-	short oflags;
+	unsigned long int oflags;
 	int pri;
 	struct rtw_txsoft_blk *tsb;
 	struct rtw_txdesc_blk *tdb;
@@ -3025,7 +3025,7 @@ rtw_txring_choose(struct rtw_softc *sc, struct rtw_txsoft_blk **tsbp,
 static inline struct mbuf *
 rtw_80211_dequeue(struct rtw_softc *sc, struct ifqueue *ifq, int pri,
     struct rtw_txsoft_blk **tsbp, struct rtw_txdesc_blk **tdbp,
-    struct ieee80211_node **nip, short *if_flagsp)
+    struct ieee80211_node **nip, unsigned long int *if_flagsp)
 {
 	struct mbuf *m;
 
@@ -3057,7 +3057,7 @@ rtw_dequeue(struct ifnet *ifp, struct rtw_txsoft_blk **tsbp,
 	struct ether_header *eh;
 	struct mbuf *m0;
 	struct rtw_softc *sc;
-	short *if_flagsp;
+	unsigned long int *if_flagsp;
 
 	*mp = NULL;
 

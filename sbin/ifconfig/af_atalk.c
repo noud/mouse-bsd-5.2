@@ -193,7 +193,7 @@ at_status(prop_dictionary_t env, prop_dictionary_t oenv, bool force)
 	struct ifreq ifr;
 	int s;
 	const char *ifname;
-	unsigned short flags;
+	unsigned long int flags;
 
 	if ((s = getsock(AF_APPLETALK)) == -1) {
 		if (errno == EAFNOSUPPORT)

@@ -165,7 +165,7 @@ iso_status(prop_dictionary_t env, prop_dictionary_t oenv, bool force)
 	struct iso_ifreq isoifr;
 	int s;
 	const char *ifname;
-	unsigned short flags;
+	unsigned long int flags;
 
 	if ((ifname = getifinfo(env, oenv, &flags)) == NULL)
 		err(EXIT_FAILURE, "%s: getifinfo", __func__);

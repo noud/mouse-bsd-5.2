@@ -163,7 +163,7 @@ main(int argc, char **argv)
 		strncpy(ifr.ifr_name, interface, sizeof(ifr.ifr_name));
 		if (ioctl(skt, SIOCGCNWDOMAIN, (caddr_t)&ifr) < 0)
 			err(1, "SIOCGCNWDOMAIN");
-		printf("%s:\n     0x%03x domain\n", interface, ifr.ifr_domain);
+		printf("%s:\n     0x%03lx domain\n", interface, ifr.ifr_domain);
 		printf("%10llu rx\n", (unsigned long long)cnwis.stats.nws_rx);
 		printf("%10llu rxoverflow\n",
 		    (unsigned long long)cnwis.stats.nws_rxoverflow);

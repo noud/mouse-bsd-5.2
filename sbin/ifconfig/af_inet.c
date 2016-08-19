@@ -77,7 +77,7 @@ in_alias(const char *ifname, prop_dictionary_t env, prop_dictionary_t oenv,
 	struct ifreq ifr;
 	bool alias;
 	int s;
-	unsigned short flags;
+	unsigned long int flags;
 	struct in_aliasreq in_addreq;
 
 	if (lflag)

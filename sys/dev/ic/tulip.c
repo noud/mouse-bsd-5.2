@@ -678,7 +678,7 @@ tlp_start(struct ifnet *ifp)
 	bus_dmamap_t dmamap;
 	int error, firsttx, nexttx, lasttx = 1, ofree, seg;
 
-	DPRINTF(sc, ("%s: tlp_start: sc_flags 0x%08x, if_flags 0x%08x\n",
+	DPRINTF(sc, ("%s: tlp_start: sc_flags 0x%08x, if_flags 0x%08lx\n",
 	    device_xname(&sc->sc_dev), sc->sc_flags, ifp->if_flags));
 
 	/*

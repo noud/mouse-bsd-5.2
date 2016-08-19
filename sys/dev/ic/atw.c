@@ -3443,7 +3443,7 @@ atw_start(struct ifnet *ifp)
 	bus_dmamap_t dmamap;
 	int ctl, error, firsttx, nexttx, lasttx, first, ofree, seg;
 
-	DPRINTF2(sc, ("%s: atw_start: sc_flags 0x%08x, if_flags 0x%08x\n",
+	DPRINTF2(sc, ("%s: atw_start: sc_flags 0x%08x, if_flags 0x%08lx\n",
 	    device_xname(sc->sc_dev), sc->sc_flags, ifp->if_flags));
 
 	if ((ifp->if_flags & (IFF_RUNNING|IFF_OACTIVE)) != IFF_RUNNING)

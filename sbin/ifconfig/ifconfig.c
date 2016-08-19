@@ -483,7 +483,7 @@ static int
 no_cmds_exec(prop_dictionary_t env, prop_dictionary_t oenv)
 {
 	const char *ifname;
-	unsigned short ignore;
+	unsigned long int ignore;
 
 	/* ifname == NULL is ok.  It indicates 'ifconfig -a'. */
 	if ((ifname = getifname(env)) == NULL)
@@ -499,7 +499,7 @@ static int
 media_status_exec(prop_dictionary_t env, prop_dictionary_t oenv)
 {
 	const char *ifname;
-	unsigned short ignore;
+	unsigned long int ignore;
 
 	/* ifname == NULL is ok.  It indicates 'ifconfig -a'. */
 	if ((ifname = getifname(env)) == NULL)
@@ -896,7 +896,7 @@ setifbroadaddr(prop_dictionary_t env, prop_dictionary_t oenv)
 {
 	const struct paddr_prefix *pfx;
 	prop_data_t d;
-	unsigned short flags;
+	unsigned long int flags;
 
 	if (getifflags(env, oenv, &flags) == -1)
 		err(EXIT_FAILURE, "%s: getifflags", __func__);
@@ -929,7 +929,7 @@ setifdstormask(prop_dictionary_t env, prop_dictionary_t oenv)
 	const char *key;
 	const struct paddr_prefix *pfx;
 	prop_data_t d;
-	unsigned short flags;
+	unsigned long int flags;
 
 	if (getifflags(env, oenv, &flags) == -1)
 		err(EXIT_FAILURE, "%s: getifflags", __func__);
@@ -1156,7 +1156,7 @@ status(const struct sockaddr *sdl, prop_dictionary_t env,
 	int af, s;
 	const char *ifname;
 	struct ifcapreq ifcr;
-	unsigned short flags;
+	unsigned long int flags;
 	const struct afswtch *afp;
 
 	if ((af = getaf(env)) == -1) {
