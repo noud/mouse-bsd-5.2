@@ -136,6 +136,7 @@ static const struct kwinst ifflagskw[] = {
 	, IFKW("link0", IFF_LINK0)
 	, IFKW("link1", IFF_LINK1)
 	, IFKW("link2", IFF_LINK2)
+	, IFKW("noproto", IFF_NOPROTO)
 	, {.k_word = "down", .k_type = KW_T_INT, .k_int = -IFF_UP}
 	, {.k_word = "up", .k_type = KW_T_INT, .k_int = IFF_UP}
 };

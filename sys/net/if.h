@@ -335,11 +335,12 @@ struct ifnet {				/* and the entries */
 #define IFF_LINK1       0x00002000UL /* per link layer defined bit */
 #define IFF_LINK2       0x00004000UL /* per link layer defined bit */
 #define IFF_MULTICAST   0x00008000UL /* supports multicast */
+#define IFF_NOPROTO     0x00010000UL /* don't pass to protocols */
 
 #define	IFFBITS \
     "\020\1UP\2BROADCAST\3DEBUG\4LOOPBACK\5POINTOPOINT\6NOTRAILERS" \
     "\7RUNNING\10NOARP\11PROMISC\12ALLMULTI\13OACTIVE\14SIMPLEX" \
-    "\15LINK0\16LINK1\17LINK2\20MULTICAST"
+    "\15LINK0\16LINK1\17LINK2\20MULTICAST\21NOPROTO"
 
 /* flags set internally only: */
 #define	IFF_CANTCHANGE \

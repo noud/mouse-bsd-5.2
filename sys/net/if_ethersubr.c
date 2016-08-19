@@ -857,6 +857,11 @@ ether_input(struct ifnet *ifp, struct mbuf *m)
 		m->m_flags &= ~M_HASFCS;
 	}
 
+ if (ifp->if_flags & IFF_NOPROTO)
+  { m_freem(m);
+    return;
+  }
+
 	if (etype > ETHERMTU + sizeof (struct ether_header)) {
 		/* Strip off the Ethernet header. */
 		m_adj(m, sizeof(struct ether_header));

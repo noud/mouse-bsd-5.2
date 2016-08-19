@@ -553,6 +553,16 @@ Refer to the man page for the specific driver
 for more information.
 .It Fl link[0-2]
 Disable special processing at the link level with the specified interface.
+.It Cm noproto
+Disable passing packets to protocol stacks from this interface.
+(Packets can still be received via
+.Xr bpf 4
+or passed through a
+.Xr bridge 4
+or the like.)
+.It Fl noproto
+Enable passing packets to protocol stacks from this interface.  This is
+the default and is the normal mode of operation.
 .It Cm up
 Mark an interface ``up''.
 This may be used to enable an interface after an ``ifconfig down.''
