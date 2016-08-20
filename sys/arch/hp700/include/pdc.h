@@ -547,7 +547,7 @@ struct device_path {
 /* dp_flags */
 #define	PF_AUTOBOOT	0x80	/* These two are PDC flags for how to locate */
 #define	PF_AUTOSEARCH	0x40	/*	the "boot device" */
-#define	PF_TIMER	0x0f	/* power of 2 # secs "boot timer" (0 == dflt) */
+//#define	PF_TIMER	0x0f	/* power of 2 # secs "boot timer" (0 == dflt) */
 
 /*
  * A processors Stable Storage is accessed through the PDC.  There are
