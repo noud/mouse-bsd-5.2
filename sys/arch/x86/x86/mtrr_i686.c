@@ -302,8 +302,8 @@ i686_mtrr_init_first(void)
 	i686_mtrr_vcnt = i686_mtrr_cap & MTRR_I686_CAP_VCNT_MASK;
 
 	if (i686_mtrr_vcnt > MTRR_I686_NVAR_MAX)
-		printf("\%s: FIXME: more than %d MTRRs\n", __FILE__,
-		    MTRR_I686_NVAR_MAX);
+		printf("\%s: FIXME: more than %d MTRRs (%d)\n", __FILE__,
+		    MTRR_I686_NVAR_MAX, i686_mtrr_vcnt);
 	else if (i686_mtrr_vcnt < MTRR_I686_NVAR_MAX) {
 		for (i = MTRR_I686_NVAR_MAX - i686_mtrr_vcnt; i; i--) {
 			mtrr_raw[16 - (i*2)].msraddr = 0;
