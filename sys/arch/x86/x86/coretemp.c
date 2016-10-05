@@ -104,6 +104,7 @@ coretemp_register(struct cpu_info *ci)
 		}
 	}
 
+#ifndef NO_MSR_IA32_EXT_CONFIG
 	/*
 	 * On some Core 2 CPUs, there's an undocumented MSR that
 	 * can tell us if Tj(max) is 100 or 85.
@@ -120,6 +121,7 @@ coretemp_register(struct cpu_info *ci)
 		if (msr & (1 << 30))
 			sc->sc_tjmax = 85;
 	}
+#endif
 
 	/* 
 	 * Check if the MSR contains thermal reading valid bit, this
