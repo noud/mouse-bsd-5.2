@@ -1053,23 +1053,27 @@ in_arpinput(struct mbuf *m)
 				ARP_STATINC(ARP_STAT_RCVOVERPERM);
 				log(LOG_INFO,
 				    "%s tried to overwrite permanent arp info"
-				    " for %s\n",
+				    " %s for %s\n",
 				    lla_snprintf(ar_sha(ah), ah->ar_hln),
+				    lla_snprintf(CLLADDR(sdl), sdl->sdl_alen),
 				    in_fmtaddr(isaddr));
 				goto out;
 			} else if (rt->rt_ifp != ifp) {
 				ARP_STATINC(ARP_STAT_RCVOVERINT);
 				log(LOG_INFO,
 				    "%s on %s tried to overwrite "
-				    "arp info for %s on %s\n",
+				    "arp info %s for %s on %s\n",
 				    lla_snprintf(ar_sha(ah), ah->ar_hln),
-				    ifp->if_xname, in_fmtaddr(isaddr),
+				    ifp->if_xname,
+				    lla_snprintf(CLLADDR(sdl), sdl->sdl_alen),
+				    in_fmtaddr(isaddr),
 				    rt->rt_ifp->if_xname);
 				    goto out;
 			} else {
 				ARP_STATINC(ARP_STAT_RCVOVER);
 				log(LOG_INFO,
-				    "arp info overwritten for %s by %s\n",
+				    "arp info %s for %s overwritten by %s\n",
+				    lla_snprintf(CLLADDR(sdl), sdl->sdl_alen),
 				    in_fmtaddr(isaddr),
 				    lla_snprintf(ar_sha(ah), ah->ar_hln));
 			}
