@@ -39,6 +39,7 @@ struct state {
 #define CSQ_NORMAL 1
 #define CSQ_CM_X   2
 #define CSQ_CM_Y   3
+#define CSQ_DCS    4
   } ;
 
 static STATE cons_state;
@@ -428,6 +429,9 @@ static void regular_output(STATE *s, int c)
 	  case '\31': /* ^Y */
 	     do_dc(s);
 	     break;
+	  case '\37': /* ^_ */
+	     s->cseqstate = CSQ_DCS;
+	     break;
 	}
        break;
     case CSQ_CM_X:
@@ -469,6 +473,11 @@ static void regular_output(STATE *s, int c)
 	     s->cseqstate = CSQ_CM_X;
 	     s->atcol = 0;
 	     break;
+	}
+       break;
+    case CSQ_DCS:
+       if ((c < 0x20) || ((c >= 0x7f) && (c < 0xa0)))
+	{ s->cseqstate = CSQ_NORMAL;
 	}
        break;
   }
