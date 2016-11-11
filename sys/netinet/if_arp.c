@@ -193,10 +193,10 @@ static int db_show_rtentry(struct rtentry *, void *);
  */
 
 static char *
-lla_snprintf(u_int8_t *, int);
+lla_snprintf(const u_int8_t *, int);
 
 static char *
-lla_snprintf(u_int8_t *adrp, int len)
+lla_snprintf(const u_int8_t *adrp, int len)
 {
 #define NUMBUFS 3
 	static char buf[NUMBUFS][16*3];
