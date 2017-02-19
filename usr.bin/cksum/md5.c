@@ -106,9 +106,9 @@ MD5TimeTrial(void)
 	 * Be careful that endTime-startTime is not zero.
 	 * (Bug fix from Ric * Anderson, ric@Artisoft.COM.)
 	 */
-	printf("Speed = %ld bytes/second\n",
+	printf("Speed = %lld bytes/second\n",
 	    (long) TEST_BLOCK_LEN * (long) TEST_BLOCK_COUNT /
-	    ((endTime - startTime) != 0 ? (endTime - startTime) : 1));
+	    ((endTime - startTime) != 0 ? (endTime - startTime) : 1LL));
 }
 
 /*

@@ -240,8 +240,8 @@ wtmp(const char *file, int namesz, int linesz, int hostsz, int numeric)
 						    fmttime(delta,
 						    fulltime | TIMEONLY | GMT));
 					else
-						printf(" (%ld+%s)\n",
-						    delta / SECSPERDAY,
+						printf(" (%lld+%s)\n",
+						    (long long int)delta / SECSPERDAY,
 						    fmttime(delta,
 						    fulltime | TIMEONLY | GMT));
 				}

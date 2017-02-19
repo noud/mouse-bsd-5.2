@@ -953,9 +953,10 @@ print_status(const char *arg)
 		printf("shuffle play:\t%s\n", (shuffle != 0) ? "on" : "off");
 	if (digital)
 		printf("digital xfer:\tto %s "
-		       "(%d frames per wakeup, %ld.%06lds period)\n",
-		    da.auname, da.fpw, itv_timer.it_interval.tv_sec,
-		    itv_timer.it_interval.tv_usec);
+		       "(%d frames per wakeup, %lld.%06lds period)\n",
+		    da.auname, da.fpw,
+		    (long long int)itv_timer.it_interval.tv_sec,
+		    (long int)itv_timer.it_interval.tv_usec);
 	else
 		printf("digital xfer:\toff\n");
 

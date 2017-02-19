@@ -1130,7 +1130,8 @@ metadata_log(const char *path, const char *type, struct timeval *tv,
 	if (*type == 'f') /* type=file */
 		fprintf(metafp, " size=%lld", (long long)size);
 	if (tv != NULL && dopreserve)
-		fprintf(metafp, " time=%ld.%ld", tv[1].tv_sec, tv[1].tv_usec);
+		fprintf(metafp, " time=%lld.%ld",
+		    (long long int)tv[1].tv_sec, (long int)tv[1].tv_usec);
 	if (digestresult && digest)
 		fprintf(metafp, " %s=%s", digest, digestresult);
 	if (fflags)

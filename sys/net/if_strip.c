@@ -1460,11 +1460,11 @@ strip_watchdog(struct ifnet *ifp)
 
 #ifdef DEBUG
 	if (ifp->if_flags & IFF_DEBUG)
-		addlog("\n%s: in watchdog, state %s timeout %ld\n",
+		addlog("\n%s: in watchdog, state %s timeout %lld\n",
 		       ifp->if_xname,
  		       ((unsigned) sc->sc_state < 3) ?
 		       strip_statenames[sc->sc_state] : "<<illegal state>>",
-		       sc->sc_statetimo - time_second);
+		       (long long int)(sc->sc_statetimo - time_second));
 #endif
 
 	/*

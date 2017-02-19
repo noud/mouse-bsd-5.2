@@ -230,7 +230,7 @@ static void tsock_tick(void *arg __attribute__((__unused__)))
 	  timeradd(&t->itv.it_value,&t->itv.it_interval,&t->itv.it_value);
 	} while (tvcmp(&t->itv.it_value,<=,&now));
        heap_insert(t);
-       if (timerdebug) printf("tsock_tick %p reinstalled %lu.%06lu\n",(void *)t,t->itv.it_value.tv_sec,t->itv.it_value.tv_usec);
+       if (timerdebug) printf("tsock_tick %p reinstalled %llu.%06lu\n",(void *)t,(unsigned long long int)t->itv.it_value.tv_sec,(unsigned long int)t->itv.it_value.tv_usec);
      }
     else
      { tsock_gentick(t);
@@ -315,7 +315,7 @@ static int tsock_set(PCB *pcb, struct mbuf *m)
        microtime(&now);
        timeradd(&now,&itv.it_value,&pcb->itv.it_value);
        pcb->itv.it_interval = itv.it_interval;
-       if (timerdebug) printf("tsock_set %p start %lu.%06lu+%lu.%06lu=%lu.%06lu\n",(void *)pcb,now.tv_sec,now.tv_usec,itv.it_value.tv_sec,itv.it_value.tv_usec,pcb->itv.it_value.tv_sec,pcb->itv.it_value.tv_usec);
+       if (timerdebug) printf("tsock_set %p start %llu.%06lu+%llu.%06lu=%llu.%06lu\n",(void *)pcb,(unsigned long long int)now.tv_sec,(unsigned long int)now.tv_usec,(unsigned long long int)itv.it_value.tv_sec,(unsigned long int)itv.it_value.tv_usec,(unsigned long long int)pcb->itv.it_value.tv_sec,(unsigned long int)pcb->itv.it_value.tv_usec);
        tsock_start(pcb);
      }
     else

@@ -100,8 +100,8 @@ main(int argc, char **argv)
 		if (gettimeofday(&now, NULL) == -1)
 			err(1, "gettimeofday now");
 		timersub(&now, &then, &diff);
-		printf("sig: kevent returned %d in %ld.%06ld\n", n,
-		    diff.tv_sec, diff.tv_usec);
+		printf("sig: kevent returned %d in %lld.%06ld\n", n,
+		    (long long int)diff.tv_sec, diff.tv_usec);
 		if (n == -1)
 			err(1, "kevent(2)");
 		else if (n == 0)

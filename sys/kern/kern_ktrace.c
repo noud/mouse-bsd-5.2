@@ -370,8 +370,8 @@ ktraddentry(lwp_t *l, struct ktrace_entry *kte, int flags)
 			timersub(&t2, &t1, &t2);
 			if (t2.tv_sec > 0)
 				log(LOG_NOTICE,
-				    "ktrace long wait: %ld.%06ld\n",
-				    t2.tv_sec, t2.tv_usec);
+				    "ktrace long wait: %lld.%06ld\n",
+				    (long long int)t2.tv_sec, (long int)t2.tv_usec);
 #endif
 		} while (p->p_tracep == ktd &&
 		    (ktd->ktd_flags & (KTDF_WAIT | KTDF_DONE)) == KTDF_WAIT);

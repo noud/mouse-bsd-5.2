@@ -2822,7 +2822,7 @@ static l_fp
 			struct timeval *tvp = (struct timeval *)CMSG_DATA(cmsghdr);
 			double dtemp;
 			l_fp nts;
-			DPRINTF(4, ("fetch_timestamp: system network time stamp: %ld.%06ld\n", tvp->tv_sec, tvp->tv_usec));
+			DPRINTF(4, ("fetch_timestamp: system network time stamp: %lld.%06ld\n", (long long int)tvp->tv_sec, tvp->tv_usec));
 			nts.l_i = tvp->tv_sec + JAN_1970;
 			dtemp = tvp->tv_usec / 1e6;
 

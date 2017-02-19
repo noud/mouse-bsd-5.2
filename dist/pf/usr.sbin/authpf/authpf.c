@@ -714,8 +714,9 @@ change_filter(int add, const char *luser, const char *ipsrc)
 		syslog(LOG_INFO, "allowing %s, user %s", ipsrc, luser);
 	} else {
 		gettimeofday(&Tend, NULL);
-		syslog(LOG_INFO, "removed %s, user %s - duration %ld seconds",
-		    ipsrc, luser, Tend.tv_sec - Tstart.tv_sec);
+		syslog(LOG_INFO, "removed %s, user %s - duration %lld seconds",
+		    ipsrc, luser,
+		    (long long int)(Tend.tv_sec - Tstart.tv_sec));
 	}
 	return (0);
 no_mem:

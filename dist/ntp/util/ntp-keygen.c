@@ -1565,8 +1565,8 @@ gen_mv(
 		PEM_write_PrivateKey(str, pkey1, passwd2 ?
 		    EVP_des_cbc() : NULL, NULL, 0, NULL, passwd2);
 		fclose(str);
-		fprintf(stderr, "ntpkey_%s_%s.%lu\n", ident, trustname,
-		    epoch + JAN_1970);
+		fprintf(stderr, "ntpkey_%s_%s.%llu\n", ident, trustname,
+		    epoch + (unsigned long long int)JAN_1970);
 		if (debug)
 			DSA_print_fp(stdout, sdsa, 0);
 		EVP_PKEY_free(pkey1);
@@ -1859,8 +1859,8 @@ fheader	(
 {
 	FILE	*str;		/* file handle */
 
-	sprintf(filename, "ntpkey_%s_%s.%lu", id, name, epoch +
-	    JAN_1970);
+	sprintf(filename, "ntpkey_%s_%s.%llu", id, name, epoch +
+	    (unsigned long long int)JAN_1970);
 	if ((str = fopen(filename, "w")) == NULL) {
 		perror("Write");
 		exit (-1);

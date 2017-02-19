@@ -108,8 +108,8 @@ sleep(5);
 			err(1, "gettimeofday now");
 		timersub(&now, &then, &diff);
 
-		printf("iw: kevent returned %d in %ld.%06ld\n", n,
-		    diff.tv_sec, diff.tv_usec);
+		printf("iw: kevent returned %d in %lld.%06ld\n", n,
+		    (long long int)diff.tv_sec, diff.tv_usec);
 		if (n == -1)
 			err(1, "kevent");
 		else if (n == 0)
@@ -212,8 +212,8 @@ printf("ir: registered sock %d\n", sock);
 			err(1, "ir: gettimeofday now");
 		timersub(&now, &then, &diff);
 
-		printf("ir: kevent returned %d in %ld.%06ld\n", n,
-		    diff.tv_sec, diff.tv_usec);
+		printf("ir: kevent returned %d in %lld.%06ld\n", n,
+		    (long long int)diff.tv_sec, diff.tv_usec);
 		if (n == -1)
 			err(1, "ir: kevent");
 		else if (n == 0)
@@ -247,8 +247,8 @@ printf("ir: registered fd %d\n", fd);
 			err(1, "ir: gettimeofday now");
 		timersub(&now, &then, &diff);
 
-		printf("ir: kevent returned %d in %ld.%06ld\n", n,
-		    diff.tv_sec, diff.tv_usec);
+		printf("ir: kevent returned %d in %lld.%06ld\n", n,
+		    (long long int)diff.tv_sec, diff.tv_usec);
 		if (n == -1)
 			err(1, "ir: kevent");
 		else if (n == 0)

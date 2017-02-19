@@ -148,8 +148,9 @@ procfs_dostatus(
 		ps += snprintf(ps, sizeof(psbuf) - (ps - psbuf), "noflags");
 
 	if (l->l_flag & LW_INMEM)
-		ps += snprintf(ps, sizeof(psbuf) - (ps - psbuf), " %ld,%ld",
-		    p->p_stats->p_start.tv_sec, p->p_stats->p_start.tv_usec);
+		ps += snprintf(ps, sizeof(psbuf) - (ps - psbuf), " %lld,%ld",
+		    (long long int)p->p_stats->p_start.tv_sec,
+		    (long int)p->p_stats->p_start.tv_usec);
 	else
 		ps += snprintf(ps, sizeof(psbuf) - (ps - psbuf), " -1,-1");
 
@@ -158,8 +159,11 @@ procfs_dostatus(
 
 		calcru(p, &ut, &st, (void *) 0, NULL);
 		ps += snprintf(ps, sizeof(psbuf) - (ps - psbuf),
-		    " %ld,%ld %ld,%ld", ut.tv_sec, ut.tv_usec, st.tv_sec,
-		    st.tv_usec);
+		    " %lld,%ld %lld,%ld",
+		    (long long int)ut.tv_sec,
+		    (long int)ut.tv_usec,
+		    (long long int)st.tv_sec,
+		    (long int)st.tv_usec);
 	}
 
 	lwp_lock(l);

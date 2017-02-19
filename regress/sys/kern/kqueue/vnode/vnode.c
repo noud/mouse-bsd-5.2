@@ -98,9 +98,9 @@ main(int argc, char **argv)
 		if (gettimeofday(&now, NULL) == -1)
 			err(1, "gettimeofday now");
 		timersub(&now, &then, &diff);
-		printf("vnode '%s': kevent returned %d in %ld.%06ld\n",
+		printf("vnode '%s': kevent returned %d in %lld.%06ld\n",
 			argv[1],
-			n, diff.tv_sec, diff.tv_usec);
+			n, (long long int)diff.tv_sec, diff.tv_usec);
 
 		if (n == -1)
 			err(1, "kevent");

@@ -227,8 +227,8 @@ coredump_buildname(struct proc *p, char *dst, const char *src, size_t len)
 				    p->p_pgrp->pg_session->s_login);
 				break;
 			case 't':
-				i = snprintf(d, end - d, "%ld",
-				    p->p_stats->p_start.tv_sec);
+				i = snprintf(d, end - d, "%lld",
+				    (long long int)p->p_stats->p_start.tv_sec);
 				break;
 			default:
 				goto copy;

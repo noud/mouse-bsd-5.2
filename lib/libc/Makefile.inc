@@ -40,10 +40,10 @@ CPPFLAGS+=	-DNLS
 CPPFLAGS+=	-DYP
 .endif
 
-.if ${MACHINE_ARCH} == "i386"
-# Set lint to exit on warnings
-LINTFLAGS+=	-w
-.endif
+#	.if ${MACHINE_ARCH} == "i386"
+#	# Set lint to exit on warnings
+#	LINTFLAGS+=	-w
+#	.endif
 # ignore 'empty translation unit' warnings.
 LINTFLAGS+=	-X 272
 

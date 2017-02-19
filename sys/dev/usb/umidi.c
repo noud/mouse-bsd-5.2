@@ -1486,8 +1486,8 @@ out_jack_output(struct umidi_jack *out_jack, u_char *src, int len, int cin)
 	if ( umididebug >= 100 )
 		microtime(&umidi_tv);
 #endif
-	DPRINTFN(100, ("umidi out: %lu.%06lus ep=%p cn=%d len=%d cin=%#x\n",
-	    umidi_tv.tv_sec%100, umidi_tv.tv_usec,
+	DPRINTFN(100, ("umidi out: %d.%06llus ep=%p cn=%d len=%d cin=%#x\n",
+	    (int)(umidi_tv.tv_sec%100), (unsigned long long int)umidi_tv.tv_usec,
 	    ep, out_jack->cable_number, len, cin));
 	
 	s = splusb();
@@ -1631,9 +1631,11 @@ out_intr(usbd_xfer_handle xfer, usbd_private_handle priv,
 #endif
 	usbd_get_xfer_status(xfer, NULL, NULL, &count, NULL);
         if ( 0 == count % UMIDI_PACKET_SIZE ) {
-		DPRINTFN(200,("%s: %lu.%06lus out ep %p xfer length %u\n",
+		DPRINTFN(200,("%s: %d.%06llus out ep %p xfer length %u\n",
 			     USBDEVNAME(ep->sc->sc_dev),
-			     umidi_tv.tv_sec%100, umidi_tv.tv_usec, ep, count));
+			     (int)(umidi_tv.tv_sec%100),
+			     (unsigned long long int)umidi_tv.tv_usec,
+			     ep, count));
         } else {
                 DPRINTF(("%s: output endpoint %p odd transfer length %u\n",
                         USBDEVNAME(ep->sc->sc_dev), ep, count));

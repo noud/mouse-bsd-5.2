@@ -296,9 +296,9 @@ print_bw_meter(bw_meter, banner_printed)
 		sprintf(s2, "%llu", (unsigned long long)bw_meter->bm_measured.b_bytes);
 	else
 		sprintf(s2, "?");
-	sprintf(s0, "%lu.%lu|%s|%s",
-		bw_meter->bm_start_time.tv_sec,
-		bw_meter->bm_start_time.tv_usec,
+	sprintf(s0, "%llu.%lu|%s|%s",
+		(unsigned long long int)bw_meter->bm_start_time.tv_sec,
+		(unsigned long int)bw_meter->bm_start_time.tv_usec,
 		s1, s2);
 	printf("  %-30s", s0);
 
@@ -319,9 +319,9 @@ print_bw_meter(bw_meter, banner_printed)
 		sprintf(s2, "%llu", (unsigned long long)bw_meter->bm_threshold.b_bytes);
 	else
 		sprintf(s2, "?");
-	sprintf(s0, "%lu.%lu|%s|%s",
-		bw_meter->bm_threshold.b_time.tv_sec,
-		bw_meter->bm_threshold.b_time.tv_usec,
+	sprintf(s0, "%llu.%lu|%s|%s",
+		(unsigned long long int)bw_meter->bm_threshold.b_time.tv_sec,
+		(unsigned long int)bw_meter->bm_threshold.b_time.tv_usec,
 		s1, s2);
 	printf("  %-30s", s0);
 
@@ -330,11 +330,15 @@ print_bw_meter(bw_meter, banner_printed)
 		 &bw_meter->bm_threshold.b_time, &end);
 	if (timercmp(&now, &end, <=)) {
 		timersub(&end, &now, &delta);
-		sprintf(s3, "%lu.%lu", delta.tv_sec, delta.tv_usec);
+		sprintf(s3, "%llu.%lu",
+			(unsigned long long int)delta.tv_sec,
+			(unsigned long int)delta.tv_usec);
 	} else {
 		/* Negative time */
 		timersub(&now, &end, &delta);
-		sprintf(s3, "-%lu.%lu", delta.tv_sec, delta.tv_usec);
+		sprintf(s3, "-%llu.%lu",
+			(unsigned long long int)delta.tv_sec,
+			(unsigned long int)delta.tv_usec);
 	}
 	printf(" %s", s3);
 

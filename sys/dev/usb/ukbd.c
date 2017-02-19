@@ -212,9 +212,10 @@ ukbdtracedump(void)
 	for (i = 0; i < UKBDTRACESIZE; i++) {
 		struct ukbdtraceinfo *p =
 		    &ukbdtracedata[(i+ukbdtraceindex)%UKBDTRACESIZE];
-		printf("%lu.%06lu: mod=0x%02x key0=0x%02x key1=0x%02x "
+		printf("%llu.%06llu: mod=0x%02x key0=0x%02x key1=0x%02x "
 		       "key2=0x%02x key3=0x%02x\n",
-		       p->tv.tv_sec, p->tv.tv_usec,
+		       (unsigned long long int)p->tv.tv_sec,
+		       (unsigned long long int)p->tv.tv_usec,
 		       p->ud.modifiers, p->ud.keycode[0], p->ud.keycode[1],
 		       p->ud.keycode[2], p->ud.keycode[3]);
 	}
@@ -562,9 +563,10 @@ ukbd_decode(struct ukbd_softc *sc, struct ukbd_data *ud)
 	if (ukbddebug > 5) {
 		struct timeval tv;
 		microtime(&tv);
-		DPRINTF((" at %lu.%06lu  mod=0x%02x key0=0x%02x key1=0x%02x "
+		DPRINTF((" at %llu.%06llu  mod=0x%02x key0=0x%02x key1=0x%02x "
 			 "key2=0x%02x key3=0x%02x\n",
-			 tv.tv_sec, tv.tv_usec,
+			 (unsigned long long int)tv.tv_sec,
+			 (unsigned long long int)tv.tv_usec,
 			 ud->modifiers, ud->keycode[0], ud->keycode[1],
 			 ud->keycode[2], ud->keycode[3]));
 	}

@@ -164,15 +164,16 @@ strtime(struct timeval *t)
 		fill++;
 	}
 	if (t->tv_sec > 60) {
-		(void) sprintf(p, fill ? "%02ld:" : "%ld:", t->tv_sec / 60);
+		(void) sprintf(p, fill ? "%02lld:" : "%lld:",
+		    (long long int)t->tv_sec / 60);
 		while (*p++)
 			;
 		p--;
 		t->tv_sec %= 60;
 		fill++;
 	}
-	(void) sprintf(p, fill ? "%02ld.%02ld" : "%ld.%02ld",
-		t->tv_sec, t->tv_usec / 10000);
+	(void) sprintf(p, fill ? "%02lld.%02ld" : "%lld.%02ld",
+		(long long int)t->tv_sec, (long int)t->tv_usec / 10000);
 	return buf;
 }
 

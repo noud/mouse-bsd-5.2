@@ -179,9 +179,9 @@ if_dump()
 				fprintf(fp, "vltime: %ld",
 					(long)pfx->validlifetime);
 			if (pfx->vltimeexpire != 0)
-				fprintf(fp, "(decr,expire %ld), ", (long)
-					pfx->vltimeexpire > now.tv_sec ?
-					pfx->vltimeexpire - now.tv_sec : 0);
+				fprintf(fp, "(decr,expire %lld), ", (long long int)
+					( pfx->vltimeexpire > now.tv_sec ?
+					  pfx->vltimeexpire - now.tv_sec : 0 ));
 			else
 				fprintf(fp, ", ");
 			if (pfx->preflifetime ==  ND6_INFINITE_LIFETIME)
@@ -190,9 +190,9 @@ if_dump()
 				fprintf(fp, "pltime: %ld",
 					(long)pfx->preflifetime);
 			if (pfx->pltimeexpire != 0)
-				fprintf(fp, "(decr,expire %ld), ", (long)
-					pfx->pltimeexpire > now.tv_sec ?
-					pfx->pltimeexpire - now.tv_sec : 0);
+				fprintf(fp, "(decr,expire %lld), ", (long long int)
+					( pfx->pltimeexpire > now.tv_sec ?
+					  pfx->pltimeexpire - now.tv_sec : 0 ));
 			else
 				fprintf(fp, ", ");
 			fprintf(fp, "flags: %s%s%s",

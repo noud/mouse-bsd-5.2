@@ -198,7 +198,9 @@ puffsdump_req(struct puffs_req *preq)
 	PU_LOCK();
 	gettimeofday(&tv_now, NULL);
 	timersub(&tv_now, &tv_prev, &tv);
-	printf("\t\tsince previous call: %ld.%06ld\n", tv.tv_sec, tv.tv_usec);
+	printf("\t\tsince previous call: %lld.%06ld\n",
+		(long long int)tv.tv_sec,
+		(long int)tv.tv_usec);
 	gettimeofday(&tv_prev, NULL);
 	PU_UNLOCK();
 }

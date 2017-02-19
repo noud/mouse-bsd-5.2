@@ -221,9 +221,11 @@ umass_scsipi_request(struct scsipi_channel *chan,
 		periph = xs->xs_periph;
 		DIF(UDMASS_UPPER, periph->periph_dbflags |= SCSIPI_DEBUG_FLAGS);
 
-		DPRINTF(UDMASS_CMD, ("%s: umass_scsi_cmd: at %lu.%06lu: %d:%d "
+		DPRINTF(UDMASS_CMD, ("%s: umass_scsi_cmd: at %llu.%06llu: %d:%d "
 		    "xs=%p cmd=0x%02x datalen=%d (quirks=0x%x, poll=%d)\n",
-		    USBDEVNAME(sc->sc_dev), sc->tv.tv_sec, sc->tv.tv_usec,
+		    USBDEVNAME(sc->sc_dev),
+		    (unsigned long long int)sc->tv.tv_sec,
+		    (unsigned long long int)sc->tv.tv_usec,
 		    periph->periph_target, periph->periph_lun,
 		    xs, xs->cmd->opcode, xs->datalen,
 		    periph->periph_quirks, xs->xs_control & XS_CTL_POLL));
@@ -399,8 +401,10 @@ umass_scsipi_cb(struct umass_softc *sc, void *priv, int residue, int status)
 	delta = (tv.tv_sec - sc->tv.tv_sec) * 1000000 + tv.tv_usec - sc->tv.tv_usec;
 #endif
 
-	DPRINTF(UDMASS_CMD,("umass_scsipi_cb: at %lu.%06lu, delta=%u: xs=%p residue=%d"
-	    " status=%d\n", tv.tv_sec, tv.tv_usec, delta, xs, residue, status));
+	DPRINTF(UDMASS_CMD,("umass_scsipi_cb: at %llu.%06llu, delta=%u: xs=%p residue=%d status=%d\n",
+		(unsigned long long int)tv.tv_sec,
+		(unsigned long long int)tv.tv_usec,
+		delta, xs, residue, status));
 
 	xs->resid = residue;
 
@@ -441,9 +445,10 @@ umass_scsipi_cb(struct umass_softc *sc, void *priv, int residue, int status)
 			USBDEVNAME(sc->sc_dev), status);
 	}
 
-	DPRINTF(UDMASS_CMD,("umass_scsipi_cb: at %lu.%06lu: return xs->error="
+	DPRINTF(UDMASS_CMD,("umass_scsipi_cb: at %llu.%06llu: return xs->error="
             "%d, xs->xs_status=0x%x xs->resid=%d\n",
-	     tv.tv_sec, tv.tv_usec,
+	     (unsigned long long int)tv.tv_sec,
+	     (unsigned long long int)tv.tv_usec,
 	     xs->error, xs->xs_status, xs->resid));
 
 	s = splbio();

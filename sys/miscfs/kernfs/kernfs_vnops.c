@@ -400,7 +400,8 @@ kernfs_xread(kfs, off, bufp, len, wrlen)
 		struct timeval tv;
 
 		microtime(&tv);
-		snprintf(*bufp, len, "%ld %ld\n", tv.tv_sec, tv.tv_usec);
+		snprintf(*bufp, len, "%lld %ld\n",
+			(long long int)tv.tv_sec, (long int)tv.tv_usec);
 		break;
 	}
 

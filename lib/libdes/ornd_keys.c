@@ -77,9 +77,9 @@ des_init_random_number_generator(des_cblock *seed)
 
 	memcpy(&seed_q, seed, sizeof(seed_q));
 
-	snprintf(accum, sizeof(accum), "%ld%ld%d%s%d%lld",
-	    when.tv_sec, when.tv_usec, getpid(), hname, getuid(),
-	    (long long) seed_q);
+	snprintf(accum, sizeof(accum), "%lld%ld%d%s%d%lld",
+	    (long long int)when.tv_sec, (long int)when.tv_usec,
+	    getpid(), hname, getuid(), (long long) seed_q);
 
 	SHA1Update(&sha, (u_char *) accum, strlen(accum));
 

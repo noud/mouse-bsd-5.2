@@ -1743,8 +1743,9 @@ pf_normalize_tcp_stateful(struct mbuf *m, int off, struct pf_pdesc *pd,
 			    SEQ_GT(tsecr, dst->scrub->pfss_tsval) ? '2' : ' ',
 			    SEQ_LT(tsecr, dst->scrub->pfss_tsval0)? '3' : ' '));
 			DPFPRINTF((" tsval: %" PRIu32 "  tsecr: %" PRIu32
-			    "  +ticks: %" PRIu32 "  idle: %lus %lums\n",
-			    tsval, tsecr, tsval_from_last, delta_ts.tv_sec,
+			    "  +ticks: %" PRIu32 "  idle: %llus %lums\n",
+			    tsval, tsecr, tsval_from_last,
+			    (unsigned long long int)delta_ts.tv_sec,
 			    delta_ts.tv_usec / 1000));
 			DPFPRINTF((" src->tsval: %" PRIu32 "  tsecr: %" PRIu32
 			    "\n",

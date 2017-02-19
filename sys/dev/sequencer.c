@@ -901,12 +901,12 @@ seq_timer_waitabs(struct sequencer_softc *sc, uint32_t divs)
 	usec = (long long)divs * (long long)t->usperdiv; /* convert to usec */
 	when.tv_sec = usec / 1000000;
 	when.tv_usec = usec % 1000000;
-	DPRINTFN(4, ("seq_timer_waitabs: adjdivs=%d, sleep when=%ld.%06ld",
-	             divs, when.tv_sec, when.tv_usec));
+	DPRINTFN(4, ("seq_timer_waitabs: adjdivs=%d, sleep when=%lld.%06lld",
+	             divs, (long long int)when.tv_sec, (long long int)when.tv_usec));
 	ADDTIMEVAL(&when, &t->reftime); /* abstime for end */
 	ticks = tvhzto(&when);
-	DPRINTFN(4, (" when+start=%ld.%06ld, tick=%d\n",
-		     when.tv_sec, when.tv_usec, ticks));
+	DPRINTFN(4, (" when+start=%lld.%06lld, tick=%d\n",
+		     (long long int)when.tv_sec, (long long int)when.tv_usec, ticks));
 	if (ticks > 0) {
 #ifdef DIAGNOSTIC
 		if (ticks > 20 * hz) {

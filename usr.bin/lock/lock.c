@@ -337,9 +337,9 @@ hi(dummy)
 		if (gettimeofday(&timval, NULL) == -1)
 			err(1, "gettimeofday failed");
 		(void)printf("lock: type in the unlock key. "
-		    "timeout in %ld:%ld minutes\n",
-		    (nexttime - timval.tv_sec) / 60,
-		    (nexttime - timval.tv_sec) % 60);
+		    "timeout in %lld:%lld minutes\n",
+		    (nexttime - timval.tv_sec) / 60LL,
+		    (nexttime - timval.tv_sec) % 60LL);
 	}
 }
 
