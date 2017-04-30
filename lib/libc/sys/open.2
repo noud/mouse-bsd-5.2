@@ -155,6 +155,8 @@ bit with
 .Dv O_CREAT
 or
 .Dv O_TRUNC .
+(The test is performed on the object that would be opened; if the path
+names a symbolic link, it is the target of the link that is tested.)
 .El
 .Pp
 Opening a file with
