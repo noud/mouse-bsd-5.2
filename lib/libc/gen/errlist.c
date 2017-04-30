@@ -172,7 +172,9 @@ static const char *const errlist[] = {
 
 	"Multihop attempted",			/* 94 - EMULTIHOP */
 	"Link has been severed",		/* 95 - ENOLINK */
-	"Protocol error"			/* 96 - EPROTO */
+	"Protocol error",			/* 96 - EPROTO */
+
+	"Not a plain file",			/* 97 - ENOTPLAIN */
 };
 
 const int sys_nerr = sizeof(errlist) / sizeof(errlist[0]);

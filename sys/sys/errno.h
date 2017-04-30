@@ -172,7 +172,9 @@
 #define	ENOLINK		95		/* Link has been severed */
 #define	EPROTO		96		/* Protocol error */
 
-#define	ELAST		96		/* Must equal largest errno */
+#define ENOTPLAIN	97		/* Not a plain file */
+
+#define	ELAST		97		/* Must equal largest errno */
 
 #ifdef _KERNEL
 /* pseudo-errors returned inside kernel to modify return to process */

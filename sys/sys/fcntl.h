@@ -115,6 +115,7 @@
 #define	O_NOCTTY	0x00008000	/* don't assign controlling terminal */
 
 #define	O_DIRECTORY	0x00200000	/* error unless directory */
+#define	O_PLAIN		0x00400000	/* error unless plain file */
 
 #ifdef _KERNEL
 /* convert from open() flags to/from fflags; convert O_RD/WR to FREAD/FWRITE */

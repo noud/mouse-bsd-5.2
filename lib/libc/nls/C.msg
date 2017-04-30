@@ -191,6 +191,8 @@ $ ENOLINK
 95 Link has been severed
 $ EPROTO
 96 Protocol error
+$ ENOTPLAIN
+97 Not a plain file
 $set 2
 $ SIGHUP
 1 Hangup

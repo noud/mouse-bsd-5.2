@@ -206,6 +206,10 @@ vn_open(struct nameidata *ndp, int fmode, int cmode)
 		error = ENOTDIR;
 		goto bad;
 	}
+	if ((fmode & O_PLAIN) && (vp->v_type != VREG)) {
+		error = ENOTPLAIN;
+		goto bad;
+	}
 	if (vp->v_type == VSOCK) {
 		error = EOPNOTSUPP;
 		goto bad;

@@ -157,7 +157,31 @@ or
 .Dv O_TRUNC .
 (The test is performed on the object that would be opened; if the path
 names a symbolic link, it is the target of the link that is tested.)
+.It Dv O_PLAIN
+Error if the path names an object other than a plain file.  Like
+.Dv O_DIRECTORY ,
+the test is performed on the object that would be opened (a symbolic
+link pointing to a plain file is accepted); unlike
+.Dv O_DIRECTORY ,
+.Dv O_PLAIN
+may be combined with
+.Dv O_CREAT
+and/or
+.Dv O_TRUNC .
+When combined with
+.Dv O_CREAT
+and actually creating a file, the created object is always a plain file
+and thus is accepted by
+.Dv O_PLAIN .
 .El
+.Pp
+It is not, strictly, invalid to combine
+.Dv O_DIRECTORY
+with
+.Dv O_PLAIN ,
+but when this is done an error will always be returned since no object
+can satisfy both tests.  (If both tests fail, it is unspecified which
+one takes precedence for choosing an error code.)
 .Pp
 Opening a file with
 .Dv O_APPEND
@@ -342,6 +366,10 @@ points outside the process's allocated address space.
 and
 .Dv O_EXCL
 were specified and the file exists.
+.It Bq Er ENOTPLAIN
+.Dv O_PLAIN
+was specified and the operation would have opened an object other than
+a plain file.
 .It Bq Er EOPNOTSUPP
 An attempt was made to open a socket (not currently implemented).
 .El
@@ -374,8 +402,9 @@ The
 .Dv O_EXLOCK ,
 .Dv O_NOFOLLOW ,
 .Dv O_NOACCESS ,
+.Dv O_DIRECTORY ,
 and
-.Dv O_DIRECTORY
+.Dv O_PLAIN
 flags are non-standard extensions and should not be used if portability
 is of concern.
 .Sh HISTORY
