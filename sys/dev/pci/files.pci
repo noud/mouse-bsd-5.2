@@ -988,3 +988,7 @@ file	dev/pci/viomb.c		viomb
 device	vioif
 attach	vioif at virtio
 file	dev/pci/if_vioif.c	vioif
+
+device	adlink7300a
+attach	adlink7300a at pci
+file	dev/pci/7300a.c		adlink7300a
