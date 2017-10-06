@@ -64,6 +64,8 @@
 #ifndef _X86_BUS_H_
 #define _X86_BUS_H_
 
+#include <sys/types.h>
+
 #include <x86/busdefs.h>
 
 #ifdef BUS_SPACE_DEBUG 
