@@ -45,6 +45,14 @@
 #define FILL_PATTERN 0xa5a5a5a5
 #define NBUFFRAGS 32
 
+#define CHUNKWORDS (((DMABUFSIZE/NBUFFRAGS)-16)>>2)
+#define CHUNKBYTES (CHUNKWORDS << 2)
+#define BUFWORDS (CHUNKWORDS * NBUFFRAGS)
+#define BUFBYTES (BUFWORDS << 2)
+#if CHUNKBYTES >= (1 << 23)
+#error "Chunk size too large"
+#endif
+
 typedef struct softc SOFTC;
 
 /*
@@ -87,8 +95,6 @@ struct softc {
   pci_intr_handle_t intr_h;
   void *intr_est;
   volatile uint32_t *bufbase;
-  int bufsize;			// samples
-  int fragsize;			// samples
   volatile int rsamp;		// samples
   volatile int dsamp;		// samples
   } ;
@@ -153,7 +159,7 @@ static int start_dma(SOFTC *sc)
  // DMAMODE0 is good from init
  if (sc->dmapci & ~PLX9080_DMADPRx_NEXT) panic("misaligned descriptor");
  bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMADPR0,
-	(sc->dmapci + (sc->bufsize * 4)) | PLX9080_DMADPRx_SPACE_PCI | PLX9080_DMADPRx_IRQ | PLX9080_DMADPRx_DIR_L2P);
+	(sc->dmapci + BUFBYTES) | PLX9080_DMADPRx_SPACE_PCI | PLX9080_DMADPRx_IRQ | PLX9080_DMADPRx_DIR_L2P);
  // Enable DMA completion interrupt.
  bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR,bus_space_read_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR)|PLX9080_INTCSR_LCL_CH0_IE);
  // Set it going!
@@ -378,16 +384,16 @@ static int dma_catchup(SOFTC *sc)
      { sc->dsamp = ds;
        if (rs == ds) return(0);
        room = (rs > ds) ? rs - ds : (rs + DMABUFWORDS - ds);
-       if (room < 2*sc->fragsize)
-	{ rs = ds + 2*sc->fragsize;
-	  if (rs >= sc->bufsize) rs -= sc->bufsize;
+       if (room < 2*CHUNKWORDS)
+	{ rs = ds + (2 * CHUNKWORDS);
+	  if (rs >= BUFWORDS) rs -= BUFWORDS;
 	  sc->rsamp = rs;
 	  // XXX Report this to the console?
 	}
        return(0);
      }
     ds ++;
-    if (ds >= sc->bufsize) ds = 0;
+    if (ds >= BUFWORDS) ds = 0;
     if (ds == rs) return(1);
   }
 }
@@ -405,7 +411,7 @@ static void restart_dma(SOFTC *sc)
  HRING_RECORD();
  flush_fifo(sc);
  HRING_RECORD();
- fill_buffer((void *)sc->dmamem,sc->bufsize);
+ fill_buffer((void *)sc->dmamem,BUFWORDS);
  HRING_RECORD();
  bus_dmamap_sync(sc->dmat,sc->dmam,0,DMABUFSIZE,BUS_DMASYNC_PREWRITE);
  HRING_RECORD();
@@ -482,16 +488,16 @@ static void adlink7300a_flush(SOFTC *sc)
   { sc->bufbase[rs] = FILL_PATTERN;
     bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_PREWRITE);
     rs ++;
-    if (rs >= sc->bufsize) rs = 0;
+    if (rs >= BUFWORDS) rs = 0;
   }
- loops = sc->bufsize + 1;
+ loops = BUFWORDS + 1;
  while (1)
   { bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_POSTREAD);
     val = sc->bufbase[rs];
     if (val == FILL_PATTERN) break;
     sc->bufbase[rs] = FILL_PATTERN;
     rs ++;
-    if (rs >= sc->bufsize) rs = 0;
+    if (rs >= BUFWORDS) rs = 0;
     if (loops-- < 1)
      { HRING_RECORD();
        restart_dma(sc);
@@ -525,7 +531,6 @@ static int adlink7300a_match(device_t parent, cfdata_t cf, void *aux)
 static void setup_buf(SOFTC *sc)
 {
  int i;
- int samps;
  volatile uint32_t *desc;
  volatile char *descbase;
 
@@ -539,26 +544,23 @@ static void setup_buf(SOFTC *sc)
   *  are fixed by the hardware (16 and 4), this is probably safe and
   *  doesn't need a #if/#error/#endif test.
   */
- samps = ((DMABUFSIZE / NBUFFRAGS) - 16) >> 2;
- descbase = (void *) (sc->dmamem + (NBUFFRAGS * samps * 4));
+ descbase = (void *) (sc->dmamem + BUFBYTES);
  sc->bufbase = (void *) sc->dmamem;
  for (i=NBUFFRAGS-1;i>=0;i--)
   { desc = (volatile void *) (descbase + (16 * i));
     // Starting DMA address
-    desc[0] = sc->dmapci + (samps * 4 * i);
+    desc[0] = sc->dmapci + (CHUNKWORDS * 4 * i);
     // Why 0x10?  Because that's what I found in DMALADR0, and,
     // given DMAMODE0, it's constant....
     desc[1] = 0x10;
     // This value is in bytes
-    desc[2] = samps * 4;
+    desc[2] = CHUNKBYTES;
     // Not set: PLX9080_DMADPRx_END, end-of-chain
-    desc[3] = (sc->dmapci + (NBUFFRAGS * samps * 4) + (((i+1)%NBUFFRAGS) * 16) ) |
+    desc[3] = (sc->dmapci + BUFBYTES + (((i+1)%NBUFFRAGS) * 16) ) |
 		PLX9080_DMADPRx_DIR_L2P |
 		PLX9080_DMADPRx_IRQ |
 		PLX9080_DMADPRx_SPACE_PCI;
   }
- sc->fragsize = samps;
- sc->bufsize = samps * NBUFFRAGS;
 }
 
 static void adlink7300a_attach(device_t parent, device_t self, void *aux)
@@ -746,7 +748,7 @@ static int adlink7300a_read(dev_t dev, struct uio *uio, int flags)
     s = splhigh();
     rs = sc->rsamp;
     ds = sc->dsamp;
-    if (maxn > sc->bufsize-rs) maxn = sc->bufsize - rs;
+    if (maxn > BUFWORDS-rs) maxn = BUFWORDS - rs;
     nv = 0;
     while (nv < maxn)
      { bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_POSTREAD);
@@ -758,8 +760,8 @@ static int adlink7300a_read(dev_t dev, struct uio *uio, int flags)
        if (rs == ds) ds ++;
        rs ++;
      }
-    if (rs == sc->bufsize) rs = 0;
-    if (ds == sc->bufsize) ds = 0;
+    if (rs >= BUFWORDS) rs = 0;
+    if (ds >= BUFWORDS) ds = 0;
     sc->rsamp = rs;
     sc->dsamp = ds;
     splx(s);
