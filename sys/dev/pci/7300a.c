@@ -86,7 +86,6 @@ struct softc {
   bus_size_t regs_s;
   pci_intr_handle_t intr_h;
   void *intr_est;
-  volatile unsigned int overruns;
   volatile uint32_t *bufbase;
   int bufsize;			// samples
   int fragsize;			// samples
@@ -383,7 +382,7 @@ static int dma_catchup(SOFTC *sc)
 	{ rs = ds + 2*sc->fragsize;
 	  if (rs >= sc->bufsize) rs -= sc->bufsize;
 	  sc->rsamp = rs;
-	  printf("O");
+	  // XXX Report this to the console?
 	}
        return(0);
      }
@@ -645,7 +644,6 @@ static void adlink7300a_attach(device_t parent, device_t self, void *aux)
  sc->dmapci = sc->dmam->dm_segs->ds_addr;
  setup_buf(sc);
  sc->flags = 0;
- sc->overruns = 0;
  HRING_RECORD();
 }
 
