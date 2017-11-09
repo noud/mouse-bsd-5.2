@@ -8,6 +8,21 @@
  *  were obtained by dumping out the 9080 registers as set up by
  *  Adlink's library routines, cross-referenced with the 9080
  *  documentation, and healthy doses of guessing and experimentation.
+ *
+ * The hardware is fairly badly crippled.  It does not appear to have
+ *  any "how far has this transfer progressed?" operation, in
+ *  particular, which limits the APIs we can provide.  Instead, we wire
+ *  in yet more knowledge of what this is being used for and detect how
+ *  far DMA has progressed by figuring out how much of the buffer has
+ *  been overwritten (by filling it with a pattern and trusting that
+ *  that pattern will not occur - it certainly shouldn't, since 23 of
+ *  the data pins are grounded).
+ *
+ * We keep a large (DMABUFSIZE below, one megabyte at this writing) DMA
+ *  buffer.  We break it up into smaller chunks and configure the 9080
+ *  in chaining mode, with interrupts after each chunk is done, so we
+ *  can - provided we stay ahead of the data stream - never let it
+ *  reach end-of-ring.
  */
 
 #include <sys/bus.h>
@@ -23,56 +38,43 @@
 #include <dev/pci/pcivar.h>
 
 #include "7300a.h"
+#include "7300a-reg.h"
 
-#define ADLINK7300A_CONF_LCR 0x14
-#define ADLINK7300A_CONF_BASE 0x18
-
-#define PLX9080_CNTRL    0x6c
-#define PLX9080_CNTRL_SOFTRESET 0x40000000
-#define PLX9080_LAS0RR   0x00
-#define PLX9080_LAS0BA   0x04
-#define PLX9080_LBRD0    0x18
-#define PLX9080_INTCSR   0x68
-#define PLX9080_DMACSR0  0xa8
-#define PLX9080_DMACSR1  0xa9
-#define PLX9080_DMAMODE0 0x80
-#define PLX9080_DMAPADR0 0x84
-#define PLX9080_DMALADR0 0x88
-#define PLX9080_DMASIZ0  0x8c
-#define PLX9080_DMADPR0  0x90
-#define PLX9080_DMAMODE1 0x94
-#define PLX9080_DMATHR   0xb0
-
-#define AL7300_DI_CSR       0x00
-#define AL7300_DO_CSR       0x04
-#define AL7300_AUX_DIO      0x08
-#define AL7300_INT_CSR      0x0c
-#define AL7300_DI_FIFO      0x10
-#define AL7300_DO_FIFO      0x14
-#define AL7300_FIFO_CR      0x18
-#define AL7300_POL_CTRL     0x1c
-#define AL7300_8254_COUNT0  0x20
-#define AL7300_8254_COUNT1  0x24
-#define AL7300_8254_COUNT2  0x28
-#define AL7300_8254_CONTROL 0x2c
-
-#define DMABUFSIZE 0x100000
+#define DMABUFSIZE 0x1000000
+#define DMABUFWORDS (DMABUFSIZE>>2)
+#define FILL_PATTERN 0xa5a5a5a5
+#define NBUFFRAGS 32
 
 typedef struct softc SOFTC;
 
+/*
+ * dsamp is the index of the next sample to be DMA-filled (which may,
+ *  and often will, lag the samples actually filled by the hardware).
+ *  rsamp is the index of the next sample to be returned by read().
+ *
+ * In the DMA interrupt routine, we advance dsamp until it encounters a
+ *  not-yet-overwritten sample, or it encounters rsamp.  If the former,
+ *  we then advance rsamp if necessary so there are at least two frags'
+ *  worth of space between it and dsamp.  If the latter, DMA has not
+ *  only overrun the reader but has overrun the interrupt routine; in
+ *  this case, we have no idea where it's currently DMAing into, so we
+ *  kinda have to reset the hardware and restart from ground zero.
+ *
+ * Overruns - either hardware-reported or dsamp running into rsamp -
+ *  are not reflected to the read() interface, since userland doesn't
+ *  care.  They _are_ reported to the console, though, so we can get
+ *  some idea how common they are.
+ */
 struct softc {
   device_t dev;
   unsigned int flags;
-#define SCF_BROKEN 0x00000001
-#define SCF_OPEN   0x00000002
-#define SCF_SET_UP 0x00000004
-  enum adlink7300a_dma_status dmastat;
-  struct adlink7300a_dma dmareq;
-  struct lwp *dmawho;
+#define SCF_BROKEN  0x00000001
+#define SCF_OPEN    0x00000002
   pci_chipset_tag_t pc;
   pcitag_t pt;
   bus_dma_tag_t dmat;
-  char *dmabuf;
+  char *dmamem;
+  bus_addr_t dmapci;
   bus_dmamap_t dmam;
   bus_space_tag_t lcr_t;
   bus_space_handle_t lcr_h;
@@ -84,10 +86,335 @@ struct softc {
   bus_size_t regs_s;
   pci_intr_handle_t intr_h;
   void *intr_est;
-  struct selinfo si;
+  volatile unsigned int overruns;
+  volatile uint32_t *bufbase;
+  int bufsize;			// samples
+  int fragsize;			// samples
+  volatile int rsamp;		// samples
+  volatile int dsamp;		// samples
   } ;
 
 extern struct cfdriver adlink7300a_cd;
+
+#define HRINGSIZE 1024
+volatile int hring_7300[HRINGSIZE];
+volatile int hring_7300_h;
+volatile int hring_7300_t;
+#define HRING_RECORD() hring_record(__LINE__)
+
+static void hring_init(void)
+{
+ hring_7300_h = 0;
+ hring_7300_t = 0;
+}
+
+static void hring_record(int v)
+{
+ int s;
+ int h;
+ int t;
+
+ s = splhigh();
+ h = hring_7300_h;
+ t = hring_7300_t;
+ hring_7300[h] = v;
+ h ++;
+ if (h >= HRINGSIZE) h = 0;
+ hring_7300_h = h;
+ if (h == t)
+  { t ++;
+    if (t >= HRINGSIZE) t = 0;
+    hring_7300_t = t;
+  }
+ splx(s);
+}
+
+/*
+LOC 00e8	INTCSR, PCI 068
+LOC 0100	DMAMODE0, PCI 080
+LOC e110	not found
+	110	DMADPR0
+
+ch0 done: bit [10] of register LOC 100
+ch0 terminal: bit [2] of register LOC e110
+either DMA 0: bit [18] of register LOC e8 and bit [17] of register LOC 100
+if bit [17] is 0 gen LINTo#; if bit [17] is 1 gen INTA#.
+read Interrupt Control/Status Register to determine whether DMA channel interrupt is pending.
+Done status bit in that register can determine which kind of interrupt it is.
+write 1 to Clear Interrupt bit in DMA Command/Status Register to clear interrupt
+*/
+
+static int start_dma(SOFTC *sc)
+{
+ int s;
+
+// printf("D");
+ HRING_RECORD();
+ s = splhigh();
+ // DMAMODE0 is good from init
+ if (sc->dmapci & ~PLX9080_DMADPRx_NEXT) panic("misaligned descriptor");
+ bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMADPR0,
+	(sc->dmapci + (sc->bufsize * 4)) | PLX9080_DMADPRx_SPACE_PCI | PLX9080_DMADPRx_IRQ | PLX9080_DMADPRx_DIR_L2P);
+ // Enable DMA completion interrupt.
+ bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR,bus_space_read_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR)|PLX9080_INTCSR_LCL_CH0_IE);
+ // Set it going!
+ bus_space_write_1(sc->lcr_t,sc->lcr_h,PLX9080_DMACSR0,PLX9080_DMACSRx_ENB);
+ bus_space_write_1(sc->lcr_t,sc->lcr_h,PLX9080_DMACSR0,PLX9080_DMACSRx_ENB|PLX9080_DMACSRx_GO);
+ // Enable digital input - but mask off "write 1 to do something" bits.
+ bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR,
+	(bus_space_read_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR)&~AL7300_DI_CSR_OVERRUN)|AL7300_DI_CSR_ENABLE);
+ splx(s);
+ HRING_RECORD();
+ return(0);
+}
+
+static void adlink7300a_reset(SOFTC *sc)
+{
+ uint32_t r;
+
+ HRING_RECORD();
+ /*
+  * Initialize 9080 registers.
+  */
+ /* Tell the 9080 to soft reset */
+ r = bus_space_read_4(sc->lcr_t,sc->lcr_h,PLX9080_CNTRL);
+ bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_CNTRL,r|PLX9080_CNTRL_SOFTRESET);
+ DELAY(10); // is this actually needed?
+ bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_CNTRL,r&~PLX9080_CNTRL_SOFTRESET);
+ DELAY(10); // is this actually needed?
+ // LAS0RR, Local Address Space 0 Range Register for PCI to Local
+ // We know, here, that the 7300 occupies 0x40 bytes of space.
+ bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_LAS0RR,(-(uint32_t)0x40)|PLX9080_LASxRR_SPACE_IO);
+ // LAS0BA, Local Address Space 0 Local Base Address (Remap) Register
+ // Apparently, local address 0 is the right thing here.
+ bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_LAS0BA,PLX9080_LASxBA_ENABLE|0);
+ // The on-reset values are suitable for:
+ //	MARBR, Mode/Arbitration Register
+ //	BIGEND, Big/Little Endian Descriptor Register
+ //	EROMRR, Expansion ROM Range Register
+ //	EROMBA, Expansion ROM Local Base Address Register
+ // LBRD0, Local Address Space 0/Expansion ROM Bus Region Descriptor
+ bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_LBRD0,
+	PLX9080_LBRD0_MEM0SIZE_32x |
+	(0 << PLX9080_LBRD0_MEM0WAIT_S) |
+	PLX9080_LBRD0_MS0READY |
+	PLX9080_LBRD0_MS0BTERM |
+	PLX9080_LBRD0_MS0PFDIS |
+	PLX9080_LBRD0_ROMPFDIS |
+	PLX9080_LBRD0_ROMSIZE_8 |
+	(0 << PLX9080_LBRD0_ROMWAIT_S) |
+	PLX9080_LBRD0_MS0BURST |
+	PLX9080_LBRD0_XLONG_LD |
+	PLX9080_LBRD0_DS_WMODE_TRDY |
+	(4 << PLX9080_LBRD0_RETRYCLK_S) );
+ // The on-reset values are suitable for:
+ //	DMRR, Local Range Register for Direct Master to PCI
+ //	DMLBAM, Local Bus Base Address Register for Direct Master to PCI Memory
+ //	DMLBAI, Local Base Address Register for Direct Master to PCI IO/CFG
+ //	DMPBAM, PCI Base Address (Remap) Register for Direct Master to PCI Memory
+ //	DMCFGA, PCI Configuration Address Register for Direct Master to PCI IO/CFG
+ //	LAS1RR, Local Address Space 1 Ranger Register for PCI to Local Bus
+ //	LAS1BA, Local Address Space 1 Local Base Address (Remap) Register
+ //	LBRD1, Local Address Space 1 Bus Region Descriptor Register
+ //	MBOX0, Mailbox Register 0
+ //	MBOX1, Mailbox Register 1
+ //	MBOX2, Mailbox Register 2
+ //	MBOX3, Mailbox Register 3
+ //	MBOX4, Mailbox Register 4
+ //	MBOX5, Mailbox Register 5
+ //	MBOX6, Mailbox Register 6
+ //	MBOX7, Mailbox Register 7
+ //	P2LDBELL, PCI to Local Doorbell Register
+ //	L2PDBELL, Local to PCI Doorbell Register
+ // INTCSR, interrupt control/status
+ // I also see PLX9080_INTCSR_LCL_CH0_IE set, but we don't want any DMA
+ // interrupts yet 'cause we're not doing DMA yet.
+ bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR,PLX9080_INTCSR_PCI_LCL_IE|PLX9080_INTCSR_PCI_IE);
+ // CNTRL, EEPROM/PCI/user/init control
+ bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_CNTRL,
+	(12 << PLX9080_CNTRL_DMA_R_CMD_S) |
+	(7 << PLX9080_CNTRL_DMA_W_CMD_S) |
+	(6 << PLX9080_CNTRL_DM_R_CMD_S) |
+	(7 << PLX9080_CNTRL_DM_W_CMD_S) |
+	PLX9080_CNTRL_INITDONE);
+ // The on-reset values are suitable for:
+ //	PCIHIDR, PCI Permanent Configuration ID Register
+ //	PCIHREV, PCI Permanent Revision ID Register
+ // DMACSR[01], DMA Channel [01] Command/Status Register
+ // We set these now, out of numerical order, to disable the channels
+ // before we start meddling with their configuration.  Clear their
+ // interrupts just in case.
+ bus_space_write_1(sc->lcr_t,sc->lcr_h,PLX9080_DMACSR0,0);
+ bus_space_write_1(sc->lcr_t,sc->lcr_h,PLX9080_DMACSR0,PLX9080_DMACSRx_IACK);
+ bus_space_write_1(sc->lcr_t,sc->lcr_h,PLX9080_DMACSR1,0);
+ bus_space_write_1(sc->lcr_t,sc->lcr_h,PLX9080_DMACSR1,PLX9080_DMACSRx_IACK);
+ // DMAMODE0, DMA Channel 0 Mode Register
+ bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMAMODE0,
+	PLX9080_DMAMODEx_LB_WIDTH_32 |
+	(0 << PLX9080_DMAMODEx_WAITS_S) |
+	PLX9080_DMAMODEx_READY |
+	PLX9080_DMAMODEx_BTERM |
+	PLX9080_DMAMODEx_LBURST |
+	PLX9080_DMAMODEx_CHAIN |
+	PLX9080_DMAMODEx_DONE_IE |
+	PLX9080_DMAMODEx_LCLCONST |
+	PLX9080_DMAMODEx_DEMAND |
+	PLX9080_DMAMODEx_DMA_STOP_BLAST |
+	PLX9080_DMAMODEx_CHx_INT_PCI);
+ // We don't set these now since we aren't doing DMA yet.
+ //	DMAPADR0, DMA Channel 0 PCI Address Register
+ //	DMALADR0, DMA Channel 0 Local Address Register
+ //	DMASIZ0, DMA Channel 0 Transfer Size (Bytes) Register
+ //	DMADPR0, DMA Channel 0 Descriptor Pointer Register
+ // DMAMODE1, DMA Channel 1 Mode Register
+ bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMAMODE1,
+	PLX9080_DMAMODEx_LB_WIDTH_16 |
+	(0 << PLX9080_DMAMODEx_WAITS_S) |
+	PLX9080_DMAMODEx_BTERM |
+	PLX9080_DMAMODEx_LBURST |
+	PLX9080_DMAMODEx_DONE_IE |
+	PLX9080_DMAMODEx_LCLCONST |
+	PLX9080_DMAMODEx_DEMAND |
+	PLX9080_DMAMODEx_DMA_STOP_BLAST |
+	PLX9080_DMAMODEx_CHx_INT_PCI);
+ // We don't set these now since we aren't doing DMA yet.
+ //	DMAPADR1, DMA Channel 1 PCI Address Register
+ //	DMALADR1, DMA Channel 1 Local Address Register
+ //	DMASIZ1, DMA Channel 1 Transfer Size (Bytes) Register
+ //	DMADPR1, DMA Channel 1 Descriptor Pointer Register
+ // We set these above, out of numerical order; see above for why.
+ //	DMACSR0, DMA Channel 0 Command/Status Register
+ //	DMACSR1, DMA Channel 1 Command/Status Register
+ // DMAARB, DMA Arbitration Register - same register as MARBR, above.
+ // DMATHR, DMA Threshold Register
+ // I suspect some of these never get used because we don't output.
+ bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMATHR,
+	( 7 << PLX9080_DMATHR_C0PLAF_S) |
+	( 7 << PLX9080_DMATHR_C0PLAE_S) |
+	( 4 << PLX9080_DMATHR_C0LPAE_S) |
+	(10 << PLX9080_DMATHR_C0LPAF_S) |
+	( 4 << PLX9080_DMATHR_C1PLAF_S) |
+	( 4 << PLX9080_DMATHR_C1PLAE_S) |
+	( 4 << PLX9080_DMATHR_C1LPAE_S) |
+	( 4 << PLX9080_DMATHR_C1LPAF_S) );
+ // Is this actually necessary?
+ pci_conf_write(sc->pc,sc->pt,PCI_BHLC_REG,pci_conf_read(sc->pc,sc->pt,PCI_BHLC_REG)|(PCI_LATTIMER_MASK<<PCI_LATTIMER_SHIFT));
+ HRING_RECORD();
+}
+
+static void adlink7300a_setup(SOFTC *sc)
+{
+ HRING_RECORD();
+ // DMAMODE0 is correct as set up by _reset()
+ /*
+  * Set almost-empty and almost-full values.
+  */
+ bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_FIFO_CR,
+	(8 << AL7300_FIFO_CR_PA_S) | (8 << AL7300_FIFO_CR_PB_S));
+ bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_FIFO_CR,
+	(128 << AL7300_FIFO_CR_PA_S) | (128 << AL7300_FIFO_CR_PB_S));
+ /*
+  * The table calls this register POL_CTRL; the text calls it
+  *  POL_CNTRL.  All the _NEG bits are called _NEG in the table and
+  *  _NEQ in the text, too.  Adlink _really_ needs to proofread their
+  *  manual.
+  */
+ bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_POL_CTRL,
+	AL7300_POL_CTRL_DI_REQ_RISING |
+	AL7300_POL_CTRL_DI_ACK_RISING |
+	AL7300_POL_CTRL_DI_TRIG_RISING |
+	AL7300_POL_CTRL_DO_REQ_RISING |
+	AL7300_POL_CTRL_DO_ACK_RISING |
+	AL7300_POL_CTRL_DO_TRIG_RISING );
+ /*
+  * Clear D[IO]_UNDER (the diagram shows DO_UNDER, the text says
+  *  DI_UNDER), set DO_FIFO_CLR, clear DO_EN, terminator off.
+  */
+ bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_DO_CSR,
+	AL7300_DO_CSR_CLK_TIMER1 |
+	AL7300_DO_CSR_B_TERM_OFF |
+	AL7300_DO_CSR_CLR_FIFO |
+	AL7300_DO_CSR_UNDERRUN );
+ /*
+  * Clear DI_OVER, set DI_FIFO_CLR and DI_EN, terminator off, start
+  *  sampling now, no handshaking, external clock, 32-bit width.
+  */
+ bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR,
+	AL7300_DI_CSR_DI_32 |
+	AL7300_DI_CSR_CLK_EXT |
+	AL7300_DI_CSR_A_TERM_OFF |
+	AL7300_DI_CSR_ENABLE |
+	AL7300_DI_CSR_CLR_FIFO |
+	AL7300_DI_CSR_OVERRUN );
+ HRING_RECORD();
+}
+
+static void fill_buffer(volatile uint32_t *buf, int nwords)
+{
+ for (;nwords>0;nwords--) *buf++ = FILL_PATTERN;
+}
+
+/*
+ * Advance dsamp until it either (a) finds an unmodified value or (b)
+ *  runs into rsamp.  If the former, advance rsamp if necessary and
+ *  return 0; if the latter, return 1 without bothering to update the
+ *  SOFTC (since it'll be thrown out anyway).
+ */
+static int dma_catchup(SOFTC *sc)
+{
+ int ds;
+ int rs;
+ int s;
+ uint32_t val;
+ int room;
+
+ s = splhigh();
+ ds = sc->dsamp;
+ rs = sc->rsamp;
+ splx(s);
+ while (1)
+  { bus_dmamap_sync(sc->dmat,sc->dmam,ds*4,4,BUS_DMASYNC_POSTREAD);
+    val = sc->bufbase[ds];
+    if (val == FILL_PATTERN)
+     { sc->dsamp = ds;
+       if (rs == ds) return(0);
+       room = (rs > ds) ? rs - ds : (rs + DMABUFWORDS - ds);
+       if (room < 2*sc->fragsize)
+	{ rs = ds + 2*sc->fragsize;
+	  if (rs >= sc->bufsize) rs -= sc->bufsize;
+	  sc->rsamp = rs;
+	  printf("O");
+	}
+       return(0);
+     }
+    ds ++;
+    if (ds >= sc->bufsize) ds = 0;
+    if (ds == rs) return(1);
+  }
+}
+
+static void flush_fifo(SOFTC *sc)
+{
+ bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR,bus_space_read_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR)|AL7300_DI_CSR_CLR_FIFO);
+}
+
+static void restart_dma(SOFTC *sc)
+{
+// printf("R");
+ HRING_RECORD();
+ adlink7300a_setup(sc);
+ HRING_RECORD();
+ flush_fifo(sc);
+ HRING_RECORD();
+ fill_buffer((void *)sc->dmamem,sc->bufsize);
+ HRING_RECORD();
+ bus_dmamap_sync(sc->dmat,sc->dmam,0,DMABUFSIZE,BUS_DMASYNC_PREWRITE);
+ HRING_RECORD();
+ sc->rsamp = 0;
+ sc->dsamp = 0;
+ start_dma(sc);
+ HRING_RECORD();
+}
 
 /*
  * pci_intr(9) does not describe the semantics of the return value.
@@ -101,483 +428,83 @@ extern struct cfdriver adlink7300a_cd;
  */
 static int adlink7300a_intr(void *scv)
 {
- volatile SOFTC *sc;
+ SOFTC *sc;
+ unsigned int icsr;
  unsigned int v;
 
+ HRING_RECORD();
  sc = scv;
- v = bus_space_read_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR);
+ icsr = bus_space_read_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR);
  /*
-  * 0x00200000 is DMA channel 0 interrupt; 0x00008000 is local bus
-  *  interrupt.  I'm not sure what local bus interrupts correspond to,
-  *  but I see the local bus interrupt enable set, so they presumably
-  *  mean something.  However, I have no idea what, so, if we get such
-  *  an interrupt, we just turn off the interrupt enable and let it go
-  *  at that.
+  * I'm not sure what local bus interrupts correspond to, but I see the
+  *  local bus interrupt enable set, so they presumably mean something.
+  *  However, I have no idea what, so, if we get such an interrupt, we
+  *  just turn off the interrupt enable and let it go at that (and log
+  *  it, so we can find out it happened).
   */
- if (v & 0x00208000)
-  { if (v & 0x00200000)
+ if (icsr & (PLX9080_INTCSR_LCL_CH0_IRQ|PLX9080_INTCSR_PCI_LCL_IRQ))
+  { if (icsr & PLX9080_INTCSR_LCL_CH0_IRQ)
      { //aprint_normal_dev(sc->dev,"DMA interrupt\n");
-       // 0x08 is write-1-to-clear for the channel DMA-done interrupt.
-       // Also clears 0x10, the Done bit
-       bus_space_write_1(sc->lcr_t,sc->lcr_h,PLX9080_DMACSR0,0x08);
+       HRING_RECORD();
+       // ACK the interrupt - and clear the DONE bit, if set.
+       bus_space_write_1(sc->lcr_t,sc->lcr_h,PLX9080_DMACSR0,PLX9080_DMACSRx_ENB|PLX9080_DMACSRx_IACK);
        v = bus_space_read_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR);
-       // 0x400 is DI_OVER (FIFO overrun occurred during input)
-       if (v & 0x400)
-	{ // DI_OVER is the only write-1-to-clear bit, so...
-	  aprint_normal_dev(sc->dev,"input overrun\n");
+       if (v & AL7300_DI_CSR_OVERRUN)
+	{ //report_overrun(sc);
+	  // AL7300_DI_CSR_OVERRUN is the only write-1-to-clear bit...
 	  bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR,v);
 	}
-       switch (sc->dmastat)
-	{ case ADLINK7300A_DMA_PENDING:
-	     sc->dmastat = ADLINK7300A_DMA_DONE;
-	     break;
-	  case ADLINK7300A_DMA_FLUSH:
-	     bus_dmamap_sync(sc->dmat,sc->dmam,0,sc->dmareq.count*4,BUS_DMASYNC_POSTREAD);
-	     bus_dmamap_unload(sc->dmat,sc->dmam);
-	     sc->dmastat = ADLINK7300A_DMA_NONE;
-	     break;
-	  case ADLINK7300A_DMA_NONE:
-	     aprint_normal_dev(sc->dev,"warning: DMA interrupt with no DMA in progress\n");
-	     break;
-	  case ADLINK7300A_DMA_DONE:
-	     aprint_normal_dev(sc->dev,"warning: DMA interrupt after DMA done\n");
-	     break;
-	  default:
-	     panic("adlink7300a: impossible DMA state %d\n",(int)sc->dmastat);
-	     break;
-	}
-       // XXX what's the right way to de-volatile here?
-       selnotify(&((SOFTC *)scv)->si,0,0);
+       if (dma_catchup(sc)) restart_dma(sc);
      }
-    if (v & 0x00008000)
-     { aprint_normal_dev(sc->dev,"local bus interrupt\n");
-       // 0x800 is PCI local interrupt enable.
-       bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR,bus_space_read_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR)&~0x800);
+    if (icsr & PLX9080_INTCSR_PCI_LCL_IRQ)
+     { HRING_RECORD();
+       aprint_normal_dev(sc->dev,"local bus interrupt\n");
+       bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR,bus_space_read_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR)&~PLX9080_INTCSR_PCI_LCL_IE);
      }
     return(1);
   }
+ HRING_RECORD();
  return(0);
 }
 
-/*
- * All bit meanings here come from the 9080 doc.
- */
-static void adlink7300a_reset(volatile SOFTC *sc)
+static void adlink7300a_flush(SOFTC *sc)
 {
- uint32_t r;
+ int s;
+ int rs;
+ int ds;
+ int loops;
+ uint32_t val;
 
- /*
-  * Initialize 9080 registers.
-  */
- /* Tell the 9080 to soft reset */
- /*
-  * CNTRL, CoNTRoL of various things.
-  *
-  *	Bits		R/W	Meaning
-  *	80000000	RW	Local init done.
-  *	40000000	RW	PCI adapter soft reset.
-  *	20000000	RW	Reload local config from EEPROM.
-  *	10000000	R	1 iff serial EEPROM present.
-  *	08000000	R	Serial EEPROM read data bit.
-  *	04000000	RW	Serial EEPROM write data bit.
-  *	02000000	RW	Serial EEPROM chip select.
-  *	01000000	RW	Serial EEPROM clock.
-  *	00fc0000	R	Reserved.
-  *	00020000	R	USERI pin input value.
-  *	00010000	RW	USERO pin output value.
-  *	0000f000	RW	PCI memory write command code.
-  *	00000f00	RW	PCI memory read command code.
-  *	000000f0	RW	PCI DMA write command code.
-  *	0000000f	RW	PCI DMA read command code.
-  */
- r = bus_space_read_4(sc->lcr_t,sc->lcr_h,0x6c);
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_CNTRL,r|PLX9080_CNTRL_SOFTRESET);
- DELAY(10); // is this actually needed?
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_CNTRL,r&~PLX9080_CNTRL_SOFTRESET);
- DELAY(10); // is this actually needed?
- /*
-  * LAS0RR, Local Address Space 0 Range Register for PCI to Local
-  *
-  * 0xffffffc1 means: occupy 0x40 bytes (decode the 0xffffffc0 address
-  *  bits), 0x08 bit set means prefetchable, 0x00 bit set means I/O
-  *  space (as opposed to memory space), and, in I/O space, 0x04 bit is
-  *  part of decoding mask and 0x02 bit "must be set to 0".  The 7300
-  *  doc describes only 0x30 bytes of registers, but, because the
-  *  paradigm is to specify what address bits to decode, the space
-  *  occupied must be a power of two.  (The 9080 doc says that the
-  *  range "must be a power of 2", meaning that the bits-to-decode must
-  *  be a single contiguous set of bits at the high end of the value.
-  *  It doesn't give any indication what might happen if not.)
-  */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_LAS0RR,0xffffffc1);
- /*
-  * LAS0BA, Local Address Space 0 Local Base Address (Remap) Register
-  *
-  * The 0x01 bit set enables access, the 0x02 bit is reserved, and the
-  *  rest of the bits replace the PCI address bits, meaning we're
-  *  accessing local addresses based at zero.
-  */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_LAS0BA,0x00000001);
- /*
-  * MARBR, Mode/Arbitration Register
-  * BIGEND, Big/Little Endian Descriptor Register
-  * EROMRR, Expansion ROM Range Register
-  * EROMBA, Expansion ROM Local Base Address Register
-  *
-  * The on-reset values are suitable for these.
-  */
- /*
-  * LBRD0, Local Address Space 0/Expansion ROM Bus Region Descriptor
-  *  Register
-  *
-  *	Bits		Meaning
-  *	f0000000	Specify PCI target retry delay.
-  *	08000000	When FIFO full, disconnect (if set to 0) or
-  *			  deassert TRDY# (if set to 1).
-  *	04000000	ROM space burst enable (on local bus).
-  *	02000000	1 means load subsystem ID and local address
-  *			  space 1 registers from EEPROM; 0, don't.
-  *	01000000	Memory space 0 burst enable (on local bus).
-  *	00800000	ROM space BTERM# input enable.
-  *	00400000	ROM space Ready input enable.
-  *	003c0000	ROM space internal wait state count.
-  *	00030000	ROM space local bus width.
-  *	00008000	Reserved.
-  *	00007800	Prefetch count during memory reads.
-  *	00000400	Prefetch count enable.
-  *	00000200	ROM space prefetch disable.
-  *	00000100	Memory space 0 prefetch disable.
-  *	00000080	Memory space 0 BTERM# input enable.
-  *	00000040	Memory space 0 Ready input enable.
-  *	0000003c	Memory space 0 internal wait states.
-  *	00000003	Memory space 0 local bus width.
-  *
-  *  Bus widths are specified as 00 = 8 bit, 01 = 16 bit, 10 or 11 = 32
-  *  bit.
-  *
-  * So, 4b0003c3 means: retry delay 4, FIFO full deassert TRDY#, ROM
-  *  space burst disabled, load subsystem ID and local address space 1
-  *  from EEPROM, memory space 0 local bursting enabled, ROM space
-  *  BTERM# and Ready inputs disabled with no wait states and 8-bit bus
-  *  width, memory prefetch continues until terminted by PCI bus, ROM
-  *  space and memory space 0 prefetching disabled, memory space 0
-  *  BTERM# and Ready inputs enabled with no wait states and 32-bit bus
-  *  width.
-  */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_LBRD0,0x4b0003c3);
- /*
-  * DMRR, Local Range Register for Direct Master to PCI
-  * DMLBAM, Local Bus Base Address Register for Direct Master to PCI
-  *  Memory
-  * DMLBAI, Local Base Address Register for Direct Master to PCI IO/CFG
-  * DMPBAM, PCI Base Address (Remap) Register for Direct Master to PCI
-  *  Memory
-  * DMCFGA, PCI Configuration Address Register for Direct Master to PCI
-  *  IO/CFG
-  * LAS1RR, Local Address Space 1 Ranger Register for PCI to Local Bus
-  * LAS1BA, Local Address Space 1 Local Base Address (Remap) Register
-  * LBRD1, Local Address Space 1 Bus Region Descriptor Register
-  *
-  * MBOX0, Mailbox Register 0
-  * MBOX1, Mailbox Register 1
-  * MBOX2, Mailbox Register 2
-  * MBOX3, Mailbox Register 3
-  * MBOX4, Mailbox Register 4
-  * MBOX5, Mailbox Register 5
-  * MBOX6, Mailbox Register 6
-  * MBOX7, Mailbox Register 7
-  * P2LDBELL, PCI to Local Doorbell Register
-  * L2PDBELL, Local to PCI Doorbell Register
-  *
-  * The on-reset values are suitable for these.
-  */
- /*
-  * Interrupt control/status.
-  *
-  *	Bits		R/W	Meaning
-  *	80000000	R	PCI wrote data to mailbox #3.
-  *	40000000	R	PCI wrote data to mailbox #2.
-  *	20000000	R	PCI wrote data to mailbox #1.
-  *	10000000	R	PCI wrote data to mailbox #0.
-  *	0f000000	R	Abort status indication (see doc).
-  *	00800000	R	BIST interrupt active.
-  *	00400000	R	DMA channel 1 interrupt active.
-  *	00200000	R	DMA channel 0 interrupt active.
-  *	00100000	R	Local doorbell interrupt active.
-  *	00080000	RW	Local DMA channel 1 interrupt enable.
-  *	00040000	RW	Local DMA channel 0 interrupt enable.
-  *	00020000	RW	Local doorbell interrupt enable.
-  *	00010000	RW	Local interrupt output enable.
-  *	00008000	R	Local interrupt (LINTi#) is active.
-  *	00004000	R	PCI abort interrupt is active.
-  *	00002000	R	PCI doorbell interrupt is active.
-  *	00001000	RW	Retry abort enable ("diagnostic only").
-  *	00000800	RW	PCI local interrupt enable.
-  *	00000400	RW	PCI abort interrupt enable.
-  *	00000200	RW	PCI doorbell interrupt enable.
-  *	00000100	RW	PCI interrupt enable.
-  *	000000f0	R	Reserved.
-  *	00000008	RW	Mailbox interrupt enable.
-  *	00000004	RW	Generate PCI SERR#.
-  *	00000002	RW	Enable local LSERR# on PCI parity
-  *				  error.
-  *	00000001	RW	Enable local bus LSERR# on PCI target
-  *				  abort or master abort.
-  *
-  * So, 00000900 means: disable most stuff, enable PCI local
-  *  interrupts, meaning that a local bus interrupt produces a PCI
-  *  interrupt.  I also see 00040000 turned on, but we don't want any
-  *  DMA interrupts yet 'cause we're not doing DMA yet.
-  */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR,0x00000900);
- /*
-  * See above for the bits in CNTRL.  9000767c means (ignoring
-  *  read-only bits): local init done, both writes use command 7,
-  *  direct master reads use command 6 (do we ever do direct master
-  *  reads?), DMA reads use command c.  I'm not sure what these
-  *  "command"s are; presumably if I knew more about PCI they would
-  *  make sense to me.
-  */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_CNTRL,0x9000767c);
- /*
-  * PCIHIDR, PCI Permanent Configuration ID Register
-  * PCIHREV, PCI Permanent Revision ID Register
-  *
-  * The on-reset values are suitable for these.
-  */
- /*
-  * DMACSR0, DMA Channel 0 Command/Status Register
-  * DMACSR1, DMA Channel 1 Command/Status Register
-  *
-  *	Bits	R/W	Meaning
-  *	e0	R	Reserved.
-  *	10	R	Channel 0/1 transfer done.
-  *	08	W/C	Writing 1 clears channel 0/1 interrupts.
-  *	04	W/S	Writing 1 aborts transfer in progress.
-  *	02	W/S	Writing 1 starts transfer.
-  *	01	RW	Channel 0/1 enable.
-  *
-  * We set these now, out of numerical order, to disable the channels
-  *  before we start meddling with their configuration.
-  */
- bus_space_write_1(sc->lcr_t,sc->lcr_h,PLX9080_DMACSR0,0x00);
- bus_space_write_1(sc->lcr_t,sc->lcr_h,PLX9080_DMACSR1,0x00);
- /*
-  * DMAMODE0, DMA Channel 0 Mode Register
-  *
-  *	Bits		R/W	Meaning
-  *	fffc0000	R	Reserved.
-  *	00020000	RW	Channel 0 interrupt select (0 for local
-  *				  bus interrupt, 1 for PCI interrupt).
-  *	00010000	RW	Clear count mode.
-  *	00008000	RW	DMA stop data mode.  0 sends BLAST; 1
-  *				  asserts EOT or negates DREQ[1:0].
-  *	00004000	RW	DMA EOT input pin enable.
-  *	00002000	RW	Write-and-invalidate mode for DMA.
-  *	00001000	RW	Demand mode.
-  *	00000800	RW	Local addressing mode.
-  *	00000400	RW	Done interrupt enable.
-  *	00000200	RW	Chaining enable.
-  *	00000100	RW	Local-bus bursting enable.
-  *	00000080	RW	BTERM# input enable.
-  *	00000040	RW	Ready input enable.
-  *	0000003c	RW	Internal wait states.
-  *	00000003	RW	Local bus width (see LBRD0 doc above).
-  *
-  *  00021dc2 means: PCI interrupts, no clear count, BLAST, no EOT
-  *  input, no write-and-invalidate, demand mode, local-bus address is
-  *  constant, done interrupts enabled, no chaining, local bursting
-  *  enabled, BTERM# and Ready inputs enabled, no internal wait states,
-  *  32-bit local bus width.
-  */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMAMODE0,0x00021dc2);
- /*
-  * DMAPADR0, DMA Channel 0 PCI Address Register
-  * DMALADR0, DMA Channel 0 Local Address Register
-  * DMASIZ0, DMA Channel 0 Transfer Size (Bytes) Register
-  * DMADPR0, DMA Channel 0 Descriptor Pointer Register
-  *
-  * These we don't set now since we aren't doing DMA now.
-  */
- /*
-  * DMAMODE1, DMA Channel 1 mode Register.
-  *
-  * Bits are just like DMAMODE0, above, except that of course they
-  *  apply to channel 1 instead of channel 0.
-  *
-  *  00021d81 means: PCI interrupts, no clear count, BLAST, no EOT
-  *  input, no write-and-invalidate, demand mode, local-bus address is
-  *  constant, done interrupts enabled, no chaining, local bursting
-  *  eabled, BTERM# input enabled, Ready input disabled, no internal
-  *  wait states, 16-bit local bus width.
-  */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMAMODE1,0x00021d81);
- /*
-  * DMAPADR1, DMA Channel 1 PCI Address Register
-  * DMALADR1, DMA Channel 1 Local Address Register
-  * DMASIZ1, DMA Channel 1 Transfer Size (Bytes) Register
-  * DMADPR1, DMA Channel 1 Descriptor Pointer Register
-  *
-  * These we don't set now since we aren't doing DMA now.
-  */
- /*
-  * DMACSR0, DMA Channel 0 Command/Status Register
-  * DMACSR1, DMA Channel 1 Command/Status Register
-  *
-  * These are set, above, out of numerical order.
-  */
- /*
-  * DMAARB, DMA Arbitration Register - same as MARBR, above.
-  */
- /*
-  * DMATHR, DMA Threshold Register
-  *
-  *	Bits		R/W	Meaning
-  *	f0000000	RW	Channel 1 PCI->local almost empty.
-  *	0f000000	RW	Channel 1 local->PCI almost full.
-  *	00f00000	RW	Channel 1 local->PCI almost empty.
-  *	000f0000	RW	Channel 1 PCI->local almost full.
-  *	0000f000	RW	Channel 0 PCI->local almost empty.
-  *	00000f00	RW	Channel 0 local->PCI almost full.
-  *	000000f0	RW	Channel 0 local->PCI almost empty.
-  *	0000000f	RW	Channel 0 PCI->local almost full.
-  *
-  *  Each nybble is "Number of <x> entries (divided by two, minus one)
-  *  in FIFO" before requesting the relevant bus in the relevant
-  *  direction.  For example, "PCI->local almost full" is the number of
-  *  entries before requesting the local bus for writes.  The peculiar
-  *  ordering makes more sense if you look at it as
-  *
-  *	f000	Entries before requesting PCI for reads.
-  *	0f00	Entries before requesting PCI for writes.
-  *	00f0	Entries before requesting local bus for reads.
-  *	000f	Entries before requesting local bus for writes.
-  *
-  *  There are "should" criteria applying to sums of various fields;
-  *  see the doc.
-  */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMATHR,0x44447a47);
- /*
-  * Is this actually necessary?
-  */
- pci_conf_write(sc->pc,sc->pt,PCI_BHLC_REG,pci_conf_read(sc->pc,sc->pt,PCI_BHLC_REG)|(PCI_LATTIMER_MASK<<PCI_LATTIMER_SHIFT));
-}
-
-static void adlink7300a_setup(volatile SOFTC *sc)
-{
- /*
-  * Set DMA mode.  All we do here is set 32-bit bus width.
-  */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMAMODE0,(bus_space_read_4(sc->lcr_t,sc->lcr_h,PLX9080_DMAMODE0)&~3U)|2);
- /*
-  * Set almost-empty and almost-full values.
-  */
- bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_FIFO_CR,0x00080008);
- bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_FIFO_CR,0x00800080);
- /*
-  * The table calls this register POL_CTRL; the text calls it
-  *  POL_CNTRL.  All the _NEG bits are called _NEG in the table and
-  *  _NEQ in the text, too.  Adlink _really_ needs to proofread their
-  *  manual.
-  *
-  * 0 configures everything to be rising edge active, which is what we
-  *  want here.
-  */
- bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_POL_CTRL,0);
- /*
-  * Clear D[IO]_UNDER (the diagram shows DO_UNDER, the text says
-  *  DI_UNDER), set DO_FIFO_CLR, clear DO_EN, terminator off.
-  */
- bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_DO_CSR,0x00000640);
- /*
-  * clear DI_OVER, set DI_FIFO_CLR and DI_EN, terminator off, start
-  *  sampling now, no handshaking, external clock, 32-bit width.
-  */
- bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR,0x00000747);
-}
-
-static int start_dma(volatile SOFTC *sc, const struct adlink7300a_dma *req, struct lwp *l)
-{
- int e;
-
- if ((req->count < 1) || (req->count > DMABUFSIZE/4)) return(EMSGSIZE); // needs translation
- switch (sc->dmastat)
-  { default:
-       panic("impossible dmastat %d",(int)sc->dmastat);
-       break;
-    case ADLINK7300A_DMA_PENDING:
-    case ADLINK7300A_DMA_DONE:
-    case ADLINK7300A_DMA_FLUSH:
-       break;
-    case ADLINK7300A_DMA_NONE:
-       e = bus_dmamap_load(sc->dmat,sc->dmam,sc->dmabuf,req->count*4,0,BUS_DMA_WAITOK|BUS_DMA_READ);
-       if (e)
-	{ printf("adlink7300a: DMA map load failed %d\n",e);
-	  return(EIO);
-	}
-       break;
+ HRING_RECORD();
+ s = splhigh();
+ rs = sc->rsamp;
+ ds = sc->dsamp;
+ while (rs != ds)
+  { sc->bufbase[rs] = FILL_PATTERN;
+    bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_PREWRITE);
+    rs ++;
+    if (rs >= sc->bufsize) rs = 0;
   }
- sc->dmareq = *req;
- bus_dmamap_sync(sc->dmat,sc->dmam,0,req->count*4,BUS_DMASYNC_PREREAD);
- /* 0x200 is DI_FIFO_CLR */
- if (req->flags & ADLINK7300A_DMAF_FLUSH) bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR,bus_space_read_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR)|0x200);
- /* DMAMODE0 is good from init */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMAPADR0,sc->dmam->dm_segs->ds_addr);
- /*
-  * Why 0x10 here?  That's what I find there, and, given the value in
-  *  DMAMODE0, this is held constant....
-  */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMALADR0,0x10);
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMASIZ0,req->count*4);
- /*
-  * 0xb is (0x8) local->PCI, (0x4) no interrupt, (0x2) no chain, (0x1)
-  *  the descriptor is in PCI space (except we're not chaining, so
-  *  `descriptor' is not a useful term).
-  */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMADPR0,0xb);
- /*
-  * Enable DMA completion interrupt.  0x00040000 is DMA 0 enable.
-  */
- bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR,bus_space_read_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR)|0x00040000);
- /*
-  * Set it going!  0x01 = enable, 0x02 = start.
-  */
- bus_space_write_1(sc->lcr_t,sc->lcr_h,PLX9080_DMACSR0,1);
- bus_space_write_1(sc->lcr_t,sc->lcr_h,PLX9080_DMACSR0,3);
- /*
-  * 0x100 is DI_EN.  0x3ff masks off status bits which are "write 1 to
-  *  do something" but we don't want to do anything to now.
-  */
- bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR,(bus_space_read_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR)&0x3ff)|0x100);
- sc->dmastat = ADLINK7300A_DMA_PENDING;
- return(0);
-}
-
-static void dma_status(volatile SOFTC *sc, enum adlink7300a_dma_status *stp)
-{
- enum adlink7300a_dma_status stat;
-
- stat = sc->dmastat;
- switch (stat)
-  { default:
-       aprint_normal_dev(sc->dev,"DMA status unknown (%d)\n",(int)stat);
-       stat = ADLINK7300A_DMA_NONE;
-       /* fall through */
-    case ADLINK7300A_DMA_NONE:
-    case ADLINK7300A_DMA_PENDING:
-       *stp = sc->dmastat;
-    case ADLINK7300A_DMA_DONE:
-       *stp = sc->dmastat;
-       bus_dmamap_sync(sc->dmat,sc->dmam,0,sc->dmareq.count*4,BUS_DMASYNC_POSTREAD);
-       bus_dmamap_unload(sc->dmat,sc->dmam);
-       copyout(sc->dmabuf,sc->dmareq.buf,sc->dmareq.count*4);
-       *stp = ADLINK7300A_DMA_DONE;
-       sc->dmastat = ADLINK7300A_DMA_NONE;
-       break;
-    case ADLINK7300A_DMA_FLUSH:
-       *stp = ADLINK7300A_DMA_PENDING;
-       break;
+ loops = sc->bufsize + 1;
+ while (1)
+  { bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_POSTREAD);
+    val = sc->bufbase[rs];
+    if (val == FILL_PATTERN) break;
+    sc->bufbase[rs] = FILL_PATTERN;
+    rs ++;
+    if (rs >= sc->bufsize) rs = 0;
+    if (loops-- < 1)
+     { HRING_RECORD();
+       restart_dma(sc);
+       splx(s);
+       HRING_RECORD();
+       return;
+     }
   }
+ sc->rsamp = rs;
+ sc->dsamp = rs;
+ splx(s);
+ HRING_RECORD();
 }
 
 /*
@@ -596,6 +523,45 @@ static int adlink7300a_match(device_t parent, cfdata_t cf, void *aux)
  return(r==0x7300144a);
 }
 
+static void setup_buf(SOFTC *sc)
+{
+ int i;
+ int samps;
+ volatile uint32_t *desc;
+ volatile char *descbase;
+
+ /*
+  * Each frag requires a 16-byte descriptor, so the data space
+  *  available in each one is (DMABUFSIZE/NBUFFRAGS)-16 bytes.  We put
+  *  all the descriptors at the end of the buffer.
+  *
+  * XXX This code assumes each descriptor is an integral number of
+  *  samples long.  Since both the descriptor size and the sample size
+  *  are fixed by the hardware (16 and 4), this is probably safe and
+  *  doesn't need a #if/#error/#endif test.
+  */
+ samps = ((DMABUFSIZE / NBUFFRAGS) - 16) >> 2;
+ descbase = (void *) (sc->dmamem + (NBUFFRAGS * samps * 4));
+ sc->bufbase = (void *) sc->dmamem;
+ for (i=NBUFFRAGS-1;i>=0;i--)
+  { desc = (volatile void *) (descbase + (16 * i));
+    // Starting DMA address
+    desc[0] = sc->dmapci + (samps * 4 * i);
+    // Why 0x10?  Because that's what I found in DMALADR0, and,
+    // given DMAMODE0, it's constant....
+    desc[1] = 0x10;
+    // This value is in bytes
+    desc[2] = samps * 4;
+    // Not set: PLX9080_DMADPRx_END, end-of-chain
+    desc[3] = (sc->dmapci + (NBUFFRAGS * samps * 4) + (((i+1)%NBUFFRAGS) * 16) ) |
+		PLX9080_DMADPRx_DIR_L2P |
+		PLX9080_DMADPRx_IRQ |
+		PLX9080_DMADPRx_SPACE_PCI;
+  }
+ sc->fragsize = samps;
+ sc->bufsize = samps * NBUFFRAGS;
+}
+
 static void adlink7300a_attach(device_t parent, device_t self, void *aux)
 {
  SOFTC *sc;
@@ -607,6 +573,8 @@ static void adlink7300a_attach(device_t parent, device_t self, void *aux)
  void *dmamapped;
  char devinfo[256];
 
+ hring_init();
+ HRING_RECORD();
  sc = device_private(self);
  pa = aux;
  sc->dev = self;
@@ -620,12 +588,12 @@ static void adlink7300a_attach(device_t parent, device_t self, void *aux)
     sc->flags = SCF_BROKEN;
     return;
   }
- if (pci_mapreg_map(pa,ADLINK7300A_CONF_LCR,PCI_MAPREG_TYPE_IO,0,&sc->lcr_t,&sc->lcr_h,&sc->lcr_a,&sc->lcr_s))
+ if (pci_mapreg_map(pa,AL7300_CONF_LCR,PCI_MAPREG_TYPE_IO,0,&sc->lcr_t,&sc->lcr_h,&sc->lcr_a,&sc->lcr_s))
   { aprint_error_dev(sc->dev,"can't map LCR registers\n");
     sc->flags = SCF_BROKEN;
     return;
   }
- if (pci_mapreg_map(pa,ADLINK7300A_CONF_BASE,PCI_MAPREG_TYPE_IO,0,&sc->regs_t,&sc->regs_h,&sc->regs_a,&sc->regs_s))
+ if (pci_mapreg_map(pa,AL7300_CONF_BASE,PCI_MAPREG_TYPE_IO,0,&sc->regs_t,&sc->regs_h,&sc->regs_a,&sc->regs_s))
   { aprint_error_dev(sc->dev,"can't map board registers\n");
     sc->flags = SCF_BROKEN;
     return;
@@ -644,7 +612,7 @@ static void adlink7300a_attach(device_t parent, device_t self, void *aux)
   }
  aprint_normal_dev(sc->dev,"interrupting at %s\n",pci_intr_string(sc->pc,sc->intr_h));
  sc->intr_est = pci_intr_establish(sc->pc,sc->intr_h,IPL_BIO,&adlink7300a_intr,sc);
- e = bus_dmamem_alloc(sc->dmat,DMABUFSIZE,1,0x40000000,&dmaseg,1,&ns,BUS_DMA_WAITOK|BUS_DMA_STREAMING);
+ e = bus_dmamem_alloc(sc->dmat,DMABUFSIZE,4,0x40000000,&dmaseg,1,&ns,BUS_DMA_WAITOK|BUS_DMA_STREAMING);
  if (e)
   { aprint_error_dev(sc->dev,"can't allocate DMA memory (%d)\n",e);
     sc->flags = SCF_BROKEN;
@@ -655,21 +623,30 @@ static void adlink7300a_attach(device_t parent, device_t self, void *aux)
     sc->flags = SCF_BROKEN;
     return;
   }
- e = bus_dmamem_map(sc->dmat,&dmaseg,1,DMABUFSIZE,&dmamapped,BUS_DMA_WAITOK);
+ e = bus_dmamem_map(sc->dmat,&dmaseg,1,DMABUFSIZE,&dmamapped,BUS_DMA_WAITOK|BUS_DMA_COHERENT);
  if (e)
   { aprint_error_dev(sc->dev,"can't map DMA memory (%d)\n",e);
     sc->flags = SCF_BROKEN;
     return;
   }
- sc->dmabuf = dmamapped;
+ sc->dmamem = dmamapped;
  e = bus_dmamap_create(sc->dmat,DMABUFSIZE,1,DMABUFSIZE,0,BUS_DMA_WAITOK,&sc->dmam);
  if (e)
   { aprint_error_dev(sc->dev,"can't create DMA map (%d)\n",e);
     sc->flags = SCF_BROKEN;
     return;
   }
+ e = bus_dmamap_load(sc->dmat,sc->dmam,sc->dmamem,DMABUFSIZE,0,BUS_DMA_WAITOK);
+ if (e)
+  { aprint_error_dev(sc->dev,"can't create DMA map (%d)\n",e);
+    sc->flags = SCF_BROKEN;
+    return;
+  }
+ sc->dmapci = sc->dmam->dm_segs->ds_addr;
+ setup_buf(sc);
  sc->flags = 0;
- selinit(&sc->si);
+ sc->overruns = 0;
+ HRING_RECORD();
 }
 
 CFATTACH_DECL_NEW(adlink7300a,sizeof(SOFTC),adlink7300a_match,adlink7300a_attach,0,0);
@@ -677,33 +654,34 @@ CFATTACH_DECL_NEW(adlink7300a,sizeof(SOFTC),adlink7300a_match,adlink7300a_attach
 static int adlink7300a_open(dev_t dev, int flags, int mode, struct lwp *l)
 {
  int u;
- volatile SOFTC *sc;
+ SOFTC *sc;
  int s;
 
+ HRING_RECORD();
  u = minor(dev);
  sc = device_lookup_private(&adlink7300a_cd,u);
  if (! sc)
-  { printf("adlink7300a_open, unit %d: nonexistent\n",u);
+  { HRING_RECORD();
+    //printf("adlink7300a_open, unit %d: nonexistent\n",u);
     return(ENXIO);
   }
  if (sc->flags & SCF_BROKEN)
-  { printf("adlink7300a_open, unit %d: broken\n",u);
+  { HRING_RECORD();
+    //printf("adlink7300a_open, unit %d: broken\n",u);
     return(ENXIO);
   }
  s = splhigh();
  if (sc->flags & SCF_OPEN)
   { splx(s);
-    printf("adlink7300a_open, unit %d: already open\n",u);
+    HRING_RECORD();
+    //printf("adlink7300a_open, unit %d: already open\n",u);
     return(0);
   }
- if (! (sc->flags & SCF_SET_UP))
-  { adlink7300a_setup(sc);
-    sc->flags |= SCF_SET_UP;
-    sc->dmastat = ADLINK7300A_DMA_NONE;
-  }
+ HRING_RECORD();
+ restart_dma(sc);
  sc->flags |= SCF_OPEN;
  splx(s);
- printf("adlink7300a_open, unit %d: succeeded\n",u);
+ //printf("adlink7300a_open, unit %d: succeeded\n",u);
  return(0);
 }
 
@@ -713,22 +691,87 @@ static int adlink7300a_close(dev_t dev, int flags, int mode, struct lwp *l)
  SOFTC *sc;
  int s;
 
+ HRING_RECORD();
  u = minor(dev);
  sc = device_lookup_private(&adlink7300a_cd,u);
  if (! sc) panic("closing nonexistent 7300\n");
  if (sc->flags & SCF_BROKEN) panic("closing broken 7300\n");
  s = splhigh();
- if (sc->dmastat == ADLINK7300A_DMA_PENDING) sc->dmastat = ADLINK7300A_DMA_FLUSH;
+ adlink7300a_reset(sc);
  sc->flags &= ~SCF_OPEN;
  splx(s);
- printf("adlink7300a_close, unit %d\n",u);
+ //printf("adlink7300a_close, unit %d\n",u);
+ HRING_RECORD();
  return(0);
 }
 
+/*
+ * Advance rsamp until either (a) we satisfy the read or (b) we run
+ *  into a FILL_PATTERN sample.  If we run into dsamp first, push dsamp
+ *  forward too.  Reset memory to FILL_PATTERN as we go.
+ *
+ * XXX Should we sync(PREWRITE) only once (or twice if we wrap) after
+ *  the loop, isntead of every time around?  PREWRITE involves an
+ *  mfence, which is relatively expensive.  We actually care about it
+ *  for only that one piece of memory, but there's no "mfence for just
+ *  this little piece of memory".
+ */
 static int adlink7300a_read(dev_t dev, struct uio *uio, int flags)
 {
- printf("adlink7300a_read: reading not supported\n");
- return(EOPNOTSUPP);
+ int u;
+ SOFTC *sc;
+ int s;
+ int rs;
+ int ds;
+ uint32_t val;
+ uint32_t v[256];
+ int nv;
+ int maxn;
+
+ HRING_RECORD();
+ u = minor(dev);
+ sc = device_lookup_private(&adlink7300a_cd,u);
+ if (! sc) panic("read on nonexistent 7300");
+ if (sc->flags & SCF_BROKEN) panic("read on broken 7300\n");
+#if FILL_PATTERN == 0
+ val = 1;
+#else
+ val = 0;
+#endif
+ while (1)
+  { maxn = uio->uio_resid >> 2;
+    if (maxn < 1)
+     { //printf("B");
+       break;
+     }
+    if (maxn > sizeof(v)/sizeof(v[0])) maxn = sizeof(v) / sizeof(v[0]);
+    s = splhigh();
+    rs = sc->rsamp;
+    ds = sc->dsamp;
+    if (maxn > sc->bufsize-rs) maxn = sc->bufsize - rs;
+    nv = 0;
+    while (nv < maxn)
+     { bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_POSTREAD);
+       val = sc->bufbase[rs];
+       if (val == FILL_PATTERN) break;
+       sc->bufbase[rs] = FILL_PATTERN;
+       bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_PREWRITE);
+       v[nv++] = val;
+       if (rs == ds) ds ++;
+       rs ++;
+     }
+    if (rs == sc->bufsize) rs = 0;
+    if (ds == sc->bufsize) ds = 0;
+    sc->rsamp = rs;
+    sc->dsamp = ds;
+    splx(s);
+    if (nv > 0) uiomove(&v[0],nv<<2,uio);
+    if (val == FILL_PATTERN)
+     { //printf("F");
+       break;
+     }
+  }
+ return(0);
 }
 
 static int adlink7300a_write(dev_t dev, struct uio *uio, int flags)
@@ -742,14 +785,15 @@ static int adlink7300a_ioctl(dev_t dev, u_long ioc, void *addr, int flag, struct
  int u;
  SOFTC *sc;
  int s;
- int e;
 
+ HRING_RECORD();
  u = minor(dev);
  sc = device_lookup_private(&adlink7300a_cd,u);
  if (! sc) panic("ioctl on nonexistent 7300\n");
  if (sc->flags & SCF_BROKEN) panic("ioctl on broken 7300\n");
  switch (ioc)
   { case ADLINK7300A_DO_AUX:
+       HRING_RECORD();
 	{ unsigned char v;
 	  v = *(unsigned char *)addr;
 	  //aprint_normal_dev(sc->dev,"DO_AUX %d%d%d%d\n",(v>>3)&1,(v>>2)&1,(v>>1)&1,v&1);
@@ -759,6 +803,7 @@ static int adlink7300a_ioctl(dev_t dev, u_long ioc, void *addr, int flag, struct
 	}
        break;
     case ADLINK7300A_DI_AUX:
+       HRING_RECORD();
 	{ unsigned char v;
 	  s = splhigh();
 	  v = (bus_space_read_1(sc->regs_t,sc->regs_h,AL7300_AUX_DIO) >> 4) & 15;
@@ -767,22 +812,15 @@ static int adlink7300a_ioctl(dev_t dev, u_long ioc, void *addr, int flag, struct
 	  *(unsigned char *)addr = v;
 	}
        break;
-    case ADLINK7300A_DMA_START:
-       //aprint_normal_dev(sc->dev,"DMA_START buf %p count %d flags %x\n",(void *)((const struct adlink7300a_dma *)addr)->buf,((const struct adlink7300a_dma *)addr)->count,((const struct adlink7300a_dma *)addr)->flags);
-       s = splhigh();
-       e = start_dma(sc,(const struct adlink7300a_dma *)addr,l);
-       splx(s);
-       return(e);
-       break;
-    case ADLINK7300A_DMA_STATUS:
-       s = splhigh();
-       dma_status(sc,(enum adlink7300a_dma_status *)addr);
-       splx(s);
+    case ADLINK7300A_FLUSH:
+       adlink7300a_flush(sc);
        break;
     default:
+       HRING_RECORD();
        return(EINVAL);
        break;
   }
+ HRING_RECORD();
  return(0);
 }
 
@@ -790,29 +828,14 @@ static int adlink7300a_poll(dev_t dev, int events, struct lwp *l)
 {
  int u;
  SOFTC *sc;
- int s;
 
+ HRING_RECORD();
  u = minor(dev);
  sc = device_lookup_private(&adlink7300a_cd,u);
  if (! sc) panic("poll on nonexistent 7300\n");
  if (sc->flags & SCF_BROKEN) panic("poll on broken 7300\n");
  aprint_normal_dev(sc->dev,"poll\n");
- s = splhigh();
- switch (sc->dmastat)
-  { default:
-       panic("impossible dmastat");
-       break;
-    case ADLINK7300A_DMA_NONE:
-    case ADLINK7300A_DMA_PENDING:
-       selrecord(l,&sc->si);
-       splx(s);
-       return(0);
-       break;
-    case ADLINK7300A_DMA_DONE:
-       splx(s);
-       return(events);
-       break;
-  }
+ return(events);
 }
 
 static paddr_t adlink7300a_mmap(dev_t dev, off_t off, int prot)
