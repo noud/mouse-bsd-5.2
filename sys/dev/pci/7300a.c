@@ -153,7 +153,6 @@ static int start_dma(SOFTC *sc)
 {
  int s;
 
-// printf("D");
  HRING_RECORD();
  s = splhigh();
  // DMAMODE0 is good from init
