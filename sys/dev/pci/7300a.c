@@ -157,7 +157,7 @@ static int start_dma(SOFTC *sc)
  HRING_RECORD();
  s = splhigh();
  // DMAMODE0 is good from init
- if (sc->dmapci & ~PLX9080_DMADPRx_NEXT) panic("misaligned descriptor");
+ if ((sc->dmapci+BUFBYTES) & ~PLX9080_DMADPRx_NEXT) panic("misaligned descriptor");
  bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMADPR0,
 	(sc->dmapci + BUFBYTES) | PLX9080_DMADPRx_SPACE_PCI | PLX9080_DMADPRx_IRQ | PLX9080_DMADPRx_DIR_L2P);
  // Enable DMA completion interrupt.
