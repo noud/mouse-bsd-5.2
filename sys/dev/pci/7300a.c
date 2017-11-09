@@ -9,20 +9,32 @@
  *  Adlink's library routines, cross-referenced with the 9080
  *  documentation, and healthy doses of guessing and experimentation.
  *
- * The hardware is fairly badly crippled.  It does not appear to have
- *  any "how far has this transfer progressed?" operation, in
+ * This driver is less general-purpose than one might wish.  There are
+ *  a number of things it hardwires, because they are what the
+ *  designed-for userland application expects.  (As a simple examples,
+ *  it always runs the card in 32-bit input mode.  There are many more
+ *  examples.)
+ *
+ * The hardware appears to be fairly crippled.  It does not appear to
+ *  have any "how far has this transfer progressed?" operation, in
  *  particular, which limits the APIs we can provide.  Instead, we wire
  *  in yet more knowledge of what this is being used for and detect how
  *  far DMA has progressed by figuring out how much of the buffer has
  *  been overwritten (by filling it with a pattern and trusting that
  *  that pattern will not occur - it certainly shouldn't, since 23 of
- *  the data pins are grounded).
+ *  the 32 data pins are grounded).
  *
- * We keep a large (DMABUFSIZE below, one megabyte at this writing) DMA
+ * We keep a large (DMABUFSIZE below, 16 megabytes at this writing) DMA
  *  buffer.  We break it up into smaller chunks and configure the 9080
- *  in chaining mode, with interrupts after each chunk is done, so we
- *  can - provided we stay ahead of the data stream - never let it
- *  reach end-of-ring.
+ *  in chaining mode, with a loop of descriptors none of which have the
+ *  end-of-chain bit set, with interrupts after each chunk is done.
+ *  Provided the interrupt handler stays ahead of the data stream, this
+ *  means the hardware is set-and-forget, because it's DMAing into an
+ *  "infinite" ring of buffers.  (If the hardware overruns the
+ *  interrupt handler, the only reason we have to poke the hardware is
+ *  that we then have no way to tell where it's DMAing into with
+ *  sub-ring-element granularity, and, because interrupts can be
+ *  delayed, even that much is less lsure than I'd like.)
  */
 
 #include <sys/bus.h>
@@ -40,11 +52,28 @@
 #include "7300a.h"
 #include "7300a-reg.h"
 
+/*
+ * DMABUFSIZE is the size of the DMA-shared memory, in bytes.
+ *  DMABUFWORDS is the same size, in terms of DMAed samples (4 bytes
+ *  each).  FILL_PATTERN is the "cannot occur" pattern mentioned above.
+ *  NBUFFRAGS is the number of chunks we break the DMABUFSIZE-sized
+ *  buffer up into for DMA ring purposes.
+ */
 #define DMABUFSIZE 0x1000000
 #define DMABUFWORDS (DMABUFSIZE>>2)
 #define FILL_PATTERN 0xa5a5a5a5
 #define NBUFFRAGS 32
 
+/*
+ * The hardware imposes the restriction that each chunk of the ring
+ *  have a size, in bytes, that fits into 23 bits.
+ *
+ * Each chunk also requires a 16-byte descriptor.  This means that we
+ *  have up to (DMABUFSIZE/NBUFFRAGS)-16 bytes per chunk available, but
+ *  we also have to round that down to a multiple of 4, because it's
+ *  too much hair to try to paste together partial samples from
+ *  multiple chunks.  So, set up #defines and then check their values.
+ */
 #define CHUNKWORDS (((DMABUFSIZE/NBUFFRAGS)-16)>>2)
 #define CHUNKBYTES (CHUNKWORDS << 2)
 #define BUFWORDS (CHUNKWORDS * NBUFFRAGS)
@@ -56,22 +85,61 @@
 typedef struct softc SOFTC;
 
 /*
- * dsamp is the index of the next sample to be DMA-filled (which may,
- *  and often will, lag the samples actually filled by the hardware).
- *  rsamp is the index of the next sample to be returned by read().
+ * dev - the device_t.
  *
- * In the DMA interrupt routine, we advance dsamp until it encounters a
- *  not-yet-overwritten sample, or it encounters rsamp.  If the former,
- *  we then advance rsamp if necessary so there are at least two frags'
- *  worth of space between it and dsamp.  If the latter, DMA has not
- *  only overrun the reader but has overrun the interrupt routine; in
- *  this case, we have no idea where it's currently DMAing into, so we
- *  kinda have to reset the hardware and restart from ground zero.
+ * flags - some flags values:
+ *
+ *	SCF_BROKEN
+ *		This unit is broken somehow (eg, can't map registers)
+ *		and should be unusable.
+ *
+ *	SCF_OPEN
+ *		This unit is currently open.
+ *
+ * pc, pt - the pci_chipset_tag_t and pcitag_t for the device, for
+ *  accessing PCI-level resources.
+ *
+ * dmat - the bus_dma_tag_t for the device.
+ *
+ * dmamem, dmapci - the addresses of the kernel virtual (dmamem) and
+ *  PCI (dmapci) views of the DMABUFSIZE-sized DMAable memory area.
+ *
+ * dmam - the bus_dmamap_t for the mapping of the DMAable memory.
+ *
+ * lcr_t, lcr_h, lcr_a, lcr_s - the bus-space resources for mapping the
+ *  PLX9080's registers.
+ *
+ * regs_t, regs_h, regs_a, regs_s - the bus-space resources for mapping
+ *  the registers of the data-acquisition part, the stuff behind the
+ *  PLX9080's local bus.  (This stuff is accessible only via the 9080;
+ *  we can't talk to it until the 9080 has been configured to let us do
+ *  so.)
+ *
+ * intr_h - the pci_intr_handle_t for the device's PCI interrupt.
+ *
+ * intr_est - the cookie returned by pci_intr_establish for the
+ *  device's interrupt.
+ *
+ * bufbase - a pointer to the base of the ring buffer of samples in the
+ *  DMAable memory.
+ *
+ * rsamp - index of the next sample to be returned by read().
+ *
+ * dsamp - index of the next sample to be overwritten by DMA (as far as
+ *  we're aware; this may lag the DMA reality).
+ *
+ * In the DMA interrupt routine, we advance dsamp until either it
+ *  encounters a not-yet-overwritten sample or it encounters rsamp.  If
+ *  the former, we then advance rsamp if necessary so there are at
+ *  least two frags' worth of space between it and dsamp.  If the
+ *  latter, DMA has not only overrun the reader but has overrun the
+ *  interrupt routine; in this case, we have no idea where it's
+ *  currently DMAing into, so we kinda have to reset the hardware and
+ *  restart from ground zero.
  *
  * Overruns - either hardware-reported or dsamp running into rsamp -
- *  are not reflected to the read() interface, since userland doesn't
- *  care.  They _are_ reported to the console, though, so we can get
- *  some idea how common they are.
+ *  are not saved anywhere for reflection to the read() interface,
+ *  since userland doesn't care.
  */
 struct softc {
   device_t dev;
@@ -100,6 +168,17 @@ struct softc {
   } ;
 
 extern struct cfdriver adlink7300a_cd;
+
+/*
+ * The hring stuff exists as a debugging aid.  Various places in the
+ *  driver do HRING_RECORD().  This records the line number where it
+ *  occurs in a ring buffer of line numbers; the idea is that if we
+ *  crash then we can inspect the ring buffer (from ddb or post-mortem)
+ *  to get some idea where we crashed.
+ *
+ * The driver is stable enough I'm not sure how much value there is in
+ *  this.  But the cost is low, so I'm leaving it, at least for now.
+ */
 
 #define HRINGSIZE 1024
 volatile int hring_7300[HRINGSIZE];
@@ -135,20 +214,11 @@ static void hring_record(int v)
 }
 
 /*
-LOC 00e8	INTCSR, PCI 068
-LOC 0100	DMAMODE0, PCI 080
-LOC e110	not found
-	110	DMADPR0
-
-ch0 done: bit [10] of register LOC 100
-ch0 terminal: bit [2] of register LOC e110
-either DMA 0: bit [18] of register LOC e8 and bit [17] of register LOC 100
-if bit [17] is 0 gen LINTo#; if bit [17] is 1 gen INTA#.
-read Interrupt Control/Status Register to determine whether DMA channel interrupt is pending.
-Done status bit in that register can determine which kind of interrupt it is.
-write 1 to Clear Interrupt bit in DMA Command/Status Register to clear interrupt
-*/
-
+ * Start DMA.  Because of the circular descriptor chain, we do this
+ *  only once under normal operation.  It needs doing only (a) when we
+ *  have just opened and want to start up or (b) if DMA overruns the
+ *  interrupt handling and we have to reset-and-restart.
+ */
 static int start_dma(SOFTC *sc)
 {
  int s;
@@ -172,15 +242,19 @@ static int start_dma(SOFTC *sc)
  return(0);
 }
 
+/*
+ * Reset the hardware.  This actually resets just the 9080; we arguably
+ *  should reset the data-acquisition part here too, though, since
+ *  resetting the 9080 shuts off DMA, it sorta doesn't matter if input
+ *  samples are being accumulated - at worst the FIFO will fill up
+ *  because the 9080 isn't fetching samples to DMA into host memory.
+ */
 static void adlink7300a_reset(SOFTC *sc)
 {
  uint32_t r;
 
  HRING_RECORD();
- /*
-  * Initialize 9080 registers.
-  */
- /* Tell the 9080 to soft reset */
+ // Tell the 9080 to soft reset
  r = bus_space_read_4(sc->lcr_t,sc->lcr_h,PLX9080_CNTRL);
  bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_CNTRL,r|PLX9080_CNTRL_SOFTRESET);
  DELAY(10); // is this actually needed?
@@ -286,6 +360,7 @@ static void adlink7300a_reset(SOFTC *sc)
  //	DMALADR1, DMA Channel 1 Local Address Register
  //	DMASIZ1, DMA Channel 1 Transfer Size (Bytes) Register
  //	DMADPR1, DMA Channel 1 Descriptor Pointer Register
+ // (Also, DMA channel 1 is for output, which we don't do.)
  // We set these above, out of numerical order; see above for why.
  //	DMACSR0, DMA Channel 0 Command/Status Register
  //	DMACSR1, DMA Channel 1 Command/Status Register
@@ -306,6 +381,10 @@ static void adlink7300a_reset(SOFTC *sc)
  HRING_RECORD();
 }
 
+/*
+ * Set up the data-acquisition hardware, assuming the 9080 has already
+ *  been set up.
+ */
 static void adlink7300a_setup(SOFTC *sc)
 {
  HRING_RECORD();
@@ -353,6 +432,9 @@ static void adlink7300a_setup(SOFTC *sc)
  HRING_RECORD();
 }
 
+/*
+ * Fill a buffer, or partial buffer, of samples with FILL_PATTERN.
+ */
 static void fill_buffer(volatile uint32_t *buf, int nwords)
 {
  for (;nwords>0;nwords--) *buf++ = FILL_PATTERN;
@@ -362,7 +444,7 @@ static void fill_buffer(volatile uint32_t *buf, int nwords)
  * Advance dsamp until it either (a) finds an unmodified value or (b)
  *  runs into rsamp.  If the former, advance rsamp if necessary and
  *  return 0; if the latter, return 1 without bothering to update the
- *  SOFTC (since it'll be thrown out anyway).
+ *  SOFTC (since in that case we're going to reset everything anyway).
  */
 static int dma_catchup(SOFTC *sc)
 {
@@ -397,11 +479,20 @@ static int dma_catchup(SOFTC *sc)
   }
 }
 
+/*
+ * Flush the 7300's hardware FIFO.
+ */
 static void flush_fifo(SOFTC *sc)
 {
  bus_space_write_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR,bus_space_read_4(sc->regs_t,sc->regs_h,AL7300_DI_CSR)|AL7300_DI_CSR_CLR_FIFO);
 }
 
+/*
+ * Restart DMA.  This is designed, and named, to be called when an
+ *  overrun bad enough that we can't recover is noticed.  It is also
+ *  called from our open routine, to start DMA in the first place,
+ *  since the call sequence is identical.
+ */
 static void restart_dma(SOFTC *sc)
 {
 // printf("R");
@@ -421,6 +512,8 @@ static void restart_dma(SOFTC *sc)
 }
 
 /*
+ * This is our interrupt handler.
+ *
  * pci_intr(9) does not describe the semantics of the return value.
  *  Going under the hood, it appears a return value of 1 means the
  *  routine is claiming the interrupt and 0 that it is disclaiming it.
@@ -429,6 +522,20 @@ static void restart_dma(SOFTC *sc)
  *  unrelated interrupts occur (since PCI has only four interrupt
  *  lines, interrupt conflicts are inevitable on any PCI bus with more
  *  than four interrupt-generating devices).
+ *
+ * This is supposed to get called every time the DMA engine reaches the
+ *  end of a chunk of the ring buffer.  We then have a chance to push
+ *  rsamp far enough forward, if necessary, to minimize the risk of DMA
+ *  overrunning the reader and calling for a full reset.  See
+ *  dma_catchup for details.
+ *
+ * I've also seen PLX9080_INTCSR_PCI_LCL_IE set, sp presumably there is
+ *  some circumstances under which PLX9080_INTCSR_PCI_LCL_IRQ can be
+ *  set.  I have no idea what it means, though (see the head-of-file
+ *  comment's remarks about how underdocumented the local-bus side of
+ *  the PLX9080 is), and I haven't seen it happen in my testing, so I
+ *  just print a message to the console and turn off the IE bit if it
+ *  happens.
  */
 static int adlink7300a_intr(void *scv)
 {
@@ -439,13 +546,6 @@ static int adlink7300a_intr(void *scv)
  HRING_RECORD();
  sc = scv;
  icsr = bus_space_read_4(sc->lcr_t,sc->lcr_h,PLX9080_INTCSR);
- /*
-  * I'm not sure what local bus interrupts correspond to, but I see the
-  *  local bus interrupt enable set, so they presumably mean something.
-  *  However, I have no idea what, so, if we get such an interrupt, we
-  *  just turn off the interrupt enable and let it go at that (and log
-  *  it, so we can find out it happened).
-  */
  if (icsr & (PLX9080_INTCSR_LCL_CH0_IRQ|PLX9080_INTCSR_PCI_LCL_IRQ))
   { if (icsr & PLX9080_INTCSR_LCL_CH0_IRQ)
      { //aprint_normal_dev(sc->dev,"DMA interrupt\n");
@@ -471,6 +571,24 @@ static int adlink7300a_intr(void *scv)
  return(0);
 }
 
+/*
+ * Flush everything buffered.  This implements the ADLINK7300A_FLUSH
+ *  ioctl, basically.
+ *
+ * We might be able to be more efficient here by calling
+ *  bus_dmamap_sync only once (or twice if we wrap around the ring
+ *  buffer), but this seems to work well enough, and the code
+ *  complexity argues against trying it.  I don't know how expensive
+ *  memory fences are, though; it might be worth trying if this proves
+ *  to be too expensive an operation.
+ *
+ * We don't flush the hardware's FIFO because it should never have
+ *  enough in it to matter.  Samples are coming in at only about 1MHz;
+ *  if the 9080's DMA engine and the PCI bus can't keep up with that
+ *  we've got far worse problems than just flush operations not
+ *  flushing everything.  Thus, the only buffering worth bothering with
+ *  is our ring buffer, which this does flush.
+ */
 static void adlink7300a_flush(SOFTC *sc)
 {
  int s;
@@ -512,6 +630,8 @@ static void adlink7300a_flush(SOFTC *sc)
 }
 
 /*
+ * Our match routine.
+ *
  * 10b5 and 9080 are the generic PLX-9080 values, so we check the
  *  subsystem ID as well to avoid false positives.
  */
@@ -527,6 +647,11 @@ static int adlink7300a_match(device_t parent, cfdata_t cf, void *aux)
  return(r==0x7300144a);
 }
 
+/*
+ * Construct the DMAable ring-buffer setup.  This is called, after the
+ *  DMAable memory has been allocated, to set up the ring of
+ *  descriptors for the 9080's DMA engine to chew on.
+ */
 static void setup_buf(SOFTC *sc)
 {
  int i;
@@ -554,7 +679,7 @@ static void setup_buf(SOFTC *sc)
     desc[1] = 0x10;
     // This value is in bytes
     desc[2] = CHUNKBYTES;
-    // Not set: PLX9080_DMADPRx_END, end-of-chain
+    // Not set: PLX9080_DMADPRx_END (end-of-chain)
     desc[3] = (sc->dmapci + BUFBYTES + (((i+1)%NBUFFRAGS) * 16) ) |
 		PLX9080_DMADPRx_DIR_L2P |
 		PLX9080_DMADPRx_IRQ |
@@ -562,6 +687,15 @@ static void setup_buf(SOFTC *sc)
   }
 }
 
+/*
+ * Our attach routine.
+ *
+ * Not much of note here; this is very little beyond a bunch of
+ *  bus_space/bus_dma (and the like) calls.  We do call out to
+ *  adlink7300a_reset (to reset the hardware) once we have set up
+ *  enough of the PCI stuff to have access to it, and setup_buf (to set
+ *  up the ring buffer) once we've set up enough to do that.
+ */
 static void adlink7300a_attach(device_t parent, device_t self, void *aux)
 {
  SOFTC *sc;
@@ -648,8 +782,18 @@ static void adlink7300a_attach(device_t parent, device_t self, void *aux)
  HRING_RECORD();
 }
 
+/*
+ * Autoconf glue.
+ */
 CFATTACH_DECL_NEW(adlink7300a,sizeof(SOFTC),adlink7300a_match,adlink7300a_attach,0,0);
 
+/*
+ * Our open routine.
+ *
+ * Not much of note here.  About all worth mentioning is that this is
+ *  where we actually have the hardware start throwing samples our way
+ *  (by calling restart_dma()).
+ */
 static int adlink7300a_open(dev_t dev, int flags, int mode, struct lwp *l)
 {
  int u;
@@ -684,6 +828,13 @@ static int adlink7300a_open(dev_t dev, int flags, int mode, struct lwp *l)
  return(0);
 }
 
+/*
+ * Our clsoe routine.
+ *
+ * We reset the 9080, which (among other things) shuts off DMA, so,
+ *  even if the 7300 proper is receiving samples, they're not going to
+ *  go anywhere.  The FIFO may fill up, but that's not a big deal.
+ */
 static int adlink7300a_close(dev_t dev, int flags, int mode, struct lwp *l)
 {
  int u;
@@ -705,15 +856,34 @@ static int adlink7300a_close(dev_t dev, int flags, int mode, struct lwp *l)
 }
 
 /*
- * Advance rsamp until either (a) we satisfy the read or (b) we run
- *  into a FILL_PATTERN sample.  If we run into dsamp first, push dsamp
- *  forward too.  Reset memory to FILL_PATTERN as we go.
+ * Our read routine.
+ *
+ * We advance rsamp, collecting samples as we go, until either (a) we
+ *  satisfy the read or (b) we run into a FILL_PATTERN sample.  If we
+ *  run into dsamp first, push dsamp forward too.  Reset memory to
+ *  FILL_PATTERN as we go.
+ *
+ * The only notable thing here is v[].  This exists because we can't
+ *  uiomove() at splhigh(), or at least the interfaces don't promise we
+ *  can.  We could jump to splhigh() and back again and uiomove for
+ *  every sample, but I suspect that would be uncomfortably slow.  This
+ *  amortizes the overhead, effectively reducing it by a factor of 256,
+ *  without staying at splhigh for (potentially) tens or hundreds of
+ *  thousands of samples.
  *
  * XXX Should we sync(PREWRITE) only once (or twice if we wrap) after
- *  the loop, isntead of every time around?  PREWRITE involves an
+ *  the loop, instead of every time around?  PREWRITE involves an
  *  mfence, which is relatively expensive.  We actually care about it
  *  for only that one piece of memory, but there's no "mfence for just
- *  this little piece of memory".
+ *  this little piece of memory".  That has the risk that the DMA
+ *  engine may catch up to memory we've emptied and written, but not
+ *  yet sync()ed, meaning the sync() could destroy the DMA-written
+ *  values.
+ *
+ * If there is nothing available, this returns a successful transfer of
+ *  zero bytes instead of (say) blocking.  Userland must be prepared
+ *  for this and not interrest that as some kind of hard EOF.  See the
+ *  comment on our poll routine, below, for further discussion.
  */
 static int adlink7300a_read(dev_t dev, struct uio *uio, int flags)
 {
@@ -773,12 +943,22 @@ static int adlink7300a_read(dev_t dev, struct uio *uio, int flags)
  return(0);
 }
 
+/*
+ * Our write routine.  We don't support writes.
+ */
 static int adlink7300a_write(dev_t dev, struct uio *uio, int flags)
 {
  printf("adlink7300a_write: writing not supported\n");
  return(EOPNOTSUPP);
 }
 
+/*
+ * Our ioctl routine.
+ *
+ * There are really only three ioctls we support: two for the aux I/O
+ *  bits (ADLINK7300A_DO_AUX for output and ADLINK7300A_DI_AUX for
+ *  input) and one to flush anything buffered.
+ */
 static int adlink7300a_ioctl(dev_t dev, u_long ioc, void *addr, int flag, struct lwp *l)
 {
  int u;
@@ -823,6 +1003,19 @@ static int adlink7300a_ioctl(dev_t dev, u_long ioc, void *addr, int flag, struct
  return(0);
 }
 
+/*
+ * Our poll routine.
+ *
+ * We don't support polled operation.  Can't, really, because there is
+ *  no way to make the hardware wake us up as soon as at least one more
+ *  sample has been DMAed in, and, without some kind of hardware
+ *  trigger like an interrupt, we can't wake up when more samples are
+ *  available.
+ *
+ * Fortunately, userland is prepared to deal with this paradigm,
+ *  because that's how the hardware works and thus what the program was
+ *  deisnged around.
+ */
 static int adlink7300a_poll(dev_t dev, int events, struct lwp *l)
 {
  int u;
@@ -837,12 +1030,18 @@ static int adlink7300a_poll(dev_t dev, int events, struct lwp *l)
  return(events);
 }
 
+/*
+ * Our mmap routine.  We don't support mmap.
+ */
 static paddr_t adlink7300a_mmap(dev_t dev, off_t off, int prot)
 {
  printf("adlink7300a_mmap\n");
  return(-(paddr_t)1);
 }
 
+/*
+ * cdevsw glue.
+ */
 const struct cdevsw adlink7300a_cdevsw
  = { &adlink7300a_open,
      &adlink7300a_close,
