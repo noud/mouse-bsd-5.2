@@ -44,6 +44,7 @@
  *	128-255	reserved for future use
  */
 
+#include <sys/time.h>
 #include <sys/types.h>
 #include <sys/ioccom.h>
 #include <dev/wscons/wsksymvar.h>
