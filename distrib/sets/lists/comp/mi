@@ -460,6 +460,7 @@
 ./usr/include/dev/ofw/ofw_pci.h			comp-obsolete		obsolete
 ./usr/include/dev/ofw/openfirm.h		comp-obsolete		obsolete
 ./usr/include/dev/ofw/openfirmio.h		comp-c-include
+./usr/include/dev/pci/7300a.h			comp-c-include
 ./usr/include/dev/pci/amrio.h			comp-c-include
 ./usr/include/dev/pci/amrreg.h			comp-c-include
 ./usr/include/dev/pci/hdaudio/hdaudioio.h	comp-c-include
