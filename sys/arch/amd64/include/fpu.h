@@ -3,6 +3,8 @@
 #ifndef	_AMD64_FPU_H_
 #define	_AMD64_FPU_H_
 
+#include <sys/types.h>
+
 /*
  * NetBSD/amd64 only uses the extended save/restore format used
  * by fxsave/fsrestore, to always deal with the SSE registers,
