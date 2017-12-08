@@ -27,7 +27,7 @@
  *  multiple watchers watching the same unit means that we may need to
  *  lock multiple SOFTCs when clearing a watch.
  *
- * Rather than use cokmplex and subtle locking (and probably get it
+ * Rather than use complex and subtle locking (and probably get it
  *  wrong), we just punt and use a single lock to protect pretty much
  *  everything we do.
  */
