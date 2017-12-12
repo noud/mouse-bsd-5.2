@@ -712,15 +712,16 @@ aim_monster(object *monster)
 
 	rn = get_room_number(monster->row, monster->col);
 	if (rn == NO_ROOM)
-		clean_up("aim_monster: monster not in room");
-	r = get_rand(0, 12);
-
-	for (i = 0; i < 4; i++) {
-		d = (r + i) % 4;
-		if (rooms[rn].doors[d].oth_room != NO_ROOM) {
-			monster->trow = rooms[rn].doors[d].door_row;
-			monster->tcol = rooms[rn].doors[d].door_col;
-			break;
+		monster->trow = NO_ROOM;
+	else {
+		r = get_rand(0, 12);
+		for (i = 0; i < 4; i++) {
+			d = (r + i) % 4;
+			if (rooms[rn].doors[d].oth_room != NO_ROOM) {
+				monster->trow = rooms[rn].doors[d].door_row;
+				monster->tcol = rooms[rn].doors[d].door_col;
+				break;
+			}
 		}
 	}
 }
