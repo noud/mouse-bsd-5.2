@@ -11,7 +11,7 @@
  *
  * This driver is less general-purpose than one might wish.  There are
  *  a number of things it hardwires, because they are what the
- *  designed-for userland application expects.  (As a simple examples,
+ *  designed-for userland application expects.  (As a simple example,
  *  it always runs the card in 32-bit input mode.  There are many more
  *  examples.)
  *
@@ -34,7 +34,7 @@
  *  interrupt handler, the only reason we have to poke the hardware is
  *  that we then have no way to tell where it's DMAing into with
  *  sub-ring-element granularity, and, because interrupts can be
- *  delayed, even that much is less lsure than I'd like.)
+ *  delayed, even that much is less sure than I'd like.)
  */
 
 #include <sys/bus.h>
@@ -829,7 +829,7 @@ static int adlink7300a_open(dev_t dev, int flags, int mode, struct lwp *l)
 }
 
 /*
- * Our clsoe routine.
+ * Our close routine.
  *
  * We reset the 9080, which (among other things) shuts off DMA, so,
  *  even if the 7300 proper is receiving samples, they're not going to
@@ -1014,7 +1014,7 @@ static int adlink7300a_ioctl(dev_t dev, u_long ioc, void *addr, int flag, struct
  *
  * Fortunately, userland is prepared to deal with this paradigm,
  *  because that's how the hardware works and thus what the program was
- *  deisnged around.
+ *  designed around.
  */
 static int adlink7300a_poll(dev_t dev, int events, struct lwp *l)
 {
