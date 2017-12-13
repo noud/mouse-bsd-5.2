@@ -56,7 +56,12 @@
 #ifndef _LPT_VAR_H_
 #define _LPT_VAR_H_
 
+#include <sys/mutex.h>
+#include <sys/select.h>
 #include <sys/callout.h>
+#include <sys/condvar.h>
+
+#define LPT_RAWBUFSIZE 64
 
 struct lpt_softc {
 	device_t sc_dev;
@@ -71,15 +76,30 @@ struct lpt_softc {
 	bus_space_handle_t sc_ioh;
 	u_char sc_dev_ok;	/* device attached correctly */
 	u_char sc_state;
+// XXX shouldn't use LPT_ prefix for both this and sc_flags!
+// Would like to have a _RAW bit for each.  *grr*
+// So I went with RAWPP for sc_flags and RAW for sc_state.
 #define	LPT_OPEN	0x01	/* device is open */
 #define	LPT_OBUSY	0x02	/* printer is busy doing output */
 #define	LPT_INIT	0x04	/* waiting to initialize for open */
-	u_char sc_flags;
-#define	LPT_AUTOLF	0x20	/* automatic LF on CR */
-#define	LPT_NOPRIME	0x40	/* don't prime on open */
-#define	LPT_NOINTR	0x80	/* do not use interrupt */
+#define	LPT_RAW		0x08	/* LPT_PPRAW device is open */
+#define	LPT_NBIO	0x10	/* non-blocking I/O mode */
+	unsigned int sc_flags;
+#define	LPT_AUTOLF	0x00000020	/* automatic LF on CR */
+#define	LPT_NOPRIME	0x00000040	/* don't prime on open */
+#define	LPT_NOINTR	0x00000080	/* do not use interrupt */
+#define	LPT_RAWPP	0x00000100	/* raw parallel port, not printer */
 	u_char sc_control;
 	u_char sc_laststatus;
+  unsigned char rawbuf[LPT_RAWBUFSIZE];
+  int rbfill;
+  int rbptr;
+  kcondvar_t rawr_cv;
+  kmutex_t rawr_mtx;
+  unsigned int laststat;
+#define LPT_NO_STAT (1U+(unsigned int)(unsigned char)~0U)
+  callout_t rawreadticker;
+  struct selinfo rsel;
 };
 
 #define LPS_INVERT      (LPS_SELECT|LPS_NERR|LPS_NBSY|LPS_NACK)

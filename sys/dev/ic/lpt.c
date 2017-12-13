@@ -56,6 +56,7 @@
 #include <sys/cdefs.h>
 __KERNEL_RCSID(0, "$NetBSD: lpt.c,v 1.75 2008/06/10 22:53:08 cegger Exp $");
 
+#include <sys/poll.h>
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/proc.h>
@@ -68,6 +69,7 @@ __KERNEL_RCSID(0, "$NetBSD: lpt.c,v 1.75 2008/06/10 22:53:08 cegger Exp $");
 #include <sys/conf.h>
 #include <sys/syslog.h>
 #include <sys/intr.h>
+#include <sys/select.h>
 
 #include <sys/bus.h>
 
@@ -91,20 +93,184 @@ int lptdebug = 0;
 
 extern struct cfdriver lpt_cd;
 
-dev_type_open(lptopen);
-dev_type_close(lptclose);
-dev_type_write(lptwrite);
-dev_type_ioctl(lptioctl);
-
-const struct cdevsw lpt_cdevsw = {
-	lptopen, lptclose, noread, lptwrite, lptioctl,
-	nostop, notty, nopoll, nommap, nokqfilter, D_OTHER,
-};
-
 #define	LPTUNIT(s)	(minor(s) & 0x1f)
-#define	LPTFLAGS(s)	(minor(s) & 0xe0)
+#define	LPTFLAGS(s)	(minor(s) & ~0x1f)
 
 static void	lptsoftintr(void *);
+
+#define DLRINGSIZE 65536
+static volatile int dlring[DLRINGSIZE];
+static volatile int dlh = 0;
+static volatile int dlt = DLRINGSIZE - 1;
+static volatile int mutex_set_up = 0;
+static kmutex_t dlmtx;
+
+static void record_line(int lno)
+{
+ int h;
+
+ mutex_enter(&dlmtx);
+ h = dlh;
+ dlt = h;
+ dlring[h] = lno;
+ h ++;
+ if (h >= DLRINGSIZE) h = 0;
+ dlring[h] = -1;
+ dlh = h;
+ mutex_exit(&dlmtx);
+}
+#define DLINE() record_line(__LINE__)
+
+static void lpt_raw_read_tick(void *scv)
+{
+ struct lpt_softc *sc;
+ volatile struct lpt_softc *vsc;
+ unsigned char st;
+ unsigned int rbf;
+
+ sc = scv;
+ vsc = sc;
+ DLINE();
+ st = bus_space_read_1(sc->sc_iot,sc->sc_ioh,lpt_status);
+ DLINE();
+ if (st != sc->laststat)
+  { DLINE();
+    mutex_enter(&sc->rawr_mtx);
+    DLINE();
+    sc->laststat = st;
+    rbf = vsc->rbfill;
+    if (vsc->rbptr == rbf)
+     { DLINE();
+       vsc->rbptr = 0;
+       rbf = 0;
+     }
+    DLINE();
+    if (rbf >= LPT_RAWBUFSIZE)
+     { DLINE();
+       printf("raw lpt: read buffer overflow\n");
+       rbf = 0;
+       vsc->rbptr = 0;
+       DLINE();
+     }
+    DLINE();
+    vsc->rawbuf[rbf++] = st;
+    vsc->rbfill = rbf;
+    DLINE();
+    cv_broadcast(&sc->rawr_cv);
+    DLINE();
+    selnotify(&sc->rsel,POLLIN|POLLRDNORM,0);
+    DLINE();
+    mutex_exit(&sc->rawr_mtx);
+    DLINE();
+  }
+ DLINE();
+ callout_schedule(&sc->rawreadticker,1);
+ DLINE();
+}
+
+static int lpt_raw_read(struct lpt_softc *sc, struct uio *uio)
+{
+ volatile struct lpt_softc *vsc;
+ int rbf;
+ int rbp;
+ int e;
+ int n;
+ int i;
+ unsigned char rb[LPT_RAWBUFSIZE];
+
+ DLINE();
+ vsc = sc;
+ n = uio->uio_resid;
+ if (n > LPT_RAWBUFSIZE) n = LPT_RAWBUFSIZE;
+ DLINE();
+ mutex_enter(&sc->rawr_mtx);
+ DLINE();
+ while (1)
+  { DLINE();
+    rbf = vsc->rbfill;
+    rbp = vsc->rbptr;
+    if (rbp < rbf)
+     { DLINE();
+       break;
+     }
+    DLINE();
+    if (vsc->sc_state & LPT_NBIO)
+     { DLINE();
+       mutex_exit(&sc->rawr_mtx);
+       DLINE();
+       return(EWOULDBLOCK);
+     }
+    e = cv_wait_sig(&sc->rawr_cv,&sc->rawr_mtx);
+    DLINE();
+    if (e)
+     { DLINE();
+       mutex_exit(&sc->rawr_mtx);
+       DLINE();
+       return(e);
+     }
+    DLINE();
+  }
+ DLINE();
+ i = 0;
+ DLINE();
+ while ((rbp < rbf) && (i < n)) rb[i++] = vsc->rawbuf[rbp++];
+ vsc->rbptr = rbp;
+ DLINE();
+ mutex_exit(&sc->rawr_mtx);
+ DLINE();
+ return(uiomove(&rb[0],i,uio));
+}
+
+/*
+ * We don't check NBIO because we can never block here (in the NBIO
+ *  sense, that is; we can block for, for example, uiomove() to fault
+ *  pages in).
+ *
+ * We don't lock against anything because writing data like this can't
+ *  collide with anything, possibly excepting close, which we don't
+ *  worry about because this driver runs giantlocked.  If/when this is
+ *  to be made MPSAFE, this will need attention.
+ */
+static int lpt_raw_write(struct lpt_softc *sc, struct uio *uio)
+{
+ unsigned char data[256][2];
+ int n;
+ int e;
+ int i;
+ bus_space_tag_t iot;
+ bus_space_handle_t ioh;
+
+ DLINE();
+ iot = sc->sc_iot;
+ ioh = sc->sc_ioh;
+ DLINE();
+ if (uio->uio_resid & 1) return(EMSGSIZE); // needs translation
+ DLINE();
+ while (1)
+  { DLINE();
+    n = uio->uio_resid >> 1;
+    if (n > 256) n = 256;
+    if (n < 1)
+     { DLINE();
+       break;
+     }
+    DLINE();
+    e = uiomove(&data[0][0],n<<1,uio);
+    if (e)
+     { DLINE();
+       return(e);
+     }
+    DLINE();
+    for (i=0;i<n;i++)
+     { DLINE();
+       bus_space_write_1(iot,ioh,lpt_data,data[i][0]);
+       bus_space_write_1(iot,ioh,lpt_control,data[i][1]&(LPC_STROBE|LPC_AUTOLF|LPC_NINIT|LPC_SELECT));
+     }
+    DLINE();
+  }
+ DLINE();
+ return(0);
+}
 
 void
 lpt_attach_subr(sc)
@@ -124,6 +290,31 @@ lpt_attach_subr(sc)
 	sc->sc_sih = softint_establish(SOFTINT_SERIAL, lptsoftintr, sc);
 
 	sc->sc_dev_ok = 1;
+
+ mutex_init(&sc->rawr_mtx,MUTEX_DEFAULT,IPL_SOFTCLOCK);
+ cv_init(&sc->rawr_cv,"rawlpt");
+ selinit(&sc->rsel);
+ /*
+  * We assume autoconf is singlethreaded enough that we don't have to
+  *  worry about another CPU, or another thread on this one, colliding
+  *  with us during this test.  (I don't see much alternative anyway;
+  *  mutex(9) doesn't describe anything we can compile-time initialize
+  *  dlmtx to to provide the equivalent of this mutex_init(), and,
+  *  while it's possible to do mutual exclusion with nothing but
+  *  volatile and memory barriers, it's a delicate and complicated
+  *  dance which I believe is also unnecessary at present.)
+  *
+  * RUN_ONCE(9) is what we want, but that is advertised as being
+  *  capable of sleeping and thus is, AIUI, unsuitable during autoconf.
+  *  That warning applies only when it's called concurrently, but if
+  *  this codepath never runs concurrently with itself then what we do
+  *  here is enough.  (That is, if it runs concurrently, RUN_ONCE is
+  *  unsuitable; if not, RUN_ONCE is unnecessary.)
+  */
+ if (! mutex_set_up)
+  { mutex_set_up = 1;
+    mutex_init(&dlmtx,MUTEX_DEFAULT,IPL_HIGH);
+  }
 }
 
 int
@@ -131,6 +322,9 @@ lpt_detach_subr(device_t self, int flags)
 {
 	struct lpt_softc *sc = device_private(self);
 
+ seldestroy(&sc->rsel);
+ mutex_destroy(&sc->rawr_mtx);
+ cv_destroy(&sc->rawr_cv);
 	sc->sc_dev_ok = 0;
 	softint_disestablish(sc->sc_sih);
 	callout_destroy(&sc->sc_wakeup_ch);
@@ -139,11 +333,15 @@ lpt_detach_subr(device_t self, int flags)
 
 /*
  * Reset the printer, then wait until it's selected and not busy.
+ *
+ * The manipulations of sc_state and flags have the potential to
+ *  collide unpleasantly with other such, here and elsewhere.  We don't
+ *  worry about that because this driver runs giantlocked.  This will
+ *  need fixing if/when we want to make this thing MPSAFE.
  */
-int
-lptopen(dev_t dev, int flag, int mode, struct lwp *l)
+static int lptopen(dev_t dev, int flag, int mode, struct lwp *l)
 {
-	u_char flags = LPTFLAGS(dev);
+	unsigned int flags = LPTFLAGS(dev);
 	struct lpt_softc *sc;
 	bus_space_tag_t iot;
 	bus_space_handle_t ioh;
@@ -154,6 +352,29 @@ lptopen(dev_t dev, int flag, int mode, struct lwp *l)
 	sc = device_lookup_private(&lpt_cd, LPTUNIT(dev));
 	if (!sc || !sc->sc_dev_ok)
 		return ENXIO;
+
+ // Can't combine raw with any other qualifiers.
+ if ((flags & LPT_RAWPP) && (flags & (LPT_AUTOLF|LPT_NOPRIME|LPT_NOINTR)))
+  { return(EINVAL);
+  }
+ // Can't open if already open and existing open and new open disagree on rawness.
+ if ( (sc->sc_state & LPT_OPEN) &&
+      ( ((flags & LPT_RAWPP) && !(sc->sc_state & LPT_RAW)) ||
+	(!(flags & LPT_RAWPP) && (sc->sc_state & LPT_RAW)) ) )
+  { return(EBUSY);
+  }
+ // For raw opens, no further tests apply, but we do need to start reading.
+ if (flags & LPT_RAWPP)
+  { if (! (sc->sc_state & LPT_OPEN))
+     { sc->sc_state = LPT_OPEN | LPT_RAW;
+       sc->laststat = LPT_NO_STAT;
+       sc->rbfill = 0;
+       sc->rbptr = 0;
+       callout_init(&sc->rawreadticker,0);
+       callout_reset(&sc->rawreadticker,1,&lpt_raw_read_tick,sc);
+     }
+    return(0);
+  }
 
 #if 0	/* XXX what to do? */
 	if (sc->sc_irq == IRQUNK && (flags & LPT_NOINTR) == 0)
@@ -169,7 +390,7 @@ lptopen(dev_t dev, int flag, int mode, struct lwp *l)
 	if (sc->sc_state)
 		return EBUSY;
 
-	sc->sc_state = LPT_INIT;
+	sc->sc_state = LPT_INIT | (flags & LPT_RAWPP);
 	sc->sc_flags = flags;
 	LPRINTF(("%s: open: flags=0x%x\n", device_xname(sc->sc_dev),
 	    (unsigned)flags));
@@ -260,15 +481,28 @@ lptwakeup(arg)
 
 /*
  * Close the device, and free the local line buffer.
+ *
+ * callout_halt() is undocumented; I learnt about it from tech-kern.
  */
-int
-lptclose(dev_t dev, int flag, int mode,
+static int lptclose(dev_t dev, int flag, int mode,
     struct lwp *l)
 {
 	struct lpt_softc *sc =
 	    device_lookup_private(&lpt_cd, LPTUNIT(dev));
 	bus_space_tag_t iot = sc->sc_iot;
 	bus_space_handle_t ioh = sc->sc_ioh;
+
+ // Not much to do on last close of a raw open.
+ if (sc->sc_state & LPT_RAW)
+  { DLINE();
+    callout_halt(&sc->rawreadticker,0);
+    DLINE();
+    callout_destroy(&sc->rawreadticker);
+    DLINE();
+    sc->sc_state = 0;
+    DLINE();
+    return(0);
+  }
 
 	if (sc->sc_count)
 		(void) lptpushbytes(sc);
@@ -354,17 +588,33 @@ lptpushbytes(sc)
 }
 
 /*
+ * No reading except for raw opens....
+ *
+ * ENODEV isn't really right here, but it's what the old code did for
+ *  reads (it used (dev_type_read((*)))enodev).
+ */
+static int lptread(dev_t dev, struct uio *uio, int flags)
+{
+ struct lpt_softc *sc;
+
+ sc = device_lookup_private(&lpt_cd,LPTUNIT(dev));
+ if (! sc) panic("reading from nonexistent lpt");
+ if ((sc->sc_state & (LPT_OPEN|LPT_RAW)) != (LPT_OPEN|LPT_RAW)) return(ENODEV);
+ return(lpt_raw_read(sc,uio));
+}
+
+/*
  * Copy a line from user space to a local buffer, then call putc to get the
  * chars moved to the output queue.
  */
-int
-lptwrite(dev_t dev, struct uio *uio, int flags)
+static int lptwrite(dev_t dev, struct uio *uio, int flags)
 {
 	struct lpt_softc *sc =
 	    device_lookup_private(&lpt_cd, LPTUNIT(dev));
 	size_t n;
 	int error = 0;
 
+ if (sc->sc_state & LPT_RAW) return(lpt_raw_write(sc,uio));
 	while ((n = min(LPT_BSIZE, uio->uio_resid)) != 0) {
 		uiomove(sc->sc_cp = sc->sc_inbuf, n, uio);
 		sc->sc_count = n;
@@ -386,8 +636,7 @@ lptwrite(dev_t dev, struct uio *uio, int flags)
  * Handle printer interrupts which occur when the printer is ready to accept
  * another char.
  */
-int
-lptintr(arg)
+int lptintr(arg)
 	void *arg;
 {
 	struct lpt_softc *sc = arg;
@@ -425,16 +674,79 @@ lptintr(arg)
 	return 1;
 }
 
-static void
-lptsoftintr(void *cookie)
+static void lptsoftintr(void *cookie)
 {
 
 	wakeup(cookie);
 }
 
-int
-lptioctl(dev_t dev, u_long cmd, void *data,
+/*
+ * ENODEV if not open raw is arguably wrong, but it's what the old
+ *  driver did.
+ *
+ * The manipulations of sc_state here have the potential to collide
+ *  with others doing likewise.  We don't worry about it because this
+ *  driver runs giantlocked.  If/when we want to make this MPSAFE, this
+ *  will need fixing.
+ *
+ * We cv_broadcast when turning NBIO on, but not off, because turning
+ *  it on calls for waking up anyone sleeping, but when NBIO is on,
+ *  there is never anyone sleeping and thus nobody to wake up.  (If
+ *  NBIO was already set the way it's being "changed" to here, nothing
+ *  needs doing in either case, but the cv_broadcast is harmless.)
+ */
+static int lptioctl(dev_t dev, u_long cmd, void *data,
     int flag, struct lwp *l)
 {
-	return ENODEV;
+ struct lpt_softc *sc;
+ volatile struct lpt_softc *vsc;
+
+ sc = device_lookup_private(&lpt_cd,LPTUNIT(dev));
+ if (! sc) panic("lptioctl: nonexistent lpt");
+ vsc = sc;
+ if ((sc->sc_state & (LPT_OPEN|LPT_RAW)) != (LPT_OPEN|LPT_RAW)) return(ENODEV);
+ switch (cmd)
+  { case FIONBIO:
+       if (*(int *)data)
+	{ mutex_enter(&sc->rawr_mtx);
+	  sc->sc_state |= LPT_NBIO;
+	  cv_broadcast(&sc->rawr_cv);
+	  mutex_exit(&sc->rawr_mtx);
+	}
+       else
+	{ sc->sc_state &= ~LPT_NBIO;
+	}
+       return(0);
+       break;
+  }
+ return(EINVAL);
 }
+
+static int lptpoll(dev_t dev, int events, struct lwp *l)
+{
+ struct lpt_softc *sc;
+ volatile struct lpt_softc *vsc;
+ int rev;
+
+ sc = device_lookup_private(&lpt_cd,LPTUNIT(dev));
+ if (! sc) panic("lptpoll: nonexistent lpt");
+ vsc = sc;
+ if ((sc->sc_state & (LPT_OPEN|LPT_RAW)) != (LPT_OPEN|LPT_RAW)) return(seltrue(dev,events,l));
+ mutex_enter(&sc->rawr_mtx);
+ rev = events & (POLLOUT | POLLWRNORM);
+ if (events & (POLLIN | POLLRDNORM))
+  { if (vsc->rbptr < vsc->rbfill)
+     { rev |= events & (POLLIN | POLLRDNORM);
+     }
+    else if (! rev)
+     { selrecord(l,&sc->rsel);
+     }
+  }
+ mutex_exit(&sc->rawr_mtx);
+ return(rev);
+}
+
+const struct cdevsw lpt_cdevsw = {
+	lptopen, lptclose, lptread, lptwrite, lptioctl,
+	nostop, notty, lptpoll, nommap, nokqfilter, D_OTHER,
+};
