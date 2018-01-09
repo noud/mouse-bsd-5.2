@@ -9,7 +9,7 @@
 #
 # Majors 160-255 are used for the MI drivers.
 
-device-major	adlink7300a	char 144
+device-major	adlink7300a	char 144		adlink7300a
 
 device-major	crypto		char 160		crypto
 device-major	pf		char 161		pf
