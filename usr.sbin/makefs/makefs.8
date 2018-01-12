@@ -110,6 +110,12 @@ permissions and modification time will be used unless specifically
 overridden by the specfile.
 An error will be raised if the type of entry in the specfile
 conflicts with that of an existing entry.
+If a plain file entry in the specfile has the
+.Sy contents
+keyword given, the size and contents are taken from the named path;
+other properties are derived as if the
+.Sy contents
+keyword were not used.
 .Pp
 In the opposite case (where a specfile entry does not have an entry
 in the underlying file system) the following occurs:

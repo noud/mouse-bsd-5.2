@@ -56,6 +56,8 @@ __RCSID("$NetBSD: walk.c,v 1.23 2006/10/10 01:55:45 dbj Exp $");
 #include <unistd.h>
 #include <sys/stat.h>
 
+extern const char *__progname;
+
 #include "makefs.h"
 #include "mtree.h"
 
@@ -167,6 +169,8 @@ create_fsnode(const char *name, struct stat *stbuf)
 	    (cur->name = strdup(name)) == NULL ||
 	    (cur->inode = calloc(1, sizeof(fsinode))) == NULL)
 		err(1, "Memory allocation error");
+	cur->symlink = 0;
+	cur->contents = 0;
 	cur->type = stbuf->st_mode & S_IFMT;
 	cur->inode->nlink = 1;
 	cur->inode->st = *stbuf;
@@ -427,6 +431,18 @@ apply_specentry(const char *dir, NODE *specnode, fsnode *dirnode)
 		dirnode->inode->st.st_mode |= (specnode->st_mode & ALLPERMS);
 	}
 		/* XXX: ignoring F_NLINK for now */
+ if (specnode->flags & F_CONTENTS)
+  { struct stat stb;
+    if (stat(specnode->contents,&stb) < 0)
+     { fprintf(stderr,"%s: %s/%s: contents file `%s': stat: %s\n",__progname,dir,specnode->name,specnode->contents,strerror(errno));
+       fprintf(stderr,"%s: proceeding as if it were empty\n",__progname);
+     }
+    else
+     { dirnode->inode->st.st_size = stb.st_size;
+     }
+    free(dirnode->contents);
+    dirnode->contents = strdup(specnode->contents);
+  }
 	if (specnode->flags & F_SIZE) {
 		ASEPRINT("size", "%lld",
 		    (long long)dirnode->inode->st.st_size,

@@ -296,6 +296,12 @@ The checksum of the file using the default algorithm specified by
 the
 .Xr cksum 1
 utility.
+.It Sy contents
+A path of a file elsewhere holding contents.  This exists for the
+benefit of
+.Xr makefs 8 ;
+.Nm
+itself does not use it for anything (though it arguably should).
 .It Sy device
 The device number to use for
 .Sy block

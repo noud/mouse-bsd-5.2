@@ -102,6 +102,7 @@ typedef struct _fsnode {
 	uint32_t	 type;		/* type of entry */
 	fsinode		*inode;		/* actual inode data */
 	char		*symlink;	/* symlink target */
+	char		*contents;	/* contents path */
 	char		*name;		/* file name */
 	int		flags;		/* misc flags */
 } fsnode;

@@ -804,6 +804,9 @@ ffs_populate_dir(const char *dir, fsnode *root, fsinfo_t *fsopts)
 			putchar('\n');
 		}
 
+		if (S_ISREG(DIP(&din,mode)) && cur->contents)
+			membuf = cur->contents;
+
 		if (membuf != NULL) {
 			ffs_write_file(&din, cur->inode->ino, membuf, fsopts);
 		} else if (S_ISREG(cur->type)) {

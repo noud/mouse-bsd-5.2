@@ -45,6 +45,7 @@ typedef struct _node {
 	off_t	st_size;			/* size */
 	struct timespec	st_mtimespec;		/* last modification time */
 	char	*slink;				/* symbolic link reference */
+	char	*contents;			/* contents path */
 	uid_t	st_uid;				/* uid */
 	gid_t	st_gid;				/* gid */
 #define	MBITS	(S_ISUID|S_ISGID|S_ISTXT|S_IRWXU|S_IRWXG|S_IRWXO)
@@ -63,27 +64,28 @@ typedef struct _node {
 	size_t	lineno;				/* line # entry came from */
 
 #define	F_CKSUM		0x00000001		/* cksum(1) check sum */
-#define	F_DEV		0x00000002		/* device type */
-#define	F_DONE		0x00000004		/* directory done */
-#define	F_FLAGS		0x00000008		/* file flags */
-#define	F_GID		0x00000010		/* gid */
-#define	F_GNAME		0x00000020		/* group name */
-#define	F_IGN		0x00000040		/* ignore */
-#define	F_MAGIC		0x00000080		/* name has magic chars */
-#define	F_MD5		0x00000100		/* MD5 digest */
-#define	F_MODE		0x00000200		/* mode */
-#define	F_NLINK		0x00000400		/* number of links */
-#define	F_OPT		0x00000800		/* existence optional */
-#define	F_RMD160	0x00001000		/* RMD-160 digest */
-#define	F_SHA1		0x00002000		/* SHA1 digest */
-#define	F_SIZE		0x00004000		/* size */
-#define	F_SLINK		0x00008000		/* symbolic link */
-#define	F_TAGS		0x00010000		/* tags */
-#define	F_TIME		0x00020000		/* modification time */
-#define	F_TYPE		0x00040000		/* file type */
-#define	F_UID		0x00080000		/* uid */
-#define	F_UNAME		0x00100000		/* user name */
-#define	F_VISIT		0x00200000		/* file visited */
+#define	F_CONTENTS	0x00000002		/* path to contents */
+#define	F_DEV		0x00000004		/* device type */
+#define	F_DONE		0x00000008		/* directory done */
+#define	F_FLAGS		0x00000010		/* file flags */
+#define	F_GID		0x00000020		/* gid */
+#define	F_GNAME		0x00000040		/* group name */
+#define	F_IGN		0x00000080		/* ignore */
+#define	F_MAGIC		0x00000100		/* name has magic chars */
+#define	F_MD5		0x00000200		/* MD5 digest */
+#define	F_MODE		0x00000400		/* mode */
+#define	F_NLINK		0x00000800		/* number of links */
+#define	F_OPT		0x00001000		/* existence optional */
+#define	F_RMD160	0x00002000		/* RMD-160 digest */
+#define	F_SHA1		0x00004000		/* SHA1 digest */
+#define	F_SIZE		0x00008000		/* size */
+#define	F_SLINK		0x00010000		/* symbolic link */
+#define	F_TAGS		0x00020000		/* tags */
+#define	F_TIME		0x00040000		/* modification time */
+#define	F_TYPE		0x00080000		/* file type */
+#define	F_UID		0x00100000		/* uid */
+#define	F_UNAME		0x00200000		/* user name */
+#define	F_VISIT		0x00400000		/* file visited */
 #define	F_SHA256	0x00800000		/* SHA256 digest */
 #define	F_SHA384	0x01000000		/* SHA384 digest */
 #define	F_SHA512	0x02000000		/* SHA512 digest */

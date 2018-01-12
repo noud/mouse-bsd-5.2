@@ -283,6 +283,7 @@ free_nodes(NODE *root)
 		next = cur->next;
 		free_nodes(cur->child);
 		REPLACEPTR(cur->slink, NULL);
+		REPLACEPTR(cur->contents, NULL);
 		REPLACEPTR(cur->md5digest, NULL);
 		REPLACEPTR(cur->rmd160digest, NULL);
 		REPLACEPTR(cur->sha1digest, NULL);
@@ -346,6 +347,8 @@ dump_nodes(const char *dir, NODE *root, int pathlast)
 			printf("nlink=%d ", cur->st_nlink);
 		if (MATCHFLAG(F_SLINK))
 			printf("link=%s ", vispath(cur->slink));
+		if (MATCHFLAG(F_CONTENTS))
+			printf("file=%s ", vispath(cur->contents));
 		if (MATCHFLAG(F_SIZE))
 			printf("size=%lld ", (long long)cur->st_size);
 		if (MATCHFLAG(F_TIME))
@@ -474,6 +477,14 @@ replacenode(NODE *cur, NODE *new)
 			mtree_err("strunvis failed on `%s'", new->slink);
 		free(new->slink);
 	}
+	REPLACESTR(contents);
+	if (cur->contents != NULL) {
+		if ((cur->contents = strdup(new->contents)) == NULL)
+			mtree_err("memory allocation error");
+		if (strunvis(cur->contents, new->contents) == -1)
+			mtree_err("strunvis failed on `%s'", new->contents);
+		free(new->contents);
+	}
 	REPLACE(st_uid);
 	REPLACE(st_gid);
 	REPLACE(st_mode);
@@ -520,6 +531,12 @@ set(char *t, NODE *ip)
 			ip->cksum = strtoul(val, &ep, 10);
 			if (*ep)
 				mtree_err("invalid checksum `%s'", val);
+			break;
+		case F_CONTENTS:
+			if ((ip->contents = strdup(val)) == NULL)
+				mtree_err("memory allocation error");
+			if (strunvis(ip->contents, val) == -1)
+				mtree_err("strunvis failed on `%s'", val);
 			break;
 		case F_DEV:
 			ip->st_rdev = parsedev(val);
