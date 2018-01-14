@@ -68,6 +68,7 @@ struct pollfd {
 #endif
 
 #ifdef _KERNEL
+#include <sys/types.h>
 #include <sys/signal.h>		/* for sigset_t */
 
 struct lwp;
