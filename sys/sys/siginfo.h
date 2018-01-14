@@ -36,6 +36,7 @@
 #ifdef _KERNEL
 #include <sys/queue.h>
 #endif
+#include <sys/types.h>
 
 typedef union sigval {
 	int	sival_int;
