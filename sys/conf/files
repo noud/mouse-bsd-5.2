@@ -905,7 +905,7 @@ define	ata_udma
 define	ata_piobm
 device	wdc: ata, wdc_common
 
-defflag	opt_ata.h	ATADEBUG
+defflag	opt_ata.h	ATADEBUG NO_HPA_ACCESS
 
 device	atabus: atapi,ata_hl
 attach	atabus at ata

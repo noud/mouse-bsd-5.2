@@ -367,6 +367,9 @@ static int hpa_check(struct device *self)
     else
      { aprint_normal(", protected area present\n");
      }
+#ifdef NO_HPA_ACCESS
+    aprint_normal("%s: limit not raised (disabled in configuration)\n",device_xname(self));
+#else
     bzero(&cmd,sizeof(cmd));
     if (wd->sc_flags & WDF_LBA48)
      { /* XXX this is gross; the wdc command structures need reworking
@@ -417,6 +420,7 @@ static int hpa_check(struct device *self)
 		(unsigned long long int)wd->sc_capacity );
 	}
      }
+#endif
   }
  return(0);
 }
