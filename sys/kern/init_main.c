@@ -262,6 +262,347 @@ __secmodel_none(void)
 	return;
 }
 
+#ifdef AUTOSLIP
+static kmutex_t autoslip_mutex;
+static volatile int autoslip_spin;
+static lwp_t *autoslip_lwp_r;
+static lwp_t *autoslip_lwp_w;
+static lwp_t *autoslip_lwp_m;
+static const struct cdevsw *autoslip_tap;
+static dev_t autoslip_tapdev;
+static const struct cdevsw *autoslip_serial;
+static dev_t autoslip_serialdev;
+// I don't understand why, but mb_memory()
+// simply doesn't exist on amd64!
+#ifndef mb_memory
+#define mb_memory() ((void)0)
+#endif
+#endif
+
+#ifdef AUTOSLIP
+static void autoslip_reader(void *arg __attribute__((__unused__)))
+{
+ unsigned char pkt[0x600];
+ int pfill;
+ char gotmagic;
+ char gotesc;
+ char bad;
+ unsigned char ibuf[512];
+ int ifill;
+ int iptr;
+ struct iovec iov;
+ struct uio uio;
+ int i;
+
+ while (autoslip_spin) yield();
+ mutex_enter(&autoslip_mutex);
+ mutex_exit(&autoslip_mutex);
+ ifill = 0;
+ iptr = 0;
+ pfill = 0;
+ gotmagic = 0;
+ gotesc = 0;
+ bad = 0;
+ while (1)
+  { if (iptr >= ifill)
+     { iov.iov_base = &ibuf[0];
+       iov.iov_len = sizeof(ibuf);
+       uio.uio_iov = &iov;
+       uio.uio_iovcnt = 1;
+       uio.uio_offset = 0;
+       uio.uio_resid = sizeof(ibuf);
+       uio.uio_rw = UIO_READ;
+       UIO_SETUP_SYSSPACE(&uio);
+       i = (*autoslip_serial->d_read)(autoslip_serialdev,&uio,0);
+       if (i)
+	{ printf("autoslip serial read errored %d\n",i);
+	  continue;
+	}
+       ifill = sizeof(ibuf) - uio.uio_resid;
+       iptr = 0;
+       if (ifill == 0)
+	{ printf("autoslip serial read got EOF?\n");
+	  continue;
+	}
+     }
+    i = -1;
+    if (bad)
+     { if (ibuf[iptr] == 0xc0)
+	{ bad = 0;
+	  gotesc = 0;
+	  pfill = 0;
+	  gotmagic = 0;
+	}
+     }
+    else if (gotesc)
+     { gotesc = 0;
+       switch (ibuf[iptr])
+	{ case 0xdc:
+	     i = 0xc0;
+	     break;
+	  case 0xdd:
+	     i = 0xdb;
+	     break;
+	  case 0x8f:
+	     gotmagic = 1;
+	     break;
+	  default:
+	     printf("autoslip: unrecognized: ESC %02x\n",ibuf[iptr]);
+	     bad = 1;
+	     break;
+	}
+     }
+    else
+     { switch (ibuf[iptr])
+	{ case 0xc0:
+	     if (pfill > 0)
+	      { if (gotmagic)
+		 { iov.iov_base = &pkt[0];
+		   iov.iov_len = pfill;
+		   uio.uio_iov = &iov;
+		   uio.uio_iovcnt = 1;
+		   uio.uio_offset = 0;
+		   uio.uio_resid = pfill;
+		   uio.uio_rw = UIO_WRITE;
+		   UIO_SETUP_SYSSPACE(&uio);
+		   i = (*autoslip_tap->d_write)(autoslip_tapdev,&uio,0);
+		   if (i)
+		    { printf("autoslip tap write errored %d\n",i);
+		    }
+		   i = -1;
+		 }
+		else
+		 { printf("pkt %d but no magic\n",pfill);
+		 }
+	      }
+	     pfill = 0;
+	     gotmagic = 0;
+	     break;
+	  case 0xdb:
+	     gotesc = 1;
+	     break;
+	  default:
+	     i = ibuf[iptr];
+	     break;
+	}
+     }
+    iptr ++;
+    if (i >= 0)
+     { if (pfill >= sizeof(pkt))
+	{ printf("autoslip: packet overflow\n");
+	  bad = 1;
+	}
+       else
+	{ pkt[pfill++] = i;
+	}
+     }
+  }
+}
+#endif
+
+#ifdef AUTOSLIP
+static int encode_packet(const unsigned char *ipkt, int ilen, unsigned char *opkt)
+{
+ unsigned char *opkt0;
+
+ opkt0 = opkt;
+ *opkt++ = 0xc0;
+ *opkt++ = 0xdb;
+ *opkt++ = 0x8f;
+ for (;ilen>0;ilen--,ipkt++)
+  { switch (*ipkt)
+     { case 0xc0:
+	  *opkt++ = 0xdb;
+	  *opkt++ = 0xdc;
+	  break;
+       case 0xdb:
+	  *opkt++ = 0xdb;
+	  *opkt++ = 0xdd;
+	  break;
+       default:
+	  *opkt++ = *ipkt;
+	  break;
+     }
+  }
+ *opkt++ = 0xc0;
+ return(opkt-opkt0);
+}
+#endif
+
+#ifdef AUTOSLIP
+static void autoslip_writer(void *arg __attribute__((__unused__)))
+{
+ unsigned char pkt[(2*0x600)+4];
+ unsigned char *rpp;
+ unsigned char *wpp;
+ int len;
+ struct uio uio;
+ struct iovec iov;
+ int i;
+
+ while (autoslip_spin) yield();
+ mutex_enter(&autoslip_mutex);
+ mutex_exit(&autoslip_mutex);
+ while (1)
+  { rpp = &pkt[sizeof(pkt)-0x600];
+    wpp = &pkt[0];
+    iov.iov_base = rpp;
+    iov.iov_len = 0x600;
+    uio.uio_iov = &iov;
+    uio.uio_iovcnt = 1;
+    uio.uio_offset = 0;
+    uio.uio_resid = 0x600;
+    uio.uio_rw = UIO_READ;
+    UIO_SETUP_SYSSPACE(&uio);
+    i = (*autoslip_tap->d_read)(autoslip_tapdev,&uio,0);
+    if (i)
+     { printf("autoslip tap read errored %d\n",i);
+       continue;
+     }
+    len = 0x600 - uio.uio_resid;
+    if ((len < 0) || (len > sizeof(pkt))) panic("autoslip impossible tap read");
+    i = encode_packet(rpp,len,wpp);
+    iov.iov_base = wpp;
+    iov.iov_len = i;
+    uio.uio_iov = &iov;
+    uio.uio_iovcnt = 1;
+    uio.uio_offset = 0;
+    uio.uio_resid = i;
+    uio.uio_rw = UIO_WRITE;
+    UIO_SETUP_SYSSPACE(&uio);
+    i = (*autoslip_serial->d_write)(autoslip_serialdev,&uio,O_RDWR);
+    if (i)
+     { printf("serial write errored %d\n",i);
+     }
+  }
+}
+#endif
+
+#ifdef AUTOSLIP
+static void autoslip_main(void *arg __attribute__((__unused__)))
+{
+ const char *s0;
+ const char *sp;
+ char devname[64];
+ int devunit;
+ int speed;
+ int i;
+ int k;
+ int j;
+ const struct cdevsw *cd;
+ struct ifnet *ifp;
+ struct ifreq ifr;
+ struct termios tio;
+
+ mutex_enter(&autoslip_mutex);
+ autoslip_spin = 0;
+ mb_memory();
+ printf("autoslip main entered\n");
+ if_clone_create("tap0");
+ s0 = AUTOSLIP;
+ i = 0;
+ while (1)
+  { if (s0[i] == ',') break;
+    if (s0[i] == '\0') panic("no , in AUTOSLIP");
+    i ++;
+  }
+ for (k=i-1;(k>=0)&&isdigit(s0[k]);k--) ;
+ k ++;
+ if (k > sizeof(devname)-1) panic("AUTOSLIP devname too long");
+ bcopy(s0,&devname[0],k);
+ devname[k] = '\0';
+ sp = s0 + i + 1;
+ devunit = 0;
+ for (;k<i;k++)
+  { switch (s0[k])
+     { case '0': j = 0; break;
+       case '1': j = 1; break;
+       case '2': j = 2; break;
+       case '3': j = 3; break;
+       case '4': j = 4; break;
+       case '5': j = 5; break;
+       case '6': j = 6; break;
+       case '7': j = 7; break;
+       case '8': j = 8; break;
+       case '9': j = 9; break;
+       default: panic("autoslip unit impossibility");
+     }
+    devunit = (10 * devunit) + j;
+  }
+ speed = 0;
+ while <"speed"> (1)
+  { switch (*sp)
+     { case '0': j = 0; break;
+       case '1': j = 1; break;
+       case '2': j = 2; break;
+       case '3': j = 3; break;
+       case '4': j = 4; break;
+       case '5': j = 5; break;
+       case '6': j = 6; break;
+       case '7': j = 7; break;
+       case '8': j = 8; break;
+       case '9': j = 9; break;
+       default: break <"speed">;
+     }
+    speed = (10 * speed) + j;
+    sp ++;
+  }
+ printf("AUTOSLIP %s: device %s unit %d speed %d\n",s0,&devname[0],devunit,speed);
+ ifp = ifunit("tap0");
+ ifioctl_common(ifp,SIOCGIFFLAGS,&ifr);
+ ifr.ifr_flags |= IFF_UP;
+ ifioctl_common(ifp,SIOCSIFFLAGS,&ifr);
+ i = devsw_name2chr("tap",0,0);
+ if (i < 0) panic("AUTOSLIP can't find tap major");
+ autoslip_tapdev = makedev(i,0);
+ cd = cdevsw_lookup(autoslip_tapdev);
+ if (! cd) panic("AUTOSLIP can't find tap cdevsw");
+ i = (*cd->d_open)(autoslip_tapdev,O_RDWR|O_NONBLOCK,0,autoslip_lwp_m);
+ if (i) panic("autoslip tap open errored %d",i);
+ *(const struct cdevsw * volatile *)&autoslip_tap = cd;
+ i = devsw_name2chr(&devname[0],0,0);
+ if (i < 0) panic("AUTOSLIP can't find %s major",&devname[0]);
+ autoslip_serialdev = makedev(i,devunit);
+ cd = cdevsw_lookup(autoslip_serialdev);
+ if (! cd) panic("AUTOSLIP can't find %s%d cdevsw",&devname[0],devunit);
+ i = (*cd->d_open)(autoslip_serialdev,O_RDWR|O_NONBLOCK,0,autoslip_lwp_m);
+ if (i) panic("autoslip serial open errored %d",i);
+ i = (*cd->d_ioctl)(autoslip_serialdev,TIOCGETA,&tio,O_RDWR,autoslip_lwp_m);
+ if (i) panic("AUTOSLIP can't TIOCGETA on %s",&devname[0]);
+ tio.c_iflag = IGNBRK;
+ tio.c_oflag = 0;
+ tio.c_cflag = CS8 | CREAD | CLOCAL;
+ tio.c_lflag = 0;
+ tio.c_cc[VMIN] = 1;
+ tio.c_cc[VTIME] = 0;
+ tio.c_ispeed = speed;
+ tio.c_ospeed = speed;
+ i = (*cd->d_ioctl)(autoslip_serialdev,TIOCSETA,&tio,O_RDWR,autoslip_lwp_m);
+ if (i) panic("AUTOSLIP can't TIOCSETA on %s",&devname[0]);
+ *(const struct cdevsw * volatile *)&autoslip_serial = cd;
+ mutex_exit(&autoslip_mutex);
+ printf("autoslip main exiting\n");
+ kthread_exit(0);
+}
+#endif
+
+#ifdef AUTOSLIP
+static void slip_autosetup(void)
+{
+ lwp_t *th;
+
+ mutex_init(&autoslip_mutex,MUTEX_DEFAULT,IPL_NONE);
+ autoslip_spin = 1;
+ mb_memory();
+ kthread_create(PRI_NONE,0,0,&autoslip_reader,0,&th,"sleth r");
+ *(lwp_t * volatile *)&autoslip_lwp_r = th;
+ kthread_create(PRI_NONE,0,0,&autoslip_writer,0,&th,"sleth w");
+ *(lwp_t * volatile *)&autoslip_lwp_w = th;
+ kthread_create(PRI_NONE,0,0,&autoslip_main,0,&th,"sleth m");
+ *(lwp_t * volatile *)&autoslip_lwp_m = th;
+}
+#endif
+
 /*
  * System startup; initialize the world, create process 0, mount root
  * filesystem, and fork to create init and pagedaemon.  Most of the
@@ -577,6 +918,10 @@ main(void)
 	 * selected, since finalization may create the root device.
 	 */
 	config_finalize();
+
+#ifdef AUTOSLIP
+ slip_autosetup();
+#endif
 
 	/*
 	 * Now that autoconfiguration has completed, we can determine
