@@ -79,6 +79,8 @@ __KERNEL_RCSID(0, "$NetBSD: if_stf.c,v 1.67 2008/10/24 17:07:33 dyoung Exp $");
 
 #include "opt_inet.h"
 
+#if defined(INET) && defined(INET6)
+
 #include <sys/param.h>
 #include <sys/systm.h>
 #include <sys/socket.h>
@@ -724,3 +726,14 @@ stf_ioctl(struct ifnet *ifp, u_long cmd, void *data)
 
 	return error;
 }
+
+#else // !INET and/or !INET6
+
+void stfattach(int);
+
+void stfattach(int count)
+{
+ (void)count;
+}
+
+#endif
