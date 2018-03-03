@@ -100,7 +100,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_jme.c,v 1.4.6.4 2011/04/05 06:12:46 riz Exp $");
 #include <sys/rnd.h>
 #endif
 
-#ifdef INET
+#if defined(INET) || defined(INET6)
 #include <netinet/in.h>
 #include <netinet/in_systm.h>
 #include <netinet/in_var.h>
@@ -1365,6 +1365,7 @@ jme_encap(struct jme_softc *sc, struct mbuf **m_head)
 	int error, i, prod, headdsc, nsegs;
 	uint32_t cflags, tso_segsz;
 
+#if defined(INET) || defined(INET6)
 	if (((*m_head)->m_pkthdr.csum_flags & (M_CSUM_TSOv4|M_CSUM_TSOv6)) != 0){
 		/*
 		 * Due to the adherence to NDIS specification JMC250
@@ -1396,6 +1397,7 @@ jme_encap(struct jme_softc *sc, struct mbuf **m_head)
 
 			   m_copydata((*m_head), hlen, sizeof(th), &th);
 			   if (v4) {
+#ifdef INET
 				    struct ip ip;
 
 				    m_copydata((*m_head), ETHER_HDR_LEN,
@@ -1406,8 +1408,9 @@ jme_encap(struct jme_softc *sc, struct mbuf **m_head)
 					 sizeof(ip.ip_len), &ip.ip_len);
 				    th.th_sum = in_cksum_phdr(ip.ip_src.s_addr,
 					 ip.ip_dst.s_addr, htons(IPPROTO_TCP));
+#endif // INET
 			   } else {
-#if INET6
+#ifdef INET6
 				    struct ip6_hdr ip6;
 
 				    m_copydata((*m_head), ETHER_HDR_LEN,
@@ -1418,7 +1421,7 @@ jme_encap(struct jme_softc *sc, struct mbuf **m_head)
 					 sizeof(ip6.ip6_plen), &ip6.ip6_plen);
 				    th.th_sum = in6_cksum_phdr(&ip6.ip6_src,
 					 &ip6.ip6_dst, 0, htonl(IPPROTO_TCP));
-#endif /* INET6 */
+#endif // INET6
 			   }
 			   m_copyback((*m_head),
 			    hlen + offsetof(struct tcphdr, th_sum),
@@ -1433,6 +1436,7 @@ jme_encap(struct jme_softc *sc, struct mbuf **m_head)
 			   struct tcphdr *th;
 
 			   if (v4) {
+#ifdef INET
 				    struct ip *ip =
 					 (void *)(mtod((*m_head), char *) +
 					ETHER_HDR_LEN);
@@ -1441,8 +1445,9 @@ jme_encap(struct jme_softc *sc, struct mbuf **m_head)
 				    ip->ip_len = 0;
 				    th->th_sum = in_cksum_phdr(ip->ip_src.s_addr,
 					 ip->ip_dst.s_addr, htons(IPPROTO_TCP));
+#endif // INET
 			   } else {
-#if INET6
+#ifdef INET6
 				    struct ip6_hdr *ip6 =
 				    (void *)(mtod((*m_head), char *) +
 				    ETHER_HDR_LEN);
@@ -1451,12 +1456,12 @@ jme_encap(struct jme_softc *sc, struct mbuf **m_head)
 				    ip6->ip6_plen = 0;
 				    th->th_sum = in6_cksum_phdr(&ip6->ip6_src,
 					 &ip6->ip6_dst, 0, htonl(IPPROTO_TCP));
-#endif /* INET6 */
+#endif // INET6
 			   }
 			hlen += th->th_off << 2;
 		}
-
 	}
+#endif // defined(INET) || defined(INET6)
 
 	prod = sc->jme_tx_prod;
 	txd = &sc->jme_txring[prod];
