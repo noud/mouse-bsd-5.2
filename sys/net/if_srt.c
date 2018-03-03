@@ -6,9 +6,7 @@ __KERNEL_RCSID(0, "$NetBSD: if_srt.c,v 1.8 2008/06/15 16:37:21 christos Exp $");
 
 #include "opt_inet.h"
 
-#if !defined(INET) && !defined(INET6)
-#error "srt without INET/INET6?"
-#endif
+#if defined(INET) || defined(INET6)
 
 #ifndef SRT_MAXUNIT
 #define SRT_MAXUNIT 255
@@ -486,3 +484,30 @@ const struct cdevsw srt_cdevsw
      nommap,
      nullkqfilter,
      D_OTHER };
+
+#else
+
+/* include-file bug workarounds */
+#include <sys/types.h> /* sys/conf.h */
+
+#include <sys/conf.h>
+
+extern void srtattach(void);
+void srtattach(void)
+{
+}
+
+const struct cdevsw srt_cdevsw
+ = { noopen,
+     nullclose,
+     nullread,
+     nullwrite,
+     nullioctl,
+     nullstop,
+     notty,
+     nullpoll,
+     nommap,
+     nullkqfilter,
+     D_OTHER };
+
+#endif
