@@ -517,7 +517,7 @@ vndstrategy(struct buf *bp)
 			goto done;
 	}
 #if NDISKWATCH > 0
-	if ((bp->b_flags & (B_READ|B_WRITE)) == B_WRITE) {
+	{
 		int p;
 		p = DISKPART(bp->b_dev);
 		if (vnd->watchunit[p] >= 0)

@@ -1,17 +1,28 @@
 diskwatch pseudo-device driver.
 
 A diskwatch device is associated with a disk device.  Conceptually,
-this is just a means whereby as the disk is written to, a userland
-process hears about the writes.
+this is just a means whereby as the disk is read from and/or written
+to, a userland process hears about it.
 
-Provided writes occur at a low enough rate for userland to keep up,
-writes are simply copied to userland, each tagged with the block number
-of the block written to.  When writers overrun the reader, the kernel
-stops passing block contents to userland, passing instead just the
-block numbers.  If userland fails to keep up with even this reduced
-data rate, the kernel generates a distinctive event and stops sending
-userland anything; after each of these slowdowns, the kernel does not
-resume sending at the higher data rate until userland tells it to.
+There are four modes available:
+
+0 - The kernel does not report reads/writes to userland at all.
+1 - The kernel reports the numbers of sectors written.
+2 - The kernel reports writes as sector number and data.
+3 - The kernel reports the numbers of sectors read or written.
+
+In mode 2, provided writes occur at a low enough rate for userland to
+keep up, writes are simply copied to userland, each tagged with the
+block number of the block written to.  When writers overrun the reader,
+the kernel falls back to mode 1, passing just the block numbers.  If
+userland fails to keep up with even this reduced data rate, the kernel
+falls back to mode 0.  Each such slowdown is reported to userland; the
+kernel does not resume sending at the higher data rate until userland
+tells it to.
+
+Mode 3 is like mode 1 in that the kernel will fall back to mode 0 if it
+overruns userland.  There is no mode that reports reads with data read
+(that is, there is nothing that is to mode 3 what mode 2 is to mode 1).
 
 Userland's interface is through a character special device.  There are
 two of these for each diskwatch device, a `control' device and a `data'
@@ -26,22 +37,27 @@ the rest of the write in each case, are:
 
 	d
 		Set the real disk device.  The rest of the string is f
-		followed by a number, which must be the number of a
-		file descriptor open on the relevant raw disk device in
-		the writing process.  (The f is to allow easy
-		extensibility to other possible ways of identifying the
-		disk.)
+		followed by a number (in decimal, as text), which must
+		be the number of a file descriptor open on the relevant
+		raw disk device in the writing process.  (The f is to
+		allow easy extensibility to other possible ways of
+		identifying the disk.)
+
+	3
+		Switch to mode 3 (report read and write block numbers).
+		No additional data.
 
 	2
-		Start sending at the highest data rate (including block
+		Switch to mode 2 (writes only, block numbers and
 		contents).  No additional data.
 
 	1
-		Start sending at the intermediate data rate (just block
-		numbers).  No additional data.
+		Switch to mode 1 (writes only, just block numbers).  No
+		additional data.
 
 	0
-		Stop sending altogether.  No additional data.
+		Switch to mode 0: stop sending altogether.  No
+		additional data.
 
 If the write does not fit the above, the write returns showing EIO.
 Note that a command cannot be split between two writes, nor can
@@ -49,8 +65,11 @@ multiple commands be combined into a single write.  Note that setting a
 non-stopped data rate may have no visible effect, throttling back
 immediately, if the queue is already too full.
 
-Reads from the control device return a 0, 1, or 2 indicating the
+Reads from the control device return a 0, 1, 2, or 3 indicating the
 current sending data rate.
+
+Note that 0, 1, etc above are the ASCII characters, that is, they are
+octet values 0x30, 0x31, etc, not octets 0x00, 0x01, etc.
 
 The data device rejects all write attempts (EIO).  Each read from it
 returns zero or more data packets, concatenated in the buffer space
@@ -66,17 +85,23 @@ more data.  The high 8 bits of (the low 64 bits of) this value indicate
 what the packet is:
 
 	0x00
-		The packet is a full data block.  The low 56 bits
+		The packet is a full write data block.  The low 56 bits
 		contain the block number; the following 512 bytes
 		contain the new block data.
 
 	0x01
-		The packet is a data block number.  The low 56 bits
-		contain the block number; there is nothing following.
+		The packet is a write data block number.  The low 56
+		bits contain the block number; there is nothing
+		following.
 
 	0x02
 		The packet indicates that the kernel has stopped
 		sending entirely.
+
+	0x03
+		The packet is a read data block number.  The low 56
+		bits contain the block number; there is nothing
+		following.
 
 Note in particular that if the read buffer is aligned to a natural
 unsigned long long int boundary, every packet beginning will be too.
