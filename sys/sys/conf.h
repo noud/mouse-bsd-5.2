@@ -44,7 +44,6 @@
  */
 
 #include <sys/queue.h>
-#include <sys/systm.h>
 
 struct buf;
 struct knote;
@@ -95,6 +94,8 @@ struct cdevsw {
 };
 
 #ifdef _KERNEL
+
+#include <sys/systm.h>
 
 int devsw_attach(const char *, const struct bdevsw *, int *,
 		 const struct cdevsw *, int *);
