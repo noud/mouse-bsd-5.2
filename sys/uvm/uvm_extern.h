@@ -582,6 +582,7 @@ int		uvm_fault_internal(struct vm_map *, vaddr_t, vm_prot_t, int);
 void			uvm_chgkprot(void *, size_t, int);
 #endif
 void			uvm_proc_fork(struct proc *, struct proc *, bool);
+extern void uvm_proc_vforkbreak(struct lwp *);
 void			uvm_lwp_fork(struct lwp *, struct lwp *,
 			    void *, size_t, void (*)(void *), void *);
 int			uvm_coredump_walkmap(struct proc *,

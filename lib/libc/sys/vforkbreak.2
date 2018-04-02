@@ -1,0 +1,37 @@
+.Dd April 2, 2018
+.Dt VFORKBREAK 2
+.Os
+.Sh NAME
+.Nm vforkbreak
+.Nd break vfork-style sharing
+.Sh LIBRARY
+.Lb libc
+.Sh SYNOPSIS
+.In unistd.h
+.Ft void
+.Fn vforkbreak void
+.Sh DESCRIPTION
+.Fn vforkbreak
+allows a process created with
+.Xr vfork 2
+to break the VM-space sharing and control-flow ties with its parent
+without doing an
+.Xr execve 2
+or
+.Xr exit 2 .
+It can be called by other processes, but without effect.
+.Sh RETURN VALUES
+.Fn
+always returns 0.
+.Sh ERRORS
+None.
+.Sh SEE ALSO
+.Xr execve 2 ,
+.Xr exit 2 ,
+.Xr vfork 2 .
+.Sh STANDARDS
+.Fn
+is an extension, not specified in any standard.
+.Sh HISTORY
+.Fn
+first appeared in Mouse's post-5.2 NetBSD.

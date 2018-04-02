@@ -211,6 +211,14 @@ uvm_proc_fork(struct proc *p1, struct proc *p2, bool shared)
 	cpu_proc_fork(p1, p2);
 }
 
+/*
+ * uvm_proc_vforkbreak: break vfork sharing
+ */
+void uvm_proc_vforkbreak(struct lwp *l)
+{
+ uvmspace_unshare(l);
+}
+
 
 /*
  * uvm_lwp_fork: fork a thread

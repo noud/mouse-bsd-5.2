@@ -116,7 +116,7 @@ ASM=	access.S acct.S \
 	timer_create.S timer_delete.S timer_gettime.S timer_getoverrun.S \
 		timer_settime.S \
 	umask.S undelete.S unlink.S unmount.S utimes.S utrace.S uuidgen.S \
-	vadvise.S
+	vadvise.S vforkbreak.S
 
 # modules with potentially non default implementations
 ASM_MD=	_lwp_getprivate.S mremap.S 
@@ -225,7 +225,8 @@ MAN+=	accept.2 access.2 acct.2 adjtime.2 bind.2 brk.2 chdir.2 \
 	socketpair.2 stat.2 statvfs.2 swapctl.2 swapon.3 symlink.2 \
 	sync.2 sysarch.2 syscall.2 timer_create.2 timer_delete.2 \
 	timer_settime.2 truncate.2 umask.2 undelete.2 \
-	unlink.2 utimes.2 utrace.2 uuidgen.2 vfork.2 wait.2 write.2
+	unlink.2 utimes.2 utrace.2 uuidgen.2 vfork.2 vforkbreak.2 \
+	wait.2 write.2
 
 MLINKS+=_exit.2 _Exit.2
 MLINKS+=brk.2 sbrk.2

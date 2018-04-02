@@ -138,6 +138,24 @@ sys___vfork14(struct lwp *l, const void *v, register_t *retval)
 }
 
 /*
+ * vforkbreak(2) system call: break vfork sharing without actually
+ *  doing a fork or exec.
+ */
+/*ARGSUSED*/
+int sys_vforkbreak(struct lwp *l, const void *v, register_t *retval)
+{
+ struct proc *p;
+
+ uvm_proc_vforkbreak(l);
+ p = l->l_proc;
+ if (p->p_lflag & PL_PPWAIT)
+  { p->p_lflag &= ~PL_PPWAIT;
+    cv_broadcast(&p->p_pptr->p_waitcv);
+  }
+ return(0);
+}
+
+/*
  * Linux-compatible __clone(2) system call.
  */
 int
