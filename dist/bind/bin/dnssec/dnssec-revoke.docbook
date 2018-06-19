@@ -76,7 +76,7 @@
 	  </para>
         </listitem>
       </varlistentry>
-  
+
       <varlistentry>
         <term>-K <replaceable class="parameter">directory</replaceable></term>
         <listitem>

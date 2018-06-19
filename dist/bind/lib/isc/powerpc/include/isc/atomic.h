@@ -87,11 +87,11 @@ isc_atomic_cmpxchg(atomic_p p, int old, int new) {
 	if (compare_and_swap(p, &orig, new))
 		orig = old;
 
-#ifdef __GNUC__ 
+#ifdef __GNUC__
 	asm("ics");
-#else 
+#else
 	 __isync();
-#endif 
+#endif
 
 	return (orig);
 }

@@ -148,7 +148,7 @@
       uses the <option>-y</option> or <option>-k</option> option
       to provide the shared secret needed to generate a TSIG record
       for authenticating Dynamic DNS update requests, default type
-      HMAC-MD5.  These options are mutually exclusive. 
+      HMAC-MD5.  These options are mutually exclusive.
     </para>
     <para>
       When the <option>-y</option> option is used, a signature is

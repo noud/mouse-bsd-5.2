@@ -58,13 +58,13 @@ zkt 1.0rc1 -- 1. Apr 2010 (The 1.0 release was sponsored by DOMINIC(r) )
 * bug	Token parsing function gettok() fixed to recognize tokens
 	with dashes ("zone-statistics" was seen as "zone").
 	Thanks to Andreas Baess for finding this bug.
-	
+
 * bug	Fixed bug in (re)salting dynamic zones.
 	sig_zone() and gensalt() needs parameter change for this
 
 * func	New option -a added to zkt-conf
 
-* func	In zconf.c CONF_TIMEINT parameter are now able to recognize 
+* func	In zconf.c CONF_TIMEINT parameter are now able to recognize
 	"unset" values (which is represented internaly as 0)
 
 * func	Set Max_TTL to sig lifetime for dynamic zones or if Max_TTL
@@ -83,7 +83,7 @@ zkt 1.0rc1 -- 1. Apr 2010 (The 1.0 release was sponsored by DOMINIC(r) )
 	currently not used
 
 * misc	LOG_FNAMETMPL changed and moved from config_zkt.h to log.h
-	
+
 * misc	Default soa serial format changed from "Incremental"
 	to "Unixtime"
 
@@ -98,7 +98,7 @@ zkt 1.0rc1 -- 1. Apr 2010 (The 1.0 release was sponsored by DOMINIC(r) )
 
 zkt 0.99d -- Not released
 
-* func	Option SIG_DnsKeyKSK for DNSKEY signing with KSK only 
+* func	Option SIG_DnsKeyKSK for DNSKEY signing with KSK only
 	added (only useful with BIND9.7)
 
 * misc	For BIND 9.7 compability:
@@ -172,7 +172,7 @@ zkt 0.98 -- 28. Dec 2008
 * func	New pseudo algorithms for NSEC3 DNSKEYS added.
 	Support of NSEC3 hashing if a BIND version greater equal 9.6.0
 	is used. New parameter "SaltBits" added to the config file to
-	set the salt length in bits (default is 24 which means 6 hex nibbles). 
+	set the salt length in bits (default is 24 which means 6 hex nibbles).
 	The number of hash iterations is set to the default value of
 	dnssec-signzone which depends on key size.
 
@@ -195,7 +195,7 @@ zkt 0.98 -- 28. Dec 2008
 
 * func	Changed inc_serial() so that the SOA record parser accepts a label
 	other than '@' and an optional ttl value before the class and SOA
-	RR identifier (Both are case insensitive). Thanks to Shane Kerr 
+	RR identifier (Both are case insensitive). Thanks to Shane Kerr
 	for the suggestion.
 
 * bug	Change of global configured key liftetime during a zone signing
@@ -262,7 +262,7 @@ zkt 0.97 -- 5. Aug 2008
 
 * port	Preparation for use of autoconf
 	- config.h renamed to config_zkt.h and change of include directives
-	- conditional include of config.h 
+	- conditional include of config.h
 	- ./configure script is able to determine BIND utility path
 	  (BIND_UTIL_PATH) and version (BIND_VERSION)
 	- compile time options are settable via configure script (--enable-xxx)
@@ -304,7 +304,7 @@ zkt 0.96 -- 19. June 2008
 * func	New function filesize() added
 
 * func	dki_prt_trustedkey print out old key id if key
-	is revoked 
+	is revoked
 
 * func	dki_new() writes gentime (GMT) and proposed key
 	lifetime (days) as comment into the *.key file
@@ -411,7 +411,7 @@ zkt 0.92 -- 1. Oct 2007
 	the zonefile. (Thanks to Jakob Schlyter for the
 	-N option of dnssec-signzone and the suggestion to
 	add the unixtime support to zkt)
-	
+
 * func	Option --ksk-roll-stat added.
 
 * port	Added macro HAS_GETOPT_LONG to support OS with
@@ -433,7 +433,7 @@ zkt 0.91 -- 1. Apr 2007
 
 * func	some experimental code for dynamic zones added.
 	new functions added: copyzonefile(), dyn_update_freeze().
-	New option "-d" added. 
+	New option "-d" added.
 
 zkt 0.90 -- 6. Dec 2006
 
@@ -560,7 +560,7 @@ zkt 0.64 -- 1. Aug 2005
 	- We use a dsa with 704 bits as ksk and a rsamd5 with 512 bits as zsk on each domain.
 	- All test made on Sun Fire V440 with 4 CPU and 4x2GB main memory
 
-		# sequential signing of all zones 
+		# sequential signing of all zones
 		$ time dnssec-signer -v -v -f -D sec
 		real	434m	(~ 7h 14min)
 		user	188
@@ -590,7 +590,7 @@ zkt 0.64 -- 1. Aug 2005
 		user	2m0.060s
 		sys	0m4.510s
 
-	
+
 		# signing the big (820000 RR) domain only
 		$ time dnssec-signer -v -v -f -D sec/b/big-domain
 		real	196m23.165	(~ 3h 16min)

@@ -81,7 +81,7 @@ do
 		grep "NS SOA" dig.out.ns2.test$n > /dev/null || ret=1
 	done
 	for z in bar. example.
-	do 
+	do
 		$DIG $DIGOPTS $z @10.53.0.3 nsec > dig.out.ns3.test$n || ret=1
 		grep "NS SOA" dig.out.ns3.test$n > /dev/null || ret=1
 	done

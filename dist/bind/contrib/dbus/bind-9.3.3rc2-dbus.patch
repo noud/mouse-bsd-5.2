@@ -19,26 +19,26 @@
 +
 +	result = dns_rbt_deletename(fwdtable->table, name, ISC_FALSE);
 +
-+	RWUNLOCK(&fwdtable->rwlock, isc_rwlocktype_write);		    
++	RWUNLOCK(&fwdtable->rwlock, isc_rwlocktype_write);
 +
 +	return (result);
 +}
 +
 +isc_result_t
-+dns_fwdtable_find_closest(dns_fwdtable_t *fwdtable, 
-+			  dns_name_t *name, 
++dns_fwdtable_find_closest(dns_fwdtable_t *fwdtable,
++			  dns_name_t *name,
 +			  dns_name_t *foundname,
 +			  dns_forwarders_t **forwardersp)
 +{
 +	isc_result_t result;
 +
 +	REQUIRE(VALID_FWDTABLE(fwdtable));
-+	
++
 +	RWLOCK(&fwdtable->rwlock, isc_rwlocktype_read);
 +
 +	result = dns_rbt_findname(fwdtable->table, name, 0, foundname,
 +				  (void **)forwardersp);
-+	
++
 +	if(result == DNS_R_PARTIALMATCH)
 +	    result = ISC_R_SUCCESS;
 +
@@ -61,7 +61,7 @@
 +
 +	result = dns_rbt_findname(fwdtable->table, name, 0, NULL,
 +				  (void **)forwardersp);
-+	
++
 +	if( result != ISC_R_SUCCESS )
 +	    *forwardersp = 0L;
 +
@@ -70,9 +70,9 @@
 +	return (result);
 +}
 +
-+static 
++static
 +void dns_fwdtable_traverse
-+(   
++(
 +    dns_name_t *name,
 +    void *node_data,
 +    void *cbp,
@@ -80,7 +80,7 @@
 +)
 +{
 +    dns_fwdtable_callback_t  cb = (dns_fwdtable_callback_t) cbp;
-+    
++
 +    (*cb)( name, node_data, cb_arg);
 +}
 +
@@ -102,7 +102,7 @@
 +
 +isc_result_t
 +dns_fwdtable_delete( dns_fwdtable_t *fwdtable, dns_name_t *name );
-+/* 
++/*
 + * Removes an entry from the forwarding table.
 + */
 +
@@ -110,20 +110,20 @@
 +dns_fwdtable_find_exact(dns_fwdtable_t *fwdtable, dns_name_t *name,
 +		  dns_forwarders_t **forwardersp);
 +/*
-+ * Finds an exact match for "name" in the forwarding table.  
++ * Finds an exact match for "name" in the forwarding table.
 + */
 +
 +isc_result_t
 +dns_fwdtable_find_closest(dns_fwdtable_t *fwdtable, dns_name_t *name, dns_name_t *foundname,
 +		  dns_forwarders_t **forwardersp);
 +/*
-+ * Finds the closest match for "*name" in the forwarding table, returning  
-+ * the actual name matching in *name if different to *name passed in. 
++ * Finds the closest match for "*name" in the forwarding table, returning
++ * the actual name matching in *name if different to *name passed in.
 + */
 +
 +typedef void (*dns_fwdtable_callback_t)( dns_name_t *, dns_forwarders_t *, void *);
 +void dns_fwdtable_foreach(dns_fwdtable_t *fwdtable, dns_fwdtable_callback_t cb, void * );
-+/* Invoke cb for each member of fwdtable 
++/* Invoke cb for each member of fwdtable
 + */
 +
 +
@@ -169,7 +169,7 @@
 +
 +	if (root != NULL) {
 +
-+		if (DOWN(root)) 
++		if (DOWN(root))
 +			dns_rbt_traverse_tree(DOWN(root), cb, cb_arg1, cb_arg2);
 +
 +		if( LEFT(root) != NULL )
@@ -185,16 +185,16 @@
 +		isc_buffer_init(&buffer, buf, DNS_NAME_MAXWIRE);
 +		dns_name_setbuffer( &name, &buffer);
 +		dns_rbt_fullnamefromnode(root, &name);
-+		
-+		(*cb)(&name, DATA(root), cb_arg1, cb_arg2);		
-+	} 
++
++		(*cb)(&name, DATA(root), cb_arg1, cb_arg2);
++	}
 +}
 +
 +void dns_rbt_traverse( dns_rbt_t *rbt, dns_rbt_traverse_callback_t cb, void *cb_arg1, void *cb_arg2  )
 +{
 +        REQUIRE(VALID_RBT(rbt));
 +
-+	dns_rbt_traverse_tree( rbt->root, cb, cb_arg1, cb_arg2 );       
++	dns_rbt_traverse_tree( rbt->root, cb, cb_arg1, cb_arg2 );
 +}
 +
  /*
@@ -229,15 +229,15 @@
  
 +isc_socketevent_t*
 +isc_socket_fd_handle_reads( isc_socket_t *sock, isc_socketevent_t *dev );
-+/* register the "dev" event to be sent when the isc_sockettype_fd sock 
++/* register the "dev" event to be sent when the isc_sockettype_fd sock
 + * was select()-ed for read. If there is already an event registered, it
 + * is returned, otherwise 0 is returned. If dev is 0, removes any existing
 + * registered event.
 + */
-+ 
++
 +isc_socketevent_t*
 +isc_socket_fd_handle_writes( isc_socket_t *sock, isc_socketevent_t *dev );
-+/* register the "dev" event to be sent when the isc_sockettype_fd sock 
++/* register the "dev" event to be sent when the isc_sockettype_fd sock
 + * was select()-ed for write. If there is already an event registered, it
 + * is returned, otherwise 0 is returned. If dev is 0, removes any existing
 + * registered event.
@@ -245,7 +245,7 @@
 +
 +isc_socketevent_t*
 +isc_socket_fd_handle_selected( isc_socket_t *sock, isc_socketevent_t *dev );
-+/* register the "dev" event to be sent when ALL isc_sockettype_fd sockets 
++/* register the "dev" event to be sent when ALL isc_sockettype_fd sockets
 + * have been select()-ed . If there is already an event registered, it
 + * is returned, otherwise 0 is returned. If dev is 0, removes any existing
 + * registered event.
@@ -260,7 +260,7 @@
  	ISC_LIST(isc_socketevent_t)		recv_list;
  	ISC_LIST(isc_socket_newconnev_t)	accept_list;
  	isc_socket_connev_t		       *connect_ev;
-+        
++
 +        /* these are used only by isc_sockettype_fd sockets:*/
 +        isc_socketevent_t      *read_ready_event;
 +        isc_socketevent_t      *write_ready_event;
@@ -322,7 +322,7 @@
 +isc_event_t *dispatch_read_ready(isc_socketmgr_t *manager, isc_socket_t *sock)
 +{
 +    isc_event_t *dev = (isc_event_t*)sock->read_ready_event, *ev;
-+    
++
 +    ev = isc_mem_get(manager->mctx, dev->ev_size);
 +    memcpy(ev,dev,dev->ev_size);
 +    ISC_LINK_INIT(ev,ev_link);
@@ -372,9 +372,9 @@
  				else
  					dispatch_recv(sock);
 -			}
-+			    }else			    
++			    }else
 +				sock_selected = dispatch_read_ready(manager,sock);
-+			}			    
++			}
  			FD_CLR(i, &manager->read_fds);
  		}
  	check_write:
@@ -388,7 +388,7 @@
  					dispatch_connect(sock);
  				else
  					dispatch_send(sock);
-+			    }else			   
++			    }else
 +				sock_selected =	dispatch_write_ready(manager,sock);
  			}
  			FD_CLR(i, &manager->write_fds);
@@ -419,9 +419,9 @@
 +
 +isc_socketevent_t*
 +isc_socket_fd_handle_reads( isc_socket_t *sock, isc_socketevent_t *dev )
-+{    
-+    REQUIRE(VALID_SOCKET(sock));   
-+    if(dev != 0L) 
++{
++    REQUIRE(VALID_SOCKET(sock));
++    if(dev != 0L)
 +    {
 +	sock->references=1;
 +	sock->read_ready_event = dev;
@@ -437,12 +437,12 @@
 +isc_socketevent_t*
 +isc_socket_fd_handle_writes( isc_socket_t *sock, isc_socketevent_t *dev )
 +{
-+    REQUIRE(VALID_SOCKET(sock));   
-+    if(dev != 0L) 
++    REQUIRE(VALID_SOCKET(sock));
++    if(dev != 0L)
 +    {
 +	sock->references=1;
 +	sock->write_ready_event = dev;
-+	select_poke(sock->manager, sock->fd, SELECT_POKE_WRITE);    
++	select_poke(sock->manager, sock->fd, SELECT_POKE_WRITE);
 +    }else
 +    {
 +	dev = sock->write_ready_event;
@@ -455,7 +455,7 @@
 +isc_socket_fd_handle_selected( isc_socket_t *sock, isc_socketevent_t *dev )
 +{
 +    REQUIRE(VALID_SOCKET(sock));
-+    if(dev != 0L) 
++    if(dev != 0L)
 +    {
 +	sock->references=1;
 +	sock->selected_event = dev;
@@ -519,8 +519,8 @@
 +zone database file directory (the options { "directory" } option), where
 +$ROOTDIR is set in /etc/sysconfig/named.
 +.br
-+The "named" group must be granted read privelege to 
-+these files in order for named to be enabled to read them. 
++The "named" group must be granted read privelege to
++these files in order for named to be enabled to read them.
 +.br
 +Any file created in the zone database file directory is automatically assigned
 +the SELinux file context named_zone_t .
@@ -532,7 +532,7 @@
 +The Red Hat BIND distribution and SELinux policy creates two directories where
 +named is allowed to create and modify files: $ROOTDIR/var/named/slaves and
 +$ROOTDIR/var/named/data. By placing files you want named to modify, such as
-+slave or DDNS updateable zone files and database / statistics dump files in 
++slave or DDNS updateable zone files and database / statistics dump files in
 +these directories, named will work normally and no further operator action is
 +required. Files in these directories are automatically assigned the 'named_cache_t'
 +file context, which SELinux allows named to write.
@@ -540,9 +540,9 @@
 +You can enable the named_t domain to write and create named_zone_t files by use
 +of the SELinux tunable boolean variable "named_write_master_zones", using the
 +setsebool(8) command or the system-config-security GUI . If you do this, you
-+must also set the ENABLE_ZONE_WRITE variable in /etc/sysconfig/named to 
++must also set the ENABLE_ZONE_WRITE variable in /etc/sysconfig/named to
 +1 / yes to set the ownership of files in the $ROOTDIR/var/named directory
-+to named:named in order for named to be allowed to write them. 
++to named:named in order for named to be allowed to write them.
 +.PP
 +\fBRed Hat BIND named_sdb SDB support:\fR
 +.PP
@@ -602,7 +602,7 @@
  	ns_controls_t *		controls;	/* Control channels */
  	unsigned int		dispatchgen;
  	ns_dispatchlist_t	dispatches;
--						
+-
 +
 +        ns_dbus_mgr_t *         dbus_mgr;
  };
@@ -689,7 +689,7 @@
  		goto cleanup;
  	}
 -
-+		
++
  	result = ISC_R_SUCCESS;
  
   cleanup:
@@ -698,7 +698,7 @@
  	CHECKFATAL(load_zones(server, ISC_FALSE), "loading zones");
  
 +	server->dbus_mgr = 0L;
-+	if( ns_g_dbus )	
++	if( ns_g_dbus )
 +	    if( dbus_mgr_create
 +	        (  ns_g_mctx, ns_g_taskmgr, ns_g_socketmgr, ns_g_timermgr,
 +		   &server->dbus_mgr

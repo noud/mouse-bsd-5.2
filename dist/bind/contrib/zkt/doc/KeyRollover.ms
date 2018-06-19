@@ -28,7 +28,7 @@ sep	KSK	257	.key	-	n	sep
 .TE
 .SP 2
 .NH 1
-Key rollover 
+Key rollover
 .PP
 .NH 2
 Zone signing key rollover (pre-publish RFC4641)
@@ -40,10 +40,10 @@ l	|l	|l	|l	|l	.
 action		create	change	remove
 keys		newkey	sig key	old key
 _
-zsk1	active	active	depreciated	
+zsk1	active	active	depreciated
 zsk2		published	active	active
 .sp 0.3
-RRSIG	zsk1	zsk1	zsk2	zsk2	
+RRSIG	zsk1	zsk1	zsk2	zsk2
 .TE
 .SP 2
 .NH 2
@@ -56,14 +56,14 @@ l	|l	|l	|l	|l	.
 action		create	change	remove
 keys		newkey	delegation	old key
 _
-ksk\d1\u	active	active	active	
+ksk\d1\u	active	active	active
 ksk\d2\u		active	active	active
 .sp 0.3
-DNSKEY RRSIG	ksk1	ksk1,ksk2	ksk1,ksk2	ksk2	
+DNSKEY RRSIG	ksk1	ksk1,ksk2	ksk1,ksk2	ksk2
 .sp 0.3
 DS at parent	DS\d1\u	DS\d1\u	DS\d2\u	DS\d2\u
 .TE
-.\"RRSIG	DNSKEY\dksk1\u	DNSKEY\dksk1,ksk2\u	DNSKEY\dksk1,ksk2\u	DNSKEY\dksk2\u	
+.\"RRSIG	DNSKEY\dksk1\u	DNSKEY\dksk1,ksk2\u	DNSKEY\dksk1,ksk2\u	DNSKEY\dksk2\u
 .SP 2
 .NH 2
 Key signing key rollover (rfc5011)
@@ -75,7 +75,7 @@ l	|l	|l	|l	.
 action		newkey 	change delegation
 keys		& rollover	& remove old key
 _
-ksk\d1\u	active	revoke\v'-0.2'\(dg\v'+0.2'		
+ksk\d1\u	active	revoke\v'-0.2'\(dg\v'+0.2'
 ksk\d2\u	standby	active	active
 ksk\d3\u		standby\v'-0.2'\(dd\v'+0.2'	standby
 .sp 0.3

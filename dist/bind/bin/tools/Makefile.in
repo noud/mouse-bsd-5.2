@@ -40,7 +40,7 @@ LWRESDEPLIBS =	../../lib/lwres/liblwres.@A@
 LIBS =		${ISCLIBS} @LIBS@
 NOSYMLIBS =	${ISCNOSYMLIBS} @LIBS@
 
-SUBDIRS = 
+SUBDIRS =
 
 TARGETS =	arpaname@EXEEXT@ named-journalprint@EXEEXT@ nsec3hash@EXEEXT@ \
 		genrandom@EXEEXT@ isc-hmac-fixup@EXEEXT@

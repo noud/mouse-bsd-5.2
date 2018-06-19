@@ -100,20 +100,20 @@ int     bounce_warn_service(int unused_flags, char *service, char *queue_name,
 
     /*
      * Initialize. Open queue file, bounce log, etc.
-     * 
+     *
      * XXX DSN This service produces RFC 3464-style "delayed mail" reports from
      * information in the defer logfile. That same file is used for three
      * different types of report:
-     * 
+     *
      * a) On-demand reports of all delayed deliveries by the mailq(1) command.
      * This reports all recipients that have a transient delivery error.
-     * 
+     *
      * b) RFC 3464-style "delayed mail" notifications by the defer(8) service.
      * This reports to the sender all recipients that have no DSN NOTIFY
      * information (compatibility) and all recipients that have DSN
      * NOTIFY=DELAY; this reports to postmaster all recipients, subject to
      * notify_classes restrictions.
-     * 
+     *
      * c) RFC 3464-style bounce reports by the bounce(8) service when mail is
      * too old. This reports to the sender all recipients that have no DSN
      * NOTIFY information (compatibility) and all recipients that have DSN
@@ -139,7 +139,7 @@ int     bounce_warn_service(int unused_flags, char *service, char *queue_name,
 
     /*
      * Double bounce failed. Never send a triple bounce.
-     * 
+     *
      * However, this does not prevent double bounces from bouncing on other
      * systems. In order to cope with this, either the queue manager must
      * recognize the double-bounce recipient address and discard mail, or
@@ -237,7 +237,7 @@ int     bounce_warn_service(int unused_flags, char *service, char *queue_name,
 	/*
 	 * Optionally send a postmaster notice, subject to notify_classes
 	 * restrictions.
-	 * 
+	 *
 	 * This postmaster notice is not critical, so if it fails don't
 	 * retransmit the bounce that we just generated, just log a warning.
 	 */

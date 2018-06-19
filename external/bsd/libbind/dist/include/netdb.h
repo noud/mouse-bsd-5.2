@@ -54,7 +54,7 @@
  * -
  * Portions Copyright (C) 1995, 1996, 1997, and 1998 WIDE Project.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -70,7 +70,7 @@
  * 4. Neither the name of the project nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE PROJECT AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -428,14 +428,14 @@ int		innetgr __P((const char *, const char *, const char *,
 #if defined(__hpux) || defined(__osf__) || defined(_AIX)
 int		gethostbyaddr_r __P((const char *, int, int, struct hostent *,
 					struct hostent_data *));
-int		gethostbyname_r __P((const char *, struct hostent *, 
+int		gethostbyname_r __P((const char *, struct hostent *,
 					struct hostent_data *));
 int		gethostent_r __P((struct hostent *, struct hostent_data *));
 #if defined(_AIX)
 void		sethostent_r __P((int, struct hostent_data *));
 #else
 int		sethostent_r __P((int, struct hostent_data *));
-#endif 
+#endif
 #if defined(__hpux)
 int		endhostent_r __P((struct hostent_data *));
 #else
@@ -486,7 +486,7 @@ void		endservent_r __P((struct servent_data *));
 int		setnetgrent_r __P((char *, void **));
 void		endnetgrent_r __P((void **));
 /*
- * Note: AIX's netdb.h declares innetgr_r() as: 
+ * Note: AIX's netdb.h declares innetgr_r() as:
  *	int innetgr_r(char *, char *, char *, char *, struct innetgr_data *);
  */
 int		innetgr_r __P((const char *, const char *, const char *,

@@ -7,7 +7,7 @@ open test-queue-file3.tmp
 # this also tests possible interactions with envelope recipient
 # updates, which share the same heap with message header updates.
 
-# Add a recipient and update all headers in reverse order. 
+# Add a recipient and update all headers in reverse order.
 
 add_rcpt me@porcupine.org
 upd_header 1 Subject hey!

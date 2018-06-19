@@ -127,9 +127,9 @@ zkt\-keyman \(em A DNSSEC key management tool
 .ad
 
 .SH DESCRIPTION
-The 
+The
 .I zkt\-keyman
-command is a wrapper around 
+command is a wrapper around
 .I dnssec-keygen(8)
 to assist in dnssec zone key management.
 .PP
@@ -143,7 +143,7 @@ Try to read the default configuration out of a file named
 .I dnssec-<view>.conf .
 Instead of specifying the \-V or --view option every time,
 it is also possible to create a hard or softlink to the
-executable file to give it an additional name like 
+executable file to give it an additional name like
 .I zkt\-keyman\-<view> .
 .TP
 .BI \-c " file" ", \-\-config=" file
@@ -159,7 +159,7 @@ but have to be delimited by semicolon (or newline).
 .BR \-d ", " \-\-directory
 Skip directory arguments.
 This will be useful in combination with wildcard arguments
-to prevent dnsssec-zkt to list all keys found in subdirectories. 
+to prevent dnsssec-zkt to list all keys found in subdirectories.
 For example "zkt\-keyman -d *" will print out a list of all keys only found in
 the current directory.
 Maybe it is easier to use "zkt\-keyman ." instead (without -r set).
@@ -247,7 +247,7 @@ Use --ksk-rollover for a little more detailed description.
 
 
 .SH SAMPLE USAGE
-.TP 
+.TP
 .fam C
 .B "zkt-keyman \-C example.net \-k \-r ./zonedir
 .fam T
@@ -256,7 +256,7 @@ Store the key in the same directory below "zonedir" where the other
 "example.net" keys live.
 .TP
 .fam C
-.B "zkt-keyman \-D 123245 \-r . 
+.B "zkt-keyman \-D 123245 \-r .
 .fam T
 Depreciate the key with tag "12345" below the current directory,
 .TP
@@ -266,14 +266,14 @@ Depreciate the key with tag "12345" below the current directory,
 Create a new zone key for the internal zone example.net.
 .TP
 .fam C
-.B "zkt-keyman-intern 
+.B "zkt-keyman-intern
 .fam T
 Same as above.
 The binary file
 .I zkt\-keyman
 has another link, named
 .I zkt-keyman-intern
-made, and 
+made, and
 .I zkt\-keyman
 examines argv[0] to find a view whose zones it proceeds to process.
 
@@ -310,7 +310,7 @@ FITNESS FOR A PARTICULAR PURPOSE.
 .SH SEE ALSO
 dnssec-keygen(8), dnssec-signzone(8), rndc(8), named.conf(5), zkt-conf(8), zkt-ls(8), zkt-signer(8)
 .br
-RFC4641 
+RFC4641
 "DNSSEC Operational Practices" by Miek Gieben and Olaf Kolkman,
 .br
 DNSSEC HOWTO Tutorial by Olaf Kolkman, RIPE NCC

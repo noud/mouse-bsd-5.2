@@ -190,7 +190,7 @@ copy_group(struct group *ge, struct group *gptr, char *buf, int buflen) {
 	len += strlen(ge->gr_name) + 1;
 	len += strlen(ge->gr_passwd) + 1;
 	len += numptr * sizeof(char*);
-	
+
 	if (len > buflen) {
 		errno = ERANGE;
 		return (ERANGE);

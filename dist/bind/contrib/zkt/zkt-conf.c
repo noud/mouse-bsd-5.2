@@ -178,7 +178,7 @@ int	main (int argc, char *argv[])
 			break;
 		case 's':		/* side wide config */
 			/* this is the default **/
-			break;	
+			break;
 		case 'a':		/* set all flag */
 			allflag = 1;
 			break;
@@ -242,9 +242,9 @@ int	main (int argc, char *argv[])
 
 			if ( refconfig )	/* have we seen a local config file ? */
 				if ( allflag )
-					printconfig (confname, config);	
+					printconfig (confname, config);
 				else
-					printconfigdiff (confname, refconfig, config);	
+					printconfigdiff (confname, refconfig, config);
 			else
 				printconfig (confname, config);
 		}
@@ -279,7 +279,7 @@ int	main (int argc, char *argv[])
 		}
 
 		if ( minttl < (10 * MINSEC) )
-			fprintf (stderr, "Min_TTL of %s (%ld seconds) is too low to use it in a signed zone (see RFC4641)\n", 
+			fprintf (stderr, "Min_TTL of %s (%ld seconds) is too low to use it in a signed zone (see RFC4641)\n",
 							timeint2str (minttl), minttl);
 		else
 			fprintf (stderr, "Min_TTL:\t%s\t# (%ld seconds)\n", timeint2str (minttl), minttl);

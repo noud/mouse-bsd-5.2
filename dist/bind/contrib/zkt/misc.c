@@ -103,7 +103,7 @@ const	char	*getdefconfname (const char *view)
 	char	*file;
 	char	*buf;
 	int	size;
-	
+
 	if ( (file = getenv ("ZKT_CONFFILE")) == NULL )
 		file = CONFIG_FILE;
 	dbg_val2 ("getdefconfname (%s) file = %s\n", view ? view : "NULL", file);
@@ -119,7 +119,7 @@ const	char	*getdefconfname (const char *view)
 	dbg_val4 ("%.*s-%s%s\n", p - file, file, view, p);
 
 	snprintf (buf, size, "%.*s-%s%s", p - file, file, view, p);
-	return buf;	
+	return buf;
 }
 
 /*****************************************************************
@@ -176,7 +176,7 @@ char	*str_tolowerdup (const char *s)
 
 /*****************************************************************
 **	str_delspace (s)
-**	Remove in string 's' all white space char 
+**	Remove in string 's' all white space char
 *****************************************************************/
 char	*str_delspace (char *s)
 {
@@ -384,9 +384,9 @@ int	is_directory (const char *name)
 {
 	struct	stat	st;
 
-	if ( !name || !*name )	
+	if ( !name || !*name )
 		return 0;
-	
+
 	return ( stat (name, &st) == 0 && S_ISDIR (st.st_mode) );
 }
 
@@ -404,7 +404,7 @@ int	fileexist (const char *name)
 /*****************************************************************
 **	filesize (name)
 **	return the size of the file with the given pathname 'name'.
-**	returns -1 if the file not exist 
+**	returns -1 if the file not exist
 *****************************************************************/
 size_t	filesize (const char *name)
 {
@@ -427,7 +427,7 @@ int	is_keyfilename (const char *name)
 		return 0;
 
 	len = strlen (name);
-	if ( len > 4 && strcmp (&name[len - 4], ".key") == 0 ) 
+	if ( len > 4 && strcmp (&name[len - 4], ".key") == 0 )
 		return 1;
 
 	return 0;
@@ -441,7 +441,7 @@ int	is_keyfilename (const char *name)
 int	is_dotfilename (const char *name)
 {
 	if ( name && (
-	     (name[0] == '.' && name[1] == '\0') || 
+	     (name[0] == '.' && name[1] == '\0') ||
 	     (name[0] == '.' && name[1] == '.' && name[2] == '\0')) )
 		return 1;
 
@@ -495,13 +495,13 @@ int	copyfile (const char *fromfile, const char *tofile, const char *dnskeyfile)
 		fclose (infp);
 		return -2;
 	}
-	while ( (c = getc (infp)) != EOF ) 
+	while ( (c = getc (infp)) != EOF )
 		putc (c, outfp);
 
 	fclose (infp);
 	if ( dnskeyfile && *dnskeyfile && (infp = fopen (dnskeyfile, "r")) != NULL )
 	{
-		while ( (c = getc (infp)) != EOF ) 
+		while ( (c = getc (infp)) != EOF )
 			putc (c, outfp);
 		fclose (infp);
 	}
@@ -544,7 +544,7 @@ int	copyzonefile (const char *fromfile, const char *tofile, const char *dnskeyfi
 	multi_line_dnskey = 0;
 	dnskeys = 0;
 	bufoverflow = 0;
-	while ( fgets (buf, sizeof buf, infp) != NULL ) 
+	while ( fgets (buf, sizeof buf, infp) != NULL )
 	{
 		p = buf;
 		if ( !bufoverflow && !multi_line_dnskey && (*p == '@' || isspace (*p)) )	/* check if DNSKEY RR */
@@ -581,17 +581,17 @@ int	copyzonefile (const char *fromfile, const char *tofile, const char *dnskeyfi
 					p++;
 				}
 				if ( dnskeys == 1 )
-					fprintf (outfp, "$INCLUDE %s\n", dnskeyfile);	
+					fprintf (outfp, "$INCLUDE %s\n", dnskeyfile);
 			}
-			else 
-				fputs (buf, outfp);	
+			else
+				fputs (buf, outfp);
 		}
 		else
 		{
 			if ( bufoverflow )
 				fprintf (stderr, "!! buffer overflow in copyzonefile() !!\n");
 			if ( !multi_line_dnskey )
-				fputs (buf, outfp);	
+				fputs (buf, outfp);
 			else
 			{
 				while ( *p && *p != ')' )
@@ -600,7 +600,7 @@ int	copyzonefile (const char *fromfile, const char *tofile, const char *dnskeyfi
 					multi_line_dnskey = 0;
 			}
 		}
-		
+
 		len = strlen (buf);
 		bufoverflow = buf[len-1] != '\n';	/* line too long ? */
 	}
@@ -787,8 +787,8 @@ time_t	timestr2time (const char *timestr)
 	time_t	sec;
 
 	// fprintf (stderr, "timestr = \"%s\"\n", timestr);
-	if ( sscanf (timestr, "%4d%2d%2d%2d%2d%2d", 
-			&t.tm_year, &t.tm_mon, &t.tm_mday, 
+	if ( sscanf (timestr, "%4d%2d%2d%2d%2d%2d",
+			&t.tm_year, &t.tm_mon, &t.tm_mday,
 			&t.tm_hour, &t.tm_min, &t.tm_sec) != 6 )
 		return 0L;
 	t.tm_year -= 1900;
@@ -815,7 +815,7 @@ time_t	timestr2time (const char *timestr)
 	tzset();
 	}
 #endif
-	
+
 	return sec < 0L ? 0L : sec;
 }
 
@@ -863,25 +863,25 @@ char	*time2str (time_t sec, int precision)
 	s = t->tm_gmtoff % 3600;
 	if ( precision == 's' )
 		snprintf (timestr, sizeof (timestr), "%s %2d %4d %02d:%02d:%02d %c%02d%02d",
-			mstr[t->tm_mon], t->tm_mday, t->tm_year + 1900, 
+			mstr[t->tm_mon], t->tm_mday, t->tm_year + 1900,
 			t->tm_hour, t->tm_min, t->tm_sec,
 			t->tm_gmtoff < 0 ? '-': '+',
 			h, s);
 	else
 		snprintf (timestr, sizeof (timestr), "%s %2d %4d %02d:%02d %c%02d%02d",
-			mstr[t->tm_mon], t->tm_mday, t->tm_year + 1900, 
-			t->tm_hour, t->tm_min, 
+			mstr[t->tm_mon], t->tm_mday, t->tm_year + 1900,
+			t->tm_hour, t->tm_min,
 			t->tm_gmtoff < 0 ? '-': '+',
 			h, s);
 	}
 # else
 	if ( precision == 's' )
 		snprintf (timestr, sizeof (timestr), "%s %2d %4d %02d:%02d:%02d",
-			mstr[t->tm_mon], t->tm_mday, t->tm_year + 1900, 
+			mstr[t->tm_mon], t->tm_mday, t->tm_year + 1900,
 			t->tm_hour, t->tm_min, t->tm_sec);
 	else
 		snprintf (timestr, sizeof (timestr), "%s %2d %4d %02d:%02d",
-			mstr[t->tm_mon], t->tm_mday, t->tm_year + 1900, 
+			mstr[t->tm_mon], t->tm_mday, t->tm_year + 1900,
 			t->tm_hour, t->tm_min);
 # endif
 #endif
@@ -918,7 +918,7 @@ char	*time2isostr (time_t sec, int precision)
 
 /*****************************************************************
 **	age2str (sec)
-**	!!Attention: This function is not reentrant 
+**	!!Attention: This function is not reentrant
 *****************************************************************/
 char	*age2str (time_t sec)
 {
@@ -1056,7 +1056,7 @@ main (int argc, char *argv[])
 		fprintf (stderr, "e.g.: url_test http://www.hznet.de:80/zkt\n");
 		exit (1);
 	}
-	
+
 	strcpy (url, argv[1]);
 	parseurl (url, &proto, &host, &port, &para);
 

@@ -72,7 +72,7 @@ zkt\-ls \(em list dnskeys
 .RI "" ... ]
 
 .SH DESCRIPTION
-The 
+The
 .I zkt-ls
 command list all dnssec zone keys found in the given or predefined
 default directory.
@@ -99,7 +99,7 @@ Try to read the default configuration out of a file named
 .I dnssec-<view>.conf .
 Instead of specifying the \-V or --view option every time,
 it is also possible to create a hard or softlink to the
-executable file to give it an additional name like 
+executable file to give it an additional name like
 .I zkt-ls-<view> .
 .TP
 .BI \-c " file" ", \-\-config=" file
@@ -120,7 +120,7 @@ Take care of, that every domain name has a trailing dot.
 .BR \-d ", " \-\-directory
 Skip directory arguments.
 This will be useful in combination with wildcard arguments
-to prevent dnsssec-zkt to list all keys found in subdirectories. 
+to prevent dnsssec-zkt to list all keys found in subdirectories.
 For example "zkt-ls -d *" will print out a list of all keys only found in
 the current directory.
 Maybe it is easier to use "zkt-ls ." instead (without -r set).
@@ -185,9 +185,9 @@ Use
 to suppress comment lines.
 
 .SH SAMPLE USAGE
-.TP 
+.TP
 .fam C
-.B "zkt\-ls \-r . 
+.B "zkt\-ls \-r .
 .fam T
 Print out a list of all zone keys found below the current directory.
 .TP
@@ -202,7 +202,7 @@ Print out the compiled in default parameters.
 Print out a trusted-key section containing the key signing keys of "example.net".
 .TP
 .fam C
-.B "zkt\-ls --view intern 
+.B "zkt\-ls --view intern
 .fam T
 Print out a list of all zone keys found below the directory where all
 the zones of view intern live.
@@ -211,14 +211,14 @@ There should be a seperate dnssec config file
 with a directory option to take affect of this.
 .TP
 .fam C
-.B "zkt\-ls\-intern 
+.B "zkt\-ls\-intern
 .fam T
 Same as above.
 The binary file
 .I zkt\-ls
 has another link, named
 .I zkt\-ls\-intern
-made, and 
+made, and
 .I zkt\-ls
 examines argv[0] to find a view whose zones it proceeds to process.
 
@@ -262,7 +262,7 @@ FITNESS FOR A PARTICULAR PURPOSE.
 .SH SEE ALSO
 dnssec-keygen(8), dnssec-signzone(8), rndc(8), named.conf(5), zkt-conf(8), zkt-keyman(8), zkt-signer(8)
 .br
-RFC4641 
+RFC4641
 "DNSSEC Operational Practices" by Miek Gieben and Olaf Kolkman,
 .br
 DNSSEC HOWTO Tutorial by Olaf Kolkman, RIPE NCC

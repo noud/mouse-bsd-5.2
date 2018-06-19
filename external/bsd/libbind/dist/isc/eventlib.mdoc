@@ -129,9 +129,9 @@
 .Ft int
 .Fn evSetIdleTimer "evContext opaqueCtx" "evTimerFunc func" "void *uap" \
 "struct timespec max_idle" "evTimerID *opaqueID"
-.Ft int 
+.Ft int
 .Fn evTouchIdleTimer "evContext opaqueCtx" "evTimerID id"
-.Ft int 
+.Ft int
 .Fn evResetIdleTimer "evContext opaqueCtx" "evTimerID id" "evTimerFunc func" \
 "void *uap" "struct timespec max_idle"
 .Ft int
@@ -209,7 +209,7 @@ The function
 .Fn evCreate
 creates an event context which is needed by all the other functions in this
 library.  All information used internally by this library is bound to this
-context, rather than to static storage.  This makes the library 
+context, rather than to static storage.  This makes the library
 .Dq thread safe ,
 and permits other library functions to use events without
 disrupting the application's use of events.
@@ -249,8 +249,8 @@ to block internally until the next event occurs; and
 .Fa EV_NULL ,
 which tells
 .Fn evGetNext
-that it should return a special 
-.Dq no-op 
+that it should return a special
+.Dq no-op
 event, which is ignored by
 .Fn evDispatch
 but handled correctly by
@@ -322,10 +322,10 @@ constructors, there would be no need for this function.)
 The functions
 .Fn evTimeSpec
 and
-.Fn evTimeVal 
+.Fn evTimeVal
 are utilities which allow the caller to convert a
 .Dq Fa struct timeval
-to a 
+to a
 .Dq Fa struct timespec
 (the function of
 .Fn evTimeSpec )
@@ -376,23 +376,23 @@ The timestamp returned may not be UTC time if
 the "monotime" option has been enabled with
 .Fn evSetOption .
 .Pp
-The function 
+The function
 .Fn evUTCTime
-is like 
+is like
 .Fn evNowTime
 except the result is always on the UTC timescale.
 .Pp
 The function
-.Fn evLastEventTime 
+.Fn evLastEventTime
 returns the
 .Dq Fa struct timespec
-which describes the last time that certain events happened to the 
-event context indicated by 
+which describes the last time that certain events happened to the
+event context indicated by
 .Fa opaqueCtx .
 This value is updated by
-.Fn evCreate 
+.Fn evCreate
 and
-.Fn evGetNext 
+.Fn evGetNext
 (upon entry and after
 .Xr select 2
 returns); it is routinely compared with other times in the internal handling
@@ -415,18 +415,18 @@ As a special case, specifying a
 .Fa due
 argument equal to
 .Dq Fn evConsTime 0 0
-means 
+means
 .Dq due immediately .
 The
 .Fa opaqueID
 argument, if specified as a value other than
 .Fa NULL ,
-will be used to store the resulting 
-.Dq timer \s-1ID\s+1 , 
+will be used to store the resulting
+.Dq timer \s-1ID\s+1 ,
 useful as an argument to
 .Fn evClearTimer .
-Note that in a 
-.Dq one\-shot 
+Note that in a
+.Dq one\-shot
 timer (which has an
 .Fa inter
 argument equal to
@@ -477,7 +477,7 @@ For both "rate" and "interval" the numerical argument
 is ignored.
 .Pp
 The function
-.Fn evSetIdleTimer 
+.Fn evSetIdleTimer
 is similar to (and built on)
 .Fn evSetTimer ;
 it registers an idle timer event which provides for the function call to
@@ -489,24 +489,24 @@ timer, the call will occur after at least
 time has passed since the time the idle timer was
 .Dq last touched ;
 originally, this is set to the time returned by
-.Fn evLastEventTime 
-(described above) for the event context specified by 
-.Fa opaqueCtx .  
-This is a 
-.Dq one\-shot 
+.Fn evLastEventTime
+(described above) for the event context specified by
+.Fa opaqueCtx .
+This is a
+.Dq one\-shot
 timer, but the time at which the
 .Fa func
 is actually called can be changed by recourse to
 .Fn evTouchIdleTimer
-(described below).  The pointer to the underlying 
-.Dq timer \s-1ID\s+1 
+(described below).  The pointer to the underlying
+.Dq timer \s-1ID\s+1
 is returned in
 .Fa opaqueID ,
 if it is
 .No non- Ns Dv NULL .
 .Pp
 The
-.Fn evTouchIdleTimer 
+.Fn evTouchIdleTimer
 function updates the idle timer associated with
 .Fa id ,
 setting its idea of the time it was last accessed to the value returned by
@@ -535,7 +535,7 @@ The
 function unregisters the idle timer associated with
 .Fa id .
 See the discussion under
-.Fn evClearTimer , 
+.Fn evClearTimer ,
 above, for information regarding caller handling of the
 .Fa uap
 associated with the corresponding
@@ -549,20 +549,20 @@ places the function
 on the given event context's wait queue with the associated (possibly
 .Dv NULL )
 .Dq Fa tag ;
-if 
+if
 .Fa id
-is 
+is
 .No non- Ns Dv NULL ,
-then it will contain the 
-.Dq wait \s-1ID\s+1 
+then it will contain the
+.Dq wait \s-1ID\s+1
 associated with the created queue element.
 .Pp
 The function
-.Fn evDo 
-marks 
+.Fn evDo
+marks
 .Em all
-of the 
-.Dq waiting 
+of the
+.Dq waiting
 functions in the given event context's wait queue with the associated (possibly
 .Dv NULL )
 .Dq Fa tag
@@ -572,12 +572,12 @@ queue which will be read by
 .Fn evGetNext .
 .Pp
 The function
-.Fn evUnwait 
+.Fn evUnwait
 will search for the
-.Dq wait \s-1ID\s+1 
+.Dq wait \s-1ID\s+1
 .Fa id
 in the wait queue of the given event context; if an element with the given
-.Fa id 
+.Fa id
 is not found, then the
 .Dq done
 queue of that context is searched.  If found, the queue element is removed
@@ -699,9 +699,9 @@ unless the underlying file descriptor is closed first.
 .Pp
 The function
 .Fn evTimeRW
-sets the stream associated with the given stream \s-1ID\s+1 
+sets the stream associated with the given stream \s-1ID\s+1
 .Dq Fa id
-to have the idle timer associated with the timer \s-1ID\s+1 
+to have the idle timer associated with the timer \s-1ID\s+1
 .Dq Fa timer .
 .Pp
 The function
@@ -760,7 +760,7 @@ to
 .Fn \*(lp*func\*(rp
 will be
 .Fa -1
-if an error occurred that prevented this connection from completing 
+if an error occurred that prevented this connection from completing
 successfully.  In this case
 .Fn errno
 will have been set and the socket described by
@@ -816,13 +816,13 @@ or equal to the indicated
 .Pp
 The function
 .Fn evInitID
-will initialize an opaque 
-.Dq evConn \s-1ID\s+1 , 
-.Dq evFile \s-1ID\s+1 , 
-.Dq evStream \s-1ID\s+1 , 
-.Dq evTimer \s-1ID\s+1 , 
-.Dq evWait \s-1ID\s+1 , 
-.Dq evContext , 
+will initialize an opaque
+.Dq evConn \s-1ID\s+1 ,
+.Dq evFile \s-1ID\s+1 ,
+.Dq evStream \s-1ID\s+1 ,
+.Dq evTimer \s-1ID\s+1 ,
+.Dq evWait \s-1ID\s+1 ,
+.Dq evContext ,
 or
 .Dq evEvent ,
 which is passed by reference to a state which
@@ -838,10 +838,10 @@ only if it is not in its initialized state.
 .Pp
 The functions
 .Fn evGetOption
-and 
+and
 .Fn evSetOption
 can be used to inspect and modify options.
-Currently there is only one option,  "monotime" and it is global for all 
+Currently there is only one option,  "monotime" and it is global for all
 instances of eventlib so the ctx argument must be passed as NULL.
 .Pp
 The default value for the "monotime" option is zero which selects
@@ -869,9 +869,9 @@ and setting
 to indicate failure.
 .Sh FILE
 .Pa heap.h ,
-which is in the 
+which is in the
 .Pa src/lib/isc
-directory of the current 
+directory of the current
 .Sy BIND
 distribution.
 .Sh ERRORS
@@ -890,8 +890,8 @@ The specified file descriptor has an integer value greater than the default
 .Fa FD_SETSIZE ,
 meaning that the application's limit is higher than the library's.
 .It Bq Er ENOENT
-The specified 
-.Dq event \s-1ID\s+1 
+The specified
+.Dq event \s-1ID\s+1
 does not exist.
 .It Bq Er EWOULDBLOCK
 No events have occurred and the

@@ -63,15 +63,15 @@ diff -upr openssl-0.9.8g.orig/ssl/s3_srvr.c openssl-0.9.8g/ssl/s3_srvr.c
 +		SSL_CIPHER *pref_cipher=NULL;
 +
 +		s->session->master_key_length=sizeof(s->session->master_key);
-+		if(s->tls_session_secret_cb(s, s->session->master_key, &s->session->master_key_length, 
++		if(s->tls_session_secret_cb(s, s->session->master_key, &s->session->master_key_length,
 +			ciphers, &pref_cipher, s->tls_session_secret_cb_arg))
 +		{
 +			s->hit=1;
 +			s->session->ciphers=ciphers;
 +			s->session->verify_result=X509_V_OK;
-+			
++
 +			ciphers=NULL;
-+			
++
 +			/* check if some cipher was preferred by call back */
 +			pref_cipher=pref_cipher ? pref_cipher : ssl3_choose_cipher(s, s->session->ciphers, SSL_get_ciphers(s));
 +			if (pref_cipher == NULL)
@@ -195,7 +195,7 @@ diff -upr openssl-0.9.8g.orig/ssl/ssl_sess.c openssl-0.9.8g/ssl/ssl_sess.c
  	}
  
 +#ifndef OPENSSL_NO_TLSEXT
-+int SSL_set_session_secret_cb(SSL *s, int (*tls_session_secret_cb)(SSL *s, void *secret, int *secret_len, 
++int SSL_set_session_secret_cb(SSL *s, int (*tls_session_secret_cb)(SSL *s, void *secret, int *secret_len,
 +	STACK_OF(SSL_CIPHER) *peer_ciphers, SSL_CIPHER **cipher, void *arg), void *arg)
 +{
 +	if (s == NULL) return(0);
@@ -290,7 +290,7 @@ diff -upr openssl-0.9.8g.orig/ssl/t1_lib.c openssl-0.9.8g/ssl/t1_lib.c
  		}
 +		skip_ext:
  
- 	if ((extdatalen = ret-p-2)== 0) 
+ 	if ((extdatalen = ret-p-2)== 0)
  		return p;
 @@ -543,6 +566,8 @@ int tls1_process_ticket(SSL *s, unsigned
  				s->tlsext_ticket_expected = 1;
@@ -322,7 +322,7 @@ diff -upr openssl-0.9.8g.orig/ssl/tls1.h openssl-0.9.8g/ssl/tls1.h
 diff -upr openssl-0.9.8g.orig/util/ssleay.num openssl-0.9.8g/util/ssleay.num
 --- openssl-0.9.8g.orig/util/ssleay.num	2007-08-13 01:31:16.000000000 +0300
 +++ openssl-0.9.8g/util/ssleay.num	2008-04-15 17:10:37.000000000 +0300
-@@ -241,3 +241,5 @@ SSL_CTX_sess_get_remove_cb              
+@@ -241,3 +241,5 @@ SSL_CTX_sess_get_remove_cb
  SSL_set_SSL_CTX                         290	EXIST::FUNCTION:
  SSL_get_servername                      291	EXIST::FUNCTION:TLSEXT
  SSL_get_servername_type                 292	EXIST::FUNCTION:TLSEXT

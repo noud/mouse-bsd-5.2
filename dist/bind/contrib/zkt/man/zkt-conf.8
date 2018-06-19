@@ -5,7 +5,7 @@
 .\"	if n .nh
 .nh
 .SH NAME
-zkt-conf \(em Secure DNS zone key config tool 
+zkt-conf \(em Secure DNS zone key config tool
 
 .SH SYNOPSYS
 .na
@@ -47,7 +47,7 @@ zkt-conf \(em Secure DNS zone key config tool
 .br
 .ad
 .SH DESCRIPTION
-The 
+The
 .I zkt-conf
 command helps to create and show a config file for use by
 the Zone Key Tool commands, which are currently
@@ -65,12 +65,12 @@ The build-in default parameters
 b)
 The side wide config file or the file specified with option -c
 overloads the built-in vars.
-The file is 
+The file is
 .I /var/named/dnssec.conf
 or the one set by the environment variable ZKT_CONFFILE.
 .IP
 c)
-The local config file 
+The local config file
 .I dnssec.conf
 in the current zone directory also overloads the parameter read so far.
 .PP
@@ -106,7 +106,7 @@ This is useful in case of an ZKT upgrade or if one or more parameters are change
 by option
 .BR \-O .
 .PP
-Option 
+Option
 .B \-t
 checks some of the parameter for reasonable values.
 .PP
@@ -163,7 +163,7 @@ Instead of specifying the
 or
 .B \-\-view
 option every time, it is also possible to create a hard or softlink to the
-executable file and name it like 
+executable file and name it like
 .I zkt-conf-<view> .
 .TP
 .BI \-c " file" ", \-\-config=" file
@@ -183,7 +183,7 @@ this prints all parameter, not just the ones different to the site wide
 or built-in defaults.
 
 .SH SAMPLE USAGE
-.TP 
+.TP
 .fam C
 .B "zkt-conf \-d
 .fam T
@@ -241,7 +241,7 @@ FITNESS FOR A PARTICULAR PURPOSE.
 .SH SEE ALSO
 dnssec-keygen(8), dnssec-signzone(8), rndc(8), named.conf(5), zkt-signer(8), zkt-ls(8), zkt-keyman(8),
 .br
-RFC4641 
+RFC4641
 "DNSSEC Operational Practices" by Miek Gieben and Olaf Kolkman,
 .br
 DNSSEC HOWTO Tutorial by Olaf Kolkman, RIPE NCC

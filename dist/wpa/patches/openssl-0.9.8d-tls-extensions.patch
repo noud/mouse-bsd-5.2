@@ -113,7 +113,7 @@ diff -uprN openssl-0.9.8d.orig/ssl/s3_clnt.c openssl-0.9.8d/ssl/s3_clnt.c
 @@ -601,6 +601,20 @@ int ssl3_client_hello(SSL *s)
  #endif
  		*(p++)=0; /* Add the NULL method */
- 		
+ 
 +		/* send client hello extensions if any */
 +		if (s->version >= TLS1_VERSION && s->tls_extension)
 +		{
@@ -123,7 +123,7 @@ diff -uprN openssl-0.9.8d.orig/ssl/s3_clnt.c openssl-0.9.8d/ssl/s3_clnt.c
 +			// put the extensions with type and length
 +			s2n(s->tls_extension->type, p);
 +			s2n(s->tls_extension->length, p);
-+			
++
 +			memcpy(p, s->tls_extension->data, s->tls_extension->length);
 +			p+=s->tls_extension->length;
 +		}
@@ -180,7 +180,7 @@ diff -uprN openssl-0.9.8d.orig/ssl/s3_srvr.c openssl-0.9.8d/ssl/s3_srvr.c
 +		{
 +			TLS_EXTENSION tls_ext;
 +			unsigned short ext_total_len;
-+			
++
 +			n2s(p, ext_total_len);
 +			n2s(p, tls_ext.type);
 +			n2s(p, tls_ext.length);
@@ -211,15 +211,15 @@ diff -uprN openssl-0.9.8d.orig/ssl/s3_srvr.c openssl-0.9.8d/ssl/s3_srvr.c
 +		SSL_CIPHER *pref_cipher=NULL;
 +
 +		s->session->master_key_length=sizeof(s->session->master_key);
-+		if(s->tls_session_secret_cb(s, s->session->master_key, &s->session->master_key_length, 
++		if(s->tls_session_secret_cb(s, s->session->master_key, &s->session->master_key_length,
 +			ciphers, &pref_cipher, s->tls_session_secret_cb_arg))
 +		{
 +			s->hit=1;
 +			s->session->ciphers=ciphers;
 +			s->session->verify_result=X509_V_OK;
-+			
++
 +			ciphers=NULL;
-+			
++
 +			/* check if some cipher was preferred by call back */
 +			pref_cipher=pref_cipher ? pref_cipher : ssl3_choose_cipher(s, s->session->ciphers, SSL_get_ciphers(s));
 +			if (pref_cipher == NULL)
@@ -321,7 +321,7 @@ diff -uprN openssl-0.9.8d.orig/ssl/ssl_sess.c openssl-0.9.8d/ssl/ssl_sess.c
  	return(s->session_timeout);
  	}
  
-+int SSL_set_session_secret_cb(SSL *s, int (*tls_session_secret_cb)(SSL *s, void *secret, int *secret_len, 
++int SSL_set_session_secret_cb(SSL *s, int (*tls_session_secret_cb)(SSL *s, void *secret, int *secret_len,
 +	STACK_OF(SSL_CIPHER) *peer_ciphers, SSL_CIPHER **cipher, void *arg), void *arg)
 +{
 +	if (s == NULL) return(0);
@@ -420,7 +420,7 @@ diff -uprN openssl-0.9.8d.orig/ssl/tls1.h openssl-0.9.8d/ssl/tls1.h
 diff -uprN openssl-0.9.8d.orig/util/ssleay.num openssl-0.9.8d/util/ssleay.num
 --- openssl-0.9.8d.orig/util/ssleay.num	2005-05-08 17:22:02.000000000 -0700
 +++ openssl-0.9.8d/util/ssleay.num	2006-12-10 08:20:02.000000000 -0800
-@@ -226,3 +226,6 @@ DTLSv1_server_method                    
+@@ -226,3 +226,6 @@ DTLSv1_server_method
  SSL_COMP_get_compression_methods        276	EXIST:!VMS:FUNCTION:COMP
  SSL_COMP_get_compress_methods           276	EXIST:VMS:FUNCTION:COMP
  SSL_SESSION_get_id                      277	EXIST::FUNCTION:

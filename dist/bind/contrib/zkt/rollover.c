@@ -43,8 +43,8 @@
 # include <time.h>
 # include <assert.h>
 # include <dirent.h>
-# include <errno.h>	
-# include <unistd.h>	
+# include <errno.h>
+# include <unistd.h>
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -344,7 +344,7 @@ static	int	kskrollover (dki_t *ksk, zone_t *zonelist, zone_t *zp)
 		assert ( currphase == 1 || currphase == 2 );
 		/* NOTREACHED */
 	}
-	
+
 	return 0;
 }
 
@@ -449,9 +449,9 @@ int	ksk5011status (dki_t **listp, const char *dir, const char *domain, const zco
 		verbmesg (2, z, "\t\t=>Activating old standby key %d \n", standbykey->tag);
 		dki_setstatus (standbykey, DKI_ACT);
 
-		/* active key should be revoked */ 
+		/* active key should be revoked */
 		verbmesg (2, z, "\t\t=>Revoking old active key %d \n", activekey->tag);
-		dki_setstatus (activekey, DKI_REVOKED);	
+		dki_setstatus (activekey, DKI_REVOKED);
 		dki_setexptime (activekey, currtime);	/* now the key is expired */
 
 		ret |= 01;		/* resigning necessary */
@@ -558,7 +558,7 @@ int	zskstatus (dki_t **listp, const char *dir, const char *domain, const zconf_t
 	dkp = *listp;
 	while ( dkp )
 		if ( !dki_isksk (dkp) &&
-		     dki_status (dkp) == DKI_DEPRECIATED && 
+		     dki_status (dkp) == DKI_DEPRECIATED &&
 		     dki_age (dkp, currtime) > lifetime )
 		{
 			keychange = 1;

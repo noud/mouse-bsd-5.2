@@ -46,7 +46,7 @@ static const char rcsid[] = "Id: getpwent_r.c,v 1.8 2005/04/27 04:56:26 sra Exp"
 
 #ifdef PASS_R_RETURN
 
-static int 
+static int
 copy_passwd(struct passwd *, struct passwd *, char *buf, int buflen);
 
 /* POSIX 1003.1c */
@@ -213,7 +213,7 @@ copy_passwd(struct passwd *pw, struct passwd *pwptr, char *buf, int buflen) {
 	len += strlen(pw->pw_gecos) + 1;
 	len += strlen(pw->pw_dir) + 1;
 	len += strlen(pw->pw_shell) + 1;
-	
+
 	if (len > buflen) {
 		errno = ERANGE;
 		return (ERANGE);

@@ -5,7 +5,7 @@
 .\"	if n .nh
 .nh
 .SH NAME
-zkt-signer \(em Secure DNS zone signing tool 
+zkt-signer \(em Secure DNS zone signing tool
 
 .SH SYNOPSYS
 .na
@@ -49,12 +49,12 @@ zkt-signer \(em Secure DNS zone signing tool
 .RB [ \-fhnr ]
 .RB [ \-v
 .RB [ \-v ]]
-.B \-o 
+.B \-o
 .IR "origin"
 .RI [ zonefile ]
 
 .SH DESCRIPTION
-The 
+The
 .I zkt-signer
 command is a wrapper around
 .I dnssec-signzone(8)
@@ -71,7 +71,7 @@ intervals via
 can do all that stuff automatically.
 .PP
 In the most useful usage scenario the command will be called with option
-.B \-N 
+.B \-N
 to read the secure zones out of the given
 .I named.conf
 file.
@@ -175,7 +175,7 @@ Try to read the default configuration out of a file named
 .I dnssec-<view>.conf .
 Instead of specifying the \-V or --view option every time,
 it is also possible to create a hard- or softlink to the
-executable file with an additional name like 
+executable file with an additional name like
 .I zkt-signer-<view> .
 .TP
 .BI \-c " file" ", \-\-config=" file
@@ -226,16 +226,16 @@ will be a little more verbose.
 Print out the online help.
 
 .SH SAMPLE USAGE
-.TP 
+.TP
 .fam C
-.B "zkt-signer \-N /var/named/named.conf \-r \-v \-v 
+.B "zkt-signer \-N /var/named/named.conf \-r \-v \-v
 .fam T
 Sign all secure zones found in the named.conf file and, if necessary,
 trigger a reload of the zone.
 Print some explanatory remarks on stdout.
 .TP
 .fam C
-.B "zkt-signer \-D zonedir/example.net. \-f \-v \-v 
+.B "zkt-signer \-D zonedir/example.net. \-f \-v \-v
 .fam T
 Force the signing of the zone found in the directory
 .I zonedir/example.net .
@@ -312,7 +312,7 @@ or you have to use the option
 to name the zone and specify the zone file as argument.
 .TP
 Add the name of the signed zonefile to the \fInamed.conf\fP file
-The filename is the name of the zone file with the 
+The filename is the name of the zone file with the
 extension
 .IR .signed .
 Create an empty file with the name
@@ -358,7 +358,7 @@ left justified in a field of at least 10 spaces!
 .fam C
 .fi 0
 @  IN SOA  ns1.example.net. hostmaster.example.net.  (
-		60        ; Serial    
+		60        ; Serial
 		43200 ; Refresh
 		1800  ; Retry
 		2W    ; Expire
@@ -369,7 +369,7 @@ left justified in a field of at least 10 spaces!
 If you use BIND version 9.4 or later and
 use the unixtime format for the serial number (which is the default since ZKT-1.0)
 than this is not necessary.
-See also the parameter Serialformat in 
+See also the parameter Serialformat in
 .IR dnssec.conf .
 .TP
 Try to sign the zone
@@ -455,7 +455,7 @@ FITNESS FOR A PARTICULAR PURPOSE.
 .\"--------------------------------------------------
 
 .SH SEE ALSO
-dnssec-keygen(8), dnssec-signzone(8), rndc(8), named.conf(5), zkt-conf(8), zkt-ls(8), zkt-keygen(8) 
+dnssec-keygen(8), dnssec-signzone(8), rndc(8), named.conf(5), zkt-conf(8), zkt-ls(8), zkt-keygen(8)
 .br
 RFC4033, RFC4034, RFC4035
 .br

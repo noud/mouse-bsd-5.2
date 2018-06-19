@@ -461,7 +461,7 @@ static void cleanup_service(VSTREAM *src, char *unused_service, char **argv)
 
     /*
      * XXX Rely on the front-end programs to enforce record size limits.
-     * 
+     *
      * First, copy the envelope records to the queue file. Then, copy the
      * message content (headers and body). Finally, attach any information
      * extracted from message headers.

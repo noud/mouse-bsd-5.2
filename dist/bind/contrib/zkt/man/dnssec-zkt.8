@@ -5,7 +5,7 @@
 .\"	if n .nh
 .nh
 .SH NAME
-dnssec-zkt \(em Secure DNS zone key tool 
+dnssec-zkt \(em Secure DNS zone key tool
 
 .SH SYNOPSYS
 .na
@@ -200,9 +200,9 @@ dnssec-zkt \(em Secure DNS zone key tool
 .ad
 
 .SH DESCRIPTION
-The 
+The
 .I dnssec-zkt
-command is a wrapper around 
+command is a wrapper around
 .I dnssec-keygen(8)
 to assist in dnssec zone key management.
 .PP
@@ -230,7 +230,7 @@ Try to read the default configuration out of a file named
 .I dnssec-<view>.conf .
 Instead of specifying the \-V or --view option every time,
 it is also possible to create a hard or softlink to the
-executable file to give it an additional name like 
+executable file to give it an additional name like
 .I dnssec-zkt-<view> .
 .TP
 .BI \-c " file" ", \-\-config=" file
@@ -251,7 +251,7 @@ Take care of, that every domain name has a trailing dot.
 .BR \-d ", " \-\-directory
 Skip directory arguments.
 This will be useful in combination with wildcard arguments
-to prevent dnsssec-zkt to list all keys found in subdirectories. 
+to prevent dnsssec-zkt to list all keys found in subdirectories.
 For example "dnssec-zkt -d *" will print out a list of all keys only found in
 the current directory.
 Maybe it is easier to use "dnssec-zkt ." instead (without -r set).
@@ -389,9 +389,9 @@ Use --ksk-rollover for a little more detailed description.
 
 
 .SH SAMPLE USAGE
-.TP 
+.TP
 .fam C
-.B "dnssec-zkt \-r . 
+.B "dnssec-zkt \-r .
 .fam T
 Print out a list of all zone keys found below the current directory.
 .TP
@@ -413,12 +413,12 @@ Store the key in the same directory below "zonedir" where the other
 Print out a trusted-key section containing the key signing keys of "example.net".
 .TP
 .fam C
-.B "dnssec-zkt \-D 123245 \-r . 
+.B "dnssec-zkt \-D 123245 \-r .
 .fam T
 Depreciate the key with tag "12345" below the current directory,
 .TP
 .fam C
-.B "dnssec-zkt --view intern 
+.B "dnssec-zkt --view intern
 .fam T
 Print out a list of all zone keys found below the directory where all
 the zones of view intern live.
@@ -427,14 +427,14 @@ There should be a seperate dnssec config file
 with a directory option to take affect of this.
 .TP
 .fam C
-.B "dnssec-zkt-intern 
+.B "dnssec-zkt-intern
 .fam T
 Same as above.
 The binary file
 .I dnssec-zkt
 has another link, named
 .I dnssec-zkt-intern
-made, and 
+made, and
 .I dnssec-zkt
 examines argv[0] to find a view whose zones it proceeds to process.
 
@@ -479,7 +479,7 @@ FITNESS FOR A PARTICULAR PURPOSE.
 .SH SEE ALSO
 dnssec-keygen(8), dnssec-signzone(8), rndc(8), named.conf(5), dnssec-signer(8),
 .br
-RFC4641 
+RFC4641
 "DNSSEC Operational Practices" by Miek Gieben and Olaf Kolkman,
 .br
 DNSSEC HOWTO Tutorial by Olaf Kolkman, RIPE NCC

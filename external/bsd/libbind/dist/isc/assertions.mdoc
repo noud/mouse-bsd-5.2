@@ -59,7 +59,7 @@ and
 .Fn INVARIANT
 macros evaluate a boolean expression, and if it is false, they invoke the
 current assertion failure callback.  The default callback will print a message
-to 
+to
 .Li stderr
 describing the failure, and then cause the program to dump core.
 If the
@@ -94,7 +94,7 @@ specifies the function to call when an assertion fails.
 .Pp
 When an
 .Fn assertion_failure_callback
-is called, the 
+is called, the
 .Fa filename
 and
 .Fa line
@@ -112,7 +112,7 @@ assert_invariant
 and may be used by the callback to determine the type of the failing
 assertion.
 .Fa condition
-is the literal text of the assertion that failed. 
+is the literal text of the assertion that failed.
 .Fa print_errno
 will be non-zero if the callback should print
 .Fa strerror "errno"

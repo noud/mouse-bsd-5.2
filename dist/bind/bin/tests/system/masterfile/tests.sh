@@ -41,7 +41,7 @@ status=`expr $status + $ret`
 ret=0
 n=`expr $n + 1`
 echo "I:test that the nameserver is running with a missing master file ($n)"
-$DIG +tcp +noall +answer example soa @10.53.0.2 -p 5300 > dig.out.$n 
+$DIG +tcp +noall +answer example soa @10.53.0.2 -p 5300 > dig.out.$n
 grep SOA dig.out.$n > /dev/null || ret=1
 if [ $ret != 0 ]; then echo "I:failed"; fi
 status=`expr $status + $ret`
@@ -49,7 +49,7 @@ status=`expr $status + $ret`
 ret=0
 n=`expr $n + 1`
 echo "I:test that the nameserver returns SERVFAIL for a missing master file ($n)"
-$DIG +tcp +all missing soa @10.53.0.2 -p 5300 > dig.out.$n 
+$DIG +tcp +all missing soa @10.53.0.2 -p 5300 > dig.out.$n
 grep "status: SERVFAIL" dig.out.$n > /dev/null || ret=1
 if [ $ret != 0 ]; then echo "I:failed"; fi
 status=`expr $status + $ret`

@@ -71,7 +71,7 @@ static	const	char	*strfindstr (const char *str, const char *search);
 **	To match the SOA record, the SOA RR must be formatted
 **	like this:
 **	@ [ttl]   IN  SOA <master.fq.dn.> <hostmaster.fq.dn.> (
-**	<SPACEes or TABs>      1234567890; serial number 
+**	<SPACEes or TABs>      1234567890; serial number
 **	<SPACEes or TABs>      86400	 ; other values
 **				...
 **	The space from the first digit of the serial number to
@@ -79,7 +79,7 @@ static	const	char	*strfindstr (const char *str, const char *search);
 **	must be at least 10 characters!
 **	So you have to left justify the serial number in a field
 **	of at least 10 characters like this:
-**	<SPACEes or TABs>      1         ; Serial 
+**	<SPACEes or TABs>      1         ; Serial
 **
 ****************************************************************/
 int	inc_serial (const char *fname, int use_unixtime)
@@ -217,7 +217,7 @@ static	int	inc_soa_serial (FILE *fp, int use_unixtime)
 	if ( !use_unixtime )
 	{
 		today = serialtime (today);	/* YYYYmmdd00 */
-		if ( serial > 1970010100L && serial < today )	
+		if ( serial > 1970010100L && serial < today )
 			serial = today;			/* set to current time */
 		serial++;			/* increment anyway */
 	}

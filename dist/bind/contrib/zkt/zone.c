@@ -187,7 +187,7 @@ zone_t	*zone_new (zone_t **zp, const char *zone, const char *dir, const char *fi
 		dki_readdir (new->dir, &new->keys, 0);
 		new->next = NULL;
 	}
-	
+
 	return zone_add (zp, new);
 }
 
@@ -221,7 +221,7 @@ int	zone_readdir (const char *dir, const char *zone, const char *zfile, zone_t *
 		signed_ext = ".dsigned";
 
 	if ( zfile && (p = strrchr (zfile, '/')) )	/* check if zfile contains a directory */
-	{	
+	{
 		char	subdir[MAX_PATHSIZE+1];
 
 		snprintf (subdir, sizeof (subdir), "%s/%.*s", dir, p - zfile, zfile);
@@ -268,7 +268,7 @@ int	zone_readdir (const char *dir, const char *zone, const char *zfile, zone_t *
 
 /*****************************************************************
 **	zone_geterrstr ()
-**	return error string 
+**	return error string
 *****************************************************************/
 const	char	*zone_geterrstr ()
 {
@@ -300,7 +300,7 @@ zone_t	*zone_add (zone_t **list, zone_t *new)
 	else			/* add node at end or between two nodes */
 		last->next = new;
 	new->next = curr;
-	
+
 	return new;
 }
 

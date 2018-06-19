@@ -7,24 +7,24 @@
 **	Copyright (c) Aug 2005, Karle Boss, Holger Zuleger (kaho).
 **	isparentdomain() (c) Mar 2010 by Holger Zuleger
 **	All rights reserved.
-**	
+**
 **	This software is open source.
-**	
+**
 **	Redistribution and use in source and binary forms, with or without
 **	modification, are permitted provided that the following conditions
 **	are met:
-**	
+**
 **	Redistributions of source code must retain the above copyright notice,
 **	this list of conditions and the following disclaimer.
-**	
+**
 **	Redistributions in binary form must reproduce the above copyright notice,
 **	this list of conditions and the following disclaimer in the documentation
 **	and/or other materials provided with the distribution.
-**	
+**
 **	Neither the name of Karle Boss or Holger Zuleger (kaho) nor the
 **	names of its contributors may be used to endorse or promote products
 **	derived from this software without specific prior written permission.
-**	
+**
 **	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 **	"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 **	TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -90,12 +90,12 @@ int     domaincmp_dir (const char *a, const char *b, int subdomain_above)
 
 	/* let pa and pb point to the last non dot char */
 	pa = a + strlen (a);
-	do 
+	do
 		pa--;
-	while ( pa > a && *pa == '.' );	
+	while ( pa > a && *pa == '.' );
 
 	pb = b + strlen (b);
-	do 
+	do
 		pb--;
 	while ( pb > b && *pb == '.' );
 
@@ -307,7 +307,7 @@ static  struct {
 const char	*progname;
 main (int argc, char *argv[])
 {
-	
+
 	int	expect;
 	int	res;
 	int	c;
@@ -319,18 +319,18 @@ main (int argc, char *argv[])
 	{
 		expect = ex[i].res;
 		if ( expect < 0 )
-			c = '<'; 
+			c = '<';
 		else if ( expect > 0 )
-			c = '>'; 
-		else 
-			c = '='; 
+			c = '>';
+		else
+			c = '=';
 		printf ("%-20s %-20s ", ex[i].a, ex[i].b);
 		printf ("%3d  ", issubdomain (ex[i].a, ex[i].b));
 		printf ("\t==> 0 %c ", c);
 		fflush (stdout);
 		res = domaincmp (ex[i].a, ex[i].b);
 		printf ("%3d  ", res);
-		if ( res < 0 && expect < 0 || res > 0 && expect > 0 || res == 0 && expect == 0 ) 
+		if ( res < 0 && expect < 0 || res > 0 && expect > 0 || res == 0 && expect == 0 )
 			puts ("ok");
 		else
 			puts ("not ok");

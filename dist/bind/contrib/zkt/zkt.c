@@ -2,7 +2,7 @@
 
 /*****************************************************************
 **
-**	@(#) zkt.c  -- A library for managing a list of dns zone files. 
+**	@(#) zkt.c  -- A library for managing a list of dns zone files.
 **
 **	Copyright (c) 2005 - 2008, Holger Zuleger HZnet. All rights reserved.
 **
@@ -129,18 +129,18 @@ static	void	printkeyinfo (const dki_t *dkp, const char *oldpath)
 		tc_attr (stdout, color, 1);
 
 		if ( timeflag )
-			printf (" %-20s", time2str (dkp->gentime ? dkp->gentime: dkp->time, 's')); 
+			printf (" %-20s", time2str (dkp->gentime ? dkp->gentime: dkp->time, 's'));
 		if ( exptimeflag )
-			printf (" %-20s", time2str (dkp->exptime, 's')); 
+			printf (" %-20s", time2str (dkp->exptime, 's'));
 		if ( ageflag )
-			printf (" %16s", age2str (dki_age (dkp, currtime))); 
+			printf (" %16s", age2str (dki_age (dkp, currtime)));
 		if ( lifetimeflag && dkp->lifetime )
 		{
 			if ( dkp->status == 'a' )
-				printf ("%c", (currtime < dkp->time + dkp->lifetime) ? '<' : '!'); 
+				printf ("%c", (currtime < dkp->time + dkp->lifetime) ? '<' : '!');
 			else
 				putchar (' ');
-			printf ("%hdd", dki_lifetimedays (dkp)); 
+			printf ("%hdd", dki_lifetimedays (dkp));
 		}
 		tc_attr (stdout, color, 0);
 		putchar ('\n');
@@ -235,7 +235,7 @@ static	void	list_trustedkey (const dki_t **nodep, const VISIT which, int depth)
 
 		if ( parent == NULL || !issubdomain (dkp->name, parent->name) )
 		{
-			parent = dkp;	
+			parent = dkp;
 			/* loop through list */
 			while ( dkp )
 			{

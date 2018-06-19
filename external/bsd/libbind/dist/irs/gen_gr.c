@@ -418,9 +418,9 @@ grmerge(struct irs_gr *this, const struct group *src, int preserve) {
 			cp += n;
 		}
 	if (preserve) {
-		pvt->group.gr_name = pvt->membuf + 
+		pvt->group.gr_name = pvt->membuf +
 				     (pvt->group.gr_name - oldmembuf);
-		pvt->group.gr_passwd = pvt->membuf + 
+		pvt->group.gr_passwd = pvt->membuf +
 				       (pvt->group.gr_passwd - oldmembuf);
 	} else {
 		pvt->group.gr_name = cp;

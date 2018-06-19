@@ -33,7 +33,7 @@
 .\"	Id: resolver.man3,v 1.2 2009/01/21 00:12:34 each Exp
 .\"
 .Dd July 4, 2000
-.Dt RESOLVER 3 
+.Dt RESOLVER 3
 .Os BSD 4
 .Sh NAME
 .Nm res_ninit ,
@@ -207,7 +207,7 @@ kept in the structure
 rather than that referenced through
 .Ft statp .
 .Pp
-Most of the values in 
+Most of the values in
 .Ft statp
 and
 .Ft _res
@@ -224,7 +224,7 @@ stored in
 are defined in
 .Pa resolv.h
 and are as follows.
-Options are stored as a simple bit mask containing the bitwise 
+Options are stored as a simple bit mask containing the bitwise
 .Dq OR
 of the options enabled.
 .Bl -tag -width "RES_DEB"
@@ -244,8 +244,8 @@ Currently this is not implemented.
 .It Dv RES_USEVC
 Use TCP connections for queries instead of UDP datagrams.
 .It Dv RES_STAYOPEN
-Used with 
-.Dv RES_USEVC 
+Used with
+.Dv RES_USEVC
 to keep the TCP connection open between queries.
 This is useful only in programs that regularly do many queries.
 UDP should be the normal mode used.
@@ -280,12 +280,12 @@ This is used by the standard host lookup routine
 This option is enabled by default.
 .It Dv RES_NOALIASES
 This option turns off the user level aliasing feature controlled by
-the 
-.Ev HOSTALIASES 
+the
+.Ev HOSTALIASES
 environment variable.
 Network daemons should set this option.
 .It Dv RES_USE_INET6
-This option causes 
+This option causes
 .Xr gethostbyname 3
 to look for AAAA records before looking for A records if none are found.
 .It Dv RES_ROTATE
@@ -328,7 +328,7 @@ the Internet address of the local name server(s).
 If no server is configured, the host running the resolver is tried.
 The current domain name is defined by the hostname
 if not specified in the configuration file;
-it can be overridden by the environment variable 
+it can be overridden by the environment variable
 .Ev LOCALDOMAIN .
 This environment variable may contain several blank-separated
 tokens if you wish to override the
@@ -336,8 +336,8 @@ tokens if you wish to override the
 on a per-process basis.  This is similar to the
 .Ic search
 command in the configuration file.
-Another environment variable 
-.Pq Dq Ev RES_OPTIONS 
+Another environment variable
+.Pq Dq Ev RES_OPTIONS
 can be set to override certain internal resolver options which are otherwise
 set by changing fields in the
 .Ft statp
@@ -345,8 +345,8 @@ set by changing fields in the
 .Ft _res
 structure or are inherited from the configuration file's
 .Ic options
-command.  The syntax of the 
-.Dq Ev RES_OPTIONS 
+command.  The syntax of the
+.Dq Ev RES_OPTIONS
 environment variable is explained in
 .Xr resolver 5 .
 Initialization normally occurs on the first call
@@ -358,7 +358,7 @@ must be set to all zeros prior to the first call to
 .Fn res_ninit .
 .Fn res_ndestroy
 should be call to free memory allocated by
-.Fn res_ninit 
+.Fn res_ninit
 after last use.
 .Pp
 The
@@ -393,10 +393,10 @@ routines make a query and awaits a response like
 /
 .Fn res_query ,
 but in addition, it implements the default and search rules
-controlled by the 
-.Dv RES_DEFNAMES 
-and 
-.Dv RES_DNSRCH 
+controlled by the
+.Dv RES_DEFNAMES
+and
+.Dv RES_DNSRCH
 options.
 It returns the length of the first successful reply which is stored in
 .Ft answer
@@ -418,8 +418,8 @@ larger than
 .Fa buflen .
 The query type
 .Fa op
-is usually 
-.Dv QUERY , 
+is usually
+.Dv QUERY ,
 but can be any of the query types defined in
 .Pa <arpa/nameser.h> .
 The domain name for the query is given by
@@ -439,8 +439,8 @@ It will call
 .Fn res_ninit
 /
 .Fn res_init
-if 
-.Dv RES_INIT 
+if
+.Dv RES_INIT
 is not set, send the query to the local name server, and
 handle timeouts and retries.  Additionally,
 .Fn res_nsendsigned
@@ -466,13 +466,13 @@ a buffer that bigger that the answer returned by the previous
 query is recommended.
 .Pp
 .Fa answer
-MUST be big enough to receive a maximum UDP response from the server or 
+MUST be big enough to receive a maximum UDP response from the server or
 parts of the answer will be silently discarded.
 The default maximum UDP response size is 512 bytes.
 .Pp
 The function
 .Fn res_ourserver_p
-returns true when 
+returns true when
 .Fa inp
 is one of the servers in
 .Fa statp->nsaddr_list
@@ -498,7 +498,7 @@ The function
 .Fn fp_resstat
 prints out the active flag bits in
 .Fa statp->options
-preceeded by the text ";; res options:" on 
+preceeded by the text ";; res options:" on
 .Fa file .
 .Pp
 The functions
@@ -541,7 +541,7 @@ The function
 discovers the closest enclosing zone cut for a specified domain name,
 and finds the IP addresses of the zone's master servers.
 .Pp
-The functions 
+The functions
 .Fn res_nmkupdate
 /
 .Fn res_mkupdate
@@ -556,15 +556,15 @@ return the length of the constructed message on no error or one of the
 following error values.
 .Bl -inset -width "-5"
 .It -1
-An error occurred parsing 
+An error occurred parsing
 .Fa rrecp_in .
 .It -2
-The buffer 
+The buffer
 .Fa buf
 was too small.
 .It -3
 The first record was not a zone section or there was a section order problem.
-The section order is S_ZONE, S_PREREQ and S_UPDATE. 
+The section order is S_ZONE, S_PREREQ and S_UPDATE.
 .It -4
 A number overflow occurred.
 .It -5
@@ -604,7 +604,7 @@ an array of pointers
 .Fa dnptrs
 to previously-compressed names in the current message.
 The first pointer points to
-to the beginning of the message and the list ends with 
+to the beginning of the message and the list ends with
 .Dv NULL .
 The limit to the array is specified by
 .Fa lastdnptr .
@@ -613,12 +613,12 @@ A side effect of
 is to update the list of pointers for labels inserted into the message
 as the name is compressed.  If
 .Fa dnptr
-is 
-.Dv NULL , 
+is
+.Dv NULL ,
 names are not compressed.  If
 .Fa lastdnptr
-is 
-.Dv NULL , 
+is
+.Dv NULL ,
 the list of labels is not updated.
 .Pp
 The
@@ -673,13 +673,13 @@ parameter.
 .Sh FILES
 .Bl -tag -width "/etc/resolv.conf    "
 .It Pa /etc/resolv.conf
-See 
-.Xr resolver 5 . 
+See
+.Xr resolver 5 .
 .El
 .Sh SEE ALSO
-.Xr gethostbyname 3 , 
+.Xr gethostbyname 3 ,
 .Xr hostname 7 ,
 .Xr resolver 5 ;
 RFC1032, RFC1033, RFC1034, RFC1035, RFC974;
-SMM:11, 
+SMM:11,
 .Dq Name Server Operations Guide for BIND

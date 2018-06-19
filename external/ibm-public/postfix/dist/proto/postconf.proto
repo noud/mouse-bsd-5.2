@@ -165,7 +165,7 @@ Do not change this unless you have a complete understanding of RFC 2821.
 <p>
 The numerical Postfix SMTP server response code for
 an access(5) map "defer" action, including "defer_if_permit"
-or "defer_if_reject". Prior to Postfix 2.6, the response 
+or "defer_if_reject". Prior to Postfix 2.6, the response
 is hard-coded as "450".
 </p>
 
@@ -494,7 +494,7 @@ If you change the alias database, run "<b>postalias /etc/aliases</b>"
 (or wherever your system stores the mail alias file), or simply
 run "<b>newaliases</b>" to build the necessary DBM or DB file.
 </p>
-  
+
 <p>
 The local(8) delivery agent disallows regular expression substitution
 of $1 etc. in alias_maps, because that would open a security hole.
@@ -585,17 +585,17 @@ This is enabled by default.
 
 <p> Note: with Postfix version 2.2, message header address rewriting
 happens only when one of the following conditions is true: </p>
- 
+
 <ul>
- 
+
 <li> The message is received with the Postfix sendmail(1) command,
- 
+
 <li> The message is received from a network client that matches
 $local_header_rewrite_clients,
- 
+
 <li> The message is received from the network, and the
 remote_header_rewrite_domain parameter specifies a non-empty value.
- 
+
 </ul>
 
 <p> To get the behavior before Postfix version 2.2, specify
@@ -628,7 +628,7 @@ routing can match Postfix access tables. By default, such addresses
 cannot match Postfix access tables, because the address is ambiguous.
 </p>
 
-%PARAM always_bcc 
+%PARAM always_bcc
 
 <p>
 Optional address that receives a "blind carbon copy" of each message
@@ -667,7 +667,7 @@ hash or btree tables.  Specify a byte count.
 This feature is available in Postfix 2.0 and later.
 </p>
 
-%PARAM best_mx_transport 
+%PARAM best_mx_transport
 
 <p>
 Where the Postfix SMTP client should deliver mail when it detects
@@ -708,7 +708,7 @@ with lots of interactive users, the biff service can be a performance
 drain.  Specify "biff = no" in main.cf to disable.
 </p>
 
-%PARAM body_checks 
+%PARAM body_checks
 
 <p> Optional lookup tables for content inspection as specified in
 the body_checks(5) manual page.  </p>
@@ -773,7 +773,7 @@ message size exceeds a local or remote MTA's message size limit.
 
 </ul>
 
-%PARAM canonical_maps 
+%PARAM canonical_maps
 
 <p>
 Optional address mapping lookup tables for message headers and
@@ -897,7 +897,7 @@ The default time unit is s (seconds).
 <p> The increment in verbose logging level when a remote client or
 server matches a pattern in the debug_peer_list parameter.  </p>
 
-%PARAM debug_peer_list 
+%PARAM debug_peer_list
 
 <p> Optional list of remote client or server hostname or network
 address patterns that cause the verbose logging level to increase
@@ -1265,7 +1265,7 @@ transport(5) table. </p>
 In order of decreasing precedence, the nexthop destination is taken
 from $sender_dependent_default_transport_maps, $default_transport,
 $sender_dependent_relayhost_maps, $relayhost, or from the recipient
-domain. 
+domain.
 </p>
 
 <p>
@@ -1294,7 +1294,7 @@ client request is rejected by the "defer" restriction.
 Do not change this unless you have a complete understanding of RFC 2821.
 </p>
 
-%PARAM defer_transports 
+%PARAM defer_transports
 
 <p>
 The names of message delivery transports that should not deliver mail
@@ -1420,7 +1420,7 @@ Postfix version 2.2 and later will not use the fallback relays for
 destinations that it is MX host for (assuming DNS lookup is turned on).
 </p>
 
-%PARAM fallback_relay 
+%PARAM fallback_relay
 
 <p>
 Optional list of relay hosts for SMTP destinations that can't be
@@ -1723,7 +1723,7 @@ meant to be a substitute for content filters that do complex
 processing such attachment decoding and unzipping.
 </p>
 
-%PARAM header_checks 
+%PARAM header_checks
 
 <p>
 Optional lookup tables for content inspection of primary non-MIME
@@ -1738,7 +1738,7 @@ If a header is larger, the excess is discarded.  The limit is
 enforced by the cleanup(8) server.
 </p>
 
-%PARAM home_mailbox 
+%PARAM home_mailbox
 
 <p>
 Optional pathname of a mailbox file relative to a local(8) user's
@@ -2178,7 +2178,7 @@ The default time unit is s (seconds).
 This feature is available in Postfix 2.1 and later.
 </p>
 
-%PARAM local_command_shell 
+%PARAM local_command_shell
 
 <p>
 Optional shell program for local(8) delivery to non-Postfix command.
@@ -2299,7 +2299,7 @@ which is just the name of a service that is defined the master.cf file.
 <p>
 Specify a string of the form <i>transport:nexthop</i>, where <i>transport</i>
 is the name of a mail delivery transport defined in master.cf.
-The <i>:nexthop</i> destination is optional; its syntax is documented 
+The <i>:nexthop</i> destination is optional; its syntax is documented
 in the manual page of the corresponding delivery agent.
 </p>
 
@@ -2309,7 +2309,7 @@ need to review the LOCAL_RECIPIENT_README document, otherwise the
 SMTP server may reject mail for local recipients.
 </p>
 
-%PARAM luser_relay 
+%PARAM luser_relay
 
 <p>
 Optional catch-all destination for unknown local(8) recipients.
@@ -2447,7 +2447,7 @@ also include the release date. The version string can be used in,
 for example, the SMTP greeting banner.
 </p>
 
-%PARAM mailbox_command 
+%PARAM mailbox_command
 
 <p>
 Optional external command that the local(8) delivery agent should
@@ -2619,7 +2619,7 @@ Specify zero or more of: envelope_sender, envelope_recipient,
 header_sender, header_recipient
 </p>
 
-%PARAM masquerade_domains 
+%PARAM masquerade_domains
 
 <p>
 Optional list of domains whose subdomain structure will be stripped
@@ -2685,7 +2685,7 @@ Example:
 masquerade_domains = $mydomain
 </pre>
 
-%PARAM masquerade_exceptions 
+%PARAM masquerade_exceptions
 
 <p>
 Optional list of user names that are not subjected to address
@@ -2930,7 +2930,7 @@ information.
 </p>
 
 <p>
-If you specify the mynetworks list by hand, 
+If you specify the mynetworks list by hand,
 Postfix ignores the mynetworks_style setting.
 </p>
 
@@ -2956,10 +2956,10 @@ and would otherwise be confused with a "type:table" pattern.  </p>
 
 <p> Examples:  </p>
 
-<pre> 
+<pre>
 mynetworks = 127.0.0.0/8 168.100.189.0/28
 mynetworks = !192.168.0.1, 192.168.0.0/28
-mynetworks = 127.0.0.0/8 168.100.189.0/28 [::1]/128 [2001:240:587::]/64 
+mynetworks = 127.0.0.0/8 168.100.189.0/28 [::1]/128 [2001:240:587::]/64
 mynetworks = $config_directory/mynetworks
 mynetworks = hash:/etc/postfix/network_table
 </pre>
@@ -3111,7 +3111,7 @@ propagate_unmatched_extensions = canonical, virtual, alias,
 propagate_unmatched_extensions = canonical, virtual
 </pre>
 
-%PARAM proxy_interfaces 
+%PARAM proxy_interfaces
 
 <p>
 The network interface addresses that this mail system receives mail
@@ -3156,7 +3156,7 @@ _recipient_limit) if necessary. The minimum value allowed for this
 parameter is 1.
 </p>
 
-%PARAM qmqpd_authorized_clients 
+%PARAM qmqpd_authorized_clients
 
 <p>
 What clients are allowed to connect to the QMQP server port.
@@ -3252,7 +3252,7 @@ Time units: s (seconds), m (minutes), h (hours), d (days), w (weeks).
 The default time unit is s (seconds).
 </p>
 
-%PARAM rbl_reply_maps 
+%PARAM rbl_reply_maps
 
 <p>
 Optional lookup tables with RBL response templates. The tables are
@@ -3266,7 +3266,7 @@ templates.
 This feature is available in Postfix 2.0 and later.
 </p>
 
-%PARAM receive_override_options 
+%PARAM receive_override_options
 
 <p> Enable or disable recipient validation, built-in content
 filtering, or address mapping. Typically, these are specified in
@@ -3326,7 +3326,7 @@ receive_override_options = no_address_mappings
 This feature is available in Postfix 2.1 and later.
 </p>
 
-%PARAM recipient_bcc_maps 
+%PARAM recipient_bcc_maps
 
 <p>
 Optional BCC (blind carbon-copy) address lookup tables, indexed by
@@ -3384,7 +3384,7 @@ Example:
 recipient_bcc_maps = hash:/etc/postfix/recipient_bcc
 </pre>
 
-%PARAM recipient_canonical_maps 
+%PARAM recipient_canonical_maps
 
 <p>
 Optional address mapping lookup tables for envelope and header
@@ -3404,7 +3404,7 @@ Example:
 recipient_canonical_maps = hash:/etc/postfix/recipient_canonical
 </pre>
 
-%PARAM recipient_delimiter 
+%PARAM recipient_delimiter
 
 <p>
 The separator between user names and address extensions (user+foo).
@@ -3473,7 +3473,7 @@ restriction.
 Do not change this unless you have a complete understanding of RFC 2821.
 </p>
 
-%PARAM relay_recipient_maps 
+%PARAM relay_recipient_maps
 
 <p> Optional lookup tables with all valid addresses in the domains
 that match $relay_domains. Specify @domain as a wild-card for
@@ -3507,7 +3507,7 @@ relay_recipient_maps = hash:/etc/postfix/relay_recipients
 This feature is available in Postfix 2.0 and later.
 </p>
 
-%PARAM relayhost 
+%PARAM relayhost
 
 <p>
 The next-hop destination of non-local mail; overrides non-local
@@ -3545,7 +3545,7 @@ relayhost = uucphost
 relayhost = [an.ip.add.ress]
 </pre>
 
-%PARAM relocated_maps 
+%PARAM relocated_maps
 
 <p>
 Optional lookup tables with new contact information for users or
@@ -3664,7 +3664,7 @@ Example:
 sender_bcc_maps = hash:/etc/postfix/sender_bcc
 </pre>
 
-%PARAM sender_canonical_maps 
+%PARAM sender_canonical_maps
 
 <p>
 Optional address mapping lookup tables for envelope and header
@@ -3702,7 +3702,7 @@ the word "ESMTP" appears in the server greeting banner (example:
 220 spike.porcupine.org ESMTP Postfix).
 </p>
 
-%PARAM smtp_bind_address 
+%PARAM smtp_bind_address
 
 <p>
 An optional numerical network address that the Postfix SMTP client
@@ -3731,7 +3731,7 @@ inet_interfaces documentation for more detail. </p>
 <p> Note 2: address information may be enclosed inside <tt>[]</tt>,
 but this form is not required here. </p>
 
-%PARAM smtp_bind_address6 
+%PARAM smtp_bind_address6
 
 <p>
 An optional numerical network address that the Postfix SMTP client
@@ -3774,7 +3774,7 @@ not specify larger values without permission from the remote sites.
 %PARAM smtp_connection_cache_reuse_limit 10
 
 <p> When SMTP connection caching is enabled, the number of times that
-an SMTP session may be reused before it is closed. 
+an SMTP session may be reused before it is closed.
 </p>
 
 <p> This feature is available in Postfix 2.2. In Postfix 2.3 it is
@@ -4248,7 +4248,7 @@ Example:
 smtp_sasl_auth_enable = yes
 </pre>
 
-%PARAM smtp_sasl_password_maps 
+%PARAM smtp_sasl_password_maps
 
 <p>
 Optional SMTP client lookup tables with one username:password entry
@@ -4469,7 +4469,7 @@ files specified with "/file/name".  IP version 6 addresses contain
 the ":" character, and would otherwise be confused with a "type:table"
 pattern.  </p>
 
-%PARAM smtpd_authorized_xclient_hosts 
+%PARAM smtpd_authorized_xclient_hosts
 
 <p>
 What SMTP clients are allowed to use the XCLIENT feature.  This
@@ -4506,7 +4506,7 @@ files specified with "/file/name".  IP version 6 addresses contain
 the ":" character, and would otherwise be confused with a "type:table"
 pattern.  </p>
 
-%PARAM smtpd_authorized_xforward_hosts 
+%PARAM smtpd_authorized_xforward_hosts
 
 <p>
 What SMTP clients are allowed to use the XFORWARD feature.  This
@@ -4749,7 +4749,7 @@ Example:
 smtpd_client_new_tls_session_rate_limit = 100
 </pre>
 
-%PARAM smtpd_client_restrictions 
+%PARAM smtpd_client_restrictions
 
 <p>
 Optional SMTP server access restrictions in the context of a client
@@ -4780,7 +4780,7 @@ client network address information.
 
 <dd> Use the client certificate fingerprint as lookup key for the
 specified access(5) database; with Postfix version 2.2, also require that
-the SMTP client certificate is verified successfully. 
+the SMTP client certificate is verified successfully.
 The fingerprint digest algorithm is configurable via the
 smtpd_tls_fingerprint_digest parameter (hard-coded as md5 prior to
 Postfix version 2.5).  This feature is available with Postfix version
@@ -4981,7 +4981,7 @@ rare but legitimate applications: under certain conditions,
 multi-recipient mail that was posted with the DSN option NOTIFY=NEVER
 may be forwarded with the null sender address.
 <br> Note: this restriction can only work reliably
-when used in smtpd_data_restrictions or 
+when used in smtpd_data_restrictions or
 smtpd_end_of_data_restrictions, because the total number of
 recipients is not known at an earlier stage of the SMTP conversation.
 Use at the RCPT stage will only reject the second etc.  recipient.
@@ -5007,7 +5007,7 @@ of time where it is not allowed, or when the client sends SMTP
 commands ahead of time without knowing that Postfix actually supports
 ESMTP command pipelining. This stops mail from bulk mail software
 that improperly uses ESMTP command pipelining in order to speed up
-deliveries. 
+deliveries.
 <br> With Postfix 2.6 and later, the SMTP server sets a per-session
 flag whenever it detects illegal pipelining, including pipelined
 EHLO or HELO commands. The reject_unauth_pipelining feature simply
@@ -5031,7 +5031,7 @@ the next restriction in the list, if any. This may stop zombie
 mail when used as:
 <pre>
 /etc/postfix/main.cf:
-    smtpd_client_restrictions = 
+    smtpd_client_restrictions =
         sleep 1, reject_unauth_pipelining
     smtpd_delay_reject = no
 </pre>
@@ -5153,7 +5153,7 @@ excess of the limit specified with $smtpd_recipient_limit, before
 the Postfix SMTP server increments the per-session error count
 for each excess recipient.  </p>
 
-%PARAM smtpd_etrn_restrictions 
+%PARAM smtpd_etrn_restrictions
 
 <p>
 Optional SMTP server access restrictions in the context of a client
@@ -5258,7 +5258,7 @@ Example:
 smtpd_helo_required = yes
 </pre>
 
-%PARAM smtpd_helo_restrictions 
+%PARAM smtpd_helo_restrictions
 
 <p>
 Optional restrictions that the Postfix SMTP server applies in the
@@ -5303,7 +5303,7 @@ feature is available in Postfix 2.1 and later.  </dd>
 
 <dd>Search the specified access(5) database for the DNS servers
 for the HELO or EHLO hostname, and execute the corresponding action.
-Note: a result of "OK" is not allowed for safety reasons. Instead,        
+Note: a result of "OK" is not allowed for safety reasons. Instead,
 use DUNNO in order to exclude specific hosts from blacklists.  This
 feature is available in Postfix 2.1 and later.  </dd>
 
@@ -5379,7 +5379,7 @@ The maximal number of lines in the Postfix SMTP server command history
 before it is flushed upon receipt of EHLO, RSET, or end of DATA.
 </p>
 
-%PARAM smtpd_noop_commands 
+%PARAM smtpd_noop_commands
 
 <p>
 List of commands that the Postfix SMTP server replies to with "250
@@ -5398,7 +5398,7 @@ By default, the Postfix hostname is used.
 This feature is available in Postfix 2.1 and later.
 </p>
 
-%PARAM smtpd_proxy_options 
+%PARAM smtpd_proxy_options
 
 <p>
 List of options that control how the Postfix SMTP server
@@ -5442,7 +5442,7 @@ This becomes a problem as mail load increases so that fewer and
 fewer CPU cycles remain available to mead the fixed deadline.
 </p>
 
-%PARAM smtpd_proxy_filter 
+%PARAM smtpd_proxy_filter
 
 <p> The hostname and TCP port of the mail filtering proxy server.
 The proxy receives all mail from the Postfix SMTP server, and is
@@ -5751,7 +5751,7 @@ message header.  </p>
 
 <p> This feature is available in Postfix 2.3 and later.  </p>
 
-%PARAM smtpd_sasl_exceptions_networks 
+%PARAM smtpd_sasl_exceptions_networks
 
 <p>
 What remote SMTP clients the Postfix SMTP server will not offer
@@ -5795,7 +5795,7 @@ smtpd_sasl_exceptions_networks = $mynetworks
 This feature is available in Postfix 2.1 and later.
 </p>
 
-%PARAM smtpd_sasl_local_domain 
+%PARAM smtpd_sasl_local_domain
 
 <p>
 The name of the Postfix SMTP server's local SASL authentication
@@ -5887,7 +5887,7 @@ Example:
 smtpd_sasl_security_options = noanonymous, noplaintext
 </pre>
 
-%PARAM smtpd_sender_login_maps 
+%PARAM smtpd_sender_login_maps
 
 <p>
 Optional lookup table with the SASL login names that own sender
@@ -5923,7 +5923,7 @@ In all cases the result of table lookup must be either "not found"
 or a list of SASL login names separated by comma and/or whitespace.
 </p>
 
-%PARAM smtpd_sender_restrictions 
+%PARAM smtpd_sender_restrictions
 
 <p>
 Optional restrictions that the Postfix SMTP server applies in the
@@ -6152,17 +6152,17 @@ enabled by default.
 
 <p> Note: with Postfix version 2.2, message header address rewriting
 happens only when one of the following conditions is true: </p>
- 
+
 <ul>
- 
+
 <li> The message is received with the Postfix sendmail(1) command,
- 
+
 <li> The message is received from a network client that matches
 $local_header_rewrite_clients,
- 
+
 <li> The message is received from the network, and the
 remote_header_rewrite_domain parameter specifies a non-empty value.
- 
+
 </ul>
 
 <p> To get the behavior before Postfix version 2.2, specify
@@ -6206,7 +6206,7 @@ are errors while parsing the command line arguments, and errors
 while accessing the Postfix main.cf configuration file.
 </p>
 
-%PARAM transport_maps 
+%PARAM transport_maps
 
 <p>
 Optional lookup tables with mappings from recipient address to
@@ -6510,7 +6510,7 @@ a lot of detail, to running some daemon processes under control of
 a call tracer or debugger.
 </p>
 
-%PARAM debugger_command 
+%PARAM debugger_command
 
 <p>
 The external command to execute when a Postfix daemon program is
@@ -6547,7 +6547,7 @@ maintains the status of sender and/or recipient address verification
 probes, and generates probes on request by other Postfix processes.
 </p>
 
-%PARAM alternate_config_directories 
+%PARAM alternate_config_directories
 
 <p>
 A list of non-default Postfix configuration directories that may
@@ -6576,17 +6576,17 @@ Postfix does not support domain-less addresses.
 
 <p> Note 2: with Postfix version 2.2, message header address rewriting
 happens only when one of the following conditions is true: </p>
- 
+
 <ul>
- 
+
 <li> The message is received with the Postfix sendmail(1) command,
- 
+
 <li> The message is received from a network client that matches
 $local_header_rewrite_clients,
- 
+
 <li> The message is received from the network, and the
 remote_header_rewrite_domain parameter specifies a non-empty value.
- 
+
 </ul>
 
 <p> To get the behavior before Postfix version 2.2, specify
@@ -6609,17 +6609,17 @@ specify full domain names instead.
 
 <p> Note 2: with Postfix version 2.2, message header address rewriting
 happens only when one of the following conditions is true: </p>
- 
+
 <ul>
- 
+
 <li> The message is received with the Postfix sendmail(1) command,
- 
+
 <li> The message is received from a network client that matches
 $local_header_rewrite_clients,
- 
+
 <li> The message is received from the network, and the
 remote_header_rewrite_domain parameter specifies a non-empty value.
- 
+
 </ul>
 
 <p> To get the behavior before Postfix version 2.2, specify
@@ -6647,7 +6647,7 @@ This feature is available in Postfix 2.1 and later.
 List of users who are authorized to flush the queue.
 </p>
 
-<p> 
+<p>
 By default, all users are allowed to flush the queue.  Access is
 always granted if the invoking user is the super-user or the
 $mail_owner user.  Otherwise, the real UID of the process is looked
@@ -6708,7 +6708,7 @@ List of users who are authorized to submit mail with the sendmail(1)
 command (and with the privileged postdrop(1) helper command).
 </p>
 
-<p> 
+<p>
 By default, all users are allowed to submit mail.  Otherwise, the
 real UID of the process is looked up in the system password file,
 and access is granted only if the corresponding login name is on
@@ -6864,7 +6864,7 @@ Characters outside the
 allowed set are replaced by underscores.
 </p>
 
-%PARAM content_filter 
+%PARAM content_filter
 
 <p> After the message is queued, send the entire message to the
 specified <i>transport:destination</i>. The <i>transport</i> name
@@ -6944,7 +6944,7 @@ encoded in the envelope sender address.  The VERP_README file
 describes configuration and operation details of Postfix support
 for variable envelope return path addresses.  VERP style delivery
 is requested with the SMTP XVERP command or with the "<b>sendmail
--V</b>" command-line option and is available in Postfix 
+-V</b>" command-line option and is available in Postfix
 1.1 and later.
 </p>
 
@@ -7108,14 +7108,14 @@ of the "owner-aliasname" alias. Normally, Postfix sets the envelope
 sender address to the name of the "owner-aliasname" alias.
 </p>
 
-%PARAM fallback_transport 
+%PARAM fallback_transport
 
 <p>
 Optional message delivery transport that the local(8) delivery
 agent should use for names that are not found in the aliases(5)
 or UNIX password database.
 </p>
- 
+
 <p> The precedence of local(8) delivery features from high to low
 is: aliases, .forward files, mailbox_transport_maps, mailbox_transport,
 mailbox_command_maps, mailbox_command, home_mailbox, mail_spool_directory,
@@ -7217,7 +7217,7 @@ programs.
 Enable SASL authentication in the Postfix LMTP client.
 </p>
 
-%PARAM lmtp_sasl_password_maps 
+%PARAM lmtp_sasl_password_maps
 
 <p>
 Optional LMTP client lookup tables with one username:password entry
@@ -7277,7 +7277,7 @@ The default TCP port that the Postfix LMTP client connects to.
 The Postfix release date, in "YYYYMMDD" format.
 </p>
 
-%PARAM mailbox_command_maps 
+%PARAM mailbox_command_maps
 
 <p>
 Optional lookup tables with per-recipient external commands to use
@@ -7311,7 +7311,7 @@ GID has write access to the parent directory of the mailbox file.
 Note: the default setting of this parameter is system dependent.
 </p>
 
-%PARAM mailbox_transport 
+%PARAM mailbox_transport
 
 <p>
 Optional message delivery transport that the local(8) delivery
@@ -7338,7 +7338,7 @@ list the Postfix mail queue.
 Where the Postfix manual pages are installed.
 </p>
 
-%PARAM maps_rbl_domains 
+%PARAM maps_rbl_domains
 
 <p>
 Obsolete feature: use the reject_rbl_client feature instead.
@@ -7441,7 +7441,7 @@ recipient_delimiter is set to "-".  This feature is useful for
 mailing lists.
 </p>
 
-%PARAM permit_mx_backup_networks 
+%PARAM permit_mx_backup_networks
 
 <p>
 Restrict the use of the permit_mx_backup SMTP access feature to
@@ -7508,7 +7508,7 @@ This is a read-only parameter.
 %PARAM proxy_read_maps see "postconf -d" output
 
 <p>
-The lookup tables that the proxymap(8) server is allowed to 
+The lookup tables that the proxymap(8) server is allowed to
 access for the read-only service.
 Table references that don't begin with proxy: are ignored.
 </p>
@@ -7614,7 +7614,7 @@ the transport(5) table.
 <p>
 Specify a string of the form <i>transport:nexthop</i>, where <i>transport</i>
 is the name of a mail delivery transport defined in master.cf.
-The <i>:nexthop</i> destination is optional; its syntax is documented 
+The <i>:nexthop</i> destination is optional; its syntax is documented
 in the manual page of the corresponding delivery agent.
 </p>
 
@@ -7735,7 +7735,7 @@ cached session is still usable.  </p>
 
 <p> This feature is available in Postfix 2.1 and later.  </p>
 
-%PARAM smtpd_data_restrictions 
+%PARAM smtpd_data_restrictions
 
 <p>
 Optional access restrictions that the Postfix SMTP server applies
@@ -7779,7 +7779,7 @@ smtpd_data_restrictions = reject_unauth_pipelining
 smtpd_data_restrictions = reject_multi_recipient_bounce
 </pre>
 
-%PARAM smtpd_end_of_data_restrictions 
+%PARAM smtpd_end_of_data_restrictions
 
 <p> Optional access restrictions that the Postfix SMTP server
 applies in the context of the SMTP END-OF-DATA command.
@@ -7931,7 +7931,7 @@ not null.
 This feature is available in Postfix 2.1 and later.
 </p>
 
-%PARAM smtpd_restriction_classes 
+%PARAM smtpd_restriction_classes
 
 <p>
 User-defined aliases for groups of access restrictions. The aliases
@@ -8104,7 +8104,7 @@ Postfix sendmail(1) command line and in SMTP commands.
 This feature is available in Postfix 1.1 and later.
 </p>
 
-%PARAM virtual_gid_maps 
+%PARAM virtual_gid_maps
 
 <p>
 Lookup tables with the per-recipient group ID for virtual(8) mailbox
@@ -8137,7 +8137,7 @@ it will open the table directly. Before Postfix version 2.2, the
 virtual(8) delivery agent will terminate with a fatal error.
 </p>
 
-%PARAM virtual_mailbox_base 
+%PARAM virtual_mailbox_base
 
 <p>
 A prefix that the virtual(8) delivery agent prepends to all pathname
@@ -8201,7 +8201,7 @@ mailbox file.
 Note 2: the default setting of this parameter is system dependent.
 </p>
 
-%PARAM virtual_mailbox_maps 
+%PARAM virtual_mailbox_maps
 
 <p>
 Optional lookup tables with all valid addresses in the domains that
@@ -8263,7 +8263,7 @@ This information can be overruled with the transport(5) table.
 <p>
 Specify a string of the form <i>transport:nexthop</i>, where <i>transport</i>
 is the name of a mail delivery transport defined in master.cf.
-The <i>:nexthop</i> destination is optional; its syntax is documented 
+The <i>:nexthop</i> destination is optional; its syntax is documented
 in the manual page of the corresponding delivery agent.
 </p>
 
@@ -8271,7 +8271,7 @@ in the manual page of the corresponding delivery agent.
 This feature is available in Postfix 2.0 and later.
 </p>
 
-%PARAM virtual_uid_maps 
+%PARAM virtual_uid_maps
 
 <p>
 Lookup tables with the per-recipient user ID that the virtual(8)
@@ -8416,7 +8416,7 @@ is already bounded by $max_idle.  </p>
 connection cache hit and miss rates for logical destinations and for
 physical endpoints. </p>
 
-%PARAM remote_header_rewrite_domain 
+%PARAM remote_header_rewrite_domain
 
 <p> Don't rewrite message headers from remote clients at all when
 this parameter is empty; otherwise, rewrite message headers and
@@ -8431,7 +8431,7 @@ addresses from remote SMTP clients, so that those addresses cannot
 be confused with local addresses. </p>
 
 <blockquote>
-<pre> 
+<pre>
 remote_header_rewrite_domain = domain.invalid
 </pre>
 </blockquote>
@@ -8515,7 +8515,7 @@ message headers, and always append my own domain to incomplete
 header addresses.  </p>
 
 <blockquote>
-<pre> 
+<pre>
 local_header_rewrite_clients = static:all
 </pre>
 </blockquote>
@@ -8539,9 +8539,9 @@ system.  </p>
 
 <blockquote>
 <pre>
-local_header_rewrite_clients = permit_mynetworks, 
+local_header_rewrite_clients = permit_mynetworks,
     permit_sasl_authenticated permit_tls_clientcerts
-    check_address_map hash:/etc/postfix/pop-before-smtp 
+    check_address_map hash:/etc/postfix/pop-before-smtp
 </pre>
 </blockquote>
 
@@ -8765,7 +8765,7 @@ dedicated servers. </p>
 <p> Note 1: "smtpd_enforce_tls = yes" implies "smtpd_tls_auth_only = yes". </p>
 
 <p> Note 2: when invoked via "<b>sendmail -bs</b>", Postfix will never offer
-STARTTLS due to insufficient privileges to access the server private  
+STARTTLS due to insufficient privileges to access the server private
 key. This is intended behavior. </p>
 
 <p> This feature is available in Postfix 2.2 and later. With
@@ -8850,7 +8850,7 @@ caches in a single database. </p>
 
 <p> Note: <b>dbm</b> databases are not suitable. TLS
 session objects are too large. </p>
- 
+
 <p> As of version 2.5, Postfix no longer uses root privileges when
 opening this file. The file should now be stored under the Postfix-owned
 data_directory. As a migration aid, an attempt to open the file
@@ -8880,7 +8880,7 @@ are not possible. </p>
 
 <p> List of tables with remote SMTP client-certificate fingerprints
 for which the Postfix SMTP server will allow access with the
-permit_tls_clientcerts feature.  
+permit_tls_clientcerts feature.
 The fingerprint digest algorithm is configurable via the
 smtpd_tls_fingerprint_digest parameter (hard-coded as md5 prior to
 Postfix version 2.5).  </p>
@@ -9074,7 +9074,7 @@ certificate.  Don't forget to create the necessary "hash" links
 with, for example, "$OPENSSL_HOME/bin/c_rehash /etc/postfix/certs".
 </p>
 
-<p> To use this option in chroot mode, this directory (or a copy) 
+<p> To use this option in chroot mode, this directory (or a copy)
 must be inside the chroot jail. </p>
 
 <p> Specify "tls_append_default_CA = no" to prevent Postfix from
@@ -9133,7 +9133,7 @@ caches in a single database. </p>
 
 <p> Note: <b>dbm</b> databases are not suitable. TLS
 session objects are too large. </p>
- 
+
 <p> As of version 2.5, Postfix no longer uses root privileges when
 opening this file. The file should now be stored under the Postfix-owned
 data_directory. As a migration aid, an attempt to open the file
@@ -9661,7 +9661,7 @@ smtpd_discard_ehlo_keyword_address_maps. </p>
 
 <p> This feature is available in Postfix 2.3 and later. </p>
 
-%PARAM lmtp_discard_lhlo_keywords 
+%PARAM lmtp_discard_lhlo_keywords
 
 <p> A case insensitive list of LHLO keywords (pipelining, starttls,
 auth, etc.) that the LMTP client will ignore in the LHLO response
@@ -9896,7 +9896,7 @@ for authentication. The available types are listed with the
 %PARAM smtp_sasl_type cyrus
 
 <p> The SASL plug-in type that the Postfix SMTP client should use
-for authentication.  The available types are listed with the    
+for authentication.  The available types are listed with the
 "<b>postconf -A</b>" command. </p>
 
 <p> This feature is available in Postfix 2.3 and later. </p>
@@ -9905,7 +9905,7 @@ for authentication.  The available types are listed with the
 %PARAM lmtp_sasl_type cyrus
 
 <p> The SASL plug-in type that the Postfix LMTP client should use
-for authentication.  The available types are listed with the    
+for authentication.  The available types are listed with the
 "<b>postconf -A</b>" command. </p>
 
 <p> This feature is available in Postfix 2.3 and later. </p>
@@ -9971,7 +9971,7 @@ rejecting the address as invalid.  </p>
 <p> Optional lookup tables with per-recipient message delivery
 transports to use for local(8) mailbox delivery, whether or not the
 recipients are found in the UNIX passwd database. </p>
- 
+
 <p> The precedence of local(8) delivery features from high to low
 is: aliases, .forward files, mailbox_transport_maps, mailbox_transport,
 mailbox_command_maps, mailbox_command, home_mailbox, mail_spool_directory,
@@ -9979,7 +9979,7 @@ fallback_transport_maps, fallback_transport and luser_relay.  </p>
 
 <p> For safety reasons, this feature does not allow $number
 substitutions in regular expression maps. </p>
- 
+
 <p> This feature is available in Postfix 2.3 and later. </p>
 
 %PARAM fallback_transport_maps
@@ -9987,7 +9987,7 @@ substitutions in regular expression maps. </p>
 <p> Optional lookup tables with per-recipient message delivery
 transports for recipients that the local(8) delivery agent could
 not find in the aliases(5) or UNIX password database. </p>
- 
+
 <p> The precedence of local(8) delivery features from high to low
 is: aliases, .forward files, mailbox_transport_maps, mailbox_transport,
 mailbox_command_maps, mailbox_command, home_mailbox, mail_spool_directory,
@@ -9995,7 +9995,7 @@ fallback_transport_maps, fallback_transport and luser_relay.  </p>
 
 <p> For safety reasons, this feature does not allow $number
 substitutions in regular expression maps. </p>
- 
+
 <p> This feature is available in Postfix 2.3 and later. </p>
 
 %PARAM smtp_cname_overrides_servername version dependent
@@ -10052,7 +10052,7 @@ See there for details. </p>
 <p> The LMTP-specific version of the
 smtp_connection_cache_time_limit configuration parameter.
 See there for details. </p>
- 
+
 <p> This feature is available in Postfix 2.3 and later. </p>
 
 %PARAM smtpd_delay_open_until_valid_rcpt yes
@@ -10168,7 +10168,7 @@ security are: </p>
 
 <dl>
 
-<dt><b>none</b></dt>         
+<dt><b>none</b></dt>
 <dd>No TLS. No additional attributes are supported at this level. </dd>
 
 <dt><b>may</b></dt>
@@ -10305,7 +10305,7 @@ smtp_tls_mandatory_protocols = !SSLv2, !SSLv3
 
 <p> The server certificate peername verification method for the
 "verify" TLS security level. In a "verify" TLS policy table
-($smtp_tls_policy_maps) entry the optional "match" attribute 
+($smtp_tls_policy_maps) entry the optional "match" attribute
 overrides this main.cf setting. </p>
 
 <p> This parameter specifies one or more patterns or strategies separated
@@ -10595,7 +10595,7 @@ relayhost = [mailhub.example.com]
 smtp_tls_security_level = fingerprint
 smtp_tls_mandatory_protocols = !SSLv2, !SSLv3
 smtp_tls_mandatory_ciphers = high
-smtp_tls_fingerprint_cert_match = 
+smtp_tls_fingerprint_cert_match =
     3D:95:34:51:24:66:33:B9:D2:40:99:C0:C1:17:0B:D1
     EC:3B:2D:B0:5B:B1:FB:6D:20:A3:9D:72:F6:8D:12:35
 </pre>
@@ -10812,8 +10812,8 @@ given the fact that many implementations still do not offer any stronger
 grade ciphers. So insisting on "high" grade ciphers is generally
 counter-productive. Allowing "export" or "low" ciphers is typically
 not a good idea, as systems limited to just these are limited to
-obsolete browsers. No known SMTP clients fail to support at least 
-one "medium" or "high" grade cipher. </p> 
+obsolete browsers. No known SMTP clients fail to support at least
+one "medium" or "high" grade cipher. </p>
 
 <p> The following cipher grades are supported: </p>
 
@@ -11147,7 +11147,7 @@ private key. This is intended behavior.</p>
 
 <p> This feature is available in Postfix 2.3 and later. </p>
 
-%PARAM internal_mail_filter_classes 
+%PARAM internal_mail_filter_classes
 
 <p> What categories of Postfix-generated mail are subject to
 before-queue content inspection by non_smtpd_milters, header_checks
@@ -11966,7 +11966,7 @@ the message delivery transport. </p>
 %PARAM transport_delivery_slot_loan $default_delivery_slot_loan
 
 <p> A transport-specific override for the default_delivery_slot_loan
-parameter value, where <i>transport</i> is the master.cf name of  
+parameter value, where <i>transport</i> is the master.cf name of
 the message delivery transport. </p>
 
 %PARAM transport_delivery_slot_discount $default_delivery_slot_discount
@@ -12178,7 +12178,7 @@ unverified_recipient_reject_reason = Recipient address lookup failed
 
 <p> Defer delivery when a mailbox file is not owned by its recipient.
 The default setting is not backwards compatible.  </p>
-    
+
 <p> This feature is available in Postfix 2.5.3 and later. </p>
 
 %PARAM proxymap_service_name proxymap
@@ -12196,7 +12196,7 @@ This service is normally implemented by the proxymap(8) daemon.
 
 <p> This feature is available in Postfix 2.6 and later. </p>
 
-%PARAM master_service_disable 
+%PARAM master_service_disable
 
 <p> Selectively disable master(8) listener ports by service type
 or by service name and type.  Specify a list of service types
@@ -12481,7 +12481,7 @@ inspection for DKIM-signed mail from known friendly domains. </p>
 <p> This feature is available in Postfix 2.7, and as an optional
 patch for Postfix 2.6. </p>
 
-%PARAM smtpd_command_filter 
+%PARAM smtpd_command_filter
 
 <p> A mechanism to transform commands from remote SMTP clients.
 This is a last-resort tool to work around client commands that break
@@ -12538,7 +12538,7 @@ part before delivering the mail. </p>
 
 <p> This feature is available in Postfix 2.7. </p>
 
-%PARAM smtp_reply_filter 
+%PARAM smtp_reply_filter
 
 <p> A mechanism to transform replies from remote SMTP servers one
 line at a time.  This is a last-resort tool to work around server
@@ -12643,7 +12643,7 @@ setting for address verification probes.  </p>
 
 <p> This feature is available in Postfix 2.7 and later.  </p>
 
-%PARAM default_filter_nexthop 
+%PARAM default_filter_nexthop
 
 <p> When a content_filter or FILTER request specifies no explicit
 next-hop destination, use $default_filter_nexthop instead; when

@@ -118,7 +118,7 @@ use the following instead: </p>
 <pre>
 /etc/postfix/master.cf:
     maildrop  unix  -       n       n       -       -       pipe
-      flags=ODRhu user=vmail argv=/path/to/maildrop 
+      flags=ODRhu user=vmail argv=/path/to/maildrop
       -d ${user}@${domain} ${extension} ${recipient} ${user} ${nexthop}
 </pre>
 </blockquote>

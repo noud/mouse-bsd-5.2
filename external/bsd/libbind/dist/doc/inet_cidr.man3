@@ -16,7 +16,7 @@
 .\" Id: inet_cidr.man3,v 1.2 2009/01/21 00:12:34 each Exp
 .\"
 .Dd October 19, 1998
-.Dt INET_CIDR 3 
+.Dt INET_CIDR 3
 .Os BSD 4
 .Sh NAME
 .Nm inet_cidr_ntop ,
@@ -62,7 +62,7 @@ is a caller supplied buffer of at least
 bytes.
 .Pp
 .Fn inet_cidr_ntop
-returns 
+returns
 .Ft dst
 on success or NULL.
 Check errno for reason.
@@ -74,9 +74,9 @@ The resulting address is zero filled if there were insufficint bits in
 .Ft src .
 .Pp
 .Ft af
-describes the type of address that is being passed in via 
+describes the type of address that is being passed in via
 .Ft src
-and determines the size of 
+and determines the size of
 .Ft dst .
 .Pp
 .Ft src

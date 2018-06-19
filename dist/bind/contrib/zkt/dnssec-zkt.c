@@ -509,7 +509,7 @@ static	void	createkey (const char *keyname, const dki_t *list, const zconf_t *co
 			conf = loadconfig (path, &localconf);
 		}
 	}
-	
+
 	if  ( zskflag )
 		dkp = dki_new (dir, keyname, DKI_ZSK, conf->k_algo, conf->z_bits, conf->z_random, conf->z_life / DAYSEC);
 	else

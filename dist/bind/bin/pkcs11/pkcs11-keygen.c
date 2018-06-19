@@ -46,12 +46,12 @@
 *
 * create RSASHA1 key in the keystore of an SCA6000
 * The calculation of key tag is left to the script
-* that converts the key into a DNSKEY RR and inserts 
+* that converts the key into a DNSKEY RR and inserts
 * it into a zone file.
 *
 * usage:
 * pkcs11-keygen [-P] [-m module] [-s slot] [-e] -b keysize
-*               -l label [-i id] [-p pin] 
+*               -l label [-i id] [-p pin]
 *
 */
 
@@ -181,7 +181,7 @@ main(int argc, char *argv[])
 				"[-s slot] [-e] [-i id] [-p PIN]\n");
 		exit(2);
 	}
-	
+
 	search_template[0].pValue = label;
 	search_template[0].ulValueLen = strlen((char *)label);
 	publickey_template[0].pValue = label;
@@ -258,7 +258,7 @@ main(int argc, char *argv[])
 	}
 
 	/* check if a key with the same id already exists */
-	rv = C_FindObjectsInit(hSession, search_template, 1); 
+	rv = C_FindObjectsInit(hSession, search_template, 1);
 	if (rv != CKR_OK) {
 		fprintf(stderr, "C_FindObjectsInit: Error = 0x%.8lX\n", rv);
 		error = 1;
@@ -287,12 +287,12 @@ main(int argc, char *argv[])
 			       publickey_template, publickey_attrcnt,
 			       privatekey_template, privatekey_attrcnt,
 			       &publickey, &privatekey);
-	
+
 	if (rv != CKR_OK) {
 		fprintf(stderr, "C_GenerateKeyPair: Error = 0x%.8lX\n", rv);
 		error = 1;
 	}
-	
+
  exit_search:
 	rv = C_FindObjectsFinal(hSession);
 	if (rv != CKR_OK) {

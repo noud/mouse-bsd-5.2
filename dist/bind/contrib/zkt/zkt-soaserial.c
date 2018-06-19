@@ -81,8 +81,8 @@ static	char	*timestr (time_t sec)
 	s = abs (t->tm_gmtoff);
 	h = t->tm_gmtoff / 3600;
 	s = t->tm_gmtoff % 3600;
-	snprintf (timestr, sizeof (timestr), "%s %2d %4d %02d:%02d:%02d %c%02d%02d", 
-		mstr[t->tm_mon], t->tm_mday, t->tm_year + 1900, 
+	snprintf (timestr, sizeof (timestr), "%s %2d %4d %02d:%02d:%02d %c%02d%02d",
+		mstr[t->tm_mon], t->tm_mday, t->tm_year + 1900,
 		t->tm_hour, t->tm_min, t->tm_sec,
 		t->tm_gmtoff < 0 ? '-': '+',
 		h, s);
@@ -102,7 +102,7 @@ static	char	*timestr (time_t sec)
 **	To match the SOA record, the SOA RR must be formatted
 **	like this:
 **	@    IN  SOA <master.fq.dn.> <hostmaster.fq.dn.> (
-**	<SPACEes or TABs>      1234567890; serial number 
+**	<SPACEes or TABs>      1234567890; serial number
 **	<SPACEes or TABs>      86400	 ; other values
 **				...
 **
@@ -169,7 +169,7 @@ static	void	printserial (const char *fname, unsigned long serial)
 		m = serial % 100;
 		serial /= 100;
 		y = serial;
-		
+
 		printf ("\t%d-%02d-%02d Version %02d", y, m, d, v);
 	}
 	else					/* unixtime */

@@ -69,7 +69,7 @@ irs_gen_ng(struct irs_acc *this) {
 	struct gen_p *accpvt = (struct gen_p *)this->private;
 	struct irs_ng *ng;
 	struct pvt *pvt;
-	
+
 	if (!(ng = memget(sizeof *ng))) {
 		errno = ENOMEM;
 		return (NULL);
@@ -94,10 +94,10 @@ irs_gen_ng(struct irs_acc *this) {
 
 /* Methods */
 
-static void 
+static void
 ng_close(struct irs_ng *this) {
 	struct pvt *pvt = (struct pvt *)this->private;
-	
+
 	ng_minimize(this);
 	if (pvt->curgroup)
 		free(pvt->curgroup);
@@ -111,7 +111,7 @@ ng_next(struct irs_ng *this, const char **host, const char **user,
 {
 	struct pvt *pvt = (struct pvt *)this->private;
 	struct irs_ng *ng;
-	
+
 	while (pvt->rule) {
 		ng = pvt->rule->inst->ng;
 		if ((*ng->next)(ng, host, user, domain) == 1)
@@ -135,7 +135,7 @@ ng_test(struct irs_ng *this, const char *name,
 	struct irs_rule *rule;
 	struct irs_ng *ng;
 	int rval;
-	
+
 	rval = 0;
 	for (rule = pvt->rules; rule; rule = rule->next) {
 		ng = rule->inst->ng;
@@ -150,7 +150,7 @@ static void
 ng_rewind(struct irs_ng *this, const char *group) {
 	struct pvt *pvt = (struct pvt *)this->private;
 	struct irs_ng *ng;
-	
+
 	pvt->rule = pvt->rules;
 	if (pvt->rule) {
 		if (pvt->curgroup)

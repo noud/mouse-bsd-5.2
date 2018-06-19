@@ -126,12 +126,12 @@ int     cleanup_bounce(CLEANUP_STATE *state)
     /*
      * Create a bounce logfile with one entry for each final recipient.
      * Degrade gracefully in case of no recipients or no queue file.
-     * 
+     *
      * Victor Duchovni observes that the number of recipients in the queue file
      * can potentially be very large due to virtual alias expansion. This can
      * expand the recipient count by virtual_alias_expansion_limit (default:
      * 1000) times.
-     * 
+     *
      * After a queue file write error, purge any unwritten data (so that
      * vstream_fseek() won't fail while trying to flush it) and reset the
      * stream error flags to avoid false alarms.

@@ -100,30 +100,30 @@ int     bounce_notify_service(int flags, char *service, char *queue_name,
 
     /*
      * Initialize. Open queue file, bounce log, etc.
-     * 
+     *
      * XXX DSN The bounce service produces RFC 3464-style "failed mail" reports
      * from information in two following types of logfile:
-     * 
+     *
      * 1 - bounce: this file is used for RFC 3464-style reports of permanent
      * delivery errors by the bounce(8) service. This reports to the sender
      * all recipients that have no DSN NOTIFY information (compatibility) and
      * all recipients that have DSN NOTIFY=FAILURE; this reports to
      * postmaster all recipients, if postmaster notification is enabled.
-     * 
+     *
      * 2 - defer: this file is used for three types of report:
-     * 
+     *
      * 2a) RFC 3464-style "mail is too old" reports by the bounce(8) service.
      * This reports to the sender all recipients that have no DSN NOTIFY
      * information (compatibility) and all recipients that have DSN
      * NOTIFY=FAILURE; this reports to postmaster all recipients, if
      * postmaster notification is enabled.
-     * 
+     *
      * Other reports that other servers produce from the defer logfile:
-     * 
+     *
      * 2b) On-demand reports of all delayed deliveries by the showq(8) service
      * and mailq(1) command. This reports all recipients that have a
      * transient delivery error.
-     * 
+     *
      * 2c) RFC 3464-style "delayed mail" notifications by the defer(8) service.
      * This reports to the sender all recipients that have no DSN NOTIFY
      * information (compatibility) and all recipients that have DSN
@@ -149,7 +149,7 @@ int     bounce_notify_service(int flags, char *service, char *queue_name,
 
     /*
      * Double bounce failed. Never send a triple bounce.
-     * 
+     *
      * However, this does not prevent double bounces from bouncing on other
      * systems. In order to cope with this, either the queue manager must
      * recognize the double-bounce recipient address and discard mail, or
@@ -250,7 +250,7 @@ int     bounce_notify_service(int flags, char *service, char *queue_name,
 	/*
 	 * Optionally, send a postmaster notice, subject to notify_classes
 	 * restrictions.
-	 * 
+	 *
 	 * This postmaster notice is not critical, so if it fails don't
 	 * retransmit the bounce that we just generated, just log a warning.
 	 */

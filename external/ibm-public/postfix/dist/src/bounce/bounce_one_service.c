@@ -122,7 +122,7 @@ int     bounce_one_service(int flags, char *queue_name, char *queue_id,
 
     /*
      * Double bounce failed. Never send a triple bounce.
-     * 
+     *
      * However, this does not prevent double bounces from bouncing on other
      * systems. In order to cope with this, either the queue manager must
      * recognize the double-bounce original sender address and discard mail,
@@ -212,7 +212,7 @@ int     bounce_one_service(int flags, char *queue_name, char *queue_id,
 	/*
 	 * Optionally send a postmaster notice, subject to notify_classes
 	 * restrictions.
-	 * 
+	 *
 	 * This postmaster notice is not critical, so if it fails don't
 	 * retransmit the bounce that we just generated, just log a warning.
 	 */

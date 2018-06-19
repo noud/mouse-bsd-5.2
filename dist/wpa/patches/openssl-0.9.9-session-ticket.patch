@@ -74,15 +74,15 @@ diff -upr openssl-SNAP-20080528.orig/ssl/s3_srvr.c openssl-SNAP-20080528/ssl/s3_
 +		SSL_CIPHER *pref_cipher=NULL;
 +
 +		s->session->master_key_length=sizeof(s->session->master_key);
-+		if(s->tls_session_secret_cb(s, s->session->master_key, &s->session->master_key_length, 
++		if(s->tls_session_secret_cb(s, s->session->master_key, &s->session->master_key_length,
 +			ciphers, &pref_cipher, s->tls_session_secret_cb_arg))
 +		{
 +			s->hit=1;
 +			s->session->ciphers=ciphers;
 +			s->session->verify_result=X509_V_OK;
-+			
++
 +			ciphers=NULL;
-+			
++
 +			/* check if some cipher was preferred by call back */
 +			pref_cipher=pref_cipher ? pref_cipher : ssl3_choose_cipher(s, s->session->ciphers, SSL_get_ciphers(s));
 +			if (pref_cipher == NULL)
@@ -205,7 +205,7 @@ diff -upr openssl-SNAP-20080528.orig/ssl/ssl_sess.c openssl-SNAP-20080528/ssl/ss
  	}
  
 +#ifndef OPENSSL_NO_TLSEXT
-+int SSL_set_session_secret_cb(SSL *s, int (*tls_session_secret_cb)(SSL *s, void *secret, int *secret_len, 
++int SSL_set_session_secret_cb(SSL *s, int (*tls_session_secret_cb)(SSL *s, void *secret, int *secret_len,
 +	STACK_OF(SSL_CIPHER) *peer_ciphers, SSL_CIPHER **cipher, void *arg), void *arg)
 +{
 +	if (s == NULL) return(0);
@@ -332,7 +332,7 @@ diff -upr openssl-SNAP-20080528.orig/ssl/tls1.h openssl-SNAP-20080528/ssl/tls1.h
 diff -upr openssl-SNAP-20080528.orig/util/ssleay.num openssl-SNAP-20080528/util/ssleay.num
 --- openssl-SNAP-20080528.orig/util/ssleay.num	2007-08-31 16:03:14.000000000 +0300
 +++ openssl-SNAP-20080528/util/ssleay.num	2008-05-29 10:49:25.000000000 +0300
-@@ -253,3 +253,5 @@ PEM_write_bio_SSL_SESSION               
+@@ -253,3 +253,5 @@ PEM_write_bio_SSL_SESSION
  PEM_read_SSL_SESSION                    302	EXIST:!WIN16:FUNCTION:
  PEM_read_bio_SSL_SESSION                303	EXIST::FUNCTION:
  PEM_write_SSL_SESSION                   304	EXIST:!WIN16:FUNCTION:

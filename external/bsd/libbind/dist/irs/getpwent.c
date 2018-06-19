@@ -189,13 +189,13 @@ init() {
 		net_data->pw = (*net_data->irs->pw_map)(net_data->irs);
 
 		if (!net_data->pw || !net_data->res) {
- error: 
+ error:
 			errno = EIO;
 			return (NULL);
 		}
 		(*net_data->pw->res_set)(net_data->pw, net_data->res, NULL);
 	}
-	
+
 	return (net_data);
 }
 

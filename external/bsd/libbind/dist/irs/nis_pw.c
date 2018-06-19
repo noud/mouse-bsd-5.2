@@ -93,7 +93,7 @@ struct irs_pw *
 irs_nis_pw(struct irs_acc *this) {
 	struct irs_pw *pw;
 	struct pvt *pvt;
-		 
+
         if (!(pw = memget(sizeof *pw))) {
                 errno = ENOMEM;
                 return (NULL);
@@ -124,7 +124,7 @@ irs_nis_pw(struct irs_acc *this) {
 static void
 pw_close(struct irs_pw *this) {
 	struct pvt *pvt = (struct pvt *)this->private;
-	
+
 	if (pvt->pwbuf)
 		free(pvt->pwbuf);
 	nisfree(pvt, do_all);
@@ -240,7 +240,7 @@ makepasswdent(struct irs_pw *this) {
 	if (!(cp = strchr(cp, ':')))
 		goto cleanup;
 	*cp++ = '\0';
-	
+
 	pvt->passwd.pw_uid = atoi(cp);
 	if (!(cp = strchr(cp, ':')))
 		goto cleanup;
@@ -267,7 +267,7 @@ makepasswdent(struct irs_pw *this) {
 		*cp = '\0';
 
 	return (&pvt->passwd);
-	
+
  cleanup:
 	free(pvt->pwbuf);
 	pvt->pwbuf = NULL;

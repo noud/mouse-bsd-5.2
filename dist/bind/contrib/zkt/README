@@ -36,14 +36,14 @@ f) Install
 
 
 Prepare your setup:
-a) (optional) Install or rebuild the default dnssec.conf file 
+a) (optional) Install or rebuild the default dnssec.conf file
 	$ zkt-conf -d -w	# Install new file
 		or
 	$ zkt-conf -s -w	# rebuild existing file
 
 b) (optional) Change default parameters
 	$ zkt-conf -s -O "Zonedir: /var/named/zones" -w
-		or use your prefered editor 
+		or use your prefered editor
 	$ vi /var/named/dnssec.conf
 
 c) Prepare one of your zone for zkt

@@ -1,11 +1,11 @@
 SHELL	= /bin/sh
 SRCS	= anvil.c
 OBJS	= anvil.o
-HDRS	= 
+HDRS	=
 TESTSRC	=
 DEFS	= -I. -I$(INC_DIR) -D$(SYSTYPE)
 CFLAGS	= $(DEBUG) $(OPT) $(DEFS)
-TESTPROG= 
+TESTPROG=
 PROG	= anvil
 INC_DIR = ../../include
 LIBS	= ../../lib/libmaster.a ../../lib/libglobal.a ../../lib/libutil.a
@@ -42,7 +42,7 @@ lint:
 	lint $(DEFS) $(SRCS) $(LINTFIX)
 
 clean:
-	rm -f *.o *core $(PROG) $(TESTPROG) junk 
+	rm -f *.o *core $(PROG) $(TESTPROG) junk
 	rm -rf printfck
 
 tidy:	clean

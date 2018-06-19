@@ -167,7 +167,7 @@
 #
 #	Before Postfix multi-instance support was implemented, the
 #	executables, manpages, etc., have always been maintained
-#	as part of the default Postfix instance. 
+#	as part of the default Postfix instance.
 #
 #	With multi-instance support, we simply continue to do this.
 #	Specifically, a Postfix instance will not check or update

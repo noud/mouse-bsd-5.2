@@ -44,9 +44,9 @@
 # include <stdlib.h>
 # include <assert.h>
 # include <dirent.h>
-# include <errno.h>	
-# include <unistd.h>	
-# include <ctype.h>	
+# include <errno.h>
+# include <unistd.h>
+# include <ctype.h>
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
@@ -492,7 +492,7 @@ static	int	dosigning (zone_t *zonelist, zone_t *zp)
 		lg_mesg (LG_ERROR, "\"%s\": no zone file found (%s)!", zp->zone, path);
 		return 2;
 	}
-	
+
 	zfile_time = file_mtime (path);
 	currtime = time (NULL);
 
@@ -544,17 +544,17 @@ static	int	dosigning (zone_t *zonelist, zone_t *zp)
 	**	a) the command line flag -f is set, or
 	**	b) new keys are generated, or
 	**	c) we found a new KSK of a delegated domain, or
-	**	d) the "dnskey.db" file is newer than "zone.db" 
+	**	d) the "dnskey.db" file is newer than "zone.db"
 	**	e) the "zone.db" is newer than "zone.db.signed" or
 	**	f) "zone.db.signed" is older than the re-sign interval
 	**/
 	mesg[0] = '\0';
 	if ( force )
-		snprintf (mesg, sizeof(mesg), "Option -f"); 
+		snprintf (mesg, sizeof(mesg), "Option -f");
 	else if ( newkey )
-		snprintf (mesg, sizeof(mesg), "Modfied zone key set"); 
+		snprintf (mesg, sizeof(mesg), "Modfied zone key set");
 	else if ( newkeysetfile )
-		snprintf (mesg, sizeof(mesg), "Modified KSK in delegated domain"); 
+		snprintf (mesg, sizeof(mesg), "Modified KSK in delegated domain");
 	else if ( file_mtime (path) > zfilesig_time )
 		snprintf (mesg, sizeof(mesg), "Modified keys");
 	else if ( zfile_time > zfilesig_time )
@@ -574,7 +574,7 @@ static	int	dosigning (zone_t *zonelist, zone_t *zp)
 		lg_mesg (LG_NOTICE, "\"%s\": re-signing triggered: %s", zp->zone,  mesg);
 
 	dbg_line ();
-	if ( !(force || newkey || newkeysetfile || zfile_time > zfilesig_time ||	
+	if ( !(force || newkey || newkeysetfile || zfile_time > zfilesig_time ||
 	     file_mtime (path) > zfilesig_time ||
 	     (currtime - zfilesig_time) > zp->conf->resign - (OFFSET) ||
 	      bind94_dynzone (dynamic_zone)) )
@@ -620,10 +620,10 @@ static	int	dosigning (zone_t *zonelist, zone_t *zp)
 					"zone \"%s\": couldn't increment serialno in file %s: %s",
 							zp->zone, path, inc_errstr (err));
 			}
-			else 
+			else
 			verbmesg (1, zp->conf, "\tIncrementing serial number in file \"%s\"\n", path);
 		}
-		else 
+		else
 			verbmesg (1, zp->conf, "\tIncrementing serial number in file \"%s\"\n", path);
 	}
 
@@ -658,7 +658,7 @@ static	int	dosigning (zone_t *zonelist, zone_t *zp)
 			}
 #endif
 			verbmesg (1, zp->conf, "\tDynamic Zone signing: copy old signed zone file %s to new input file %s\n",
-										path, zfile); 
+										path, zfile);
 
 			if ( newkey )	/* if we have new keys, they should be added to the zone file */
 			{
@@ -758,14 +758,14 @@ static	int	new_keysetfiles (const char *dir, time_t zone_signing_time)
 		return 0;
 
 	newkeysetfile = 0;
-	dbg_val2 ("new_keysetfile (%s, %s)\n", dir, time2str (zone_signing_time, 's')); 
+	dbg_val2 ("new_keysetfile (%s, %s)\n", dir, time2str (zone_signing_time, 's'));
 	while ( !newkeysetfile && (dentp = readdir (dirp)) != NULL )
 	{
 		if ( strncmp (dentp->d_name, KEYSET_FILE_PFX, strlen (KEYSET_FILE_PFX)) != 0 )
 			continue;
 
 		pathname (path, sizeof (path), dir, dentp->d_name, NULL);
-		dbg_val2 ("newkeysetfile timestamp of %s = %s\n", path, time2str (file_mtime(path), 's')); 
+		dbg_val2 ("newkeysetfile timestamp of %s = %s\n", path, time2str (file_mtime(path), 's'));
 		if ( file_mtime (path) > zone_signing_time )
 			newkeysetfile = 1;
 	}
@@ -819,7 +819,7 @@ static	int	writekeyfile (const char *fname, const dki_t *list, int key_ttl)
 		dki_prt_dnskeyttl (dkp, fp, key_ttl);
 		putc ('\n', fp);
 	}
-	
+
 	fclose (fp);
 	return 1;
 }

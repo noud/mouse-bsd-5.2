@@ -211,14 +211,14 @@ init() {
 		net_data->gr = (*net_data->irs->gr_map)(net_data->irs);
 
 		if (!net_data->gr || !net_data->res) {
- error: 
+ error:
 			errno = EIO;
 			return (NULL);
 		}
 		(*net_data->gr->res_set)(net_data->gr, net_data->res,
 					 NULL);
 	}
-	
+
 	return (net_data);
 }
 

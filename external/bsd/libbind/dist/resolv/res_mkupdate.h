@@ -23,5 +23,5 @@
 __BEGIN_DECLS
 __END_DECLS
 
-#endif /* _RES_MKUPDATE_H_ */ 
+#endif /* _RES_MKUPDATE_H_ */
 /*! \file */

@@ -17,7 +17,7 @@
 .\"
 .Dd January 1, 1996
 .Os BSD 4
-.Dt TSIG 
+.Dt TSIG
 .Sh NAME
 .Nm ns_sign ,
 .Nm ns_sign_tcp ,

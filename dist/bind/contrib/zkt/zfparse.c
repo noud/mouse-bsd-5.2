@@ -151,8 +151,8 @@ int	addkeydb (const char *file, const char *keydbfile)
 	if ( (fp = fopen (file, "a")) == NULL )
 		return -1;
 
-	fprintf (fp, "\n");	
-	fprintf (fp, "$INCLUDE %s\t; this is the database of public DNSKEY RR\n", keydbfile);	
+	fprintf (fp, "\n");
+	fprintf (fp, "$INCLUDE %s\t; this is the database of public DNSKEY RR\n", keydbfile);
 
 	fclose (fp);
 
@@ -191,7 +191,7 @@ int	parsezonefile (const char *file, long *pminttl, long *pmaxttl, const char *k
 	lnr = 0;
 	keydbfilefound = 0;
 	multi_line_rr = 0;
-	while ( fgets (buf, sizeof buf, infp) != NULL ) 
+	while ( fgets (buf, sizeof buf, infp) != NULL )
 	{
 		len = strlen (buf);
 		if ( buf[len-1] != '\n' )	/* line too long ? */

@@ -163,7 +163,7 @@
 # .sp
 #	The \fIvirtual-alias.domain anything\fR entry is required for a
 #	virtual alias domain. \fBWithout this entry, mail is rejected
-#	with "relay access denied", or bounces with 
+#	with "relay access denied", or bounces with
 #	"mail loops back to myself".\fR
 #
 #	Do not specify virtual alias domain names in the \fBmain.cf
@@ -226,8 +226,8 @@
 #	List of virtual alias domains. This uses the same syntax
 #	as the \fBmydestination\fR parameter.
 # .IP \fBpropagate_unmatched_extensions\fR
-#	A list of address rewriting or forwarding mechanisms that propagate   
-#	an address extension from the original address to the result.     
+#	A list of address rewriting or forwarding mechanisms that propagate
+#	an address extension from the original address to the result.
 #	Specify zero or more of \fBcanonical\fR, \fBvirtual\fR, \fBalias\fR,
 #	\fBforward\fR, \fBinclude\fR, or \fBgeneric\fR.
 # .PP

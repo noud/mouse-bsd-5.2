@@ -305,7 +305,7 @@ typedef struct {
  /*
   * The following operations are implemented as macros with recognizable
   * names so that we don't lose sight of what the code is trying to do.
-  * 
+  *
   * Related operations are defined side by side so that the code implementing
   * them isn't pages apart.
   */

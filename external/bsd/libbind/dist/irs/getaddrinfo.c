@@ -508,7 +508,7 @@ getaddrinfo(hostname, servname, hints, res)
 	 * We'll make sure that
 	 * - if returning addrinfo list is empty, return non-zero error
 	 *   value (already known one or EAI_NONAME).
-	 * - otherwise, 
+	 * - otherwise,
 	 *   + if we haven't had any errors, return 0 (i.e. success).
 	 *   + if we've had an error, free the list and return the error.
 	 * without any assumption on the behavior of explore_fqdn().
@@ -588,7 +588,7 @@ good:
 		return(SUCCESS);
 	} else {
 		/*
-		 * All the process succeeded, but we've had an empty list. 
+		 * All the process succeeded, but we've had an empty list.
 		 * This can happen if the given hints do not match our
 		 * candidates.
 		 */
@@ -1115,7 +1115,7 @@ ip6_str2scopeid(char *scope, struct sockaddr_in6 *sin6,
 	u_long lscopeid;
 	struct in6_addr *a6 = &sin6->sin6_addr;
 	char *ep;
-	
+
 	/* empty scopeid portion is invalid */
 	if (*scope == '\0')
 		return (0);

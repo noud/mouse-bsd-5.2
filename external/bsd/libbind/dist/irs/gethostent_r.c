@@ -36,7 +36,7 @@ static const char rcsid[] = "Id: gethostent_r.c,v 1.9 2005/09/03 12:41:37 marka 
 
 #ifdef HOST_R_RETURN
 
-static HOST_R_RETURN 
+static HOST_R_RETURN
 copy_hostent(struct hostent *, struct hostent *, HOST_R_COPY_ARGS);
 
 HOST_R_RETURN
@@ -55,7 +55,7 @@ gethostbyname_r(const char *name,  struct hostent *hptr, HOST_R_ARGS) {
 		*answerp = NULL;
 	else
 		*answerp = hptr;
-	
+
 	return (n);
 #else
 	if (he == NULL)
@@ -82,7 +82,7 @@ gethostbyaddr_r(const char *addr, int len, int type,
 		*answerp = NULL;
 	else
 		*answerp = hptr;
-	
+
 	return (n);
 #else
 	if (he == NULL)
@@ -114,7 +114,7 @@ gethostent_r(struct hostent *hptr, HOST_R_ARGS) {
 		*answerp = NULL;
 	else
 		*answerp = hptr;
-	
+
 	return (n);
 #else
 	if (he == NULL)
@@ -175,7 +175,7 @@ copy_hostent(struct hostent *he, struct hostent *hptr, HOST_R_COPY_ARGS) {
 	}
 	len += strlen(he->h_name) + 1;
 	len += nptr * sizeof(char*);
-	
+
 	if (len > buflen) {
 		errno = ERANGE;
 		return (HOST_R_BAD);

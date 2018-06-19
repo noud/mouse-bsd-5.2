@@ -107,7 +107,7 @@ irs_gen_pw(struct irs_acc *this) {
 static void
 pw_close(struct irs_pw *this) {
 	struct pvt *pvt = (struct pvt *)this->private;
-	
+
 	memput(pvt, sizeof *pvt);
 	memput(this, sizeof *this);
 }
@@ -117,7 +117,7 @@ pw_next(struct irs_pw *this) {
 	struct pvt *pvt = (struct pvt *)this->private;
 	struct passwd *rval;
 	struct irs_pw *pw;
-	
+
 	while (pvt->rule) {
 		pw = pvt->rule->inst->pw;
 		rval = (*pw->next)(pw);
@@ -138,7 +138,7 @@ static void
 pw_rewind(struct irs_pw *this) {
 	struct pvt *pvt = (struct pvt *)this->private;
 	struct irs_pw *pw;
-	
+
 	pvt->rule = pvt->rules;
 	if (pvt->rule) {
 		pw = pvt->rule->inst->pw;
@@ -152,7 +152,7 @@ pw_byname(struct irs_pw *this, const char *name) {
 	struct irs_rule *rule;
 	struct passwd *rval;
 	struct irs_pw *pw;
-	
+
 	rval = NULL;
 	for (rule = pvt->rules; rule; rule = rule->next) {
 		pw = rule->inst->pw;
@@ -169,7 +169,7 @@ pw_byuid(struct irs_pw *this, uid_t uid) {
 	struct irs_rule *rule;
 	struct passwd *rval;
 	struct irs_pw *pw;
-	
+
 	rval = NULL;
 	for (rule = pvt->rules; rule; rule = rule->next) {
 		pw = rule->inst->pw;
@@ -178,7 +178,7 @@ pw_byuid(struct irs_pw *this, uid_t uid) {
 			break;
 	}
 	return (rval);
-}	
+}
 
 static void
 pw_minimize(struct irs_pw *this) {

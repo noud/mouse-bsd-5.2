@@ -282,7 +282,7 @@ makegroupent(struct irs_gr *this) {
 	if (!(cp = strchr(cp, ':')))
 		goto cleanup;
 	*cp++ = '\0';
-	
+
 	pvt->group.gr_passwd = cp;
 	if (!(cp = strchr(cp, ':')))
 		goto cleanup;
@@ -324,10 +324,10 @@ makegroupent(struct irs_gr *this) {
 		pvt->nmemb = 1;
 	}
 	pvt->group.gr_mem[num_members] = NULL;
-	
+
 	return (&pvt->group);
-	
- cleanup:	
+
+ cleanup:
 	if (pvt->group.gr_mem) {
 		free(pvt->group.gr_mem);
 		pvt->group.gr_mem = NULL;

@@ -542,9 +542,9 @@ static void cleanup_header_callback(void *context, int header_class,
      * we should do with this header: delete, count, rewrite. Note that we
      * should examine headers even when they will be deleted from the output,
      * because the addresses in those headers might be needed elsewhere.
-     * 
+     *
      * XXX 2821: Return-path breakage.
-     * 
+     *
      * RFC 821 specifies: When the receiver-SMTP makes the "final delivery" of a
      * message it inserts at the beginning of the mail data a return path
      * line.  The return path line preserves the information in the
@@ -552,13 +552,13 @@ static void cleanup_header_callback(void *context, int header_class,
      * message leaves the SMTP world.  Normally, this would mean it has been
      * delivered to the destination user, but in some cases it may be further
      * processed and transmitted by another mail system.
-     * 
+     *
      * And that is what Postfix implements. Delivery agents prepend
      * Return-Path:. In order to avoid cluttering up the message with
      * possibly inconsistent Return-Path: information (the sender can change
      * as the result of mail forwarding or mailing list delivery), Postfix
      * removes any existing Return-Path: headers.
-     * 
+     *
      * RFC 2821 Section 4.4 specifies:    A message-originating SMTP system
      * SHOULD NOT send a message that already contains a Return-path header.
      * SMTP servers performing a relay function MUST NOT inspect the message
@@ -615,18 +615,18 @@ static void cleanup_header_done_callback(void *context)
     /*
      * Add a missing (Resent-)Message-Id: header. The message ID gives the
      * time in GMT units, plus the local queue ID.
-     * 
+     *
      * XXX Message-Id is not a required message header (RFC 822 and RFC 2822).
-     * 
+     *
      * XXX It is the queue ID non-inode bits that prevent messages from getting
      * the same Message-Id within the same second.
-     * 
+     *
      * XXX An arbitrary amount of time may pass between the start of the mail
      * transaction and the creation of a queue file. Since we guarantee queue
      * ID uniqueness only within a second, we must ensure that the time in
      * the message ID matches the queue ID creation time, as long as we use
      * the queue ID in the message ID.
-     * 
+     *
      * XXX We log a dummy name=value record so that we (hopefully) don't break
      * compatibility with existing logfile analyzers, and so that we don't
      * complicate future code that wants to log more name=value attributes.
@@ -687,17 +687,17 @@ static void cleanup_header_done_callback(void *context)
      * header field if it is different from the address in the From header
      * field.  (Any Sender field that was already there SHOULD be removed.)
      * Similar wording appears in RFC 2822 section 3.6.2.
-     * 
+     *
      * Postfix presently does not insert a Sender: header if envelope and From:
      * address differ. Older Postfix versions assumed that the envelope
      * sender address specifies the system identity and inserted Sender:
      * whenever envelope and From: differed. This was wrong with relayed
      * mail, and was often not even desirable with original submissions.
-     * 
+     *
      * XXX 2822 Section 3.6.2, as well as RFC 822 Section 4.1: FROM headers can
      * contain multiple addresses. If this is the case, then a Sender: header
      * must be provided with a single address.
-     * 
+     *
      * Postfix does not count the number of addresses in a From: header
      * (although doing so is trivial, once the address is parsed).
      */
@@ -792,7 +792,7 @@ static void cleanup_message_headerbody(CLEANUP_STATE *state, int type,
 
     /*
      * Reject unwanted characters.
-     * 
+     *
      * XXX Possible optimization: simplify the loop when the "reject" set
      * contains only one character.
      */
@@ -811,10 +811,10 @@ static void cleanup_message_headerbody(CLEANUP_STATE *state, int type,
 
     /*
      * Strip unwanted characters. Don't overwrite the input.
-     * 
+     *
      * XXX Possible optimization: simplify the loop when the "strip" set
      * contains only one character.
-     * 
+     *
      * XXX Possible optimization: copy the input only if we really have to.
      */
     if ((state->flags & CLEANUP_FLAG_FILTER) && cleanup_strip_chars) {

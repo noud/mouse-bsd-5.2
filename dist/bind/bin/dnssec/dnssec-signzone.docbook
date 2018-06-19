@@ -476,7 +476,7 @@
                 <para>
                   If the key's activation date is set and in the past, the
                   key is published (regardless of publication date) and
-                  used to sign the zone.  
+                  used to sign the zone.
                 </para>
 	      </listitem>
             </varlistentry>

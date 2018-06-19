@@ -25,7 +25,7 @@ open bug2.file.tmp
 # record could be overwritten with the location of the new Subject:
 # header on the heap. Later "append header" operations would then
 # update old "append header" record and thus clobber part of the
-# pointer to the new Subject: header value.  
+# pointer to the new Subject: header value.
 #
 # - While saving the "append header" pointer record value on the
 # heap, Postfix did not replace the still virgin "0" append header"

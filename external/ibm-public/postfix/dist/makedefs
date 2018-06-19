@@ -305,7 +305,7 @@ case "$SYSTEM.$RELEASE" in
 		# Kernel 2.6 added EPOLL
 		case "$RELEASE" in
 		2.[0-5].*) CCARGS="$CCARGS -DNO_EPOLL";;
-		    # Workaround for retarded libc 
+		    # Workaround for retarded libc
 		    2.6.*)
 		       if [ `expr "X$CCARGS" : "X.*-DNO_EPOLL"` -gt 0 ]
                        then

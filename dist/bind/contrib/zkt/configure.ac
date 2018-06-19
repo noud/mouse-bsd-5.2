@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 #
-#	@(#) configure.ac 
+#	@(#) configure.ac
 #
 #	2008-06-27	initial setup
 #	2008-06-29	add of BIND path checking
@@ -95,7 +95,7 @@ AS_IF([test "$enable_ttl_in_keyfile" = "no"], [ttl_in_keyfile=0])
 AC_DEFINE_UNQUOTED(TTL_IN_KEYFILE_ALLOWED, $ttl_in_keyfile, TTL in keyfiles allowed)
 
 configpath="/var/named"
-AC_ARG_ENABLE([configpath], 
+AC_ARG_ENABLE([configpath],
 	AS_HELP_STRING( [--enable-configpath=PATH], [set path of config file (defaults to /var/named)]),
 	[configpath=$enableval])
 case "$configpath" in
@@ -112,7 +112,7 @@ AC_DEFINE_UNQUOTED(CONFIG_PATH, "$configpath/", [set path of config file (defaul
 
 usetree=1
 t=""
-AC_ARG_ENABLE([tree], 
+AC_ARG_ENABLE([tree],
 	AS_HELP_STRING( [--disable-tree], [use single linked list instead of binary tree data structure for dnssec-zkt]),
 	[usetree=$enableval])
 if test "$usetree" = no

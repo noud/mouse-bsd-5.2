@@ -12,24 +12,24 @@
 **	Copyright (c) Aug 2005, Jeroen Massar.
 **	Copyright (c) Aug 2005 - Apr 2010, Holger Zuleger.
 **	All rights reserved.
-**	
+**
 **	This software is open source.
-**	
+**
 **	Redistribution and use in source and binary forms, with or without
 **	modification, are permitted provided that the following conditions
 **	are met:
-**	
+**
 **	Redistributions of source code must retain the above copyright notice,
 **	this list of conditions and the following disclaimer.
-**	
+**
 **	Redistributions in binary form must reproduce the above copyright notice,
 **	this list of conditions and the following disclaimer in the documentation
 **	and/or other materials provided with the distribution.
-**	
+**
 **	Neither the name of Jeroen Masar or Holger Zuleger nor the
 **	names of its contributors may be used to endorse or promote products
 **	derived from this software without specific prior written permission.
-**	
+**
 **	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 **	"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
 **	TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
@@ -101,7 +101,7 @@ typedef enum {
 static	int	compversion;
 
 static	zconf_t	def = {
-	ZONEDIR, RECURSIVE, 
+	ZONEDIR, RECURSIVE,
 	PRINTTIME, PRINTAGE, LJUST, LSCOLORTERM,
 	SIG_VALIDITY, MAX_TTL, KEY_TTL, PROPTIME, Unixtime,
 	RESIGN_INT,
@@ -310,7 +310,7 @@ static	void	parseconfigline (char *buf, unsigned int line, zconf_t *z)
 
 	for (p = buf; isspace (*p); p++ )	/* Ignore leading white space */
 		;
-	
+
 	/* Ignore comments and emtpy lines */
 	if ( *p == '\0' || ISCOMMENT (p) )
 		return;
@@ -480,7 +480,7 @@ static	void	printconfigline (FILE *fp, zconf_para_t *cp)
 	switch ( cp->type )
 	{
 	case CONF_VERSION:
-			fprintf (fp, "#\tZKT config file for version %d.%02d\n", 
+			fprintf (fp, "#\tZKT config file for version %d.%02d\n",
 						compversion / 100, compversion % 100);
 		break;
 	case CONF_COMMENT:
@@ -780,7 +780,7 @@ int	printconfig (const char *fname, const zconf_t *z)
 			return -1;
 		}
 	}
-		
+
 	set_all_varptr ((zconf_t *)z, NULL);
 
 	for ( cp = confpara; cp->type != CONF_END; cp++ )	/* loop through all parameter */
@@ -819,7 +819,7 @@ int	printconfigdiff (const char *fname, const zconf_t *ref, const zconf_t *z)
 			return -1;
 		}
 	}
-		
+
 	set_all_varptr ((zconf_t *)z, ref);
 
 	for ( cp = confpara; cp->type != CONF_END; cp++ )	/* loop through all parameter */
@@ -978,7 +978,7 @@ main (int argc, char *argv[])
 	setconfigpar (config, "recursive", &val);
 	val = 1200;
 	setconfigpar (config, "propagation", &val);
-	
+
 	printconfig ("stdout", config);
 }
 #endif

@@ -122,7 +122,7 @@ $DIG +short $DIGOPTS @10.53.0.1 null.example null in > dig.out || ret=1
 echo '\# 1 00' | diff - dig.out || ret=1
 [ $ret = 0 ] || echo "I: failed"
 status=`expr $status + $ret`
- 
+
 echo "I:querying for empty NULL record"
 ret=0
 $DIG +short $DIGOPTS @10.53.0.1 empty.example null in > dig.out || ret=1

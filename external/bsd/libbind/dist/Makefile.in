@@ -44,7 +44,7 @@ INETOBJS= inet/inet_addr.@O@ inet/inet_cidr_ntop.@O@ inet/inet_cidr_pton.@O@ \
 WANT_IRS_THREADS_OBJS=	irs/gethostent_r.@O@ irs/getnetent_r.@O@ \
 	irs/getnetgrent_r.@O@ irs/getprotoent_r.@O@ irs/getservent_r.@O@
 
-WANT_IRS_NISGR_OBJS= irs/nis_gr.@O@ 
+WANT_IRS_NISGR_OBJS= irs/nis_gr.@O@
 WANT_IRS_GR_OBJS= irs/dns_gr.@O@ irs/irp_gr.@O@ irs/lcl_gr.@O@ irs/gen_gr.@O@ \
 	irs/getgrent.@O@ @WANT_IRS_NISGR_OBJS@ @WANT_IRS_THREADSGR_OBJS@
 

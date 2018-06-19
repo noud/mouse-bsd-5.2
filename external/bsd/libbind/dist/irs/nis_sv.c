@@ -93,7 +93,7 @@ struct irs_sv *
 irs_nis_sv(struct irs_acc *this) {
 	struct irs_sv *sv;
 	struct pvt *pvt;
-	
+
 	if (!(sv = memget(sizeof *sv))) {
 		errno = ENOMEM;
 		return (NULL);
@@ -124,7 +124,7 @@ irs_nis_sv(struct irs_acc *this) {
 static void
 sv_close(struct irs_sv *this) {
 	struct pvt *pvt = (struct pvt *)this->private;
-	
+
 	nisfree(pvt, do_all);
 	if (pvt->serv.s_aliases)
 		free(pvt->serv.s_aliases);
@@ -247,7 +247,7 @@ makeservent(struct irs_sv *this) {
 
 	pvt->serv.s_port = htons((u_short) atoi(p));
 	pvt->serv.s_proto = NULL;
-	
+
 	while (*p && !isspace((unsigned char)*p))
 		if (*p++ == '/')
 			pvt->serv.s_proto = p;
@@ -282,7 +282,7 @@ makeservent(struct irs_sv *this) {
 		goto cleanup;
 	pvt->serv.s_aliases[n] = NULL;
 	return (&pvt->serv);
-	
+
  cleanup:
 	if (pvt->serv.s_aliases) {
 		free(pvt->serv.s_aliases);

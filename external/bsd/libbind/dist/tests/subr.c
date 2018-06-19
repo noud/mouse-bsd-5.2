@@ -18,14 +18,14 @@
 
 /*
  * Portions Copyright (c) 1993 by Digital Equipment Corporation.
- * 
+ *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies, and that
  * the name of Digital Equipment Corporation not be used in advertising or
  * publicity pertaining to distribution of the document or software without
  * specific, written prior permission.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND DIGITAL EQUIPMENT CORP. DISCLAIMS ALL
  * WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS.   IN NO EVENT SHALL DIGITAL EQUIPMENT
@@ -162,7 +162,7 @@ pickString(const char *src, char *dest, size_t dest_size) {
 
 	if (dest_size == 0 || dest == NULL || src == NULL)
 		return 0;
-	
+
 	for (start = src ; isspace((unsigned char)*start) ; start++)
 		/* nada */ ;
 
@@ -170,7 +170,7 @@ pickString(const char *src, char *dest, size_t dest_size) {
 		/* nada */ ;
 
 	sublen = end - start ;
-	
+
 	if (sublen == 0 || sublen > (dest_size - 1))
 		return 0;
 
@@ -189,17 +189,17 @@ pickString(const char *src, char *dest, size_t dest_size) {
  * FORMAT will match any amount of (including no) leading whitespace in
  * SRC. Any amount of whitespace inside FORMAT matches any non-zero amount
  * of whitespace in SRC. Value returned is 0 if match didn't occur, or the
- * amount of characters in SRC that did match 
+ * amount of characters in SRC that did match
  *
  * 	int i ;
  *
- * 	i = matchString(" a    b c", "a b c") ; 
+ * 	i = matchString(" a    b c", "a b c") ;
  * 	assert (i == 5) ;
- * 	i = matchString("a b c", "  a b c");  
+ * 	i = matchString("a b c", "  a b c");
  * 	assert (i == 0) ;    becasue no leading white space in format
- * 	i = matchString(" a b c", " a   b     c"); 
+ * 	i = matchString(" a b c", " a   b     c");
  * 	assert(i == 12);
- * 	i = matchString("aa bb ", "aa      bb      ddd sd"); 
+ * 	i = matchString("aa bb ", "aa      bb      ddd sd");
  * 	assert(i == 16);
  */
 int
@@ -216,7 +216,7 @@ matchString (const char *format, const char *src) {
 		while (isspace((unsigned char)*s))
 			s++ ;
 	}
-	
+
 	while (1) {
 		if (isspace((unsigned char)*f)) {
 			if (!isspace((unsigned char)*s))

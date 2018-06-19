@@ -75,7 +75,7 @@
     <para><command>dnssec-keyfromlabel</command>
       gets keys with the given label from a crypto hardware and builds
       key files for DNSSEC (Secure DNS), as defined in RFC 2535
-      and RFC 4034.  
+      and RFC 4034.
     </para>
     <para>
       The <option>name</option> of the key is specified on the command
@@ -382,7 +382,7 @@
         </para>
       </listitem>
     </itemizedlist>
-    <para><command>dnssec-keyfromlabel</command> 
+    <para><command>dnssec-keyfromlabel</command>
       creates two files, with names based
       on the printed string.  <filename>Knnnn.+aaa+iiiii.key</filename>
       contains the public key, and

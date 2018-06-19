@@ -72,7 +72,7 @@ if no node was found, or the value of the user data pointer if the node
 was found.
 .Fn compare
 is the address of a function to compare two user data blocks.  This routine
-should work much the way 
+should work much the way
 .Xr strcmp 3
 does; in fact,
 .Xr strcmp
@@ -125,7 +125,7 @@ with the address of each user data block.  If
 .Fn trav_uar
 returns FALSE at any time,
 .Fn tree_trav
-will immediately return FALSE to its caller.  Otherwise all nodes will be 
+will immediately return FALSE to its caller.  Otherwise all nodes will be
 reached and
 .Fn tree_trav
 will return TRUE.

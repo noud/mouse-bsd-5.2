@@ -896,7 +896,7 @@ diff -c mdn/othersrc/bind9/configure:1.1.1.9 mdn/othersrc/bind9/configure:1.15
   int main() {
 ***************
 *** 1965,1971 ****
-  	
+  
   ; return 0; }
   EOF
 ! if { (eval echo configure:1969: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
@@ -904,7 +904,7 @@ diff -c mdn/othersrc/bind9/configure:1.1.1.9 mdn/othersrc/bind9/configure:1.15
     echo "$ac_t""no" 1>&6
   else
 --- 1973,1979 ----
-  	
+  
   ; return 0; }
   EOF
 ! if { (eval echo configure:1977: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
@@ -1276,7 +1276,7 @@ diff -c mdn/othersrc/bind9/configure:1.1.1.9 mdn/othersrc/bind9/configure:1.15
     withval="$with_randomdev"
 ***************
 *** 2411,2417 ****
-  		
+  
   ac_safe=`echo "$devrandom" | sed 'y%./+-%__p_%'`
   echo $ac_n "checking for $devrandom""... $ac_c" 1>&6
 ! echo "configure:2415: checking for $devrandom" >&5
@@ -1284,7 +1284,7 @@ diff -c mdn/othersrc/bind9/configure:1.1.1.9 mdn/othersrc/bind9/configure:1.15
     echo $ac_n "(cached) $ac_c" 1>&6
   else
 --- 2419,2425 ----
-  		
+  
   ac_safe=`echo "$devrandom" | sed 'y%./+-%__p_%'`
   echo $ac_n "checking for $devrandom""... $ac_c" 1>&6
 ! echo "configure:2423: checking for $devrandom" >&5
@@ -5222,7 +5222,7 @@ diff -c mdn/othersrc/bind9/configure:1.1.1.9 mdn/othersrc/bind9/configure:1.15
 +   cat >> confdefs.h <<EOF
 + #define $ac_tr_hdr 1
 + EOF
-+  
++ 
 + else
 +   echo "$ac_t""no" 1>&6
 + fi
@@ -5277,7 +5277,7 @@ diff -c mdn/othersrc/bind9/configure:1.1.1.9 mdn/othersrc/bind9/configure:1.15
 +   cat >> confdefs.h <<EOF
 + #define $ac_tr_func 1
 + EOF
-+  
++ 
 + else
 +   echo "$ac_t""no" 1>&6
 + fi
@@ -5444,7 +5444,7 @@ diff -c mdn/othersrc/bind9/bin/dig/dig.1:1.1.1.2 mdn/othersrc/bind9/bin/dig/dig.
 + reply from the server.
 + If you'd like to turn off the IDN support for some reason, defines
 + the \fBIDN_DISABLE\fR environment variable.
-+ The IDN support is disabled if the the variable is set when 
++ The IDN support is disabled if the the variable is set when
 + \fBdig\fR runs.
   .SH "FILES"
   .PP
@@ -5468,7 +5468,7 @@ diff -c mdn/othersrc/bind9/bin/dig/dig.docbook:1.1.1.2 mdn/othersrc/bind9/bin/di
 + reply from the server.
 + If you'd like to turn off the IDN support for some reason, defines
 + the <envar>IDN_DISABLE</envar> environment variable.
-+ The IDN support is disabled if the the variable is set when 
++ The IDN support is disabled if the the variable is set when
 + <command>dig</command> runs.
 + </para>
 + </refsect1>

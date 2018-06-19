@@ -99,7 +99,7 @@ DESC_CAT = 	hostname.${DESC_CAT_EXT}
 DESC_OUT =	${DESC_MAN} ${DESC_CAT}
 
 #
-# This sed command is used to update the manual entries so they refer to 
+# This sed command is used to update the manual entries so they refer to
 # the appropriate section of the manual for a given platform.
 #
 EXT_SED_CMD =	LIB_NETWORK_EXT_U=`echo "${LIB_NETWORK_EXT}"|tr "[a-z]" "[A-Z]"`; \
@@ -125,10 +125,10 @@ EXT_SED_CMD =	LIB_NETWORK_EXT_U=`echo "${LIB_NETWORK_EXT}"|tr "[a-z]" "[A-Z]"`; 
 
 .SUFFIXES:	.${LIB_NETWORK_EXT} .${LIB_NETWORK_MAN_EXT} \
 		.${FORMAT_EXT} .${FORMAT_MAN_EXT} \
-		.${DESC_EXT} .${DESC_MAN_EXT} 
+		.${DESC_EXT} .${DESC_MAN_EXT}
 .SUFFIXES:	.${LIB_NETWORK_MAN_EXT} .${LIB_NETWORK_CAT_EXT} \
 		.${FORMAT_MAN_EXT} .${FORMAT_CAT_EXT} \
-		.${DESC_MAN_EXT} .${DESC_CAT_EXT} 
+		.${DESC_MAN_EXT} .${DESC_CAT_EXT}
 
 .${LIB_NETWORK_EXT}.${LIB_NETWORK_MAN_EXT}:
 	@echo "$*.${LIB_NETWORK_EXT} -> $*.${LIB_NETWORK_MAN_EXT}"

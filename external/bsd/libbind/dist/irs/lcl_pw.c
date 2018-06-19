@@ -92,7 +92,7 @@ static int __bind_irs_pw_unneeded;
  * The lookup techniques and data extraction code here must be kept
  * in sync with that in `pwd_mkdb'.
  */
- 
+
 
 /* Types */
 
@@ -124,7 +124,7 @@ irs_lcl_pw(struct irs_acc *this) {
 	struct pvt *pvt;
 
 	UNUSED(this);
-		 
+
         if (!(pw = memget(sizeof *pw))) {
 		errno = ENOMEM;
 		return (NULL);
@@ -153,7 +153,7 @@ irs_lcl_pw(struct irs_acc *this) {
 static void
 pw_close(struct irs_pw *this) {
 	struct pvt *pvt = (struct pvt *)this->private;
-	
+
 	if (pvt->pw_db) {
 		(void)(pvt->pw_db->close)(pvt->pw_db);
 		pvt->pw_db = NULL;
@@ -167,13 +167,13 @@ pw_close(struct irs_pw *this) {
 static struct passwd *
 pw_next(struct irs_pw *this) {
 	struct pvt *pvt = (struct pvt *)this->private;
-	
+
 	DBT key;
 	char bf[sizeof(pvt->pw_keynum) + 1];
- 
+
 	if (!initdb(pvt))
 		return (NULL);
- 
+
 	++pvt->pw_keynum;
 	bf[0] = _PW_KEYBYNUM;
 	memcpy(bf + 1, (char *)&pvt->pw_keynum, sizeof(pvt->pw_keynum));
@@ -181,27 +181,27 @@ pw_next(struct irs_pw *this) {
 	key.size = sizeof(pvt->pw_keynum) + 1;
 	return (hashpw(this, &key) ? &pvt->passwd : NULL);
 }
- 
+
 static struct passwd *
 pw_byname(struct irs_pw *this, const char *name) {
 	struct pvt *pvt = (struct pvt *)this->private;
 	DBT key;
 	int len, rval;
 	char bf[UT_NAMESIZE + 1];
- 
+
 	if (!initdb(pvt))
 		return (NULL);
- 
+
 	bf[0] = _PW_KEYBYNAME;
 	len = strlen(name);
 	memcpy(bf + 1, name, MIN(len, UT_NAMESIZE));
 	key.data = (u_char *)bf;
 	key.size = len + 1;
 	rval = hashpw(this, &key);
- 
+
 	return (rval ? &pvt->passwd : NULL);
 }
- 
+
 
 static struct passwd *
 pw_byuid(struct irs_pw *this, uid_t uid) {
@@ -209,17 +209,17 @@ pw_byuid(struct irs_pw *this, uid_t uid) {
 	DBT key;
 	int keyuid, rval;
 	char bf[sizeof(keyuid) + 1];
- 
+
 	if (!initdb(pvt))
 		return (NULL);
- 
+
 	bf[0] = _PW_KEYBYUID;
 	keyuid = uid;
 	memcpy(bf + 1, &keyuid, sizeof(keyuid));
 	key.data = (u_char *)bf;
 	key.size = sizeof(keyuid) + 1;
 	rval = hashpw(this, &key);
- 
+
 	return (rval ? &pvt->passwd : NULL);
 }
 
@@ -270,7 +270,7 @@ hashpw(struct irs_pw *this, DBT *key) {
 	struct pvt *pvt = (struct pvt *)this->private;
 	char *p, *t, *l;
 	DBT data;
- 
+
 	if ((pvt->pw_db->get)(pvt->pw_db, key, &data, 0))
 		return (0);
 	p = (char *)data.data;

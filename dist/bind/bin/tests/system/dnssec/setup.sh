@@ -17,7 +17,7 @@
 
 # Id
 
-sh clean.sh 
+sh clean.sh
 
 ../../../tools/genrandom 400 random.data
 

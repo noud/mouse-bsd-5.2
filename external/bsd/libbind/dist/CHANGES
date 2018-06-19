@@ -1,6 +1,6 @@
                         -- 6.0rc1 released --
 
-11.	[func]		Add tests subdirectory.  Includes dig8.c, to test 
+11.	[func]		Add tests subdirectory.  Includes dig8.c, to test
 			linking against libbind. [RT #19425]
 
 10.	[func]		Add suppport for DS, SSHFP, RRSIG, NSEC, DNSKEY,

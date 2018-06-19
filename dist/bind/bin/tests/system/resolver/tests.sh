@@ -188,7 +188,7 @@ n=`expr $n + 1`
 echo "I:checking that update a nameservers address has immediate effects ($n)"
 ret=0
 $DIG +tcp TXT foo.moves @10.53.0.7 -p 5300 > dig.ns7.foo.${n} || ret=1
-grep "From NS 5" dig.ns7.foo.${n} > /dev/null || ret=1 
+grep "From NS 5" dig.ns7.foo.${n} > /dev/null || ret=1
 $NSUPDATE << EOF
 server 10.53.0.7 5300
 zone server
@@ -206,7 +206,7 @@ n=`expr $n + 1`
 echo "I:checking that update a nameservers glue has immediate effects ($n)"
 ret=0
 $DIG +tcp TXT foo.child.server @10.53.0.7 -p 5300 > dig.ns7.foo.${n} || ret=1
-grep "From NS 5" dig.ns7.foo.${n} > /dev/null || ret=1 
+grep "From NS 5" dig.ns7.foo.${n} > /dev/null || ret=1
 $NSUPDATE << EOF
 server 10.53.0.7 5300
 zone server
@@ -270,7 +270,7 @@ ret=0
 $DIG -p 5300 @10.53.0.5 www.to-be-removed.tld A > dig.ns5.prime.${n}
 grep "status: NOERROR" dig.ns5.prime.${n} > /dev/null || { ret=1; echo "I: priming failed"; }
 cp ns4/tld2.db ns4/tld.db
-($RNDC -c ../common/rndc.conf -s 10.53.0.4 -p 9953 reload tld 2>&1 ) | 
+($RNDC -c ../common/rndc.conf -s 10.53.0.4 -p 9953 reload tld 2>&1 ) |
 sed -e '/reload queued/d' -e 's/^/I:ns4 /'
 old=
 for i in 0 1 2 3 4 5 6 7 8 9
@@ -290,7 +290,7 @@ EOF
 	old=$i
 	sleep 1
 done
-[ $ret = 0 ] && ret=$foo; 
+[ $ret = 0 ] && ret=$foo;
 if [ $ret != 0 ]; then echo "I:failed"; status=1; fi
 
 echo "I:exit status: $status"

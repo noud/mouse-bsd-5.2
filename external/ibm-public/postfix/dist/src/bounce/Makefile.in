@@ -7,8 +7,8 @@ OBJS	= bounce.o bounce_append_service.o bounce_notify_service.o \
 	bounce_cleanup.o bounce_notify_util.o bounce_notify_verp.o \
 	bounce_one_service.o bounce_warn_service.o bounce_trace_service.o \
 	bounce_template.o bounce_templates.o
-HDRS	= 
-TESTSRC	= 
+HDRS	=
+TESTSRC	=
 DEFS	= -I. -I$(INC_DIR) -D$(SYSTYPE)
 CFLAGS	= $(DEBUG) $(OPT) $(DEFS)
 TESTPROG=

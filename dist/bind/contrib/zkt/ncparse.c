@@ -1,7 +1,7 @@
 /*        $NetBSD: ncparse.c,v 1.1.2.1 2011/01/06 21:41:08 riz Exp $      */
 
 /*****************************************************************
-**	
+**
 **	@(#) ncparse.c -- A very simple named.conf parser
 **
 **	Copyright (c) Apr 2005 - Nov 2007, Holger Zuleger HZnet. All rights reserved.
@@ -146,7 +146,7 @@ static	int	gettok (FILE *fp, char *val, size_t valsize)
 				lastc = EOF;		/* read until end of c comment */
 				while ( (c = getc (fp)) != EOF && !(lastc == '*' && c == '/') )
 					lastc = c;
-			}	
+			}
 			else if ( c == '/' )	/* is it a C single line comment ? */
 			{
 				while ( (c = getc (fp)) != EOF && c != '\n' )
@@ -167,7 +167,7 @@ static	int	gettok (FILE *fp, char *val, size_t valsize)
 			/* if string buffer is too small, eat up rest of string */
 			while ( c != EOF && c != '\"' )
 				c = getc (fp);
-			
+
 			return TOK_STRING;
 		}
 
@@ -201,7 +201,7 @@ int	parse_namedconf (const char *filename, const char *chroot_dir, char *dir, si
 	int	tok;
 	char	path[511+1];
 #if 1	/* this is potentialy too small for key data, but we don't need the keys... */
-	char	strval[255+1];		
+	char	strval[255+1];
 #else
 	char	strval[4095+1];
 #endif
@@ -246,8 +246,8 @@ int	parse_namedconf (const char *filename, const char *chroot_dir, char *dir, si
 				else
 					snprintf (dir, dirsize, "%s", path);
 				dbg_val ("parse_namedconf: new dir \"%s\" \n", dir);
-			}	
-		}	
+			}
+		}
 		else if ( tok == TOK_INCLUDE )
 		{
 			if ( gettok (fp, strval, sizeof (strval)) == TOK_STRING )
@@ -288,7 +288,7 @@ int	parse_namedconf (const char *filename, const char *chroot_dir, char *dir, si
 			dbg_val4 ("dir %s view %s zone %s file %s\n", dir, view, zone, zonefile);
 			(*func) (dir, view, zone, zonefile);
 		}
-		else 
+		else
 			dbg_val3 ("%-10s(%d): %s\n", tok2str(tok), tok, strval);
 	}
 	fclose (fp);
@@ -321,7 +321,7 @@ main (int argc, char *argv[])
 	directory[0] = '\0';
 	if ( --argc == 0 )
 		parse_namedconf ("/var/named/named.conf", NULL, directory, sizeof (directory), printzone);
-	else 
+	else
 		parse_namedconf (argv[1], NULL, directory, sizeof (directory), printzone);
 }
 #endif

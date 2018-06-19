@@ -96,7 +96,7 @@ static	int	dki_readfile (FILE *fp, dki_t *dkp)
 	assert (fp != NULL);
 
 	while ( (c = getc (fp)) == ';' )	/* line start with comment ? */
-	{	
+	{
 		tag[0] = val[0] = '\0';
 		if ( (c = getc (fp)) == '%' )	/* special comment? */
 		{
@@ -256,7 +256,7 @@ dki_t	*dki_new (const char *dir, const char *name, int ksk, int algo, int bitsiz
 	randfile[0] = '\0';
 	if ( rfile && *rfile )
 		snprintf (randfile, sizeof (randfile), "-r %.250s ", rfile);
-		
+
 	if ( algo == DK_ALGO_RSA || algo == DK_ALGO_RSASHA1 || algo == DK_ALGO_RSASHA256 || algo == DK_ALGO_RSASHA512 )
 		expflag = "-e ";
 
@@ -280,7 +280,7 @@ dki_t	*dki_new (const char *dir, const char *name, int ksk, int algo, int bitsiz
 	new = dki_read (dir, fname);
 	if ( new )
 		dki_setlifetime (new, lf_days);	/* sets gentime + proposed lifetime */
-	
+
 	return new;
 }
 
@@ -338,7 +338,7 @@ dki_t	*dki_read (const char *dirname, const char *filename)
 			"dki_read: Can\'t open file \"%s\" for reading", path);
 		return (NULL);
 	}
-	
+
 	dbg_line ();
 	if ( (err = dki_readfile (fp, dkp)) != 0 )
 	{
@@ -500,13 +500,13 @@ static	int	dki_setstat (dki_t *dkp, int status, int preserve_time)
 			dki_setflag (dkp, DK_FLAG_REVOKE);	/* set REVOKE bit */
 		else
 			dki_unsetflag (dkp, DK_FLAG_REVOKE);	/* clear REVOKE bit */
-			
+
 
 		dki_writeinfo (dkp, topath);	/* ..and write it to the key file */
-		
+
 		if ( !preserve_time )
 			touch (topath, time (NULL));
-			
+
 		return 0;
 	}
 
@@ -553,7 +553,7 @@ static	int	dki_setstat (dki_t *dkp, int status, int preserve_time)
 **	dki_remove ()
 **	rename files associated with key, so that the keys are not
 **	recognized by the zkt tools e.g.
-**	Kdo.ma.in.+001+12345.key ==> kdo.ma.in.+001+12345.key 
+**	Kdo.ma.in.+001+12345.key ==> kdo.ma.in.+001+12345.key
 **	(second one starts with a lower case 'k')
 *****************************************************************/
 dki_t	*dki_remove (dki_t *dkp)
@@ -564,8 +564,8 @@ dki_t	*dki_remove (dki_t *dkp)
 	dki_t	*next;
 	const	char	**pext;
 	static	const	char	*ext[] = {
-		DKI_KEY_FILEEXT, DKI_PUB_FILEEXT, 
-		DKI_ACT_FILEEXT, DKI_DEP_FILEEXT, 
+		DKI_KEY_FILEEXT, DKI_PUB_FILEEXT,
+		DKI_ACT_FILEEXT, DKI_DEP_FILEEXT,
 		NULL
 	};
 
@@ -580,7 +580,7 @@ dki_t	*dki_remove (dki_t *dkp)
 		if ( fileexist (path) )
 		{
 			pathname (newpath, sizeof (newpath), dkp->dname, newfile, *pext);
-			
+
 			dbg_val2 ("dki_remove: %s ==> %s \n", path, newpath);
 			rename (path, newpath);
 		}
@@ -601,8 +601,8 @@ dki_t	*dki_destroy (dki_t *dkp)
 	dki_t	*next;
 	const	char	**pext;
 	static	const	char	*ext[] = {
-		DKI_KEY_FILEEXT, DKI_PUB_FILEEXT, 
-		DKI_ACT_FILEEXT, DKI_DEP_FILEEXT, 
+		DKI_KEY_FILEEXT, DKI_PUB_FILEEXT,
+		DKI_ACT_FILEEXT, DKI_DEP_FILEEXT,
 		NULL
 	};
 
@@ -668,7 +668,7 @@ char	*dki_algo2sstr (int algo)
 
 /*****************************************************************
 **	dki_geterrstr ()
-**	return error string 
+**	return error string
 *****************************************************************/
 const	char	*dki_geterrstr ()
 {
@@ -698,18 +698,18 @@ int	dki_prt_dnskeyttl (const dki_t *dkp, FILE *fp, int ttl)
 		fprintf (fp, "%d ", ttl);
 	fprintf (fp, "IN DNSKEY  ");
 	fprintf (fp, "%d 3 %d (", dkp->flags, dkp->algo);
-	fprintf (fp, "\n\t\t\t"); 
+	fprintf (fp, "\n\t\t\t");
 	for ( p = dkp->pubkey; *p ; p++ )
 		if ( *p == ' ' )
-			fprintf (fp, "\n\t\t\t"); 
+			fprintf (fp, "\n\t\t\t");
 		else
 			putc (*p, fp);
 	fprintf (fp, "\n\t\t");
 	if ( dki_isrevoked (dkp) )
-		fprintf (fp, ") ; key id = %u (original key id = %u)", (dkp->tag + 128) % 65535, dkp->tag); 
+		fprintf (fp, ") ; key id = %u (original key id = %u)", (dkp->tag + 128) % 65535, dkp->tag);
 	else
-		fprintf (fp, ") ; key id = %u", dkp->tag); 
-	fprintf (fp, "\n"); 
+		fprintf (fp, ") ; key id = %u", dkp->tag);
+	fprintf (fp, "\n");
 
 	return 1;
 }
@@ -738,7 +738,7 @@ int	dki_prt_dnskey_raw (const dki_t *dkp, FILE *fp)
 #endif
 	fprintf (fp, "IN DNSKEY  ");
 	fprintf (fp, "%d 3 %d ", dkp->flags, dkp->algo);
-	fprintf (fp, "%s\n", dkp->pubkey); 
+	fprintf (fp, "%s\n", dkp->pubkey);
 
 	return 1;
 }
@@ -755,7 +755,7 @@ int	dki_prt_comment (const dki_t *dkp, FILE *fp)
 	len += fprintf (fp, "; %s  ", dkp->name);
 	len += fprintf (fp, "tag=%u  ", dkp->tag);
 	len += fprintf (fp, "algo=%s  ", dki_algo2str(dkp->algo));
-	len += fprintf (fp, "generated %s\n", time2str (dkp->time, 's')); 
+	len += fprintf (fp, "generated %s\n", time2str (dkp->time, 's'));
 
 	return len;
 }
@@ -776,18 +776,18 @@ int	dki_prt_trustedkey (const dki_t *dkp, FILE *fp)
 	len += fprintf (fp, "%*s", spaces > 0 ? spaces : 0 , " ");
 	len += fprintf (fp, "%d 3 %d ", dkp->flags, dkp->algo);
 	if ( spaces < 0 )
-		len += fprintf (fp, "\n\t\t\t%7s", " "); 
+		len += fprintf (fp, "\n\t\t\t%7s", " ");
 	len += fprintf (fp, "\"");
 	for ( p = dkp->pubkey; *p ; p++ )
 		if ( *p == ' ' )
-			len += fprintf (fp, "\n\t\t\t\t"); 
+			len += fprintf (fp, "\n\t\t\t\t");
 		else
 			putc (*p, fp), len += 1;
 
 	if ( dki_isrevoked (dkp) )
-		len += fprintf (fp, "\" ; # key id = %u (original key id = %u)\n\n", (dkp->tag + 128) % 65535, dkp->tag); 
+		len += fprintf (fp, "\" ; # key id = %u (original key id = %u)\n\n", (dkp->tag + 128) % 65535, dkp->tag);
 	else
-		len += fprintf (fp, "\" ; # key id = %u\n\n", dkp->tag); 
+		len += fprintf (fp, "\" ; # key id = %u\n\n", dkp->tag);
 	return len;
 }
 
@@ -804,7 +804,7 @@ int	dki_cmp (const dki_t *a, const dki_t *b)
 
 	/* sort by domain name, */
 	if ( (res = domaincmp (a->name, b->name)) != 0 )
-		return res; 
+		return res;
 
 	/* then by key type, */
 	if ( (res = dki_isksk (b) - dki_isksk (a)) != 0 )
@@ -828,7 +828,7 @@ int	dki_allcmp (const dki_t *a, const dki_t *b)
 // fprintf (stderr, "dki_allcmp %s, %s)\n", a->name, b->name);
 	/* sort by domain name, */
 	if ( (res = domaincmp (a->name, b->name)) != 0 )
-		return res; 
+		return res;
 
 	/* then by key type, */
 	if ( (res = dki_isksk (b) - dki_isksk (a)) != 0 )
@@ -969,7 +969,7 @@ ushort	dki_setlifetime (dki_t *dkp, int days)
 /*****************************************************************
 **	dki_setexptime (dkp, time_t sec)
 **	set the expiration time of the key in seconds since the epoch
-**	return the old exptime 
+**	return the old exptime
 *****************************************************************/
 time_t	dki_setexptime (dki_t *dkp, time_t sec)
 {
@@ -1001,7 +1001,7 @@ int	dki_age (const dki_t *dkp, time_t curr)
 }
 
 /*****************************************************************
-**	dki_getflag ()	return the flags field of a key 
+**	dki_getflag ()	return the flags field of a key
 *****************************************************************/
 dk_flag_t	dki_getflag (const dki_t *dkp, time_t curr)
 {
@@ -1009,7 +1009,7 @@ dk_flag_t	dki_getflag (const dki_t *dkp, time_t curr)
 }
 
 /*****************************************************************
-**	dki_setflag ()	set a flag of a key 
+**	dki_setflag ()	set a flag of a key
 *****************************************************************/
 dk_flag_t	dki_setflag (dki_t *dkp, dk_flag_t flag)
 {
@@ -1017,7 +1017,7 @@ dk_flag_t	dki_setflag (dki_t *dkp, dk_flag_t flag)
 }
 
 /*****************************************************************
-**	dki_unsetflag ()	unset a flag of a key 
+**	dki_unsetflag ()	unset a flag of a key
 *****************************************************************/
 dk_flag_t	dki_unsetflag (dki_t *dkp, dk_flag_t flag)
 {
@@ -1121,7 +1121,7 @@ dki_t	*dki_add (dki_t **list, dki_t *new)
 	else			/* add node at end or between two nodes */
 		last->next = new;
 	new->next = curr;
-	
+
 	return *list;
 }
 

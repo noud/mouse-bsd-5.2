@@ -29,7 +29,7 @@ all:
 
 installdirs:
 	$(SHELL) ${top_srcdir}/mkinstalldirs ${DESTDIR}${includedir}/rpc \
-	${DESTDIR}${includedir}/sys 
+	${DESTDIR}${includedir}/sys
 
 install:: installdirs
 	for i in ${HEADERS}; do \

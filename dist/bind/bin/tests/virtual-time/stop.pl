@@ -50,7 +50,7 @@ my $errors = 0;
 die "$usage\n" unless defined($test);
 die "No test directory: \"$test\"\n" unless (-d $test);
 die "No server directory: \"$server\"\n" if (defined($server) && !-d "$test/$server");
-    
+
 # Global variables
 my $testdir = abs_path($test);
 my @servers;
@@ -66,7 +66,7 @@ if (defined $server) {
 	closedir DIR;
 
 	my @ns = grep /^ns[0-9]*$/, @files;
-	
+
 	push @servers, @ns;
 }
 
@@ -146,7 +146,7 @@ sub stop_signal {
 
 	my $pid_file = server_pid_file($server);
 	return unless -f $pid_file;
-	
+
 	my $pid = read_pid($pid_file);
 	return unless defined($pid);
 

@@ -138,7 +138,7 @@ irs_nis_nw(struct irs_acc *this) {
 
 static void
 nw_close(struct irs_nw *this) {
-	struct pvt *pvt = (struct pvt *)this->private;	
+	struct pvt *pvt = (struct pvt *)this->private;
 
 	nw_minimize(this);
 	if (pvt->res && pvt->free_res)
@@ -192,7 +192,7 @@ nw_byname(struct irs_nw *this, const char *name, int af) {
 	struct pvt *pvt = (struct pvt *)this->private;
 	int r;
 	char *tmp;
-	
+
 	if (init(this) == -1)
 		return (NULL);
 
@@ -373,7 +373,7 @@ nisfree(struct pvt *pvt, enum do_what do_what) {
 static int
 init(struct irs_nw *this) {
 	struct pvt *pvt = (struct pvt *)this->private;
-	
+
 	if (!pvt->res && !nw_res_get(this))
 		return (-1);
 	if (((pvt->res->options & RES_INIT) == 0) &&

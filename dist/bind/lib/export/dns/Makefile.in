@@ -77,7 +77,7 @@ OPENSSLLINKSRCS = openssl_link.c openssldh_link.c \
 DSTSRCS =	@OPENSSLLINKSRCS@ \
 		dst_api.c dst_lib.c dst_parse.c \
 		dst_result.c gssapi_link.c gssapictx.c \
-		hmac_link.c key.c 
+		hmac_link.c key.c
 
 DNSSRCS =	acl.c adb.c byaddr.c \
 		cache.c callbacks.c client.c compress.c \

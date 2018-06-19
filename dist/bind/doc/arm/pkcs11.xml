@@ -156,8 +156,8 @@ $ <userinput>./Configure solaris64-x86_64-cc \
 </screen>
       <para>(For a 32-bit build, use "solaris-x86-cc" and
       /usr/lib/libpkcs11.so.)</para>
-      <para>After configuring, run 
-      <command>make</command> and 
+      <para>After configuring, run
+      <command>make</command> and
       <command>make test</command>.</para>
     </sect3>
     <sect3>
@@ -217,7 +217,7 @@ $ <userinput>./Configure linux-x86_64 -pthread \
       <quote><literal>[ available ]</literal></quote>.</para>
       <para>If the output is correct, run
       "<command>make install</command>" which will install the
-      modified OpenSSL suite to 
+      modified OpenSSL suite to
       <filename>/opt/pkcs11/usr</filename>.</para>
   </sect2>
   <sect2>
@@ -278,11 +278,11 @@ $ <userinput>./configure --enable-threads \
   <sect2>
     <title>PKCS #11 Tools</title>
     <para>BIND 9 includes a minimal set of tools to operate the
-    HSM, including 
+    HSM, including
     <command>pkcs11-keygen</command> to generate a new key pair
-    within the HSM, 
+    within the HSM,
     <command>pkcs11-list</command> to list objects currently
-    available, and 
+    available, and
     <command>pkcs11-destroy</command> to remove objects.</para>
     <para>In UNIX/Linux builds, these tools are built only if BIND
     9 is configured with the --with-pkcs11 option. (NOTE: If
@@ -302,7 +302,7 @@ $ <userinput>export LD_LIBRARY_PATH=/opt/pkcs11/usr/lib:${LD_LIBRARY_PATH}</user
     <para>When operating an AEP Keyper, it is also necessary to
     specify the location of the "machine" file, which stores
     information about the Keyper for use by PKCS #11 provider
-    library. If the machine file is in 
+    library. If the machine file is in
     <filename>/opt/Keyper/PKCS11Provider/machine</filename>,
     use:</para>
     <screen>
@@ -310,14 +310,14 @@ $ <userinput>export KEYPER_LIBRARY_PATH=/opt/Keyper/PKCS11Provider</userinput>
 </screen>
     <!-- TODO: why not defined at compile time? -->
     <para>These environment variables must be set whenever running
-    any tool that uses the HSM, including 
-    <command>pkcs11-keygen</command>, 
-    <command>pkcs11-list</command>, 
-    <command>pkcs11-destroy</command>, 
-    <command>dnssec-keyfromlabel</command>, 
-    <command>dnssec-signzone</command>, 
+    any tool that uses the HSM, including
+    <command>pkcs11-keygen</command>,
+    <command>pkcs11-list</command>,
+    <command>pkcs11-destroy</command>,
+    <command>dnssec-keyfromlabel</command>,
+    <command>dnssec-signzone</command>,
     <command>dnssec-keygen</command>(which will use the HSM for
-    random number generation), and 
+    random number generation), and
     <command>named</command>.</para>
     <para>We can now create and use keys in the HSM. In this case,
     we will create a 2048 bit key and give it the label
@@ -365,9 +365,9 @@ $ <userinput>dnssec-keygen example.net</userinput>
     rolled more frequently, if you wish, to compensate for a
     reduction in key security.</para>
     <para>Now you can sign the zone. (Note: If not using the -S
-    option to 
+    option to
     <command>dnssec-signzone</command>, it will be necessary to add
-    the contents of both 
+    the contents of both
     <filename>K*.key</filename> files to the zone master file before
     signing it.)</para>
     <screen>
@@ -382,8 +382,8 @@ example.net.signed
   </sect2>
   <sect2>
     <title>Specifying the engine on the command line</title>
-    <para>The OpenSSL engine can be specified in 
-    <command>named</command> and all of the BIND 
+    <para>The OpenSSL engine can be specified in
+    <command>named</command> and all of the BIND
     <command>dnssec-*</command> tools by using the "-E
     &lt;engine&gt;" command line option. If BIND 9 is built with
     the --with-pkcs11 option, this option defaults to "pkcs11".
@@ -396,18 +396,18 @@ example.net.signed
     <screen>
 $ <userinput>dnssec-signzone -E '' -S example.net</userinput>
 </screen>
-    <para>This causes 
+    <para>This causes
     <command>dnssec-signzone</command> to run as if it were compiled
     without the --with-pkcs11 option.</para>
   </sect2>
   <sect2>
     <title>Running named with automatic zone re-signing</title>
-    <para>If you want 
+    <para>If you want
     <command>named</command> to dynamically re-sign zones using HSM
     keys, and/or to to sign new records inserted via nsupdate, then
     named must have access to the HSM PIN. This can be accomplished
     by placing the PIN into the openssl.cnf file (in the above
-    examples, 
+    examples,
     <filename>/opt/pkcs11/usr/ssl/openssl.cnf</filename>).</para>
     <para>The location of the openssl.cnf file can be overridden by
     setting the OPENSSL_CONF environment variable before running
@@ -426,7 +426,7 @@ $ <userinput>dnssec-signzone -E '' -S example.net</userinput>
     without PIN entry. (The pkcs11-* tools access the HSM directly,
     not via OpenSSL, so a PIN will still be required to use
     them.)</para>
-<!-- 
+<!--
 If the PIN is not known, I believe the first time named needs the
 PIN to open a key, it'll ask you to type in the PIN, which will be
 a problem because it probably won't be running on a terminal

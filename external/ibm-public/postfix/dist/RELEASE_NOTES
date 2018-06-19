@@ -21,7 +21,7 @@ Postfix no longer appends the system-supplied default CA certificates
 to the lists specified with *_tls_CAfile or with *_tls_CApath. This
 prevents third-party certificates from getting mail relay permission
 with the permit_tls_all_clientcerts feature.
- 
+
 Unfortunately this change may cause compatibility problems when
 configurations rely on certificate verification for other purposes.
 Specify "tls_append_default_CA = yes" for backwards compatibility.
@@ -173,7 +173,7 @@ message headers.  This can be used, for example, to control mail
 flow with Milter-generated headers that carry indicators for badness
 or goodness. For details, see the postconf(5) section for
 "milter_header_checks". Currently, all header_checks features are
-implemented except PREPEND.  
+implemented except PREPEND.
 
 Major changes - multi-instance support
 --------------------------------------

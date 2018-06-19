@@ -15357,7 +15357,7 @@ Apologies for any names omitted.
 
 	Bugfix (introduced Postfix 2.3): Postfix got out of sync
 	with a Milter application after the application sent a
-	"quarantine" request at end-of-message time. The milter 
+	"quarantine" request at end-of-message time. The milter
 	application would still be in the end-of-message state,
 	while Postfix would already be working on the next SMTP
 	event (typically, QUIT or MAIL FROM).  Problem diagnosed

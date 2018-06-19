@@ -1,10 +1,10 @@
 #
 #	README.logging
 #
-#	Introduction into the new logging feature 
+#	Introduction into the new logging feature
 #	available since v0.96
 #	Per domain logging is enabled since v1.0
-#	
+#
 
 In previous version of dnssec-signer every message was written
 to the default stdout and stderr channels, and the logging itself
@@ -61,7 +61,7 @@ Current logging messages:
 	LG_WARNING: KSK lifetime expiration
 	LG_NOTICE:
 		Start and stop of dnssec-signer
-		Re-signing events 
+		Re-signing events
 		Key rollover events
 		KSK key generation and revoking
 		Zone reload resp. freeze/thaw of dynamic zone
@@ -96,7 +96,7 @@ Some recomended and useful logging settings
 	SyslogFacility: USER
 	SyslogLevel: NOTICE
 	VerboseLog: 0
-	
+
 - Recommended setting for debugging
 	LogFile: "zkt.log"	# or a directory for separate logfiles
 	LogLevel: DEBUG

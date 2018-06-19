@@ -12,7 +12,7 @@ OBJS	= cleanup.o cleanup_out.o cleanup_envelope.o cleanup_message.o \
 	cleanup_addr.o cleanup_bounce.o cleanup_milter.o \
 	cleanup_body_edit.o cleanup_region.o cleanup_final.o
 HDRS	=
-TESTSRC	= 
+TESTSRC	=
 DEFS	= -I. -I$(INC_DIR) -D$(SYSTYPE)
 CFLAGS	= $(DEBUG) $(OPT) $(DEFS)
 TESTPROG= cleanup_masquerade cleanup_milter
@@ -50,12 +50,12 @@ lint:
 	lint $(DEFS) $(SRCS) $(LINTFIX)
 
 clean:
-	rm -f *.o *core $(PROG) $(TESTPROG) junk 
+	rm -f *.o *core $(PROG) $(TESTPROG) junk
 	rm -rf printfck
 
 tidy:	clean
 
-cleanup_masquerade: cleanup_masquerade.o 
+cleanup_masquerade: cleanup_masquerade.o
 	mv cleanup_masquerade.o junk
 	$(CC) $(CFLAGS) -DTEST -o $@ $@.c $(LIBS) $(SYSLIBS)
 	mv junk cleanup_masquerade.o

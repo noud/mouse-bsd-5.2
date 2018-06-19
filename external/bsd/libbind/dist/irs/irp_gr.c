@@ -56,7 +56,7 @@ static int __bind_irs_gr_unneeded;
 
 /* Types. */
 
-/*! \file 
+/*! \file
  * \brief
  * Module for the getnetgrent(3) family to use when connected to a
  * remote irp daemon.

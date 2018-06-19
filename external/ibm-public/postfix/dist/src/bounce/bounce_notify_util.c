@@ -288,7 +288,7 @@ static BOUNCE_INFO *bounce_mail_alloc(const char *service,
      * Get time/size/sender information from the original message envelope
      * records. If the envelope is corrupted just send whatever we can
      * (remember this is a best effort, it does not have to be perfect).
-     * 
+     *
      * Lock the file for shared use, so that queue manager leaves it alone after
      * restarting.
      */
@@ -566,7 +566,7 @@ int     bounce_diagnostic_log(VSTREAM *bounce, BOUNCE_INFO *bounce_info,
      * Append a human-readable copy of the delivery error log. We're doing a
      * best effort, so there is no point raising a fatal run-time error in
      * case of a logfile read error.
-     * 
+     *
      * XXX DSN If the logfile with failed recipients is unavailable, pretend
      * that we found something anyway, so that this notification will not be
      * canceled.
@@ -644,20 +644,20 @@ int     bounce_recipient_dsn(VSTREAM *bounce, BOUNCE_INFO *bounce_info)
 
     /*
      * XXX DSN
-     * 
+     *
      * RFC 3464 section 6.3.d: "If no ORCPT parameter was provided for this
      * recipient, the Original-Recipient field MUST NOT appear."
-     * 
+     *
      * This is inconsistent with section 5.2.1.d: "If no ORCPT parameter was
      * present in the RCPT command when the message was received, an ORCPT
      * parameter MAY be added to the RCPT command when the message is
      * relayed.". Postfix adds an ORCPT parameter under these conditions.
-     * 
+     *
      * Therefore, all down-stream MTAs will send DSNs with Original-Recipient
      * field ontaining this same ORCPT value. When a down-stream MTA can use
      * that information in their DSNs, it makes no sense that an up-stream
      * MTA can't use that same information in its own DSNs.
-     * 
+     *
      * Postfix always reports an Original-Recipient field, because it is more
      * more useful and more consistent.
      */
@@ -703,7 +703,7 @@ int     bounce_diagnostic_dsn(VSTREAM *bounce, BOUNCE_INFO *bounce_info,
      * Append a machine-readable copy of the delivery error log. We're doing
      * a best effort, so there is no point raising a fatal run-time error in
      * case of a logfile read error.
-     * 
+     *
      * XXX DSN If the logfile with failed recipients is unavailable, pretend
      * that we found something anyway, so that this notification will not be
      * canceled.
@@ -802,7 +802,7 @@ int     bounce_original(VSTREAM *bounce, BOUNCE_INFO *bounce_info,
     /*
      * Final MIME headers. These require -- at the end of the boundary
      * string.
-     * 
+     *
      * XXX This should be a separate bounce_terminate() entry so we can be
      * assured that the terminator will always be sent.
      */

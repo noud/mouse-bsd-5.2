@@ -47,7 +47,7 @@ the Postfix MTA itself, or it could be a remote MTA (SMTP interruptus). Probe
 messages are like normal mail, except that they are never delivered, deferred
 or bounced; probe messages are always discarded.
 
-                               
+
                                              probe     Postfix
                                             message ->   mail
                                                         queue
@@ -62,7 +62,7 @@ or bounced; probe messages are always discarded.
                                     ^
                                     |
                                     v
-                                          
+
 
                               Address
                             verification

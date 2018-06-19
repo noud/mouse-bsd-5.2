@@ -448,7 +448,7 @@ $ <userinput>sample-update -a sample-update -k Kxxx.+nnn+mmmm.key delete "foo.dy
    <para>
      removes all A RRs for foo.dynamic.example.com using the given key.
    </para>
-   <screen>   
+   <screen>
 $ <userinput>sample-update -a sample-update -k Kxxx.+nnn+mmmm.key delete "foo.dynamic.example.com"</userinput></screen>
    <para>
      removes all RRs for foo.dynamic.example.com using the given key.

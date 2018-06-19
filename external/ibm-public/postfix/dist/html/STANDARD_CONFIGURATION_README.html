@@ -318,7 +318,7 @@ All the mail to these two accounts is forwarded to an inside address.
 <pre>
 1 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
 2     <a href="postconf.5.html#virtual_alias_maps">virtual_alias_maps</a> = hash:/etc/postfix/virtual
-3 
+3
 4 /etc/postfix/virtual:
 5     postmaster      postmaster@example.com
 6     abuse           abuse@example.com
@@ -424,7 +424,7 @@ follows:  </p>
 <pre>
 1 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
 2     <a href="postconf.5.html#virtual_alias_maps">virtual_alias_maps</a> = hash:/etc/postfix/virtual
-3 
+3
 4 /etc/postfix/virtual:
 5     root     root@localhost
 6     . . .
@@ -777,14 +777,14 @@ discussed the first half of this document. </p>
  1 /etc/postfix/<a href="postconf.5.html">main.cf</a>:
  2     <a href="postconf.5.html#myhostname">myhostname</a> = hostname.localdomain
  3     <a href="postconf.5.html#mydomain">mydomain</a> = localdomain
- 4 
+ 4
  5     <a href="postconf.5.html#canonical_maps">canonical_maps</a> = hash:/etc/postfix/canonical
- 6 
+ 6
  7     <a href="postconf.5.html#virtual_alias_maps">virtual_alias_maps</a> = hash:/etc/postfix/virtual
- 8 
+ 8
  9 /etc/postfix/canonical:
 10     your-login-name    your-account@your-isp.com
-11 
+11
 12 /etc/postfix/virtual:
 13     your-account@your-isp.com       your-login-name
 </pre>

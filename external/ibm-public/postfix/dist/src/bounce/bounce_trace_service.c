@@ -90,15 +90,15 @@ int     bounce_trace_service(int flags, char *service, char *queue_name,
 
     /*
      * Initialize. Open queue file, bounce log, etc.
-     * 
+     *
      * XXX DSN The trace service produces information from the trace logfile
      * which is used for three types of reports:
-     * 
+     *
      * a) "what-if" reports that show what would happen without actually
      * delivering mail (sendmail -bv).
-     * 
+     *
      * b) A report of actual deliveries (sendmail -v).
-     * 
+     *
      * c) DSN NOTIFY=SUCCESS reports of successful delivery ("delivered",
      * "expanded" or "relayed").
      */
@@ -118,7 +118,7 @@ int     bounce_trace_service(int flags, char *service, char *queue_name,
      * So as long as any recipient in the original queue file had
      * NOTIFY=SUCCESS we have to always look for the trace file and be
      * prepared for the file not to exist.
-     * 
+     *
      * See also comments in qmgr/qmgr_active.c.
      */
     if (bounce_info->log_handle == 0) {
@@ -135,7 +135,7 @@ int     bounce_trace_service(int flags, char *service, char *queue_name,
      * Send a single bounce with a template message header, some boilerplate
      * text that pretends that we are a polite mail system, the text with
      * per-recipient status, and a copy of the original message.
-     * 
+     *
      * XXX DSN We use the same trace file for "what-if", "verbose delivery" and
      * "success" delivery reports. This saves file system overhead because
      * there are fewer potential left-over files to remove up when we create

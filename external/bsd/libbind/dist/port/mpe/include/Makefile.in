@@ -30,7 +30,7 @@ all:
 
 installdirs:
 	$(SHELL) ${top_srcdir}/mkinstalldirs ${DESTDIR}${includedir}/net \
-	${DESTDIR}${includedir}/sys 
+	${DESTDIR}${includedir}/sys
 
 install:: installdirs
 	for i in ${HEADERS}; do \

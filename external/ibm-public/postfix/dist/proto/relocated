@@ -116,7 +116,7 @@
 # CONFIGURATION PARAMETERS
 # .ad
 # .fi
-#	The following \fBmain.cf\fR parameters are especially relevant.  
+#	The following \fBmain.cf\fR parameters are especially relevant.
 #	The text below provides only a parameter summary. See
 #	\fBpostconf\fR(5) for more details including examples.
 # .IP \fBrelocated_maps\fR

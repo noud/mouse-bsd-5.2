@@ -137,7 +137,7 @@
   * these is the actual parameter value divided by the number of seconds in a
   * day (hour, etc.), so that we can produce nicely formatted bounce messages
   * with time values converted into the appropriate units.
-  * 
+  *
   * Ideally, the bounce template processor would strip the _days etc. suffix
   * from the parameter name, and use the parameter name to look up the actual
   * parameter value and its default value (the default value specifies the
@@ -147,21 +147,21 @@
   * suffix from the bounce template to divide this number by the number of
   * seconds in an hour, etc. and produce the number that is needed for the
   * template.
-  * 
+  *
   * Unfortunately, there exists no code to look up default values by parameter
   * name. If such code existed, then we could do the _days, _hours, etc.
   * conversion with every main.cf time parameter without having to know in
   * advance what time parameter names exist.
-  * 
+  *
   * So we have to either maintain our own table of all time related main.cf
   * parameter names and defaults (like the postconf command does) or we make
   * a special case for a few parameters of special interest.
-  * 
+  *
   * We go for the second solution. There are only a few parameters that need
   * this treatment, and there will be more special cases when individual
   * queue files get support for individual expiration times, and when other
   * queue file information needs to be reported in bounce template messages.
-  * 
+  *
   * A really lame implementation would simply strip the optional s, h, d, etc.
   * suffix from the actual (string) parameter value and not do any conversion
   * at all to hours, days or weeks. But then the information in delay warning

@@ -342,7 +342,7 @@ queues.
     This process is described in the ADDRESS_VERIFICATION_README document. The
     verify(8) service is available with Postfix version 2.1 and later.
 
-                               
+
                                              probe     Postfix
                                             message ->   mail
                                                         queue
@@ -356,7 +356,7 @@ queues.
                                     ^                   agents
                                     |
                                     v
-                                          
+
 
                               Address
                             verification

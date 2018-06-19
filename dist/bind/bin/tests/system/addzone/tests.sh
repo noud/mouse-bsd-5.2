@@ -96,7 +96,7 @@ if [ $ret != 0 ]; then echo "I:failed"; fi
 status=`expr $status + $ret`
 
 echo "I:reconfiguring server with multiple views"
-rm -f ns2/named.conf 
+rm -f ns2/named.conf
 cp -f ns2/named2.conf ns2/named.conf
 $RNDC -c ../common/rndc.conf -s 10.53.0.2 -p 9953 reconfig 2>&1 | sed 's/^/I:ns2 /'
 sleep 5

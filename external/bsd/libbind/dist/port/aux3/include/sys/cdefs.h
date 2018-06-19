@@ -125,7 +125,7 @@
 #endif
 /* The following lines were added for newer versions of GNU C
  *   Ed Lewis - Sept 1996 lewis@tis.com
- */    
+ */
 #if __GNUC__ == 2 &&  __GNUC_MINOR__ >= 5 || __GNUC__ >= 3
 #define __dead
 #define __dead2     __attribute__((noreturn))

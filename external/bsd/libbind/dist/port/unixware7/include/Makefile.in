@@ -25,7 +25,7 @@ all:
 @BIND9_MAKE_RULES@
 
 installdirs:
-	$(SHELL) ${top_srcdir}/mkinstalldirs ${DESTDIR}${includedir} 
+	$(SHELL) ${top_srcdir}/mkinstalldirs ${DESTDIR}${includedir}
 
 install:: installdirs
 	for i in ${HEADERS}; do \

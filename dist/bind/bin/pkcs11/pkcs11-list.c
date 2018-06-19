@@ -184,13 +184,13 @@ main(int argc, char *argv[])
 		}
 	}
 
-	rv = C_FindObjectsInit(hSession, search_template, all ? 0 : 1); 
+	rv = C_FindObjectsInit(hSession, search_template, all ? 0 : 1);
 	if (rv != CKR_OK) {
 		fprintf(stderr, "C_FindObjectsInit: Error = 0x%.8lX\n", rv);
 		error = 1;
 		goto exit_session;
 	}
-	
+
 	ulObjectCount = 1;
 	while (ulObjectCount) {
 		rv = C_FindObjects(hSession, akey, 50, &ulObjectCount);

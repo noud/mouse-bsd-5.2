@@ -224,14 +224,14 @@ diff -u /dev/null openssl/README.pkcs11:1.6
 +| RSA keys stored in PKCS#11 key stores by reference. Some problems were found |
 +| (thanks to all who wrote me!) and due to my ENOTIME problem I may address    |
 +| those issues in a future version of the patch that will have that code back, |
-+| hopefully fixed.                                                             | 
++| hopefully fixed.                                                             |
 ++------------------------------------------------------------------------------+
 +
 +You must provide the location of PKCS#11 library in your system to the
 +configure script. You will be instructed to do that when you try to run the
 +config script:
 +
-+	$ ./config 
++	$ ./config
 +	Operating system: i86pc-whatever-solaris2
 +	Configuring for solaris-x86-cc
 +	You must set --pk11-libname for PKCS#11 library.
@@ -267,7 +267,7 @@ diff -u /dev/null openssl/README.pkcs11:1.6
 +=======================================
 +
 +2009-03-11
-+- adjusted for OpenSSL version 0.9.8j 
++- adjusted for OpenSSL version 0.9.8j
 +
 +- README.pkcs11 moved out of the patch, and is shipped together with it in a
 +  tarball instead so that it can be read before the patch is applied.
@@ -4203,7 +4203,7 @@ diff -u /dev/null openssl/crypto/engine/hw_pk11.c:1.26
 +			digest_count = slot_n_digest = current_slot_n_digest;
 +			(void) memcpy(cipher_nids, local_cipher_nids,
 +			    sizeof (local_cipher_nids));
-+			(void) memcpy(digest_nids, local_digest_nids, 
++			(void) memcpy(digest_nids, local_digest_nids,
 +			    sizeof (local_digest_nids));
 +			}
 +		}
@@ -7141,7 +7141,7 @@ diff -u /dev/null openssl/crypto/engine/hw_pk11_pub.c:1.32
 +		LOCK_OBJSTORE(OP_RSA);
 +		goto set;
 +	}
-+	
++
 +	a_key_template[0].pValue = &o_key;
 +	a_key_template[1].pValue = &k_type;
 +
@@ -10979,7 +10979,7 @@ diff -u /dev/null openssl/crypto/engine/hw_pk11so_pub.c:1.2
 +		PK11err(PK11_F_GET_PRIV_RSA_KEY, PK11_R_INCONSISTENT_KEY);
 +		return (h_key);
 +	}
-+	
++
 +	h_key = (CK_OBJECT_HANDLE)RSA_get_ex_data(rsa, hndidx_rsa);
 +	(void) pk11_active_add(h_key, OP_RSA);
 +	if (key_ptr != NULL)
@@ -11110,10 +11110,10 @@ diff -u /dev/null openssl/crypto/engine/pkcs11.h:1.1.1.1
 +
 + * License is also granted to make and use derivative works provided that
 + * such works are identified as "derived from the RSA Security Inc. PKCS #11
-+ * Cryptographic Token Interface (Cryptoki)" in all material mentioning or 
++ * Cryptographic Token Interface (Cryptoki)" in all material mentioning or
 + * referencing the derived work.
 +
-+ * RSA Security Inc. makes no representations concerning either the 
++ * RSA Security Inc. makes no representations concerning either the
 + * merchantability of this software or the suitability of this software for
 + * any particular purpose. It is provided "as is" without express or implied
 + * warranty of any kind.
@@ -11378,7 +11378,7 @@ diff -u /dev/null openssl/crypto/engine/pkcs11.h:1.1.1.1
 +
 +#define CK_PKCS11_FUNCTION_INFO(name) \
 +  __PASTE(CK_,name) name;
-+  
++
 +struct CK_FUNCTION_LIST {
 +
 +  CK_VERSION    version;  /* Cryptoki version */
@@ -11414,10 +11414,10 @@ diff -u /dev/null openssl/crypto/engine/pkcs11f.h:1.1.1.1
 +
 + * License is also granted to make and use derivative works provided that
 + * such works are identified as "derived from the RSA Security Inc. PKCS #11
-+ * Cryptographic Token Interface (Cryptoki)" in all material mentioning or 
++ * Cryptographic Token Interface (Cryptoki)" in all material mentioning or
 + * referencing the derived work.
 +
-+ * RSA Security Inc. makes no representations concerning either the 
++ * RSA Security Inc. makes no representations concerning either the
 + * merchantability of this software or the suitability of this software for
 + * any particular purpose. It is provided "as is" without express or implied
 + * warranty of any kind.
@@ -11971,7 +11971,7 @@ diff -u /dev/null openssl/crypto/engine/pkcs11f.h:1.1.1.1
 +
 +
 +/* C_SignUpdate continues a multiple-part signature operation,
-+ * where the signature is (will be) an appendix to the data, 
++ * where the signature is (will be) an appendix to the data,
 + * and plaintext cannot be recovered from the signature. */
 +CK_PKCS11_FUNCTION_INFO(C_SignUpdate)
 +#ifdef CK_NEED_ARG_LIST
@@ -11983,7 +11983,7 @@ diff -u /dev/null openssl/crypto/engine/pkcs11f.h:1.1.1.1
 +#endif
 +
 +
-+/* C_SignFinal finishes a multiple-part signature operation, 
++/* C_SignFinal finishes a multiple-part signature operation,
 + * returning the signature. */
 +CK_PKCS11_FUNCTION_INFO(C_SignFinal)
 +#ifdef CK_NEED_ARG_LIST
@@ -12032,12 +12032,12 @@ diff -u /dev/null openssl/crypto/engine/pkcs11f.h:1.1.1.1
 +(
 +  CK_SESSION_HANDLE hSession,    /* the session's handle */
 +  CK_MECHANISM_PTR  pMechanism,  /* the verification mechanism */
-+  CK_OBJECT_HANDLE  hKey         /* verification key */ 
++  CK_OBJECT_HANDLE  hKey         /* verification key */
 +);
 +#endif
 +
 +
-+/* C_Verify verifies a signature in a single-part operation, 
++/* C_Verify verifies a signature in a single-part operation,
 + * where the signature is an appendix to the data, and plaintext
 + * cannot be recovered from the signature. */
 +CK_PKCS11_FUNCTION_INFO(C_Verify)
@@ -12053,7 +12053,7 @@ diff -u /dev/null openssl/crypto/engine/pkcs11f.h:1.1.1.1
 +
 +
 +/* C_VerifyUpdate continues a multiple-part verification
-+ * operation, where the signature is an appendix to the data, 
++ * operation, where the signature is an appendix to the data,
 + * and plaintext cannot be recovered from the signature. */
 +CK_PKCS11_FUNCTION_INFO(C_VerifyUpdate)
 +#ifdef CK_NEED_ARG_LIST
@@ -12179,7 +12179,7 @@ diff -u /dev/null openssl/crypto/engine/pkcs11f.h:1.1.1.1
 +#endif
 +
 +
-+/* C_GenerateKeyPair generates a public-key/private-key pair, 
++/* C_GenerateKeyPair generates a public-key/private-key pair,
 + * creating new key objects. */
 +CK_PKCS11_FUNCTION_INFO(C_GenerateKeyPair)
 +#ifdef CK_NEED_ARG_LIST
@@ -14268,7 +14268,7 @@ diff -u openssl/util/mkdef.pl:1.1.3.1 openssl/util/mkdef.pl:1.5
  			 # Engines
 -			 "STATIC_ENGINE", "ENGINE", "HW", "GMP",
 +			 "STATIC_ENGINE", "ENGINE", "HW", "GMP", "HW_PKCS11CA", "HW_PKCS11SO",
- 			 # RFC3779 support 
+ 			 # RFC3779 support
  			 "RFC3779",
  			 # TLS extension support
 @@ -122,6 +122,7 @@

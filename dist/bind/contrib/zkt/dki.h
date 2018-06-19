@@ -45,7 +45,7 @@
 #  include <time.h>
 # endif
 
-# define	MAX_LABELSIZE	(255)	
+# define	MAX_LABELSIZE	(255)
 # define	MAX_FNAMESIZE	(1+255+2+3+1+5+1+11)
 				/* Kdomain.+ALG+KEYID.type  */
 				/* domain == FQDN (max 255) */

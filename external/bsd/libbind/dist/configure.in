@@ -533,7 +533,7 @@ fi
 #
 AC_CHECK_FUNC(flockfile, AC_DEFINE(HAVE_FLOCKFILE),)
 
-# 
+#
 # Indicate what the final decision was regarding threads.
 #
 AC_MSG_CHECKING(whether to build with threads)
@@ -543,7 +543,7 @@ else
 	AC_MSG_RESULT(no)
 fi
 
-# 
+#
 # End of pthreads stuff.
 #
 

@@ -73,7 +73,7 @@ BIND 9.4.0
 	Make public the function to read a key file, dst_key_read_public().
 
 	dig now returns the byte count for axfr/ixfr.
-			
+
 	allow-update is now settable at the options / view level.
 
 	named-checkconf now checks the logging configuration.

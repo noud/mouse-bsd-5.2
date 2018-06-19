@@ -31,7 +31,7 @@
 The
 .Fn getnameinfo
 function is defined for protocol-independent address-to-nodename translation.
-It performs functionality of 
+It performs functionality of
 .Xr gethostbyaddr @LIB_NETWORK_EXT@
 and
 .Xr getservbyport @LIB_NETWORK_EXT@
@@ -59,13 +59,13 @@ may be
 .Dv NULL
 if the hostname  or service name is not required.
 .Pp
-The 
+The
 .Fa flags
-arguement modifies the behaviour of 
+arguement modifies the behaviour of
 .Fn getnameinfo
 as follows:
 .Pp
-If 
+If
 .Dv NI_NOFQDN
 is set only the unqualified hostname is returned for local fully
 qualified names.

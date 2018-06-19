@@ -99,7 +99,7 @@ int	 tc_init (FILE *fp, const char *term)
 		return 0;
 	}
 #if 0
-	if ( !istty (fp) ) 
+	if ( !istty (fp) )
 		return 0;
 #endif
 	switch ( tgetent (buf, term) )

@@ -288,7 +288,7 @@ void    cleanup_sig(int sig)
     /*
      * msg_fatal() is safe against calling itself recursively, but signals
      * need extra safety.
-     * 
+     *
      * XXX While running as a signal handler, can't ask the memory manager to
      * release VSTRING storage.
      */

@@ -63,7 +63,7 @@ The maps that irs currently controls are the following: passwd, group,
 services, protocols, hosts, networks and netgroup.
 When a program first calls a function that accesses one of these maps,
 the irs configuration file is read,
-and the source of each map is determined for the life of the process. 
+and the source of each map is determined for the life of the process.
 .Pp
 If this file does not exist,
 the irs routines default to using local sources for all information,
@@ -139,7 +139,7 @@ protocols	local
 hosts		dns	continue
 hosts		local
 
-# Networks comes first from the local file, and failing 
+# Networks comes first from the local file, and failing
 # that the, irp daemon
 networks	local	continue
 networks	irp

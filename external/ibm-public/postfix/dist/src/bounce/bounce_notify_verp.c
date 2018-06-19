@@ -152,7 +152,7 @@ int     bounce_notify_verp(int flags, char *service, char *queue_name,
 
 	/*
 	 * Notify the originator, subject to DSN NOTIFY restrictions.
-	 * 
+	 *
 	 * Fix 20090114: Use the Postfix original recipient, because that is
 	 * what the VERP consumer expects.
 	 */
@@ -203,7 +203,7 @@ int     bounce_notify_verp(int flags, char *service, char *queue_name,
 	/*
 	 * Optionally, send a postmaster notice, subject to notify_classes
 	 * restrictions.
-	 * 
+	 *
 	 * This postmaster notice is not critical, so if it fails don't
 	 * retransmit the bounce that we just generated, just log a warning.
 	 */

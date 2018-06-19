@@ -229,7 +229,7 @@ long	lg_geterrcnt ()
 
 /*****************************************************************
 **	lg_seterrcnt () -- sets the internal error counter
-**	returns the current value 
+**	returns the current value
 *****************************************************************/
 long	lg_seterrcnt (long value)
 {
@@ -238,7 +238,7 @@ long	lg_seterrcnt (long value)
 
 /*****************************************************************
 **	lg_reseterrcnt () -- resets the internal error counter to 0
-**	returns the current value 
+**	returns the current value
 *****************************************************************/
 long	lg_reseterrcnt ()
 {
@@ -275,7 +275,7 @@ int	lg_open (const char *progname, const char *facility, const char *syslevel, c
 			return -1;
 		lg_progname = progname;
 	}
-	
+
 	return 0;
 }
 
@@ -347,7 +347,7 @@ int	lg_zone_end ()
 **
 **	lg_args (level, argc, argv[])
 **	log all command line arguments (up to a length of 511 chars)
-**	with priority level 
+**	with priority level
 **
 *****************************************************************/
 void	lg_args (lg_lvl_t level, int argc, char * const argv[])

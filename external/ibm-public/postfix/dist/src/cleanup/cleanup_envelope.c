@@ -204,12 +204,12 @@ static void cleanup_envelope_process(CLEANUP_STATE *state, int type,
      * Although recipient records appear at the end of the initial or
      * extracted envelope, the code for processing recipient records is first
      * because there can be lots of them.
-     * 
+     *
      * Recipient records may be mixed with other information (such as FILTER or
      * REDIRECT actions from SMTPD). In that case the queue manager needs to
      * examine all queue file records before it can start delivery. This is
      * not a problem when SMTPD recipient lists are small.
-     * 
+     *
      * However, if recipient records are not mixed with other records
      * (typically, mailing list mail) then we can make an optimization: the
      * queue manager does not need to examine every envelope record before it
@@ -219,7 +219,7 @@ static void cleanup_envelope_process(CLEANUP_STATE *state, int type,
     /*
      * On the transition from non-recipient records to recipient records,
      * emit some records and do some sanity checks.
-     * 
+     *
      * XXX Moving the envelope sender (and the test for its presence) to the
      * extracted segment can reduce qmqpd memory requirements because it no
      * longer needs to read the entire message into main memory.

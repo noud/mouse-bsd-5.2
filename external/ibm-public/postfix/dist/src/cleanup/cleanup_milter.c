@@ -115,7 +115,7 @@
 
  /*
   * How Postfix 2.4 edits queue file information:
-  * 
+  *
   * Mail filter applications (Milters) can send modification requests after
   * receiving the end of the message body.  Postfix implements these
   * modifications in the cleanup server, so that it can edit the queue file
@@ -125,13 +125,13 @@
   * editing, the queue file can be used as input for the next Milter, and so
   * on. Finally, the cleanup server changes file permissions, calls fsync(),
   * and waits for successful completion.
-  * 
+  *
   * To implement in-place queue file edits, we need to introduce surprisingly
   * little change to the existing Postfix queue file structure.  All we need
   * is a way to mark a record as deleted, and to jump from one place in the
   * queue file to another. We could implement deleted records with jumps, but
   * marking is sometimes simpler.
-  * 
+  *
   * Postfix does not store queue files as plain text files. Instead all
   * information is stored in records with an explicit type and length, for
   * sender, recipient, arrival time, and so on.  Even the content that makes
@@ -139,32 +139,32 @@
   * and lengths.  This organization makes it very easy to mark a record as
   * deleted, and to introduce the pointer records that we will use to jump
   * from one place in a queue file to another place.
-  * 
+  *
   * - Deleting a recipient is easiest - simply modify the record type into one
   * that is skipped by the software that delivers mail. We won't try to reuse
   * the deleted recipient for other purposes. When deleting a recipient, we
   * may need to delete multiple recipient records that result from virtual
   * alias expansion of the original recipient address.
-  * 
+  *
   * - Replacing a header record involves pointer records. A record is replaced
   * by overwriting it with a forward pointer to space after the end of the
   * queue file, putting the new record there, followed by a reverse pointer
   * to the record that follows the replaced header. To simplify
   * implementation we follow a short header record with a filler record so
   * that we can always overwrite a header record with a pointer.
-  * 
+  *
   * N.B. This is a major difference with Postfix version 2.3, which needed
   * complex code to save records that follow a short header, before it could
   * overwrite a short header record. This code contained two of the three
   * post-release bugs that were found with Postfix header editing.
-  * 
+  *
   * - Inserting a header record is like replacing one, except that we also
   * relocate the record that is being overwritten by the forward pointer.
-  * 
+  *
   * - Deleting a message header is simplest when we replace it by a "skip"
   * pointer to the information that follows the header. With a multi-line
   * header we need to update only the first line.
-  * 
+  *
   * - Appending a recipient or header record involves pointer records as well.
   * To make this convenient, the queue file already contains dummy pointer
   * records at the locations where we want to append recipient or header
@@ -172,14 +172,14 @@
   * space after the end of a message, put the new recipient or header record
   * there, followed by a reverse pointer to the record that follows the
   * forward pointer.
-  * 
+  *
   * - To append another header or recipient record, replace the reverse pointer
   * by a forward pointer to space after the end of a message, put the new
   * record there, followed by the value of the reverse pointer that we
   * replace. Thus, there is no one-to-one correspondence between forward and
   * backward pointers. Instead, there can be multiple forward pointers for
   * one reverse pointer.
-  * 
+  *
   * - When a mail filter wants to replace an entire body, we overwrite existing
   * body records until we run out of space, and then write a pointer to space
   * after the end of the queue file, followed by more body content. There may
@@ -188,9 +188,9 @@
   * the message content segment. Body regions can be large and therefore they
   * are reused to avoid wasting space. Sendmail mail filters currently do not
   * replace individual body records, and that is a good thing.
-  * 
+  *
   * Making queue file modifications safe:
-  * 
+  *
   * Postfix queue files are segmented. The first segment is for envelope
   * records, the second for message header and body content, and the third
   * segment is for information that was extracted or generated from the
@@ -198,13 +198,13 @@
   * record. For now we don't want to change their location. That is, we want
   * to avoid moving the records that mark the start or end of a queue file
   * segment.
-  * 
+  *
   * To ensure that we can always replace a header or body record by a pointer
   * record, without having to relocate a marker record, the cleanup server
   * places a dummy pointer record at the end of the recipients and at the end
   * of the message header. To support message body modifications, a dummy
   * pointer record is also placed at the end of the message content.
-  * 
+  *
   * With all these changes in queue file organization, REC_TYPE_END is no longer
   * guaranteed to be the last record in a queue file. If an application were
   * to read beyond the REC_TYPE_END marker, it would go into an infinite
@@ -283,7 +283,7 @@ static char *cleanup_milter_hbc_extend(void *context, const char *command,
      * detail-free milter-reply values (reject/discard, stored in the
      * milter_hbc_reply state member) to the Postfix libmilter code, so that
      * Postfix libmilter can stop sending requests.
-     * 
+     *
      * We also set all applicable cleanup flags here, because there is no
      * guarantee that Postfix libmilter will propagate our own milter-reply
      * value to cleanup_milter_inspect() which calls cleanup_milter_apply().
@@ -291,7 +291,7 @@ static char *cleanup_milter_hbc_extend(void *context, const char *command,
      * flags, and logs the response text. Postfix libmilter can convey only
      * one milter-reply value per email message, and that reply may even come
      * from outside Postfix.
-     * 
+     *
      * To suppress redundant logging, cleanup_milter_apply() does nothing when
      * the milter-reply value matches the saved text in the milter_hbc_reply
      * state member. As we remember only one milter-reply value, we can't
@@ -567,11 +567,11 @@ static const char *cleanup_milter_error(CLEANUP_STATE *state, int err)
      * For consistency with error reporting within the milter infrastructure,
      * content manipulation routines return a null pointer on success, and an
      * SMTP-like response on error.
-     * 
+     *
      * However, when cleanup_milter_apply() receives this error response from
      * the milter infrastructure, it ignores the text since the appropriate
      * cleanup error flags were already set by cleanup_milter_set_error().
-     * 
+     *
      * Specify a null error number when the "errno to error flag" mapping was
      * already done elsewhere, possibly outside this module.
      */
@@ -645,7 +645,7 @@ static const char *cleanup_add_header(void *context, const char *name,
     /*
      * Pointer flipping: update the old "header append" pointer record value
      * with the location of the new header record.
-     * 
+     *
      * XXX To avoid unnecessary seek operations when the new header immediately
      * follows the old append header pointer, write a null pointer or make
      * the record reading loop smarter. Making vstream_fseek() smarter does
@@ -712,59 +712,59 @@ static off_t cleanup_find_header_start(CLEANUP_STATE *state, ssize_t index,
      * Skip to the start of the message content, and read records until we
      * either find the specified header, or until we hit the end of the
      * headers.
-     * 
+     *
      * The index specifies the header instance: 1 is the first one. The header
      * label specifies the header name. A null pointer matches any header.
-     * 
+     *
      * When the specified header is not found, the result value is -1.
-     * 
+     *
      * When the specified header is found, its first record is stored in the
      * caller-provided read buffer, and the result value is the queue file
      * offset of that record. The file read position is left at the start of
      * the next (non-filler) queue file record, which can be the remainder of
      * a multi-record header.
-     * 
+     *
      * When a header is found and allow_ptr_backup is non-zero, then the result
      * is either the first record of that header, or it is the pointer record
      * that points to the first record of that header. In the latter case,
      * the file read position is undefined. Returning the pointer allows us
      * to do some optimizations when inserting text multiple times at the
      * same place.
-     * 
+     *
      * XXX We can't use the MIME processor here. It not only buffers up the
      * input, it also reads the record that follows a complete header before
      * it invokes the header call-back action. This complicates the way that
      * we discover header offsets and boundaries. Worse is that the MIME
      * processor is unaware that multi-record message headers can have PTR
      * records in the middle.
-     * 
+     *
      * XXX The draw-back of not using the MIME processor is that we have to
      * duplicate some of its logic here and in the routine that finds the end
      * of the header record. To minimize the duplication we define an ugly
      * macro that is used in all code that scans for header boundaries.
-     * 
+     *
      * XXX Sendmail compatibility (based on Sendmail 8.13.6 measurements).
-     * 
+     *
      * - When changing Received: header #1, we change the Received: header that
      * follows our own one; a request to change Received: header #0 is
      * silently treated as a request to change Received: header #1.
-     * 
+     *
      * - When changing Date: header #1, we change the first Date: header; a
      * request to change Date: header #0 is silently treated as a request to
      * change Date: header #1.
-     * 
+     *
      * Thus, header change requests are relative to the content as received,
      * that is, the content after our own Received: header. They can affect
      * only the headers that the MTA actually exposes to mail filter
      * applications.
-     * 
+     *
      * - However, when inserting a header at position 0, the new header appears
      * before our own Received: header, and when inserting at position 1, the
      * new header appears after our own Received: header.
-     * 
+     *
      * Thus, header insert operations are relative to the content as delivered,
      * that is, the content including our own Received: header.
-     * 
+     *
      * None of the above is applicable after a Milter inserts a header before
      * our own Received: header. From then on, our own Received: header
      * becomes just like other headers.
@@ -978,17 +978,17 @@ static const char *cleanup_patch_header(CLEANUP_STATE *state,
      * record. If the saved record was not a PTR record, follow the saved
      * record by a reverse pointer record that points to the record after the
      * original location of the saved record.
-     * 
+     *
      * We update the queue file in a safe manner: save the new header and the
      * existing records after the end of the queue file, write the reverse
      * pointer, and only then overwrite the saved records with the forward
      * pointer to the new header.
-     * 
+     *
      * old_rec_offset, old_rec_type, and old_rec_buf specify the record that we
      * are about to overwrite with a pointer record. If the record needs to
      * be saved (i.e. old_rec_type > 0), the buffer contains the data content
      * of exactly one PTR or text record.
-     * 
+     *
      * next_offset specifies the record that follows the to-be-overwritten
      * record. It is ignored when the to-be-saved record is a pointer record.
      */
@@ -1101,10 +1101,10 @@ static const char *cleanup_ins_header(void *context, ssize_t index,
 
     /*
      * Look for a header at the specified position.
-     * 
+     *
      * The lookup result may be a pointer record. This allows us to make some
      * optimization when multiple insert operations happen in the same place.
-     * 
+     *
      * Index 1 is the top-most header.
      */
 #define NO_HEADER_NAME	((char *) 0)
@@ -1177,11 +1177,11 @@ static const char *cleanup_upd_header(void *context, ssize_t index,
 
     /*
      * Find the header that is being modified.
-     * 
+     *
      * The lookup result will never be a pointer record.
-     * 
+     *
      * Index 1 is the first matching header instance.
-     * 
+     *
      * XXX When a header is updated repeatedly we create jumps to jumps. To
      * eliminate this, rewrite the loop below so that we can start with the
      * pointer record that points to the header that's being edited.
@@ -1248,9 +1248,9 @@ static const char *cleanup_del_header(void *context, ssize_t index,
 
     /*
      * Find the header that is being deleted.
-     * 
+     *
      * The lookup result will never be a pointer record.
-     * 
+     *
      * Index 1 is the first matching header instance.
      */
 #define CLEANUP_DEL_HEADER_RETURN(ret) do { \
@@ -1331,7 +1331,7 @@ static const char *cleanup_chg_from(void *context, const char *ext_from,
      * needed for a "new" short sender record, since the record is not meant
      * to be overwritten. When the "new" sender is replaced, we allocate a
      * new record at the end of the queue file.
-     * 
+     *
      * We update the queue file in a safe manner: save the new sender after the
      * end of the queue file, write the reverse pointer, and only then
      * overwrite the old sender record with the forward pointer to the new
@@ -1345,7 +1345,7 @@ static const char *cleanup_chg_from(void *context, const char *ext_from,
     /*
      * Transform the address from external form to internal form. This also
      * removes the enclosing <>, if present.
-     * 
+     *
      * XXX vstring_alloc() rejects zero-length requests.
      */
     int_sender_buf = vstring_alloc(strlen(ext_from) + 1);
@@ -1417,7 +1417,7 @@ static const char *cleanup_add_rcpt(void *context, const char *ext_rcpt)
      * recipient record, followed by a reverse pointer record that points to
      * the target of the old "recipient append" pointer record. This reverse
      * pointer record becomes the new "recipient append" pointer record.
-     * 
+     *
      * We update the queue file in a safe manner: save the new recipient after
      * the end of the queue file, write the reverse pointer, and only then
      * overwrite the old "recipient append" pointer with the forward pointer
@@ -1433,7 +1433,7 @@ static const char *cleanup_add_rcpt(void *context, const char *ext_rcpt)
     /*
      * Transform recipient from external form to internal form. This also
      * removes the enclosing <>, if present.
-     * 
+     *
      * XXX vstring_alloc() rejects zero-length requests.
      */
     int_rcpt_buf = vstring_alloc(strlen(ext_rcpt) + 1);
@@ -1535,17 +1535,17 @@ static const char *cleanup_del_rcpt(void *context, const char *ext_rcpt)
      * filter sees the envelope address. Therefore we must delete all
      * recipient records whose Postfix (not DSN) original recipient address
      * matches the specified address.
-     * 
+     *
      * As the number of recipients may be very large we can't do an efficient
      * two-pass implementation (collect record offsets first, then mark
      * records as deleted). Instead we mark records as soon as we find them.
      * This is less efficient because we do (seek-write-read) for each marked
      * recipient, instead of (seek-write). It's unlikely that VSTREAMs will
      * be made smart enough to eliminate unnecessary I/O with small seeks.
-     * 
+     *
      * XXX When Postfix original recipients are turned off, we have no option
      * but to match against the expanded and rewritten recipient address.
-     * 
+     *
      * XXX Remove the (dsn_orcpt, dsn_notify, orcpt, recip) tuple from the
      * duplicate recipient filter. This requires that we maintain reference
      * counts.
@@ -1567,7 +1567,7 @@ static const char *cleanup_del_rcpt(void *context, const char *ext_rcpt)
     /*
      * Transform recipient from external form to internal form. This also
      * removes the enclosing <>, if present.
-     * 
+     *
      * XXX vstring_alloc() rejects zero-length requests.
      */
     int_rcpt_buf = vstring_alloc(strlen(ext_rcpt) + 1);
@@ -1887,7 +1887,7 @@ static const char *cleanup_milter_apply(CLEANUP_STATE *state, const char *event,
 	 * store the message (soft reject). After a temporary reject we stop
 	 * inspecting queue file records, so it can't be overruled by
 	 * something else.
-	 * 
+	 *
 	 * CLEANUP_STAT_CONT and CLEANUP_STAT_DEFER both update the reason
 	 * attribute, but CLEANUP_STAT_DEFER takes precedence. It terminates
 	 * queue record processing, and prevents bounces from being sent.
