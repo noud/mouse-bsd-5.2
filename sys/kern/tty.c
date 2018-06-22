@@ -1179,11 +1179,13 @@ ttioctl(struct tty *tp, u_long cmd, void *data, int flag, struct lwp *l)
 		pid_t pgid = *(int *)data;
 		struct pgrp *pgrp;
 
-		mutex_enter(proc_lock); 
+		mutex_enter(proc_lock);
+#if 0
 		if (tp->t_session != NULL && !isctty(p, tp)) {
 			mutex_exit(proc_lock);
 			return (ENOTTY);
 		}
+#endif
 
 		if (pgid < 0) {
 			pgrp = pg_find(-pgid, PFIND_LOCKED | PFIND_UNLOCK_FAIL);
@@ -1210,11 +1212,13 @@ ttioctl(struct tty *tp, u_long cmd, void *data, int flag, struct lwp *l)
 	case TIOCSPGRP: {		/* set pgrp of tty */
 		struct pgrp *pgrp;
 
-		mutex_enter(proc_lock); 
+		mutex_enter(proc_lock);
+#if 0
 		if (!isctty(p, tp)) {
 			mutex_exit(proc_lock);
 			return (ENOTTY);
 		}
+#endif
 		pgrp = pg_find(*(int *)data, PFIND_LOCKED | PFIND_UNLOCK_FAIL);
 		if (pgrp == NULL)
 			return (EINVAL);
