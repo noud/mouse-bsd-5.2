@@ -35,6 +35,11 @@
  *  that we then have no way to tell where it's DMAing into with
  *  sub-ring-element granularity, and, because interrupts can be
  *  delayed, even that much is less sure than I'd like.)
+ *
+ * This locks against itself with splhigh().  This essentially depends
+ *  on either (a) the machine being uniprocessor or (b) it running
+ *  giantlocked.  This needs some love from someone who actually
+ *  understands NetBSD's MP locking DKI.
  */
 
 #include <sys/bus.h>
@@ -529,8 +534,8 @@ static void restart_dma(SOFTC *sc)
  *  overrunning the reader and calling for a full reset.  See
  *  dma_catchup for details.
  *
- * I've also seen PLX9080_INTCSR_PCI_LCL_IE set, sp presumably there is
- *  some circumstances under which PLX9080_INTCSR_PCI_LCL_IRQ can be
+ * I've also seen PLX9080_INTCSR_PCI_LCL_IE set, so presumably there is
+ *  some circumstance under which PLX9080_INTCSR_PCI_LCL_IRQ can be
  *  set.  I have no idea what it means, though (see the head-of-file
  *  comment's remarks about how underdocumented the local-bus side of
  *  the PLX9080 is), and I haven't seen it happen in my testing, so I
@@ -882,7 +887,7 @@ static int adlink7300a_close(dev_t dev, int flags, int mode, struct lwp *l)
  *
  * If there is nothing available, this returns a successful transfer of
  *  zero bytes instead of (say) blocking.  Userland must be prepared
- *  for this and not interrest that as some kind of hard EOF.  See the
+ *  for this and not interpret that as some kind of hard EOF.  See the
  *  comment on our poll routine, below, for further discussion.
  */
 static int adlink7300a_read(dev_t dev, struct uio *uio, int flags)
