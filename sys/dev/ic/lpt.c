@@ -230,10 +230,27 @@ static int lpt_raw_read(struct lpt_softc *sc, struct uio *uio)
  *  collide with anything, possibly excepting close, which we don't
  *  worry about because this driver runs giantlocked.  If/when this is
  *  to be made MPSAFE, this will need attention.
+ *
+ * The API here is: the first byte written is a key, indicating which
+ *  registers are to be written.  Bit 0x01 corresponds to the data
+ *  register and bit 0x02 corresponds to the control register.  (Other
+ *  bits are reserved and, if set, cause EINVAL; a key of zero also
+ *  causes EINVAL.)  The rest of the write is broken up into units;
+ *  each unit has one byte per bit set in the key, with lower bits
+ *  corresponding to earlier bytes, and gets written to the relevant
+ *  hardware register(s).
+ *
+ * For exmaple, writing 0x01 0x7f 0x20 0x7f pushes 7f, 20, 7f into the
+ *  data register, without affecting the control register.  Writing
+ *  0x02 0x01 0x00 0x01 0x00 pushes 01, 00, 01, 00 into the control
+ *  reigster, without affecting the data register.  Writing 0x03 0xff
+ *  0x00 0x91 0x04 0x00 0x01 pushes ff -> data, 00 -> control, 91 ->
+ *  data, 04 -> control, 00 -> data, 01 -> control.
  */
 static int lpt_raw_write(struct lpt_softc *sc, struct uio *uio)
 {
- unsigned char data[256][2];
+ unsigned char key;
+ unsigned char data[256];
  int n;
  int e;
  int i;
@@ -244,27 +261,39 @@ static int lpt_raw_write(struct lpt_softc *sc, struct uio *uio)
  iot = sc->sc_iot;
  ioh = sc->sc_ioh;
  DLINE();
- if (uio->uio_resid & 1) return(EMSGSIZE); // needs translation
+ if (uio->uio_resid < 1) return(EMSGSIZE); // needs translation
  DLINE();
+ e = uiomove(&key,1,uio);
+ if (e)
+  { DLINE();
+    return(e);
+  }
+ // All these EINVALs need translation.
+ // Maybe return other errnos for some of these?
+ if (key & ~3U) return(EINVAL);
+ if (key == 0) return(EINVAL);
+ // if (uio->uio_resid % bitcount(key)), but for key in [1-3]...
+ if ((key == 3) && (uio->uio_resid & 1)) return(EINVAL);
  while (1)
   { DLINE();
-    n = uio->uio_resid >> 1;
-    if (n > 256) n = 256;
+    n = uio->uio_resid;
     if (n < 1)
      { DLINE();
        break;
      }
+    if (n > 256) n = 256;
     DLINE();
-    e = uiomove(&data[0][0],n<<1,uio);
+    e = uiomove(&data[0],n,uio);
     if (e)
      { DLINE();
        return(e);
      }
     DLINE();
-    for (i=0;i<n;i++)
+    i = 0;
+    while (i < n)
      { DLINE();
-       bus_space_write_1(iot,ioh,lpt_data,data[i][0]);
-       bus_space_write_1(iot,ioh,lpt_control,data[i][1]&(LPC_STROBE|LPC_AUTOLF|LPC_NINIT|LPC_SELECT));
+       if (key & 1) bus_space_write_1(iot,ioh,lpt_data,data[i++]);
+       if (key & 2) bus_space_write_1(iot,ioh,lpt_control,data[i++]&(LPC_STROBE|LPC_AUTOLF|LPC_NINIT|LPC_SELECT));
      }
     DLINE();
   }
