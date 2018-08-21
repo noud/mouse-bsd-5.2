@@ -53,7 +53,7 @@ static void yyerror(const char *, ...);
 static int yylex(void);
 static int is_zero_or_null(const char *);
 static int is_integer(const char *);
-static int64_t perform_arith_op(const char *, const char *, const char *);
+static int64_t perform_arith_bin(const char *, const char *, const char *);
 
 int main(int, const char * const *);
 
@@ -63,6 +63,10 @@ int main(int, const char * const *);
 %token STRING
 %left SPEC_OR
 %left SPEC_AND
+%left BIT_AND
+%left BIT_OR
+%left BIT_XOR
+%token BIT_NOT
 %left COMPARE
 %left ADD_SUB_OPERATOR
 %left MUL_DIV_MOD_OPERATOR
@@ -147,7 +151,7 @@ expr:	item { $$ = $1; }
 		char *val;
 		int64_t res;
 
-		res = perform_arith_op($1, $2, $3);
+		res = perform_arith_bin($1, $2, $3);
 		(void) asprintf(&val, "%lld", (long long int) res);
 		if (val == NULL)
 			err(1, NULL);
@@ -162,12 +166,44 @@ expr:	item { $$ = $1; }
 		char *val;
 		int64_t res;
 
-		res = perform_arith_op($1, $2, $3);
+		res = perform_arith_bin($1, $2, $3);
 		(void) asprintf(&val, "%lld", (long long int) res);
 		if (val == NULL)
 			err(1, NULL);
 		$$ = val;
 
+		}
+	| expr BIT_AND expr = {
+		char *val;
+		int64_t res;
+		res = perform_arith_bin($1,$2,$3);
+		asprintf(&val,"%lld",(long long int)res);
+		if (! val) err(1,0);
+		$$ = val;
+		}
+	| expr BIT_OR expr = {
+		char *val;
+		int64_t res;
+		res = perform_arith_bin($1,$2,$3);
+		asprintf(&val,"%lld",(long long int)res);
+		if (! val) err(1,0);
+		$$ = val;
+		}
+	| expr BIT_XOR expr = {
+		char *val;
+		int64_t res;
+		res = perform_arith_bin($1,$2,$3);
+		asprintf(&val,"%lld",(long long int)res);
+		if (! val) err(1,0);
+		$$ = val;
+		}
+	| BIT_NOT expr = {
+		char *val;
+		int64_t res;
+		res = perform_arith_un($1,$2);
+		asprintf(&val,"%lld",(long long int)res);
+		if (! val) err(1,0);
+		$$ = val;
 		}
 	| expr COMPARE expr = {
 		/*
@@ -273,7 +309,7 @@ is_integer(const char *str)
 }
 
 static int64_t
-perform_arith_op(const char *left, const char *op, const char *right)
+perform_arith_bin(const char *left, const char *op, const char *right)
 {
 	int64_t res, sign, l, r;
 	u_int64_t temp;
@@ -308,6 +344,19 @@ perform_arith_op(const char *left, const char *op, const char *right)
 	}
 
 	switch(op[0]) {
+	case 'b':
+		switch (op[1]) {
+		case '&':
+			res = l & r;
+			break;
+		case '|':
+			res = l | r;
+			break;
+		case '^':
+			res = l ^ r;
+			break;
+		}
+		break;
 	case '+':
 		/*
 		 * Do the op into an unsigned to avoid overflow and then cast
@@ -374,6 +423,39 @@ perform_arith_op(const char *left, const char *op, const char *right)
 	return res;
 }
 
+static int64_t perform_arith_un(const char *op, const char *right)
+{
+	int64_t res;
+	int64_t r;
+ 
+	res = 0;
+ 
+	if (!is_integer(right)) {
+		yyerror("non-integer argument '%s'", right);
+		/* NOTREACHED */
+	}
+ 
+	errno = 0;
+	r = strtoll(right, NULL, 10);
+	if (errno == ERANGE) {
+		yyerror("value '%s' is %s is %lld", right,
+		    (r > 0) ? "too big, maximum" : "too small, minimum",
+		    (r > 0) ? LLONG_MAX : LLONG_MIN);
+		/* NOTREACHED */
+	}
+ 
+	switch(op[0]) {
+	case 'b':
+		switch (op[1]) {
+		case '~':
+			res = ~ r;
+			break;
+		}
+		break;
+	}
+	return res;
+}
+
 static const char *x = "|&=<>+-*/%:()";
 static const int x_token[] = {
 	SPEC_OR, SPEC_AND, COMPARE, COMPARE, COMPARE, ADD_SUB_OPERATOR,
@@ -398,7 +480,15 @@ yylex(void)
 		} else {
 			retval = STRING;
 		}
-	} else if (p[1] == '=' && p[2] == '\0'
+	} else if ((p[0] == 'b') && (p[1] == '&') && (p[2] == '\0'))
+		retval = BIT_AND;
+	else if ((p[0] == 'b') && (p[1] == '|') && (p[2] == '\0'))
+		retval = BIT_OR;
+	else if ((p[0] == 'b') && (p[1] == '^') && (p[2] == '\0'))
+		retval = BIT_XOR;
+	else if ((p[0] == 'b') && (p[1] == '~') && (p[2] == '\0'))
+		retval = BIT_NOT;
+	else if (p[1] == '=' && p[2] == '\0'
 			&& (p[0] == '>' || p[0] == '<' || p[0] == '!'))
 		retval = COMPARE;
 	else if (handle_ddash && p[0] == '-' && p[1] == '-' && p[2] == '\0') {
