@@ -315,7 +315,7 @@ perform_arith_op(const char *left, const char *op, const char *right)
 		 */
 		temp = l + r;
 		res = (int64_t) temp;
-		/* very simplistic check for over-& underflow */
+		/* very simplistic check for over- & underflow */
 		if ((res < 0 && l > 0 && r > 0)
 	  	    || (res > 0 && l < 0 && r < 0))
 			yyerror("integer overflow or underflow occurred for "
@@ -328,7 +328,7 @@ perform_arith_op(const char *left, const char *op, const char *right)
 		 */
 		temp = l - r;
 		res = (int64_t) temp;
-		/* very simplistic check for over-& underflow */
+		/* very simplistic check for over- & underflow */
 		if ((res < 0 && l > 0 && l > r)
 		    || (res > 0 && l < 0 && l < r) )
 			yyerror("integer overflow or underflow occurred for "
