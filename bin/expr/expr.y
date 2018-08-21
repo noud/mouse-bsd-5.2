@@ -302,8 +302,8 @@ perform_arith_op(const char *left, const char *op, const char *right)
 	r = strtoll(right, NULL, 10);
 	if (errno == ERANGE) {
 		yyerror("value '%s' is %s is %lld", right,
-		    (l > 0) ? "too big, maximum" : "too small, minimum",
-	  	    (l > 0) ? LLONG_MAX : LLONG_MIN);
+		    (r > 0) ? "too big, maximum" : "too small, minimum",
+	  	    (r > 0) ? LLONG_MAX : LLONG_MIN);
 		/* NOTREACHED */
 	}
 
