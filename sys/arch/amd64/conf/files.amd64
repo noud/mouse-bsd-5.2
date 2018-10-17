@@ -12,6 +12,8 @@ maxpartitions 16
 
 maxusers 2 16 128
 
+defparam opt_halted_message.h HALTED_MESSAGE
+
 # delay before cpu_reset() for reboot.
 defparam		CPURESET_DELAY
 

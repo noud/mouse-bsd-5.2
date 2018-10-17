@@ -127,6 +127,7 @@ __KERNEL_RCSID(0, "$NetBSD: machdep.c,v 1.102.4.14 2012/06/12 23:18:13 riz Exp $
 #include "opt_lockdebug.h"
 #include "opt_mtrr.h"
 #include "opt_realmem.h"
+#include "opt_halted_message.h"
 #include "opt_xen.h"
 #ifndef XEN
 #include "opt_physmem.h"
@@ -732,9 +733,13 @@ haltsys:
 		AcpiDisable();
 #endif
 
+#ifdef HALTED_MESSAGE
+		printf("%s",HALTED_MESSAGE);
+#else
 		printf("\n");
 		printf("The operating system has halted.\n");
 		printf("Please press any key to reboot.\n\n");
+#endif
 		cnpollc(1);	/* for proper keyboard command handling */
 		cngetc();
 		cnpollc(0);
