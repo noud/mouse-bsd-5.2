@@ -75,6 +75,7 @@ __KERNEL_RCSID(0, "$NetBSD: lpt.c,v 1.75 2008/06/10 22:53:08 cegger Exp $");
 
 #include <dev/ic/lptreg.h>
 #include <dev/ic/lptvar.h>
+#include <dev/ic/lptioc.h>
 
 #define	TIMEOUT		hz*16	/* wait up to 16 seconds for a ready */
 #define	STEP		hz/4
@@ -121,186 +122,6 @@ static void record_line(int lno)
 }
 #define DLINE() record_line(__LINE__)
 
-static void lpt_raw_read_tick(void *scv)
-{
- struct lpt_softc *sc;
- volatile struct lpt_softc *vsc;
- unsigned char st;
- unsigned int rbf;
-
- sc = scv;
- vsc = sc;
- DLINE();
- st = bus_space_read_1(sc->sc_iot,sc->sc_ioh,lpt_status);
- DLINE();
- if (st != sc->laststat)
-  { DLINE();
-    mutex_enter(&sc->rawr_mtx);
-    DLINE();
-    sc->laststat = st;
-    rbf = vsc->rbfill;
-    if (vsc->rbptr == rbf)
-     { DLINE();
-       vsc->rbptr = 0;
-       rbf = 0;
-     }
-    DLINE();
-    if (rbf >= LPT_RAWBUFSIZE)
-     { DLINE();
-       printf("raw lpt: read buffer overflow\n");
-       rbf = 0;
-       vsc->rbptr = 0;
-       DLINE();
-     }
-    DLINE();
-    vsc->rawbuf[rbf++] = st;
-    vsc->rbfill = rbf;
-    DLINE();
-    cv_broadcast(&sc->rawr_cv);
-    DLINE();
-    selnotify(&sc->rsel,POLLIN|POLLRDNORM,0);
-    DLINE();
-    mutex_exit(&sc->rawr_mtx);
-    DLINE();
-  }
- DLINE();
- callout_schedule(&sc->rawreadticker,1);
- DLINE();
-}
-
-static int lpt_raw_read(struct lpt_softc *sc, struct uio *uio)
-{
- volatile struct lpt_softc *vsc;
- int rbf;
- int rbp;
- int e;
- int n;
- int i;
- unsigned char rb[LPT_RAWBUFSIZE];
-
- DLINE();
- vsc = sc;
- n = uio->uio_resid;
- if (n > LPT_RAWBUFSIZE) n = LPT_RAWBUFSIZE;
- DLINE();
- mutex_enter(&sc->rawr_mtx);
- DLINE();
- while (1)
-  { DLINE();
-    rbf = vsc->rbfill;
-    rbp = vsc->rbptr;
-    if (rbp < rbf)
-     { DLINE();
-       break;
-     }
-    DLINE();
-    if (vsc->sc_state & LPT_NBIO)
-     { DLINE();
-       mutex_exit(&sc->rawr_mtx);
-       DLINE();
-       return(EWOULDBLOCK);
-     }
-    e = cv_wait_sig(&sc->rawr_cv,&sc->rawr_mtx);
-    DLINE();
-    if (e)
-     { DLINE();
-       mutex_exit(&sc->rawr_mtx);
-       DLINE();
-       return(e);
-     }
-    DLINE();
-  }
- DLINE();
- i = 0;
- DLINE();
- while ((rbp < rbf) && (i < n)) rb[i++] = vsc->rawbuf[rbp++];
- vsc->rbptr = rbp;
- DLINE();
- mutex_exit(&sc->rawr_mtx);
- DLINE();
- return(uiomove(&rb[0],i,uio));
-}
-
-/*
- * We don't check NBIO because we can never block here (in the NBIO
- *  sense, that is; we can block for, for example, uiomove() to fault
- *  pages in).
- *
- * We don't lock against anything because writing data like this can't
- *  collide with anything, possibly excepting close, which we don't
- *  worry about because this driver runs giantlocked.  If/when this is
- *  to be made MPSAFE, this will need attention.
- *
- * The API here is: the first byte written is a key, indicating which
- *  registers are to be written.  Bit 0x01 corresponds to the data
- *  register and bit 0x02 corresponds to the control register.  (Other
- *  bits are reserved and, if set, cause EINVAL; a key of zero also
- *  causes EINVAL.)  The rest of the write is broken up into units;
- *  each unit has one byte per bit set in the key, with lower bits
- *  corresponding to earlier bytes, and gets written to the relevant
- *  hardware register(s).
- *
- * For exmaple, writing 0x01 0x7f 0x20 0x7f pushes 7f, 20, 7f into the
- *  data register, without affecting the control register.  Writing
- *  0x02 0x01 0x00 0x01 0x00 pushes 01, 00, 01, 00 into the control
- *  reigster, without affecting the data register.  Writing 0x03 0xff
- *  0x00 0x91 0x04 0x00 0x01 pushes ff -> data, 00 -> control, 91 ->
- *  data, 04 -> control, 00 -> data, 01 -> control.
- */
-static int lpt_raw_write(struct lpt_softc *sc, struct uio *uio)
-{
- unsigned char key;
- unsigned char data[256];
- int n;
- int e;
- int i;
- bus_space_tag_t iot;
- bus_space_handle_t ioh;
-
- DLINE();
- iot = sc->sc_iot;
- ioh = sc->sc_ioh;
- DLINE();
- if (uio->uio_resid < 1) return(EMSGSIZE); // needs translation
- DLINE();
- e = uiomove(&key,1,uio);
- if (e)
-  { DLINE();
-    return(e);
-  }
- // All these EINVALs need translation.
- // Maybe return other errnos for some of these?
- if (key & ~3U) return(EINVAL);
- if (key == 0) return(EINVAL);
- // if (uio->uio_resid % bitcount(key)), but for key in [1-3]...
- if ((key == 3) && (uio->uio_resid & 1)) return(EINVAL);
- while (1)
-  { DLINE();
-    n = uio->uio_resid;
-    if (n < 1)
-     { DLINE();
-       break;
-     }
-    if (n > 256) n = 256;
-    DLINE();
-    e = uiomove(&data[0],n,uio);
-    if (e)
-     { DLINE();
-       return(e);
-     }
-    DLINE();
-    i = 0;
-    while (i < n)
-     { DLINE();
-       if (key & 1) bus_space_write_1(iot,ioh,lpt_data,data[i++]);
-       if (key & 2) bus_space_write_1(iot,ioh,lpt_control,data[i++]&(LPC_STROBE|LPC_AUTOLF|LPC_NINIT|LPC_SELECT));
-     }
-    DLINE();
-  }
- DLINE();
- return(0);
-}
-
 void
 lpt_attach_subr(sc)
 	struct lpt_softc *sc;
@@ -320,8 +141,6 @@ lpt_attach_subr(sc)
 
 	sc->sc_dev_ok = 1;
 
- mutex_init(&sc->rawr_mtx,MUTEX_DEFAULT,IPL_SOFTCLOCK);
- cv_init(&sc->rawr_cv,"rawlpt");
  selinit(&sc->rsel);
  /*
   * We assume autoconf is singlethreaded enough that we don't have to
@@ -352,8 +171,6 @@ lpt_detach_subr(device_t self, int flags)
 	struct lpt_softc *sc = device_private(self);
 
  seldestroy(&sc->rsel);
- mutex_destroy(&sc->rawr_mtx);
- cv_destroy(&sc->rawr_cv);
 	sc->sc_dev_ok = 0;
 	softint_disestablish(sc->sc_sih);
 	callout_destroy(&sc->sc_wakeup_ch);
@@ -392,15 +209,11 @@ static int lptopen(dev_t dev, int flag, int mode, struct lwp *l)
 	(!(flags & LPT_RAWPP) && (sc->sc_state & LPT_RAW)) ) )
   { return(EBUSY);
   }
- // For raw opens, no further tests apply, but we do need to start reading.
+ // For raw opens, no further tests apply.
  if (flags & LPT_RAWPP)
   { if (! (sc->sc_state & LPT_OPEN))
      { sc->sc_state = LPT_OPEN | LPT_RAW;
        sc->laststat = LPT_NO_STAT;
-       sc->rbfill = 0;
-       sc->rbptr = 0;
-       callout_init(&sc->rawreadticker,0);
-       callout_reset(&sc->rawreadticker,1,&lpt_raw_read_tick,sc);
      }
     return(0);
   }
@@ -524,10 +337,6 @@ static int lptclose(dev_t dev, int flag, int mode,
  // Not much to do on last close of a raw open.
  if (sc->sc_state & LPT_RAW)
   { DLINE();
-    callout_halt(&sc->rawreadticker,0);
-    DLINE();
-    callout_destroy(&sc->rawreadticker);
-    DLINE();
     sc->sc_state = 0;
     DLINE();
     return(0);
@@ -617,19 +426,142 @@ lptpushbytes(sc)
 }
 
 /*
- * No reading except for raw opens....
+ * No reading.
  *
  * ENODEV isn't really right here, but it's what the old code did for
  *  reads (it used (dev_type_read((*)))enodev).
  */
 static int lptread(dev_t dev, struct uio *uio, int flags)
 {
- struct lpt_softc *sc;
+ (void)dev;
+ (void)uio;
+ (void)flags;
+ return(ENODEV);
+}
 
- sc = device_lookup_private(&lpt_cd,LPTUNIT(dev));
- if (! sc) panic("reading from nonexistent lpt");
- if ((sc->sc_state & (LPT_OPEN|LPT_RAW)) != (LPT_OPEN|LPT_RAW)) return(ENODEV);
- return(lpt_raw_read(sc,uio));
+/*
+ * Flexible generic I/O.
+ *
+ * XXX Should we be using ioctl_copyin and ioctl_copyout?  My
+ *  impression is that they matter iff the ioctl driving this is called
+ *  from within the kernel; for now, I'm willing to ignore that
+ *  possibility.  (Doing that would mean passing the flag value from
+ *  ioctl down to us.)
+ */
+static int lpt_doio(struct lpt_softc *sc, struct lpt_io *io)
+{
+ char iostate;
+ unsigned char ctl;
+ unsigned char cbuf[256];
+ int nc;
+ unsigned char wbuf[256];
+ int nw;
+ unsigned char rbuf[256];
+ int nr;
+ int e;
+ int s;
+ int i;
+
+ iostate = '?';
+ nc = io->clen;
+ if (nc > 256)
+  { printf("%s: nc = %d is too large\n",__func__,nc);
+    return(EMSGSIZE); // needs translation
+  }
+ e = copyin(io->ctl,&cbuf[0],nc);
+ if (e) return(e);
+ nw = 0;
+ nr = 0;
+ for (i=0;i<nc;i++)
+  { switch (cbuf[i])
+     { case LPTCTL_SETDO:
+	  iostate = 'o';
+	  break;
+       case LPTCTL_SETDI:
+	  iostate = 'i';
+	  break;
+       case LPTCTL_WDATA:
+	  if (iostate != 'o')
+	   { printf("%s: WRITE without SET_O\n",__func__);
+	     return(EIO); // needs translation
+	   }
+	  nw ++;
+	  break;
+       case LPTCTL_RDATA:
+	  if (iostate != 'i')
+	   { printf("%s: READ without SET_I\n",__func__);
+	     return(EIO); // needs translation
+	   }
+	  nr ++;
+	  break;
+       case LPTCTL_WCTL:
+	  nw ++;
+	  break;
+       case LPTCTL_RSTAT:
+	  nr ++;
+	  break;
+       default:
+	   { printf("%s: bad ctl %02x\n",__func__,(unsigned char)cbuf[i]);
+	     return(EIO); // needs translation
+	   }
+	  break;
+     }
+  }
+ if ((nw > io->wlen) || (nr > io->rlen))
+  { printf("%s: nw %d wlen %u, nr %d rlen %u\n",__func__,nw,io->wlen,nr,io->rlen);
+    return(EMSGSIZE); // needs translation
+  }
+ if (nw > 0)
+  { e = copyin(io->wdata,&wbuf[0],nw);
+    if (e) return(e);
+  }
+ /*
+  * We really do mean splhigh() here, even on MP machines.  The point
+  *  is not to lock against other processors, but to ensure we don't
+  *  take an interrupt on this CPU during this sequence.
+  *
+  * Locking against other processors fiddling the hardware is something
+  *  we ignore.  We can get away with this for now because this driver
+  *  runs giantlocked; if/when this is to be made MPSAFE, this will
+  *  need attention.
+  */
+ s = splhigh();
+ ctl = bus_space_read_1(sc->sc_iot,sc->sc_ioh,lpt_control);
+ nw = 0;
+ nr = 0;
+ for (i=0;i<nc;i++)
+  { switch (cbuf[i])
+     { case LPTCTL_SETDO:
+	  ctl &= ~LPC_INPUT;
+	  bus_space_write_1(sc->sc_iot,sc->sc_ioh,lpt_control,ctl);
+	  break;
+       case LPTCTL_SETDI:
+	  ctl |= LPC_INPUT;
+	  bus_space_write_1(sc->sc_iot,sc->sc_ioh,lpt_control,ctl);
+	  break;
+       case LPTCTL_WDATA:
+	  bus_space_write_1(sc->sc_iot,sc->sc_ioh,lpt_data,wbuf[nw++]);
+	  break;
+       case LPTCTL_RDATA:
+	  rbuf[nr++] = bus_space_read_1(sc->sc_iot,sc->sc_ioh,lpt_data);
+	  break;
+       case LPTCTL_WCTL:
+	  ctl = (ctl & ~0x0f) | (wbuf[nw++] & 0x0f);
+	  bus_space_write_1(sc->sc_iot,sc->sc_ioh,lpt_control,ctl);
+	  break;
+       case LPTCTL_RSTAT:
+	  rbuf[nr++] = bus_space_read_1(sc->sc_iot,sc->sc_ioh,lpt_status) & 0xf8;
+	  break;
+     }
+  }
+ splx(s);
+ if (nr > 0)
+  { e = copyout(&rbuf[0],io->rdata,nr);
+    if (e) return(e);
+  }
+ io->wlen = nw;
+ io->rlen = nr;
+ return(0);
 }
 
 /*
@@ -643,7 +575,7 @@ static int lptwrite(dev_t dev, struct uio *uio, int flags)
 	size_t n;
 	int error = 0;
 
- if (sc->sc_state & LPT_RAW) return(lpt_raw_write(sc,uio));
+ if (sc->sc_state & LPT_RAW) return(EOPNOTSUPP);
 	while ((n = min(LPT_BSIZE, uio->uio_resid)) != 0) {
 		uiomove(sc->sc_cp = sc->sc_inbuf, n, uio);
 		sc->sc_count = n;
@@ -728,24 +660,16 @@ static int lptioctl(dev_t dev, u_long cmd, void *data,
     int flag, struct lwp *l)
 {
  struct lpt_softc *sc;
- volatile struct lpt_softc *vsc;
 
  sc = device_lookup_private(&lpt_cd,LPTUNIT(dev));
  if (! sc) panic("lptioctl: nonexistent lpt");
- vsc = sc;
  if ((sc->sc_state & (LPT_OPEN|LPT_RAW)) != (LPT_OPEN|LPT_RAW)) return(ENODEV);
  switch (cmd)
   { case FIONBIO:
-       if (*(int *)data)
-	{ mutex_enter(&sc->rawr_mtx);
-	  sc->sc_state |= LPT_NBIO;
-	  cv_broadcast(&sc->rawr_cv);
-	  mutex_exit(&sc->rawr_mtx);
-	}
-       else
-	{ sc->sc_state &= ~LPT_NBIO;
-	}
        return(0);
+       break;
+    case LPTIOC_IO:
+       return(lpt_doio(sc,data));
        break;
   }
  return(EINVAL);
@@ -761,17 +685,7 @@ static int lptpoll(dev_t dev, int events, struct lwp *l)
  if (! sc) panic("lptpoll: nonexistent lpt");
  vsc = sc;
  if ((sc->sc_state & (LPT_OPEN|LPT_RAW)) != (LPT_OPEN|LPT_RAW)) return(seltrue(dev,events,l));
- mutex_enter(&sc->rawr_mtx);
- rev = events & (POLLOUT | POLLWRNORM);
- if (events & (POLLIN | POLLRDNORM))
-  { if (vsc->rbptr < vsc->rbfill)
-     { rev |= events & (POLLIN | POLLRDNORM);
-     }
-    else if (! rev)
-     { selrecord(l,&sc->rsel);
-     }
-  }
- mutex_exit(&sc->rawr_mtx);
+ rev = events & (POLLOUT | POLLWRNORM | POLLIN | POLLRDNORM);
  return(rev);
 }
 

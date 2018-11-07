@@ -61,8 +61,6 @@
 #include <sys/callout.h>
 #include <sys/condvar.h>
 
-#define LPT_RAWBUFSIZE 64
-
 struct lpt_softc {
 	device_t sc_dev;
 	void *sc_ih;
@@ -83,7 +81,6 @@ struct lpt_softc {
 #define	LPT_OBUSY	0x02	/* printer is busy doing output */
 #define	LPT_INIT	0x04	/* waiting to initialize for open */
 #define	LPT_RAW		0x08	/* LPT_PPRAW device is open */
-#define	LPT_NBIO	0x10	/* non-blocking I/O mode */
 	unsigned int sc_flags;
 #define	LPT_AUTOLF	0x00000020	/* automatic LF on CR */
 #define	LPT_NOPRIME	0x00000040	/* don't prime on open */
@@ -91,14 +88,8 @@ struct lpt_softc {
 #define	LPT_RAWPP	0x00000100	/* raw parallel port, not printer */
 	u_char sc_control;
 	u_char sc_laststatus;
-  unsigned char rawbuf[LPT_RAWBUFSIZE];
-  int rbfill;
-  int rbptr;
-  kcondvar_t rawr_cv;
-  kmutex_t rawr_mtx;
   unsigned int laststat;
 #define LPT_NO_STAT (1U+(unsigned int)(unsigned char)~0U)
-  callout_t rawreadticker;
   struct selinfo rsel;
 };
 
