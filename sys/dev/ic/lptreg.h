@@ -70,5 +70,6 @@
 #define	LPC_NINIT		0x04	/* initialize printer */
 #define	LPC_SELECT		0x08	/* printer selected */
 #define	LPC_IENABLE		0x10	/* printer out of paper */
+#define LPC_INPUT		0x20	/* data lines are inputs */
 
 #define	LPT_NPORTS	4
