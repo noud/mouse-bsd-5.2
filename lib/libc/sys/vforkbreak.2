@@ -11,7 +11,7 @@
 .Ft void
 .Fn vforkbreak void
 .Sh DESCRIPTION
-.Fn vforkbreak
+.Nm
 allows a process created with
 .Xr vfork 2
 to break the VM-space sharing and control-flow ties with its parent
@@ -21,7 +21,7 @@ or
 .Xr exit 2 .
 It can be called by other processes, but without effect.
 .Sh RETURN VALUES
-.Fn
+.Nm
 always returns 0.
 .Sh ERRORS
 None.
@@ -30,8 +30,8 @@ None.
 .Xr exit 2 ,
 .Xr vfork 2 .
 .Sh STANDARDS
-.Fn
+.Nm
 is an extension, not specified in any standard.
 .Sh HISTORY
-.Fn
+.Nm
 first appeared in Mouse's post-5.2 NetBSD.
