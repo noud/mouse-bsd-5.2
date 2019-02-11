@@ -48,17 +48,18 @@
 .Ft int
 .Fn strncmp "const char *s1" "const char *s2" "size_t len"
 .Sh DESCRIPTION
-The
 .Fn strcmp
 and
 .Fn strncmp
-functions
 lexicographically compare the nul-terminated strings
 .Fa s1
 and
-.Fa s2 .
+.Fa s2 ;
+.Fn strncmp
+compares not more than
+.Fa len
+characters.
 .Sh RETURN VALUES
-The
 .Fn strcmp
 and
 .Fn strncmp
@@ -71,12 +72,6 @@ The comparison is done using unsigned characters, so that
 .Ql \e200
 is greater than
 .Ql \e0 .
-.Pp
-The
-.Fn strncmp
-compares not more than
-.Fa len
-characters.
 .Sh SEE ALSO
 .Xr bcmp 3 ,
 .Xr memcmp 3 ,
