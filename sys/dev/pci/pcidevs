@@ -3142,12 +3142,13 @@ product NETGEAR GA620T		0x630a	GA620 1000baseT Ethernet
 product NETGEAR MA301		0x4100	MA301 PCI IEEE 802.11b
 
 /* Netmos products */
-product NETMOS NM9805	0x9805	1284 Printer port
-product NETMOS NM9815	0x9815	Dual 1284 Printer port
+product NETMOS NM9805	0x9805	1284 Printer Port
+product NETMOS NM9815	0x9815	Dual 1284 Printer Port
 product NETMOS NM9820	0x9820	Single UART
-product NETMOS NM9835	0x9835	Dual UART and 1284 Printer port
-product NETMOS NM9845	0x9845	Quad UART and 1284 Printer port
-product NETMOS NM9855	0x9855	9855 Quad UART and 1284 Printer port
+product NETMOS NM9835	0x9835	Dual UART and 1284 Printer Port
+product NETMOS NM9845	0x9845	Quad UART and 1284 Printer Port
+product NETMOS NM9855	0x9855	9855 Quad UART and 1284 Printer Port
+product NETMOS NM9912	0x9912	Dual PCI-E UART and 1284 Printer Port
 
 /* Network Security Technologies */
 product NETSEC 7751		0x7751	7751
