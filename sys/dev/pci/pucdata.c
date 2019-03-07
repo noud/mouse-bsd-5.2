@@ -1368,5 +1368,23 @@ const struct puc_device_description puc_devices[] = {
 	    },
 	},
 
+	/*
+	 * NetMOS boards
+	 */
+	{ "NetMos NM9912 Dual PCI-E UART and 1284 Printer Port",
+	    {	PCI_VENDOR_NETMOS, PCI_PRODUCT_NETMOS_NM9912, 0, 0x1000 },
+	    {	0xffff, 0xffff, 0, 0xffff },
+	    {
+		{ PUC_PORT_TYPE_COM, 0x10, 0x0000, 0 },
+	    },
+	},
+	{ "NetMos NM9912 Dual PCI-E UART and 1284 Printer Port",
+	    {	PCI_VENDOR_NETMOS, PCI_PRODUCT_NETMOS_NM9912, 0, 0x2000 },
+	    {	0xffff, 0xffff, 0, 0xffff },
+	    {
+		{ PUC_PORT_TYPE_LPT, 0x10, 0x0000, 0 },
+	    },
+	},
+
 	{ .name = NULL },
 };
