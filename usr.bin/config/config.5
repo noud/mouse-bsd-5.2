@@ -636,7 +636,17 @@ and
 .Ar fs
 parameters can be wildcarded with
 .Dq \&?
-to let the kernel automatically discover those values.
+to let the kernel automatically discover those values; in addition, the
+.Sq root on
+spec may be of the form
+.Sq \&*x ,
+where
+.Ar x
+is a valid partition letter (ie, specifying a partition less than the
+.Ic maxpartitions
+value).  This means that the root filesystem is to be on the boot
+device, wherever it is found, like the default, but in a non-default
+partition on that device.
 .Pp
 At least one
 .Ic config
