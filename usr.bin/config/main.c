@@ -1126,7 +1126,7 @@ crosscheck(void)
 	}
 	TAILQ_FOREACH(cf, &allcf, cf_next) {
 		if (cf->cf_root != NULL) {	/* i.e., not root on ? */
-			errs += cfcrosscheck(cf, "root", cf->cf_root);
+			if (cf->cf_root->nv_str[0] != '*') errs += cfcrosscheck(cf, "root", cf->cf_root);
 			errs += cfcrosscheck(cf, "dumps", cf->cf_dump);
 		}
 	}

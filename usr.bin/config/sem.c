@@ -815,12 +815,20 @@ addconf(struct config *cf0)
 		cfgerror("%s: no root device specified", name);
 		goto bad;
 	}
-	if (cf->cf_root && cf->cf_root->nv_str != s_qmark) {
-		struct nvlist *nv;
-		nv = cf->cf_root;
-		if (resolve(&cf->cf_root, name, "root", nv, 'a'))
-			goto bad;
-	}
+ if (cf->cf_root && cf->cf_root->nv_str != s_qmark)
+  { struct nvlist *nv;
+    nv = cf->cf_root;
+    if ( (nv->nv_str[0] == '*') &&
+	 nv->nv_str[1] &&
+	 !nv->nv_str[2] &&
+	 (nv->nv_str[1] >= 'a') &&
+	 (nv->nv_str[1] < 'a'+maxpartitions) )
+     { nv->nv_int = NODEV;
+     }
+    else
+     { if (resolve(&cf->cf_root,name,"root",nv,'a')) goto bad;
+     }
+  }
 
 	/*
 	 * Resolve the dump device.

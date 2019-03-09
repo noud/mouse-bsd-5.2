@@ -118,7 +118,7 @@ static	struct nvlist *mk_ns(const char *, struct nvlist *);
 %token	VERSION
 %token	WITH
 %token	<num> NUMBER
-%token	<str> PATHNAME QSTRING WORD EMPTYSTRING
+%token	<str> PATHNAME QSTRING WORD EMPTYSTRING STARLETTER
 %token	ENDDEFS
 
 %left '|'
@@ -139,6 +139,7 @@ static	struct nvlist *mk_ns(const char *, struct nvlist *);
 %type	<list>	attrs_opt attrs
 %type	<list>	locators locator
 %type	<list>	dev_spec
+%type	<list>	rootdev_spec
 %type	<str>	device_instance
 %type	<str>	attachment
 %type	<str>	value
@@ -539,7 +540,7 @@ conf:
 					    conf.cf_dump = NULL; };
 
 root_spec:
-	ROOT on_opt dev_spec fs_spec_opt
+	ROOT on_opt rootdev_spec fs_spec_opt
 				{ setconf(&conf.cf_root, "root", $3); };
 
 fs_spec_opt:
@@ -561,6 +562,10 @@ dev_spec:
 	'?'				{ $$ = new_si(intern("?"), NODEV); } |
 	WORD				{ $$ = new_si($1, NODEV); } |
 	major_minor			{ $$ = new_si(NULL, $1); };
+
+rootdev_spec:
+	dev_spec { $$ = $1; } |
+	STARLETTER { $$ = new_si(intern($1), NODEV); };
 
 major_minor:
 	MAJOR NUMBER MINOR NUMBER	{ $$ = makedev($2.val, $4.val); };
@@ -746,4 +751,3 @@ mk_ns(const char *name, struct nvlist *vals)
 	}
 	return vals;
 }
-

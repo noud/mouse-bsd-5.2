@@ -951,8 +951,7 @@ setroot(struct device *bootdv, int bootpartition)
 				break;
 			}
 		}
-
-	} else if (rootspec == NULL) {
+	} else if (!rootspec || (rootspec[0] == '*')) {
 		/*
 		 * Wildcarded root; use the boot device.
 		 */
@@ -970,7 +969,7 @@ setroot(struct device *bootdv, int bootpartition)
 			if (DEV_USES_PARTITIONS(bootdv))
 				rootdev = MAKEDISKDEV(majdev,
 						      device_unit(bootdv),
-						      bootpartition);
+						      rootspec?(rootspec[1]-'a'):bootpartition);
 			else
 				rootdev = makedev(majdev, device_unit(bootdv));
 		}
