@@ -99,7 +99,7 @@ __sflags(mode, optr)
 			m = O_RDWR;
 			break;
 		case 'f':
-			o |= O_NONBLOCK;
+			o |= O_PLAIN;
 			break;
 		case 'b':
 			break;

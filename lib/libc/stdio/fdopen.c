@@ -92,7 +92,11 @@ fdopen(fd, mode)
 		return (NULL);
 	}
 
-	if (oflags & O_NONBLOCK) {
+	if (oflags & O_PLAIN) {
+		/*
+		 * fd was handed to us; we didn't get a chance for
+		 *  O_PLAIN to do its thing.
+		 */
 		struct stat st;
 		if (fstat(fd, &st) == -1) {
 			return (NULL);

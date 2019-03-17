@@ -145,21 +145,6 @@ freopen(file, mode, fp)
 		return (NULL);
 	}
 
-	if (oflags & O_NONBLOCK) {
-		struct stat st;
-		if (fstat(f, &st) == -1) {
-			sverrno = errno;
-			(void)close(f);
-			errno = sverrno;
-			return (NULL);
-		}
-		if (!S_ISREG(st.st_mode)) {
-			(void)close(f);
-			errno = EFTYPE;
-			return (NULL);
-		}
-	}
-
 	/*
 	 * If reopening something that was open before on a real file, try
 	 * to maintain the descriptor.  Various C library routines (perror)

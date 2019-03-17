@@ -68,20 +68,6 @@ fopen(file, mode)
 		return (NULL);
 	if ((f = open(file, oflags, DEFFILEMODE)) < 0)
 		goto release;
-	if (oflags & O_NONBLOCK) {
-		struct stat st;
-		if (fstat(f, &st) == -1) {
-			int sverrno = errno;
-			(void)close(f);
-			errno = sverrno;
-			goto release;
-		}
-		if (!S_ISREG(st.st_mode)) {
-			(void)close(f);
-			errno = EFTYPE;
-			goto release;
-		}
-	}
 	/*
 	 * File descriptors are a full int, but _file is only a short.
 	 * If we get a valid file descriptor that is greater or equal to
