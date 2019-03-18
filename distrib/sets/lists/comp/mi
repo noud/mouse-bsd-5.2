@@ -4016,6 +4016,7 @@
 ./usr/share/man/cat2/utrace.0			comp-c-catman		.cat
 ./usr/share/man/cat2/uuidgen.0			comp-c-catman		.cat
 ./usr/share/man/cat2/vfork.0			comp-c-catman		.cat
+./usr/share/man/cat2/vforkbreak.0		comp-c-catman		.cat
 ./usr/share/man/cat2/wait.0			comp-c-catman		.cat
 ./usr/share/man/cat2/wait3.0			comp-c-catman		.cat
 ./usr/share/man/cat2/wait4.0			comp-c-catman		.cat
