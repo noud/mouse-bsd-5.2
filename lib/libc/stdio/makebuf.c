@@ -52,6 +52,47 @@ __RCSID("$NetBSD: makebuf.c,v 1.15 2008/03/13 15:40:00 christos Exp $");
 #include "reentrant.h"
 #include "local.h"
 
+static int gen_dec_num(char *to, unsigned int v)
+{
+ int n;
+
+ if (v >= 10)
+  { n = gen_dec_num(to,v/10);
+    v %= 10;
+  }
+ else
+  { n = 0;
+  }
+ to[n] = '0' + v;
+ return(n+1);
+}
+
+typedef enum {
+	  EB_NO_SPEC = 1,
+	  EB_SPEC_NONE,
+	  EB_SPEC_LINE,
+	  EB_SPEC_FULL,
+	  } EBRV;
+static EBRV env_buffering(int fd)
+{
+ char en[64];
+ const char *ev;
+ int i;
+
+ ev = "STDIO_BUFFERING_";
+ for (i=0;ev[i];i++) en[i] = ev[i];
+ en[i+gen_dec_num(&en[i],fd)] = '\0';
+ ev = getenv(&en[0]);
+ if (! ev) ev = getenv("STDIO_BUFFERING");
+ if (! ev) return(EB_NO_SPEC);
+ switch (*ev)
+  { case 'n': case 'N': return(EB_SPEC_NONE); break;
+    case 'l': case 'L': return(EB_SPEC_LINE); break;
+    case 'f': case 'F': return(EB_SPEC_FULL); break;
+  }
+ return(EB_NO_SPEC);
+}
+
 /*
  * Allocate a file buffer, or switch to unbuffered I/O.
  * Per the ANSI C standard, ALL tty devices default to line buffered.
@@ -59,36 +100,39 @@ __RCSID("$NetBSD: makebuf.c,v 1.15 2008/03/13 15:40:00 christos Exp $");
  * As a side effect, we set __SOPT or __SNPT (en/dis-able fseek
  * optimisation) right after the fstat() that finds the buffer size.
  */
-void
-__smakebuf(fp)
-	FILE *fp;
+void __smakebuf(FILE *fp)
 {
-	void *p;
-	int flags;
-	size_t size;
-	int couldbetty;
+ void *p;
+ int flags;
+ size_t size;
+ int couldbetty;
+ EBRV eb;
 
-	_DIAGASSERT(fp != NULL);
-
-	if (fp->_flags & __SNBF) {
-		fp->_bf._base = fp->_p = fp->_nbuf;
-		fp->_bf._size = 1;
-		return;
-	}
-	flags = __swhatbuf(fp, &size, &couldbetty);
-	if ((p = malloc(size)) == NULL) {
-		fp->_flags |= __SNBF;
-		fp->_bf._base = fp->_p = fp->_nbuf;
-		fp->_bf._size = 1;
-		return;
-	}
-	__cleanup = _cleanup;
-	flags |= __SMBF;
-	fp->_bf._base = fp->_p = p;
-	fp->_bf._size = size;
-	if (couldbetty && isatty(__sfileno(fp)))
-		flags |= __SLBF;
-	fp->_flags |= flags;
+ _DIAGASSERT(fp != NULL);
+ eb = env_buffering(__sfileno(fp));
+ if (eb == EB_SPEC_NONE) fp->_flags |= __SNBF;
+ if (fp->_flags & __SNBF)
+  { fp->_bf._base = fp->_p = fp->_nbuf;
+    fp->_bf._size = 1;
+    return;
+  }
+ flags = __swhatbuf(fp,&size,&couldbetty);
+ p = malloc(size);
+ if (! p)
+  { fp->_flags |= __SNBF;
+    fp->_bf._base = fp->_p = fp->_nbuf;
+    fp->_bf._size = 1;
+    return;
+  }
+ __cleanup = _cleanup;
+ flags |= __SMBF;
+ fp->_bf._base = fp->_p = p;
+ fp->_bf._size = size;
+ if ( (eb == EB_SPEC_LINE) ||
+      ( (eb != EB_SPEC_FULL) &&
+	couldbetty &&
+	isatty(__sfileno(fp)) ) ) flags |= __SLBF;
+ fp->_flags |= flags;
 }
 
 /*
