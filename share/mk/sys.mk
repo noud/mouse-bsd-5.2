@@ -120,9 +120,10 @@ YACC.y?=	${YACC} ${YFLAGS}
 	${AR} ${ARFLAGS} ${.TARGET} ${.PREFIX}.o
 	rm -f ${.PREFIX}.o
 .c.ln:
-	${LINT} ${LINTFLAGS} \
+	: ${LINT} ${LINTFLAGS} \
 	    ${CPPFLAGS:C/-([IDU])[  ]*/-\1/Wg:M-[IDU]*} \
 	    -i ${.IMPSRC}
+	touch ${.IMPSRC:T:R}.ln
 
 # C++
 .cc .cpp .cxx .C:

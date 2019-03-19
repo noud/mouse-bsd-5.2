@@ -384,7 +384,7 @@ ${DESTDIR}${DEBUGDIR}${BINDIR.${_P}}/${_PROGDEBUG.${_P}}: .MADE
 lint: lint-${_P}
 lint-${_P}: ${LOBJS.${_P}}
 .if defined(LOBJS.${_P}) && !empty(LOBJS.${_P})
-	${LINT} ${LINTFLAGS} ${_LDFLAGS.${_P}:C/-L[  ]*/-L/Wg:M-L*} ${LOBJS.${_P}} ${_LDADD.${_P}}
+	: ${LINT} ${LINTFLAGS} ${_LDFLAGS.${_P}:C/-L[  ]*/-L/Wg:M-L*} ${LOBJS.${_P}} ${_LDADD.${_P}}
 .endif
 
 .endfor # _P in ${PROGS} ${PROGS_CXX}					# }

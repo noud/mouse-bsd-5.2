@@ -537,15 +537,16 @@ llib-l${LIB}.ln: ${LOBJS}
 	${_MKTARGET_COMPILE}
 	rm -f llib-l${LIB}.ln
 .if defined(DESTDIR)
-	${LINT} -C${LIB} ${.ALLSRC} -L${DESTDIR}/usr/libdata ${LLIBS}
+	: ${LINT} -C${LIB} ${.ALLSRC} -L${DESTDIR}/usr/libdata ${LLIBS}
 .else
-	${LINT} -C${LIB} ${.ALLSRC} ${LLIBS}
+	: ${LINT} -C${LIB} ${.ALLSRC} ${LLIBS}
 .endif
+	touch llib-l${LIB}.ln
 .endif									# }
 
 lint: ${LOBJS}
 .if defined(LOBJS) && !empty(LOBJS)
-	${LINT} ${LINTFLAGS} ${LOBJS}
+	: ${LINT} ${LINTFLAGS} ${LOBJS}
 .endif
 
 cleanlib: .PHONY
