@@ -320,7 +320,8 @@
 ./usr/include/dev/ic/ispvar.h			comp-obsolete		obsolete
 ./usr/include/dev/ic/lemacreg.h			comp-obsolete		obsolete
 ./usr/include/dev/ic/lemacvar.h			comp-obsolete		obsolete
-./usr/include/dev/ic/lptreg.h			comp-obsolete		obsolete
+./usr/include/dev/ic/lptioc.h			comp-c-include
+./usr/include/dev/ic/lptreg.h			comp-c-include
 ./usr/include/dev/ic/lptvar.h			comp-obsolete		obsolete
 ./usr/include/dev/ic/mb86960reg.h		comp-obsolete		obsolete
 ./usr/include/dev/ic/mb86960var.h		comp-obsolete		obsolete
