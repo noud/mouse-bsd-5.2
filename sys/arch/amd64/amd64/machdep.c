@@ -1239,9 +1239,10 @@ add_mem_cluster(uint64_t seg_start, uint64_t seg_end, uint32_t type)
 		return;
 
 	/* XXX XXX XXX */
-	if (mem_cluster_cnt >= VM_PHYSSEG_MAX)
-		panic("init_x86_64: too many memory segments "
-		      "(increase VM_PHYSSEG_MAX)");
+ if (mem_cluster_cnt >= VM_PHYSSEG_MAX)
+  { printf("mem_cluster_cnt=%d >= VM_PHYSSEG_MAX=%d\n",(int)mem_cluster_cnt,(int)VM_PHYSSEG_MAX);
+    panic("init_x86_64: too many memory segments (increase VM_PHYSSEG_MAX)");
+  }
 
 #ifdef PHYSMEM_MAX_ADDR
 	if (seg_start >= MBTOB(PHYSMEM_MAX_ADDR))
