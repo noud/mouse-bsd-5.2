@@ -205,9 +205,11 @@ ptyfs_mount(struct mount *mp, const char *path, void *data, size_t *data_len)
 		return 0;
 	}
 
+#if 0
 	/* Don't allow more than one mount */
 	if (ptyfs_count)
 		return EBUSY;
+#endif
 
 	if (mp->mnt_flag & MNT_UPDATE)
 		return EOPNOTSUPP;
@@ -231,8 +233,10 @@ ptyfs_mount(struct mount *mp, const char *path, void *data, size_t *data_len)
 
 	/* Point pty access to us */
 
-	ptm_ptyfspty.arg = mp;
-	ptyfs_save_ptm = pty_sethandler(&ptm_ptyfspty);
+	if (ptyfs_count == 0) {
+		ptm_ptyfspty.arg = mp;
+		ptyfs_save_ptm = pty_sethandler(&ptm_ptyfspty);
+	}
 	ptyfs_count++;
 	return 0;
 }
@@ -257,17 +261,19 @@ ptyfs_unmount(struct mount *mp, int mntflags)
 	if ((error = vflush(mp, 0, flags)) != 0)
 		return (error);
 
-	/* Restore where pty access was pointing */
-	(void)pty_sethandler(ptyfs_save_ptm);
-	ptyfs_save_ptm = NULL;
-	ptm_ptyfspty.arg = NULL;
+	ptyfs_count--;
+	if (ptyfs_count == 0) {
+		/* Restore where pty access was pointing */
+		(void)pty_sethandler(ptyfs_save_ptm);
+		ptyfs_save_ptm = NULL;
+		ptm_ptyfspty.arg = NULL;
+	}
 
 	/*
 	 * Finally, throw away the ptyfsmount structure
 	 */
 	free(mp->mnt_data, M_PTYFSMNT);
 	mp->mnt_data = NULL;
-	ptyfs_count--;
 
 	return 0;
 }
