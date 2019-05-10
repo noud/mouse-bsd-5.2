@@ -9422,6 +9422,7 @@
 ./usr/share/man/html2/utrace.html		comp-c-htmlman		html
 ./usr/share/man/html2/uuidgen.html		comp-c-htmlman		html
 ./usr/share/man/html2/vfork.html		comp-c-htmlman		html
+./usr/share/man/html2/vforkbreak.html		comp-c-htmlman		html
 ./usr/share/man/html2/wait.html			comp-c-htmlman		html
 ./usr/share/man/html2/wait3.html		comp-c-htmlman		html
 ./usr/share/man/html2/wait4.html		comp-c-htmlman		html
@@ -14619,6 +14620,7 @@
 ./usr/share/man/man2/utrace.2			comp-c-man		.man
 ./usr/share/man/man2/uuidgen.2			comp-c-man		.man
 ./usr/share/man/man2/vfork.2			comp-c-man		.man
+./usr/share/man/man2/vforkbreak.2		comp-c-man		.man
 ./usr/share/man/man2/wait.2			comp-c-man		.man
 ./usr/share/man/man2/wait3.2			comp-c-man		.man
 ./usr/share/man/man2/wait4.2			comp-c-man		.man
