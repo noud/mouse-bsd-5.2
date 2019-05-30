@@ -149,18 +149,9 @@ struct bpf_hdr {
  * Because the structure above is not a multiple of 4 bytes, some compilers
  * will insist on inserting padding; hence, sizeof(struct bpf_hdr) won't work.
  * Only the kernel needs to know about it; applications use bh_hdrlen.
- * XXX To save a few bytes on 32-bit machines, we avoid end-of-struct
- * XXX padding by using the size of the header data elements.  This is
- * XXX fail-safe: on new machines, we just use the 'safe' sizeof.
  */
 #ifdef _KERNEL
-#if defined(__arm32__) || defined(__i386__) || defined(__m68k__) || \
-    defined(__mips__) || defined(__ns32k__) || defined(__vax__) || \
-    defined(__sh__) || (defined(__sparc__) && !defined(__sparc64__))
-#define SIZEOF_BPF_HDR 18
-#else
 #define SIZEOF_BPF_HDR sizeof(struct bpf_hdr)
-#endif
 #endif
 
 /* Pull in data-link level type codes. */
