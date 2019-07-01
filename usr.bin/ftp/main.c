@@ -105,21 +105,21 @@ __RCSID("$NetBSD: main.c,v 1.113 2008/09/09 00:48:28 gmcgarry Exp $");
 /*
  * FTP User Program -- Command Interface.
  */
-#include <sys/types.h>
-#include <sys/socket.h>
-
 #include <err.h>
+#include <pwd.h>
+#include <time.h>
 #include <errno.h>
 #include <netdb.h>
 #include <paths.h>
-#include <pwd.h>
-#include <signal.h>
 #include <stdio.h>
+#include <ctype.h>
+#include <signal.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include <unistd.h>
 #include <locale.h>
+#include <sys/types.h>
+#include <sys/socket.h>
 
 #define	GLOBAL		/* force GLOBAL decls in ftp_var.h to be declared */
 #include "ftp_var.h"
