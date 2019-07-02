@@ -1292,7 +1292,7 @@ register struct tm * const		tmp;
 		newy = (int)(y + days / DAYSPERNYEAR);
 		if (days < 0)
 			--newy;
-		days -= (newy - y) * DAYSPERNYEAR +
+		days -= (newy - y) * (long int)DAYSPERNYEAR +
 			LEAPS_THRU_END_OF(newy - 1) -
 			LEAPS_THRU_END_OF(y - 1);
 		y = newy;
