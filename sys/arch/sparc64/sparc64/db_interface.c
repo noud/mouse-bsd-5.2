@@ -857,9 +857,9 @@ db_proc_cmd(db_expr_t addr, bool have_addr, db_expr_t count, const char *modif)
 	db_printf("maxsaddr:%p ssiz:%dpg or %llxB\n",
 		  p->p_vmspace->vm_maxsaddr, p->p_vmspace->vm_ssize, 
 		  (unsigned long long)ctob(p->p_vmspace->vm_ssize));
-	db_printf("profile timer: %ld sec %ld usec\n",
-		  p->p_stats->p_timer[ITIMER_PROF].it_value.tv_sec,
-		  p->p_stats->p_timer[ITIMER_PROF].it_value.tv_usec);
+	db_printf("profile timer: %lld sec %lld usec\n",
+		  (long long int)p->p_stats->p_timer[ITIMER_PROF].it_value.tv_sec,
+		  (long long int)p->p_stats->p_timer[ITIMER_PROF].it_value.tv_usec);
 	return;
 }
 
