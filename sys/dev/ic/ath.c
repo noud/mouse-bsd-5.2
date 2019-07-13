@@ -651,7 +651,7 @@ ath_detach(struct ath_softc *sc)
 	if ((sc->sc_flags & ATH_ATTACHED) == 0)
 		return (0);
 
-	DPRINTF(sc, ATH_DEBUG_ANY, "%s: if_flags %lx\n",
+	DPRINTF(sc, ATH_DEBUG_ANY, "%s: if_flags %x\n",
 		__func__, ifp->if_flags);
 
 	s = splnet();
@@ -761,7 +761,7 @@ ath_intr(void *arg)
 		return 0;
 
 	if ((ifp->if_flags & (IFF_RUNNING|IFF_UP)) != (IFF_RUNNING|IFF_UP)) {
-		DPRINTF(sc, ATH_DEBUG_ANY, "%s: if_flags 0x%lx\n",
+		DPRINTF(sc, ATH_DEBUG_ANY, "%s: if_flags 0x%x\n",
 			__func__, ifp->if_flags);
 		ath_hal_getisr(ah, &status);	/* clear ISR */
 		ath_hal_intrset(ah, 0);		/* disable further intr's */
@@ -987,7 +987,7 @@ ath_init(struct ath_softc *sc)
 	HAL_STATUS status;
 	int error = 0;
 
-	DPRINTF(sc, ATH_DEBUG_ANY, "%s: if_flags 0x%lx\n",
+	DPRINTF(sc, ATH_DEBUG_ANY, "%s: if_flags 0x%x\n",
 		__func__, ifp->if_flags);
 
 	if (device_is_active(sc->sc_dev)) {
@@ -1090,7 +1090,7 @@ ath_stop_locked(struct ifnet *ifp, int disable)
 	struct ieee80211com *ic = &sc->sc_ic;
 	struct ath_hal *ah = sc->sc_ah;
 
-	DPRINTF(sc, ATH_DEBUG_ANY, "%s: invalid %d if_flags 0x%lx\n",
+	DPRINTF(sc, ATH_DEBUG_ANY, "%s: invalid %d if_flags 0x%x\n",
 		__func__, !device_is_enabled(sc->sc_dev), ifp->if_flags);
 
 	ATH_LOCK_ASSERT(sc);
