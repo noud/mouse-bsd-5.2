@@ -661,7 +661,7 @@ cyparam(struct tty *tp, struct termios *t)
 
 	s = spltty();
 
-	/* hang up the line is ospeed is zero, else turn DTR on */
+	/* hang up the line if ospeed is zero, else turn DTR on */
 	cy_modem_control(sc, cy, TIOCM_DTR, (t->c_ospeed == 0 ? DMBIC : DMBIS));
 
 	/* channel was selected by the above call to cy_modem_control() */
