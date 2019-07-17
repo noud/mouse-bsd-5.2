@@ -423,8 +423,8 @@ soinit1(void)
 
 /*
  * Socket operation routines.
- * These routines are called by the routines in
- * sys_socket.c or from a system process, and
+ * These routines are called from elsewhere (mostly
+ * uipc_syscalls.c) or from a system process, and
  * implement the semantics of socket operations by
  * switching out to the protocol specific routines.
  */
