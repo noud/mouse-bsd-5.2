@@ -91,6 +91,8 @@ extern const char *arith_buf, *arith_startbuf;
 "-"	{ return(ARITH_SUB); }
 "~"	{ return(ARITH_BNOT); }
 "!"	{ return(ARITH_NOT); }
+"?"	{ return(ARITH_QUES); }
+":"	{ return(ARITH_COLON); }
 .	{ error("arith: syntax error: \"%s\"", arith_startbuf); }
 %%
 

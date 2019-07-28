@@ -71,6 +71,7 @@ int error(char *);
 %left ARITH_BAND
 %left ARITH_EQ ARITH_NE
 %left ARITH_LT ARITH_GT ARITH_GE ARITH_LE
+%nonassoc ARITH_QUES ARITH_COLON
 %left ARITH_LSHIFT ARITH_RSHIFT
 %left ARITH_ADD ARITH_SUB
 %left ARITH_MUL ARITH_DIV ARITH_REM
@@ -89,6 +90,7 @@ exp:	expr {
 
 
 expr:	ARITH_LPAREN expr ARITH_RPAREN { $$ = $2; }
+	| expr ARITH_QUES expr ARITH_COLON expr	{ $$ = $1 ? $3 : $5; }
 	| expr ARITH_OR expr	{ $$ = $1 ? $1 : $3 ? $3 : 0; }
 	| expr ARITH_AND expr	{ $$ = $1 ? ( $3 ? $3 : 0 ) : 0; }
 	| expr ARITH_BOR expr	{ $$ = $1 | $3; }
