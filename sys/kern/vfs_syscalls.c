@@ -2047,7 +2047,7 @@ sys_link(struct lwp *l, const struct sys_link_args *uap, register_t *retval)
 	const char *path = SCARG(uap, path);
 	const char *link = SCARG(uap, link);
 
-	return do_sys_link(l, path, link, 1, retval);
+	return do_sys_link(l, path, link, 0, retval);
 }
 
 int
