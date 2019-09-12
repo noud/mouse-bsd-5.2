@@ -56,10 +56,8 @@
 #ifndef _LPT_VAR_H_
 #define _LPT_VAR_H_
 
-#include <sys/mutex.h>
 #include <sys/select.h>
 #include <sys/callout.h>
-#include <sys/condvar.h>
 
 struct lpt_softc {
 	device_t sc_dev;
@@ -74,13 +72,13 @@ struct lpt_softc {
 	bus_space_handle_t sc_ioh;
 	u_char sc_dev_ok;	/* device attached correctly */
 	u_char sc_state;
-// XXX shouldn't use LPT_ prefix for both this and sc_flags!
-// Would like to have a _RAW bit for each.  *grr*
-// So I went with RAWPP for sc_flags and RAW for sc_state.
+// XXX shouldn't use LPT_ prefix for both sc_state and sc_flags!
+// I want a RAW bit in each, grr.
+// I went with the below.
 #define	LPT_OPEN	0x01	/* device is open */
 #define	LPT_OBUSY	0x02	/* printer is busy doing output */
 #define	LPT_INIT	0x04	/* waiting to initialize for open */
-#define	LPT_RAW		0x08	/* LPT_PPRAW device is open */
+#define	LPT_RAW		0x08	/* LPT_RAWPP device is open */
 	unsigned int sc_flags;
 #define	LPT_AUTOLF	0x00000020	/* automatic LF on CR */
 #define	LPT_NOPRIME	0x00000040	/* don't prime on open */

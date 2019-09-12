@@ -99,28 +99,10 @@ extern struct cfdriver lpt_cd;
 
 static void	lptsoftintr(void *);
 
-#define DLRINGSIZE 65536
-static volatile int dlring[DLRINGSIZE];
-static volatile int dlh = 0;
-static volatile int dlt = DLRINGSIZE - 1;
-static volatile int mutex_set_up = 0;
-static kmutex_t dlmtx;
+static struct lpt_softc *rawpp = 0;
 
-static void record_line(int lno)
-{
- int h;
-
- mutex_enter(&dlmtx);
- h = dlh;
- dlt = h;
- dlring[h] = lno;
- h ++;
- if (h >= DLRINGSIZE) h = 0;
- dlring[h] = -1;
- dlh = h;
- mutex_exit(&dlmtx);
-}
-#define DLINE() record_line(__LINE__)
+static callout_t ticker_co;
+static volatile int ticker_started = 0;
 
 void
 lpt_attach_subr(sc)
@@ -142,27 +124,6 @@ lpt_attach_subr(sc)
 	sc->sc_dev_ok = 1;
 
  selinit(&sc->rsel);
- /*
-  * We assume autoconf is singlethreaded enough that we don't have to
-  *  worry about another CPU, or another thread on this one, colliding
-  *  with us during this test.  (I don't see much alternative anyway;
-  *  mutex(9) doesn't describe anything we can compile-time initialize
-  *  dlmtx to to provide the equivalent of this mutex_init(), and,
-  *  while it's possible to do mutual exclusion with nothing but
-  *  volatile and memory barriers, it's a delicate and complicated
-  *  dance which I believe is also unnecessary at present.)
-  *
-  * RUN_ONCE(9) is what we want, but that is advertised as being
-  *  capable of sleeping and thus is, AIUI, unsuitable during autoconf.
-  *  That warning applies only when it's called concurrently, but if
-  *  this codepath never runs concurrently with itself then what we do
-  *  here is enough.  (That is, if it runs concurrently, RUN_ONCE is
-  *  unsuitable; if not, RUN_ONCE is unnecessary.)
-  */
- if (! mutex_set_up)
-  { mutex_set_up = 1;
-    mutex_init(&dlmtx,MUTEX_DEFAULT,IPL_HIGH);
-  }
 }
 
 int
@@ -175,6 +136,112 @@ lpt_detach_subr(device_t self, int flags)
 	softint_disestablish(sc->sc_sih);
 	callout_destroy(&sc->sc_wakeup_ch);
 	return 0;
+}
+
+#define D2A_RING_SIZE 1048576
+#define D2A_RING_ADV(x) (((x) ? : D2A_RING_SIZE) - 1)
+static volatile unsigned char d2a_b[D2A_RING_SIZE];
+static volatile unsigned int d2a_h;
+static volatile unsigned int d2a_t;
+static volatile int d2a_enb;
+static kmutex_t d2a_mtx;
+
+static void ticker(void *arg __attribute__((__unused__)))
+{
+#if 1
+ int b;
+ unsigned int h;
+ unsigned int t;
+
+ if (rawpp)
+  { mutex_enter(&d2a_mtx);
+    if (d2a_enb)
+     { h = d2a_h;
+       t = d2a_t;
+       if (h == t)
+	{ b = -1;
+	}
+       else
+	{ b = d2a_b[t];
+	  t = D2A_RING_ADV(t);
+	  d2a_t = t;
+	}
+     }
+    else
+     { d2a_t = d2a_h;
+       b = -1;
+     }
+    if (b >= 0) bus_space_write_1(rawpp->sc_iot,rawpp->sc_ioh,lpt_data,b);
+    mutex_exit(&d2a_mtx);
+//    if (b >= 0) printf("S%02x",b); else printf("S-");
+  }
+#else
+ static unsigned char v = 0;
+
+ if (rawpp)
+  { bus_space_write_1(rawpp->sc_iot,rawpp->sc_ioh,lpt_data,v);
+    v ++;
+  }
+#endif
+ callout_schedule(&ticker_co,1);
+}
+
+static void d2a_enqueue(unsigned char c)
+{
+ unsigned int h;
+
+ mutex_enter(&d2a_mtx);
+ h = d2a_h;
+ d2a_b[h] = c;
+ d2a_h = D2A_RING_ADV(h);
+ mutex_exit(&d2a_mtx);
+// printf("Q%02x",c);
+}
+
+static void d2a_set_enable(int enb)
+{
+ mutex_enter(&d2a_mtx);
+ if (rawpp)
+  { unsigned char ctl;
+    ctl = bus_space_read_1(rawpp->sc_iot,rawpp->sc_ioh,lpt_control);
+    if (enb)
+     { ctl &= ~LPC_INPUT;
+       bus_space_write_1(rawpp->sc_iot,rawpp->sc_ioh,lpt_control,ctl);
+       bus_space_write_1(rawpp->sc_iot,rawpp->sc_ioh,lpt_data,127);
+       ctl &= ~LPC_NINIT;
+     }
+    else
+     { ctl |= LPC_NINIT;
+     }
+    bus_space_write_1(rawpp->sc_iot,rawpp->sc_ioh,lpt_control,ctl);
+  }
+ if (enb)
+  { d2a_enb = 1;
+  }
+ else
+  { d2a_enb = 0;
+    d2a_h = 0;
+    d2a_t = 0;
+  }
+ mutex_exit(&d2a_mtx);
+// printf(enb?"E":"D");
+}
+
+/*
+ * We assume we cannot collide with ourselves.  Because of how we're
+ *  called, this amounts to saying that lptopen() is single-threaded.
+ *  Currently, this is safe, because this driver runs giantlocked.
+ */
+static void maybe_start_ticker(void)
+{
+ if (ticker_started) return;
+ callout_init(&ticker_co,0);
+ callout_reset(&ticker_co,1,&ticker,0);
+ d2a_enb = 0;
+ d2a_h = 0;
+ d2a_t = 0;
+ mutex_init(&d2a_mtx,MUTEX_DEFAULT,IPL_HIGH);
+ ticker_started = 1;
 }
 
 /*
@@ -215,6 +282,8 @@ static int lptopen(dev_t dev, int flag, int mode, struct lwp *l)
      { sc->sc_state = LPT_OPEN | LPT_RAW;
        sc->laststat = LPT_NO_STAT;
      }
+    maybe_start_ticker();
+    rawpp = sc;
     return(0);
   }
 
@@ -336,9 +405,7 @@ static int lptclose(dev_t dev, int flag, int mode,
 
  // Not much to do on last close of a raw open.
  if (sc->sc_state & LPT_RAW)
-  { DLINE();
-    sc->sc_state = 0;
-    DLINE();
+  { sc->sc_state = 0;
     return(0);
   }
 
@@ -670,6 +737,15 @@ static int lptioctl(dev_t dev, u_long cmd, void *data,
        break;
     case LPTIOC_IO:
        return(lpt_doio(sc,data));
+       break;
+    case LPTIOC_ENABLE_D2A:
+       d2a_set_enable(1);
+       break;
+    case LPTIOC_SEND_D2A:
+       if (d2a_enb) d2a_enqueue(*(const unsigned char *)data);
+       break;
+    case LPTIOC_DISABLE_D2A:
+       d2a_set_enable(0);
        break;
   }
  return(EINVAL);

@@ -1,5 +1,5 @@
-#ifndef _LPTIOC_H_622015bb_
-#define _LPTIOC_H_622015bb_
+#ifndef WH_LPTIOC_H_256e6061_
+#define WH_LPTIOC_H_256e6061_
 
 #include <sys/ioccom.h>
 
@@ -19,5 +19,8 @@ struct lpt_io {
   } ;
 
 #define LPTIOC_IO _IOWR('|',1,struct lpt_io)
+#define LPTIOC_ENABLE_D2A _IO('|',2)
+#define LPTIOC_SEND_D2A _IOW('|',3,unsigned char)
+#define LPTIOC_DISABLE_D2A _IO('|',4)
 
 #endif
