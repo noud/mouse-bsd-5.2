@@ -153,6 +153,9 @@ __KERNEL_RCSID(0, "$NetBSD: com.c,v 1.286 2008/10/25 17:50:29 matt Exp $");
 	bus_space_write_multi_1((r)->cr_iot, (r)->cr_ioh, o, p, n)
 #endif
 
+#include <sys/once.h>
+#include <sys/mutex.h>
+#include <sys/kthread.h>
 
 static void com_enable_debugport(struct com_softc *);
 
@@ -253,6 +256,32 @@ const bus_size_t com_std_map[16] = COM_REG_16550;
 #define	BW	BUS_SPACE_BARRIER_WRITE
 #define COM_BARRIER(r, f) \
 	bus_space_barrier((r)->cr_iot, (r)->cr_ioh, 0, (r)->cr_nports, (f))
+
+#ifdef COM_START_DELAY_USEC
+/*
+ * Time, in ticks, to delay written data by.  This is set first time
+ *  it's used.  It's out at file scope so it can be poked at run time
+ *  with a debugger or the like.
+ */
+int com_start_delay_ticks = 0;
+typedef struct compend COMPEND;
+struct compend {
+  COMPEND *link;
+  unsigned long long int when;
+  int len;
+  struct com_softc *sc;
+  struct uio uio;
+  struct iovec iov;
+  int wflag;
+  char data[0];
+  } ;
+static COMPEND * volatile pending;
+static COMPEND * volatile * volatile pendtail;
+static volatile unsigned long long int pendtime;
+static kcondvar_t pendcv;
+static kmutex_t pendmtx;
+static callout_t comwrite_co;
+#endif
 
 /*ARGSUSED*/
 int
@@ -925,17 +954,118 @@ comread(dev_t dev, struct uio *uio, int flag)
 	return ((*tp->t_linesw->l_read)(tp, uio, flag));
 }
 
+#ifdef COM_START_DELAY_USEC
+static void comwrite_thread(void *arg __attribute__((__unused__)))
+{
+ COMPEND *p;
+ int e;
+
+ mutex_spin_enter(&pendmtx);
+ while (1)
+  { while (1)
+     { p = pending;
+       if (! p) break;
+       if (p->when > pendtime) break;
+       mutex_spin_exit(&pendmtx);
+       e = (*p->sc->sc_tty->t_linesw->l_write)(p->sc->sc_tty,&p->uio,p->wflag);
+       if (e == EWOULDBLOCK) e = 0;
+       if (e) printf("comwrite_thread: error %d\n",e);
+       if (!e && (p->uio.uio_resid > 0))
+	{ mutex_spin_enter(&pendmtx);
+	  break;
+	}
+       mutex_spin_enter(&pendmtx);
+       if (p != pending) panic("comwrite_thread: pending disappeared");
+       if (! (pending = p->link)) pendtail = &pending;
+       mutex_spin_exit(&pendmtx);
+       kmem_free(p,sizeof(COMPEND)+p->len);
+       mutex_spin_enter(&pendmtx);
+     }
+    cv_wait(&pendcv,&pendmtx);
+  }
+}
+#endif
+
+#ifdef COM_START_DELAY_USEC
+static void comwrite_tick(void *arg __attribute__((__unused__)))
+{
+ unsigned long long int t;
+ COMPEND *p;
+
+ mutex_spin_enter(&pendmtx);
+ t = pendtime + 1;
+ pendtime = t;
+ p = pending;
+ if (p && (t >= p->when)) cv_broadcast(&pendcv);
+ mutex_spin_exit(&pendmtx);
+ callout_schedule(&comwrite_co,1);
+}
+#endif
+
+#ifdef COM_START_DELAY_USEC
+static int comwrite_init(void)
+{
+ com_start_delay_ticks = ((COM_START_DELAY_USEC * 1LL * hz) + 999999) / 1000000;
+ printf("com_start_delay_ticks = %d\n",com_start_delay_ticks);
+ pending = 0;
+ pendtail = &pending;
+ pendtime = 0;
+ mutex_init(&pendmtx,MUTEX_DEFAULT,IPL_HIGH);
+ cv_init(&pendcv,"comw cv");
+ callout_init(&comwrite_co,CALLOUT_MPSAFE);
+ callout_reset(&comwrite_co,1,&comwrite_tick,0);
+ kthread_create(PRI_SOFTSERIAL,KTHREAD_MPSAFE,0,&comwrite_thread,0,0,"comwrite");
+ return(0);
+}
+#endif
+
 int
 comwrite(dev_t dev, struct uio *uio, int flag)
 {
 	struct com_softc *sc =
 	    device_lookup_private(&com_cd, COMUNIT(dev));
-	struct tty *tp = sc->sc_tty;
 
 	if (COM_ISALIVE(sc) == 0)
 		return (EIO);
 
-	return ((*tp->t_linesw->l_write)(tp, uio, flag));
+#ifdef COM_START_DELAY_USEC
+  { static ONCE_DECL(oncectl);
+    COMPEND *p;
+    volatile COMPEND *pv;
+    int e;
+    int r;
+    RUN_ONCE(&oncectl,&comwrite_init);
+    r = uio->uio_resid;
+    p = kmem_alloc(sizeof(COMPEND)+r,KM_SLEEP);
+    pv = p;
+    pv->len = r;
+    e = uiomove(&p->data[0],r,uio);
+    p->iov.iov_base = &p->data[0];
+    p->iov.iov_len = r;
+    p->uio.uio_iov = &p->iov;
+    p->uio.uio_iovcnt = 1;
+    p->uio.uio_offset = uio->uio_offset;
+    p->uio.uio_resid = r;
+    p->uio.uio_rw = UIO_WRITE;
+    p->wflag = flag;
+    UIO_SETUP_SYSSPACE(&p->uio);
+    if (e)
+     { kmem_free(p,sizeof(COMPEND)+r);
+       return(e);
+     }
+    pv->sc = sc;
+    pv->link = 0;
+    mutex_spin_enter(&pendmtx);
+    p->when = pendtime + com_start_delay_ticks;
+    *pendtail = p;
+    pendtail = &p->link;
+    cv_broadcast(&pendcv);
+    mutex_spin_exit(&pendmtx);
+    return(0);
+  }
+#else
+ return((*sc->sc_tty->t_linesw->l_write)(sc->sc_tty,uio,flag));
+#endif
 }
 
 int
