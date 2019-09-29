@@ -257,21 +257,19 @@ const bus_size_t com_std_map[16] = COM_REG_16550;
 #define COM_BARRIER(r, f) \
 	bus_space_barrier((r)->cr_iot, (r)->cr_ioh, 0, (r)->cr_nports, (f))
 
-#ifdef COM_START_DELAY_USEC
-/*
- * Time, in ticks, to delay written data by.  This is set first time
- *  it's used.  It's out at file scope so it can be poked at run time
- *  with a debugger or the like.
- */
-int com_start_delay_ticks = 0;
+#ifdef COM_CUSTOM_TIMING
+// Time, in ticks, to delay written data by.  <=0 -> no delay.
+volatile int com_start_delay_ticks = 0;
+// Time, in ticks, between bytes of a single write.  <=0 -> no delay.
+volatile int com_inter_char_ticks = 0;
 typedef struct compend COMPEND;
 struct compend {
   COMPEND *link;
   unsigned long long int when;
   int len;
+  int x;
+  off_t o;
   struct com_softc *sc;
-  struct uio uio;
-  struct iovec iov;
   int wflag;
   char data[0];
   } ;
@@ -954,11 +952,15 @@ comread(dev_t dev, struct uio *uio, int flag)
 	return ((*tp->t_linesw->l_read)(tp, uio, flag));
 }
 
-#ifdef COM_START_DELAY_USEC
+#ifdef COM_CUSTOM_TIMING
 static void comwrite_thread(void *arg __attribute__((__unused__)))
 {
  COMPEND *p;
  int e;
+ struct uio uio;
+ struct iovec iov;
+ int n;
+ int ic;
 
  mutex_spin_enter(&pendmtx);
  while (1)
@@ -966,15 +968,29 @@ static void comwrite_thread(void *arg __attribute__((__unused__)))
      { p = pending;
        if (! p) break;
        if (p->when > pendtime) break;
+       if (p->x == p->len) break;
+       if (p->x > p->len) panic("buffer overrun");
        mutex_spin_exit(&pendmtx);
-       e = (*p->sc->sc_tty->t_linesw->l_write)(p->sc->sc_tty,&p->uio,p->wflag);
+       iov.iov_base = &p->data[p->x];
+       uio.uio_iov = &iov;
+       uio.uio_iovcnt = 1;
+       uio.uio_rw = UIO_WRITE;
+       UIO_SETUP_SYSSPACE(&uio);
+       uio.uio_offset = p->o;
+       ic = com_inter_char_ticks;
+       if (ic < 0) ic = 0;
+       n = (ic < 1) ? p->len - p->x : 1;
+       iov.iov_len = n;
+       uio.uio_resid = n;
+       e = (*p->sc->sc_tty->t_linesw->l_write)(p->sc->sc_tty,&uio,p->wflag);
        if (e == EWOULDBLOCK) e = 0;
-       if (e) printf("comwrite_thread: error %d\n",e);
-       if (!e && (p->uio.uio_resid > 0))
-	{ mutex_spin_enter(&pendmtx);
+       mutex_spin_enter(&pendmtx);
+       p->x += n - uio.uio_resid;
+       if (!e && (uio.uio_resid > 0)) break;
+       if (p->x < p->len)
+	{ p->when += ic;
 	  break;
 	}
-       mutex_spin_enter(&pendmtx);
        if (p != pending) panic("comwrite_thread: pending disappeared");
        if (! (pending = p->link)) pendtail = &pending;
        mutex_spin_exit(&pendmtx);
@@ -986,7 +1002,7 @@ static void comwrite_thread(void *arg __attribute__((__unused__)))
 }
 #endif
 
-#ifdef COM_START_DELAY_USEC
+#ifdef COM_CUSTOM_TIMING
 static void comwrite_tick(void *arg __attribute__((__unused__)))
 {
  unsigned long long int t;
@@ -1002,15 +1018,13 @@ static void comwrite_tick(void *arg __attribute__((__unused__)))
 }
 #endif
 
-#ifdef COM_START_DELAY_USEC
+#ifdef COM_CUSTOM_TIMING
 static int comwrite_init(void)
 {
- com_start_delay_ticks = ((COM_START_DELAY_USEC * 1LL * hz) + 999999) / 1000000;
- printf("com_start_delay_ticks = %d\n",com_start_delay_ticks);
  pending = 0;
  pendtail = &pending;
  pendtime = 0;
- mutex_init(&pendmtx,MUTEX_DEFAULT,IPL_HIGH);
+ mutex_init(&pendmtx,MUTEX_DEFAULT,IPL_SCHED);
  cv_init(&pendcv,"comw cv");
  callout_init(&comwrite_co,CALLOUT_MPSAFE);
  callout_reset(&comwrite_co,1,&comwrite_tick,0);
@@ -1028,44 +1042,43 @@ comwrite(dev_t dev, struct uio *uio, int flag)
 	if (COM_ISALIVE(sc) == 0)
 		return (EIO);
 
-#ifdef COM_START_DELAY_USEC
+#ifdef COM_CUSTOM_TIMING
   { static ONCE_DECL(oncectl);
-    COMPEND *p;
-    volatile COMPEND *pv;
-    int e;
-    int r;
+    int t;
     RUN_ONCE(&oncectl,&comwrite_init);
-    r = uio->uio_resid;
-    p = kmem_alloc(sizeof(COMPEND)+r,KM_SLEEP);
-    pv = p;
-    pv->len = r;
-    e = uiomove(&p->data[0],r,uio);
-    p->iov.iov_base = &p->data[0];
-    p->iov.iov_len = r;
-    p->uio.uio_iov = &p->iov;
-    p->uio.uio_iovcnt = 1;
-    p->uio.uio_offset = uio->uio_offset;
-    p->uio.uio_resid = r;
-    p->uio.uio_rw = UIO_WRITE;
-    p->wflag = flag;
-    UIO_SETUP_SYSSPACE(&p->uio);
-    if (e)
-     { kmem_free(p,sizeof(COMPEND)+r);
-       return(e);
+    t = com_start_delay_ticks;
+    if ((t > 0) || (com_inter_char_ticks > 0))
+     { COMPEND *p;
+       volatile COMPEND *pv;
+       int e;
+       int r;
+       r = uio->uio_resid;
+       p = kmem_alloc(sizeof(COMPEND)+r,KM_SLEEP);
+       pv = p;
+       pv->len = r;
+       pv->o = uio->uio_offset;
+       // XXX should use pv->data here, but uiomove doesn't
+       // accept volatile data buffers (WTF not??).
+       e = uiomove(&p->data[0],r,uio);
+       if (e)
+	{ kmem_free(p,sizeof(COMPEND)+r);
+	  return(e);
+	}
+       pv->x = 0;
+       pv->wflag = flag;
+       pv->sc = sc;
+       pv->link = 0;
+       mutex_spin_enter(&pendmtx);
+       pv->when = pendtime + ((t > 0) ? t : 0);
+       *pendtail = p;
+       pendtail = &p->link;
+       cv_broadcast(&pendcv);
+       mutex_spin_exit(&pendmtx);
+       return(0);
      }
-    pv->sc = sc;
-    pv->link = 0;
-    mutex_spin_enter(&pendmtx);
-    p->when = pendtime + com_start_delay_ticks;
-    *pendtail = p;
-    pendtail = &p->link;
-    cv_broadcast(&pendcv);
-    mutex_spin_exit(&pendmtx);
-    return(0);
   }
-#else
- return((*sc->sc_tty->t_linesw->l_write)(sc->sc_tty,uio,flag));
 #endif
+ return((*sc->sc_tty->t_linesw->l_write)(sc->sc_tty,uio,flag));
 }
 
 int
@@ -1131,6 +1144,14 @@ comioctl(dev_t dev, u_long cmd, void *data, int flag, struct lwp *l)
 	mutex_spin_enter(&sc->sc_lock);
 
 	switch (cmd) {
+	case _IOW('T',98,int):
+		com_start_delay_ticks = *(int *)data;
+		break;
+
+	case _IOW('T',99,int):
+		com_inter_char_ticks = *(int *)data;
+		break;
+
 	case TIOCSBRK:
 		com_break(sc, 1);
 		break;
