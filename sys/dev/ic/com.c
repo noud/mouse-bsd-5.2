@@ -1144,13 +1144,17 @@ comioctl(dev_t dev, u_long cmd, void *data, int flag, struct lwp *l)
 	mutex_spin_enter(&sc->sc_lock);
 
 	switch (cmd) {
+#ifdef COM_CUSTOM_TIMING
 	case _IOW('T',98,int):
 		com_start_delay_ticks = *(int *)data;
 		break;
+#endif
 
+#ifdef COM_CUSTOM_TIMING
 	case _IOW('T',99,int):
 		com_inter_char_ticks = *(int *)data;
 		break;
+#endif
 
 	case TIOCSBRK:
 		com_break(sc, 1);
