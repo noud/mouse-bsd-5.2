@@ -1313,6 +1313,9 @@ wsdisplay_internal_ioctl(struct wsdisplay_softc *sc, struct wsscreen *scr,
 	case WSDISPLAYIO_SMSGATTRS:
 		return (ENODEV);
 #endif
+	case WSDISPLAYIO_INJECTKBD:
+		wsdisplay_kbdinput(sc->sc_dev,*(keysym_t *)data);
+		return(0);
 	}
 
 	/* check ioctls for display */

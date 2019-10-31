@@ -521,4 +521,6 @@ struct wsmux_device_list {
 #define	WSMUXIO_LIST_DEVICES	_IOWR('W', 99, struct wsmux_device_list)
 #define	WSMUX_LIST_DEVICES	WSMUXIO_LIST_DEVICES /* XXX compat */
 
+#define WSDISPLAYIO_INJECTKBD _IOW('W',255,keysym_t)
+
 #endif /* _DEV_WSCONS_WSCONSIO_H_ */
