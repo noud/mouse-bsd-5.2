@@ -131,13 +131,13 @@ static void status(const struct sockaddr *, prop_dictionary_t,
 static void usage(void);
 
 static const struct kwinst ifflagskw[] = {
-	  IFKW("arp", -IFF_NOARP)
+	  IFKW("arp", -(int64_t)IFF_NOARP)
 	, IFKW("debug", IFF_DEBUG)
 	, IFKW("link0", IFF_LINK0)
 	, IFKW("link1", IFF_LINK1)
 	, IFKW("link2", IFF_LINK2)
 	, IFKW("noproto", IFF_NOPROTO)
-	, {.k_word = "down", .k_type = KW_T_INT, .k_int = -IFF_UP}
+	, {.k_word = "down", .k_type = KW_T_INT, .k_int = -(int64_t)IFF_UP}
 	, {.k_word = "up", .k_type = KW_T_INT, .k_int = IFF_UP}
 };
 

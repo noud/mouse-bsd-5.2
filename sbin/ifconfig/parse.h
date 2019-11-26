@@ -146,7 +146,7 @@ extern const struct parser_methods pterm_methods;
 {								\
 	.k_word = (__word), .k_neg = true, .k_type = KW_T_INT,	\
 	.k_int = (__flag),					\
-	.k_negint = -(__flag)					\
+	.k_negint = -(int64_t)(__flag)				\
 }
 
 #define	KW_T_NONE	0
