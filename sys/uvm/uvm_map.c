@@ -2721,7 +2721,7 @@ uvm_map_extract(struct vm_map *srcmap, vaddr_t start, vsize_t len,
 	 */
 
 	if ((flags & UVM_EXTRACT_RESERVED) == 0) {
-		dstaddr = vm_map_min(dstmap);
+		dstaddr = (dstmap->flags & VM_MAP_TOPDOWN) ? vm_map_max(dstmap) : vm_map_min(dstmap);
 		if (!uvm_map_reserve(dstmap, len, start, 0, &dstaddr, 0))
 			return (ENOMEM);
 		*dstaddrp = dstaddr;	/* pass address back to caller */
@@ -2891,7 +2891,7 @@ uvm_map_extract(struct vm_map *srcmap, vaddr_t start, vsize_t len,
 	 *   0 => dstmap unlocked, NO pmap_copy, and we will "replace" in step 7
 	 */
 
-	if (srcmap == dstmap || vm_map_lock_try(dstmap) == true) {
+	if (srcmap->pmap && dstmap->pmap && ((srcmap == dstmap) || (vm_map_lock_try(dstmap) == true))) {
 		copy_ok = 1;
 		if (!uvm_map_replace(dstmap, dstaddr, dstaddr+len, chain,
 		    nchain, &resentry)) {
@@ -2938,8 +2938,7 @@ uvm_map_extract(struct vm_map *srcmap, vaddr_t start, vsize_t len,
 
 			/* we advance "entry" in the following if statement */
 			if (flags & UVM_EXTRACT_REMOVE) {
-				pmap_remove(srcmap->pmap, entry->start,
-						entry->end);
+				if (srcmap->pmap) pmap_remove(srcmap->pmap, entry->start, entry->end);
 				oldentry = entry;	/* save entry */
 				entry = entry->next;	/* advance */
 				uvm_map_entry_unlink(srcmap, oldentry);
@@ -2953,7 +2952,7 @@ uvm_map_extract(struct vm_map *srcmap, vaddr_t start, vsize_t len,
 			/* end of 'while' loop */
 			fudge = 0;
 		}
-		pmap_update(srcmap->pmap);
+		if (srcmap->pmap) pmap_update(srcmap->pmap);
 
 		/*
 		 * unlock dstmap.  we will dispose of deadentry in
