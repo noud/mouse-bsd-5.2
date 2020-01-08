@@ -120,6 +120,12 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_usrreq.c,v 1.119.4.5 2012/06/03 08:47:28 jdc Ex
 #include <sys/kernel.h>
 #include <sys/kthread.h>
 
+typedef struct inflight_memory INFLIGHT_MEMORY;
+
+struct inflight_memory {
+  struct socket_memory sm;
+  } ;
+
 /*
  * Unix communications domain.
  *
@@ -516,10 +522,9 @@ uipc_usrreq(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
 
 	case PRU_SEND:
 		/*
-		 * Note: unp_internalize() rejects any control message
-		 * other than SCM_RIGHTS, and only allows one.  This
-		 * has the side-effect of preventing a caller from
-		 * forging SCM_CREDS.
+		 * Note: unp_internalize() is responsible for
+		 *  preventing forged SCM_CREDS and the like; it must
+		 *  allow only SCM_RIGHTS and SCM_MEMORY.
 		 */
 		if (control) {
 			sounlock(so);
@@ -1208,219 +1213,737 @@ unp_drain(void)
 }
 #endif
 
-int
-unp_externalize(struct mbuf *rights, struct lwp *l)
+static void dump_mbuf_chain(struct mbuf *, const char *) __attribute__((__used__));
+static void dump_mbuf_chain(struct mbuf *m, const char *what)
 {
-	struct cmsghdr *cm = mtod(rights, struct cmsghdr *);
-	struct proc *p = l->l_proc;
-	int i, *fdp;
-	file_t **rp;
-	file_t *fp;
-	int nfds, error = 0;
+ int i;
+ const char *sep;
+ const unsigned char *dp;
+ int t;
 
-	nfds = (cm->cmsg_len - CMSG_ALIGN(sizeof(*cm))) /
-	    sizeof(file_t *);
-	rp = (file_t **)CMSG_DATA(cm);
-
-	fdp = malloc(nfds * sizeof(int), M_TEMP, M_WAITOK);
-	rw_enter(&p->p_cwdi->cwdi_lock, RW_READER);
-
-	/* Make sure the recipient should be able to see the files.. */
-	if (p->p_cwdi->cwdi_rdir != NULL) {
-		rp = (file_t **)CMSG_DATA(cm);
-		for (i = 0; i < nfds; i++) {
-			fp = *rp++;
-			/*
-			 * If we are in a chroot'ed directory, and
-			 * someone wants to pass us a directory, make
-			 * sure it's inside the subtree we're allowed
-			 * to access.
-			 */
-			if (fp->f_type == DTYPE_VNODE) {
-				vnode_t *vp = (vnode_t *)fp->f_data;
-				if ((vp->v_type == VDIR) &&
-				    !vn_isunder(vp, p->p_cwdi->cwdi_rdir, l)) {
-					error = EPERM;
-					break;
-				}
-			}
-		}
+ printf("%s:",what);
+ sep = "";
+ t = 0;
+ for (;m;m=m->m_next)
+  { printf("%s",sep);
+    sep = " |";
+    dp = (void *)mtod(m,char *);
+    for (i=0;i<m->m_len;i++)
+     { printf(" %02x",*dp++);
+       if (t++ > 128)
+	{ printf("...\n");
+	  return;
 	}
-
- restart:
-	rp = (file_t **)CMSG_DATA(cm);
-	if (error != 0) {
-		for (i = 0; i < nfds; i++) {
-			fp = *rp;
-			*rp++ = 0;
-			unp_discard_now(fp);
-		}
-		goto out;
-	}
-
-	/*
-	 * First loop -- allocate file descriptor table slots for the
-	 * new files.
-	 */
-	for (i = 0; i < nfds; i++) {
-		fp = *rp++;
-		if ((error = fd_alloc(p, 0, &fdp[i])) != 0) {
-			/*
-			 * Back out what we've done so far.
-			 */
-			for (--i; i >= 0; i--) {
-				fd_abort(p, NULL, fdp[i]);
-			}
-			if (error == ENOSPC) {
-				fd_tryexpand(p);
-				error = 0;
-			} else {
-				/*
-				 * This is the error that has historically
-				 * been returned, and some callers may
-				 * expect it.
-				 */
-				error = EMSGSIZE;
-			}
-			goto restart;
-		}
-	}
-
-	/*
-	 * Now that adding them has succeeded, update all of the
-	 * file passing state and affix the descriptors.
-	 */
-	rp = (file_t **)CMSG_DATA(cm);
-	for (i = 0; i < nfds; i++) {
-		fp = *rp++;
-		atomic_dec_uint(&unp_rights);
-		fd_affix(p, fp, fdp[i]);
-		mutex_enter(&fp->f_lock);
-		fp->f_msgcount--;
-		mutex_exit(&fp->f_lock);
-		/*
-		 * Note that fd_affix() adds a reference to the file.
-		 * The file may already have been closed by another
-		 * LWP in the process, so we must drop the reference
-		 * added by unp_internalize() with closef().
-		 */
-		closef(fp);
-	}
-
-	/*
-	 * Copy temporary array to message and adjust length, in case of
-	 * transition from large file_t pointers to ints.
-	 */
-	memcpy(CMSG_DATA(cm), fdp, nfds * sizeof(int));
-	cm->cmsg_len = CMSG_LEN(nfds * sizeof(int));
-	rights->m_len = CMSG_SPACE(nfds * sizeof(int));
- out:
-	rw_exit(&p->p_cwdi->cwdi_lock);
-	free(fdp, M_TEMP);
-	return (error);
+     }
+  }
+ printf("\n");
 }
 
-int
-unp_internalize(struct mbuf **controlp)
+// State for unp_externalize.
+typedef struct extern_state EXTERN_STATE;
+struct extern_state {
+  struct lwp *l;
+  int err;
+  int nfds;
+  file_t *files[SCM_RIGHTS_MAX];
+  int fds[SCM_RIGHTS_MAX];
+  int nmem;
+  INFLIGHT_MEMORY im[SCM_MEMORY_MAX];
+  struct socket_memory sm[SCM_MEMORY_MAX];
+  struct mbuf *imb;
+  char *ibuf;
+  int ioff;
+  char *ebuf;
+  int eoff;
+  } ;
+
+static int externalize_gather_rights(EXTERN_STATE *s)
 {
-	filedesc_t *fdescp = curlwp->l_fd;
-	struct mbuf *control = *controlp;
-	struct cmsghdr *newcm, *cm = mtod(control, struct cmsghdr *);
-	file_t **rp, **files;
-	file_t *fp;
-	int i, fd, *fdp;
-	int nfds, error;
-	u_int maxmsg;
+ struct cmsghdr cmh;
+ struct proc *p;
+ int nfds;
+ file_t *fp;
+ file_t **rp;
+ int i;
 
-	error = 0;
-	newcm = NULL;
-
-	/* Sanity check the control message header. */
-	if (cm->cmsg_type != SCM_RIGHTS || cm->cmsg_level != SOL_SOCKET ||
-	    cm->cmsg_len > control->m_len ||
-	    cm->cmsg_len < CMSG_ALIGN(sizeof(*cm)))
-		return (EINVAL);
-
-	/*
-	 * Verify that the file descriptors are valid, and acquire
-	 * a reference to each.
-	 */
-	nfds = (cm->cmsg_len - CMSG_ALIGN(sizeof(*cm))) / sizeof(int);
-	fdp = (int *)CMSG_DATA(cm);
-	maxmsg = maxfiles / unp_rights_ratio;
-	for (i = 0; i < nfds; i++) {
-		fd = *fdp++;
-		if (atomic_inc_uint_nv(&unp_rights) > maxmsg) {
-			atomic_dec_uint(&unp_rights);
-			nfds = i;
-			error = EAGAIN;
-			goto out;
-		}
-		if ((fp = fd_getfile(fd)) == NULL
-		    || fp->f_type == DTYPE_KQUEUE) {
-		    	if (fp)
-		    		fd_putfile(fd);
-			atomic_dec_uint(&unp_rights);
-			nfds = i;
-			error = EBADF;
-			goto out;
-		}
+ bcopy(s->ibuf+s->ioff,&cmh,sizeof(struct cmsghdr));
+ p = s->l->l_proc;
+ if (cmh.cmsg_type != SCM_RIGHTS) panic("impossible externalize_gather_rights");
+ nfds = (cmh.cmsg_len - CMSG_ALIGN(sizeof(struct cmsghdr))) / sizeof(file_t *);
+ rp = (file_t **)(s->ibuf+s->ioff+CMSG_ALIGN(sizeof(struct cmsghdr)));
+ rw_enter(&p->p_cwdi->cwdi_lock,RW_READER);
+ for (i=0;i<nfds;i++)
+  { fp = rp[i];
+    if (p->p_cwdi->cwdi_rdir)
+     { /*
+	* If we are in a chrooted directory, and someone wants to pass
+	*  us a directory, make sure it's inside the subtree we're
+	*  allowed to access.  (Otherwise, it's too easy for a
+	*  subverted chrooted process to escape the chroot.)
+	*/
+       if (fp->f_type == DTYPE_VNODE)
+	{ vnode_t *vp = (vnode_t *)fp->f_data;
+	  if ( (vp->v_type == VDIR) &&
+	       !vn_isunder(vp,p->p_cwdi->cwdi_rdir,s->l) )
+	   { rw_exit(&p->p_cwdi->cwdi_lock);
+	     return(EPERM);
+	   }
 	}
+     }
+    s->files[s->nfds++] = fp;
+  }
+ rw_exit(&p->p_cwdi->cwdi_lock);
+ return(0);
+}
 
-	/* Allocate new space and copy header into it. */
-	newcm = malloc(CMSG_SPACE(nfds * sizeof(file_t *)), M_MBUF, M_WAITOK);
-	if (newcm == NULL) {
-		error = E2BIG;
-		goto out;
+static int externalize_gather_memory(EXTERN_STATE *s)
+{
+ struct cmsghdr cmh;
+ int nmb;
+ int i;
+ int o;
+
+ bcopy(s->ibuf+s->ioff,&cmh,sizeof(struct cmsghdr));
+ if (cmh.cmsg_type != SCM_MEMORY) panic("impossible externalize_gather_memory");
+ nmb = (cmh.cmsg_len - sizeof(struct cmsghdr)) / sizeof(INFLIGHT_MEMORY);
+ o = s->ioff + sizeof(struct cmsghdr);
+ for (i=0;i<nmb;i++) bcopy(s->ibuf+o,&s->im[s->nmem++],sizeof(INFLIGHT_MEMORY));
+ return(0);
+}
+
+static int externalize_copy(EXTERN_STATE *s)
+{
+ struct cmsghdr cmh;
+ int n;
+
+ bcopy(s->ibuf+s->ioff,&cmh,sizeof(struct cmsghdr));
+ bcopy(s->ibuf+s->ioff,s->ebuf+s->eoff,cmh.cmsg_len);
+ n = CMSG_ALIGN(cmh.cmsg_len) - cmh.cmsg_len;
+ if (n) bzero(s->ebuf+s->eoff+cmh.cmsg_len,n);
+ s->eoff += CMSG_ALIGN(cmh.cmsg_len);
+ return(0);
+}
+
+/*
+ * XXX If ints have padding bits, we can leak kernel memory (stack
+ *  trash or whatever) through them.  But I don't really see any way
+ *  around that.
+ */
+static int externalize_process_rights(EXTERN_STATE *s)
+{
+ struct cmsghdr cmh;
+ struct proc *p;
+ char *ep;
+ int i;
+ int e;
+ file_t *fp;
+
+ if (s->nfds < 1) return(0);
+ p = s->l->l_proc;
+ bzero(&cmh,sizeof(cmh));
+ cmh.cmsg_len = CMSG_LEN(s->nfds*sizeof(int));
+ cmh.cmsg_level = SOL_SOCKET;
+ cmh.cmsg_type = SCM_RIGHTS;
+ ep = s->ebuf + s->eoff;
+ bzero(ep,CMSG_SPACE(s->nfds*sizeof(int)));
+ bcopy(&cmh,ep,sizeof(struct cmsghdr));
+ ep += CMSG_ALIGN(sizeof(struct cmsghdr));
+ while <"retry"> (1)
+  { for (i=s->nfds-1;i>=0;i--)
+     { e = fd_alloc(p,0,&s->fds[i]);
+       if (e)
+	{ for (i--;i>=0;i--) fd_abort(p,0,s->fds[i]);
+	  if (e == ENOSPC)
+	   { fd_tryexpand(p);
+	     continue <"retry">;
+	   }
+	  // This is the historical error, some code may expect it
+	  return(EMSGSIZE);
 	}
-	memcpy(newcm, cm, sizeof(struct cmsghdr));
-	files = (file_t **)CMSG_DATA(newcm);
+     }
+    break;
+  }
+ bcopy(&s->fds[0],ep,s->nfds*sizeof(int));
+ s->eoff += CMSG_SPACE(s->nfds*sizeof(int));
+ for (i=s->nfds-1;i>=0;i--)
+  { fp = s->files[i];
+    atomic_dec_uint(&unp_rights);
+    fd_affix(p,fp,s->fds[i]);
+    mutex_enter(&fp->f_lock);
+    fp->f_msgcount --;
+    mutex_exit(&fp->f_lock);
+    closef(fp);
+  }
+ return(0);
+}
 
-	/*
-	 * Transform the file descriptors into file_t pointers, in
-	 * reverse order so that if pointers are bigger than ints, the
-	 * int won't get until we're done.  No need to lock, as we have
-	 * already validated the descriptors with fd_getfile().
-	 */
-	fdp = (int *)CMSG_DATA(cm) + nfds;
-	rp = files + nfds;
-	for (i = 0; i < nfds; i++) {
-		fp = fdescp->fd_ofiles[*--fdp]->ff_file;
-		KASSERT(fp != NULL);
-		mutex_enter(&fp->f_lock);
-		*--rp = fp;
-		fp->f_count++;
-		fp->f_msgcount++;
-		mutex_exit(&fp->f_lock);
+static void externalize_backout_rights(EXTERN_STATE *s)
+{
+ int i;
+
+ for (i=s->nfds-1;i>=0;i--)
+  { // We've already closef()ed the message's reference.
+    fd_abort(s->l->l_proc,0,s->fds[i]);
+  }
+}
+
+static int externalize_process_memory(EXTERN_STATE *s)
+{
+ struct cmsghdr cmh;
+ char *ep;
+ int i;
+
+ if (s->nmem < 1) return(0);
+ bzero(&cmh,sizeof(cmh));
+ cmh.cmsg_len = sizeof(struct cmsghdr) + (s->nmem * sizeof(struct socket_memory));
+ cmh.cmsg_level = SOL_SOCKET;
+ cmh.cmsg_type = SCM_MEMORY;
+ ep = s->ebuf + s->eoff;
+ bzero(ep,CMSG_SPACE(s->nfds*sizeof(int)));
+ bcopy(&cmh,ep,sizeof(struct cmsghdr));
+ ep += sizeof(struct cmsghdr);
+ for (i=s->nmem-1;i>=0;i--)
+  { // XXX create VM here
+    s->sm[i] = s->im[i].sm;
+  }
+ bcopy(&s->sm[0],ep,s->nmem*sizeof(struct socket_memory));
+ s->eoff += CMSG_LEN(s->nmem*sizeof(struct socket_memory));
+ return(0);
+}
+
+static void externalize_finish(EXTERN_STATE *s)
+{
+ bcopy(s->ebuf,s->ibuf,s->eoff);
+ s->imb->m_len = s->eoff;
+}
+
+/*
+ * Convert a control message from internal form to external form.  l is
+ *  the receiving lwp (the one into which we should, for example, drop
+ *  fds created for SCM_RIGHTS messages).  This is, approximately, the
+ *  converse of unp_internalize().
+ *
+ * There is a bit of an API botch here.  Our caller assumes that we
+ *  will overwrite the contents of rights and adjust its length.  This
+ *  means the external form cannot be longer than the internal form!
+ *
+ * In particular, this means that file_t * must be no smaller than int,
+ *  and struct socket_memory must be no smaller than INFLIGHT_MEMORY.
+ *  We check these.
+ *
+ * (*dom_externalize)()'s API should have passed a struct mbuf **, the
+ *  way unp_internalize's does.
+ */
+int unp_externalize(struct mbuf *rights, struct lwp *l)
+{
+ int i;
+ EXTERN_STATE s;
+ struct cmsghdr cmh;
+ struct mbuf *m;
+
+ if ( (sizeof(file_t *) < sizeof(int)) ||
+      (sizeof(INFLIGHT_MEMORY) < sizeof(struct socket_memory)) )
+  { panic("unp_externalize size assumptions wrong");
+  }
+ if (! l)
+  { /*
+     * Walk the whole chain, instead of returning as soon as we find
+     *	something making us return 1, to verify the assumptions made by
+     *	the code below.
+     */
+    s.ioff = 0;
+    i = 0;
+    while (s.ioff < rights->m_len)
+     { if (s.ioff+sizeof(struct cmsghdr) > rights->m_len)
+	{ printf("unp_externalize: off %d + msghdr %d > m_len %d\n",s.ioff,(int)sizeof(struct cmsghdr),(int)rights->m_len);
+	  i = 0;
+	  break;
 	}
-
- out:
- 	/* Release descriptor references. */
-	fdp = (int *)CMSG_DATA(cm);
-	for (i = 0; i < nfds; i++) {
-		fd_putfile(*fdp++);
-		if (error != 0) {
-			atomic_dec_uint(&unp_rights);
-		}
+       bcopy(mtod(rights,char *)+s.ioff,&cmh,sizeof(struct cmsghdr));
+       if (s.ioff+cmh.cmsg_len > rights->m_len)
+	{ printf("unp_externalize: off %d + cmsg_len %d > m_len %d\n",s.ioff,(int)cmh.cmsg_len,(int)rights->m_len);
+	  i = 0;
+	  break;
 	}
-
-	if (error == 0) {
-		if (control->m_flags & M_EXT) {
-			m_freem(control);
-			*controlp = control = m_get(M_WAIT, MT_CONTROL);
-		}
-		MEXTADD(control, newcm, CMSG_SPACE(nfds * sizeof(file_t *)),
-		    M_MBUF, NULL, NULL);
-		cm = newcm;
-		/*
-		 * Adjust message & mbuf to note amount of space
-		 * actually used.
-		 */
-		cm->cmsg_len = CMSG_LEN(nfds * sizeof(file_t *));
-		control->m_len = CMSG_SPACE(nfds * sizeof(file_t *));
+       switch (cmh.cmsg_type)
+	{ case SCM_RIGHTS:
+	  case SCM_MEMORY:
+	     i = 1;
+	     break;
 	}
+       s.ioff += CMSG_ALIGN(cmh.cmsg_len);
+     }
+    return(i);
+  }
+#ifdef DEBUG_UNP_CTL
+ dump_mbuf_chain(rights,"unp_externalize entry");
+#endif
+ m = m_get(M_WAIT,MT_CONTROL);
+ MEXTMALLOC(m,rights->m_len,M_WAIT);
+ m->m_len = rights->m_len;
+ s.l = l;
+ s.err = 0;
+ s.nfds = 0;
+ s.nmem = 0;
+ s.imb = rights;
+ s.ibuf = mtod(rights,char *);
+ s.ioff = 0;
+ s.ebuf = mtod(m,char *);
+ s.eoff = 0;
+ while (s.ioff < rights->m_len)
+  { // overruns tested above; we return 0 if any, so shouldn't be here
+#ifdef DEBUG_UNP_CTL
+    printf("unp_externalize: %d:",s.ioff);
+#endif
+    if (s.ioff+sizeof(struct cmsghdr) > rights->m_len) panic("impossible: hdr overrun");
+    bcopy(s.ibuf+s.ioff,&cmh,sizeof(struct cmsghdr));
+    if (s.ioff+cmh.cmsg_len > rights->m_len) panic("impossible: cmsg overrun");
+#ifdef DEBUG_UNP_CTL
+    printf(" len %d:",(int)cmh.cmsg_len);
+#endif
+    switch (cmh.cmsg_type)
+     { case SCM_RIGHTS:
+#ifdef DEBUG_UNP_CTL
+	  printf(" rights:");
+#endif
+	  s.err = externalize_gather_rights(&s);
+#ifdef DEBUG_UNP_CTL
+	  printf(" err %d eoff now %d\n",s.err,s.eoff);
+#endif
+	  break;
+       case SCM_MEMORY:
+#ifdef DEBUG_UNP_CTL
+	  printf(" memory:");
+#endif
+	  s.err = externalize_gather_memory(&s);
 
-	return error;
+#ifdef DEBUG_UNP_CTL
+	  printf(" err %d eoff now %d\n",s.err,s.eoff);
+#endif
+	  break;
+       default:
+#ifdef DEBUG_UNP_CTL
+	  printf(" other (%d)\n",(int)cmh.cmsg_type);
+#endif
+	  s.err = externalize_copy(&s);
+#ifdef DEBUG_UNP_CTL
+	  printf(" err %d eoff now %d\n",s.err,s.eoff);
+#endif
+	  break;
+     }
+    if (s.err) break;
+    s.ioff += CMSG_ALIGN(cmh.cmsg_len);
+  }
+#ifdef DEBUG_UNP_CTL
+ printf("unp_externalize: nfds %d nmem %d eoff %d\n",s.nfds,s.nmem,s.eoff);
+#endif
+ if (! s.err)
+  { s.err = externalize_process_rights(&s);
+#ifdef DEBUG_UNP_CTL
+    printf("unp_externalize: processed rights, err %d eoff %d\n",s.err,s.eoff);
+#endif
+  }
+ if (! s.err)
+  { s.err = externalize_process_memory(&s);
+#ifdef DEBUG_UNP_CTL
+    printf("unp_externalize: processed memory, err %d eoff %d\n",s.err,s.eoff);
+#endif
+    if (s.err) externalize_backout_rights(&s);
+  }
+ if (s.eoff > rights->m_len) panic("externalize_finish: message grew (%d > %d)",s.eoff,(int)rights->m_len);
+ if (! s.err)
+  { m->m_len = s.eoff;
+#ifdef DEBUG_UNP_CTL
+    dump_mbuf_chain(m,"unp_externalize exit");
+#endif
+  }
+ if (! s.err) externalize_finish(&s);
+ m_free(m);
+ return(s.err);
+}
+
+// State for unp_internalize
+typedef struct intern_state INTERN_STATE;
+struct intern_state {
+  int nfds;
+  int nmem;
+  struct mbuf **newctlt;
+  } ;
+
+static void internalize_release_fds(void *fpv, int n)
+{
+ file_t *fp;
+
+ fp = fpv;
+ for (;n>0;n--,fp++) unp_discard_now(fp);
+}
+
+static void internalize_release_memory(void *imv, int n)
+{
+ INFLIGHT_MEMORY *im;
+
+ im = imv;
+ // XXX do something real here!
+ (void)im;
+ (void)n;
+ // for (;n>0;n--,im++) ...;
+}
+
+// Pretty much the old unp_internalize, atrocious style and all.
+static int internalize_rights(struct cmsghdr *cm, INTERN_STATE *s)
+{
+ filedesc_t *fdescp;
+ struct cmsghdr *newcm;
+ file_t **rp;
+ file_t **files;
+ file_t *fp;
+ int i;
+ int fd;
+ int *fdp;
+ int nfds;
+ int error;
+ u_int maxmsg;
+ struct mbuf *m;
+
+ /*
+  * Without this, gcc complains that newcm "may be used uninitialized
+  *  in this function".  Apparently it's too stupid to realize that the
+  *  only ways to get to out: before setting newcm involve setting
+  *  errno nonzero.  I'm tempted to shut off the warning, but it looks
+  *  easier to waste a few cycles here. :-þ
+  */
+ newcm = 0;
+ fdescp = curlwp->l_fd;
+ /*
+  * Verify that the file descriptors are valid, and acquire a reference
+  *  to each.
+  */
+ nfds = (cm->cmsg_len - CMSG_ALIGN(sizeof(*cm))) / sizeof(int);
+ if (s->nfds+nfds > SCM_RIGHTS_MAX) return(EMSGSIZE);
+ s->nfds += nfds;
+ fdp = (int *)CMSG_DATA(cm);
+ maxmsg = maxfiles / unp_rights_ratio;
+ for (i=0;i<nfds;i++)
+  { fd = *fdp++;
+    if (atomic_inc_uint_nv(&unp_rights) > maxmsg)
+     { atomic_dec_uint(&unp_rights);
+       nfds = i;
+       error = EAGAIN;
+       goto out;
+     }
+    if ( !(fp = fd_getfile(fd)) ||
+	 (fp->f_type == DTYPE_KQUEUE) )
+     { if (fp) fd_putfile(fd);
+       atomic_dec_uint(&unp_rights);
+       nfds = i;
+       error = EBADF;
+       goto out;
+     }
+  }
+ /* Allocate new space and copy header into it. */
+ newcm = malloc(CMSG_SPACE(nfds*sizeof(file_t *)),M_MBUF,M_WAITOK);
+ if (! newcm)
+  { error = E2BIG;
+    goto out;
+  }
+ files = (file_t **)CMSG_DATA(newcm);
+ /*
+  * Transform the file descriptors into file_t pointers.
+  */
+ fdp = (int *)CMSG_DATA(cm);
+ rp = files;
+ for (i=0;i<nfds;i++)
+  { fp = fdescp->fd_ofiles[*fdp++]->ff_file;
+    KASSERT(fp);
+    mutex_enter(&fp->f_lock);
+    *rp++ = fp;
+    fp->f_count ++;
+    fp->f_msgcount ++;
+    mutex_exit(&fp->f_lock);
+  }
+ error = 0;
+out:
+ /* Release descriptor references. */
+ fdp = (int *)CMSG_DATA(cm);
+ for (i=0;i<nfds;i++)
+  { fd_putfile(*fdp++);
+    if (error) atomic_dec_uint(&unp_rights);
+  }
+ if (! error)
+  { m = m_get(M_WAIT,MT_CONTROL);
+    MEXTADD(m,newcm,CMSG_SPACE(nfds*sizeof(file_t *)),M_MBUF,0,0);
+    newcm->cmsg_len = CMSG_LEN(nfds*sizeof(file_t *));
+    newcm->cmsg_level = SOL_SOCKET;
+    newcm->cmsg_type = SCM_RIGHTS;
+    m->m_len = CMSG_SPACE(nfds*sizeof(file_t *));
+#ifdef DEBUG_UNP_CTL
+    printf("internalize_rights: appending %p (%d)\n",(void *)m,m->m_len);
+#endif
+    *s->newctlt = m;
+    s->newctlt = &m->m_next;
+  }
+ return(error);
+}
+
+static int internalize_memory(struct cmsghdr *cm, INTERN_STATE *s)
+{
+ int nmb;
+ struct cmsghdr nmh;
+ struct socket_memory sm;
+ INFLIGHT_MEMORY im;
+// "shadows a global declaration" - so the fsck what?!
+// char *nbuf;
+ char *nbuf_;
+#define nbuf nbuf_
+ int nbsp;
+ struct mbuf *m;
+ int i;
+
+ nmb = (cm->cmsg_len - sizeof(struct cmsghdr)) / sizeof(struct socket_memory);
+ if (s->nmem+nmb > SCM_MEMORY_MAX) return(EMSGSIZE);
+ s->nmem += nmb;
+ if (cm->cmsg_len != sizeof(struct cmsghdr) + (nmb * sizeof(struct socket_memory)))
+  { printf("internalize_memory: partial struct socket_memory in message: cmsg_len %d != %d + (%d * %d)\n",
+	(int)cm->cmsg_len, (int)sizeof(struct cmsghdr), nmb, (int)sizeof(struct socket_memory) );
+    return(EINVAL);
+  }
+ nbsp = sizeof(struct cmsghdr) + (nmb * sizeof(INFLIGHT_MEMORY));
+ nbuf = malloc(CMSG_ALIGN(nbsp),M_MBUF,M_WAITOK);
+ for (i=nmb-1;i>=0;i--)
+  { bcopy(((char *)(cm+1))+(i*sizeof(struct socket_memory)),&sm,sizeof(struct socket_memory));
+    // XXX validate and do real internalize here!
+    im.sm = sm;
+    bcopy(&im,nbuf+sizeof(struct cmsghdr)+(i*sizeof(INFLIGHT_MEMORY)),sizeof(INFLIGHT_MEMORY));
+  }
+ nmh.cmsg_len = sizeof(struct cmsghdr) + (nmb*sizeof(INFLIGHT_MEMORY));
+ nmh.cmsg_level = SOL_SOCKET;
+ nmh.cmsg_type = SCM_MEMORY;
+ bcopy(&nmh,nbuf,sizeof(struct cmsghdr));
+ m = m_get(M_WAIT,MT_CONTROL);
+ MEXTADD(m,nbuf,nbsp,M_MBUF,0,0);
+ m->m_len = CMSG_ALIGN(nbsp);
+#ifdef DEBUG_UNP_CTL
+ printf("internalize_memory: appending %p (%d)\n",(void *)m,m->m_len);
+#endif
+ *s->newctlt = m;
+ s->newctlt = &m->m_next;
+ return(0);
+#undef nbuf
+}
+
+static void internalize_backout_rights(struct mbuf *m)
+{
+ struct cmsghdr *cmh;
+
+ if (m->m_len < sizeof(struct cmsghdr)) panic("internalize_backout_rights: impossible size");
+ cmh = mtod(m,struct cmsghdr *);
+ if (cmh->cmsg_type != SCM_RIGHTS) panic("internalize_backout_rights: impossible type");
+ internalize_release_fds(CMSG_DATA(cmh),(cmh->cmsg_len-CMSG_ALIGN(sizeof(struct cmsghdr)))/sizeof(int));
+}
+
+static void internalize_backout_memory(struct mbuf *m)
+{
+ char *dp;
+ struct cmsghdr cmh;
+
+ if (m->m_len < sizeof(struct cmsghdr)) panic("internalize_backout_rights: impossible size");
+ dp = mtod(m,char *);
+ bcopy(dp,&cmh,sizeof(struct cmsghdr));
+ if (cmh.cmsg_type != SCM_RIGHTS) panic("internalize_backout_memory: impossible type");
+ internalize_release_memory(dp+sizeof(struct cmsghdr),(cmh.cmsg_len-sizeof(struct cmsghdr))/sizeof(INFLIGHT_MEMORY));
+}
+
+static void internalize_backout(struct mbuf *m)
+{
+ struct mbuf *m2;
+ struct cmsghdr cmh;
+
+ while (m)
+  { if (m->m_len >= sizeof(struct cmsghdr))
+     { bcopy(mtod(m,char *),&cmh,sizeof(struct cmsghdr));
+       switch (cmh.cmsg_type)
+	{ case SCM_RIGHTS:
+	     internalize_backout_rights(m);
+	     break;
+	  case SCM_MEMORY:
+	     internalize_backout_memory(m);
+	     break;
+	  default:
+	     printf("internalize_backout: impossible type %d\n",(int)cmh.cmsg_type);
+	     break;
+	}
+     }
+    MFREE(m,m2);
+    m = m2;
+  }
+}
+
+/*
+ * Convert a control message buffer from external (userland) form to
+ *  internal (kernel) form.
+ *
+ * For SCM_RIGHTS messages, this means converting from an array of int
+ *  to an array of file_t *.  For SCM_MEMORY messages, this means
+ *  converting from an array of struct socket_memory to an array of
+ *  struct inflight_memory *.
+ *
+ * The control message buffer must all be in a single mbuf.
+ *
+ * There is a severe API design bug here.  The SCM_RIGHTS API silently
+ *  changed.  The traditional way had the buffer containing a bunch of
+ *  ints, packed tightly after the struct cmsghdr.  But then someone
+ *  took the CMSG_* macros, invented for, near as I can tell, all the
+ *  control crap IPv6 wants to fling around, and gratuitously inflicted
+ *  them on SCM_RIGHTS messages.  If sizeof(int) is not a power of two,
+ *  or if it's smaller than __cmsg_alignbytes+1, the new ABI differs
+ *  from the old, thus breaking formerly working code.  What's more,
+ *  the CMSG_* macros are a broken API; they don't support any coding
+ *  style except overlaying structs onto the buffer, which means the
+ *  buffer must be suitably aligned for struct cmsghdr; worse, it must
+ *  be aligned on a __cmsg_alignbytes() boundary - see CMSG_ALIGN
+ *  (presumably the implementation makes sure that __cmsg_alignbytes
+ *  alignment is suitable for struct cmsghdr).  There also is no way in
+ *  the API to compute the data pointer except as a function of the
+ *  struct cmsghdr pointer, making it impossible to operate portably by
+ *  copying the struct cmsghdr out of the buffer, because computing the
+ *  data pointer may then generate a pointer past the end of an object.
+ *  (We kludge around this here by going under the hood and knowing how
+ *  the internals of the APU work.)
+ *
+ * Unfortunately, there is too much code in the tree that uses
+ *  SCM_RIGHTS the broken ("new") way for us to just fix this.  And we
+ *  can't just define SCM_FIXEDRIGHTS or some such, because the kernel,
+ *  not userland, chooses the control message type during recvmsg() (if
+ *  we generate SCM_FIXEDRIGHTS, code that expects SCM_RIGHTS won't
+ *  know what to do; if we generate SCM_RIGHTS, code will expect it to
+ *  use the CMSG_* crap).
+ *
+ * So we continue to do SCM_RIGHTS the broken way.  But at least we can
+ *  make sure SCM_MEMORY is done right, though we do have to CMSG_ALIGN
+ *  the SCM_MEMORY message as a whole, so that an SCM_RIGHTS after it
+ *  can use the same API as an SCM_RIGHTS before it.
+ */
+int unp_internalize(struct mbuf **controlp)
+{
+ struct mbuf *ctlm;
+ struct cmsghdr *cm;
+ struct mbuf *newctl;
+ int off;
+ int e;
+ INTERN_STATE s;
+
+ ctlm = *controlp;
+#ifdef DEBUG_UNP_CTL
+ dump_mbuf_chain(ctlm,"unp_internalize entry");
+#endif
+ off = 0;
+ s.nfds = 0;
+ s.nmem = 0;
+ s.newctlt = &newctl;
+ while <"done"> (1)
+  {
+#ifdef DEBUG_UNP_CTL
+    printf("unp_internalize: at %d\n",off);
+#endif
+    if (off == ctlm->m_len)
+     {
+#ifdef DEBUG_UNP_CTL
+       printf("unp_internalize: loop done\n");
+#endif
+       e = 0;
+       break;
+     }
+    if (off+sizeof(struct cmsghdr) > ctlm->m_len)
+     {
+#ifdef DEBUG_UNP_CTL
+       printf("unp_internalize: msg overruns buffer (%d+%d > %d)\n",
+		(int)off, (int)sizeof(struct cmsghdr), (int)ctlm->m_len);
+#endif
+       e = EINVAL;
+       break;
+     }
+    cm = (void *)(mtod(ctlm,char *) + off);
+    if ( (cm->cmsg_level != SOL_SOCKET) ||
+	 (off+cm->cmsg_len > ctlm->m_len) )
+     { e = EINVAL;
+       break;
+     }
+    switch (cm->cmsg_type)
+     { case SCM_RIGHTS:
+	  if (cm->cmsg_len < CMSG_ALIGN(sizeof(struct cmsghdr)))
+	   { e = EINVAL;
+	     break <"done">;
+	   }
+#ifdef DEBUG_UNP_CTL
+	  printf("unp_internalize: rights\n");
+#endif
+	  e = internalize_rights(cm,&s);
+	  if (e) break <"done">;
+	  break;
+       case SCM_MEMORY:
+#ifdef DEBUG_UNP_CTL
+	  printf("unp_internalize: memory\n");
+#endif
+	  e = internalize_memory(cm,&s);
+	  if (e) break <"done">;
+	  break;
+       default:
+#ifdef DEBUG_UNP_CTL
+	  printf("unp_internalize: unsupported type %d\n",(int)cm->cmsg_type);
+#endif
+	  e = EINVAL;
+	  break <"done">;
+     }
+    off += CMSG_ALIGN(cm->cmsg_len);
+  }
+ *s.newctlt = 0;
+#ifdef DEBUG_UNP_CTL
+ printf("unp_internalize: error %d, new chain",e);
+  { struct mbuf *m;
+    for (m=newctl;m;m=m->m_next) printf(" %p",(void *)m);
+  }
+ printf("\n");
+#endif
+ if (e)
+  { internalize_backout(newctl);
+  }
+ else
+  { struct mbuf *m;
+    struct mbuf *t;
+    if (! newctl) panic("unp_internalize: success but no new ctl mbuf");
+    off = 0;
+    for (ctlm=newctl;ctlm;ctlm=ctlm->m_next) off += ctlm->m_len;
+    m = m_get(M_WAIT,MT_CONTROL);
+    if (! m)
+     { // Is this possible with M_WAIT/M_WAITOK?
+       internalize_backout(newctl);
+       e = ENOMEM;
+     }
+    else
+     { if (off > MLEN)
+	{ char *data;
+	  data = malloc(off,M_MBUF,M_WAITOK);
+	  MEXTADD(m,data,off,M_MBUF,0,0);
+	}
+       m->m_len = off;
+       off = 0;
+       for (t=newctl;t;t=t->m_next)
+	{ bcopy(mtod(t,char *),mtod(m,char *)+off,t->m_len);
+	  off += t->m_len;
+	}
+       if (off != m->m_len) panic("unp_internalize: off %d m_len %d\n",off,(int)m->m_len);
+       m_freem(newctl);
+       newctl = m;
+     }
+  }
+ if (! e)
+  { m_freem(*controlp);
+    *controlp = newctl;
+#ifdef DEBUG_UNP_CTL
+    dump_mbuf_chain(newctl,"unp_internalize exit");
+#endif
+  }
+ return(e);
 }
 
 struct mbuf *

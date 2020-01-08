@@ -1255,8 +1255,8 @@ soreceive(struct socket *so, struct mbuf **paddr, struct uio *uio,
 			cm->m_next = NULL;
 			type = mtod(cm, struct cmsghdr *)->cmsg_type;
 			if (controlp != NULL) {
-				if (dom->dom_externalize != NULL &&
-				    type == SCM_RIGHTS) {
+				if ( dom->dom_externalize &&
+				     (*dom->dom_externalize)(cm,0) ) {
 					sounlock(so);
 					splx(s);
 					error = (*dom->dom_externalize)(cm, l);

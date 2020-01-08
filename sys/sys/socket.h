@@ -543,7 +543,14 @@ struct cmsghdr {
 #define	SCM_RIGHTS	0x01		/* access rights (array of int) */
 #if defined(_NETBSD_SOURCE)
 #define	SCM_TIMESTAMP	0x02		/* timestamp (struct timeval) */
+#define SCM_MEMORY	0x03
 #define	SCM_CREDS	0x04		/* credentials (struct sockcred) */
+struct socket_memory {
+  void *base;
+  size_t size;
+  } ;
+#define SCM_RIGHTS_MAX 64 // max # fds per sendmsg
+#define SCM_MEMORY_MAX 16 // max # structs socket_memory per sendmsg
 #endif
 
 /*
