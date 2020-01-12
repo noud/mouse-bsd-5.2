@@ -1999,6 +1999,11 @@ static void internalize_backout_memory(struct mbuf *m)
  free_inflight_memory(dp+sizeof(struct cmsghdr),(cmh.cmsg_len-sizeof(struct cmsghdr))/sizeof(INFLIGHT_MEMORY));
 }
 
+/*
+ * We can get away with assuming only one message per mbuf only because
+ *  that's what internalize_rights() et al, which created this mbuf
+ *  chain, generate.
+ */
 static void internalize_backout(struct mbuf *m)
 {
  struct mbuf *m2;
@@ -2075,6 +2080,7 @@ int unp_internalize(struct mbuf **controlp)
  struct cmsghdr *cm;
  struct mbuf *newctl;
  int off;
+ int pad;
  int e;
  INTERN_STATE s;
 
@@ -2084,6 +2090,7 @@ int unp_internalize(struct mbuf **controlp)
  dump_holding_map("unp_internalize entry");
 #endif
  off = 0;
+ pad = 0;
  s.nfds = 0;
  s.nmem = 0;
  s.newctlt = &newctl;
@@ -2092,7 +2099,10 @@ int unp_internalize(struct mbuf **controlp)
 #ifdef DEBUG_UNP_CTL
     printf("unp_internalize: at %d\n",off);
 #endif
-    if (off == ctlm->m_len)
+    if (off > ctlm->m_len) panic("unp_internalize: impossible overrun (%d > %d)\n",off,(int)ctlm->m_len);
+    off += pad;
+    if (off != CMSG_ALIGN(off)) panic("unp_internalize: misaligned\n");
+    if (off >= ctlm->m_len)
      {
 #ifdef DEBUG_UNP_CTL
        printf("unp_internalize: loop done\n");
@@ -2103,13 +2113,22 @@ int unp_internalize(struct mbuf **controlp)
     if (off+sizeof(struct cmsghdr) > ctlm->m_len)
      {
 #ifdef DEBUG_UNP_CTL
-       printf("unp_internalize: msg overruns buffer (%d+%d > %d)\n",
+       printf("unp_internalize: msg overruns buffer 1 (%d+%d > %d)\n",
 		(int)off, (int)sizeof(struct cmsghdr), (int)ctlm->m_len);
 #endif
        e = EINVAL;
        break;
      }
     cm = (void *)(mtod(ctlm,char *) + off);
+    if (off+cm->cmsg_len > ctlm->m_len)
+     {
+#ifdef DEBUG_UNP_CTL
+       printf("unp_internalize: msg overruns buffer 2 (%d+%d > %d)\n",
+		(int)off, (int)CMSG_LEN(cm->cmsg_len), (int)ctlm->m_len);
+#endif
+       e = EINVAL;
+       break;
+     }
     if ( (cm->cmsg_level != SOL_SOCKET) ||
 	 (off+cm->cmsg_len > ctlm->m_len) )
      { e = EINVAL;
@@ -2141,7 +2160,8 @@ int unp_internalize(struct mbuf **controlp)
 	  e = EINVAL;
 	  break <"done">;
      }
-    off += CMSG_ALIGN(cm->cmsg_len);
+    off += cm->cmsg_len;
+    pad = CMSG_ALIGN(cm->cmsg_len) - cm->cmsg_len;
   }
  *s.newctlt = 0;
 #ifdef DEBUG_UNP_CTL
