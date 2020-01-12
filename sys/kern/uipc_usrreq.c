@@ -2099,13 +2099,13 @@ unp_gc(file_t *dp)
 			 * accept queue as well.
 			 */
 			solock(so);
-			unp_scan(so->so_rcv.sb_mb, unp_mark, 0);
+			unp_scan(so->so_rcv.sb_mb, &unp_mark, 0);
 			if ((so->so_options & SO_ACCEPTCONN) != 0) {
 				TAILQ_FOREACH(so1, &so->so_q0, so_qe) {
-					unp_scan(so1->so_rcv.sb_mb, unp_mark, 0);
+					unp_scan(so1->so_rcv.sb_mb, &unp_mark, 0);
 				}
 				TAILQ_FOREACH(so1, &so->so_q, so_qe) {
-					unp_scan(so1->so_rcv.sb_mb, unp_mark, 0);
+					unp_scan(so1->so_rcv.sb_mb, &unp_mark, 0);
 				}
 			}
 			sounlock(so);
