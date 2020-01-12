@@ -2385,11 +2385,11 @@ uvm_unmap_remove(struct vm_map *map, vaddr_t start, vaddr_t end,
 			 * remove mappings the standard way.
 			 */
 
-			pmap_remove(map->pmap, entry->start, entry->end);
+			if (map->pmap) pmap_remove(map->pmap, entry->start, entry->end);
 		}
 
 #if defined(DEBUG)
-		if ((entry->flags & UVM_MAP_KMAPENT) == 0) {
+		if (((entry->flags & UVM_MAP_KMAPENT) == 0) && map->pmap) {
 
 			/*
 			 * check if there's remaining mapping,
@@ -2434,10 +2434,12 @@ uvm_unmap_remove(struct vm_map *map, vaddr_t start, vaddr_t end,
 	 * Note: if map is dying, leave pmap_update() for pmap_destroy(),
 	 * which will be called later.
 	 */
-	if ((map->flags & VM_MAP_DYING) == 0) {
-		pmap_update(vm_map_pmap(map));
-	} else {
-		KASSERT(vm_map_pmap(map) != pmap_kernel());
+	if (map->pmap) {
+		if ((map->flags & VM_MAP_DYING) == 0) {
+			pmap_update(vm_map_pmap(map));
+		} else {
+			KASSERT(vm_map_pmap(map) != pmap_kernel());
+		}
 	}
 
 	uvm_map_check(map, "unmap_remove leave");

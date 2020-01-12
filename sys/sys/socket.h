@@ -69,6 +69,10 @@
  * Definitions related to sockets: types, address families, options.
  */
 
+#if defined(_KERNEL)
+#include <sys/mbuf.h>
+#endif
+
 /*
  * Data types.
  */
@@ -584,6 +588,25 @@ const void *sockaddr_anyaddr(const struct sockaddr *, socklen_t *);
 int sockaddr_cmp(const struct sockaddr *, const struct sockaddr *);
 struct sockaddr *sockaddr_dup(const struct sockaddr *, int);
 void sockaddr_free(struct sockaddr *);
+typedef enum {
+	  WCM_PRE = 1,
+	  WCM_POST,
+	  } WCMOP;
+typedef struct inflight_memory INFLIGHT_MEMORY;
+// The union is just because this must not be smaller than
+//  struct socket_memory; see the comment on unp_externalize().
+struct inflight_memory {
+  union {
+    struct {
+      unsigned int npages;
+      vaddr_t *pgv;
+      } im;
+    struct socket_memory sm;
+    } u;
+  } ;
+extern void walk_control_msgs(struct mbuf *, int (*)(void *, struct mbuf *, WCMOP), void (*)(void *, struct cmsghdr *), void *);
+extern void free_inflight_memory(char *, int);
+extern void free_cmsg_rights(char *, int);
 __END_DECLS
 #endif /* _KERNEL */
 

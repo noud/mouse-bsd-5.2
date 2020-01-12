@@ -666,97 +666,195 @@ sys_recvmsg(struct lwp *l, const struct sys_recvmsg_args *uap, register_t *retva
 	return (error);
 }
 
-/*
- * Adjust for a truncated SCM_RIGHTS control message.
- *  This means closing any file descriptors that aren't present
- *  in the returned buffer.
- *  m is the mbuf holding the (already externalized) SCM_RIGHTS message.
- */
-static void
-free_rights(struct mbuf *m)
+void walk_control_msgs(struct mbuf *list, int (*mb)(void *, struct mbuf *, WCMOP), void (*msg)(void *, struct cmsghdr *), void *arg)
 {
-	int nfd;
-	int i;
-	int *fdv;
+ struct mbuf *m;
+ char *dp;
+ int o;
+ int l;
+ struct cmsghdr *cmh;
 
-	nfd = m->m_len < CMSG_SPACE(sizeof(int)) ? 0
-	    : (m->m_len - CMSG_SPACE(sizeof(int))) / sizeof(int) + 1;
-	fdv = (int *) CMSG_DATA(mtod(m,struct cmsghdr *));
-	for (i = 0; i < nfd; i++) {
-		if (fd_getfile(fdv[i]) != NULL)
-			(void)fd_close(fdv[i]);
+ while (list)
+  { m = list;
+    list = m->m_next;
+    if (m->m_type != MT_CONTROL) continue;
+    if (m->m_len < 1) continue;
+    if (m->m_len < sizeof(struct cmsghdr))
+     { printf("walk_control_msgs shortfall 1: %d < %d\n",(int)m->m_len,(int)sizeof(struct cmsghdr));
+#ifdef DIAGNOSTIC
+       panic("ddb");
+#endif
+       continue;
+     }
+    if ((!mb || (*mb)(arg,m,WCM_PRE)) && msg)
+     { dp = mtod(m,char *);
+       l = m->m_len;
+       o = 0;
+       while (o < l)
+	{ if (o+sizeof(struct cmsghdr) > l)
+	   { printf("walk_control_msgs overrun 1: %d+%d > %d",o,(int)sizeof(struct cmsghdr),l);
+#ifdef DIAGNOSTIC
+	     panic("ddb");
+#endif
+	     break;
+	   }
+	  cmh = (void *)(dp + o);
+	  if (cmh->cmsg_len < sizeof(struct cmsghdr))
+	   { printf("walk_control_mbuf shortfall 2: %d < %d",(int)cmh->cmsg_len,(int)sizeof(struct cmsghdr));
+#ifdef DIAGNOSTIC
+	     panic("ddb");
+#endif
+	     break;
+	   }
+	  if (o+cmh->cmsg_len > l)
+	   { printf("walk_control_mbuf overrun 2: %d+%d > %d",o,(int)cmh->cmsg_len,l);
+#ifdef DIAGNOSTIC
+	     panic("ddb");
+#endif
+	     break;
+	   }
+	  (*msg)(arg,cmh);
+	  o += CMSG_ALIGN(cmh->cmsg_len);
 	}
+     }
+    if (mb) (*mb)(arg,m,WCM_POST);
+  }
 }
 
-void
-free_control_mbuf(struct lwp *l, struct mbuf *control, struct mbuf *uncopied)
-{
-	struct mbuf *next;
-	struct cmsghdr *cmsg;
-	bool do_free_rights = false;
+typedef struct fcmstate FCMSTATE;
+struct fcmstate {
+  int freeing;
+  struct mbuf *uncopied;
+  } ;
 
-	while (control != NULL) {
-		cmsg = mtod(control, struct cmsghdr *);
-		if (control == uncopied)
-			do_free_rights = true;
-		if (do_free_rights && cmsg->cmsg_level == SOL_SOCKET
-		    && cmsg->cmsg_type == SCM_RIGHTS)
-			free_rights(control);
-		next = control->m_next;
-		m_free(control);
-		control = next;
+static int free_control_mb(void *sv, struct mbuf *m, WCMOP op)
+{
+ FCMSTATE *s;
+
+ s = sv;
+ switch (op)
+  { case WCM_PRE:
+       if (m == s->uncopied) s->freeing = 1;
+       return(s->freeing);
+       break;
+    case WCM_POST:
+       m_free(m);
+       break;
+  }
+ return(0);
+}
+
+static void free_control_msg(void *sv, struct cmsghdr *mh)
+{
+ (void)sv;
+ if (mh->cmsg_level != SOL_SOCKET) return;
+ switch (mh->cmsg_type)
+  { case SCM_RIGHTS:
+       free_cmsg_rights(CMSG_DATA(mh),(mh->cmsg_len-CMSG_ALIGN(sizeof(struct cmsghdr)))/sizeof(int));
+       break;
+    case SCM_MEMORY:
+       free_inflight_memory((void *)(mh+1),(mh->cmsg_len-sizeof(struct cmsghdr))/sizeof(INFLIGHT_MEMORY));
+       break;
+  }
+}
+
+void free_control_mbuf(struct lwp *l, struct mbuf *control, struct mbuf *uncopied)
+{
+ FCMSTATE s;
+
+ s.freeing = 0;
+ s.uncopied = uncopied;
+ walk_control_msgs(control,&free_control_mb,&free_control_msg,&s);
+}
+
+typedef struct cmcstate CMCSTATE;
+struct cmcstate {
+  int err;
+  int trunc;
+  char *ubp;
+  int ubl;
+  } ;
+
+static int copyout_control_mb(void *sv, struct mbuf *m, WCMOP op)
+{
+ CMCSTATE *s;
+
+ s = sv;
+ switch (op)
+  { case WCM_PRE:
+       break;
+    case WCM_POST:
+       m_free(m);
+       break;
+  }
+ return(1);
+}
+
+static void copyout_control_msg(void *sv, struct cmsghdr *mh)
+{
+ CMCSTATE *s;
+ int i;
+
+ s = sv;
+ if (mh->cmsg_level != SOL_SOCKET) return;
+ if (!s->trunc && !s->err)
+  { if (mh->cmsg_len > s->ubl)
+     { s->trunc = 1;
+     }
+    else
+     { s->err = copyout(mh,s->ubp,mh->cmsg_len);
+       ktrkuser("msgcontrol",mh,mh->cmsg_len);
+       s->ubp += mh->cmsg_len;
+       s->ubl -= mh->cmsg_len;
+     }
+    /*
+     * Pad per CMSG_ALIGN().  If the padding is truncated, this does
+     *	not provoke CMSG_TRUNC in itself.  ubp may not be aligned after
+     *	this, but any further messages will get truncated away, so that
+     *	doesn't matter.
+     */
+    i = CMSG_ALIGN(mh->cmsg_len) - mh->cmsg_len;
+    if (i)
+     { if (i > s->ubl) i = s->ubl;
+       if (i > 0)
+	{ bzero(((char *)mh)+mh->cmsg_len,i);
+	  s->ubp += i;
+	  s->ubl -= i;
 	}
+     }
+  }
+ switch (mh->cmsg_type)
+  { case SCM_RIGHTS:
+       if (s->trunc || s->err)
+	{ free_cmsg_rights(CMSG_DATA(mh),mh->cmsg_len-CMSG_ALIGN(sizeof(struct cmsghdr)));
+	}
+       break;
+    case SCM_MEMORY:
+       if (s->trunc || s->err)
+	{ free_inflight_memory((void *)(mh+1),mh->cmsg_len-sizeof(struct cmsghdr));
+	}
+       break;
+  }
 }
 
 /* Copy socket control/CMSG data to user buffer, frees the mbuf */
-int
-copyout_msg_control(struct lwp *l, struct msghdr *mp, struct mbuf *control)
+int copyout_msg_control(struct lwp *l, struct msghdr *mp, struct mbuf *control)
 {
-	int i, len, error = 0;
-	struct cmsghdr *cmsg;
-	struct mbuf *m;
-	char *q;
+ CMCSTATE s;
 
-	len = mp->msg_controllen;
-	if (len <= 0 || control == 0) {
-		mp->msg_controllen = 0;
-		free_control_mbuf(l, control, control);
-		return 0;
-	}
-
-	q = (char *)mp->msg_control;
-
-	for (m = control; m != NULL; ) {
-		cmsg = mtod(m, struct cmsghdr *);
-		i = m->m_len;
-		if (len < i) {
-			mp->msg_flags |= MSG_CTRUNC;
-			if (cmsg->cmsg_level == SOL_SOCKET
-			    && cmsg->cmsg_type == SCM_RIGHTS)
-				/* Do not truncate me ... */
-				break;
-			i = len;
-		}
-		error = copyout(mtod(m, void *), q, i);
-		ktrkuser("msgcontrol", mtod(m, void *), i);
-		if (error != 0) {
-			/* We must free all the SCM_RIGHTS */
-			m = control;
-			break;
-		}
-		m = m->m_next;
-		if (m)
-			i = ALIGN(i);
-		q += i;
-		len -= i;
-		if (len <= 0)
-			break;
-	}
-
-	free_control_mbuf(l, control, m);
-
-	mp->msg_controllen = q - (char *)mp->msg_control;
-	return error;
+ if ((mp->msg_controllen <= 0) || (control == 0))
+  { mp->msg_controllen = 0;
+    free_control_mbuf(l,control,control);
+    return(0);
+  }
+ s.err = 0;
+ s.trunc = 0;
+ s.ubp = (char *)mp->msg_control;
+ s.ubl = mp->msg_controllen;
+ walk_control_msgs(control,&copyout_control_mb,&copyout_control_msg,&s);
+ if (s.trunc) mp->msg_flags |= MSG_CTRUNC;
+ mp->msg_controllen = s.ubp - (char *)mp->msg_control;
+ return(s.err);
 }
 
 int

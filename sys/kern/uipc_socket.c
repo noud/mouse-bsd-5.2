@@ -1268,11 +1268,10 @@ soreceive(struct socket *so, struct mbuf **paddr, struct uio *uio,
 					controlp = &(*controlp)->m_next;
 			} else {
 				/*
-				 * Dispose of any SCM_RIGHTS message that went
-				 * through the read path rather than recv.
+				 * Dispose of any SCM_RIGHTS etc message that
+				 * went through the read path rather than recv.
 				 */
-				if (dom->dom_dispose != NULL &&
-				    type == SCM_RIGHTS) {
+				if (dom->dom_dispose) {
 				    	sounlock(so);
 					(*dom->dom_dispose)(cm);
 					solock(so);

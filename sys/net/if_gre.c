@@ -680,11 +680,10 @@ gre_soreceive(struct socket *so, struct mbuf **mp0)
 	while (m != NULL && m->m_type == MT_CONTROL && error == 0) {
 		sbfree(&so->so_rcv, m);
 		/*
-		 * Dispose of any SCM_RIGHTS message that went
+		 * Dispose of any SCM_RIGHTS etc message that went
 		 * through the read path rather than recv.
 		 */
-		if (pr->pr_domain->dom_dispose &&
-		    mtod(m, struct cmsghdr *)->cmsg_type == SCM_RIGHTS)
+		if (pr->pr_domain->dom_dispose)
 			(*pr->pr_domain->dom_dispose)(m);
 		MFREE(m, so->so_rcv.sb_mb);
 		m = so->so_rcv.sb_mb;

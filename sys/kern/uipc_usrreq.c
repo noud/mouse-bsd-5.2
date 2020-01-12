@@ -119,12 +119,7 @@ __KERNEL_RCSID(0, "$NetBSD: uipc_usrreq.c,v 1.119.4.5 2012/06/03 08:47:28 jdc Ex
 #include <sys/uidinfo.h>
 #include <sys/kernel.h>
 #include <sys/kthread.h>
-
-typedef struct inflight_memory INFLIGHT_MEMORY;
-
-struct inflight_memory {
-  struct socket_memory sm;
-  } ;
+#include <uvm/uvm.h>
 
 /*
  * Unix communications domain.
@@ -190,6 +185,13 @@ static lwp_t *unp_thread_lwp;
 static SLIST_HEAD(,file) unp_thread_discard;
 static int unp_defer;
 
+// Define this to get debugging kernel printfs.
+//#define DEBUG_UNP_CTL
+static struct vm_map unp_mem_map;
+static uint32_t unp_max_mem;
+MALLOC_DEFINE(M_SOCKMEM,"sockbits","inflight socket memory");
+static kmutex_t unp_mem_mutex;
+
 /*
  * Initialize Unix protocols.
  */
@@ -205,6 +207,10 @@ uipc_init(void)
 	    NULL, &unp_thread_lwp, "unpgc");
 	if (error != 0)
 		panic("uipc_init %d", error);
+ unp_max_mem = (1U << 30) / PAGE_SIZE;
+ uvm_map_setup(&unp_mem_map,(vaddr_t)PAGE_SIZE,(vaddr_t)(PAGE_SIZE*(unp_max_mem+1)),VM_MAP_PAGEABLE);
+ unp_mem_map.pmap = 0;
+ mutex_init(&unp_mem_mutex,MUTEX_DEFAULT,IPL_NONE);
 }
 
 /*
@@ -524,7 +530,7 @@ uipc_usrreq(struct socket *so, int req, struct mbuf *m, struct mbuf *nam,
 		/*
 		 * Note: unp_internalize() is responsible for
 		 *  preventing forged SCM_CREDS and the like; it must
-		 *  allow only SCM_RIGHTS and SCM_MEMORY.
+		 *  allow only messages userland is allowed to send.
 		 */
 		if (control) {
 			sounlock(so);
@@ -1259,17 +1265,17 @@ struct extern_state {
 
 static int externalize_gather_rights(EXTERN_STATE *s)
 {
- struct cmsghdr cmh;
+ struct cmsghdr *cmh;
  struct proc *p;
  int nfds;
  file_t *fp;
  file_t **rp;
  int i;
 
- bcopy(s->ibuf+s->ioff,&cmh,sizeof(struct cmsghdr));
+ cmh = (void *)(s->ibuf+s->ioff);
  p = s->l->l_proc;
- if (cmh.cmsg_type != SCM_RIGHTS) panic("impossible externalize_gather_rights");
- nfds = (cmh.cmsg_len - CMSG_ALIGN(sizeof(struct cmsghdr))) / sizeof(file_t *);
+ if (cmh->cmsg_type != SCM_RIGHTS) panic("impossible externalize_gather_rights");
+ nfds = (cmh->cmsg_len - CMSG_ALIGN(sizeof(struct cmsghdr))) / sizeof(file_t *);
  rp = (file_t **)(s->ibuf+s->ioff+CMSG_ALIGN(sizeof(struct cmsghdr)));
  rw_enter(&p->p_cwdi->cwdi_lock,RW_READER);
  for (i=0;i<nfds;i++)
@@ -1298,29 +1304,32 @@ static int externalize_gather_rights(EXTERN_STATE *s)
 
 static int externalize_gather_memory(EXTERN_STATE *s)
 {
- struct cmsghdr cmh;
+ struct cmsghdr *cmh;
  int nmb;
  int i;
  int o;
+ INFLIGHT_MEMORY im;
 
- bcopy(s->ibuf+s->ioff,&cmh,sizeof(struct cmsghdr));
- if (cmh.cmsg_type != SCM_MEMORY) panic("impossible externalize_gather_memory");
- nmb = (cmh.cmsg_len - sizeof(struct cmsghdr)) / sizeof(INFLIGHT_MEMORY);
+ cmh = (void *)(s->ibuf+s->ioff);
+ if (cmh->cmsg_type != SCM_MEMORY) panic("impossible externalize_gather_memory");
+ nmb = (cmh->cmsg_len - sizeof(struct cmsghdr)) / sizeof(INFLIGHT_MEMORY);
  o = s->ioff + sizeof(struct cmsghdr);
+ im.u.im.npages = 0;
+ im.u.im.pgv = 0;
  for (i=0;i<nmb;i++) bcopy(s->ibuf+o,&s->im[s->nmem++],sizeof(INFLIGHT_MEMORY));
  return(0);
 }
 
 static int externalize_copy(EXTERN_STATE *s)
 {
- struct cmsghdr cmh;
+ struct cmsghdr *cmh;
  int n;
 
- bcopy(s->ibuf+s->ioff,&cmh,sizeof(struct cmsghdr));
- bcopy(s->ibuf+s->ioff,s->ebuf+s->eoff,cmh.cmsg_len);
- n = CMSG_ALIGN(cmh.cmsg_len) - cmh.cmsg_len;
- if (n) bzero(s->ebuf+s->eoff+cmh.cmsg_len,n);
- s->eoff += CMSG_ALIGN(cmh.cmsg_len);
+ cmh = (void *)(s->ibuf+s->ioff);
+ bcopy(s->ibuf+s->ioff,s->ebuf+s->eoff,cmh->cmsg_len);
+ n = CMSG_ALIGN(cmh->cmsg_len) - cmh->cmsg_len;
+ if (n) bzero(s->ebuf+s->eoff+cmh->cmsg_len,n);
+ s->eoff += CMSG_ALIGN(cmh->cmsg_len);
  return(0);
 }
 
@@ -1345,9 +1354,10 @@ static int externalize_process_rights(EXTERN_STATE *s)
  cmh.cmsg_level = SOL_SOCKET;
  cmh.cmsg_type = SCM_RIGHTS;
  ep = s->ebuf + s->eoff;
- bzero(ep,CMSG_SPACE(s->nfds*sizeof(int)));
- bcopy(&cmh,ep,sizeof(struct cmsghdr));
- ep += CMSG_ALIGN(sizeof(struct cmsghdr));
+ i = sizeof(struct cmsghdr);
+ bcopy(&cmh,ep,i);
+ if (i != CMSG_SPACE(0)) bzero(ep+i,CMSG_SPACE(0)-i);
+ ep += CMSG_SPACE(0);
  while <"retry"> (1)
   { for (i=s->nfds-1;i>=0;i--)
      { e = fd_alloc(p,0,&s->fds[i]);
@@ -1363,8 +1373,10 @@ static int externalize_process_rights(EXTERN_STATE *s)
      }
     break;
   }
- bcopy(&s->fds[0],ep,s->nfds*sizeof(int));
- s->eoff += CMSG_SPACE(s->nfds*sizeof(int));
+ i = s->nfds * sizeof(int);
+ bcopy(&s->fds[0],ep,i);
+ if (i != CMSG_ALIGN(i)) bzero(ep+i,CMSG_ALIGN(i)-i);
+ s->eoff += CMSG_SPACE(i);
  for (i=s->nfds-1;i>=0;i--)
   { fp = s->files[i];
     atomic_dec_uint(&unp_rights);
@@ -1387,11 +1399,26 @@ static void externalize_backout_rights(EXTERN_STATE *s)
   }
 }
 
+static void externalize_backout_memory(EXTERN_STATE *s, struct socket_memory *sm, int nsm)
+{
+ struct vm_map *map;
+
+ map = &s->l->l_proc->p_vmspace->vm_map;
+ for (;nsm>0;nsm--,sm++) uvm_unmap(map,(vaddr_t)sm->base,sm->size);
+}
+
 static int externalize_process_memory(EXTERN_STATE *s)
 {
  struct cmsghdr cmh;
  char *ep;
  int i;
+ vaddr_t dstva;
+ struct vm_map *dstmap;
+ vaddr_t pgva;
+ INFLIGHT_MEMORY *im;
+ int j;
+ int j0;
+ int e;
 
  if (s->nmem < 1) return(0);
  bzero(&cmh,sizeof(cmh));
@@ -1402,12 +1429,64 @@ static int externalize_process_memory(EXTERN_STATE *s)
  bzero(ep,CMSG_SPACE(s->nfds*sizeof(int)));
  bcopy(&cmh,ep,sizeof(struct cmsghdr));
  ep += sizeof(struct cmsghdr);
+ dstmap = &s->l->l_proc->p_vmspace->vm_map;
  for (i=s->nmem-1;i>=0;i--)
-  { // XXX create VM here
-    s->sm[i] = s->im[i].sm;
+  { im = &s->im[i];
+    dstva = (dstmap->flags & VM_MAP_TOPDOWN) ? vm_map_max(dstmap) : vm_map_min(dstmap);
+    if (! uvm_map_reserve(dstmap,im->u.im.npages*PAGE_SIZE,0,0,&dstva,0))
+     {
+#ifdef DEBUG_UNP_CTL
+       printf("externalize_process_memory: uvm_map_reserve failed\n");
+#endif
+       if (i < s->nmem-1) externalize_backout_memory(s,&s->sm[i+1],s->nmem-1-i);
+       return(ENOMEM);
+     }
+#ifdef DEBUG_UNP_CTL
+    printf("externalize_process_memory: pages");
+    for (j=0;j<im->u.im.npages;j++) printf(" %p",(void *)im->u.im.pgv[j]);
+    printf("\n");
+#endif
+    j0 = -1;
+    for (j=0;j<im->u.im.npages;j++)
+     { if (j0 < 0)
+	{ j0 = j;
+	  continue;
+	}
+       if (im->u.im.pgv[j] == im->u.im.pgv[j-1]+PAGE_SIZE) continue;
+       pgva = dstva + (j0 * PAGE_SIZE);
+       e = uvm_map_extract(&unp_mem_map,im->u.im.pgv[j0],(j-j0)*PAGE_SIZE,dstmap,&pgva,UVM_EXTRACT_RESERVED);
+       if (e)
+	{
+#ifdef DEBUG_UNP_CTL
+	  printf("externalize_process_memory: uvm_map_extract 1 (%d@%p [%d]) failed\n",j-j0,(void *)im->u.im.pgv[j0],j0);
+#endif
+	  if (j0 > 0) uvm_unmap(dstmap,dstva,j0*PAGE_SIZE);
+	  if (i < s->nmem-1) externalize_backout_memory(s,&s->sm[i+1],s->nmem-1-i);
+	  return(e);
+	}
+       j0 = -1;
+     }
+    if (j0 >= 0)
+     { pgva = dstva + (j0 * PAGE_SIZE);
+       e = uvm_map_extract(&unp_mem_map,im->u.im.pgv[j0],(j-j0)*PAGE_SIZE,dstmap,&pgva,UVM_EXTRACT_RESERVED);
+       if (e)
+	{
+#ifdef DEBUG_UNP_CTL
+	  printf("externalize_process_memory: uvm_map_extract 2 (%d@%p [%d]) failed\n",j-j0,(void *)im->u.im.pgv[j0],j0);
+#endif
+	  if (j0 > 0) uvm_unmap(dstmap,dstva,j0*PAGE_SIZE);
+	  if (i < s->nmem-1) externalize_backout_memory(s,&s->sm[i+1],s->nmem-1-i);
+	  return(e);
+	}
+     }
+    s->sm[i].base = (void *)dstva;
+    s->sm[i].size = im->u.im.npages * PAGE_SIZE;
   }
  bcopy(&s->sm[0],ep,s->nmem*sizeof(struct socket_memory));
- s->eoff += CMSG_LEN(s->nmem*sizeof(struct socket_memory));
+ i = s->nmem * sizeof(struct socket_memory);
+ if (CMSG_SPACE(i) != CMSG_LEN(i)) bzero(ep+i,CMSG_SPACE(i)-CMSG_LEN(i));
+ s->eoff += CMSG_SPACE(i);
+ free_inflight_memory((void *)&s->im[0],s->nmem);
  return(0);
 }
 
@@ -1417,22 +1496,57 @@ static void externalize_finish(EXTERN_STATE *s)
  s->imb->m_len = s->eoff;
 }
 
+#ifdef DEBUG_UNP_CTL
+static void dump_holding_map(const char *when)
+{
+ struct vm_map *m;
+ struct vm_map_entry *e;
+
+ printf("holding map at %s:\n",when);
+ m = &unp_mem_map;
+ printf("  flags %08x nentries %d size %llu\n",m->flags,m->nentries,(unsigned long long int)m->size);
+ vm_map_lock_read(m);
+ for (e=m->header.next;e!=&m->header;e=e->next)
+  { printf("  %p:",(void *)e);
+    if (e->etype & UVM_ET_OBJ) printf(" +OBJ"); else printf(" -obj");
+    if (e->etype & UVM_ET_SUBMAP) printf(" +SUBMAP"); else printf(" -submap");
+    if (e->etype & UVM_ET_COPYONWRITE) printf(" +COW"); else printf(" -cow");
+    if (e->etype & UVM_ET_NEEDSCOPY) printf(" +NC"); else printf(" -nc");
+    printf("\n  %c%c%c %c%c%c %p..%p\n",
+	(e->protection & VM_PROT_READ) ? 'r' : '-',
+	(e->protection & VM_PROT_WRITE) ? 'w' : '-',
+	(e->protection & VM_PROT_EXECUTE) ? 'x' : '-',
+	(e->max_protection & VM_PROT_READ) ? 'r' : '-',
+	(e->max_protection & VM_PROT_WRITE) ? 'w' : '-',
+	(e->max_protection & VM_PROT_EXECUTE) ? 'x' : '-',
+	(void *)e->start, (void *)e->end);
+  }
+ vm_map_unlock_read(m);
+}
+#endif
+
 /*
  * Convert a control message from internal form to external form.  l is
  *  the receiving lwp (the one into which we should, for example, drop
- *  fds created for SCM_RIGHTS messages).  This is, approximately, the
- *  converse of unp_internalize().
+ *  fds created for SCM_RIGHTS messages).  This is the converse of
+ *  unp_internalize().
+ *
+ * Notably, this processes a single mbuf, not an mbuf chain.  It is
+ *  expected to do any of the actions of unp_dispose that need doing.
  *
  * There is a bit of an API botch here.  Our caller assumes that we
  *  will overwrite the contents of rights and adjust its length.  This
  *  means the external form cannot be longer than the internal form!
+ *  In particular, this means that file_t * must be no smaller than
+ *  int, and struct socket_memory must be no smaller than
+ *  INFLIGHT_MEMORY.  We check these.
  *
- * In particular, this means that file_t * must be no smaller than int,
- *  and struct socket_memory must be no smaller than INFLIGHT_MEMORY.
- *  We check these.
+ * If we really have to return more data, we can do it by chaining
+ *  another mbuf off the argument one.  But it's not clear whether
+ *  that's part of the API or an accident of our caller's
+ *  implementation....
  *
- * (*dom_externalize)()'s API should have passed a struct mbuf **, the
- *  way unp_internalize's does.
+ * If we return an error, we are still expected to dispose of rights.
  */
 int unp_externalize(struct mbuf *rights, struct lwp *l)
 {
@@ -1455,14 +1569,18 @@ int unp_externalize(struct mbuf *rights, struct lwp *l)
     i = 0;
     while (s.ioff < rights->m_len)
      { if (s.ioff+sizeof(struct cmsghdr) > rights->m_len)
-	{ printf("unp_externalize: off %d + msghdr %d > m_len %d\n",s.ioff,(int)sizeof(struct cmsghdr),(int)rights->m_len);
-	  i = 0;
+	{ i = 0;
+#ifdef DEBUG_UNP_CTL
+	  printf("unp_externalize: off %d + msghdr %d > m_len %d\n",s.ioff,(int)sizeof(struct cmsghdr),(int)rights->m_len);
+#endif
 	  break;
 	}
        bcopy(mtod(rights,char *)+s.ioff,&cmh,sizeof(struct cmsghdr));
        if (s.ioff+cmh.cmsg_len > rights->m_len)
-	{ printf("unp_externalize: off %d + cmsg_len %d > m_len %d\n",s.ioff,(int)cmh.cmsg_len,(int)rights->m_len);
-	  i = 0;
+	{ i = 0;
+#ifdef DEBUG_UNP_CTL
+	  printf("unp_externalize: off %d + cmsg_len %d > m_len %d\n",s.ioff,(int)cmh.cmsg_len,(int)rights->m_len);
+#endif
 	  break;
 	}
        switch (cmh.cmsg_type)
@@ -1477,6 +1595,7 @@ int unp_externalize(struct mbuf *rights, struct lwp *l)
   }
 #ifdef DEBUG_UNP_CTL
  dump_mbuf_chain(rights,"unp_externalize entry");
+ dump_holding_map("unp_externalize entry");
 #endif
  m = m_get(M_WAIT,MT_CONTROL);
  MEXTMALLOC(m,rights->m_len,M_WAIT);
@@ -1504,21 +1623,21 @@ int unp_externalize(struct mbuf *rights, struct lwp *l)
     switch (cmh.cmsg_type)
      { case SCM_RIGHTS:
 #ifdef DEBUG_UNP_CTL
-	  printf(" rights:");
+	  printf(" rights\n");
 #endif
 	  s.err = externalize_gather_rights(&s);
 #ifdef DEBUG_UNP_CTL
-	  printf(" err %d eoff now %d\n",s.err,s.eoff);
+	  printf("unp_externalize: after rights, err %d eoff now %d\n",s.err,s.eoff);
 #endif
 	  break;
        case SCM_MEMORY:
 #ifdef DEBUG_UNP_CTL
-	  printf(" memory:");
+	  printf(" memory\n");
 #endif
 	  s.err = externalize_gather_memory(&s);
 
 #ifdef DEBUG_UNP_CTL
-	  printf(" err %d eoff now %d\n",s.err,s.eoff);
+	  printf("unp_externalize: after memory, err %d eoff now %d\n",s.err,s.eoff);
 #endif
 	  break;
        default:
@@ -1527,7 +1646,7 @@ int unp_externalize(struct mbuf *rights, struct lwp *l)
 #endif
 	  s.err = externalize_copy(&s);
 #ifdef DEBUG_UNP_CTL
-	  printf(" err %d eoff now %d\n",s.err,s.eoff);
+	  printf("unp_externalize: after other, err %d eoff now %d\n",s.err,s.eoff);
 #endif
 	  break;
      }
@@ -1537,20 +1656,48 @@ int unp_externalize(struct mbuf *rights, struct lwp *l)
 #ifdef DEBUG_UNP_CTL
  printf("unp_externalize: nfds %d nmem %d eoff %d\n",s.nfds,s.nmem,s.eoff);
 #endif
- if (! s.err)
-  { s.err = externalize_process_rights(&s);
+ if (s.err)
+  {
+#ifdef DEBUG_UNP_CTL
+    printf("unp_externalize: s.err %d, discarding fds\n",s.err);
+#endif
+    for (i=s.nfds-1;i>=0;i--) unp_discard_later(s.files[i]);
+  }
+ else
+  {
+#ifdef DEBUG_UNP_CTL
+    printf("unp_externalize: calling externalize_process_rights\n");
+#endif
+    s.err = externalize_process_rights(&s);
 #ifdef DEBUG_UNP_CTL
     printf("unp_externalize: processed rights, err %d eoff %d\n",s.err,s.eoff);
 #endif
   }
- if (! s.err)
-  { s.err = externalize_process_memory(&s);
+ if (s.err)
+  {
+#ifdef DEBUG_UNP_CTL
+    printf("unp_externalize: s.err %d, freeing inflight memory\n",s.err);
+#endif
+    free_inflight_memory((void *)&s.im[0],s.nmem);
+  }
+ else
+  {
+#ifdef DEBUG_UNP_CTL
+    printf("unp_externalize: calling externalize_process_memory\n");
+#endif
+    s.err = externalize_process_memory(&s);
 #ifdef DEBUG_UNP_CTL
     printf("unp_externalize: processed memory, err %d eoff %d\n",s.err,s.eoff);
 #endif
-    if (s.err) externalize_backout_rights(&s);
+    if (s.err)
+     {
+#ifdef DEBUG_UNP_CTL
+       printf("unp_externalize: s.err %d, backing out rights\n",s.err);
+#endif
+       externalize_backout_rights(&s);
+     }
   }
- if (s.eoff > rights->m_len) panic("externalize_finish: message grew (%d > %d)",s.eoff,(int)rights->m_len);
+ if (s.eoff > rights->m_len) panic("unp_externalize: message grew (%d > %d)",s.eoff,(int)rights->m_len);
  if (! s.err)
   { m->m_len = s.eoff;
 #ifdef DEBUG_UNP_CTL
@@ -1559,6 +1706,9 @@ int unp_externalize(struct mbuf *rights, struct lwp *l)
   }
  if (! s.err) externalize_finish(&s);
  m_free(m);
+#ifdef DEBUG_UNP_CTL
+ dump_holding_map("unp_externalize exit");
+#endif
  return(s.err);
 }
 
@@ -1576,17 +1726,6 @@ static void internalize_release_fds(void *fpv, int n)
 
  fp = fpv;
  for (;n>0;n--,fp++) unp_discard_now(fp);
-}
-
-static void internalize_release_memory(void *imv, int n)
-{
- INFLIGHT_MEMORY *im;
-
- im = imv;
- // XXX do something real here!
- (void)im;
- (void)n;
- // for (;n>0;n--,im++) ...;
 }
 
 // Pretty much the old unp_internalize, atrocious style and all.
@@ -1685,19 +1824,61 @@ out:
  return(error);
 }
 
+void free_cmsg_rights(char *fvp, int nfp)
+{
+ file_t **fpp;
+
+ fpp = (void *)fvp;
+ for (;nfp>0;nfp--,fpp++)
+  { unp_discard_later(*fpp);
+    *fpp = 0;
+  }
+}
+
+void free_inflight_memory(char *imp, int nim)
+{
+ INFLIGHT_MEMORY im;
+ int i;
+
+#ifdef DEBUG_UNP_CTL
+ printf("free_inflight_memory:");
+#endif
+ for (;nim>0;nim--,imp+=sizeof(INFLIGHT_MEMORY))
+  { bcopy(imp,&im,sizeof(INFLIGHT_MEMORY));
+#ifdef DEBUG_UNP_CTL
+    printf(" <%u@%p:",im.u.im.npages,(void *)im.u.im.pgv);
+    for (i=0;i<im.u.im.npages;i++) printf(" %p",(void *)im.u.im.pgv[i]);
+    printf(">");
+#endif
+    if (im.u.im.npages < 1) continue;
+    for (i=im.u.im.npages-1;i>=0;i--) uvm_unmap(&unp_mem_map,im.u.im.pgv[i],im.u.im.pgv[i]+PAGE_SIZE);
+    free(im.u.im.pgv,M_SOCKMEM);
+    im.u.im.npages = 0;
+    im.u.im.pgv = 0;
+    bcopy(&im,imp,sizeof(INFLIGHT_MEMORY));
+  }
+#ifdef DEBUG_UNP_CTL
+ printf("\n");
+#endif
+}
+
 static int internalize_memory(struct cmsghdr *cm, INTERN_STATE *s)
 {
  int nmb;
  struct cmsghdr nmh;
  struct socket_memory sm;
  INFLIGHT_MEMORY im;
-// "shadows a global declaration" - so the fsck what?!
-// char *nbuf;
- char *nbuf_;
-#define nbuf nbuf_
+ char *newbuf;
  int nbsp;
  struct mbuf *m;
  int i;
+ int totsiz;
+ int j;
+ int npgs;
+ vaddr_t *pxv;
+ int k;
+ vaddr_t mapped;
+ int e;
 
  nmb = (cm->cmsg_len - sizeof(struct cmsghdr)) / sizeof(struct socket_memory);
  if (s->nmem+nmb > SCM_MEMORY_MAX) return(EMSGSIZE);
@@ -1708,27 +1889,83 @@ static int internalize_memory(struct cmsghdr *cm, INTERN_STATE *s)
     return(EINVAL);
   }
  nbsp = sizeof(struct cmsghdr) + (nmb * sizeof(INFLIGHT_MEMORY));
- nbuf = malloc(CMSG_ALIGN(nbsp),M_MBUF,M_WAITOK);
- for (i=nmb-1;i>=0;i--)
-  { bcopy(((char *)(cm+1))+(i*sizeof(struct socket_memory)),&sm,sizeof(struct socket_memory));
-    // XXX validate and do real internalize here!
-    im.sm = sm;
-    bcopy(&im,nbuf+sizeof(struct cmsghdr)+(i*sizeof(INFLIGHT_MEMORY)),sizeof(INFLIGHT_MEMORY));
-  }
- nmh.cmsg_len = sizeof(struct cmsghdr) + (nmb*sizeof(INFLIGHT_MEMORY));
- nmh.cmsg_level = SOL_SOCKET;
- nmh.cmsg_type = SCM_MEMORY;
- bcopy(&nmh,nbuf,sizeof(struct cmsghdr));
- m = m_get(M_WAIT,MT_CONTROL);
- MEXTADD(m,nbuf,nbsp,M_MBUF,0,0);
- m->m_len = CMSG_ALIGN(nbsp);
+ newbuf = malloc(CMSG_ALIGN(nbsp),M_MBUF,M_WAITOK);
+ do <"err">
+  { // Validate and compute total size
+    totsiz = 0;
+    for (i=nmb-1;i>=0;i--)
+     { bcopy(((char *)(cm+1))+(i*sizeof(struct socket_memory)),&sm,sizeof(struct socket_memory));
+       if ( (((vaddr_t)sm.base) & PAGE_MASK) ||
+	    (sm.size & PAGE_MASK) )
+	{ e = EINVAL;
+	  break <"err">;
+	}
+       totsiz += sm.size;
+     }
+    totsiz /= PAGE_SIZE;
+    do <"err">
+     { // There's enough space.  Find pages and save them.
+       for (i=nmb-1;i>=0;i--)
+	{ bcopy(((char *)(cm+1))+(i*sizeof(struct socket_memory)),&sm,sizeof(struct socket_memory));
+	  npgs = sm.size / PAGE_SIZE;
+	  MALLOC(pxv,vaddr_t *,npgs*sizeof(vaddr_t),M_SOCKMEM,M_WAITOK);
+	  mutex_enter(&unp_mem_mutex);
+	  e = 0;
+	  // We really want something more like unwind-protect, here
+	  do <"err">
+	   { /*
+	      * Try to grab it all as one chunk.  If we succeed, win.
+	      *	If not, break it down and do each page separately.
+	      *	Because we checked unp_mem, above, we_should never run
+	      *	out of space, so any error from the second attempt is a
+	      *	real error.  On error, just uvm_unmap what we mapped in
+	      *	unp_mem_map and return the error.
+	      */
+	     e = uvm_map_extract( &curlwp->l_proc->p_vmspace->vm_map, (vaddr_t)(char *)sm.base, sm.size,
+				  &unp_mem_map, &mapped, 0 );
+	     if (e == ENOMEM)
+	      { for <"pages"> (j=(sm.size/PAGE_SIZE)-1;j>=0;j--)
+		 { e = uvm_map_extract( &curlwp->l_proc->p_vmspace->vm_map, (vaddr_t)(((char *)sm.base)+(j*PAGE_SIZE)), PAGE_SIZE,
+					&unp_mem_map, &mapped, 0 );
+		   if (e)
+		    { for (k=(sm.size/PAGE_SIZE)-1;k>j;k--) uvm_unmap(&unp_mem_map,pxv[k],pxv[k]+PAGE_SIZE);
+		      break <"err">;
+		    }
+		   pxv[j] = mapped;
+		 }
+	      }
+	     else
+	      { for (j=(sm.size/PAGE_SIZE)-1;j>=0;j--)
+		 { pxv[j] = mapped + (j * PAGE_SIZE);
+		 }
+	      }
+	     im.u.im.npages = npgs;
+	     im.u.im.pgv = pxv;
+	     pxv = 0;
+	     bcopy(&im,newbuf+sizeof(struct cmsghdr)+(i*sizeof(INFLIGHT_MEMORY)),sizeof(INFLIGHT_MEMORY));
+	   } while (0);
+	  mutex_exit(&unp_mem_mutex);
+	  if (pxv) FREE(pxv,M_SOCKMEM);
+	  if (e) break <"err">;
+	}
+       nmh.cmsg_len = sizeof(struct cmsghdr) + (nmb*sizeof(INFLIGHT_MEMORY));
+       nmh.cmsg_level = SOL_SOCKET;
+       nmh.cmsg_type = SCM_MEMORY;
+       bcopy(&nmh,newbuf,sizeof(struct cmsghdr));
+       m = m_get(M_WAIT,MT_CONTROL);
+       MEXTADD(m,newbuf,nbsp,M_MBUF,0,0);
+       m->m_len = CMSG_ALIGN(nbsp);
 #ifdef DEBUG_UNP_CTL
- printf("internalize_memory: appending %p (%d)\n",(void *)m,m->m_len);
+       printf("internalize_memory: appending %p (%d)\n",(void *)m,m->m_len);
 #endif
- *s->newctlt = m;
- s->newctlt = &m->m_next;
- return(0);
-#undef nbuf
+       *s->newctlt = m;
+       s->newctlt = &m->m_next;
+       return(0);
+     } while (0);
+    free_inflight_memory(newbuf+sizeof(struct cmsghdr)+(i*sizeof(INFLIGHT_MEMORY)),nmb-1-i);
+  } while (0);
+ free(newbuf,M_WAITOK);
+ return(e);
 }
 
 static void internalize_backout_rights(struct mbuf *m)
@@ -1749,8 +1986,17 @@ static void internalize_backout_memory(struct mbuf *m)
  if (m->m_len < sizeof(struct cmsghdr)) panic("internalize_backout_rights: impossible size");
  dp = mtod(m,char *);
  bcopy(dp,&cmh,sizeof(struct cmsghdr));
- if (cmh.cmsg_type != SCM_RIGHTS) panic("internalize_backout_memory: impossible type");
- internalize_release_memory(dp+sizeof(struct cmsghdr),(cmh.cmsg_len-sizeof(struct cmsghdr))/sizeof(INFLIGHT_MEMORY));
+ if (cmh.cmsg_type != SCM_MEMORY) panic("internalize_backout_memory: impossible type");
+#ifdef DIAGNOSTIC
+  { int i;
+    i = (cmh.cmsg_len - sizeof(struct cmsghdr)) % sizeof(INFLIGHT_MEMORY);
+    if (i)
+     { printf("internalize_backout_memory: leftover bytes in message: (%d-%d) %% %d = %d\n",
+	(int)cmh.cmsg_len,(int)sizeof(struct cmsghdr),(int)sizeof(INFLIGHT_MEMORY),i);
+     }
+  }
+#endif
+ free_inflight_memory(dp+sizeof(struct cmsghdr),(cmh.cmsg_len-sizeof(struct cmsghdr))/sizeof(INFLIGHT_MEMORY));
 }
 
 static void internalize_backout(struct mbuf *m)
@@ -1835,6 +2081,7 @@ int unp_internalize(struct mbuf **controlp)
  ctlm = *controlp;
 #ifdef DEBUG_UNP_CTL
  dump_mbuf_chain(ctlm,"unp_internalize entry");
+ dump_holding_map("unp_internalize entry");
 #endif
  off = 0;
  s.nfds = 0;
@@ -1943,6 +2190,9 @@ int unp_internalize(struct mbuf **controlp)
     dump_mbuf_chain(newctl,"unp_internalize exit");
 #endif
   }
+#ifdef DEBUG_UNP_CTL
+ dump_holding_map("unp_internalize exit");
+#endif
  return(e);
 }
 
@@ -2220,46 +2470,82 @@ unp_thread_kick(void)
 	}
 }
 
-void
-unp_dispose(struct mbuf *m)
+static void unp_dispose_msg(void *sv, struct cmsghdr *mh)
 {
-
-	if (m)
-		unp_scan(m, unp_discard_later, 1);
+ (void)sv;
+ if (mh->cmsg_level != SOL_SOCKET) return;
+ switch (mh->cmsg_type)
+  { case SCM_RIGHTS:
+       // already handled by unp_scan - see unp_dispose()
+       break;
+    case SCM_MEMORY:
+       free_inflight_memory((void *)(mh+1),(mh->cmsg_len-sizeof(struct cmsghdr))/sizeof(INFLIGHT_MEMORY));
+       break;
+  }
 }
 
-void
-unp_scan(struct mbuf *m0, void (*op)(file_t *), int discard)
+/*
+ * Deal with anything that needs dealing with before the mbuf chain is
+ *  freed.
+ *
+ * We call unp_scan to handle file descriptors in SCM_RIGHTS messages,
+ *  then use walk_control_msgs with unp_dispose_*() (above) to handle
+ *  others (at this writing, only SCM_MEMORY).
+ */
+void unp_dispose(struct mbuf *m)
 {
-	struct mbuf *m;
-	file_t **rp, *fp;
-	struct cmsghdr *cm;
-	int i, qfds;
+ if (! m) return;
+ unp_scan(m,&unp_discard_later,1);
+ walk_control_msgs(m,0,&unp_dispose_msg,0);
+}
 
-	while (m0) {
-		for (m = m0; m; m = m->m_next) {
-			if (m->m_type != MT_CONTROL ||
-			    m->m_len < sizeof(*cm)) {
-			    	continue;
-			}
-			cm = mtod(m, struct cmsghdr *);
-			if (cm->cmsg_level != SOL_SOCKET ||
-			    cm->cmsg_type != SCM_RIGHTS)
-				continue;
-			qfds = (cm->cmsg_len - CMSG_ALIGN(sizeof(*cm)))
-			    / sizeof(file_t *);
-			rp = (file_t **)CMSG_DATA(cm);
-			for (i = 0; i < qfds; i++) {
-				fp = *rp;
-				if (discard) {
-					*rp = 0;
-				}
-				(*op)(fp);
-				rp++;
-			}
-		}
-		m0 = m0->m_nextpkt;
-	}
+typedef struct usstate USSTATE;
+struct usstate {
+  int clear;
+  void (*op)(file_t *);
+  } ;
+
+static void unp_scan_msg(void *sv, struct cmsghdr *mh)
+{
+ USSTATE *s;
+ int nfds;
+ file_t **fpp;
+ file_t *fp;
+ int i;
+
+ s = sv;
+ if (mh->cmsg_level != SOL_SOCKET) return;
+ if (mh->cmsg_type != SCM_RIGHTS) return;
+#ifdef DIAGNOSTIC
+ i = (mh->cmsg_len - CMSG_ALIGN(sizeof(struct cmsghdr))) % sizeof(file_t *);
+ if (i) printf("unp_scan: partial pointer in SCM_RIGHTS message ((%d-%d) %% %d = %d)\n",
+	(int)mh->cmsg_len,(int)CMSG_ALIGN(sizeof(struct cmsghdr)),(int)sizeof(file_t *),i);
+#endif
+ nfds = (mh->cmsg_len - CMSG_ALIGN(sizeof(struct cmsghdr))) / sizeof(file_t *);
+ fpp = (void *)CMSG_DATA(mh);
+ for (i=0;i<nfds;i++)
+  { fp = fpp[i];
+    if (s->clear) fpp[i] = 0;
+    (*s->op)(fp);
+  }
+}
+
+/*
+ * Scan an mbuf chain, calling op for each fd in each SCM_RIGHTS
+ *  control message in the chain.  This doesn't do anything with other
+ *  SCM_ messages; the calls in unp_gc are just about files, and the
+ *  only other call, in unp_dispose, handles non-SCM_RIGHTS messages
+ *  separately.
+ *
+ * Freeing the mbuf chain, when appropriate, must be done elsewhere.
+ */
+static void unp_scan(struct mbuf *m0, void (*op)(file_t *), int clear)
+{
+ USSTATE s;
+
+ s.clear = clear;
+ s.op = op;
+ walk_control_msgs(m0,0,&unp_scan_msg,&s);
 }
 
 void
