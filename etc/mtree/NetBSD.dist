@@ -499,7 +499,6 @@
 ./usr/include/readline
 ./usr/include/rpc
 ./usr/include/rpcsvc
-./usr/include/rump
 ./usr/include/security
 ./usr/include/sys
 ./usr/include/ssp

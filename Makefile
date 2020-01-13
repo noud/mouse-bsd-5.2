@@ -234,7 +234,6 @@ BUILDTARGET+=	do-libpcc
 .endif
 BUILDTARGETS+=	do-lib-libc
 BUILDTARGETS+=	do-lib do-gnu-lib do-external-lib
-BUILDTARGETS+=	do-sys-rump-fs-lib do-sys-rump-net-lib
 .if ${MKCOMPAT} != "no"
 BUILDTARGETS+=	do-compat-lib-csu
 BUILDTARGETS+=	do-compat-libgcc

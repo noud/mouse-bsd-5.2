@@ -86,8 +86,6 @@ SUBDIR+=	libkrb5		# depends on libcrypto and more
 
 SUBDIR+=	librefuse	# depends on libpuffs
 
-SUBDIR+=	librumpuser	# depends on libpthread
-
 # XXX These bind9/ISC libraries should depend on each other but the
 # XXX dependency ordering requires considerable investigation.
 # XXX Please preserve the order below so we know the order ISC links
@@ -109,20 +107,11 @@ SUBDIR+=	.WAIT libkadm5srv libkadm5clnt libkafs libsl libss
 SUBDIR+=	../external/bsd/openldap/lib
 .endif
 
-SUBDIR+=	librump		# depends on librumpuser
-
 #==================== 3rd library dependency barrier ====================
 SUBDIR+=	.WAIT
 
 .if (${MKPAM} != "no")
 SUBDIR+=	libpam		# depends on libkrb5, libkafs and more
 .endif
-
-SUBDIR+=	librumpnet	# depends on librump
-SUBDIR+=	libukfs		# depends on librump
-
-#==================== 4th library dependency barrier ====================
-SUBDIR+=	.WAIT
-SUBDIR+=	libp2k		# depends on libpuffs and libukfs
 
 .include <bsd.subdir.mk>

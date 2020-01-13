@@ -166,12 +166,6 @@
 ./usr/lib/sparc/librpcsvc.so.0.0		base-compat-shlib	compat,pic
 ./usr/lib/sparc/librt.so.0			base-compat-shlib	compat,pic
 ./usr/lib/sparc/librt.so.0.0			base-compat-shlib	compat,pic
-./usr/lib/sparc/librump.so.0			base-compat-shlib	compat,pic
-./usr/lib/sparc/librump.so.0.0			base-compat-shlib	compat,pic
-./usr/lib/sparc/librumpnet.so.0			base-compat-shlib	compat,pic
-./usr/lib/sparc/librumpnet.so.0.0		base-compat-shlib	compat,pic
-./usr/lib/sparc/librumpuser.so.0		base-compat-shlib	compat,pic
-./usr/lib/sparc/librumpuser.so.0.0		base-compat-shlib	compat,pic
 ./usr/lib/sparc/libsdp.so.2			base-compat-shlib	compat,pic
 ./usr/lib/sparc/libsdp.so.2.0			base-compat-shlib	compat,pic
 ./usr/lib/sparc/libskey.so.1			base-compat-shlib	compat,pic

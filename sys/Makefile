@@ -14,8 +14,4 @@ SUBDIR+=lkm modules
 includes-lkm:
 	@true
 
-.if make(obj) || make(cleandir)
-SUBDIR+= rump
-.endif
-
 .include <bsd.kinc.mk>

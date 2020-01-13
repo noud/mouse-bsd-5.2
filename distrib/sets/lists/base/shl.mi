@@ -112,27 +112,6 @@
 ./usr/lib/libroken.so.13.0			base-krb5-shlib		kerberos
 ./usr/lib/librpcsvc.so.0.0			base-net-shlib
 ./usr/lib/librt.so.0.0				base-sys-shlib
-./usr/lib/librump.so.0.0			base-sys-shlib
-./usr/lib/librumpfs_cd9660.so.0.0		base-sys-shlib
-./usr/lib/librumpfs_efs.so.0.0			base-sys-shlib
-./usr/lib/librumpfs_ext2fs.so.0.0		base-sys-shlib
-./usr/lib/librumpfs_ffs.so.0.0			base-sys-shlib
-./usr/lib/librumpfs_hfs.so.0.0			base-sys-shlib
-./usr/lib/librumpfs_lfs.so.0.0			base-sys-shlib
-./usr/lib/librumpfs_msdos.so.0.0		base-sys-shlib
-./usr/lib/librumpfs_nfs.so.0.0			base-sys-shlib
-./usr/lib/librumpfs_ntfs.so.0.0			base-sys-shlib
-./usr/lib/librumpfs_syspuffs.so.0.0		base-sys-shlib
-./usr/lib/librumpfs_sysvbfs.so.0.0		base-sys-shlib
-./usr/lib/librumpfs_tmpfs.so.0.0		base-sys-shlib
-./usr/lib/librumpfs_udf.so.0.0			base-sys-shlib
-./usr/lib/librumpfs_ufs.so.0.0			base-sys-shlib
-./usr/lib/librumpnet.so.0.0			base-sys-shlib
-./usr/lib/librumpnet_net.so.0.0			base-sys-shlib
-./usr/lib/librumpnet_netinet.so.0.0		base-sys-shlib
-./usr/lib/librumpnet_sockin.so.0.0		base-sys-shlib
-./usr/lib/librumpnet_virtif.so.0.0		base-sys-shlib
-./usr/lib/librumpuser.so.0.0			base-sys-shlib
 ./usr/lib/libsdp.so.2.0				base-sys-shlib
 ./usr/lib/libskey.so.1.0			base-sys-shlib		skey
 ./usr/lib/libsl.so.3.0				base-krb5-shlib		kerberos

@@ -1,9 +1,0 @@
-#	$NetBSD
-#
-
-RUMPNETLIST=	sockin virtif net netinet
-
-.for var in ${RUMPNETLIST}
-RUMPNETLIBS+=lib${var}
-RUMPNETLDADD+=-lrumpnet_${var}
-.endfor
