@@ -2129,8 +2129,7 @@ int unp_internalize(struct mbuf **controlp)
        e = EINVAL;
        break;
      }
-    if ( (cm->cmsg_level != SOL_SOCKET) ||
-	 (off+cm->cmsg_len > ctlm->m_len) )
+    if (cm->cmsg_level != SOL_SOCKET)
      { e = EINVAL;
        break;
      }
