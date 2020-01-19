@@ -2133,12 +2133,12 @@ int unp_internalize(struct mbuf **controlp)
      { e = EINVAL;
        break;
      }
+    if (cm->cmsg_len < CMSG_ALIGN(sizeof(struct cmsghdr)))
+     { e = EINVAL;
+       break;
+     }
     switch (cm->cmsg_type)
      { case SCM_RIGHTS:
-	  if (cm->cmsg_len < CMSG_ALIGN(sizeof(struct cmsghdr)))
-	   { e = EINVAL;
-	     break <"done">;
-	   }
 #ifdef DEBUG_UNP_CTL
 	  printf("unp_internalize: rights\n");
 #endif
