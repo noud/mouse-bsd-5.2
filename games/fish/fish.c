@@ -440,7 +440,14 @@ instructions(void)
 
 	(void)printf("Would you like instructions (y or n)? ");
 	input = getchar();
-	while (getchar() != '\n');
+ if (input != '\n')
+  { while (1)
+     { int c;
+       c = getchar();
+       if (c == '\n') break;
+       if (c == EOF) exit(0);
+     }
+  }
 	if (input != 'y')
 		return;
 
