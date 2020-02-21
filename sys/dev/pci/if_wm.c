@@ -1161,10 +1161,11 @@ wm_attach(device_t parent, device_t self, void *aux)
 			    PCI_MAPREG_TYPE_IO)
 				break;
 		}
-		if (i == PCI_MAPREG_END)
-			aprint_error_dev(sc->sc_dev,
-			    "WARNING: unable to find I/O BAR\n");
-		else {
+		if (i < PCI_MAPREG_END) {
+			// Don't complain if not; newer chips have no
+			//  I/O mapping registers, and that's fine
+			//  because they also don't have the bugs we
+			//  use I/O space to work around.
 			/*
 			 * The i8254x doesn't apparently respond when the
 			 * I/O BAR is 0, which looks somewhat like it's not
@@ -1223,6 +1224,7 @@ wm_attach(device_t parent, device_t self, void *aux)
 	 */
 	if ((sc->sc_type == WM_T_82546) || (sc->sc_type == WM_T_82546_3)
 	    || (sc->sc_type ==  WM_T_82571) || (sc->sc_type == WM_T_80003)
+	    || (sc->sc_type ==  WM_T_82580)
 	    || (sc->sc_type == WM_T_82575) || (sc->sc_type == WM_T_82576))
 		sc->sc_funcid = (CSR_READ(sc, WMREG_STATUS)
 		    >> STATUS_FUNCID_SHIFT) & STATUS_FUNCID_MASK;
@@ -3520,6 +3522,7 @@ wm_reset(struct wm_softc *sc)
 		break;
 	case WM_T_82575:
 	case WM_T_82576:
+	case WM_T_82580:
 	case WM_T_80003:
 	case WM_T_ICH8:
 	case WM_T_ICH9:
