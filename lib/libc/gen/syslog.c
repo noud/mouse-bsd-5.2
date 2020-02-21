@@ -222,7 +222,7 @@ vsyslog_r(int pri, struct syslog_data *data, const char *fmt, va_list ap)
 	if (!signal_safe) {
 		/* strftime() implies tzset(), localtime_r() doesn't. */
 		tzset();
-		prlen = strftime(p, tbuf_left, "%h %e %T ",
+		prlen = strftime(p, tbuf_left, "%Y-%m-%d %H:%M:%S ",
 		    localtime_r(&now, &tmnow));
 		DEC();
 	}
