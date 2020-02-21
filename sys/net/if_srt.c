@@ -194,20 +194,20 @@ static int srt_if_output(
   {
 #ifdef INET
     case AF_INET:
-#endif
 	{ struct ip *ip;
 	  ip = mtod(m,struct ip *);
 	  r = find_rt(sc,AF_INET,ip->ip_src);
 	}
        break;
+#endif
 #ifdef INET6
     case AF_INET6:
-#endif
 	{ struct ip6_hdr *ip;
 	  ip = mtod(m,struct ip6_hdr *);
 	  r = find_rt(sc,AF_INET6,ip->ip6_src);
 	}
        break;
+#endif
     default:
        IF_DROP(&intf->if_snd);
        m_freem(m);
