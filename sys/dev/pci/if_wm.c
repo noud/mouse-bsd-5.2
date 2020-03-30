@@ -5654,7 +5654,7 @@ wm_gmii_i82544_writereg(device_t self, int phy, int reg, int val)
  *
  *	Read a PHY register on the kumeran
  * This could be handled by the PHY layer if we didn't have to lock the
- * ressource ...
+ * resource ...
  */
 static int
 wm_gmii_i80003_readreg(device_t self, int phy, int reg)
@@ -5694,7 +5694,7 @@ wm_gmii_i80003_readreg(device_t self, int phy, int reg)
  *
  *	Write a PHY register on the kumeran.
  * This could be handled by the PHY layer if we didn't have to lock the
- * ressource ...
+ * resource ...
  */
 static void
 wm_gmii_i80003_writereg(device_t self, int phy, int reg, int val)
@@ -5732,7 +5732,7 @@ wm_gmii_i80003_writereg(device_t self, int phy, int reg, int val)
  *
  *	Read a PHY register on the kumeran
  * This could be handled by the PHY layer if we didn't have to lock the
- * ressource ...
+ * resource ...
  */
 static int
 wm_gmii_bm_readreg(device_t self, int phy, int reg)
@@ -5768,7 +5768,7 @@ wm_gmii_bm_readreg(device_t self, int phy, int reg)
  *
  *	Write a PHY register on the kumeran.
  * This could be handled by the PHY layer if we didn't have to lock the
- * ressource ...
+ * resource ...
  */
 static void
 wm_gmii_bm_writereg(device_t self, int phy, int reg, int val)
@@ -5843,7 +5843,7 @@ wm_access_phy_wakeup_reg_bm(device_t self, int offset, int16_t *val, int rd)
  *
  *	Read a PHY register on the kumeran
  * This could be handled by the PHY layer if we didn't have to lock the
- * ressource ...
+ * resource ...
  */
 static int
 wm_gmii_hv_readreg(device_t self, int phy, int reg)
@@ -5895,7 +5895,7 @@ wm_gmii_hv_readreg(device_t self, int phy, int reg)
  *
  *	Write a PHY register on the kumeran.
  * This could be handled by the PHY layer if we didn't have to lock the
- * ressource ...
+ * resource ...
  */
 static void
 wm_gmii_hv_writereg(device_t self, int phy, int reg, int val)
@@ -5949,7 +5949,7 @@ wm_gmii_hv_writereg(device_t self, int phy, int reg, int val)
  *
  *	Read a PHY register on the kumeran
  * This could be handled by the PHY layer if we didn't have to lock the
- * ressource ...
+ * resource ...
  */
 static int
 wm_sgmii_readreg(device_t self, int phy, int reg)
@@ -5992,7 +5992,7 @@ wm_sgmii_readreg(device_t self, int phy, int reg)
  *
  *	Write a PHY register on the kumeran.
  * This could be handled by the PHY layer if we didn't have to lock the
- * ressource ...
+ * resource ...
  */
 static void
 wm_sgmii_writereg(device_t self, int phy, int reg, int val)
