@@ -536,6 +536,8 @@ static int	wm_gmii_hv_readreg(device_t, int, int);
 static void	wm_gmii_hv_writereg(device_t, int, int, int);
 static int	wm_sgmii_readreg(device_t, int, int);
 static void	wm_sgmii_writereg(device_t, int, int, int);
+static int	wm_gmii_i82580_readreg(device_t, int, int);
+static void	wm_gmii_i82580_writereg(device_t, int, int, int);
 
 static void	wm_gmii_statchg(device_t);
 
@@ -5354,7 +5356,10 @@ wm_gmii_mediainit(struct wm_softc *sc, pci_product_id_t prodid)
 		sc->sc_mii.mii_writereg = wm_gmii_bm_writereg;
 		break;
 	default:
-		if ((sc->sc_flags & WM_F_SGMII) != 0) {
+		if (sc->sc_type == WM_T_82580) {
+			sc->sc_mii.mii_readreg = &wm_gmii_i82580_readreg;
+			sc->sc_mii.mii_writereg = &wm_gmii_i82580_writereg;
+		} else if ((sc->sc_flags & WM_F_SGMII) != 0) {
 			sc->sc_mii.mii_readreg = wm_sgmii_readreg;
 			sc->sc_mii.mii_writereg = wm_sgmii_writereg;
 		} else if (sc->sc_type >= WM_T_80003) {
@@ -5725,6 +5730,16 @@ wm_gmii_i80003_writereg(device_t self, int phy, int reg, int val)
 	delay(200);
 
 	wm_put_swfw_semaphore(sc, sem);
+}
+
+static int wm_gmii_i82580_readreg(device_t self, int phy, int reg)
+{
+ return((phy==1)?wm_gmii_i82544_readreg(self,phy,reg):0);
+}
+
+static void wm_gmii_i82580_writereg(device_t self, int phy, int reg, int val)
+{
+ if (phy == 1) wm_gmii_i82544_writereg(self,phy,reg,val);
 }
 
 /*
