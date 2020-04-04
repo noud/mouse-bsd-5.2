@@ -140,8 +140,6 @@
 ./usr/lib/sparc/libpam.so.1.0			base-compat-shlib	compat,pic
 ./usr/lib/sparc/librefuse.so.0			base-compat-shlib	compat,pic
 ./usr/lib/sparc/librefuse.so.0.0		base-compat-shlib	compat,pic
-./usr/lib/sparc/libp2k.so.0			base-compat-shlib	compat,pic
-./usr/lib/sparc/libp2k.so.0.0			base-compat-shlib	compat,pic
 ./usr/lib/sparc/libpcap.so.2			base-compat-shlib	compat,pic
 ./usr/lib/sparc/libpcap.so.2.0			base-compat-shlib	compat,pic
 ./usr/lib/sparc/libpci.so.1			base-compat-shlib	compat,pic
@@ -186,8 +184,6 @@
 ./usr/lib/sparc/libtermcap.so.0.6		base-compat-shlib	compat,pic
 ./usr/lib/sparc/libtermlib.so.0			base-compat-shlib	compat,pic
 ./usr/lib/sparc/libtermlib.so.0.6		base-compat-shlib	compat,pic
-./usr/lib/sparc/libukfs.so.0			base-compat-shlib	compat,pic
-./usr/lib/sparc/libukfs.so.0.0			base-compat-shlib	compat,pic
 ./usr/lib/sparc/libusbhid.so.1			base-compat-shlib	compat,pic
 ./usr/lib/sparc/libusbhid.so.1.0		base-compat-shlib	compat,pic
 ./usr/lib/sparc/libutil.so.7			base-compat-shlib	compat,pic

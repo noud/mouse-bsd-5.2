@@ -135,8 +135,6 @@
 ./usr/lib/i386/libcrypto.so.4.2			base-compat-shlib	compat,pic
 ./usr/lib/i386/librefuse.so.0			base-compat-shlib	compat,pic
 ./usr/lib/i386/librefuse.so.0.0			base-compat-shlib	compat,pic
-./usr/lib/i386/libp2k.so.0			base-compat-shlib	compat,pic
-./usr/lib/i386/libp2k.so.0.0			base-compat-shlib	compat,pic
 ./usr/lib/i386/libcurses.so.6			base-compat-shlib	compat,pic
 ./usr/lib/i386/libcurses.so.6.4			base-compat-shlib	compat,pic
 ./usr/lib/i386/libdes.so.7			base-compat-shlib	compat,pic
@@ -251,8 +249,6 @@
 ./usr/lib/i386/libtermcap.so.0.6		base-compat-shlib	compat,pic
 ./usr/lib/i386/libtermlib.so.0			base-compat-shlib	compat,pic
 ./usr/lib/i386/libtermlib.so.0.6		base-compat-shlib	compat,pic
-./usr/lib/i386/libukfs.so.0			base-compat-shlib	compat,pic
-./usr/lib/i386/libukfs.so.0.0			base-compat-shlib	compat,pic
 ./usr/lib/i386/libusbhid.so.1			base-compat-shlib	compat,pic
 ./usr/lib/i386/libusbhid.so.1.0			base-compat-shlib	compat,pic
 ./usr/lib/i386/libutil.so.7			base-compat-shlib	compat,pic

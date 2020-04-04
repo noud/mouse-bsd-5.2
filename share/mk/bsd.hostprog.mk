@@ -34,7 +34,6 @@ LIBMENU?=	/usr/lib/libmenu.a
 LIBMP?=		/usr/lib/libmp.a
 LIBNTP?=	/usr/lib/libntp.a
 LIBOBJC?=	/usr/lib/libobjc.a
-LIBP2K?=	/usr/lib/libp2k.a
 LIBPC?=		/usr/lib/libpc.a
 LIBPCAP?=	/usr/lib/libpcap.a
 LIBPCI?=	/usr/lib/libpci.a
@@ -53,7 +52,6 @@ LIBSUPCXX?=	/usr/lib/libsupc++.a
 LIBTERMCAP?=	/usr/lib/libtermcap.a
 LIBUTIL?=	/usr/lib/libutil.a
 LIBWRAP?=	/usr/lib/libwrap.a
-LIBUKFS?=	/usr/lib/libukfs.a
 LIBY?=		/usr/lib/liby.a
 LIBZ?=		/usr/lib/libz.a
 

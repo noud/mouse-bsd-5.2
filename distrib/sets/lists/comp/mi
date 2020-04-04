@@ -2408,8 +2408,6 @@
 ./usr/lib/libossaudio.a				comp-c-lib
 ./usr/lib/libossaudio_g.a		-unknown-	debuglib
 ./usr/lib/libossaudio_p.a			comp-c-proflib		profile
-./usr/lib/libp2k.a				comp-c-lib
-./usr/lib/libp2k_p.a				comp-c-proflib		profile
 ./usr/lib/libpam.a				comp-c-lib		pam
 ./usr/lib/libpam_g.a		-unknown-	debuglib
 ./usr/lib/libpcap.a				comp-c-lib
@@ -2488,9 +2486,6 @@
 ./usr/lib/libtermcap_p.a			comp-c-proflib		profile
 ./usr/lib/libtermlib.a				comp-c-lib
 ./usr/lib/libtermlib_p.a			comp-c-proflib		profile
-./usr/lib/libukfs.a				comp-c-lib
-./usr/lib/libukfs_g.a		-unknown-	debuglib
-./usr/lib/libukfs_p.a				comp-c-proflib		profile
 ./usr/lib/libusb.a				comp-obsolete		obsolete
 ./usr/lib/libusb_p.a				comp-obsolete		obsolete
 ./usr/lib/libusb_pic.a				comp-obsolete		obsolete
@@ -3422,7 +3417,6 @@
 ./usr/libdata/lint/llib-lmilter.ln		comp-obsolete		obsolete
 ./usr/libdata/lint/llib-lntp.ln			comp-obsolete		obsolete
 ./usr/libdata/lint/llib-lossaudio.ln		comp-c-lintlib		lint
-./usr/libdata/lint/llib-lp2k.ln			comp-c-lintlib		lint
 ./usr/libdata/lint/llib-lpam.ln			comp-c-lintlib		lint,pam
 ./usr/libdata/lint/llib-lpcap.ln		comp-c-lintlib		lint
 ./usr/libdata/lint/llib-lpci.ln			comp-c-lintlib		lint
@@ -3446,7 +3440,6 @@
 ./usr/libdata/lint/llib-lstdc.ln		comp-c-lintlib		lint
 ./usr/libdata/lint/llib-ltelnet.ln		comp-obsolete		obsolete
 ./usr/libdata/lint/llib-ltermcap.ln		comp-c-lintlib		lint
-./usr/libdata/lint/llib-lukfs.ln		comp-c-lintlib		lint
 ./usr/libdata/lint/llib-lusb.ln			comp-obsolete		obsolete
 ./usr/libdata/lint/llib-lusbhid.ln		comp-c-lintlib		lint
 ./usr/libdata/lint/llib-lutil.ln		comp-c-lintlib		lint
@@ -6711,7 +6704,6 @@
 ./usr/share/man/cat3/ossaudio.0			comp-c-catman		.cat
 ./usr/share/man/cat3/overlay.0			comp-c-catman		.cat
 ./usr/share/man/cat3/overwrite.0		comp-c-catman		.cat
-./usr/share/man/cat3/p2k.0			comp-c-catman		.cat
 ./usr/share/man/cat3/pair_content.0		comp-c-catman		.cat
 ./usr/share/man/cat3/pam.0			comp-c-catman		.cat,pam
 ./usr/share/man/cat3/pam_acct_mgmt.0		comp-c-catman		.cat,pam
@@ -7556,7 +7548,6 @@
 ./usr/share/man/cat3/tzsetwall.0		comp-c-catman		.cat
 ./usr/share/man/cat3/ualarm.0			comp-c-catman		.cat
 ./usr/share/man/cat3/uid_from_user.0		comp-c-catman		.cat
-./usr/share/man/cat3/ukfs.0			comp-c-catman		.cat
 ./usr/share/man/cat3/ulimit.0			comp-c-catman		.cat
 ./usr/share/man/cat3/uname.0			comp-c-catman		.cat
 ./usr/share/man/cat3/unctrl.0			comp-c-catman		.cat
@@ -12013,7 +12004,6 @@
 ./usr/share/man/html3/ossaudio.html		comp-c-htmlman		html
 ./usr/share/man/html3/overlay.html		comp-c-htmlman		html
 ./usr/share/man/html3/overwrite.html		comp-c-htmlman		html
-./usr/share/man/html3/p2k.html			comp-c-htmlman		html
 ./usr/share/man/html3/pair_content.html		comp-c-htmlman		html
 ./usr/share/man/html3/pam.html			comp-c-htmlman		html,pam
 ./usr/share/man/html3/pam_acct_mgmt.html	comp-c-htmlman		html,pam
@@ -12818,7 +12808,6 @@
 ./usr/share/man/html3/tzsetwall.html		comp-c-htmlman		html
 ./usr/share/man/html3/ualarm.html		comp-c-htmlman		html
 ./usr/share/man/html3/uid_from_user.html	comp-c-htmlman		html
-./usr/share/man/html3/ukfs.html			comp-c-htmlman		html
 ./usr/share/man/html3/ulimit.html		comp-c-htmlman		html
 ./usr/share/man/html3/uname.html		comp-c-htmlman		html
 ./usr/share/man/html3/unctrl.html		comp-c-htmlman		html
@@ -17310,7 +17299,6 @@
 ./usr/share/man/man3/ossaudio.3			comp-c-man		.man
 ./usr/share/man/man3/overlay.3			comp-c-man		.man
 ./usr/share/man/man3/overwrite.3		comp-c-man		.man
-./usr/share/man/man3/p2k.3			comp-c-man		.man
 ./usr/share/man/man3/pair_content.3		comp-c-man		.man
 ./usr/share/man/man3/pam.3			comp-c-man		.man,pam
 ./usr/share/man/man3/pam_acct_mgmt.3		comp-c-man		.man,pam
@@ -18151,7 +18139,6 @@
 ./usr/share/man/man3/tzsetwall.3		comp-c-man		.man
 ./usr/share/man/man3/ualarm.3			comp-c-man		.man
 ./usr/share/man/man3/uid_from_user.3		comp-c-man		.man
-./usr/share/man/man3/ukfs.3			comp-c-man		.man
 ./usr/share/man/man3/ulimit.3			comp-c-man		.man
 ./usr/share/man/man3/uname.3			comp-c-man		.man
 ./usr/share/man/man3/unctrl.3			comp-c-man		.man

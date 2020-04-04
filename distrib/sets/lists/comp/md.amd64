@@ -538,10 +538,6 @@
 ./usr/lib/i386/libossaudio.so			comp-sys-shlib		compat,pic
 ./usr/lib/i386/libossaudio_p.a			comp-c-proflib		compat,profile
 ./usr/lib/i386/libossaudio_pic.a		comp-c-piclib		compat,pic
-./usr/lib/i386/libp2k.a				comp-c-lib		compat
-./usr/lib/i386/libp2k.so			comp-sys-shlib		compat,pic
-./usr/lib/i386/libp2k_p.a			comp-c-proflib		compat,profile
-./usr/lib/i386/libp2k_pic.a			comp-c-piclib		compat,pic
 ./usr/lib/i386/libpam.a				comp-c-lib		compat,pam
 ./usr/lib/i386/libpam.so			comp-sys-shlib		compat,pic,pam
 ./usr/lib/i386/libpam_p.a			comp-c-proflib		obsolete
@@ -640,10 +636,6 @@
 ./usr/lib/i386/libtermlib.so			comp-sys-shlib		compat,pic
 ./usr/lib/i386/libtermlib_p.a			comp-c-proflib		compat,profile
 ./usr/lib/i386/libtermlib_pic.a			comp-c-piclib		compat,pic
-./usr/lib/i386/libukfs.a			comp-c-lib		compat
-./usr/lib/i386/libukfs.so			comp-sys-shlib		compat,pic
-./usr/lib/i386/libukfs_p.a			comp-c-proflib		compat,profile
-./usr/lib/i386/libukfs_pic.a			comp-c-piclib		compat,pic
 ./usr/lib/i386/libusbhid.a			comp-c-lib		compat
 ./usr/lib/i386/libusbhid.so			comp-sys-shlib		compat,pic
 ./usr/lib/i386/libusbhid_p.a			comp-c-proflib		compat,profile

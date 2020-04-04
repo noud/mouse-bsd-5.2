@@ -437,10 +437,6 @@
 ./usr/lib/sparc/libossaudio.so			base-sys-shlib		compat,pic
 ./usr/lib/sparc/libossaudio_p.a			comp-c-proflib		compat,profile
 ./usr/lib/sparc/libossaudio_pic.a		comp-c-piclib		compat,pic
-./usr/lib/sparc/libp2k.a			comp-c-lib		compat
-./usr/lib/sparc/libp2k.so			base-sys-shlib		compat,pic
-./usr/lib/sparc/libp2k_p.a			comp-c-proflib		compat,profile
-./usr/lib/sparc/libp2k_pic.a			comp-c-piclib		compat,pic
 ./usr/lib/sparc/libpam.a			comp-c-lib		compat
 ./usr/lib/sparc/libpam.so			base-sys-shlib		compat,pic
 ./usr/lib/sparc/libpam_p.a			comp-c-proflib		obsolete
@@ -539,10 +535,6 @@
 ./usr/lib/sparc/libtermlib.so			base-sys-shlib		compat,pic
 ./usr/lib/sparc/libtermlib_p.a			comp-c-proflib		compat,profile
 ./usr/lib/sparc/libtermlib_pic.a		comp-c-piclib		compat,pic
-./usr/lib/sparc/libukfs.a			comp-c-lib		compat
-./usr/lib/sparc/libukfs.so			base-sys-shlib		compat,pic
-./usr/lib/sparc/libukfs_p.a			comp-c-proflib		compat,profile
-./usr/lib/sparc/libukfs_pic.a			comp-c-piclib		compat,pic
 ./usr/lib/sparc/libusbhid.a			comp-c-lib		compat
 ./usr/lib/sparc/libusbhid.so			base-sys-shlib		compat,pic
 ./usr/lib/sparc/libusbhid_p.a			comp-c-proflib		compat,profile

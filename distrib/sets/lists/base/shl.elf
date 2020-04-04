@@ -180,8 +180,6 @@
 ./usr/lib/libobjc.so.2				base-sys-shlib		gcc
 ./usr/lib/libossaudio.so			base-sys-shlib
 ./usr/lib/libossaudio.so.0			base-sys-shlib
-./usr/lib/libp2k.so				base-sys-shlib
-./usr/lib/libp2k.so.0				base-sys-shlib
 ./usr/lib/libpam.so				base-sys-shlib		pam
 ./usr/lib/libpam.so.1				base-sys-shlib		pam
 ./usr/lib/libpcap.so				base-net-shlib
@@ -229,8 +227,6 @@
 ./usr/lib/libtermcap.so.0			base-sys-shlib
 ./usr/lib/libtermlib.so				base-sys-shlib
 ./usr/lib/libtermlib.so.0			base-sys-shlib
-./usr/lib/libukfs.so				base-sys-shlib
-./usr/lib/libukfs.so.0				base-sys-shlib
 ./usr/lib/libusbhid.so				base-sys-shlib
 ./usr/lib/libusbhid.so.1			base-sys-shlib
 ./usr/lib/libutil.so				base-sys-shlib
