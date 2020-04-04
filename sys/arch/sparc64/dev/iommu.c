@@ -397,10 +397,11 @@ iommu_strbuf_flush_done(struct strbuf_ctl *sb)
 	BUMPTIME(&flushtimeout, 500000); /* 1/2 sec */
 
 	DPRINTF(IDB_IOMMU, ("iommu_strbuf_flush_done: flush = %lx "
-		"at va = %lx pa = %lx now=%lx:%lx until = %lx:%lx\n",
+		"at va = %lx pa = %lx now=%llx:%lx until = %llx:%lx\n",
 		(long)*sb->sb_flush, (long)sb->sb_flush, (long)sb->sb_flushpa,
-		cur.tv_sec, cur.tv_usec,
-		flushtimeout.tv_sec, flushtimeout.tv_usec));
+		(unsigned long long int)cur.tv_sec, (unsigned long int)cur.tv_usec,
+		(unsigned long long int)flushtimeout.tv_sec,
+		(unsigned long int)flushtimeout.tv_usec));
 
 	/* Bypass non-coherent D$ */
 	while ((!ldxa(sb->sb_flushpa, ASI_PHYS_CACHED)) &&
