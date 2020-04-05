@@ -99,7 +99,7 @@ static void open_dev(int how)
   }
  devfd = open(txt_dev,how,0);
  if (devfd < 0)
-  { fprintf(stderr,"%s; can't open %s: %s\n",__progname,txt_dev,strerror(errno));
+  { fprintf(stderr,"%s: can't open %s: %s\n",__progname,txt_dev,strerror(errno));
     exit(1);
   }
 }
