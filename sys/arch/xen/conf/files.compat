@@ -26,6 +26,7 @@ defflag	vesabios.h		XXXVESABIOS
 defflag	bioscall.h		XXXBIOSCALL
 defflag	opt_pcibios.h		XXXOPT_PCIBIOS
 defflag	opt_pcifixup.h		XXXOPT_PCIFIXUP
+defflag opt_halted_message.h	XXXHALTED_MESSAGE
 
 # VM86 emulation
 defflag	opt_vm86.h			XXXVM86
