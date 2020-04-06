@@ -93,6 +93,9 @@ static WATCHER_TYPE watchproc;
 DECLARE_TICKER_HANDLE
 DECLARE_INET_PFIL_HEAD
 static int noverify = 0;
+static WATCH *deadwatch;
+static kmutex_t deadwatch_mtx;
+static kcondvar_t deadwatch_cv;
 
 /*
  * Rebalance the binary tree after an insertion or deletion.  *up is
@@ -566,9 +569,13 @@ static void notify_watchers(SOFTC *sc, char flgc, ...)
      } while (0);
     FILE_USE(w->f);
     soshutdown(so,SHUT_RDWR);
-    CLOSEF(w->f);
+    sounlock(so);
     *wp = w->link;
-    free(w,M_DEVBUF);
+    mutex_enter(&deadwatch_mtx);
+    w->link = deadwatch;
+    deadwatch = w;
+    cv_broadcast(&deadwatch_cv);
+    mutex_exit(&deadwatch_mtx);
     continue <"nextwatcher">;
   }
 }
@@ -932,6 +939,9 @@ DEVSW_SCLASS int pfwopen(dev_t dev, int flag, int mode, PROCTYPE p)
     running = 0;
     serial = 0;
     watchproc = 0;
+    deadwatch = 0;
+    mutex_init(&deadwatch_mtx,MUTEX_DEFAULT,IPL_VM);
+    cv_init(&deadwatch_cv,"pfwdead");
     SETUP_PFW_HOOK();
     TICKER_SETUP();
     attached = 1;
@@ -1079,8 +1089,26 @@ DEVSW_SCLASS int pfwread(dev_t dev, struct uio *uio, int ioflag)
 
 static void watchproc_main(void *arg __attribute__((__unused__)))
 {
- while (1) tsleep(&watchproc,PUSER,"forever",0);
- /*kthread_exit(0);*/
+ WATCH *list;
+ WATCH *w;
+
+ mutex_enter(&deadwatch_mtx);
+ while (1)
+  { list = deadwatch;
+    if (list == 0)
+     { cv_wait(&deadwatch_cv,&deadwatch_mtx);
+       continue;
+     }
+    deadwatch = 0;
+    mutex_exit(&deadwatch_mtx);
+    while (list)
+     { w = list;
+       list = w->link;
+       CLOSEF(w->f);
+       free(w,M_DEVBUF);
+     }
+    mutex_enter(&deadwatch_mtx);
+  }
 }
 
 /* curproc/curlwp is an implicit additional argument to addwatch() */

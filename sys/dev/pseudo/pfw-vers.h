@@ -194,10 +194,12 @@
 #include <sys/proc.h>
 #include <net/pfil.h>
 #include <sys/systm.h>
+#include <sys/mutex.h>
 #include <sys/socket.h>
 #include <netinet/ip.h>
 #include <sys/kernel.h>
 #include <sys/kthread.h>
+#include <sys/condvar.h>
 #include <netinet/tcp.h>
 #include <netinet/udp.h>
 #include <sys/filedesc.h>
