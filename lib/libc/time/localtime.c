@@ -990,6 +990,7 @@ static void localsub(const time_t * const timep, const long int offset, struct t
 	register int			i;
 	const time_t			t = *timep;
 
+ (void) offset;
 	sp = lclptr;
 #ifdef ALL_STATE
 	if (sp == NULL) {
