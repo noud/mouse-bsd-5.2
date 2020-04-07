@@ -1370,11 +1370,16 @@ static time_t time2sub(
 	** (this works whether time_t is signed or unsigned).
 	*/
 	bits = TYPE_BIT(time_t) - 1;
-	/* Unfortunately, time_t 1<<63 leads tm_year, which is
-	   usually 32 bit, to overflow.  So limit it.  Year 1<<31
-	   corresponds to a time_t of a little under 1<<56; we limit
-	   it to 1<<54. */
-	if (bits > 54) bits = 54;
+ /*
+  * Unfortunately, time_t 1<<63 leads tm_year, which is typically 32
+  *  bit, to overflow.  So limit it.  Year 1<<31 corresponds to a
+  *  time_t of a little under 1<<56, but other code breaks earlier,
+  *  especially on i386.  (amd64 seems OK with 54 as the limit here.)
+  *  Experimenting makes it appear 46 is a safe limit; that corresponds
+  *  to a tm_year a bit over a million, which is future-proof enough to
+  *  keep me happy.
+  */
+ if (bits > 46) bits = 46;
 	/*
 	** If time_t is signed, then 0 is just above the median,
 	** assuming two's complement arithmetic.
