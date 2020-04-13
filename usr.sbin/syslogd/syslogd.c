@@ -944,13 +944,20 @@ logmsg(int pri, char *msg, char *from, int flags)
 		flags |= ADDDATE;
 
 	(void)time(&now);
-	if (flags & ADDDATE)
-		timestamp = ctime(&now) + 4;
-	else {
-		timestamp = msg;
-		msg += 20;
-		msglen -= 20;
-	}
+ if (flags & ADDDATE)
+  { static char synthstamp[20];
+    int n;
+    struct tm *tm;
+    tm = localtime(&now);
+    n = strftime(&synthstamp[0],sizeof(synthstamp),"%Y-%m-%d %H:%M:%S",tm);
+    if (n != 19) sprintf(&synthstamp[0],"?""?""? n=%d ?""?""?",n);
+    timestamp = &synthstamp[0];
+  }
+ else
+  { timestamp = msg;
+    msg += 20;
+    msglen -= 20;
+  }
 
 	/* skip leading whitespace */
 	while (isspace((unsigned char)*msg)) {
