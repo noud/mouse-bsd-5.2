@@ -249,7 +249,6 @@ static FILE	*getdatasock(const char *);
 static char	*gunique(const char *);
 static void	 login_utmp(const char *, const char *, const char *,
 		     struct sockinet *);
-static void	 logremotehost(struct sockinet *);
 static void	 lostconn(int);
 static void	 toolong(int);
 static void	 sigquit(int);
@@ -277,6 +276,56 @@ void	kdestroy(void);
 int	k5login(struct passwd *, char *, char *, char *);
 void	k5destroy(void);
 #endif
+
+static void logremotehost(struct sockinet *rem, struct sockinet *lcl)
+{
+ char rhnum[NI_MAXHOST];
+ char rsnum[NI_MAXSERV];
+ int rfail;
+ char lhnum[NI_MAXHOST];
+ char lsnum[NI_MAXSERV];
+ int lfail;
+
+ if (getnameinfo( (struct sockaddr *)&rem->si_su, rem->su_len,
+	&remotehost[0], sizeof(remotehost), 0, 0, 0 ))
+  { strlcpy(remotehost,"?",sizeof(remotehost));
+  }
+#if HAVE_SETPROCTITLE
+ snprintf(&proctitle[0],sizeof(proctitle),"%s: connected",remotehost);
+ setproctitle("%s",&proctitle[0]);
+#endif /* HAVE_SETPROCTITLE */
+ if (logging)
+  { rfail = getnameinfo( (struct sockaddr *)&rem->si_su, rem->su_len,
+			 &rhnum[0], NI_MAXHOST,
+			 &rsnum[0], NI_MAXSERV,
+			 NI_NUMERICHOST | NI_NUMERICSERV );
+    lfail = getnameinfo( (struct sockaddr *)&lcl->si_su, lcl->su_len,
+			 &lhnum[0], NI_MAXHOST,
+			 &lsnum[0], NI_MAXSERV,
+			 NI_NUMERICHOST | NI_NUMERICSERV );
+    if (rfail)
+     { if (lfail)
+	{ syslog(LOG_INFO, "connection from [getnameinfo failed] (%s) to [getnameinfo failed] (%s)",
+		&remotehost[0], &hostname[0]);
+	}
+       else
+	{ syslog(LOG_INFO, "connection from [getnameinfo failed] (%s) to %s/%s (%s)",
+		&remotehost[0], &lhnum[0], &lsnum[0], &hostname[0]);
+	}
+     }
+    else
+     { if (lfail)
+	{ syslog(LOG_INFO, "connection from %s/%s (%s) to [getnameinfo failed] (%s)",
+		&rhnum[0], &rsnum[0], &remotehost[0], &hostname[0]);
+	}
+       else
+	{ syslog(LOG_INFO, "connection from %s/%s (%s) to %s/%s (%s)",
+		&rhnum[0], &rsnum[0], &remotehost[0],
+		&lhnum[0], &lsnum[0], &hostname[0]);
+	}
+     }
+  }
+}
 
 int
 main(int argc, char *argv[])
@@ -722,7 +771,7 @@ main(int argc, char *argv[])
 	if (fcntl(fileno(stdin), F_SETOWN, getpid()) == -1)
 		syslog(LOG_WARNING, "fcntl F_SETOWN: %m");
 #endif
-	logremotehost(&his_addr);
+	logremotehost(&his_addr,&ctrl_addr);
 	/*
 	 * Set up default state
 	 */
@@ -2836,24 +2885,6 @@ reply(int n, const char *fmt, ...)
 	(void)fflush(stdout);
 	if (ftpd_debug)
 		syslog(LOG_DEBUG, "<--- %s", msg);
-}
-
-static void
-logremotehost(struct sockinet *who)
-{
-
-	if (getnameinfo((struct sockaddr *)&who->si_su,
-	    who->su_len, remotehost, sizeof(remotehost), NULL, 0, 
-	    getnameopts))
-		strlcpy(remotehost, "?", sizeof(remotehost));
-
-#if defined(HAVE_SETPROCTITLE)
-	snprintf(proctitle, sizeof(proctitle), "%s: connected", remotehost);
-	setproctitle("%s", proctitle);
-#endif /* defined(HAVE_SETPROCTITLE) */
-	if (logging)
-		syslog(LOG_INFO, "connection from %s to %s",
-		    remotehost, hostname);
 }
 
 /*
