@@ -848,8 +848,7 @@ static int	permitted;	/* USER permitted */
  * need to reset state.  If name is "ftp" or "anonymous", the name is not in
  * _NAME_FTPUSERS, and ftp account exists, set guest and pw, then just return.
  * If account doesn't exist, ask for passwd anyway.  Otherwise, check user
- * requesting login privileges.  Disallow anyone who does not have a standard
- * shell as returned by getusershell().  Disallow anyone mentioned in the file
+ * requesting login privileges.  Disallow anyone mentioned in the file
  * _NAME_FTPUSERS to allow people such as root and uucp to be avoided.
  */
 void
@@ -962,21 +961,9 @@ user(const char *name)
 	}
 			/* parse ftpd.conf, setting up various parameters */
 	parse_conf(class);
-			/* if not guest user, check for valid shell */
+			/* if nonexistent, deny */
 	if (pw == NULL)
 		permitted = 0;
-	else {
-		const char	*cp, *shell;
-
-		if ((shell = pw->pw_shell) == NULL || *shell == 0)
-			shell = _PATH_BSHELL;
-		while ((cp = getusershell()) != NULL)
-			if (strcmp(cp, shell) == 0)
-				break;
-		endusershell();
-		if (cp == NULL && curclass.type != CLASS_GUEST)
-			permitted = 0;
-	}
 
 			/* deny quickly (after USER not PASS) if requested */
 	if (CURCLASS_FLAGS_ISSET(denyquick) && !permitted) {
