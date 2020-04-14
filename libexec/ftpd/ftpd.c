@@ -176,6 +176,7 @@ static sig_atomic_t	urgflag;
 int	data;
 int	Dflag;
 int	sflag;
+int	run_nonpriv;
 int	stru;			/* avoid C keyword */
 int	mode;
 int	dataport;		/* use specific data port */
@@ -297,6 +298,7 @@ main(int argc, char *argv[])
 	pdata = -1;
 	Dflag = 0;
 	sflag = 0;
+	run_nonpriv = 0;
 	dataport = 0;
 	dopidfile = 1;		/* default: DO use a pid file to count users */
 	doutmp = 0;		/* default: Do NOT log to utmp */
@@ -321,7 +323,7 @@ main(int argc, char *argv[])
 	openlog("ftpd", LOG_PID | LOG_NDELAY, LOG_FTP);
 
 	while ((ch = getopt(argc, argv,
-	    "46a:c:C:Dde:h:HlL:nP:qQrst:T:uUvV:wWX")) != -1) {
+	    "46a:c:C:Dde:h:HlL:npP:qQrst:T:uUvV:wWX")) != -1) {
 		switch (ch) {
 		case '4':
 			af = AF_INET;
@@ -395,6 +397,10 @@ main(int argc, char *argv[])
 
 		case 'n':
 			getnameopts = NI_NUMERICHOST;
+			break;
+
+		case 'p':
+			run_nonpriv = 1;
 			break;
 
 		case 'P':
@@ -1913,9 +1919,12 @@ getdatasock(const char *fmode)
 			 * ctrlport-1 (see RFC959 section 5.2).
 			 * However, if privs have been dropped and that
 			 * would be < IPPORT_RESERVED, use a random port
-			 * instead.
+			 * instead.  And, if run_nonpriv, always use a
+			 * random port.
 			 */
-	if (dataport)
+	if (run_nonpriv)
+		port = 0;
+	else if (dataport)
 		port = dataport;
 	else
 		port = ntohs(ctrl_addr.su_port) - 1;
