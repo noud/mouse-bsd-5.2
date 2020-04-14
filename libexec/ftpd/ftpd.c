@@ -1523,7 +1523,7 @@ do_pass(int pass_checked, int pass_rval, const char *passwd)
 		    "/");
 		if (EMPTYSTR(homedir))
 			homedir[0] = '/';
-		if (EMPTYSTR(root) || chroot(root) < 0) {
+		if (EMPTYSTR(root) || (strcmp(root,"/") && (chroot(root) < 0))) {
 			syslog(LOG_NOTICE,
 			    "GUEST user %s: can't chroot to %s: %m",
 			    pw->pw_name, root);
@@ -1547,7 +1547,7 @@ do_pass(int pass_checked, int pass_rval, const char *passwd)
 		    "/");
 		if (EMPTYSTR(homedir))
 			homedir[0] = '/';
-		if (EMPTYSTR(root) || chroot(root) < 0) {
+		if (EMPTYSTR(root) || (strcmp(root,"/") && (chroot(root) < 0))) {
 			syslog(LOG_NOTICE,
 			    "CHROOT user %s: can't chroot to %s: %m",
 			    pw->pw_name, root);
@@ -1566,7 +1566,7 @@ do_pass(int pass_checked, int pass_rval, const char *passwd)
 			/* only chroot REAL if explicitly requested */
 		if (! EMPTYSTR(curclass.chroot)) {
 			format_path(root, curclass.chroot);
-			if (EMPTYSTR(root) || chroot(root) < 0) {
+			if (EMPTYSTR(root) || (strcmp(root,"/") && (chroot(root) < 0))) {
 				syslog(LOG_NOTICE,
 				    "REAL user %s: can't chroot to %s: %m",
 				    pw->pw_name, root);
