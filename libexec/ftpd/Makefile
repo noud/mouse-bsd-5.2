@@ -5,7 +5,7 @@
 
 PROG=	ftpd
 SRCS=	cmds.c conf.c ftpd.c ftpcmd.y logutmp.c logwtmp.c popen.c
-CPPFLAGS+=-I${.CURDIR} -DSUPPORT_UTMP -DSUPPORT_UTMPX -DLOGIN_CAP
+CPPFLAGS+=-I${.CURDIR} -DSUPPORT_UTMP -DSUPPORT_UTMPX
 DPADD+=	${LIBCRYPT} ${LIBUTIL}
 LDADD+=	-lcrypt -lutil
 MAN=	ftpd.conf.5 ftpusers.5 ftpd.8
@@ -25,6 +25,10 @@ CPPFLAGS+=-DINET6
 
 WARNS=2
 
+USE_LOGIN_CAP ?= yes
+.if (${USE_LOGIN_CAP} != "no")
+CPPFLAGS+=-DLOGIN_CAP
+.endif
 .if (${USE_PAM} != "no")
 CPPFLAGS+=-DUSE_PAM
 DPADD+= ${LIBPAM} ${PAM_STATIC_DPADD}
