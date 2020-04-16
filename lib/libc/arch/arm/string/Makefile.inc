@@ -5,5 +5,4 @@ SRCS+=	strncmp.S memcmp.S
 SRCS+=	bcmp.c index.c memchr.c \
 	rindex.c strcat.c strcpy.c strcspn.c strlen.c \
 	strncat.c strncpy.c strpbrk.c strsep.c \
-	strspn.c strstr.c swab.c
-
+	strspn.c strstr.c swab.c strnlen.c
