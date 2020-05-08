@@ -171,7 +171,7 @@ intpr(interval, ifnetaddr, pfunc)
 			*cp = '\0';
 			ifaddraddr = (u_long)ifnet.if_addrlist.tqh_first;
 		}
-		if (vflag)
+		if (vflag || Tflag)
 			n = strlen(name) < 5 ? 5 : strlen(name);
 		else
 			n = 5;
