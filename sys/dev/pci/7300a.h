@@ -1,5 +1,5 @@
-#ifndef _7300A_H_a1317501_
-#define _7300A_H_a1317501_
+#ifndef WH_7300A_H_a1317501_
+#define WH_7300A_H_a1317501_
 
 #include <sys/ioctl.h>
 
