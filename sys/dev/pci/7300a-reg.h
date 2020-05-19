@@ -1,5 +1,5 @@
-#ifndef _7300A_REG_H_2b3cfc94_
-#define _7300A_REG_H_2b3cfc94_
+#ifndef WH_7300A_REG_H_571ba856_
+#define WH_7300A_REG_H_571ba856_
 
 /*
  * Bit meanings here come from the 9080 doc (for PLX9080* values) or
@@ -363,7 +363,7 @@
 #define PLX9080_DMATHR_C0LPAF 0x00000f00 // Ch0 local->PCI almost full
 #define PLX9080_DMATHR_C0LPAF_M 15
 #define PLX9080_DMATHR_C0LPAF_S 8
-#define PLX9080_DMATHR_C0PLAE 0x0000f000 // Ch0 local->PCI almost empty
+#define PLX9080_DMATHR_C0PLAE 0x0000f000 // Ch0 PCI->local almost empty
 #define PLX9080_DMATHR_C0PLAE_M 15
 #define PLX9080_DMATHR_C0PLAE_S 12
 #define PLX9080_DMATHR_C1PLAF 0x000f0000 // Ch1 PCI->local almost full
@@ -375,7 +375,7 @@
 #define PLX9080_DMATHR_C1LPAF 0x0f000000 // Ch1 local->PCI almost full
 #define PLX9080_DMATHR_C1LPAF_M 15
 #define PLX9080_DMATHR_C1LPAF_S 24
-#define PLX9080_DMATHR_C1PLAE 0xf0000000 // Ch1 local->PCI almost empty
+#define PLX9080_DMATHR_C1PLAE 0xf0000000 // Ch1 PCI->local almost empty
 #define PLX9080_DMATHR_C1PLAE_M 15
 #define PLX9080_DMATHR_C1PLAE_S 28
 
