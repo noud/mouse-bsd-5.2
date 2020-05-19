@@ -801,6 +801,10 @@ parseoptions()
 		makewrapper|cleandir|obj|tools|build|distribution|release|sets|sourcesets|syspkgs|params)
 			;;
 
+		do-x11)
+			op=do_x11
+			;;
+
 		iso-image)
 			op=iso_image	# used as part of a variable name
 			;;
@@ -1402,7 +1406,7 @@ main()
 			statusmsg "Built sets to ${setdir}"
 			;;
 
-		cleandir|obj|build|distribution|release|sourcesets|syspkgs|params)
+		cleandir|obj|build|distribution|release|sourcesets|syspkgs|params|do-x11)
 			${runcmd} "${makewrapper}" ${parallel} ${op} ||
 			    bomb "Failed to make ${op}"
 			statusmsg "Successful make ${op}"
