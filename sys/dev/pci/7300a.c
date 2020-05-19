@@ -371,16 +371,18 @@ static void adlink7300a_reset(SOFTC *sc)
  //	DMACSR1, DMA Channel 1 Command/Status Register
  // DMAARB, DMA Arbitration Register - same register as MARBR, above.
  // DMATHR, DMA Threshold Register
- // I suspect some of these never get used because we don't output.
+ // Some of these never get used because we don't output; some others
+ //  never get used because we don't use channel 1.  I think the only
+ //  ones that matter are the C0LP ones.
  bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMATHR,
-	( 7 << PLX9080_DMATHR_C0PLAF_S) |
-	( 7 << PLX9080_DMATHR_C0PLAE_S) |
-	( 4 << PLX9080_DMATHR_C0LPAE_S) |
-	(10 << PLX9080_DMATHR_C0LPAF_S) |
-	( 4 << PLX9080_DMATHR_C1PLAF_S) |
-	( 4 << PLX9080_DMATHR_C1PLAE_S) |
-	( 4 << PLX9080_DMATHR_C1LPAE_S) |
-	( 4 << PLX9080_DMATHR_C1LPAF_S) );
+	(7 << PLX9080_DMATHR_C0PLAE_S) |
+	(7 << PLX9080_DMATHR_C0LPAE_S) |
+	(7 << PLX9080_DMATHR_C1PLAE_S) |
+	(7 << PLX9080_DMATHR_C1LPAE_S) |
+	(1 << PLX9080_DMATHR_C0PLAF_S) |
+	(1 << PLX9080_DMATHR_C0LPAF_S) |
+	(1 << PLX9080_DMATHR_C1PLAF_S) |
+	(1 << PLX9080_DMATHR_C1LPAF_S) );
  // Is this actually necessary?
  pci_conf_write(sc->pc,sc->pt,PCI_BHLC_REG,pci_conf_read(sc->pc,sc->pt,PCI_BHLC_REG)|(PCI_LATTIMER_MASK<<PCI_LATTIMER_SHIFT));
  HRING_RECORD();
