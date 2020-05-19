@@ -464,7 +464,7 @@ static int dma_catchup(SOFTC *sc)
  rs = sc->rsamp;
  splx(s);
  while (1)
-  { bus_dmamap_sync(sc->dmat,sc->dmam,ds*4,4,BUS_DMASYNC_POSTREAD);
+  { bus_dmamap_sync(sc->dmat,sc->dmam,ds*4,4,BUS_DMASYNC_POSTREAD|BUS_DMASYNC_POSTWRITE);
     val = sc->bufbase[ds];
     if (val == FILL_PATTERN)
      { sc->dsamp = ds;
@@ -508,7 +508,7 @@ static void restart_dma(SOFTC *sc)
  HRING_RECORD();
  fill_buffer((void *)sc->dmamem,BUFWORDS);
  HRING_RECORD();
- bus_dmamap_sync(sc->dmat,sc->dmam,0,DMABUFSIZE,BUS_DMASYNC_PREWRITE);
+ bus_dmamap_sync(sc->dmat,sc->dmam,0,DMABUFSIZE,BUS_DMASYNC_PREREAD|BUS_DMASYNC_PREWRITE);
  HRING_RECORD();
  sc->rsamp = 0;
  sc->dsamp = 0;
@@ -608,13 +608,13 @@ static void adlink7300a_flush(SOFTC *sc)
  ds = sc->dsamp;
  while (rs != ds)
   { sc->bufbase[rs] = FILL_PATTERN;
-    bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_PREWRITE);
+    bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_PREREAD|BUS_DMASYNC_PREWRITE);
     rs ++;
     if (rs >= BUFWORDS) rs = 0;
   }
  loops = BUFWORDS + 1;
  while (1)
-  { bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_POSTREAD);
+  { bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_POSTREAD|BUS_DMASYNC_POSTWRITE);
     val = sc->bufbase[rs];
     if (val == FILL_PATTERN) break;
     sc->bufbase[rs] = FILL_PATTERN;
@@ -925,11 +925,11 @@ static int adlink7300a_read(dev_t dev, struct uio *uio, int flags)
     if (maxn > BUFWORDS-rs) maxn = BUFWORDS - rs;
     nv = 0;
     while (nv < maxn)
-     { bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_POSTREAD);
+     { bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_POSTREAD|BUS_DMASYNC_POSTWRITE);
        val = sc->bufbase[rs];
        if (val == FILL_PATTERN) break;
        sc->bufbase[rs] = FILL_PATTERN;
-       bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_PREWRITE);
+       bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_PREREAD|BUS_DMASYNC_PREWRITE);
        v[nv++] = val;
        if (rs == ds) ds ++;
        rs ++;
