@@ -44,6 +44,7 @@
  */
 
 #include <sys/queue.h>
+#include <sys/types.h>
 
 struct buf;
 struct knote;
