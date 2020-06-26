@@ -992,3 +992,7 @@ file	dev/pci/if_vioif.c	vioif
 device	adlink7300a
 attach	adlink7300a at pci
 file	dev/pci/7300a.c		adlink7300a
+
+device	lofn
+attach	lofn at pci
+file	dev/pci/lofn.c		lofn

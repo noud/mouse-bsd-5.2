@@ -9,6 +9,6 @@ INCSDIR= /usr/include/dev/pci
 # Only install includes which are used by userland
 INCS=	amrreg.h amrio.h if_lmc.h mlyio.h mlyreg.h \
 	pcidevs.h pcidevs_data.h pciio.h pcireg.h \
-	tgareg.h twereg.h tweio.h 7300a.h
+	tgareg.h twereg.h tweio.h 7300a.h lofn-api.h
 
 .include <bsd.kinc.mk>

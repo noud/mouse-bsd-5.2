@@ -475,6 +475,7 @@
 ./usr/include/dev/pci/if_lmcioctl.h		comp-c-include		obsolete
 ./usr/include/dev/pci/if_lmcvar.h		comp-obsolete		obsolete
 ./usr/include/dev/pci/if_tlregs.h		comp-obsolete		obsolete
+./usr/include/dev/pci/lofn-api.h		comp-c-include
 ./usr/include/dev/pci/mlyio.h			comp-c-include
 ./usr/include/dev/pci/mlyreg.h			comp-c-include
 ./usr/include/dev/pci/ncr_reg.h			comp-obsolete		obsolete
