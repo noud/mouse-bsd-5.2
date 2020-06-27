@@ -199,7 +199,8 @@ static int lofn_intr(void *scv)
      }
   }
  if (stat & LOFN_STATUS_DONE)
-  { mutex_enter(&sc->alu_mtx);
+  { sc->icnt_alu ++;
+    mutex_enter(&sc->alu_mtx);
     switch (sc->alu_state)
      { case ALU_STATE_BUSY:
 	  sc->alu_state = ALU_STATE_DONE;
