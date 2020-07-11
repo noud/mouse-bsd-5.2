@@ -906,7 +906,7 @@ ktrpsig(void *v, int len)
 		switch (si->si_signo) {
 		case SIGCHLD:
 			printf(": code=%s child pid=%d, uid=%d, "
-			    " status=%u, utime=%lu, stime=%lu)\n",
+			    "status=%u, utime=%lu, stime=%lu)\n",
 			    code, si->si_pid,
 			    si->si_uid, si->si_status,
 			    (unsigned long) si->si_utime,
