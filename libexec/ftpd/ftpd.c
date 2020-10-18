@@ -1867,6 +1867,7 @@ store(const char *name, const char *fmode, int unique)
 	int (*closefunc)(FILE *);
 	struct timeval start, finish, td, *tdp;
 	char *desc, *error;
+ static int failsleep = 0;
 
 	din = NULL;
 	desc = (*fmode == 'w') ? "put" : "append";
@@ -1884,10 +1885,18 @@ store(const char *name, const char *fmode, int unique)
 	closefunc = fclose;
 	tdp = NULL;
 	if (fout == NULL) {
+			    failsleep += 1000;
+			    if (failsleep > 1000000)
+			     { logxfer(desc,-1,name,0,0,"Exiting - too many STOR failures");
+			       exit(0);
+			     }
+			    poll(0,0,failsleep);
 		perror_reply(553, name);
 		logxfer(desc, -1, name, NULL, NULL, strerror(errno));
 		goto cleanupstore;
 	}
+ failsleep -= 99;
+ if (failsleep < 0) failsleep = 0;
 	byte_count = -1;
 	if (restart_point) {
 		if (type == TYPE_A) {
