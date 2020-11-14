@@ -31,7 +31,7 @@ SRCS+= 	_errno.c alarm.c alphasort.c arc4random.c assert.c basename.c clock.c \
 	times.c toascii.c tolower_.c ttyname.c ttyslot.c \
 	toupper_.c ualarm.c ulimit.c uname.c unvis.c usleep.c utime.c utmp.c \
 	utmpx.c valloc.c vis.c wait.c wait3.c waitpid.c warn.c warnx.c \
-	vwarn.c vwarnx.c verr.c verrx.c wordexp.c
+	validusershell.c vwarn.c vwarnx.c verr.c verrx.c wordexp.c
 
 # indirect reference stubs, to be removed soon.
 SRCS+=	_err.c _errx.c \
@@ -72,8 +72,8 @@ MAN+=	alarm.3 arc4random.3 basename.3 bswap.3 clock.3 closefrom.3 confstr.3 \
 	signal.3 signbit.3 sigrelse.3 sigset.3 sigsetops.3 sleep.3 \
 	stringlist.3 sysconf.3 sysctl.3 syslog.3 time.3 times.3 \
 	timezone.3 toascii.3 tolower.3 toupper.3 ttyname.3 \
-	ualarm.3 ulimit.3 uname.3 unvis.3 usleep.3 utime.3 valloc.3 vis.3 \
-	wordexp.3
+	ualarm.3 ulimit.3 uname.3 unvis.3 usleep.3 utime.3 \
+	validusershell.3 valloc.3 vis.3 wordexp.3
 
 MLINKS+=bswap.3 bswap16.3 bswap.3 bswap32.3 bswap.3 bswap64.3
 MLINKS+=cpuset.3 cpuset_create.3 cpuset.3 cpuset_destroy.3 \

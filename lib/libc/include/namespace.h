@@ -633,6 +633,7 @@
 #define utime			_utime
 #define uuid_create_nil		_uuid_create_nil
 #define uuid_is_nil		_uuid_is_nil
+#define validusershell		_validusershell
 #define valloc			_valloc
 #define vis			_vis
 #ifndef vsnprintf

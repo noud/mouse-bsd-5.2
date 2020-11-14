@@ -1,0 +1,38 @@
+.\" This file is in the public domain.
+.Dd November 13, 2020
+.Dt VALIDUSERSHELL 3
+.Os
+.Sh NAME
+.Nm validusershell
+.Nd test user shell validity
+.Sh LIBRARY
+.Lb libc
+.Sh SYNOPSIS
+.In unistd.h
+.Ft int
+.Fn validusershell "const char *"
+.Sh DESCRIPTION
+.Fn validusershell
+tests a putative user shell path for validity according to
+locally-configured policy, returning nonzero if the path represents a
+valid shell, zero if not.
+.Pp
+.Fn validusershell
+replaces
+.Fn getusershell ,
+which is deprecated because its interface design makes various
+reasonable policy configurations impossible.
+.Sh SEE ALSO
+.Xr getusershell 3
+.Sh HISTORY
+.Fn validusershell
+appeared in
+.Nx 10.0 .
+.Sh BUGS
+The current implementation does not actually take advantage of the
+flexibility potential provided by the new interface.  It is a
+.Sq bridge
+implementation, designed to provide the same underlying capability with
+the new interface so that software can be updated to use the more
+flexible interface in advance of the flexibility being implemented,
+rather than imposing a flag day.

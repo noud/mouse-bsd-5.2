@@ -309,6 +309,7 @@ mode_t	 getmode(const void *, mode_t);
 int	 getpeereid(int, uid_t *, gid_t *);
 int	 getsubopt(char **, char * const *, char **);
 __aconst char *getusershell(void);
+extern int validusershell(const char *);
 int	 initgroups(const char *, gid_t);
 int	 iruserok(uint32_t, int, const char *, const char *);
 int      issetugid(void);

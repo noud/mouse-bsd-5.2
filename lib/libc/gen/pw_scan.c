@@ -137,7 +137,7 @@ pw_scan( char *bp, struct passwd *pw, int *flags)
 	long ti;
 	int root, inflags;
 	int dowarn;
-	const char *p, *sh;
+	const char *p;
 
 	_DIAGASSERT(bp != NULL);
 	_DIAGASSERT(pw != NULL);
@@ -216,16 +216,8 @@ pw_scan( char *bp, struct passwd *pw, int *flags)
 
 #if ! HAVE_NBTOOL_CONFIG_H
 	p = pw->pw_shell;
-	if (root && *p)					/* empty == /bin/sh */
-		for (setusershell();;) {
-			if (!(sh = getusershell())) {
-				if (dowarn)
-					warnx("warning, unknown root shell");
-				break;
-			}
-			if (!strcmp(p, sh))
-				break;	
-		}
+	if (root && *p && dowarn && !validusershell(p))
+		warnx("warning, unknown root shell");
 #endif
 
 	if ((p = strsep(&bp, ":")) != NULL) {			/* too many */
