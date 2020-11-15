@@ -99,6 +99,10 @@ __weak_alias(getusershell,_getusershell)
 __weak_alias(setusershell,_setusershell)
 #endif
 
+__warn_references(getusershell,"warning: this program uses getusershell(), which is deprecated.")
+__warn_references(setusershell,"warning: this program uses setusershell(), which is deprecated.")
+__warn_references(endusershell,"warning: this program uses endusershell(), which is deprecated.")
+
 /*
  * Local shells should NOT be added here.
  * They should be added in /etc/shells.
