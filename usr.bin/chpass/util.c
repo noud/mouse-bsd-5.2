@@ -98,16 +98,5 @@ atot(const char *p, time_t *store)
 const char *
 ok_shell(const char *name)
 {
-	char *p;
-	const char *sh;
-
-	setusershell();
-	while ((sh = getusershell()) != NULL) {
-		if (!strcmp(name, sh))
-			return (name);
-		/* allow just shell name, but use "real" path */
-		if ((p = strrchr(sh, '/')) && strcmp(name, p + 1) == 0)
-			return (sh);
-	}
-	return (NULL);
+	return(validusershell(name)?name:0);
 }

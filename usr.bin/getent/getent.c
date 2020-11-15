@@ -824,34 +824,24 @@ services(int argc, char *argv[])
 static int
 shells(int argc, char *argv[])
 {
-	const char	*sh;
 	int		i, rv;
 
 	assert(argc > 1);
 	assert(argv != NULL);
 
-#define SHELLSPRINT	(void)printf("%s\n", sh)
-
-	setusershell();
 	rv = RV_OK;
 	if (argc == 2) {
-		while ((sh = getusershell()) != NULL)
-			SHELLSPRINT;
+		warnx("Enumeration not supported on shells");
+		rv = RV_NOENUM;
 	} else {
 		for (i = 2; i < argc; i++) {
-			setusershell();
-			while ((sh = getusershell()) != NULL) {
-				if (strcmp(sh, argv[i]) == 0) {
-					SHELLSPRINT;
-					break;
-				}
-			}
-			if (sh == NULL) {
+			if (validusershell(argv[i])) {
+				printf("%s\n", argv[i]);
+			} else {
 				rv = RV_NOTFOUND;
 				break;
 			}
 		}
 	}
-	endusershell();
 	return rv;
 }

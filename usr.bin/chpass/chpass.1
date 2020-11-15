@@ -200,9 +200,10 @@ field is empty, the Bourne shell,
 is assumed.
 When altering a login shell, and not the super-user, the user
 may not change from a non-standard shell or to a non-standard
-shell.
-Non-standard is defined as a shell not found in
-.Pa /etc/shells .
+shell, where a non-standard shell is defined as one
+for which
+.Xr validusershell 3
+returns zero.
 .Pp
 The last four fields are for storing the user's
 .Ar full name , office location ,
@@ -237,15 +238,13 @@ A Version 7 format password file
 Lock file for the passwd database
 .It Pa /tmp/pw.XXXXXX
 Temporary copy of the user passwd information
-.It Pa /etc/shells
-The list of approved shells
 .El
 .Sh SEE ALSO
 .Xr finger 1 ,
 .Xr login 1 ,
 .Xr passwd 1 ,
 .Xr pwhash 1 ,
-.Xr getusershell 3 ,
+.Xr validusershell 3 ,
 .Xr passwd 5 ,
 .Xr passwd.conf 5 ,
 .Xr pwd_mkdb 8 ,

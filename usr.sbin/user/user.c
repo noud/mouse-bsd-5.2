@@ -974,24 +974,14 @@ valid_class(char *class)
 static int
 valid_shell(const char *shellname)
 {
-	char *shellp;
-
-	if (access(_PATH_SHELLS, R_OK) == -1) {
-		/* Don't exit */
-		warn("Access failed for `%s'; will not validate shell `%s'",
-		    _PATH_SHELLS, shellname);
-		return 1;
-	}
-
 	/* if nologin is used as a shell, consider it a valid shell */
 	if (strcmp(shellname, NOLOGIN) == 0)
 		return 1;
 
-	while ((shellp = getusershell()) != NULL)
-		if (strcmp(shellp, shellname) == 0)
-			return 1;
+	if (validusershell(shellname))
+		return 1;
 
-	warnx("Shell `%s' not found in `%s'", shellname, _PATH_SHELLS);
+	warnx("Shell `%s' not a valid normal shell", shellname);
 
 	return access(shellname, X_OK) != -1;
 }

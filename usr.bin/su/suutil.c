@@ -40,13 +40,7 @@ __RCSID("$NetBSD: suutil.c,v 1.1 2007/10/17 21:05:39 christos Exp $");
 int
 chshell(const char *sh)
 {
-	const char *cp;
-
-	setusershell();
-	while ((cp = getusershell()) != NULL)
-		if (strcmp(cp, sh) == 0)
-			return 1;
-	return 0;
+ return(validusershell(sh));
 }
 
 char *
