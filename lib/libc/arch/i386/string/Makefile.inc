@@ -7,7 +7,7 @@ SRCS+=	bcmp.S bcopy.S bzero.S ffs.S index.S memchr.S memcmp.S \
 
 # objects built from C sources
 SRCS+=	strcspn.c strncat.c strncpy.c strpbrk.c strsep.c strspn.c \
-	strstr.c
+	strstr.c strnlen.c
 
 SRCS.i386.string=\
 	Lint_bcmp.c Lint_bcopy.c Lint_bzero.c Lint_ffs.c Lint_index.c \

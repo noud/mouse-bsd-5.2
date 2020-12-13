@@ -405,7 +405,8 @@ static int lptclose(dev_t dev, int flag, int mode,
 
  // Not much to do on last close of a raw open.
  if (sc->sc_state & LPT_RAW)
-  { sc->sc_state = 0;
+  { if (rawpp == sc) rawpp = 0;
+    sc->sc_state = 0;
     return(0);
   }
 

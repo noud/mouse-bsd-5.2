@@ -51,21 +51,15 @@ __RCSID("$NetBSD: visual.c,v 1.7 2007/12/15 19:44:45 perry Exp $");
 **	are out.
 */
 
-/* This struct[] has the delta x, delta y for particular directions */
-struct xy	Visdelta[11] =
-{
-	{ -1,	-1 },
-	{ -1,	 0 },
-	{ -1,	 1 },
-	{  0,	 1 },
-	{  1,	 1 },
-	{  1,	 0 },
-	{  1,	-1 },
-	{  0,	-1 },
-	{ -1,	-1 },
-	{ -1,	 0 },
-	{ -1,	 1 }
-};
+static signed char Visdelta[8][2]
+ = { { -1, -1 },
+     { -1,  0 },
+     { -1,  1 },
+     {  0,  1 },
+     {  1,  1 },
+     {  1,  0 },
+     {  1, -1 },
+     {  0, -1 } };
 
 /*ARGSUSED*/
 void
@@ -74,31 +68,30 @@ visual(z)
 {
 	int		ix, iy;
 	int		co;
-	struct xy	*v;
+	int vx;
 
 	co = getintpar("direction");
 	if (co < 0 || co > 360)
 		return;
-	co = (co + 22) / 45;
-	v = &Visdelta[co];
-	ix = Ship.sectx + v->x;
-	iy = Ship.secty + v->y;
+	vx = ((co + 22) / 45) & 7;
+	ix = Ship.sectx + Visdelta[vx][0];
+	iy = Ship.secty + Visdelta[vx][1];
 	if (ix < 0 || ix >= NSECTS || iy < 0 || iy >= NSECTS)
 		co = '?';
 	else
 		co = Sect[ix][iy];
 	printf("%d,%d %c ", ix, iy, co);
-	v++;
-	ix = Ship.sectx + v->x;
-	iy = Ship.secty + v->y;
+	vx = (vx + 1) & 7;
+	ix = Ship.sectx + Visdelta[vx][0];
+	iy = Ship.secty + Visdelta[vx][1];
 	if (ix < 0 || ix >= NSECTS || iy < 0 || iy >= NSECTS)
 		co = '?';
 	else
 		co = Sect[ix][iy];
 	printf("%c ", co);
-	v++;
-	ix = Ship.sectx + v->x;
-	iy = Ship.secty + v->y;
+	vx = (vx + 1) & 7;
+	ix = Ship.sectx + Visdelta[vx][0];
+	iy = Ship.secty + Visdelta[vx][1];
 	if (ix < 0 || ix >= NSECTS || iy < 0 || iy >= NSECTS)
 		co = '?';
 	else

@@ -79,6 +79,11 @@ void	*memccpy(void *, const void *, int, size_t);
 char	*strdup(const char *);
 #endif
 
+#if (_POSIX_C_SOURCE - 0 >= 200809L) || (_XOPEN_SOURCE - 0 >= 700) || \
+    defined(_NETBSD_SOURCE)
+extern size_t strnlen(const char *, size_t);
+#endif
+
 #if defined(_NETBSD_SOURCE)
 #include <strings.h>		/* for backwards-compatibilty */
 void	*memmem(const void *, size_t, const void *, size_t);

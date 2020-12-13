@@ -3,5 +3,5 @@
 SRCS+=	bcmp.S bcopy.S bzero.S ffs.S index.S memchr.c memcmp.S memset.S \
 	rindex.S strcat.S strcmp.S strcpy.S strcspn.c strlen.S \
 	strncat.c strncmp.S strncpy.S strpbrk.c strsep.c \
-	strspn.c strstr.c swab.S
+	strspn.c strstr.c swab.S strnlen.c
 SRCS+=	memcpy.S memccpy.S memmove.S strchr.S strrchr.S

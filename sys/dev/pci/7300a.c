@@ -371,16 +371,18 @@ static void adlink7300a_reset(SOFTC *sc)
  //	DMACSR1, DMA Channel 1 Command/Status Register
  // DMAARB, DMA Arbitration Register - same register as MARBR, above.
  // DMATHR, DMA Threshold Register
- // I suspect some of these never get used because we don't output.
+ // Some of these never get used because we don't output; some others
+ //  never get used because we don't use channel 1.  I think the only
+ //  ones that matter are the C0LP ones.
  bus_space_write_4(sc->lcr_t,sc->lcr_h,PLX9080_DMATHR,
-	( 7 << PLX9080_DMATHR_C0PLAF_S) |
-	( 7 << PLX9080_DMATHR_C0PLAE_S) |
-	( 4 << PLX9080_DMATHR_C0LPAE_S) |
-	(10 << PLX9080_DMATHR_C0LPAF_S) |
-	( 4 << PLX9080_DMATHR_C1PLAF_S) |
-	( 4 << PLX9080_DMATHR_C1PLAE_S) |
-	( 4 << PLX9080_DMATHR_C1LPAE_S) |
-	( 4 << PLX9080_DMATHR_C1LPAF_S) );
+	(7 << PLX9080_DMATHR_C0PLAE_S) |
+	(7 << PLX9080_DMATHR_C0LPAE_S) |
+	(7 << PLX9080_DMATHR_C1PLAE_S) |
+	(7 << PLX9080_DMATHR_C1LPAE_S) |
+	(1 << PLX9080_DMATHR_C0PLAF_S) |
+	(1 << PLX9080_DMATHR_C0LPAF_S) |
+	(1 << PLX9080_DMATHR_C1PLAF_S) |
+	(1 << PLX9080_DMATHR_C1LPAF_S) );
  // Is this actually necessary?
  pci_conf_write(sc->pc,sc->pt,PCI_BHLC_REG,pci_conf_read(sc->pc,sc->pt,PCI_BHLC_REG)|(PCI_LATTIMER_MASK<<PCI_LATTIMER_SHIFT));
  HRING_RECORD();
@@ -464,7 +466,7 @@ static int dma_catchup(SOFTC *sc)
  rs = sc->rsamp;
  splx(s);
  while (1)
-  { bus_dmamap_sync(sc->dmat,sc->dmam,ds*4,4,BUS_DMASYNC_POSTREAD);
+  { bus_dmamap_sync(sc->dmat,sc->dmam,ds*4,4,BUS_DMASYNC_POSTREAD|BUS_DMASYNC_POSTWRITE);
     val = sc->bufbase[ds];
     if (val == FILL_PATTERN)
      { sc->dsamp = ds;
@@ -508,7 +510,7 @@ static void restart_dma(SOFTC *sc)
  HRING_RECORD();
  fill_buffer((void *)sc->dmamem,BUFWORDS);
  HRING_RECORD();
- bus_dmamap_sync(sc->dmat,sc->dmam,0,DMABUFSIZE,BUS_DMASYNC_PREWRITE);
+ bus_dmamap_sync(sc->dmat,sc->dmam,0,DMABUFSIZE,BUS_DMASYNC_PREREAD|BUS_DMASYNC_PREWRITE);
  HRING_RECORD();
  sc->rsamp = 0;
  sc->dsamp = 0;
@@ -608,13 +610,13 @@ static void adlink7300a_flush(SOFTC *sc)
  ds = sc->dsamp;
  while (rs != ds)
   { sc->bufbase[rs] = FILL_PATTERN;
-    bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_PREWRITE);
+    bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_PREREAD|BUS_DMASYNC_PREWRITE);
     rs ++;
     if (rs >= BUFWORDS) rs = 0;
   }
  loops = BUFWORDS + 1;
  while (1)
-  { bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_POSTREAD);
+  { bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_POSTREAD|BUS_DMASYNC_POSTWRITE);
     val = sc->bufbase[rs];
     if (val == FILL_PATTERN) break;
     sc->bufbase[rs] = FILL_PATTERN;
@@ -925,11 +927,11 @@ static int adlink7300a_read(dev_t dev, struct uio *uio, int flags)
     if (maxn > BUFWORDS-rs) maxn = BUFWORDS - rs;
     nv = 0;
     while (nv < maxn)
-     { bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_POSTREAD);
+     { bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_POSTREAD|BUS_DMASYNC_POSTWRITE);
        val = sc->bufbase[rs];
        if (val == FILL_PATTERN) break;
        sc->bufbase[rs] = FILL_PATTERN;
-       bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_PREWRITE);
+       bus_dmamap_sync(sc->dmat,sc->dmam,rs<<2,4,BUS_DMASYNC_PREREAD|BUS_DMASYNC_PREWRITE);
        v[nv++] = val;
        if (rs == ds) ds ++;
        rs ++;
