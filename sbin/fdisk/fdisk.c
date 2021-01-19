@@ -160,10 +160,10 @@ char *boot_path = 0;			/* name of file we actually opened */
 
 #ifdef BOOTSEL
 
-#define OPTIONS			"0123BFSafiluvs:b:c:E:r:w:t:T:"
+#define OPTIONS			"0123BFSafiluvs:b:c:E:r:w:t:T:X"
 #else
 #define change_part(e, p, id, st, sz, bm) change__part(e, p, id, st, sz)
-#define OPTIONS			"0123FSafiluvs:b:c:E:r:w:"
+#define OPTIONS			"0123FSafiluvs:b:c:E:r:w:X"
 #endif
 
 unsigned int dos_cylinders;
@@ -199,6 +199,7 @@ int b_flag;		/* Set cyl, heads, secs (as c/h/s) */
 int B_flag;		/* Edit/install bootselect code */
 int E_flag;		/* extended partition number */
 int b_cyl, b_head, b_sec;  /* b_flag values. */
+int X_flag;
 
 #if !HAVE_NBTOOL_CONFIG_H
 int F_flag = 0;
@@ -301,6 +302,7 @@ main(int argc, char *argv[])
 	a_flag = i_flag = u_flag = sh_flag = f_flag = s_flag = b_flag = 0;
 	v_flag = 0;
 	E_flag = 0;
+ X_flag = 0;
 	csysid = cstart = csize = 0;
 	while ((ch = getopt(argc, argv, OPTIONS)) != -1)
 		switch (ch) {
@@ -400,6 +402,9 @@ main(int argc, char *argv[])
 		case 'T':
 			disk_type = optarg;
 			break;
+			      case 'X':
+			      X_flag = 1;
+			      break;
 		default:
 			usage();
 		}
@@ -1820,7 +1825,7 @@ check_ext_overlap(int part, int sysid, daddr_t start, daddr_t size, int fix)
 			p_s += le32toh(ext.ptn[p].mbr_parts[0].mbrp_start)
 							- dos_sectors;
 		if (start < p_e && start + size > p_s) {
-			if (!f_flag)
+			if (!f_flag && !X_flag)
 				return "Overlaps another extended partition";
 			if (fix) {
 				if (part == -1)
@@ -2009,8 +2014,9 @@ change_part(int extended, int part, int sysid, daddr_t start, daddr_t size,
 			}
 			lim -= start;
 			if (lim == 0) {
+					if (X_flag) printf("Warning: ");
 				printf("Start sector already allocated\n");
-				return 0;
+					if (! X_flag) return(0);
 			}
 			if (size == 0 || size > lim)
 				size = lim;
@@ -2038,12 +2044,16 @@ change_part(int extended, int part, int sysid, daddr_t start, daddr_t size,
 		errtext = check_ext_overlap(part, sysid, start, size, 0);
 	else
 		errtext = check_overlap(part, sysid, start, size, 0);
-	if (errtext != NULL) {
-		if (f_flag)
-			errx(2, "%s\n", errtext);
-		printf("%s\n", errtext);
-		return 0;
-	}
+ if (errtext != NULL)
+  { if (X_flag)
+     { printf("Warning: %s\n",errtext);
+     }
+    else
+     { if (f_flag) errx(2,"%s\n",errtext);
+       printf("%s\n",errtext);
+       return(0);
+     }
+  }
 
 	/*
 	 * Before proceeding, delete any overlapped partitions.
@@ -2054,12 +2064,18 @@ change_part(int extended, int part, int sysid, daddr_t start, daddr_t size,
 	 */
 
 	if (extended)
-		errtext = check_ext_overlap(part, sysid, start, size, 1);
+		errtext = check_ext_overlap(part, sysid, start, size, !X_flag);
 	else
-		errtext = check_overlap(part, sysid, start, size, 1);
+		errtext = check_overlap(part, sysid, start, size, !X_flag);
 
-	if (errtext)
-		errx(1, "%s\n", errtext);
+ if (errtext)
+  { if (X_flag)
+     { printf("Warning: %s\n",errtext);
+     }
+    else
+     { errx(1,"%s\n",errtext);
+     }
+  }
 
 	if (sysid == 0) {
 		/* delete this partition - save info though */
