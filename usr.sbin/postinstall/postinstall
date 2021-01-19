@@ -1060,7 +1060,8 @@ do_rc()
 		accounting altqd amd apmd \
 		bootconf.sh bootparams btattach btconfig btdevctl bthcid \
 		ccd cgd cleartmp cron \
-		dhclient dhcpcd dhcpd dhcrelay dmesg downinterfaces envsys \
+		dhclient dhcpcd dhcpd dhcrelay \
+		disklabels dmesg downinterfaces envsys \
 		fsck ftp_proxy ftpd \
 		hostapd httpd \
 		identd ifwatchd inetd ipfilter ipfs ipmon ipnat ipsec \
