@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# $NetBSD: dmesg,v 1.9 2004/08/13 18:08:03 mycroft Exp $
+#
+
+# PROVIDE: disklabels
+# REQUIRE: mountcritremote
+# BEFORE:  DAEMON
+
+$_rc_subr_loaded . /etc/rc.subr
+
+name="disklabels"
+label_dir="/var/run/disklabels"
+start_cmd="do_disklabels"
+stop_cmd=":"
+
+do_disklabels()
+{
+	rm -fr ${label_dir}
+	mkdir -p ${label_dir}
+	for d in `sysctl -n hw.disknames`
+	do
+		((fdisk $d 2>/dev/null && echo ====); disklabel $d) > ${label_dir}/$d 2>&1
+	done
+}
+
+load_rc_config $name
+run_rc_command "$1"

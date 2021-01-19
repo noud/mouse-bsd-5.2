@@ -183,6 +183,7 @@
 ./etc/rc.d/dhcpcd				etc-dhcpcd-rc
 ./etc/rc.d/dhcpd				etc-dhcpd-rc
 ./etc/rc.d/dhcrelay				etc-dhcpd-rc
+./etc/rc.d/disklabels				etc-sys-rc
 ./etc/rc.d/dmesg				etc-sys-rc
 ./etc/rc.d/downinterfaces			etc-sys-rc
 ./etc/rc.d/envsys				etc-sys-rc
